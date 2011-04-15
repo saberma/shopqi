@@ -21,6 +21,8 @@ gem "carrierwave"
 # 调用参数说明:http://www.imagemagick.org/Usage/
 gem "mini_magick"
 
+##### 控制器相关 #####
+gem 'decent_exposure'
 
 ##### 视图相关 #####
 gem 'haml'
