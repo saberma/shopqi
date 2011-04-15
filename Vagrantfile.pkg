@@ -1,0 +1,9 @@
+Vagrant::Config.run do |config|
+  # Forward a port from the guest to the host, which allows for outside
+  # computers to access the VM, whereas host only networking does not.
+  config.vm.forward_port "web-shopqi", 37000, 8088
+  config.vm.forward_port "postgre", 5432, 5432
+  config.vm.forward_port "redis-shopqi", 6379, 6379
+  config.vm.forward_port "resque-web", 8282, 8282
+  config.vm.forward_port "livereload", 35729, 35729
+end
