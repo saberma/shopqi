@@ -9,9 +9,11 @@ Vagrant::Config.run do |config|
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
-  #config.vm.forward_port "web-shopqi", 3000, 8088
-  #config.vm.forward_port "postgre", 5432, 5432
-  #config.vm.forward_port "redis-shopqi", 6379, 6379
+  config.vm.forward_port "web-shopqi", 3000, 3000
+  config.vm.forward_port "postgre", 5432, 5432
+  config.vm.forward_port "redis-shopqi", 6379, 6379
+  config.vm.forward_port "resque-web", 8282, 8282
+  config.vm.forward_port "livereload", 35729, 35729
 
   #fixed: share folder performance. http://vagrantup.com/docs/nfs.html
   config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
@@ -21,8 +23,8 @@ Vagrant::Config.run do |config|
   # to this Vagrantfile), and adding some recipes and/or roles.
   #
   config.vm.provision :chef_solo do |chef|
-    #chef.recipe_url = "https://dl.dropbox.com/u/19519145/shopqi/chef-solo.tar.gz"
-    chef.cookbooks_path = "/home/saberma/Documents/chef-repo/cookbooks"
+    chef.recipe_url = "https://dl.dropbox.com/u/19519145/shopqi/chef-solo.tar.gz"
+    #chef.cookbooks_path = "/home/saberma/Documents/chef-repo/cookbooks"
     chef.add_recipe "develop"
   
     # You may also specify custom JSON attributes:

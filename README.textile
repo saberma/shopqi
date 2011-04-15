@@ -1,0 +1,60 @@
+h2. ShoqQi
+
+中国开源电子商务平台，基于rails3开发
+
+h3. 安装
+
+为了便于安装，ShopQi的开发环境将基于Vagrant虚拟工具
+
+h3. 安装VirtualBox
+
+参考这里安装VirtualBox 4.x: "http://www.virtualbox.org/wiki/Downloads":http://www.virtualbox.org/wiki/Downloads
+
+h3. 安装Vagrant
+
+pre.
+gem install vagrant --no-ri --no-rdoc
+
+h3. 下载ShopQi虚拟镜像文件
+
+--下载镜像文件(765M): "https://dl.dropbox.com/u/19519145/shopqi/vagrant-package-shopqi.box":https://dl.dropbox.com/u/19519145/shopqi/vagrant-package-shopqi.box--
+虚拟机默认安装以下组件:
+
+# Ubuntu 10.04(32bit)
+# Ruby 1.9.2
+# Ruby on Rails 3.0.6
+# unicorn 3.5.0
+# postgrel 0.8.4
+# redis 2.2.0rc2
+
+h3. 下载源代码:
+
+pre. 
+git clone git://github.com/saberma/shopqi.git 
+cd shopqi
+
+h3. 创建虚拟机
+
+pre. 
+#require nfsd for share folder
+sudo apt-get install nfs-kernel-server
+vagrant up
+
+h2. 查看效果
+
+测试用户名密码都为admin@shopqi.com
+"登录 http://lvh.me:8088":http://lvh.me:8088
+
+h2. 开发人员
+
+saberma
+# email(gtalk): mahb45 # gmail.com
+# twitter: "twitter.com/saberma":http://twitter.com/saberma
+
+weihuilee
+# email(gtalk): liwh87 # gmail.com
+# twitter: "twitter.com/weihuilee":http://twitter.com/weihuilee
+
+h2. License
+
+产品协议: "GNU Affero GPL 3":http://www.gnu.org/licenses/agpl-3.0.html

@@ -6,6 +6,7 @@ gem 'rails', '3.0.6'
 gem 'pg'
 
 ##### 实体相关 #####
+gem 'auto_migrations'
 gem 'devise'
 # 用于保存配置型记录
 gem 'active_hash'
