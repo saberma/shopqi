@@ -27,6 +27,8 @@ gem 'decent_exposure'
 
 ##### 视图相关 #####
 gem 'haml'
+# 编译coffee-script
+gem 'barista'
 
 ##### 其他 #####
 # 支付

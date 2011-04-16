@@ -47,12 +47,17 @@ GEM
     auto_migrations (1.1.0)
       rails (>= 3.0.1)
     awesome_print (0.3.2)
+    barista (1.0.0)
+      coffee-script (~> 2.1.1)
     bcrypt-ruby (2.1.4)
     braintree (2.9.1)
       builder
     builder (2.1.2)
     carrierwave (0.5.3)
       activesupport (~> 3.0)
+    coffee-script (2.1.3)
+      coffee-script-source
+    coffee-script-source (1.0.1)
     columnize (0.3.2)
     crack (0.1.8)
     database_cleaner (0.6.6)
@@ -194,6 +199,7 @@ DEPENDENCIES
   activemerchant_patch_for_china!
   auto_migrations
   awesome_print
+  barista
   carrierwave
   database_cleaner
   decent_exposure
