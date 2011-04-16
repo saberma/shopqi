@@ -10,9 +10,10 @@ h3. 安装VirtualBox
 
 参考这里安装VirtualBox 4.x: "http://www.virtualbox.org/wiki/Downloads":http://www.virtualbox.org/wiki/Downloads
 
-h3. 安装Vagrant
+h3. 安装Vagrant和PostgrelSQL客户端
 
 pre.
+sudo apt-get install postgresql-client libpq-dev
 gem install vagrant --no-ri --no-rdoc
 
 h3. 下载ShopQi虚拟镜像文件
