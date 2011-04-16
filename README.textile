@@ -18,7 +18,7 @@ gem install vagrant --no-ri --no-rdoc
 
 h3. 下载ShopQi虚拟镜像文件
 
---下载镜像文件(765M): "https://dl.dropbox.com/u/19519145/shopqi/vagrant-package-shopqi.box":https://dl.dropbox.com/u/19519145/shopqi/vagrant-package-shopqi.box--
+下载镜像文件(584M): "http://u.115.com/file/f1e2b0818b":http://u.115.com/file/f1e2b0818b
 虚拟机默认安装以下组件:
 
 # Ubuntu 10.04(32bit)
