@@ -1,0 +1,11 @@
+#!/bin/bash
+script_dir="$(dirname "$(readlink -f ${BASH_SOURCE[0]})")"
+cd $script_dir/..
+#make sure network connected
+#http://askubuntu.com/questions/27954/how-can-i-check-internet-connectivity-in-a-console
+wget --spider http://sina.com > log/vagrant.log
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
+vagrant up >> log/vagrant.log
+vagrant reload >> log/vagrant.log
