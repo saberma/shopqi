@@ -1,0 +1,522 @@
+%h2#title
+  商店导航
+#action-links
+  %ul
+    %li#new-menu
+      %a{ :href => "#", :onclick => "Element.toggle('add-menu'); return false;" }
+        新增链接列表
+=render :partial => 'new', :locals => { :link_list => link_list }
+#link-lists
+  %h3.st.sb
+    Link Lists
+  %p.note.ssb
+    When you create a new link list, it will not show up automatically unless the theme you are using includes it.
+    %br
+    To get this link list to show up on your shop's pages you will need to modify your templates in the
+    %a{ :href => "/admin/themes/current" }
+      Template Editor
+    section.
+  .section
+    %ul#menus.nobull.st
+      %li#link_list_1905262.links.toolbox.default-menu.link-list
+        /
+          begin: default Link List items
+        #default_container_link_list_1905262
+          .section-header
+            %p#actions_link_list_1905262.list-actions
+              %a.editlist-action{ :href => "#", :onclick => "enterEditMode(1905262); return false;", :style => "padding-left: 14px;" }
+                Edit link list
+            %span{ :title => "handle: main-menu" }
+              Main Menu
+            %span.hint
+              This is a default link list and cannot be deleted.
+          #default_header_link_list_1905262.link-header.st.sl.sr
+            %span.sl
+              Name of link
+            %span.sl
+              Links to
+          %ul#default_link_list_1905262.nobull.sr.ssb
+            %li#link_default_li_8402622.sl.link.odd
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "/" }
+                  Home
+              %span.link-url
+                \/
+            %li#link_default_li_8402652.sl.link.even
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "/pages/about-us" }
+                  About Us
+              %span.link-url
+                \/pages/about-us
+            %li#link_default_li_8402642.sl.link.odd
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "/blogs/news" }
+                  Blog
+              %span.link-url
+                \/blogs/news
+            %li#link_default_li_8402632.sl.link.even
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "/collections/all" }
+                  Catalog
+              %span.link-url
+                \/collections/all
+            %li#link_default_li_8435022.sl.link.odd
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "http://ziwee.cn" }
+                  test
+              %span.link-url
+                http://ziwee.cn
+        /
+          begin: add new Link
+        #add_form_link_container_link_list_1905262
+          #add_link_control_link_list_1905262.action-row
+            .action-link
+              %p{ :onclick => "Element.togglePair('add_link_form_link_list_1905262', 'add_link_control_link_list_1905262'); return false;" }
+                %a{ :href => "#" }
+                  %span.plus
+                    +
+                  Add link
+          #add_link_form_link_list_1905262.link.btns{ :style => "display:none;" }
+            %form{ "accept-charset" => "UTF-8", :action => "/admin/links/add_link/1905262", "data-remote" => "true", :method => "post" }
+              %div{ :style => "margin:0;padding:0;display:inline" }
+                %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
+                %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
+              .add-link-title.link-col
+                %span.add-link-header
+                  Name of new link
+                %input#add_link_title_link_list_1905262.medium{ :name => "link[title]", :type => "text" }
+              .add-link-linksto.link-col
+                %span.add-link-header
+                  Links to
+                %select#add_link_type_link_list_1905262.selector{ :name => "link[link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#add_subject_id_link_list_1905262.subject{ :name => "link[subject_id]" }
+                %input#add_subject_link_list_1905262.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link[subject]", :type => "text" }
+                %input#add_subject_params_link_list_1905262.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link[subject_params]", :type => "text" }
+              .sl.sr.sb.btn-divider
+                %input.btn{ :name => "commit", :type => "submit", :value => "Add Link" }
+                or
+                %a{ :href => "#", :onclick => "Element.togglePair('add_link_form_link_list_1905262', 'add_link_control_link_list_1905262'); return false;" }
+                  Cancel
+        /
+          begin: edit Link List items
+        #edit_form_link_container_link_list_1905262{ :style => "display:none;" }
+          %form#edit_link_list_1905262.edit_link_list{ "accept-charset" => "UTF-8", :action => "/admin/links/1905262", "data-remote" => "true", :method => "post" }
+            %div{ :style => "margin:0;padding:0;display:inline" }
+              %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
+              %input{ :name => "_method", :type => "hidden", :value => "put" }
+              %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
+            .section-header
+              Edit this link list
+            .link-list-edit-header
+              %dl.padding.nst.nsb.nsl.nsr
+                %dt.nst
+                  Name
+                %dd
+                  %input#link_list_title.big.sb{ :name => "link_list[title]", :size => "30", :type => "text", :value => "Main Menu" }
+                %dt
+                  Permalink/Handle
+                  %span.note
+                    (
+                    %a{ :href => "http://wiki.shopify.com/Handle", :target => "_blank" }
+                      what's this?
+                    )
+                %dd
+                  %input#link_list_handle{ :disabled => "disabled", :name => "link_list[handle]", :size => "30", :type => "text", :value => "main-menu" }
+                  %input#link_list_handle{ :name => "link_list[handle]", :type => "hidden", :value => "main-menu" }
+                  %span.hint
+                    Default link list handle cannot be modified.
+            #edit_form_header_link_list_1905262.link-header.link-header-edit.nobull.st
+              %span
+                Name of Link
+              %span
+                Links to
+            %ul#edit_form_link_list_1905262.nobull.st.sr.ssb.sl
+              %li#link_edit_li_8402622.sl.link.link-edit.even
+                %input#link_list_links_attributes_0_id{ :name => "link_list[links_attributes][0][id]", :type => "hidden", :value => "8402622" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905262?link_id=8402622', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_0_title.medium{ :name => "link_list[links_attributes][0][title]", :size => "30", :type => "text", :value => "Home" }
+                %select#link_edit_link_type_8402622.selector.sl{ :name => "link_list[links_attributes][0][link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage", :selected => "selected" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#link_list_links_attributes_0_subject_id.subject{ :name => "link_list[links_attributes][0][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "" }
+                %input#link_list_links_attributes_0_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][0][subject]", :size => "30", :type => "text", :value => "/" }
+                %input#link_list_links_attributes_0_subject_params{ :name => "link_list[links_attributes][0][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_0_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][0][subject_params]", :size => "30", :type => "text" }
+              %li#link_edit_li_8402652.sl.link.link-edit.odd
+                %input#link_list_links_attributes_1_id{ :name => "link_list[links_attributes][1][id]", :type => "hidden", :value => "8402652" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905262?link_id=8402652', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_1_title.medium{ :name => "link_list[links_attributes][1][title]", :size => "30", :type => "text", :value => "About Us" }
+                %select#link_edit_link_type_8402652.selector.sl{ :name => "link_list[links_attributes][1][link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page", :selected => "selected" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#link_list_links_attributes_1_subject_id.subject{ :name => "link_list[links_attributes][1][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "5082262" }
+                %input#link_list_links_attributes_1_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][1][subject]", :size => "30", :type => "text", :value => "about-us" }
+                %input#link_list_links_attributes_1_subject_params{ :name => "link_list[links_attributes][1][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_1_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][1][subject_params]", :size => "30", :type => "text" }
+              %li#link_edit_li_8402642.sl.link.link-edit.even
+                %input#link_list_links_attributes_2_id{ :name => "link_list[links_attributes][2][id]", :type => "hidden", :value => "8402642" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905262?link_id=8402642', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_2_title.medium{ :name => "link_list[links_attributes][2][title]", :size => "30", :type => "text", :value => "Blog" }
+                %select#link_edit_link_type_8402642.selector.sl{ :name => "link_list[links_attributes][2][link_type]" }
+                  %option{ :value => "blog", :selected => "selected" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#link_list_links_attributes_2_subject_id.subject{ :name => "link_list[links_attributes][2][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "890622" }
+                %input#link_list_links_attributes_2_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][2][subject]", :size => "30", :type => "text", :value => "news" }
+                %input#link_list_links_attributes_2_subject_params{ :name => "link_list[links_attributes][2][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_2_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][2][subject_params]", :size => "30", :type => "text" }
+              %li#link_edit_li_8402632.sl.link.link-edit.odd
+                %input#link_list_links_attributes_3_id{ :name => "link_list[links_attributes][3][id]", :type => "hidden", :value => "8402632" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905262?link_id=8402632', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_3_title.medium{ :name => "link_list[links_attributes][3][title]", :size => "30", :type => "text", :value => "Catalog" }
+                %select#link_edit_link_type_8402632.selector.sl{ :name => "link_list[links_attributes][3][link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http", :selected => "selected" }
+                    Web Address
+                %select#link_list_links_attributes_3_subject_id.subject{ :name => "link_list[links_attributes][3][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "" }
+                %input#link_list_links_attributes_3_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][3][subject]", :size => "30", :type => "text", :value => "/collections/all" }
+                %input#link_list_links_attributes_3_subject_params{ :name => "link_list[links_attributes][3][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_3_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][3][subject_params]", :size => "30", :type => "text" }
+              %li#link_edit_li_8435022.sl.link.link-edit.even
+                %input#link_list_links_attributes_4_id{ :name => "link_list[links_attributes][4][id]", :type => "hidden", :value => "8435022" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905262?link_id=8435022', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_4_title.medium{ :name => "link_list[links_attributes][4][title]", :size => "30", :type => "text", :value => "test" }
+                %select#link_edit_link_type_8435022.selector.sl{ :name => "link_list[links_attributes][4][link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http", :selected => "selected" }
+                    Web Address
+                %select#link_list_links_attributes_4_subject_id.subject{ :name => "link_list[links_attributes][4][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "892462" }
+                %input#link_list_links_attributes_4_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][4][subject]", :size => "30", :type => "text", :value => "http://ziwee.cn" }
+                %input#link_list_links_attributes_4_subject_params{ :name => "link_list[links_attributes][4][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_4_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][4][subject_params]", :size => "30", :type => "text" }
+            .section-submit
+              %input.btn{ :name => "commit", :type => "submit", :value => "Save Changes" }
+              or
+              %a{ :href => "#", :onclick => "exitEditMode(1905262); return false;" }
+                Cancel
+      %li#link_list_1905272.links.toolbox.default-menu.link-list
+        /
+          begin: default Link List items
+        #default_container_link_list_1905272
+          .section-header
+            %p#actions_link_list_1905272.list-actions
+              %a.editlist-action{ :href => "#", :onclick => "enterEditMode(1905272); return false;", :style => "padding-left: 14px;" }
+                Edit link list
+            %span{ :title => "handle: footer" }
+              Footer
+            %span.hint
+              This is a default link list and cannot be deleted.
+          #default_header_link_list_1905272.link-header.st.sl.sr
+            %span.sl
+              Name of link
+            %span.sl
+              Links to
+          %ul#default_link_list_1905272.nobull.sr.ssb
+            %li#link_default_li_8402672.sl.link.odd
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "/pages/about-us" }
+                  About Us
+              %span.link-url
+                \/pages/about-us
+            %li#link_default_li_8402662.sl.link.even
+              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+              %span.link-title
+                %a{ :href => "/search" }
+                  Search
+              %span.link-url
+                \/search
+        /
+          begin: add new Link
+        #add_form_link_container_link_list_1905272
+          #add_link_control_link_list_1905272.action-row
+            .action-link
+              %p{ :onclick => "Element.togglePair('add_link_form_link_list_1905272', 'add_link_control_link_list_1905272'); return false;" }
+                %a{ :href => "#" }
+                  %span.plus
+                    +
+                  Add link
+          #add_link_form_link_list_1905272.link.btns{ :style => "display:none;" }
+            %form{ "accept-charset" => "UTF-8", :action => "/admin/links/add_link/1905272", "data-remote" => "true", :method => "post" }
+              %div{ :style => "margin:0;padding:0;display:inline" }
+                %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
+                %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
+              .add-link-title.link-col
+                %span.add-link-header
+                  Name of new link
+                %input#add_link_title_link_list_1905272.medium{ :name => "link[title]", :type => "text" }
+              .add-link-linksto.link-col
+                %span.add-link-header
+                  Links to
+                %select#add_link_type_link_list_1905272.selector{ :name => "link[link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#add_subject_id_link_list_1905272.subject{ :name => "link[subject_id]" }
+                %input#add_subject_link_list_1905272.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link[subject]", :type => "text" }
+                %input#add_subject_params_link_list_1905272.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link[subject_params]", :type => "text" }
+              .sl.sr.sb.btn-divider
+                %input.btn{ :name => "commit", :type => "submit", :value => "Add Link" }
+                or
+                %a{ :href => "#", :onclick => "Element.togglePair('add_link_form_link_list_1905272', 'add_link_control_link_list_1905272'); return false;" }
+                  Cancel
+        /
+          begin: edit Link List items
+        #edit_form_link_container_link_list_1905272{ :style => "display:none;" }
+          %form#edit_link_list_1905272.edit_link_list{ "accept-charset" => "UTF-8", :action => "/admin/links/1905272", "data-remote" => "true", :method => "post" }
+            %div{ :style => "margin:0;padding:0;display:inline" }
+              %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
+              %input{ :name => "_method", :type => "hidden", :value => "put" }
+              %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
+            .section-header
+              Edit this link list
+            .link-list-edit-header
+              %dl.padding.nst.nsb.nsl.nsr
+                %dt.nst
+                  Name
+                %dd
+                  %input#link_list_title.big.sb{ :name => "link_list[title]", :size => "30", :type => "text", :value => "Footer" }
+                %dt
+                  Permalink/Handle
+                  %span.note
+                    (
+                    %a{ :href => "http://wiki.shopify.com/Handle", :target => "_blank" }
+                      what's this?
+                    )
+                %dd
+                  %input#link_list_handle{ :disabled => "disabled", :name => "link_list[handle]", :size => "30", :type => "text", :value => "footer" }
+                  %input#link_list_handle{ :name => "link_list[handle]", :type => "hidden", :value => "footer" }
+                  %span.hint
+                    Default link list handle cannot be modified.
+            #edit_form_header_link_list_1905272.link-header.link-header-edit.nobull.st
+              %span
+                Name of Link
+              %span
+                Links to
+            %ul#edit_form_link_list_1905272.nobull.st.sr.ssb.sl
+              %li#link_edit_li_8402672.sl.link.link-edit.odd
+                %input#link_list_links_attributes_0_id{ :name => "link_list[links_attributes][0][id]", :type => "hidden", :value => "8402672" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905272?link_id=8402672', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_0_title.medium{ :name => "link_list[links_attributes][0][title]", :size => "30", :type => "text", :value => "About Us" }
+                %select#link_edit_link_type_8402672.selector.sl{ :name => "link_list[links_attributes][0][link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page", :selected => "selected" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#link_list_links_attributes_0_subject_id.subject{ :name => "link_list[links_attributes][0][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "5082262" }
+                %input#link_list_links_attributes_0_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][0][subject]", :size => "30", :type => "text", :value => "about-us" }
+                %input#link_list_links_attributes_0_subject_params{ :name => "link_list[links_attributes][0][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_0_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][0][subject_params]", :size => "30", :type => "text" }
+              %li#link_edit_li_8402662.sl.link.link-edit.even
+                %input#link_list_links_attributes_1_id{ :name => "link_list[links_attributes][1][id]", :type => "hidden", :value => "8402662" }
+                %a.delete.fr{ :href => "#", :onclick => "if (confirm('Are you sure you want to remove this link?')) { new Ajax.Request('/admin/links/delete_link/1905272?link_id=8402662', {asynchronous:true, evalScripts:true, method:'post', parameters:'authenticity_token=' + encodeURIComponent('q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=')}); }; return false;" }
+                  %img{ :alt => "Trash", :src => "/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
+                %input#link_list_links_attributes_1_title.medium{ :name => "link_list[links_attributes][1][title]", :size => "30", :type => "text", :value => "Search" }
+                %select#link_edit_link_type_8402662.selector.sl{ :name => "link_list[links_attributes][1][link_type]" }
+                  %option{ :value => "blog" }
+                    Blog
+                  %option{ :value => "frontpage" }
+                    Shop Frontpage
+                  %option{ :value => "collection" }
+                    Product Collection
+                  %option{ :value => "page" }
+                    Page
+                  %option{ :value => "product" }
+                    Product
+                  %option{ :value => "search", :selected => "selected" }
+                    Search page
+                  %option{ :value => "http" }
+                    Web Address
+                %select#link_list_links_attributes_1_subject_id.subject{ :name => "link_list[links_attributes][1][subject_id]", :onchange => "alertSelected(this)" }
+                  links_attributes
+                %input.subject_value.hide{ :type => "text", :value => "" }
+                %input#link_list_links_attributes_1_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopify.com", :name => "link_list[links_attributes][1][subject]", :size => "30", :type => "text", :value => "/search" }
+                %input#link_list_links_attributes_1_subject_params{ :name => "link_list[links_attributes][1][subject_params]", :type => "hidden", :value => "" }
+                %input#link_list_links_attributes_1_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][1][subject_params]", :size => "30", :type => "text" }
+            .section-submit
+              %input.btn{ :name => "commit", :type => "submit", :value => "Save Changes" }
+              or
+              %a{ :href => "#", :onclick => "exitEditMode(1905272); return false;" }
+                Cancel
+#url-redirect
+  %h3.st.sb
+    URL Redirects
+  %p.note.ssb
+    URL redirects are used to prevent old bookmarks and links to your previous site from breaking. This will automatically forward the link to your target location.
+    %br
+    Note that the following paths cannot be used: &ldquo;/application&rdquo;, &ldquo;/cart&rdquo;, &ldquo;/carts&rdquo;, &ldquo;/orders&rdquo;, and &ldquo;/shop&rdquo;.
+  .section
+    #redirects-header.section-header.link-header.redirect-header-add.nobull.st
+      %span
+        Old path
+      %span
+        New path
+    %ul#redirects.nobull.sr.ssb.sl
+    #no-redirect-hint.hint.padding
+      No URL redirects added yet.
+    #btm-nav.act-screen
+      #pagination
+    #test-row.action-row
+      .action-link
+        %a{ :href => "#", :onclick => "Element.togglePair('redirect-table-detail', 'test-row'); return false;" }
+          %span.plus
+            +
+          Add URL redirect
+    #redirect-table-detail.btns{ :style => "display:none;" }
+      %form{ "accept-charset" => "UTF-8", :action => "/admin/redirects", "data-remote" => "true", :method => "post" }
+        %div{ :style => "margin:0;padding:0;display:inline" }
+          %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
+          %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
+        %dl#add-redirect-form.st.sl.sr.sb
+          %dt
+            %label{ :for => "redirect-table-detail-path" }
+              Old path
+              %span.note
+                Enter the old path you want redirected.
+            %br
+        %p.note
+          For example, if your old url was
+          %span
+            www.example.com/shirts
+          , you should enter
+          %span
+            \/shirts
+          below.
+        %dd
+          %input#redirect-table-detail-path.long{ :type => "text", :name => "redirect[path]" }
+        %dt
+          %label{ :for => "redirect-table-detail-target" }
+            New path
+            %span.note
+              Enter the new path you want to redirect to.
+          %br
+        %p.note
+          For example, if your new url is
+          %span
+            www.example.com/collections/shirts
+          , you should enter
+          %span
+            \/collections/shirts
+          below.
+        %dd
+          %input#redirect-table-detail-target.long{ :type => "text", :name => "redirect[target]" }
+        .st.sl.sr.sb.btn-divider
+          %input.btn{ :name => "commit", :type => "submit", :value => "Add URL redirect" }
+          or
+          %a{ :href => "#", :onclick => "Element.togglePair('redirect-table-detail', 'test-row'); return false;" }
+            Cancel
