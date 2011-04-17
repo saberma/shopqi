@@ -1,4 +1,6 @@
 Shopqi::Application.routes.draw do
+  resources :links
+
   scope "/admin" do
     resources :link_lists
   end

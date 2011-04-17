@@ -8,14 +8,14 @@
 =render :partial => 'new', :locals => { :link_list => link_list }
 #link-lists
   %h3.st.sb
-    Link Lists
+    链接列表
   %p.note.ssb
-    When you create a new link list, it will not show up automatically unless the theme you are using includes it.
+    当您添加一个新的链接列表，需要在外观主题中包含它才能显示出来
     %br
-    To get this link list to show up on your shop's pages you will need to modify your templates in the
+    要让这个链接列表显示在商店页面，请在
     %a{ :href => "/admin/themes/current" }
-      Template Editor
-    section.
+      模板编辑器
+    中修改模板.
   .section
     %ul#menus.nobull.st
       %li#link_list_1905262.links.toolbox.default-menu.link-list
@@ -25,16 +25,16 @@
           .section-header
             %p#actions_link_list_1905262.list-actions
               %a.editlist-action{ :href => "#", :onclick => "enterEditMode(1905262); return false;", :style => "padding-left: 14px;" }
-                Edit link list
+                修改链接列表
             %span{ :title => "handle: main-menu" }
-              Main Menu
+              主菜单
             %span.hint
-              This is a default link list and cannot be deleted.
+              这是默认链接列表，不能删除
           #default_header_link_list_1905262.link-header.st.sl.sr
             %span.sl
-              Name of link
+              链接名称
             %span.sl
-              Links to
+              链接路径
           %ul#default_link_list_1905262.nobull.sr.ssb
             %li#link_default_li_8402622.sl.link.odd
               %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
@@ -43,44 +43,6 @@
                   Home
               %span.link-url
                 \/
-            %li#link_default_li_8402652.sl.link.even
-              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-              %span.link-title
-                %a{ :href => "/pages/about-us" }
-                  About Us
-              %span.link-url
-                \/pages/about-us
-            %li#link_default_li_8402642.sl.link.odd
-              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-              %span.link-title
-                %a{ :href => "/blogs/news" }
-                  Blog
-              %span.link-url
-                \/blogs/news
-            %li#link_default_li_8402632.sl.link.even
-              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-              %span.link-title
-                %a{ :href => "/collections/all" }
-                  Catalog
-              %span.link-url
-                \/collections/all
-            %li#link_default_li_8435022.sl.link.odd
-              %img.image_handle.nsr{ :alt => "Drag_handle", :src => "/images/admin/icons/drag_handle.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-              %span.link-title
-                %a{ :href => "http://ziwee.cn" }
-                  test
-              %span.link-url
-                http://ziwee.cn
-        /
-          begin: add new Link
-        #add_form_link_container_link_list_1905262
-          #add_link_control_link_list_1905262.action-row
-            .action-link
-              %p{ :onclick => "Element.togglePair('add_link_form_link_list_1905262', 'add_link_control_link_list_1905262'); return false;" }
-                %a{ :href => "#" }
-                  %span.plus
-                    +
-                  Add link
           #add_link_form_link_list_1905262.link.btns{ :style => "display:none;" }
             %form{ "accept-charset" => "UTF-8", :action => "/admin/links/add_link/1905262", "data-remote" => "true", :method => "post" }
               %div{ :style => "margin:0;padding:0;display:inline" }
@@ -90,11 +52,6 @@
                 %span.add-link-header
                   Name of new link
                 %input#add_link_title_link_list_1905262.medium{ :name => "link[title]", :type => "text" }
-              .add-link-linksto.link-col
-                %span.add-link-header
-                  Links to
-                %select#add_link_type_link_list_1905262.selector{ :name => "link[link_type]" }
-                  %option{ :value => "blog" }
                     Blog
                   %option{ :value => "frontpage" }
                     Shop Frontpage
@@ -294,9 +251,9 @@
               %a.editlist-action{ :href => "#", :onclick => "enterEditMode(1905272); return false;", :style => "padding-left: 14px;" }
                 Edit link list
             %span{ :title => "handle: footer" }
-              Footer
+              底端链接
             %span.hint
-              This is a default link list and cannot be deleted.
+              这是默认链接列表，不能删除
           #default_header_link_list_1905272.link-header.st.sl.sr
             %span.sl
               Name of link
