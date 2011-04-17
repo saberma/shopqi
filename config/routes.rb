@@ -1,4 +1,6 @@
 Shopqi::Application.routes.draw do
+  namespace :admin do resources :link_lists end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
