@@ -1,62 +1,11 @@
 %h2#title
-  Shop Navigation
+  商店导航
 #action-links
   %ul
     %li#new-menu
       %a{ :href => "#", :onclick => "Element.toggle('add-menu'); return false;" }
-        Add link list
-%noscript
-  .announcement
-    %h4
-      Javascript disabled
-    %p
-      %strong
-        In order to use the Shopify admin interface you
-        %em
-          must enable javascript
-        in your browser
-    %p
-      Find out
-      %a{ :href => "http://www.enable-javascript.com/" }
-        how to enable javascript
-      \.
-#upgrade-ie6.announcement{ :style => "display:none;" }
-  %h4
-    Please upgrade your browser
-  %p
-    %strong
-      We are discontinuing support for
-      %em
-        IE6
-      \. To get the most out of Shopify, please upgrade to a modern web browser
-  %p
-    We recommend
-    %a{ :href => "http://www.google.com/chrome" }
-      Google Chrome
-    ,
-    %a{ :href => "http://www.getfirefox.com" }
-      Mozilla Firefox
-    or
-    %a{ :href => "http://www.apple.com/safari/download/" }
-      Safari
-    \.
-#add-menu.box2{ :style => "display:none" }
-  %form{ "accept-charset" => "UTF-8", :action => "/admin/links/add_list", "data-remote" => "true", :method => "post" }
-    %div{ :style => "margin:0;padding:0;display:inline" }
-      %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
-      %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
-    %h3.sb
-      Add a new link list
-    %p
-      %label{ :for => "list_title" }
-        Title
-    %p.ssb
-      %input#list_title.long{ :type => "text", :name => "title", :value => "" }
-    %p.btn-divider
-      %input.btn{ :name => "commit", :type => "submit", :value => "Add link list" }
-      or
-      %a{ :href => "#", :onclick => "Element.hide('add-menu'); return false;" }
-        Cancel
+        新增链接列表
+=render :partial => 'new'
 #link-lists
   %h3.st.sb
     Link Lists
