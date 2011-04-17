@@ -5,6 +5,7 @@ h2. ShoqQi
 h3. 安装
 
 为了便于安装，ShopQi的开发环境将基于Vagrant虚拟工具
+关于vagrant的安装使用可参考 "http://saberma.me/linux/2011/03/03/vagrant-virtual-develop-enviroment.html":http://saberma.me/linux/2011/03/03/vagrant-virtual-develop-enviroment.html
 
 h3. 安装VirtualBox
 
@@ -19,6 +20,12 @@ gem install vagrant --no-ri --no-rdoc
 h3. 下载ShopQi虚拟镜像文件
 
 下载镜像文件(584M): "http://u.115.com/file/f1e2b0818b":http://u.115.com/file/f1e2b0818b
+假设下载地址为 @~/vagrant-package-shopqi-new.box@
+下载完成后执行
+
+pre. 
+vagrant box add lucid32-shopqi-new ~/vagrant-package-shopqi-new.box
+
 虚拟机默认安装以下组件:
 
 # Ubuntu 10.04(32bit)

@@ -11,9 +11,10 @@
 development:
   adapter: postgresql
   encoding: unicode
+  host: localhost
   database: shopqi_development
   pool: 5
-  username: shopqi
+  username: postgres
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -37,15 +38,17 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
+  host: localhost
   database: shopqi_test
   pool: 5
-  username: shopqi
+  username: postgres
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
+  host: localhost
   database: shopqi_production
   pool: 5
-  username: shopqi
+  username: postgres
   password:

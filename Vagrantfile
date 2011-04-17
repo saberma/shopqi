@@ -1,7 +1,7 @@
 Vagrant::Config.run do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "lucid32"
+  config.vm.box = "lucid32-shopqi-new"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -23,8 +23,8 @@ Vagrant::Config.run do |config|
   # to this Vagrantfile), and adding some recipes and/or roles.
   #
   config.vm.provision :chef_solo do |chef|
-    chef.recipe_url = "https://dl.dropbox.com/u/19519145/shopqi/chef-solo.tar.gz"
-    #chef.cookbooks_path = "/home/saberma/Documents/chef-repo/cookbooks"
+    #chef.recipe_url = "https://dl.dropbox.com/u/19519145/shopqi/chef-solo.tar.gz"
+    chef.cookbooks_path = "/home/saberma/Documents/chef-repo/cookbooks"
     chef.add_recipe "develop"
   
     # You may also specify custom JSON attributes:
