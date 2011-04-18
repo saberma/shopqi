@@ -1,19 +1,21 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:06:16 GMT from
- * /home/saberma/Documents/shopqi/app/coffeescripts/views/link_lists/new.coffee
+/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 15:05:30 GMT from
+ * /vagrant/app/coffeescripts/views/link_lists/new.coffee
  */
 
 App.Views.LinkList.New = Backbone.View.extend({
+  el: '#add-menu',
   events: {
-    "submit form": "save"
+    "submit form": "save",
+    "click .cancel": "cancel"
   },
   initialize: function() {
-    return $('#add-menu').show();
+    return $(this.el).show();
   },
   save: function() {
     var self;
     self = this;
     return this.model.save({
-      title: this.$('[name=title]').val()
+      title: this.$('#link_list_title').val()
     }, function() {
       ({
         success: function(model, resp) {
@@ -29,5 +31,8 @@ App.Views.LinkList.New = Backbone.View.extend({
       });
       return false;
     });
+  },
+  cancel: function() {
+    return $(this.el).hide();
   }
 });

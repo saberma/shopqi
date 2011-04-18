@@ -1,5 +1,5 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:06:16 GMT from
- * /home/saberma/Documents/shopqi/app/coffeescripts/controllers/link_lists.coffee
+/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:48:58 GMT from
+ * /vagrant/app/coffeescripts/controllers/link_lists.coffee
  */
 
 App.Controllers.LinkLists = Backbone.Controller.extend({

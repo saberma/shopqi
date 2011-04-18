@@ -1,9 +1,10 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:06:16 GMT from
- * /home/saberma/Documents/shopqi/app/coffeescripts/models/link_list.coffee
+/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 15:10:04 GMT from
+ * /vagrant/app/coffeescripts/models/link_list.coffee
  */
 
 var LinkList;
 LinkList = Backbone.Model.extend({
+  name: 'link_list',
   url: function() {
     var base, _ref;
     base = 'link_lists';

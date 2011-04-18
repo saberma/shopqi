@@ -1,13 +1,16 @@
 App.Views.LinkList.New = Backbone.View.extend
+  el: '#add-menu'
+
   events:
     "submit form": "save"
+    "click .cancel": "cancel"
 
   initialize: () ->
-    $('#add-menu').show()
+    $(this.el).show()
 
   save: () ->
     self = this
-    this.model.save title: this.$('[name=title]').val(), ->
+    this.model.save title: this.$('#link_list_title').val(), ->
       success: (model, resp) ->
         self.model = model
         new App.Views.LinkList.Show(model: model)
@@ -15,3 +18,6 @@ App.Views.LinkList.New = Backbone.View.extend
       error: () ->
         new App.Views.Error()
       return false
+
+  cancel: () ->
+    $(this.el).hide()
