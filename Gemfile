@@ -50,11 +50,19 @@ group :development do
   gem "jquery-rails"
   gem "haml-rails"
   # 修改后台文件后，safari或chrome浏览器会自动刷新
-  gem "livereload"
+  # use the guard-livereload instead
+  #gem "livereload"
+  gem 'guard'
   #only on the linux platform install the gem
   if RUBY_PLATFORM =~ /linux/
     gem "rb-inotify"
+    #notification support
+    #gem 'libnotify'
+  elsif RUBY_PLATFORM =~ /darwin/
+    gem 'rb-fsevent'
+    gem 'growl'
   end
+  gem 'guard-livereload'
 
   # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'ruby-debug19'
