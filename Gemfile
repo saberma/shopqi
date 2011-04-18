@@ -55,9 +55,10 @@ group :development do
   gem 'guard'
   #only on the linux platform install the gem
   if RUBY_PLATFORM =~ /linux/
-    gem "rb-inotify"
+    #vagrant虚拟机没有安装桌面
+    #gem "rb-inotify"
     #notification support
-    gem 'libnotify'
+    #gem 'libnotify'
   elsif RUBY_PLATFORM =~ /darwin/
     gem 'rb-fsevent'
     gem 'growl'
