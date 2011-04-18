@@ -12,7 +12,7 @@ Barista.configure do |c|
   # Disable wrapping in a closure:
   # c.no_wrap = true
   # ... or ...
-  # c.no_wrap!
+  c.bare = true
   
   # Change the output root for a framework:
   
