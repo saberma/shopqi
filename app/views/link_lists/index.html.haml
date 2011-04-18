@@ -2,9 +2,7 @@
   商店导航
 #action-links
   %ul
-    %li#new-menu
-      %a{ :href => "#", :onclick => "Element.toggle('add-menu'); return false;" }
-        新增链接列表
+    %li#new-menu=link_to '新增链接列表', '#new'
 =render :partial => 'new', :locals => { :link_list => link_list }
 #link-lists
   %h3.st.sb
@@ -106,3 +104,14 @@
             or
             %a{ :href => "#", :onclick => "Element.togglePair('redirect-table-detail', 'test-row'); return false;" }
               Cancel
+%ul#show-menu(style='display: none')
+  %li.links.toolbox.default-menu.link-list(id='<%=id%>')
+    .section-header
+      %p.list-actions
+        %a.editlist-action{ :href => '#/link_lists/<%=id%>/edit', :style => "padding-left: 14px;" } 修改链接列表
+      %span{ :title => "handle: main-menu" } 主菜单
+      %span.hint 这是默认链接列表，不能删除
+    .link-header.st.sl.sr
+      %span.sl 链接名称
+      %span.sl 链接路径
+    %ul.nobull.sr.ssb

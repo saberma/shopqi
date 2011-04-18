@@ -31,6 +31,7 @@ module Shopqi
 
     # JavaScript files you want as :defaults (application.js is always included).
     config.action_view.javascript_expansions[:defaults] = %w()
+    config.action_view.javascript_expansions[:admin] = %w(jquery.min rails underscore-min backbone-min application)
 
 
     # Configure generators values. Many other options are available, be sure to check the documentation.
