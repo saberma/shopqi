@@ -86,6 +86,8 @@ GEM
       em-websocket (~> 0.2.0)
       guard (>= 0.2.2)
       json (~> 1.4.6)
+    guard-rspec (0.2.0)
+      guard (>= 0.2.2)
     haml (3.0.25)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -208,6 +210,7 @@ DEPENDENCIES
   growl
   guard
   guard-livereload
+  guard-rspec
   haml
   haml-rails
   httparty
