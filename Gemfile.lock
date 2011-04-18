@@ -178,6 +178,7 @@ GEM
       tilt (< 2.0, >= 1.2.2)
     spork (0.8.4)
     subexec (0.0.4)
+    therubyracer (0.8.1)
     thor (0.14.6)
     tilt (1.2.2)
     treetop (1.4.9)
@@ -224,3 +225,4 @@ DEPENDENCIES
   rspec-rails
   ruby-debug19
   spork
+  therubyracer
