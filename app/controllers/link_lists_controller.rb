@@ -8,4 +8,9 @@ class LinkListsController < ApplicationController
 
   def index
   end
+
+  def create
+    link_list = LinkList.create! params
+    render :json => link_list
+  end
 end
