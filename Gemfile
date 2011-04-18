@@ -57,12 +57,13 @@ group :development do
   if RUBY_PLATFORM =~ /linux/
     gem "rb-inotify"
     #notification support
-    #gem 'libnotify'
+    gem 'libnotify'
   elsif RUBY_PLATFORM =~ /darwin/
     gem 'rb-fsevent'
     gem 'growl'
   end
   gem 'guard-livereload'
+  gem 'guard-rspec'
 
   # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'ruby-debug19'
