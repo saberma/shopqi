@@ -2,6 +2,8 @@ class CreateLinkLists < ActiveRecord::Migration
   def self.up
     create_table :link_lists do |t|
       t.string :title
+      #用于模板中的Permalink/Handle
+      t.string :handle
 
       t.timestamps
     end
