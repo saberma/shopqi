@@ -1,0 +1,16 @@
+.clearfix {zoom: 1;  /* triggers hasLayout */ display: block;     /* resets display for IE/Win */}  
+
+      
+/*The frontpage mark made with the sugar video*/
+.frontpage-navigation ul {  margin-top:3px;}
+.frontpage-video h1 { margin-bottom:30px; margin-top:40px;}
+.roundedcorners-dark { display:none;  background: none; position:absolute; }
+.roundedcorners-green {  display:none;  background: none; position:absolute; }
+
+/* misc fixes*/
+.job-board ul li {zoom: 1;  display: block;}
+.content { }
+h1 { margin-top: -5px; }
+
+
+#masthead { z-index:999; position:relative;} /* zindex fix for the resources tab */
