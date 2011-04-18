@@ -1,8 +1,8 @@
 Shopqi::Application.routes.draw do
-  resources :links
+  resources :links, :only => [:create, :update, :sort]
 
   scope "/admin" do
-    resources :link_lists
+    resources :link_lists, :only => [:index, :create, :update]
   end
 
   # The priority is based upon order of creation:
