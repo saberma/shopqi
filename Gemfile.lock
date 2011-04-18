@@ -87,6 +87,9 @@ GEM
       json (~> 1.4.6)
     guard-rspec (0.2.0)
       guard (>= 0.2.2)
+    guard-spork (0.1.9)
+      guard (>= 0.2.2)
+      spork (>= 0.8.4)
     haml (3.0.25)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -209,6 +212,7 @@ DEPENDENCIES
   guard
   guard-livereload
   guard-rspec
+  guard-spork
   haml
   haml-rails
   httparty

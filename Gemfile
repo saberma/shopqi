@@ -66,6 +66,7 @@ group :development do
   end
   gem 'guard-livereload'
   gem 'guard-rspec'
+  gem 'guard-spork'
 
   # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'ruby-debug19'
