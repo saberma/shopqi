@@ -10,14 +10,16 @@ App.Views.LinkList.New = Backbone.View.extend
 
   save: () ->
     self = this
-    this.model.save title: this.$('#link_list_title').val(), ->
+    this.model.save {title: this.$('#link_list_title').val()}
       success: (model, resp) ->
-        self.model = model
-        new App.Views.LinkList.Show(model: model)
-        Backbone.history.saveLocation('link_lists/' + model.id)
+        $(self.el).hide()
+        $('#link_list_title').val ''
+        self.model.clear()
+        new App.Views.LinkList.Show model: model
+        Backbone.history.saveLocation "link_lists/#{model.id}"
       error: () ->
         new App.Views.Error()
-      return false
+    return false
 
   cancel: () ->
     $(this.el).hide()

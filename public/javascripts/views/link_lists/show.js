@@ -1,5 +1,5 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:06:16 GMT from
- * /home/saberma/Documents/shopqi/app/coffeescripts/views/link_lists/show.coffee
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 02:18:14 GMT from
+ * /vagrant/app/coffeescripts/views/link_lists/show.coffee
  */
 
 App.Views.LinkList.Show = Backbone.View.extend({
@@ -7,7 +7,9 @@ App.Views.LinkList.Show = Backbone.View.extend({
     return this.render();
   },
   render: function() {
-    $(this.el).html($('#show-menu').html());
+    var compiled;
+    compiled = _.template($('#show-menu').html());
+    $(this.el).html(compiled(this.model.toJSON()));
     return $('#menus').append(this.el);
   }
 });

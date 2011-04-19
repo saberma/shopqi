@@ -3,5 +3,6 @@ App.Views.LinkList.Show = Backbone.View.extend
     this.render()
 
   render: () ->
-    $(this.el).html($('#show-menu').html())
-    $('#menus').append(this.el)
+    compiled = _.template $('#show-menu').html()
+    $(this.el).html compiled this.model.toJSON()
+    $('#menus').append this.el

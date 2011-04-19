@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 15:05:30 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 02:30:43 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/new.coffee
  */
 
@@ -14,23 +14,23 @@ App.Views.LinkList.New = Backbone.View.extend({
   save: function() {
     var self;
     self = this;
-    return this.model.save({
+    this.model.save({
       title: this.$('#link_list_title').val()
-    }, function() {
-      ({
-        success: function(model, resp) {
-          self.model = model;
-          new App.Views.LinkList.Show({
-            model: model
-          });
-          return Backbone.history.saveLocation('link_lists/' + model.id);
-        },
-        error: function() {
-          return new App.Views.Error();
-        }
-      });
-      return false;
+    }, {
+      success: function(model, resp) {
+        $(self.el).hide();
+        $('#link_list_title').val('');
+        self.model.clear();
+        new App.Views.LinkList.Show({
+          model: model
+        });
+        return Backbone.history.saveLocation("link_lists/" + model.id);
+      },
+      error: function() {
+        return new App.Views.Error();
+      }
     });
+    return false;
   },
   cancel: function() {
     return $(this.el).hide();
