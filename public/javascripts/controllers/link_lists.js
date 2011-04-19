@@ -1,10 +1,10 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:48:58 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 03:25:43 GMT from
  * /vagrant/app/coffeescripts/controllers/link_lists.coffee
  */
 
 App.Controllers.LinkLists = Backbone.Controller.extend({
   routes: {
-    "link_lists/:id": "edit",
+    "link_lists/:id/edit": "edit",
     "": "index",
     "new": "newOne"
   },
@@ -35,8 +35,6 @@ App.Controllers.LinkLists = Backbone.Controller.extend({
     });
   },
   newOne: function() {
-    return new App.Views.LinkList.New({
-      model: new LinkList()
-    });
+    return new App.Views.LinkList.New;
   }
 });

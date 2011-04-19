@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 02:30:43 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 03:03:48 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/new.coffee
  */
 
@@ -9,7 +9,9 @@ App.Views.LinkList.New = Backbone.View.extend({
     "click .cancel": "cancel"
   },
   initialize: function() {
-    return $(this.el).show();
+    this.model = new LinkList;
+    $(this.el).show();
+    return $('#link_list_title').focus();
   },
   save: function() {
     var self;
@@ -20,7 +22,6 @@ App.Views.LinkList.New = Backbone.View.extend({
       success: function(model, resp) {
         $(self.el).hide();
         $('#link_list_title').val('');
-        self.model.clear();
         new App.Views.LinkList.Show({
           model: model
         });

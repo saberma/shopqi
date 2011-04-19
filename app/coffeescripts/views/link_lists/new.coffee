@@ -6,7 +6,9 @@ App.Views.LinkList.New = Backbone.View.extend
     "click .cancel": "cancel"
 
   initialize: () ->
+    this.model = new LinkList
     $(this.el).show()
+    $('#link_list_title').focus()
 
   save: () ->
     self = this
@@ -14,7 +16,6 @@ App.Views.LinkList.New = Backbone.View.extend
       success: (model, resp) ->
         $(self.el).hide()
         $('#link_list_title').val ''
-        self.model.clear()
         new App.Views.LinkList.Show model: model
         Backbone.history.saveLocation "link_lists/#{model.id}"
       error: () ->

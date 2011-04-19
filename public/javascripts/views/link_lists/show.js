@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 02:18:14 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 03:46:03 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/show.coffee
  */
 
@@ -7,9 +7,7 @@ App.Views.LinkList.Show = Backbone.View.extend({
     return this.render();
   },
   render: function() {
-    var compiled;
-    compiled = _.template($('#show-menu').html());
-    $(this.el).html(compiled(this.model.toJSON()));
+    $(this.el).html($('#show-menu').tmpl(this.model.attributes));
     return $('#menus').append(this.el);
   }
 });

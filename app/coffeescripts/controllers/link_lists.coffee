@@ -1,6 +1,6 @@
 App.Controllers.LinkLists = Backbone.Controller.extend
   routes:
-    "link_lists/:id":           "edit"
+    "link_lists/:id/edit":           "edit"
     "":                         "index"
     "new":                      "newOne"
 
@@ -24,4 +24,4 @@ App.Controllers.LinkLists = Backbone.Controller.extend
       #  new Error(message: "加载记录时发生错误.")
 
   newOne: () ->
-    new App.Views.LinkList.New(model: new LinkList())
+    new App.Views.LinkList.New
