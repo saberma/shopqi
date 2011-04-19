@@ -16,26 +16,6 @@
     中修改模板.
   .section
     %ul#menus.nobull.st
-      %li#link_list_1905262.links.toolbox.default-menu.link-list
-        / begin: default Link List items
-        #default_container_link_list_1905262
-          .section-header
-            %p#actions_link_list_1905262.list-actions
-              %a.editlist-action{ :href => "#", :onclick => "enterEditMode(1905262); return false;", :style => "padding-left: 14px;" }
-                修改链接列表
-            %span{ :title => "handle: main-menu" }
-              主菜单
-            %span.hint
-              这是默认链接列表，不能删除
-          #default_header_link_list_1905262.link-header.st.sl.sr
-            %span.sl
-              链接名称
-            %span.sl
-              链接路径
-          %ul#default_link_list_1905262.nobull.sr.ssb
-            = render :partial => "links/link", :collection => []
-          /= render :partial => "links/new", :locals => { :link => link, :link_list => link_list, :link_types => link_types }
-        /= render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }
 -#
   #url-redirect
     %h3.st.sb
@@ -105,7 +85,8 @@
             %a{ :href => "#", :onclick => "Element.togglePair('redirect-table-detail', 'test-row'); return false;" }
               Cancel
 %script(id="show-menu" type="text/x-jquery-tmpl")
-  %li.links.toolbox.default-menu.link-list(id='link_list/${id}')
+  / begin: default Link List items
+  %div(id="default_container_link_list_${id}")
     .section-header
       %p.list-actions
         %a.editlist-action{ :href => '#/link_lists/${id}/edit', :style => "padding-left: 14px;" } 修改链接列表
@@ -115,3 +96,6 @@
       %span.sl 链接名称
       %span.sl 链接路径
     %ul.nobull.sr.ssb
+      -#= render :partial => "links/link", :collection => []
+  -#= render :partial => "links/new", :locals => { :link => link, :link_list => link_list, :link_types => link_types }
+  = render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }

@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 03:03:48 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 13:10:46 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/new.coffee
  */
 
@@ -28,7 +28,7 @@ App.Views.LinkList.New = Backbone.View.extend({
         return Backbone.history.saveLocation("link_lists/" + model.id);
       },
       error: function() {
-        return new App.Views.Error();
+        return new App.Views.Error;
       }
     });
     return false;

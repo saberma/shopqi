@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:08:21 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 13:10:46 GMT from
  * /vagrant/app/coffeescripts/application.coffee
  */
 
@@ -8,8 +8,9 @@ App = {
     LinkList: {}
   },
   Controllers: {},
+  Collections: {},
   init: function() {
-    new App.Controllers.LinkLists();
+    new App.Controllers.LinkLists;
     return Backbone.history.start();
   }
 };

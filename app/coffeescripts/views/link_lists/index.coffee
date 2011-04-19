@@ -1,8 +1,7 @@
 App.Views.LinkList.Index = Backbone.View.extend
-  initialize: () ->
-    this.link_lists = this.options.link_lists
+  initialize: ->
     this.render()
 
-  render: () ->
-    _(this.link_lists).each (model) ->
+  render: ->
+    _(this.collection.models).each (model) ->
       new App.Views.LinkList.Show model: model
