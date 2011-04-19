@@ -1,5 +1,5 @@
-/* DO NOT MODIFY. This file was compiled Mon, 18 Apr 2011 14:06:16 GMT from
- * /home/saberma/Documents/shopqi/app/coffeescripts/views/link_lists/index.coffee
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 09:31:22 GMT from
+ * /vagrant/app/coffeescripts/views/link_lists/index.coffee
  */
 
 App.Views.LinkList.Index = Backbone.View.extend({
@@ -7,5 +7,12 @@ App.Views.LinkList.Index = Backbone.View.extend({
     this.link_lists = this.options.link_lists;
     return this.render();
   },
-  render: function() {}
+  render: function() {
+    return _(this.link_lists).each(function(model) {
+      log(model);
+      return new App.Views.LinkList.Show({
+        model: model
+      });
+    });
+  }
 });

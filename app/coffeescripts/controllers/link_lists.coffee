@@ -15,7 +15,7 @@ App.Controllers.LinkLists = Backbone.Controller.extend
       #  window.location.hash = '#'
 
   index: () ->
-    $.getJSON '/link_lists', (data) ->
+    $.getJSON '/admin/link_lists', (data) ->
       if data
         link_lists = _(data).map (i) ->
           return new LinkList(i)

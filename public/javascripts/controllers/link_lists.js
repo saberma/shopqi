@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 03:25:43 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 09:19:35 GMT from
  * /vagrant/app/coffeescripts/controllers/link_lists.coffee
  */
 
@@ -22,7 +22,7 @@ App.Controllers.LinkLists = Backbone.Controller.extend({
     });
   },
   index: function() {
-    return $.getJSON('/link_lists', function(data) {
+    return $.getJSON('/admin/link_lists', function(data) {
       var link_lists;
       if (data) {
         link_lists = _(data).map(function(i) {
