@@ -8,15 +8,15 @@
   =form_for link do
     .add-link-title.link-col
       %span.add-link-header 新链接的名称
-      %input.medium{ :name => "link[title]", :type => "text" }
-    .add-link-title.link-col
+      %input.medium(name="link[title]" type="text")
+    .add-link-linksto.link-col
       %span.add-link-header 链接至
       %select.selector(name="link[link_type]")
         =options_for_select link_types.map{|t| [t.name, t.code]}
-      %select.subject{ :name => "link[subject_id]" }
-      %input.long.subject_http.linkform-hint{ "data-hint" => "http://shopqi.com", :originalname => "link[subject]", :type => "text" }
-      %input.medium.subject_params.linkform-hint{ "data-hint" => "使用标记过滤商品(以逗号,分隔)", :originalname => "link[subject_params]", :type => "text" }
+      %select.subject(name="link[subject_id]" style="display:none")
+      %input.long.subject_http.linkform-hint(data-hint="http://shopqi.com" originalname="link[subject]" type="text")
+      %input.medium.subject_params.linkform-hint(data-hint="使用标记过滤商品(以逗号,分隔)" originalname="link[subject_params]" type="text" style="display:none;")
     .sl.sr.sb.btn-divider
-      %input.btn{ :name => "commit", :type => "submit", :value => "添加链接" }
-      or
-      %a.cancel{ :href => "#" } 取消
+      %input.btn(name="commit" type="submit" value="添加链接")
+      或者
+      %a.cancel(href="#") 取消

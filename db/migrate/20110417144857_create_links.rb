@@ -1,3 +1,4 @@
+# encoding: utf-8
 class CreateLinks < ActiveRecord::Migration
   def self.up
     create_table :links do |t|
@@ -6,6 +7,7 @@ class CreateLinks < ActiveRecord::Migration
       t.string :subject_id
       t.string :subject_params
       t.string :subject
+      t.integer :link_list_id, :comment => '关联的链接列表id'
 
       t.timestamps
     end
