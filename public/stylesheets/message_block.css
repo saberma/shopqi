@@ -1,0 +1,34 @@
+.message_block {
+  clear: both;
+  margin: 12px 0;
+}
+
+.message_block ul {
+  border-bottom: 1px solid #ecd757;
+  border-top: 1px solid #ecd757;
+  list-style: none;
+  padding: 10px;
+}
+.message_block ul li {
+  margin-left: 3em;
+}
+
+.message_block ul.error {
+  background: #fcf6d0 url(../../images/message_block/error.gif) 16px 50% no-repeat;
+}
+
+.message_block ul.info {
+  background: #fcf6d0 url(../../images/message_block/info.gif) 16px 50% no-repeat;
+}
+
+.message_block ul.notice {
+  background: #fcf6d0 url(../../images/message_block/notice.gif) 16px 50% no-repeat;
+}
+
+.message_block ul.confirm {
+  background: #fcf6d0 url(../../images/message_block/confirmation.gif) 16px 50% no-repeat;
+}
+
+.message_block ul.warn {
+  background: #fcf6d0 url(../../images/message_block/warn.gif) 1em 50% no-repeat;
+}

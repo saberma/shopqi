@@ -1,0 +1,83 @@
+!!!
+%html{:lang => "en", :style => "zoom: 100%; ", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "", :name => "keywords"}/
+    %meta{:content => "", :name => "description"}/
+    %title Shopify — Signup
+    = stylesheet_link_tag "master","signup","message_block"
+    /[if IE 6]
+      = stylesheet_link_tag "ie6"
+    /[if IE 7]
+      = stylesheet_link_tag "ie6"
+    /[if IE]
+      = stylesheet_link_tag "ie-signup"      
+  %body
+    #wrapper
+      #masthead
+        .content
+          %a.logo-shopify{:href => "http://www.shopify.com/"} Shopify
+          %ul#nav-primary
+            %li
+              %a{:href => "http://www.shopify.com/tour/"} Feature Tour
+            %li
+              %a{:href => "http://www.shopify.com/examples/"} Examples
+            %li
+              %a{:href => "http://www.shopify.com/faq/"} FAQ
+            %li.current
+              %a{:href => "https://www.shopify.com/signup/"} Pricing &amp; Signup
+            %li.sub-nav
+              %ul.utilities
+                %li.megadropdown
+                  %a{:href => "https://www.shopify.com/services/signup/new/basic#"} Resources
+                  %ul
+                    %li
+                      %a{:href => "http://support.myshopify.com/", :title => "Welcome - Shopify Support"}
+                        %strong> Support
+                        Talk to Shopify Support
+                    %li
+                      %a{:href => "http://wiki.shopify.com/", :title => "Main Page - Shopify Wiki"}
+                        %strong> Documentation
+                        Learn about Shopify
+                    %li
+                      %a{:href => "http://forums.shopify.com/", :title => "Shopify Community"}
+                        %strong> Forums
+                        The Shopify community
+                    %li
+                      %a{:href => "http://apps.shopify.com/", :title => "Shopify Application Store"}
+                        %strong> Apps
+                        Apps for your shop
+                    %li
+                      %a{:href => "http://themes.shopify.com/", :title => "Shopify Theme Store"}
+                        %strong> Themes
+                        Themes for your shop
+                %li.last
+                  %a{:href => "http://www.shopify.com/login/"} Login
+      =yield
+    #footer
+      #footer-wrapper
+        .content
+          .col-3
+            %h3 Features
+            %ul
+              %li
+                %a{:href => "#"} Overview
+          .col-3
+            %h3 Resources
+            %ul
+              %li
+                %a{:href => "#"} Shopify Wiki
+          .col-3
+            %h3 Shopify
+            %ul
+              %li
+                %a{:href => "http://blog.shopify.com/"} Blog
+          .col-3.contact-us.last
+            %h3 Contact us
+            %ul
+              %li
+                %img{:alt => "Phone16", :height => "12", :src => "./Shopify — Signup_files/phone16.gif", :width => "12"}/
+                1.888.746.7439
+        #copyright.center.clear
+          %p © 2006-2011 Jaded Pixel Technologies Inc. | Shopify - A shop in minutes, a business for life.
+          %p *Shopify is a registered trademark of Jaded Pixel Technologies Inc.
