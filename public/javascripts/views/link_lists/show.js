@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 09:10:25 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 12:04:32 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/show.coffee
  */
 
@@ -25,7 +25,8 @@ App.Views.LinkList.Show = Backbone.View.extend({
       this.model.destroy({
         success: function(model, response) {
           App.link_lists.remove(self.model);
-          return self.remove();
+          self.remove();
+          return msg('\u5220\u9664\u6210\u529F\u0021');
         }
       });
     }

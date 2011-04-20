@@ -24,4 +24,6 @@ App.Views.LinkList.Show = Backbone.View.extend
         success: (model, response) ->
           App.link_lists.remove self.model
           self.remove()
+          #删除成功!
+          msg '\u5220\u9664\u6210\u529F\u0021'
     return false

@@ -11,6 +11,8 @@ App.Views.LinkList.Edit = Backbone.View.extend
     self = this
     this.model.save {title: this.$("input[name='link_list[title]']").val()}
       success: (model, resp) ->
+        #修改成功!
+        msg '\u4FEE\u6539\u6210\u529F\u0021'
         $(self.el).hide()
         $("#default_container_link_list_#{model.id}").show()
         Backbone.history.saveLocation "link_lists/#{model.id}"

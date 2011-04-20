@@ -6,4 +6,7 @@ window.log = function(){
 };
 (function(b){function c(){}for(var d="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),a;a=d.pop();)b[a]=b[a]||c})(window.console=window.console||{});
 
-
+//转码http://0xcc.net/jsescape
+window.msg = function(text){
+  $('#flashnotice').html(text).fadeIn(100).delay(2000).fadeOut(500)
+}
