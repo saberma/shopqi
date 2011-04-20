@@ -2,4 +2,32 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 cn:
-  hello: "Hello world"
+  activerecord:
+    models:
+      user: 用户
+      shop: 商店
+    attributes:
+      user:
+        email: 邮箱
+        password: 密码
+        shop_name: 商店名
+        shop_permanent_domain: 二级域名
+
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 不能为空
+              taken: 已被占用
+            shop_name:
+              blank: 不能为空
+            shop_permanent_domain:
+              blank: 不能为空
+              too_short: 长度太短
+              too_long: 长度太长
+              invalid: 格式不正确
+            password:
+              blank: 不能为空
+              confirmation: 和确认密码需一致
+

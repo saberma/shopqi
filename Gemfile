@@ -8,6 +8,8 @@ gem 'pg'
 ##### 实体相关 #####
 gem 'auto_migrations'
 gem 'devise'
+
+
 # 用于保存配置型记录
 gem 'active_hash'
 # 分页
@@ -18,6 +20,11 @@ gem 'rack-cache', :require => 'rack/cache'
 #模板语言
 gem 'liquid'
 gem "carrierwave"
+
+# 将current_user设置至线程中                                                                                                                   
+gem 'sentient_user'
+#用于显示错误信息
+gem 'message_block'
 
 # 调用参数说明:http://www.imagemagick.org/Usage/
 gem "mini_magick"

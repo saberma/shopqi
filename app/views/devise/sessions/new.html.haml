@@ -1,0 +1,43 @@
+-unless Subdomain.matches?(request)
+  #content-top
+    #content-bottom
+      #content
+        #main
+          %h3 登录
+          = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+            =f.semantic_errors :email, :password, :id => :error
+            =f.inputs do
+              =f.input :email, :hint => '用户名即为注册时填写的Email地址', :required => false
+              =f.input :password, :hint => false, :required => false
+            %p{:style => 'margin-bottom:20px'}
+              =check_box_tag :remember_me, 1, false, :id => :user_remember_me, :style => 'width:20px; margin-left:25%;'
+              = f.label :remember_me, :style => 'display:inline'
+            =f.buttons do
+              =f.commit_button '登录'
+          = render :partial => "devise/shared/links"
+
+-else
+  #page
+    #header
+      #container
+        #branding
+    #content
+      .container
+        -semantic_form_for resource,:as => resource_name,:url => session_path(resource_name) do |f|
+          .header.field
+            %h1 Login to ShopQi
+          .field
+            =f.label :email
+            =f.text_field :email
+          .field
+            =f.label :password
+            =f.password_field :password
+          .field
+            =submit_tag "登录", :class=>"green_button"
+        #footer
+          %ul
+            %li
+              %a{:href=>"http://www.shopqi.com/"}
+                主页
+            %li
+              = link_to "忘记密码", new_password_path(resource_name)
