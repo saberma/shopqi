@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 02:23:01 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 04:36:57 GMT from
  * /vagrant/app/coffeescripts/controllers/link_lists.coffee
  */
 
@@ -21,13 +21,8 @@ App.Controllers.LinkLists = Backbone.Controller.extend({
     }
   },
   index: function() {
-    App.link_lists = new App.Collections.LinkLists;
-    return App.link_lists.fetch({
-      success: function() {
-        return new App.Views.LinkList.Index({
-          collection: App.link_lists
-        });
-      }
+    return new App.Views.LinkList.Index({
+      collection: App.link_lists
     });
   },
   newOne: function() {

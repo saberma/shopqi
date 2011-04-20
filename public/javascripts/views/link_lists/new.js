@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 02:32:26 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 04:48:42 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/new.coffee
  */
 
@@ -14,22 +14,8 @@ App.Views.LinkList.New = Backbone.View.extend({
     return $('#link_list_title').focus();
   },
   save: function() {
-    var self;
-    self = this;
-    this.model.save({
+    App.link_lists.create({
       title: this.$("input[name='link_list[title]']").val()
-    }, {
-      success: function(model, resp) {
-        $(self.el).hide();
-        self.$("input[name='link_list[title]']").val('');
-        new App.Views.LinkList.Show({
-          model: model
-        });
-        return Backbone.history.saveLocation("link_lists/" + model.id);
-      },
-      error: function() {
-        return new App.Views.Error;
-      }
     });
     return false;
   },

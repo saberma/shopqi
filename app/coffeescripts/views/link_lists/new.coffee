@@ -11,15 +11,7 @@ App.Views.LinkList.New = Backbone.View.extend
     $('#link_list_title').focus()
 
   save: ->
-    self = this
-    this.model.save {title: this.$("input[name='link_list[title]']").val()}
-      success: (model, resp) ->
-        $(self.el).hide()
-        self.$("input[name='link_list[title]']").val ''
-        new App.Views.LinkList.Show model: model
-        Backbone.history.saveLocation "link_lists/#{model.id}"
-      error: () ->
-        new App.Views.Error
+    App.link_lists.create title: this.$("input[name='link_list[title]']").val()
     return false
 
   cancel: ->

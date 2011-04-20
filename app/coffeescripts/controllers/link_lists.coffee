@@ -14,12 +14,7 @@ App.Controllers.LinkLists = Backbone.Controller.extend
         el: $("#edit_form_link_container_link_list_#{model.id}")
 
   index: ->
-    App.link_lists = new App.Collections.LinkLists
-    App.link_lists.fetch
-      success: ->
-        new App.Views.LinkList.Index collection: App.link_lists
-      #error: ->
-      #  new Error message: "加载列表时发生错误."
+    new App.Views.LinkList.Index collection: App.link_lists
 
   newOne: ->
     new App.Views.LinkList.New

@@ -4,7 +4,7 @@
   .link-list-edit-header
     %dl.padding.nst.nsb.nsl.nsr
       %dt.nst 名称
-      %dd=f.text_field :title, :html => {:class => "bit sb"}
+      %dd=f.text_field :title, :value => '${title}', :html => {:class => "bit sb"}
       %dt
         持久/处理
         %span.note

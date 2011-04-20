@@ -101,3 +101,8 @@
   %div(id="edit_form_link_container_link_list_${id}" style="display:none;")
 %script(id="edit-menu" type="text/x-jquery-tmpl")
   = render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }
+
+:javascript
+  App.link_lists = new App.Collections.LinkLists();
+  //根据backbone文档，使用refresh方法进行初始化(而非fetch)，避免数据未加载完成，导致类似#linklists/1路由失效
+  App.link_lists.refresh(#{link_lists.to_json});

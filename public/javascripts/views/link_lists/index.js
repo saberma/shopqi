@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 13:09:39 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 04:36:57 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/index.coffee
  */
 
