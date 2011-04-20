@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 07:45:12 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 08:21:06 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/edit.coffee
  */
 
@@ -34,6 +34,7 @@ App.Views.LinkList.Edit = Backbone.View.extend({
     return $("#default_container_link_list_" + this.model.id).hide();
   },
   cancel: function() {
-    return $(this.el).hide();
+    $(this.el).hide();
+    return $("#default_container_link_list_" + this.model.id).show();
   }
 });

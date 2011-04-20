@@ -26,3 +26,4 @@ App.Views.LinkList.Edit = Backbone.View.extend
 
   cancel: ->
     $(this.el).hide()
+    $("#default_container_link_list_#{this.model.id}").show()
