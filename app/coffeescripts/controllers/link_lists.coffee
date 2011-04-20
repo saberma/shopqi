@@ -5,6 +5,7 @@ App.Controllers.LinkLists = Backbone.Controller.extend
   routes:
     "link_lists/:id/edit":      "edit"
     "new":                      "newOne"
+    "link_lists/:id/links/new": "newLink"
 
   edit: (id) ->
     model = App.link_lists.get(id)
@@ -18,3 +19,6 @@ App.Controllers.LinkLists = Backbone.Controller.extend
 
   newOne: ->
     new App.Views.LinkList.New
+
+  newLink: (id) ->
+    new App.Views.Link.New el: "#add_link_form_link_list_#{id}", link_id: id

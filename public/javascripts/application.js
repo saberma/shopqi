@@ -1,11 +1,12 @@
-/* DO NOT MODIFY. This file was compiled Tue, 19 Apr 2011 13:10:46 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 13:08:15 GMT from
  * /vagrant/app/coffeescripts/application.coffee
  */
 
 var App;
 App = {
   Views: {
-    LinkList: {}
+    LinkList: {},
+    Link: {}
   },
   Controllers: {},
   Collections: {},

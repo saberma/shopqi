@@ -19,5 +19,6 @@
   %ul.nobull.sr.ssb
     -#= render :partial => "links/link", :collection => []
   {{/if}}
--#= render :partial => "links/new", :locals => { :link => link, :link_list => link_list, :link_types => link_types }
+%div(id="add_form_link_container_link_list_${id}")
+  = render :partial => "links/new", :locals => { :link => link, :link_list => link_list, :link_types => link_types }
 %div(id="edit_form_link_container_link_list_${id}" style="display:none;")
