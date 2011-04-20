@@ -7,20 +7,17 @@ App.Controllers.LinkLists = Backbone.Controller.extend
     "new":                      "newOne"
 
   edit: (id) ->
-    model = new LinkList(id: id)
-    model.fetch
-      success: (model, resp) ->
-        new App.Views.LinkList.Edit model: model
-      #therubyracer bug https://github.com/cowboyd/therubyracer/issues/61#comment_807995
-      #error: () ->
-      #  new Error(message: '找不到相应的记录.')
-      #  window.location.hash = '#'
+    model = App.link_lists.get(id)
+    if model
+      new App.Views.LinkList.Edit
+        model: model
+        el: $("#edit_form_link_container_link_list_#{model.id}")
 
   index: ->
-    link_lists = new App.Collections.LinkLists
-    link_lists.fetch
+    App.link_lists = new App.Collections.LinkLists
+    App.link_lists.fetch
       success: ->
-        new App.Views.LinkList.Index collection: link_lists
+        new App.Views.LinkList.Index collection: App.link_lists
       #error: ->
       #  new Error message: "加载列表时发生错误."
 

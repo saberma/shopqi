@@ -17,4 +17,9 @@ class LinkListsController < ApplicationController
     link_list = LinkList.create! params[:link_list]
     render :json => link_list
   end
+
+  def update
+    link_list.save
+    render :json => link_list
+  end
 end

@@ -1,17 +1,14 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 02:32:26 GMT from
- * /vagrant/app/coffeescripts/views/link_lists/new.coffee
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 02:45:12 GMT from
+ * /vagrant/app/coffeescripts/views/link_lists/edit.coffee
  */
 
-App.Views.LinkList.New = Backbone.View.extend({
-  el: '#add-menu',
+App.Views.LinkList.Edit = Backbone.View.extend({
   events: {
     "submit form": "save",
     "click .cancel": "cancel"
   },
   initialize: function() {
-    this.model = new LinkList;
-    $(this.el).show();
-    return $('#link_list_title').focus();
+    return this.render();
   },
   save: function() {
     var self;
@@ -21,10 +18,6 @@ App.Views.LinkList.New = Backbone.View.extend({
     }, {
       success: function(model, resp) {
         $(self.el).hide();
-        self.$("input[name='link_list[title]']").val('');
-        new App.Views.LinkList.Show({
-          model: model
-        });
         return Backbone.history.saveLocation("link_lists/" + model.id);
       },
       error: function() {
@@ -32,6 +25,10 @@ App.Views.LinkList.New = Backbone.View.extend({
       }
     });
     return false;
+  },
+  render: function() {
+    $(this.el).html($('#edit-menu').tmpl(this.model.attributes));
+    return $(this.el).show();
   },
   cancel: function() {
     return $(this.el).hide();
