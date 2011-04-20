@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 07:45:12 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 12:07:13 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/edit.coffee
  */
 
@@ -17,6 +17,7 @@ App.Views.LinkList.Edit = Backbone.View.extend({
       title: this.$("input[name='link_list[title]']").val()
     }, {
       success: function(model, resp) {
+        msg('\u4FEE\u6539\u6210\u529F\u0021');
         $(self.el).hide();
         $("#default_container_link_list_" + model.id).show();
         return Backbone.history.saveLocation("link_lists/" + model.id);
@@ -34,6 +35,7 @@ App.Views.LinkList.Edit = Backbone.View.extend({
     return $("#default_container_link_list_" + this.model.id).hide();
   },
   cancel: function() {
-    return $(this.el).hide();
+    $(this.el).hide();
+    return $("#default_container_link_list_" + this.model.id).show();
   }
 });

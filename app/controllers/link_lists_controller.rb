@@ -14,7 +14,12 @@ class LinkListsController < ApplicationController
   end
 
   def create
-    link_list = LinkList.create! params[:link_list]
+    link_list.save
+    render :json => link_list
+  end
+
+  def destroy
+    link_list.destroy
     render :json => link_list
   end
 

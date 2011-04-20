@@ -16,3 +16,4 @@ App.Views.LinkList.New = Backbone.View.extend
 
   cancel: ->
     $(this.el).hide()
+    $('#link_list_title').blur()

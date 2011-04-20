@@ -7,6 +7,8 @@ App.Collections.LinkLists = Backbone.Collection.extend
     this.bind 'add', this.addOne
 
   addOne: (model, collection) ->
+    #新增成功!
+    msg '\u65B0\u589E\u6210\u529F\u0021'
     $('#add-menu').hide()
     $('#link_list_title').val ''
     new App.Views.LinkList.Show model: model
