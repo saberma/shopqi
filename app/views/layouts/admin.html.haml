@@ -10,7 +10,7 @@
     = stylesheet_link_tag 'print', :media => "print"
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
-    = javascript_include_tag :defaults
+    = javascript_include_tag :admin, 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
     = csrf_meta_tag
   %body
     /
@@ -55,26 +55,19 @@
             %a{ :href => "/admin" }
               %img{ :alt => "Home", :src => "/images/admin/icons/home.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
           %li
-            %a{ :href => "/admin/orders" }
-              Orders
+            %a{ :href => "/admin/orders" } 订单
           %li
-            %a{ :href => "/admin/customers" }
-              Customers
+            %a{ :href => "/admin/customers" } 会员
           %li
-            %a{ :href => "/admin/products" }
-              Products
+            %a{ :href => "/admin/products" } 产品
           %li
-            %a{ :href => "/admin/custom_collections" }
-              Collections
+            %a{ :href => "/admin/custom_collections" } 集合
           %li
-            %a{ :href => "/admin/pages" }
-              Blogs &amp; Pages
+            %a{ :href => "/admin/pages" } 文章 &amp; 页面
           %li
-            %a#current{ :href => "/admin/links" }
-              Navigation
+            %a#current{ :href => "/admin/link_lists" } 链接列表
           %li
-            %a{ :href => "/admin/marketing" }
-              Marketing
+            %a{ :href => "/admin/marketing" } 市场营销
       /
         end div.nav
     /

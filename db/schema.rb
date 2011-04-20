@@ -14,6 +14,8 @@ ActiveRecord::Schema.define(:version => 20110420064741) do
 
   create_table "link_lists", :force => true do |t|
     t.string   "title"
+    t.string   "handle"
+    t.boolean  "system_default", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

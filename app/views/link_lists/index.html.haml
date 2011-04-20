@@ -2,107 +2,24 @@
   商店导航
 #action-links
   %ul
-    %li#new-menu
-      %a{ :href => "#", :onclick => "Element.toggle('add-menu'); return false;" }
-        新增链接列表
+    %li#new-menu=link_to '新增链接列表', '#new'
 =render :partial => 'new', :locals => { :link_list => link_list }
 #link-lists
-  %h3.st.sb
-    链接列表
+  %h3.st.sb 链接列表
   %p.note.ssb
     当您添加一个新的链接列表，需要在外观主题中包含它才能显示出来
     %br
     要让这个链接列表显示在商店页面，请在
-    %a{ :href => "/admin/themes/current" }
-      模板编辑器
+    %a{ :href => "/admin/themes/current" } 模板编辑器
     中修改模板.
   .section
     %ul#menus.nobull.st
-      %li#link_list_1905262.links.toolbox.default-menu.link-list
-        / begin: default Link List items
-        #default_container_link_list_1905262
-          .section-header
-            %p#actions_link_list_1905262.list-actions
-              %a.editlist-action{ :href => "#", :onclick => "enterEditMode(1905262); return false;", :style => "padding-left: 14px;" }
-                修改链接列表
-            %span{ :title => "handle: main-menu" }
-              主菜单
-            %span.hint
-              这是默认链接列表，不能删除
-          #default_header_link_list_1905262.link-header.st.sl.sr
-            %span.sl
-              链接名称
-            %span.sl
-              链接路径
-          %ul#default_link_list_1905262.nobull.sr.ssb
-            = render :partial => "links/link", :collection => []
-          /= render :partial => "links/new", :locals => { :link => link, :link_list => link_list, :link_types => link_types }
-        /= render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }
--#
-  #url-redirect
-    %h3.st.sb
-      URL Redirects
-    %p.note.ssb
-      URL redirects are used to prevent old bookmarks and links to your previous site from breaking. This will automatically forward the link to your target location.
-      %br
-      Note that the following paths cannot be used: &ldquo;/application&rdquo;, &ldquo;/cart&rdquo;, &ldquo;/carts&rdquo;, &ldquo;/orders&rdquo;, and &ldquo;/shop&rdquo;.
-    .section
-      #redirects-header.section-header.link-header.redirect-header-add.nobull.st
-        %span
-          Old path
-        %span
-          New path
-      %ul#redirects.nobull.sr.ssb.sl
-      #no-redirect-hint.hint.padding
-        No URL redirects added yet.
-      #btm-nav.act-screen
-        #pagination
-      #test-row.action-row
-        .action-link
-          %a{ :href => "#", :onclick => "Element.togglePair('redirect-table-detail', 'test-row'); return false;" }
-            %span.plus
-              +
-            Add URL redirect
-      #redirect-table-detail.btns{ :style => "display:none;" }
-        %form{ "accept-charset" => "UTF-8", :action => "/admin/redirects", "data-remote" => "true", :method => "post" }
-          %div{ :style => "margin:0;padding:0;display:inline" }
-            %input{ :name => "utf8", :type => "hidden", :value => "&#x2713;" }
-            %input{ :name => "authenticity_token", :type => "hidden", :value => "q+mFURLfs7+M4sgHJyCH+7FwocVPKvMsmSxB2KYw7K8=" }
-          %dl#add-redirect-form.st.sl.sr.sb
-            %dt
-              %label{ :for => "redirect-table-detail-path" }
-                Old path
-                %span.note
-                  Enter the old path you want redirected.
-              %br
-          %p.note
-            For example, if your old url was
-            %span
-              www.example.com/shirts
-            , you should enter
-            %span
-              \/shirts
-            below.
-          %dd
-            %input#redirect-table-detail-path.long{ :type => "text", :name => "redirect[path]" }
-          %dt
-            %label{ :for => "redirect-table-detail-target" }
-              New path
-              %span.note
-                Enter the new path you want to redirect to.
-            %br
-          %p.note
-            For example, if your new url is
-            %span
-              www.example.com/collections/shirts
-            , you should enter
-            %span
-              \/collections/shirts
-            below.
-          %dd
-            %input#redirect-table-detail-target.long{ :type => "text", :name => "redirect[target]" }
-          .st.sl.sr.sb.btn-divider
-            %input.btn{ :name => "commit", :type => "submit", :value => "Add URL redirect" }
-            or
-            %a{ :href => "#", :onclick => "Element.togglePair('redirect-table-detail', 'test-row'); return false;" }
-              Cancel
+%script(id="show-menu" type="text/x-jquery-tmpl")
+  = render :partial => "link_lists/show"
+%script(id="edit-menu" type="text/x-jquery-tmpl")
+  = render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }
+
+:javascript
+  App.link_lists = new App.Collections.LinkLists();
+  //根据backbone文档，使用refresh方法进行初始化(而非fetch)，避免数据未加载完成，导致类似#linklists/1路由失效
+  App.link_lists.refresh(#{link_lists.to_json});

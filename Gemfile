@@ -35,6 +35,7 @@ gem 'decent_exposure'
 ##### 视图相关 #####
 gem 'haml'
 # 编译coffee-script
+gem 'therubyracer', :require => nil
 gem 'barista'
 
 ##### 其他 #####
@@ -62,9 +63,10 @@ group :development do
   gem 'guard'
   #only on the linux platform install the gem
   if RUBY_PLATFORM =~ /linux/
-    gem "rb-inotify"
+    #vagrant虚拟机没有安装桌面
+    #gem "rb-inotify"
     #notification support
-    gem 'libnotify'
+    #gem 'libnotify'
   elsif RUBY_PLATFORM =~ /darwin/
     gem 'rb-fsevent'
     gem 'growl'
