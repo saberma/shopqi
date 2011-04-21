@@ -1,8 +1,9 @@
 App =
   Views:
     LinkList: {}
-  Controllers: {},
-  Collections: {},
+    Link: {}
+  Controllers: {}
+  Collections: {}
   init: ->
     new App.Controllers.LinkLists
     Backbone.history.start()

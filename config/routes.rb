@@ -14,11 +14,9 @@ Shopqi::Application.routes.draw do
   match "/admin" => "link_lists#index"
   match "user_root" => redirect("/admin")
 
-  resources :links, :only => [:create, :update, :sort]
-  resources :links, :only => [:create, :destroy, :update, :sort]
-
   scope "/admin" do
     resources :link_lists, :only => [:index, :create, :destroy, :update]
+    resources :links, :only => [:create, :destroy, :update, :sort]
   end
 
   # The priority is based upon order of creation:

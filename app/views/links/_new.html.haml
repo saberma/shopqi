@@ -1,17 +1,22 @@
-#add_link_form_link_list_1905262.link.btns{ :style => "display:none;" }
+.action-row(id="add_link_control_link_list_${id}")
+  .action-link
+    %p
+      %a.addOne(href="#link_lists/${id}/links/new")
+        %span.plus +
+        新增链接
+.link.btns(id="add_link_form_link_list_${id}" style="display:none;")
   =form_for link do
     .add-link-title.link-col
-      %span.add-link-header 新链接名称
-      %input#add_link_title_link_list_1905262.medium{ :name => "link[title]", :type => "text" }
-    .add-link-title.link-col
+      %span.add-link-header 新链接的名称
+      %input.medium(name="link[title]" type="text")
+    .add-link-linksto.link-col
       %span.add-link-header 链接至
-      %select.selector#add_link_type_link_list_1905262(name="link[link_type]")
+      %select.selector(name="link[link_type]")
         =options_for_select link_types.map{|t| [t.name, t.code]}
-      %select#add_subject_id_link_list_1905262.subject{ :name => "link[subject_id]" }
-      %input#add_subject_link_list_1905262.long.subject_http.linkform-hint{ "data-hint" => "http://shopqi.com", :originalname => "link[subject]", :type => "text" }
-      %input#add_subject_params_link_list_1905262.medium.subject_params.linkform-hint{ "data-hint" => "使用标记过滤商品(以逗号,分隔)", :originalname => "link[subject_params]", :type => "text" }
+      %select.subject(name="link[subject_id]" style="display:none")
+      %input.long.subject_http.linkform-hint(data-hint="http://shopqi.com" name="link[subject]" originalname="link[subject]" type="text")
+      %input.medium.subject_params.linkform-hint(data-hint="使用标记过滤商品(以逗号,分隔)" originalname="link[subject_params]" type="text" style="display:none;")
     .sl.sr.sb.btn-divider
-      %input.btn{ :name => "commit", :type => "submit", :value => "添加链接" }
-      or
-      %a{ :href => "#", :onclick => "Element.togglePair('add_link_form_link_list_1905262', 'add_link_control_link_list_1905262'); return false;" }
-        取消
+      %input.btn(name="commit" type="submit" value="添加链接")
+      或者
+      %a.cancel(href="#") 取消

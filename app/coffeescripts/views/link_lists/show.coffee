@@ -6,14 +6,17 @@ App.Views.LinkList.Show = Backbone.View.extend
     _.bindAll this, 'render'
     this.model.bind 'change', this.render
     $(this.el).attr 'id', "link_lists/#{this.model.id}"
-    this.render()
     $('#menus').append this.el
+    this.render()
 
   events:
     "click .destroy": "destroy"
 
   render: ->
     $(this.el).html $('#show-menu').tmpl this.model.attributes
+    _.each this.model.attributes.links, (link) ->
+      model = new Link link
+      new App.Views.Link.Show model: model
 
   destroy: ->
     #therubyracer暂时无法编译中文，最新版已修正问题但未发布

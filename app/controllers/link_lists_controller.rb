@@ -1,3 +1,4 @@
+# encoding: utf-8
 class LinkListsController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
@@ -8,10 +9,6 @@ class LinkListsController < ApplicationController
   expose(:link)
 
   def index
-    respond_to do |format|
-      format.html
-      format.json  { render :json => link_lists}
-    end
   end
 
   def create
@@ -25,6 +22,8 @@ class LinkListsController < ApplicationController
   end
 
   def update
+    links = params[:link_list].delete(:links)
+    link_list.links_attributes = links
     link_list.save
     render :json => link_list
   end

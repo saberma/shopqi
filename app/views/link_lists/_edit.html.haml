@@ -14,28 +14,12 @@
       %dd
         =f.text_field :handle, :disabled => true
         %span.hint 默认链接列表的处理是不能修改的
-  {{if true}}
-  .hint.padding 此链接列表未新增链接.
-  {{else}}
-  #edit_form_header_link_list_1905262.link-header.link-header-edit.nobull.st
+  .hint.padding(style="{{if false}}display:none{{/if}}") 此链接列表未新增链接.
+  .link-header.link-header-edit.nobull.st(id="edit_form_header_link_list_${id}" style="{{if true}}display:none{{/if}}")
     %span 链接名称
     %span 链接至
-  -#
-    %ul#edit_form_link_list_1905262.nobull.st.sr.ssb.sl
-      %li#link_edit_li_8402622.sl.link.link-edit.even
-        %input#link_list_links_attributes_0_id{ :name => "link_list[links_attributes][0][id]", :type => "hidden", :value => "8402622" }
-        %a.delete.fr{ :href => "#" }=image_tag 'admin/icons/trash.gif', :alt => "删除"
-        %input#link_list_links_attributes_0_title.medium{ :name => "link_list[links_attributes][0][title]", :size => "30", :type => "text", :value => "Home" }
-        %select#link_edit_link_type_8402622.selector.sl{ :name => "link_list[links_attributes][0][link_type]" }
-          =options_for_select link_types.map{|t| [t.name, t.code]}
-        %select#link_list_links_attributes_0_subject_id.subject{ :name => "link_list[links_attributes][0][subject_id]", :onchange => "alertSelected(this)" }
-          links_attributes
-        %input.subject_value.hide{ :type => "text", :value => "" }
-        %input#link_list_links_attributes_0_subject.long.subject_http.linkform-hint{ "data-hint" => "http://shopqi.com", :name => "link_list[links_attributes][0][subject]", :size => "30", :type => "text", :value => "/" }
-        %input#link_list_links_attributes_0_subject_params{ :name => "link_list[links_attributes][0][subject_params]", :type => "hidden", :value => "" }
-        %input#link_list_links_attributes_0_subject_params.medium.subject_params.linkform-hint{ "data-hint" => "Filter by tags (comma separated)", :name => "link_list[links_attributes][0][subject_params]", :size => "30", :type => "text" }
-  {{/if}}
+  %ul.nobull.st.sr.ssb.sl(id="edit_form_link_list_${id}" style="{{if true}}display:none{{/if}}")
   .section-submit
-    %input.btn{ :name => "commit", :type => "submit", :value => "保存" }
+    %input.btn(name="commit" type="submit" value="保存")
     或者
-    %a.cancel{ :href => "#" } 取消
+    %a.cancel(href="#") 取消
