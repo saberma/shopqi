@@ -8,10 +8,6 @@ class LinkListsController < ApplicationController
   expose(:link)
 
   def index
-    respond_to do |format|
-      format.html
-      format.json  { render :json => link_lists}
-    end
   end
 
   def create

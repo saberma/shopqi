@@ -23,4 +23,4 @@
 :javascript
   App.link_lists = new App.Collections.LinkLists();
   //根据backbone文档，使用refresh方法进行初始化(而非fetch)，避免数据未加载完成，导致类似#linklists/1路由失效
-  App.link_lists.refresh(#{link_lists.to_json});
+  App.link_lists.refresh(#{link_lists.to_json(:except => [ :created_at, :updated_at ], :include => :links) });

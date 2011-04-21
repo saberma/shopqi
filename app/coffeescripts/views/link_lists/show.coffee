@@ -8,6 +8,9 @@ App.Views.LinkList.Show = Backbone.View.extend
     $(this.el).attr 'id', "link_lists/#{this.model.id}"
     this.render()
     $('#menus').append this.el
+    _.each this.model.attributes.links, (link) ->
+      model = new Link link
+      new App.Views.Link.Show model: model
 
   events:
     "click .destroy": "destroy"
