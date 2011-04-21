@@ -14,6 +14,8 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch(%r{^config/environments/.+\.rb$})
   watch(%r{^config/initializers/.+\.rb$})
   watch('spec/spec_helper.rb')
+  watch(%r{^app/controllers/.+\.rb})
+  watch(%r{^app/models/.+\.rb})
 end
 
 guard 'rspec', :cli => "--fail-fast --drb" do

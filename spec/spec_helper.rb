@@ -37,6 +37,11 @@ Spork.prefork do
 end
 
 Spork.each_run do
+
+  Factory.factories.clear
+  Dir[Rails.root.join("spec/factories/**/*.rb")].each{|f| load f}
+  Shopqi::Application.reload_routes!
+
   # This code will be run each time you run your specs.
   RSpec.configure do |config|
     config.before(:suite) do
