@@ -18,7 +18,7 @@
 %script(id="edit-menu" type="text/x-jquery-tmpl")
   = render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }
 %script(id="show-link-menu" type="text/x-jquery-tmpl")
-  = render :partial => "links/link", :locals => { :link => link }
+  = render :partial => "links/show"
 
 :javascript
   App.link_lists = new App.Collections.LinkLists();
