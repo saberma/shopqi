@@ -1,6 +1,18 @@
 Shopqi::Application.routes.draw do
 
   devise_for :users
+  devise_for :user do
+    get "sign_up", :to => "devise/registrations#new"
+    get "sign_in", :to => "devise/sessions#new"
+  end
+
+
+  constraints(Subdomain) do
+    match '/' => 'link_lists#index'
+  end
+
+  match "/admin" => "link_lists#index"
+  match "user_root" => redirect("/admin")
 
   resources :links, :only => [:create, :update, :sort]
   resources :links, :only => [:create, :destroy, :update, :sort]

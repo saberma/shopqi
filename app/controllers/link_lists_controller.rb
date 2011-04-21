@@ -1,4 +1,5 @@
 class LinkListsController < ApplicationController
+  prepend_before_filter :authenticate_user!
   layout 'admin'
 
   expose(:link_lists) { LinkList.all }
