@@ -10,15 +10,11 @@
       {{/if}}
     %span{ :title => "handle: main-menu" } ${title}
     %span.hint {{if system_default}}这是默认链接列表，不能删除{{/if}}
-  {{if true}}
-  .hint.padding 此链接列表未新增链接.
-  {{else}}
-  .link-header.st.sl.sr
+  .hint.padding(style="{{if false}}display:none{{/if}}") 此链接列表未新增链接.
+  .link-header.st.sl.sr(style="{{if true}}display:none{{/if}}")
     %span.sl 链接名称
     %span.sl 链接路径
-  %ul.nobull.sr.ssb
-    -#= render :partial => "links/link", :collection => []
-  {{/if}}
+  %ul.nobull.sr.ssb(style="{{if true}}display:none{{/if}}")
 %div(id="add_form_link_container_link_list_${id}")
   = render :partial => "links/new", :locals => { :link => link, :link_list => link_list, :link_types => link_types }
 %div(id="edit_form_link_container_link_list_${id}" style="display:none;")

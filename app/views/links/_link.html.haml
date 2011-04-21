@@ -1,5 +1,4 @@
-=content_tag_for :li, link, :class => "sl #{cycle("even", "odd")}" do
-  =image_tag 'admin/icons/drag_handle.gif', :alt => '拖动排序', :class => "image_handle nsr"
-  %span.link-title
-    =link_to link.title, link.subject
-  %span.link-url=link.subject
+=image_tag 'admin/icons/drag_handle.gif', :alt => '拖动排序', :class => "image_handle nsr"
+%span.link-title
+  =link_to '${title}', '${subject}'
+%span.link-url ${subject}

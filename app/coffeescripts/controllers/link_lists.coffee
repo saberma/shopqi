@@ -21,4 +21,4 @@ App.Controllers.LinkLists = Backbone.Controller.extend
     new App.Views.LinkList.New
 
   newLink: (id) ->
-    new App.Views.Link.New el: "#add_link_form_link_list_#{id}", link_id: id
+    new App.Views.Link.New el: "#add_link_form_link_list_#{id}", link_list_id: id
