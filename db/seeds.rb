@@ -8,4 +8,4 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 Shop.delete_all
 User.delete_all
-u= User.create(:shop_name => "鞋子",:shop_permanent_domain => "vancl",:email => "liwh87@shopqi.com",:password => "666666")
+u= User.create(:shop_name => "鞋子",:shop_permanent_domain => "vancl",:email => "liwh87@gmail.com",:password => "666666")
