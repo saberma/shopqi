@@ -14,7 +14,9 @@ App.Views.LinkList.Edit = Backbone.View.extend
         #修改成功!
         msg '\u4FEE\u6539\u6210\u529F\u0021'
         $(self.el).hide()
+        #显示列表窗口、新增链接按钮
         $("#default_container_link_list_#{model.id}").show()
+        $("#add_form_link_container_link_list_#{model.id}").show()
         Backbone.history.saveLocation "link_lists/#{model.id}"
       error: ->
         new App.Views.Error
@@ -24,8 +26,12 @@ App.Views.LinkList.Edit = Backbone.View.extend
     $(this.el).html $('#edit-menu').tmpl this.model.attributes
     $(this.el).show()
     this.$("input[name='link_list[title]']").focus()
+    #隐藏列表窗口、新增链接按钮
     $("#default_container_link_list_#{this.model.id}").hide()
+    $("#add_form_link_container_link_list_#{this.model.id}").hide()
 
   cancel: ->
     $(this.el).hide()
+    #显示列表窗口、新增链接按钮
     $("#default_container_link_list_#{this.model.id}").show()
+    $("#add_form_link_container_link_list_#{this.model.id}").show()

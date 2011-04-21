@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Wed, 20 Apr 2011 12:07:13 GMT from
+/* DO NOT MODIFY. This file was compiled Thu, 21 Apr 2011 08:02:33 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/edit.coffee
  */
 
@@ -20,6 +20,7 @@ App.Views.LinkList.Edit = Backbone.View.extend({
         msg('\u4FEE\u6539\u6210\u529F\u0021');
         $(self.el).hide();
         $("#default_container_link_list_" + model.id).show();
+        $("#add_form_link_container_link_list_" + model.id).show();
         return Backbone.history.saveLocation("link_lists/" + model.id);
       },
       error: function() {
@@ -32,10 +33,12 @@ App.Views.LinkList.Edit = Backbone.View.extend({
     $(this.el).html($('#edit-menu').tmpl(this.model.attributes));
     $(this.el).show();
     this.$("input[name='link_list[title]']").focus();
-    return $("#default_container_link_list_" + this.model.id).hide();
+    $("#default_container_link_list_" + this.model.id).hide();
+    return $("#add_form_link_container_link_list_" + this.model.id).hide();
   },
   cancel: function() {
     $(this.el).hide();
-    return $("#default_container_link_list_" + this.model.id).show();
+    $("#default_container_link_list_" + this.model.id).show();
+    return $("#add_form_link_container_link_list_" + this.model.id).show();
   }
 });
