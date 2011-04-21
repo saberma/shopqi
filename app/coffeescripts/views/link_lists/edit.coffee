@@ -18,8 +18,8 @@ App.Views.LinkList.Edit = Backbone.View.extend
         $("#default_container_link_list_#{model.id}").show()
         $("#add_form_link_container_link_list_#{model.id}").show()
         Backbone.history.saveLocation "link_lists/#{model.id}"
-      error: ->
-        new App.Views.Error
+      #error: (model, response) ->
+      #  new App.Views.Error
     return false
 
   render: ->

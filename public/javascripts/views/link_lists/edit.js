@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Thu, 21 Apr 2011 08:02:33 GMT from
+/* DO NOT MODIFY. This file was compiled Thu, 21 Apr 2011 10:22:56 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/edit.coffee
  */
 
@@ -22,9 +22,6 @@ App.Views.LinkList.Edit = Backbone.View.extend({
         $("#default_container_link_list_" + model.id).show();
         $("#add_form_link_container_link_list_" + model.id).show();
         return Backbone.history.saveLocation("link_lists/" + model.id);
-      },
-      error: function() {
-        return new App.Views.Error;
       }
     });
     return false;

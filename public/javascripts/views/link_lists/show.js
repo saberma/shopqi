@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Thu, 21 Apr 2011 05:00:45 GMT from
+/* DO NOT MODIFY. This file was compiled Thu, 21 Apr 2011 08:25:46 GMT from
  * /vagrant/app/coffeescripts/views/link_lists/show.coffee
  */
 
@@ -9,8 +9,14 @@ App.Views.LinkList.Show = Backbone.View.extend({
     _.bindAll(this, 'render');
     this.model.bind('change', this.render);
     $(this.el).attr('id', "link_lists/" + this.model.id);
-    this.render();
     $('#menus').append(this.el);
+    return this.render();
+  },
+  events: {
+    "click .destroy": "destroy"
+  },
+  render: function() {
+    $(this.el).html($('#show-menu').tmpl(this.model.attributes));
     return _.each(this.model.attributes.links, function(link) {
       var model;
       model = new Link(link);
@@ -18,12 +24,6 @@ App.Views.LinkList.Show = Backbone.View.extend({
         model: model
       });
     });
-  },
-  events: {
-    "click .destroy": "destroy"
-  },
-  render: function() {
-    return $(this.el).html($('#show-menu').tmpl(this.model.attributes));
   },
   destroy: function() {
     var self;
