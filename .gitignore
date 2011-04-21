@@ -39,8 +39,8 @@ public/images/.DS_Store
 public/stylesheets/.DS_Store
 
 #coffeescript生成的js文件，减少git diff时的干扰，生产环境部署时再手动调用rake barista:brew
-public/javascript/collections
-public/javascript/views
-public/javascript/models
-public/javascript/controllers
-public/javascript/applications.js
+public/javascripts/collections
+public/javascripts/views
+public/javascripts/models
+public/javascripts/controllers
+public/javascripts/application.js

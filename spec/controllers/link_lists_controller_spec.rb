@@ -9,12 +9,10 @@ describe LinkListsController do
 
   context '#update' do
 
-=begin
     it "without links" do
       xhr :put, :update, :id => link_list.id, :link_list => link_list.attributes
       response.should be_success
     end
-=end
 
     it "with links" do
       attrs = link_list_with_links.attributes

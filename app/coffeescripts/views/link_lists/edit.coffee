@@ -24,6 +24,9 @@ App.Views.LinkList.Edit = Backbone.View.extend
 
   render: ->
     $(this.el).html $('#edit-menu').tmpl this.model.attributes
+    _.each this.model.attributes.links, (link) ->
+      model = new Link link
+      new App.Views.Link.Edit model: model
     $(this.el).show()
     this.$("input[name='link_list[title]']").focus()
     #隐藏列表窗口、新增链接按钮
