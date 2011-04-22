@@ -14,3 +14,6 @@ App.Views.Link.Show = Backbone.View.extend
 
   render: ->
     $(this.el).html $('#show-link-menu').tmpl this.model.attributes
+    position = _.indexOf this.model.collection.models, this.model
+    cycle = if position % 2 == 0 then 'odd' else 'even'
+    $(this.el).addClass cycle

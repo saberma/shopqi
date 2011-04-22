@@ -1,6 +1,6 @@
 App.Views.Link.Edit = Backbone.View.extend
   tagName: 'li'
-  className: 'sl link link-edit event'
+  className: 'sl link link-edit'
 
   initialize: ->
     #显示列表、隐藏无ITEM的提示
@@ -14,3 +14,6 @@ App.Views.Link.Edit = Backbone.View.extend
 
   render: ->
     $(this.el).html $('#edit-link-menu').tmpl this.model.attributes
+    position = _.indexOf this.model.collection.models, this.model
+    cycle = if position % 2 == 0 then 'odd' else 'even'
+    $(this.el).addClass cycle
