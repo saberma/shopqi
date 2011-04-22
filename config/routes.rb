@@ -3,8 +3,9 @@ Shopqi::Application.routes.draw do
   devise_for :users
 
   scope "/admin" do
-    resources :link_lists, :only => [:index, :create, :destroy, :update]
-    resources :links, :only => [:create, :destroy, :update, :sort]
+    resources :link_lists, :only => [:index, :create, :destroy, :update] do
+      resources :links, :only => [:create, :destroy, :update, :sort]
+    end
   end
 
   # The priority is based upon order of creation:

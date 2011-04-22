@@ -8,9 +8,11 @@ App.Collections.Links = Backbone.Collection.extend
     this.bind 'add', this.addOne
 
   addOne: (model, collection) ->
-    #新增成功!
-    msg '\u65B0\u589E\u6210\u529F\u0021'
-    $('#add-menu').hide()
-    $('#link_list_title').val ''
-    new App.Views.LinkList.Show model: model
-    Backbone.history.saveLocation "link_lists/#{model.id}"
+    #显示新增按钮、隐藏自己
+    $("#add_link_control_link_list_#{model.attributes.link_list_id}").show()
+    add_container = "#add_link_form_link_list_#{model.attributes.link_list_id}"
+    $(add_container).hide()
+    $("input[name='link[title]']", add_container).val ''
+    self.$("input[name='link[subject]']", add_container).val ''
+    new App.Views.Link.Show model: model
+    Backbone.history.saveLocation "link/#{model.id}"

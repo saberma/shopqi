@@ -5,7 +5,7 @@
         %span.plus +
         新增链接
 .link.btns(id="add_link_form_link_list_${id}" style="display:none;")
-  =form_for link do
+  =form_tag '#' do
     .add-link-title.link-col
       %span.add-link-header 新链接的名称
       %input.medium(name="link[title]" type="text")
