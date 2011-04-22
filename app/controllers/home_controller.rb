@@ -5,6 +5,6 @@ class HomeController < ApplicationController
 
   # 网店管理首页
   def dashboard
-    layout 'admin'
+    render :layout => 'admin'
   end
 end

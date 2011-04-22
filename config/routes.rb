@@ -11,7 +11,7 @@ Shopqi::Application.routes.draw do
     match '/' => 'link_lists#index'
   end
 
-  match "/admin" => "link_lists#index"
+  match "/admin" => "home#dashboard"
   match "user_root" => redirect("/admin")
 
   scope "/admin" do

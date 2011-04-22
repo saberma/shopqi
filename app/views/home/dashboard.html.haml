@@ -1,0 +1,293 @@
+%h2#title
+#action-links
+  %ul
+%noscript
+  .announcement
+    %h4 Javascript disabled
+    %p
+      %strong
+        In order to use the Shopify admin interface you
+        %em must enable javascript
+        in your browser
+    %p
+      Find out
+      = succeed "." do
+        %a{:href => "http://www.enable-javascript.com/"} how to enable javascript
+#upgrade-ie6.announcement{:style => "display:none;"}
+  %h4 Please upgrade your browser
+  %p
+    %strong
+      We are discontinuing support for
+      = succeed "." do
+        %em IE6
+      To get the most out of Shopify, please upgrade to a modern web browser
+  %p
+    We recommend
+    = succeed "," do
+      %a{:href => "http://www.google.com/chrome"} Google Chrome
+    %a{:href => "http://www.getfirefox.com/"} Mozilla Firefox
+    or
+    = succeed "." do
+      %a{:href => "http://www.apple.com/safari/download/"} Safari
+.col-12.last
+  #dashboard-facts.box2
+    %ul
+      %li
+        %p.big $0.00 USD
+        %span today
+        %p 0 orders
+      %li
+        %p.big $0.00 USD
+        %span yesterday
+        %p 0 orders
+      %li
+        %p.big $0.00 USD
+        %span last week
+        %p 0 orders
+      %li
+        %p.big 0
+        %span total orders
+      %li
+        %p.big 6
+        %span total products
+      %li.last
+        %p.big 7
+        %span SKUs
+.col-8
+  :javascript
+    //
+    
+            Event.observe(document, 'dom:loaded', function() {
+              var range = '20110420T00:00:00-20110420T00:00:00'
+              new Ajax.Request("/admin/dashboard/stats", { 
+                parameters: paramsWithAuthentication({timespan: range}), 
+                onFailure: function(transport) {
+                  $('stats').replace('<p class="sst ssb"><span class="highlight">Statistics are temporarily not available</span></p>');
+                } 
+              });
+            });
+    
+    //
+  #stats-spinner{:style => "display:none"}
+    Updating…
+  #stats
+  #recent-activity
+    %h3.sb Recent activity
+    %table#events.data{:cellpadding => "0", :cellspacing => "0"}
+      %tbody
+        %tr#event-195877440.odd
+          %td.Apr17{:style => "width: 85px;"}
+            %strong Apr 17
+          %td
+            New collection:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/custom_collections/3670472"} custom
+            %br/
+            %small.note
+              at 03:28 am by development shop
+          %td.r
+        %tr#event-195876560.even
+          %td.Apr17{:style => "width: 85px;"}
+            %strong Apr 17
+          %td
+            Collection
+            %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/custom_collections/3670472"} custom
+            was published.
+            %br/
+            %small.note
+              at 03:28 am by development shop
+          %td.r
+        %tr#event-195876400.odd
+          %td.Apr15{:style => "width: 85px;"}
+            %strong Apr 15
+          %td
+            New product:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/38742692"} new product
+            %br/
+            %small.note
+              at 11:41 am by development shop
+          %td.r
+        %tr#event-195876240.even
+          %td.Apr15{:style => "width: 85px;"}
+            %strong Apr 15
+          %td
+            New article published:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/blogs/892462/articles/3023012"} How to
+            %br/
+            %small.note
+              at 09:03 am by development shop
+          %td.r
+        %tr#event-195876080.odd
+          %td.Apr15{:style => "width: 85px;"}
+            %strong Apr 15
+          %td
+            New blog:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/pages"} introduction
+            %br/
+            %small.note
+              at 08:26 am by development shop
+          %td.r
+        %tr#event-195902380.even.announcement
+          %td.Apr14{:style => "width: 85px;"}
+            %strong Apr 14
+          %td
+            %img{:alt => "Star-mini", :src => "/images/admin/star-mini.png", :style => "vertical-align: baseline; margin-right: 1px;"}/
+            Announcement:
+            %a{:href => "http://blog.shopify.com/2011/4/14/shopify-and-google-up-the-ante-with-100-adwords-credits", :title => ""} Shopify and Google up the ante with $100 AdWords Credits
+            %br/
+            %small.note
+              at 05:35 pm by Shopify Team
+          %td.r
+        %tr#event-195875920.odd
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            API access was granted to Theme Store.
+            %br/
+            %small.note
+              at 11:06 pm by development shop
+          %td.r
+        %tr#event-195875440.even
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New product:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/38663872"} Sharable fresh-thinking policy
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195875600.odd
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New product:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/38663882"} Re-engineered eco-centric policy
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195875760.even
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New product:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/38663892"} Advanced didactic hub
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195874800.odd
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            Collection
+            %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/custom_collections/3650022"} Frontpage
+            was published.
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195874960.even
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New collection:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/custom_collections/3650022"} Frontpage
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195875120.odd
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New product:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/38663852"} Public-key 6th generation synergy
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195874640.even
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New page:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/pages/5082262"} About Us
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195875280.odd
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New product:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/38663862"} Decentralized value-added array
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195874480.even
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New page:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/pages/5082252"} Welcome
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195874320.odd
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New article published:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/blogs/890622/articles/3015452"} First Post
+            %br/
+            %small.note
+              at 11:03 pm by Shopify
+          %td.r
+        %tr#event-195874160.even
+          %td.Apr13{:style => "width: 85px;"}
+            %strong Apr 13
+          %td
+            New blog:
+            = succeed "." do
+              %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/pages"} News
+            %br/
+            %small.note
+              at 11:02 pm by Shopify
+          %td.r
+  %p#upgrade.box2
+    *
+    %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/account"} Upgrade your plan
+    to utilize full statistics including a draggable bar graph, a list of
+    top referrers, search terms, a traffic breakdown, and percentage of hits
+    by country of origin.
+.col-4.last.sidebar
+  %h3 Recent Orders
+  %p.note You have no orders yet
+  %h3.sst Users
+  %ul#user-table.nobull
+    -shop.users.each do |u|
+      %li.box2
+        %img#gravatar{:alt => "", :src => "/images/avatar.jpg"}/
+        =link_to u.name,"#",:class => "closure-lightbox"
+        -#%a.closure-lightbox{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/dashboard/show_user/1019492", :title => "development shop"} development shop
+        %br/
+        %small.note
+          ==最后登录:#{distance_of_time_in_words(u.last_sign_in_at,Time.now)}
+#user-details-area{:style => "display:none"}
