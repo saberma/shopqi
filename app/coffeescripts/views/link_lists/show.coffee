@@ -14,9 +14,8 @@ App.Views.LinkList.Show = Backbone.View.extend
 
   render: ->
     $(this.el).html $('#show-menu').tmpl this.model.attributes
-    _.each this.model.attributes.links, (link) ->
-      model = new Link link
-      new App.Views.Link.Show model: model
+    _.each this.model.links.models, (link) ->
+      new App.Views.Link.Show model: link
 
   destroy: ->
     #therubyracer暂时无法编译中文，最新版已修正问题但未发布
