@@ -1,0 +1,221 @@
+- use_kindeditor
+%h2#title 新 增 商 品
+#action-links
+  %ul
+    %li.no-icon
+      =link_to "返回", products_path
+=render :partial => "shared/noscript"      
+=render :partial => "shared/upgrade_ie"
+=form_for(product,:html => {:id => "new_product",:class => "new_product",:multipart => true}) do |f|
+  %table{:cellpadding => "0", :cellspacing => "0", :style => "width: 100%;"}
+    %tbody
+      %tr
+        %td#product-details{:colspan => "2"}
+          .section-header
+            新商品
+          %dl.padding
+            %dt.top
+              =f.label :title
+              %br/
+              %span.note 例如: 新一代Iphone4
+            %dd
+              =f.text_field :title ,:style => "float:none;",:id => "product_title",:class => "big"
+            %dt.sst
+              =f.label :description
+            / editor
+          .container
+            =f.text_area :description, :id => 'kindeditor'
+      %tr
+        %td
+          .section-header.sst{:style => "margin-top:0"}
+            Properties
+          .padding
+            %dl
+              %dt
+            %p
+              %label{:for => "product_product_type"} Product type
+            %span.note 例如: 服装,电脑,家用电器
+            %dd
+              %select#product-type-select
+                %option{:selected => "selected", :value => "Shirts"} Shirts
+                %option{:value => ""} --------
+                %option{:value => "create_new"} Create new type...
+              %input#product_product_type{:name => "", :size => "30", :style => "display: none;", :type => "text", :value => "Shirts"}/
+            %dt.sst
+            %p
+              %label{:for => "product_vendor"} Product vendor
+            %span.note The creator or manufacturer of the product. Examples: IBM, Adidas
+            %dd
+              %select#product-vendor-select
+                %option{:selected => "selected", :value => "Shopify"} Shopify
+                %option{:value => ""} --------
+                %option{:value => "create_new"} Create new vendor...
+              =f.text_field :vendor,:style => "dispay:none",:id => "product_vendor"
+            %table.data2.sst.ssb
+              %tbody
+                %tr
+                  %th.clean
+                    =f.label :price
+                  %th.clean
+                    =f.label :market_price
+                %tr
+                  %td
+                    =f.text_field :price,:style => "width:50px",:id => "variant_price"
+                    元 
+                  %td
+                    =f.text_field :market_price,:style => "width:50px",:id => "variant_price"
+                    元 
+                %tr
+                  %td{:colspan => "3"}
+                    %input#variant_taxable{:checked => "checked", :name => "", :type => "checkbox", :value => "1"}/
+                    %label{:for => "variant_taxable"} Charge taxes
+                %tr
+                  %td{:colspan => "3"}
+                    %input#variant_requires_shipping{:checked => "checked", :name => "", :type => "checkbox", :value => "1"}/
+                    %label{:for => "variant_requires_shipping"} Require a shipping address
+                    %span.hint not needed for services or digital goods
+                    :javascript
+                      //
+                      new Form.Element.EventObserver('variant_requires_shipping', function(element, value) {var weight=$('variant_weight'); if (value) {weight.disabled=false;} else {weight.disabled=true; weight.value='0.0';}})
+                      //
+            #options
+              %h3 Product Options
+              %p.note.sb This is how your customers distinguish variations of your product.
+              %input#enable-options{:name => "create-options", :onclick => "ProductOptions.toggle()", :type => "checkbox", :value => ""}/
+              %label{:for => "enable-options", :onclick => "ProductOptions.toggle()"}
+                This product's variants have
+                %strong multiple
+                options that distinguish them.
+              %p.note.ssb{:style => "padding-left: 20px"} Example: Size AND Color
+              #create-options-frame{:style => "display:none"}
+                %table#product-properties.data2{:cellpadding => "0", :cellspacing => "0"}
+                  %tbody
+                    %tr
+                      %th.clean{:style => "width: 180px;"} Option Name
+                      %th.clean{:style => "width: 170px;"} Default Value
+                    %tr#new-option-0.edit-option.even{:style => ""}
+                      %td
+                        %select#option-selector-0.option-selector
+                          %option{:selected => "selected", :value => "Title"} Title
+                          %option{:value => "Size"} Size
+                          %option{:value => "Color"} Color
+                          %option{:value => "Material"} Material
+                          %option{:value => "Style"} Style
+                          %option{:value => ""} --------
+                          %option{:value => "create_new"} Custom...
+                        %input#option-name-0{:name => "", :size => "16", :style => "display: none; margin-top: 5px;", :type => "text", :value => "Title"}/
+                      %td
+                        %input#option-value-0{:name => "", :size => "16", :type => "text", :value => "Default Title"}/
+                    %tr#new-option-1.edit-option.odd{:style => "display: none;"}
+                      %td
+                        %select#option-selector-1.option-selector{:disabled => "disabled"}
+                          %option{:disabled => "disabled", :selected => "selected", :value => "Title"} Title
+                          %option{:value => "Size"} Size
+                          %option{:value => "Color"} Color
+                          %option{:value => "Material"} Material
+                          %option{:value => "Style"} Style
+                          %option{:value => ""} --------
+                          %option{:value => "create_new"} Custom...
+                        %input#option-name-1{:disabled => "disabled", :name => "", :size => "16", :style => "display: none; margin-top: 5px;", :type => "text", :value => "Title"}/
+                      %td
+                        %input#option-value-1{:disabled => "disabled", :name => "", :size => "16", :type => "text", :value => "Default Title"}/
+                        %span.fr.sr{:style => "margin-top: 5px"}
+                          %a#del-option-1{:href => "#", :onclick => "ProductOptions.remove(1);; return false;", :tabindex => "-1"}
+                            %img{:alt => "Trash", :src => "new_files/trash.gif"}/
+                    %tr#new-option-2.edit-option.even{:style => "display: none;"}
+                      %td
+                        %select#option-selector-2.option-selector{:disabled => "disabled"}
+                          %option{:disabled => "disabled", :selected => "selected", :value => "Title"} Title
+                          %option{:value => "Size"} Size
+                          %option{:value => "Color"} Color
+                          %option{:value => "Material"} Material
+                          %option{:value => "Style"} Style
+                          %option{:value => ""} --------
+                          %option{:value => "create_new"} Custom...
+                        %input#option-name-2{:disabled => "disabled", :name => "", :size => "16", :style => "display: none; margin-top: 5px;", :type => "text", :value => "Title"}/
+                      %td
+                        %input#option-value-2{:disabled => "disabled", :name => "", :size => "16", :type => "text", :value => "Default Title"}/
+                        %span.fr.sr{:style => "margin-top: 5px"}
+                          %a#del-option-2{:href => "#", :onclick => "ProductOptions.remove(2);; return false;", :tabindex => "-1"}
+                            %img{:alt => "Trash", :src => "new_files/trash.gif"}/
+                    %tr#add-option-bt.edit-option{:style => ""}
+                      %td
+                        %a{:href => "#", :onclick => "ProductOptions.add();; return false;"} add another Option
+                        %br/
+                        %span.note e.g. Color, Size
+                      %td &nbsp;
+          .section-header
+            Inventory
+          .padding
+            %dl.ssb
+              %dt
+                %label{:for => "variant_sku"} SKU
+                %span.note (optional)
+                %br/
+                %span.note Unique identifier for organization of larger inventories.
+              %dd
+                %input#variant_sku{:name => "", :size => "30", :type => "text"}/
+              %dd
+                %p
+                  %select#inventory-select-new.st{:name => "", :onchange => "Product.updateTrackingOptions('new');"}
+                    %option{:selected => "selected", :value => ""} Don't track stock level
+                    %option{:value => "shopify"} Shopify tracks this variant's stock level
+                #inventory-controls-new
+                  #shopify-inventory-new.inventory-option.st{:style => "display:none"}
+                    %p#inventory-new.soft
+                      %label{:for => "variant-inventory-quantity-new"} How many are in stock?
+                      %input#variant-inventory-quantity-new.small.r.digit-2{:name => "", :size => "6", :type => "text", :value => "1"}/
+              %dd#inventory-policy-new{:style => "display:none"}
+                %p.soft
+                  %input#variant_inventory_policy_deny{:checked => "checked", :name => "", :type => "radio", :value => "deny"}/
+                  %label.inline{:for => "variant_inventory_policy_deny"} Deny purchases for this item when not in stock.
+                  %br/
+                  %input#variant_inventory_policy_continue{:name => "", :type => "radio", :value => "continue"}/
+                  %label.inline{:for => "variant_inventory_policy_continue"} Allow users to purchase this item when out of stock.
+          .section-header Tags
+          .padding
+            %dl{:style => "margin: 0;"}
+              %dd#multi-options
+                %p.note Tags are descriptive keywords that help customers find what they need. Enter any number of tags separated by a comma.
+                %input#product_tags{:name => "", :size => "50", :type => "text"}/
+              %dd
+                %p.note{:style => "clear: both"} Previously used tags. Click to add.
+                %ul#tag-list.nobull.st
+                  %li
+                    %a{:href => "#"} Demo
+                  %li
+                    %a{:href => "#"} T-Shirt
+                .cl
+          .section-header.sst Collections
+          .padding
+            %dl{:style => "margin: 0;"}
+              %dd
+                %p.note Choose the custom collections this product should belong to:
+                %ul.nobull.pgroup.clearfix
+                  %li.product-edit-collection
+                    %input#custom_collection_3670472{:name => "", :type => "checkbox", :value => "3670472"}/
+                    %label{:for => "custom_collection_3670472", :title => "custom"} custom
+                  %li.product-edit-collection
+                    %input#custom_collection_3650022{:name => "", :type => "checkbox", :value => "3650022"}/
+                    %label{:for => "custom_collection_3650022", :title => "frontpage"} Frontpage
+        / product images
+        %td{:style => "width: 275px; padding: 0pt 0pt 0pt 10px;"}
+          %h3.section-header{:style => "margin-bottom: 0"} Product Images
+          #product-image-area.group{:style => "border-bottom: none; padding-top: 0"}
+            #pending-files{:style => "display:none;"}
+            #file-selectors{:style => "display:none;"}
+            %ul#attachments.nobull
+              %li#no-product-images-msg.item.note.c
+                %img.sb{:alt => "No_product_image", :src => "/images/other/no_product_image.gif"}/
+          #upload-area
+            %h4.st Upload an image
+            %p.note Allowed file types are .gif, .jpg, .jpeg, and .png
+            %p#file-input.st.sb
+              %input{:id => "", :name => "", :type => "file"}/
+        / product images
+  %p.btns.cl
+    =f.submit "新增商品",:id => "create-product-btn",:class => 'btn'
+    or
+    =link_to "返回", products_path
+/ end div.main
+/ end div.container

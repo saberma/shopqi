@@ -8,6 +8,7 @@
     %title 后台管理
     = stylesheet_link_tag 'admin'
     = stylesheet_link_tag 'print', :media => "print"
+    =yield :kindeditor
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
     = javascript_include_tag :admin, 'views/links/new', 'views/links/show', 'views/links/edit', 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
@@ -57,7 +58,7 @@
           %li
             %a{ :href => "/admin/customers" } 会员
           %li
-            %a{ :href => "/admin/products" } 产品
+            %a{ :href => "/admin/products" } 商品
           %li
             %a{ :href => "/admin/custom_collections" } 集合
           %li
@@ -152,3 +153,9 @@
     #dialog-content{ :style => "display:none" }
     #flasherrors{ :style => "display:none;" }
     #flashnotice{ :style => "display:none;" }
+
+    -if flash[:notice]
+      :javascript
+        window.onload = function(){
+          msg("#{flash[:notice]}");
+        }

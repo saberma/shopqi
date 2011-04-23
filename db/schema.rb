@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110420064741) do
+ActiveRecord::Schema.define(:version => 20110423115935) do
+
+  create_table "kindeditors", :force => true do |t|
+    t.string   "kindeditor_image_uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "link_lists", :force => true do |t|
     t.string   "title"
@@ -27,6 +33,18 @@ ActiveRecord::Schema.define(:version => 20110420064741) do
     t.string   "subject_params"
     t.string   "subject"
     t.integer  "link_list_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "title"
+    t.text     "description"
+    t.float    "price"
+    t.float    "market_price"
+    t.string   "number"
+    t.string   "vendor"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

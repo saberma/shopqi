@@ -1,0 +1,133 @@
+%h2#title 商品管理 
+#action-links
+  %ul
+    %li#add-prod
+      =link_to "新增商品",new_product_path
+    %li.csv
+      %a{:href => "#", :onclick => "$('export-products').toggle(); return false;"} Export products
+    %li.csv
+      %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/product_imports"} Import products
+=render :partial => "shared/noscript"      
+=render :partial => "shared/upgrade_ie"
+#export-products.box2.ssb.sst{:style => "display: none"}
+  %h3 Exporting your products
+  %p.sb
+    Your products will be exported as a
+    %strong .csv file
+    (comma separated values).
+  %a.btn{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products.csv"} Export currently shown products
+  %a.btn.sl{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/product_exports.csv"} Export all products
+#product-filters.box2.ssb.sst
+  Showing products by
+  %a#vendor-filter-link{:href => "#", :onclick => "; return false;"} all vendors
+  with
+  %a#type-filter-link{:href => "#", :onclick => "; return false;"} any product type
+  #vendor-status-select
+    %ul.nobull.filter-select.dropdown{:style => "display: none"}
+      %li
+        %strong Vendors
+      %li
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products?vendor=Shopify"} Shopify
+      %li.filter-show-all.current
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} show all
+  #type-status-select
+    %ul.nobull.filter-select.dropdown{:style => "display: none"}
+      %li
+        %strong Product Types
+      %li
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products?product_type=Shirts"} Shirts
+      %li.filter-show-all.current
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} show all
+.view-switcher
+  %a.btn.btn-group.btn-left.active{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} list view
+  %a.btn.btn-group.btn-right{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/inventory"} inventory view
+/ PRODUCTS LIST
+.listing.sst
+  #products
+    %form#batch-form{"accept-charset" => "UTF-8", :action => "/admin/products/set", :method => "post"}
+      %div{:style => "margin:0;padding:0;display:inline"}
+        %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+        %input{:name => "authenticity_token", :type => "hidden", :value => "t4NMUF1yX6an6p93ILUAgWcAxX3efzpvu0O2Zlg1+p0="}/
+      / PRODUCTS LIST
+      .listing
+        %div{:style => "height: 32px;"}
+          %table#product-controls{:cellpadding => "0", :cellspacing => "0", :style => "display: none;"}
+            %tbody
+              %tr
+                %td{:style => "text-align: left; vertical-align: middle;"}
+                  %select#product-select{:name => "operation", :onchange => "pl.submitForm(this)"}
+                    %option{:selected => "selected", :style => "color: rgb(136, 136, 136);", :value => ""} Select action…
+                    %option.indent{:value => "publish"} Publish
+                    %option.indent{:value => "unpublish"} Hide
+                    %option.indent{:value => "destroy"} Delete
+                    %optgroup{:label => "Add to collection:"}
+                      %option{:value => "add_to_collection-3670472"} custom
+                      %option{:value => "add_to_collection-3650022"} Frontpage
+                %td{:style => "text-align: center; vertical-align: middle;"}
+                  #multipage-page{:style => "display: none"}
+                    All
+                    %b#multipage-page-count ###
+                    products on this page are selected.
+                    %a#multipage-select-link{:href => "#", :onclick => "return false"}
+                      Select all
+                      %b#multipage-page-total ###
+                      products
+                  #multipage-all{:style => "display: none"}
+                    %b#multipage-all-count ###
+                    products are selected on all pages.
+                    %a#multipage-clear-link{:href => "#", :onclick => "return false"} Clear selection
+                %td{:style => "text-align: right; vertical-align: middle;"}
+                  %span#product-count.note{:style => "margin-bottom: 5px"} 0 products selected
+        #product-container
+          %table#product-table.ssb.data{:cellpadding => "0", :cellspacing => "0"}
+            %tbody
+              %tr
+                %th.nosort.sortcol{:style => "width: 16px;"}
+                  %input#select-all{:type => "checkbox"}/
+                %th.nosort.sortcol{:style => "width: 12px; text-align: center ! important;"} &nbsp;
+                %th#product-col.sortcol.sortasc{:style => "padding-left: 3px; min-width: 150px;"} Product
+                %th.nosort.sortcol Inventory
+                %th.sortcol.number{:style => "text-align: center;"} Total
+              -products.each_with_index do |p,i|
+                -r = i%2 == 0 ? "rowodd" : "roweven"
+                %tr{:id =>"row-#{p.id}" ,:class => "product #{r}"}
+                  %td{:style => "padding-right: 5px; vertical-align: middle;"}
+                    %input#checkbox-38663892.selector{:name => "products[]", :type => "checkbox", :value => "38663892"}/
+                  %td.list-image{:style => "text-align: center ! important;"}
+                    %label{:for => "checkbox-38663892"}
+                      %img{:alt => "", :src => "/images/other/no-image-thumb.gif"}/
+                  %td{:style => "padding-left: 3px; vertical-align: middle;"}
+                    %p
+                      =link_to p.title,products_path(p),:title => "处理:#{p.title}"
+                    %p.list-product-type Shirts
+                    %p.list-vendor Shopify
+                  %td.list-variants
+                    .expand-collapse-info.notification{:style => "display:none"}
+                      %p{:style => "position: absolute; top: 11px"}
+                        %a#expand-38663892{:href => "#", :onclick => "Product.expandList(38663892); return false;"}
+                          %img{:alt => "Arrow_right_small", :src => "products_files/arrow_right_small.png"}/
+                        %a#collapse-38663892{:href => "#", :onclick => "Product.collapseList(38663892); return false;", :style => "display: none;"}
+                          %img{:alt => "Arrow_down_small", :src => "products_files/arrow_down_small.png"}/
+                    %ul#variant-list-38663892.variant-list.nobull.product-list-option-1
+                      %li#variant-89269152.variant-list-item{:onmouseout => "$('variant-tip-89269152').hide();", :onmouseover => "$('variant-tip-89269152').show();"}
+                        %p.note{:style => "font-size: 9px; line-height: 11px; margin: 0"} Small
+                        %span.large{:style => "font-size: 14px;line-height: 25px"}
+                          ∞
+                        %br/
+                        #variant-tip-89269152.newtip{:style => "display: none"}
+                          .default
+                            .content 2
+                      %li#variant-89040472.variant-list-item.last-variant{:onmouseout => "$('variant-tip-89040472').hide();", :onmouseover => "$('variant-tip-89040472').show();"}
+                        %p.note{:style => "font-size: 9px; line-height: 11px; margin: 0"} Medium
+                        %span.large{:style => "font-size: 14px;line-height: 25px"}
+                          ∞
+                        %br/
+                        #variant-tip-89040472.newtip{:style => "display: none"}
+                          .default
+                            .content no SKU
+                  %td.list-total{:style => "text-align: center; vertical-align: middle;"}
+                    %span{:style => "font-size: 18px"}
+                      ∞
+#btm-nav.act-screen
+  #pagination  
+

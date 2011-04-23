@@ -2,21 +2,21 @@ Shopqi::Application.routes.draw do
 
   devise_for :users
   devise_for :user do
-    get "sign_up", :to => "devise/registrations#new"
-    get "sign_in", :to => "devise/sessions#new"
+    get "signup", :to => "devise/registrations#new"
+    get "login", :to => "devise/sessions#new"
   end
 
 
   constraints(Subdomain) do
-    match '/' => 'link_lists#index'
+    match '/' => 'home#dashboard'
   end
 
   match "/admin" => "home#dashboard"
-  match "user_root" => redirect("/admin")
 
   scope "/admin" do
     resources :link_lists, :only => [:index, :create, :destroy, :update]
     resources :links, :only => [:create, :destroy, :update, :sort]
+    resources :products, :only => [:index,:new,:create,:destroy,:update]
   end
 
   # The priority is based upon order of creation:
@@ -68,7 +68,10 @@ Shopqi::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "link_lists#index"
+  root :to => "home#index"
+
+  match '/media(/:dragonfly)', :to => Dragonfly[:images]
+  post '/kindeditor/upload_image'
 
   # See how all your routes lay out with "rake routes"
 
