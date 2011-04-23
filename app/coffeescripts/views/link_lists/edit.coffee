@@ -15,11 +15,11 @@ App.Views.LinkList.Edit = Backbone.View.extend
       model.set
         title: $("input[name='title']", this).val()
         subject: $("input[name='subject']", this).val()
+    #修正:只修改link item时也要触发change事件，更新列表
+    this.model._changed = true
     this.model.save {
         title: this.$("input[name='link_list[title]']").val()
       },
-      #只更新links item的情况下并未触发change，因此改为手动调用
-      silent: true
       success: (model, resp) ->
         #修改成功!
         msg '\u4FEE\u6539\u6210\u529F\u0021'
@@ -27,8 +27,6 @@ App.Views.LinkList.Edit = Backbone.View.extend
         #显示列表窗口、新增链接按钮
         $("#default_container_link_list_#{model.id}").show()
         $("#add_form_link_container_link_list_#{model.id}").show()
-        #显示列表
-        self.model.change()
         Backbone.history.saveLocation "link_lists/#{model.id}"
       #error: (model, response) ->
       #  new App.Views.Error
