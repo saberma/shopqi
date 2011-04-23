@@ -8,6 +8,7 @@ class CreateLinks < ActiveRecord::Migration
       t.string :subject_params, :comment => '商品集合类型的额外参数'
       t.string :subject, :comment => '其他网站类型的url地址'
       t.integer :link_list_id, :comment => '关联的链接列表id'
+      t.integer :position, :comment => '排序序号'
 
       t.timestamps
     end

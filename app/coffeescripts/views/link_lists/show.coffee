@@ -13,9 +13,20 @@ App.Views.LinkList.Show = Backbone.View.extend
     this.render()
 
   render: ->
+    self = this
     $(this.el).html $('#show-menu').tmpl this.model.attributes
     _.each this.model.links.models, (link) ->
       new App.Views.Link.Show model: link
+    #links排序
+    this.$(".nobull.sr.ssb").sortable placeholder: "sl link", handle: '.image_handle', update: (event, ui) ->
+      $.post "#{self.model.links.url}/sort", $(this).sortable('serialize')
+      #排序后设置到model
+      ids = _.map $(this).sortable('toArray'), (id) ->
+        id.substr(5) #link_1 
+      i = 0
+      _.each ids, (id) ->
+        self.model.links.get(id).set { position: i++ }, silent: true
+      self.model.links.sort silent: true
 
   destroy: ->
     #therubyracer暂时无法编译中文，最新版已修正问题但未发布

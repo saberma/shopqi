@@ -8,7 +8,7 @@ App.Views.Link.Show = Backbone.View.extend
     $('.padding', link_list_container_id).hide()
     $('.sr', link_list_container_id).show()
     _.bindAll this, 'render'
-    $(this.el).attr 'id', "link_default_li_#{this.model.id}"
+    $(this.el).attr 'id', "link_#{this.model.id}"
     this.render()
     $('.nobull', link_list_container_id).append this.el
 

@@ -14,6 +14,7 @@ App.Views.Link.New = Backbone.View.extend
     self = this
     link_list = App.link_lists.get this.model.attributes.link_list_id
     link_list.links.create
+      position: link_list.links.length
       title: this.$("input[name='link[title]']").val()
       link_type: this.$("input[name='link[link_type]']").val()
       subject: this.$("input[name='link[subject]']").val()

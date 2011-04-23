@@ -13,4 +13,11 @@ class LinksController < ApplicationController
     link.destroy
     render :json => link
   end
+
+  def sort
+    params[:link].each_with_index do |id, index|
+      link_list.links.find(id).update_attributes :position => index
+    end
+    render :nothing => true
+  end
 end

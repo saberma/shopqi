@@ -3,6 +3,9 @@ App.Collections.Links = Backbone.Collection.extend
   #init by link_lists
   #url: '/admin/link_lists/:link_list_id/links'
 
+  comparator: (link) ->
+    link.get("position")
+
   initialize: ->
     _.bindAll this, 'addOne'
     this.bind 'add', this.addOne
