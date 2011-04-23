@@ -9,7 +9,13 @@ App.Views.LinkList.Edit = Backbone.View.extend
 
   save: ->
     self = this
-    this.model.save {title: this.$("input[name='link_list[title]']").val()}
+    attrs = title: this.$("input[name='link_list[title]']").val()
+    _.each this.model.links.models, (model) ->
+      position = _.indexOf model.collection.models, model
+      model.set
+        title: this.$("input[name='link_list[links_attributes][#{position}][title]']").val()
+        subject: this.$("input[name='link_list[links_attributes][#{position}][subject]']").val()
+    this.model.save attrs,
       success: (model, resp) ->
         #修改成功!
         msg '\u4FEE\u6539\u6210\u529F\u0021'

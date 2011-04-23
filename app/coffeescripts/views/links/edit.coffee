@@ -13,7 +13,9 @@ App.Views.Link.Edit = Backbone.View.extend
     $('.nobull.ssb', edit_link_list_container_id).append this.el
 
   render: ->
-    $(this.el).html $('#edit-link-menu').tmpl this.model.attributes
-    position = _.indexOf this.model.collection.models, this.model
-    cycle = if position % 2 == 0 then 'odd' else 'even'
+    index = _.indexOf this.model.collection.models, this.model
+    cycle = if index % 2 == 0 then 'odd' else 'even'
+    attrs = _.clone this.model.attributes
+    attrs['index'] = index
+    $(this.el).html $('#edit-link-menu').tmpl attrs
     $(this.el).addClass cycle

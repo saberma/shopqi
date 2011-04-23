@@ -1,10 +1,10 @@
-%input(name="link_list[links_attributes][0][id]" type="hidden" value="${id}")
+=hidden_field_tag "link_list[links_attributes][${index}][id]", "${id}"
 %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif', :alt => "删除"
-%input.medium(name="link_list[links_attributes][0][title]" size="30" type="text" value="${title}")
-%select.selector.sl(name="link_list[links_attributes][0][link_type]")
+=text_field_tag "link_list[links_attributes][${index}][title]", "${title}", :class => :medium
+%select.selector.sl(name="link_list[links_attributes][${index}][link_type]")
   =options_for_select link_types.map{|t| [t.name, t.code]}
-%select.subject.hide(name="link_list[links_attributes][0][subject_id]")
+%select.subject.hide(name="link_list[links_attributes][${index}][subject_id]")
 %input.subject_value.hide(type="text" value="${subject}")
-%input.long.subject_http.linkform-hint(data-hint="http://shopqi.com" name="link_list[links_attributes][0][subject]" size="30" type="text" value="/")
-%input(name="link_list[links_attributes][0][subject_params]" type="hidden" value="")
-%input.hide.medium.subject_params.linkform-hint(data-hint="根据标记过滤(以逗号分隔)" name="link_list[links_attributes][0][subject_params]" size="30" type="text")
+=text_field_tag "link_list[links_attributes][${index}][subject]", "${subject}", :class => [:long, :subject_http, 'linkform-hint'], 'data-hint' => "http://shopqi.com"
+%input(name="link_list[links_attributes][${index}][subject_params]" type="hidden" value="")
+%input.hide.medium.subject_params.linkform-hint(data-hint="根据标记过滤(以逗号分隔)" name="link_list[links_attributes][${index}][subject_params]" size="30" type="text")
