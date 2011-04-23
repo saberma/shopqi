@@ -28,11 +28,9 @@
       #utils
         %ul
           %li{ :style => "float: left; margin-left: 60px; position: relative;" }
-            %a{ :href => "http://github.shopqi.com", "data-popup" => "true" }
-              http://github.shopqi.com
+            =link_to show_shop_url,show_shop_url
           %li
-            %a{ :href => "/admin/auth/logout" }
-              Logout
+            =link_to "退出登录", destroy_user_session_path
           %li
             %a{ :href => "/admin/account" }
               Account

@@ -1,43 +1,76 @@
 -unless Subdomain.matches?(request)
-  #content-top
-    #content-bottom
-      #content
-        #main
-          %h3 登录
-          = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-            =f.semantic_errors :email, :password, :id => :error
-            =f.inputs do
-              =f.input :email, :hint => '用户名即为注册时填写的Email地址', :required => false
-              =f.input :password, :hint => false, :required => false
-            %p{:style => 'margin-bottom:20px'}
-              =check_box_tag :remember_me, 1, false, :id => :user_remember_me, :style => 'width:20px; margin-left:25%;'
-              = f.label :remember_me, :style => 'display:inline'
-            =f.buttons do
-              =f.commit_button '登录'
-          = render :partial => "devise/shared/links"
-
+  #banner
+    .content
+      %h1 Login
+  .content.subpage
+    .loginarea
+      .col-5{:style => "padding-top:25px;"}
+        =form_for(resource, :url => session_path(resource_name)) do |f|
+          =message_block :on => [:user,:shop]
+          -#%label{:for => "subdomain"} Shop Address
+          -#%input#subdomain.formnote{:name => "subdomain", :type => "text"}/
+          -#%span.formnote .shopqi.com
+          =f.label :email
+          =f.text_field :email,:id => "login"
+          =f.label :password
+          =f.password_field :password,:id => "password",:class => 'formnote'
+          / <span class="formnote"><a href="">Forgot?</a></span>
+          %input{:name => "name", :onclick => "this.form.submit();", :src => "/images/buttons/btn-login-grey.gif", :type => "image", :value => "log in"}/
+      / .col-5
+      .col-5.secondcol.last{:style => "padding-top:25px;padding-bottom:25px"}
+        %h3 Other ways to log in
+        %p
+          You can also login by adding
+          %code /admin
+          to the end of your myshopify.com address.
+        %p
+          %em.light
+            If your store address is
+            %code http://examplestore.myshopify.com
+            = succeed "then" do
+              %br/
+            your admin would be
+            %br/
+            %code http://examplestore.myshopify.com/admin
+        %p If you don't remember your store name, you can find it in the welcome mail that we've sent to you when you signed up.
+        %h3 Don't have an account yet?
+        =link_to new_registration_path(resource_name) do
+          %img{:src => "/images/buttons/btn-signupnow.gif"}
+      / .col-5
+    / .col-8
+  / content
+  %div{:style => "margin-top: 30px;"}
+  #push
 -else
-  #page
-    #header
-      #container
-        #branding
-    #content
-      .container
-        -semantic_form_for resource,:as => resource_name,:url => session_path(resource_name) do |f|
-          .header.field
-            %h1 Login to ShopQi
-          .field
-            =f.label :email
-            =f.text_field :email
-          .field
-            =f.label :password
-            =f.password_field :password
-          .field
-            =submit_tag "登录", :class=>"green_button"
-        #footer
-          %ul
-            %li
-              %a{:href=>"http://www.shopqi.com/"}
-                主页
-            %li
-              = link_to "忘记密码", new_password_path(resource_name)
+  #container
+    #dialog
+      .ssb.c
+        %img{:alt => "Shopify-logo-new", :src => "/images/logos/shopify-logo-new.jpg"}/
+      =form_for(resource, :url => session_path(resource_name)) do |f|
+        #sign-in-form.lform
+          %noscript
+            %p
+              Please note that in order to use the Shopify administration interface you need to
+              = succeed "." do
+                =render :partial => "shared/noscript"
+          #login
+            .ppb.clearfix
+              =f.label :email,:id => "email_address"
+              =f.text_field :email,:id => "login-input",:size => 30,:class => "email"
+            .ppb.clearfix
+              =f.label :password,:id => "password_label"
+              =f.password_field :password,:id => "password",:class => 'formnote',:size => 16
+              #forgot-password
+                =link_to  "忘记密码?", new_password_path(resource_name)
+            .ppb.c
+              =check_box_tag :remember_me, 1, false, :id => :remember_checkbox
+              = f.label :remember_me, :class => 'normal'
+          .actions
+            %input.btn{:name => "commit", :type => "submit", :value => "登录"}/
+      :javascript
+        document.observe("dom:loaded", function() {
+        $$('input').each(function(e) {
+        e.autocapitalize = false;
+        });
+        
+        });

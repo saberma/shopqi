@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessor :shop_name,:shop_permanent_domain
-  attr_accessible :email, :password, :password_confirmation, :remember_me,:shop_name,:shop_permanent_domain
+  attr_accessible :email, :password, :password_confirmation, :remember_me,:shop_name,:shop_permanent_domain,:name
   belongs_to :shop
   validates_presence_of :shop_name
   validates_presence_of :shop_permanent_domain
