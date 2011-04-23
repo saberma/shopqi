@@ -2,15 +2,15 @@ App.Views.LinkList.Show = Backbone.View.extend
   tagName: 'li'
   className: 'links toolbox default-menu link-list'
 
+  events:
+    "click .destroy": "destroy"
+
   initialize: ->
     _.bindAll this, 'render'
     this.model.bind 'change', this.render
     $(this.el).attr 'id', "link_lists/#{this.model.id}"
     $('#menus').append this.el
     this.render()
-
-  events:
-    "click .destroy": "destroy"
 
   render: ->
     $(this.el).html $('#show-menu').tmpl this.model.attributes

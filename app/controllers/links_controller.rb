@@ -8,4 +8,9 @@ class LinksController < ApplicationController
     link.save
     render :json => link
   end
+
+  def destroy
+    link.destroy
+    render :json => link
+  end
 end

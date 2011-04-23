@@ -16,7 +16,7 @@ Shopqi::Application.routes.draw do
 
   scope "/admin" do
     resources :link_lists, :only => [:index, :create, :destroy, :update] do
-      resources :links, :only => [:create, :destroy, :update, :sort]
+      resources :links, :only => [:create, :destroy, :sort]
     end
   end
 

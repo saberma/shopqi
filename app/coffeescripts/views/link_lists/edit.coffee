@@ -9,13 +9,17 @@ App.Views.LinkList.Edit = Backbone.View.extend
 
   save: ->
     self = this
-    attrs = title: this.$("input[name='link_list[title]']").val()
-    _.each this.model.links.models, (model) ->
-      position = _.indexOf model.collection.models, model
+    #循环li，把输入项设置回model
+    $('li', this.el).each ->
+      model = self.model.links.get $("input[name='id']", this).val()
       model.set
-        title: this.$("input[name='link_list[links_attributes][#{position}][title]']").val()
-        subject: this.$("input[name='link_list[links_attributes][#{position}][subject]']").val()
-    this.model.save attrs,
+        title: $("input[name='title']", this).val()
+        subject: $("input[name='subject']", this).val()
+    this.model.save {
+        title: this.$("input[name='link_list[title]']").val()
+      },
+      #只更新links item的情况下并未触发change，因此改为手动调用
+      silent: true
       success: (model, resp) ->
         #修改成功!
         msg '\u4FEE\u6539\u6210\u529F\u0021'
@@ -23,6 +27,8 @@ App.Views.LinkList.Edit = Backbone.View.extend
         #显示列表窗口、新增链接按钮
         $("#default_container_link_list_#{model.id}").show()
         $("#add_form_link_container_link_list_#{model.id}").show()
+        #显示列表
+        self.model.change()
         Backbone.history.saveLocation "link_lists/#{model.id}"
       #error: (model, response) ->
       #  new App.Views.Error
