@@ -11,7 +11,7 @@
     =yield :kindeditor
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
-    = javascript_include_tag :admin, 'views/links/new', 'views/links/show', 'views/links/edit', 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
+    = javascript_include_tag :admin, 'views/links/new', 'views/links/show', 'views/links/edit', 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
     = csrf_meta_tag
   %body
     /
@@ -78,7 +78,7 @@
             %h3
               No apps installed yet
             %p#apps-manage
-              %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/applications" }
+              %a{ :href => "https://github.shopqi.com/admin/applications" }
                 Manage apps
             %p.more
               %a{ :href => "http://apps.shopify.com" }
@@ -97,7 +97,7 @@
                 %a{ :href => "/admin/themes/current" }
                   Template Editor
             %p.more
-              %a{ :href => "http://themes.shopify.com?shop=medhurst-shields-and-kunde7896.myshopify.com" }
+              %a{ :href => "http://themes.shopify.com?shop=github.shopqi.com" }
                 Browse Themes
               %span
                 visit the Theme Store
@@ -107,25 +107,25 @@
               Your store settings
             %ul
               %li#settings
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/general_preferences" }
+                %a{ :href => "https://github.shopqi.com/admin/general_preferences" }
                   General Settings
               %li#regions
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/countries" }
+                %a{ :href => "https://github.shopqi.com/admin/countries" }
                   Regions &amp; Taxes
               %li#payment
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/payments" }
+                %a{ :href => "https://github.shopqi.com/admin/payments" }
                   Checkout &amp; Payment
               %li#shipping
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/shipping/index" }
+                %a{ :href => "https://github.shopqi.com/admin/shipping/index" }
                   Shipping
               %li#fulfillment
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/fulfillment_services" }
+                %a{ :href => "https://github.shopqi.com/admin/fulfillment_services" }
                   Fulfillment Services
               %li#email
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/notifications" }
+                %a{ :href => "https://github.shopqi.com/admin/notifications" }
                   Email &amp; Notifications
               %li#network
-                %a{ :href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/domains" }
+                %a{ :href => "https://github.shopqi.com/admin/domains" }
                   DNS &amp; Domains
       /
         begin div.main

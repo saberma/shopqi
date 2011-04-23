@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20110423115935) do
     t.string   "subject_params"
     t.string   "subject"
     t.integer  "link_list_id"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

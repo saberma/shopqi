@@ -22,8 +22,6 @@ class LinkListsController < ApplicationController
   end
 
   def update
-    links = params[:link_list].delete(:links)
-    link_list.links_attributes = links
     link_list.save
     render :json => link_list
   end

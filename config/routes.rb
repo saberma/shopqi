@@ -14,9 +14,14 @@ Shopqi::Application.routes.draw do
   match "/admin" => "home#dashboard"
 
   scope "/admin" do
-    resources :link_lists, :only => [:index, :create, :destroy, :update]
-    resources :links, :only => [:create, :destroy, :update, :sort]
     resources :products, :only => [:index,:new,:create,:destroy,:update]
+    resources :link_lists, :only => [:index, :create, :destroy, :update] do
+      resources :links, :only => [:create, :destroy] do
+        collection do
+          post :sort
+        end
+      end
+    end
   end
 
   # The priority is based upon order of creation:

@@ -67,10 +67,3 @@
               = f.label :remember_me, :class => 'normal'
           .actions
             %input.btn{:name => "commit", :type => "submit", :value => "登录"}/
-      :javascript
-        document.observe("dom:loaded", function() {
-        $$('input').each(function(e) {
-        e.autocapitalize = false;
-        });
-        
-        });

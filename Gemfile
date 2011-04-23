@@ -62,15 +62,16 @@ group :development do
   #gem "livereload"
   gem 'guard'
   #only on the linux platform install the gem
-  if RUBY_PLATFORM =~ /linux/
-    #vagrant虚拟机没有安装桌面
-    #gem "rb-inotify"
-    #notification support
-    #gem 'libnotify'
-  elsif RUBY_PLATFORM =~ /darwin/
-    gem 'rb-fsevent'
-    gem 'growl'
-  end
+  #if语句无法做到兼容linux和mac环境，导致Gemfile.lock不断变化，先去掉提示功能
+  #if RUBY_PLATFORM =~ /linux/
+  #  #vagrant虚拟机没有安装桌面
+  #  #gem "rb-inotify"
+  #  #notification support
+  #  #gem 'libnotify'
+  #elsif RUBY_PLATFORM =~ /darwin/
+  #  gem 'rb-fsevent'
+  #  gem 'growl'
+  #end
   gem 'guard-livereload'
   gem 'guard-rspec'
   gem 'guard-spork'

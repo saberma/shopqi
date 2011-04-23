@@ -14,6 +14,7 @@ public/images/menu/4*.png
 
 #上传的图片
 public/images/uploads/**
+public/system/dragonfly/**
 
 #去掉编译后的css文件(production环境下rails不处理静态文件)
 #public/stylesheets/compiled/**
