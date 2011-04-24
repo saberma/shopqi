@@ -84,6 +84,8 @@ group :test do
   gem "rspec-rails"
   gem "factory_girl"
   gem "factory_girl_rails"
+  # 集成测试
+  gem 'capybara'
   # resque测试
   gem 'resque_spec'
 
