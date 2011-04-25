@@ -17,7 +17,7 @@ Shopqi::Application.routes.draw do
 
     resources :products, :only => [:index,:new,:create,:destroy,:update]
 
-    resources :pages
+    resources :pages, :except => :edit
 
     resources :link_lists, :only => [:index, :create, :destroy, :update] do
       resources :links, :only => [:create, :destroy] do

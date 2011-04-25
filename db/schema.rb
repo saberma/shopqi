@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(:version => 20110425043757) do
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title"
-    t.boolean  "visible",    :default => false
-    t.string   "handle"
+    t.boolean  "published",  :default => false
+    t.string   "handle",                        :null => false
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"

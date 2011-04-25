@@ -1,7 +1,7 @@
 %tr(class="#{cycle(:odd, :event)}")
   %td
     =link_to page.title, page_path(page), :title => "handle: #{page.title}"
-    -if page.visible?
+    -if page.published?
       %span.status-hidden 隐藏
   %td.date(style="text-align: right")=page.updated_at.to_s(:db)
   %td(style="text-align: center")

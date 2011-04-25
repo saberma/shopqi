@@ -1,0 +1,50 @@
+- use_kindeditor
+%h2#title= link_to page.title, "/pages/#{page.handle}", title: '在网店中查看此页面', target: '_blank'
+#action-links
+  %ul
+    %li.no-icon
+      %a#page-edit-link{:href => "#"} 编辑
+    %li.no-pad
+      = link_to image_tag('admin/icons/trash.gif'), page_path(page), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+
+.page-edit.hide
+  .group(style="margin-top:0")
+    =form_for page do |f|
+      #page-form
+        %dl
+          %dt
+            %label(for="page_title") 标题
+          %dd=f.text_field :title, class: [:big, :sb]
+          %dt#edit-handle-label(style="display:none; font-size:85%") Permalink/Handle
+          %dd#edit-handle.ssb(style="display:none;")
+            %span.note http//medhurst-shields-and-kunde7896.myshopify.com/pages/
+            =f.text_field :handle, style: 'width: 175px'
+            %span.note
+              (
+              %a(href="http//wiki.shopify.com/Handle" target="_blank")> what's this?
+              )
+          %dt
+            %label(for="page_body_html") 编写您的页面
+          %dd(style="margin-bottom:0")=f.text_area :content, :id => 'kindeditor'
+          %dd.btns.editor-btns
+            %div(style="padding:5px")
+              %input#submit-page-btn.btn(name="commit" type="submit" value="新增页面")
+              或者
+              = link_to '取消', pages_path
+
+#page-show.box2.article(style="cursor: pointer" title="Edit")
+  #page-body.textile.pgroup
+    / Table Wrapper to prevent the layout from breaking due to invalid user text!
+    %table.table-wrapper
+      %tr
+        %td
+          %p=raw page.content
+.box2.sst
+  / The parent is needed for the nested resource Article (blog is the parent)
+  %h3 页面可见性
+  %p.sb.note
+    如果你不需要此页面显示在您的网店中，您可以设置它的可见性为
+    = succeed "." do
+      %em 隐藏
+  =form_for page, :remote => true do |f|
+    =f.select :published, [['显示', true], ['隐藏', false]], {}, :style => "width: 120px; font-size: 13px"

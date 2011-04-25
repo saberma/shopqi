@@ -8,10 +8,11 @@
     %title 后台管理
     = stylesheet_link_tag 'admin'
     = stylesheet_link_tag 'print', :media => "print"
-    =yield :kindeditor
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
     = javascript_include_tag :admin, 'views/links/new', 'views/links/show', 'views/links/edit', 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
+    =yield :kindeditor
+    =yield :javascripts
     = csrf_meta_tag
   %body
     /
