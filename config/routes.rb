@@ -1,5 +1,7 @@
 Shopqi::Application.routes.draw do
 
+  resources :pages
+
   devise_for :users
   devise_for :user do
     get "signup", :to => "devise/registrations#new"

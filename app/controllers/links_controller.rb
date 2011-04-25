@@ -1,5 +1,7 @@
 # encoding: utf-8
 class LinksController < ApplicationController
+  prepend_before_filter :authenticate_user!
+
   expose(:link_list)
   expose(:links) { link_list.links }
   expose(:link)
