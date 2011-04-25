@@ -5,11 +5,9 @@ class PagesController < ApplicationController
   expose(:pages) { current_user.shop.pages }
   expose(:page)
 
-  def index
-  end
-
   def create
     page.save
+    redirect_to page_path(page)
   end
 
   def update

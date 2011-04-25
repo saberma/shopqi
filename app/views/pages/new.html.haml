@@ -1,0 +1,28 @@
+- use_kindeditor
+%h2#title 新 增 页 面
+#action-links
+  %ul
+    %li.no-icon=link_to '取消', pages_path
+.group(style="margin-top:0")
+  =form_for page do |f|
+    #page-form
+      %dl
+        %dt
+          %label(for="page_title") 标题
+        %dd=f.text_field :title, class: [:big, :sb]
+        %dt#edit-handle-label(style="display:none; font-size:85%") Permalink/Handle
+        %dd#edit-handle.ssb(style="display:none;")
+          %span.note http//medhurst-shields-and-kunde7896.myshopify.com/pages/
+          =f.text_field :handle, style: 'width: 175px'
+          %span.note
+            (
+            %a(href="http//wiki.shopify.com/Handle" target="_blank")> what's this?
+            )
+        %dt
+          %label(for="page_body_html") 编写您的页面
+        %dd(style="margin-bottom:0")=f.text_area :content, :id => 'kindeditor'
+        %dd.btns.editor-btns
+          %div(style="padding:5px")
+            %input#submit-page-btn.btn(name="commit" type="submit" value="新增页面")
+            或者
+            = link_to '取消', pages_path
