@@ -1,4 +1,4 @@
-%h2#title 文章 &amp; 页面
+%h2#title 博客 &amp; 页面
 #action-links
   %ul
     %li#create-page= link_to "新增页面", new_page_path
@@ -6,39 +6,18 @@
 #pages
   %h4 页面
   %p.description
-    页面可以用来显示您的企业信息或者帮助信息的地方
-    your business or products.
+    页面是显示您的企业信息或者帮助信息的地方
     %br
     例如:
-    %em
-      "关于我们" , "服务条款"等等
-  %table#page-list.data.row-space{ :cellspacing => "0", :cellpadding => "0", :style => "margin-bottom: 40px" }
+    %em "关于我们" , "服务条款"等等
+  %table#page-list.data.row-space(cellspacing="0" cellpadding="0" style="margin-bottom: 40px")
     %thead
       %tr
-        %th{ :scope => "col" } 标题
-        %th{ :scope => "col", :style => "width: 150px; text-align: right; padding-right: 0" } 更新时间
-        %th{ :scope => "col", :style => "width: 50px" } \&nbsp;
-    %tbody
-      %tr#page-5082262.odd
-        %td
-          %a{ :href => "/admin/pages/5082262", :title => "handle: about-us" }
-            About Us
-        %td.date{ :style => "text-align: right" }
-          2011-04-13 11:03PM
-        %td{ :style => "text-align: center" }
-          %a.del{ :href => "/admin/pages/5082262", "data-confirm" => "Are you sure you want to delete this page?", "data-method" => "delete", :rel => "nofollow", :title => "Delete this" }
-            %img{ :alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-      %tr#page-5082252.even
-        %td
-          %a{ :href => "/admin/pages/5082252", :title => "handle: frontpage" }
-            Welcome
-        %td.date{ :style => "text-align: right" }
-          2011-04-13 11:03PM
-        %td{ :style => "text-align: center" }
-          %a.del{ :href => "/admin/pages/5082252", "data-confirm" => "Are you sure you want to delete this page?", "data-method" => "delete", :rel => "nofollow", :title => "Delete this" }
-            %img{ :alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-  /
-    PAGINATION LINKS
+        %th(scope="col") 标题
+        %th(scope="col" style="width: 150px; text-align: right; padding-right: 0") 更新时间
+        %th(scope="col" style="width: 50px") &nbsp;
+    %tbody= render :partial => "page", collection: pages
+  / PAGINATION LINKS
   #btm-nav.act-screen
     #pagination
 

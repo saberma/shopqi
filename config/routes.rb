@@ -1,7 +1,5 @@
 Shopqi::Application.routes.draw do
 
-  resources :pages
-
   devise_for :users
   devise_for :user do
     get "signup", :to => "devise/registrations#new"
@@ -16,7 +14,11 @@ Shopqi::Application.routes.draw do
   match "/admin" => "home#dashboard"
 
   scope "/admin" do
+
     resources :products, :only => [:index,:new,:create,:destroy,:update]
+
+    resources :pages
+
     resources :link_lists, :only => [:index, :create, :destroy, :update] do
       resources :links, :only => [:create, :destroy] do
         collection do
@@ -24,6 +26,7 @@ Shopqi::Application.routes.draw do
         end
       end
     end
+
   end
 
   # The priority is based upon order of creation:
