@@ -5,4 +5,11 @@ module ApplicationHelper
     current_user ? current_user.shop : Shop.where(:permanent_domain => request.subdomain).first 
   end
 
+
+  def use_kindeditor
+    content_for :kindeditor do 
+      javascript_include_tag("kindeditor/kindeditor-min","kindeditor/kindeditor_config")
+    end
+  end
+
 end

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  prepend_before_filter :authenticate_user! ,:only => [:show]
+  prepend_before_filter :authenticate_user! ,:only => [:dashboard]
   def index
   end
 

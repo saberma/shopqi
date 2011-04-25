@@ -15,7 +15,7 @@ class CreateShops < ActiveRecord::Migration
       t.string :city,:comment => "城市"
       t.string :address ,:comment => "详细地址"
       t.string :keywords, :comment => "关键字"
-      t.boolean :public,:comment => "是否公开"
+      t.boolean :public,:default => true,:comment => "是否公开"
 
       t.timestamps
     end
