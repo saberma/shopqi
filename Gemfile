@@ -84,8 +84,8 @@ group :test do
   gem "rspec-rails"
   gem "factory_girl"
   gem "factory_girl_rails"
-  # 集成测试
-  gem 'capybara'
+  # 集成测试，最新版才支持:js=>true参数
+  gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   # resque测试
   gem 'resque_spec'
 
