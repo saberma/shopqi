@@ -10,6 +10,8 @@ gem 'auto_migrations'
 gem 'devise'
 
 
+#####客户端校验######
+gem 'client_side_validations'
 # 用于保存配置型记录
 gem 'active_hash'
 # 分页
