@@ -1,0 +1,2 @@
+module SmartCollectionsHelper
+end

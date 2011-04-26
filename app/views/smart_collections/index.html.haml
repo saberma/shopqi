@@ -1,0 +1,24 @@
+%h2#title 商品集合
+#action-links
+  %ul
+    %li#new-std-lbl
+      %a(href="/admin/custom_collections/new") 新增自定义集合
+    %li#new-smt-lbl= link_to "新增智能集合", '#new_smart'
+#smart-collections.pgroup.sst
+  %h3 智能集合
+  %table.collection-list
+    %tr
+      %td.collection
+        %a(href="/admin/smart_collections/3723882" title="handle: high-price")
+          high price
+        %p
+          0 products
+        %p
+          Variant price is greater than 2 and Vendor is less than 2
+      %td
+        \&nbsp;
+      %td
+        \&nbsp;
+  #pagination
+-#
+  =render 'custom_collections/index'

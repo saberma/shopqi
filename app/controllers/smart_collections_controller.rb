@@ -1,0 +1,2 @@
+class SmartCollectionsController < ApplicationController
+end
