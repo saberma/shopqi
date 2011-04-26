@@ -8,10 +8,11 @@
     %title 后台管理
     = stylesheet_link_tag 'admin'
     = stylesheet_link_tag 'print', :media => "print"
-    =yield :kindeditor
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
-    = javascript_include_tag :admin, 'views/links/new', 'views/links/show', 'views/links/edit', 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
+    = javascript_include_tag :admin
+    =yield :kindeditor
+    =yield :javascripts
     = csrf_meta_tag
   %body
     /
@@ -50,23 +51,9 @@
         begin div.nav
       #nav.col-12.last
         %ul#navlist
-          %li
-            %a{ :href => "/admin" }
-              %img{ :alt => "Home", :src => "/images/admin/icons/home.gif?0786aff543930b75c5c67bcf1e5a7c7b7e5e1ca4" }
-          %li
-            %a{ :href => "/admin/orders" } 订单
-          %li
-            %a{ :href => "/admin/customers" } 会员
-          %li
-            %a{ :href => "/admin/products" } 商品
-          %li
-            %a{ :href => "/admin/custom_collections" } 集合
-          %li
-            %a{ :href => "/admin/pages" } 文章 &amp; 页面
-          %li
-            %a#current{ :href => "/admin/link_lists" } 链接列表
-          %li
-            %a{ :href => "/admin/marketing" } 市场营销
+          %li= link_to image_tag('admin/icons/home.gif'), admin_path
+          -menus.each do |menu|
+            %li=link_to menu[:label], menu[:url], :id => current(menu)
       /
         end div.nav
     /

@@ -1,0 +1,25 @@
+%h2#title 博客 &amp; 页面
+#action-links
+  %ul
+    %li#create-page= link_to "新增页面", new_page_path
+    %li#create-blog= link_to "新增博客", '#'
+#pages
+  %h4 页面
+  %p.description
+    页面是显示您的企业信息或者帮助信息的地方
+    %br
+    例如:
+    %em "关于我们" , "服务条款"等等
+  %table#page-list.data.row-space(cellspacing="0" cellpadding="0" style="margin-bottom: 40px")
+    %thead
+      %tr
+        %th(scope="col") 标题
+        %th(scope="col" style="width: 150px; text-align: right; padding-right: 0") 更新时间
+        %th(scope="col" style="width: 50px") &nbsp;
+    %tbody= render :partial => "page", collection: pages
+  / PAGINATION LINKS
+  #btm-nav.act-screen
+    #pagination
+
+-#
+  = render :partial => "blogs/index"

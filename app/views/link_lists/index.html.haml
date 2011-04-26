@@ -1,28 +1,35 @@
+=content_for :javascripts do
+  =javascript_include_tag 'views/links/new', 'views/links/show', 'views/links/edit', 'views/link_lists/index', 'views/link_lists/new', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists', 'controllers/link_lists'
+
 %h2#title 商店导航
 #action-links
   %ul
     %li#new-menu=link_to '新增链接列表', '#new'
-=render :partial => 'new', :locals => { :link_list => link_list }
+=render 'new', locals: { link_list: link_list }
 #link-lists
   %h3.st.sb 链接列表
   %p.note.ssb
     当您添加一个新的链接列表，需要在外观主题中包含它才能显示出来
     %br
     要让这个链接列表显示在商店页面，请在
-    %a{ :href => "/admin/themes/current" } 模板编辑器
+    %a(href="/admin/themes/current") 模板编辑器
     中修改模板.
   .section
     %ul#menus.nobull.st
 %script(id="show-menu" type="text/x-jquery-tmpl")
-  = render :partial => "link_lists/show"
+  = render "link_lists/show"
 %script(id="edit-menu" type="text/x-jquery-tmpl")
-  = render :partial => "link_lists/edit", :locals => { :link_list => link_list, :link_types => link_types }
+  = render "link_lists/edit", locals: { link_list: link_list, link_types: link_types }
 %script(id="show-link-menu" type="text/x-jquery-tmpl")
-  = render :partial => "links/show"
+  = render "links/show"
 %script(id="edit-link-menu" type="text/x-jquery-tmpl")
-  = render :partial => "links/edit"
+  = render "links/edit"
 
 :javascript
+  App.init = function(){
+    new App.Controllers.LinkLists();
+    Backbone.history.start();
+  }
   App.link_lists = new App.Collections.LinkLists();
   //根据backbone文档，使用refresh方法进行初始化(而非fetch)，避免数据未加载完成，导致类似#linklists/1路由失效
-  App.link_lists.refresh(#{link_lists.to_json(:except => [ :created_at, :updated_at ], :include => :links) });
+  App.link_lists.refresh(#{link_lists.to_json(except: [ :created_at, :updated_at ], include: :links)});
