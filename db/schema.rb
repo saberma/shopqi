@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20110423115935) do
     t.string   "city"
     t.string   "address"
     t.string   "keywords"
-    t.boolean  "public"
+    t.boolean  "public",           :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

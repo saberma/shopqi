@@ -20,5 +20,8 @@ Factory.define :shop_liwh, :parent => :shop do |u|
   u.permanent_domain 'liwh'
   u.email 'liwh87@gmail.com'
   u.phone '400-800-88000'
+  u.products {[
+    Factory.build(:iphone4)
+  ]}
 end
 

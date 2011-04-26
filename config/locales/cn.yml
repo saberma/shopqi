@@ -11,8 +11,9 @@ cn:
       user:
         email: 邮箱
         password: 密码
-        shop_name: 商店名
-        shop_permanent_domain: 二级域名
+      shop:
+        permanent_domain: 二级域名
+        name: 网店名
       product:
         title: 标题
         description: 描述
@@ -37,6 +38,10 @@ cn:
             password:
               blank: 不能为空
               confirmation: 和确认密码需一致
+        shop:
+          attributes:
+            permanent_domain:
+              blank: 不能为空
 
   date:
     formats:

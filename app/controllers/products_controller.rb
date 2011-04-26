@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
 
   def create
     product.save
-    redirect_to products_path,:notice => "新增商品成功"
+    redirect_to products_path, notice: "新增商品成功!"
   end
 
 end

@@ -1,7 +1,6 @@
 Shopqi::Application.routes.draw do
 
-  devise_for :users
-  devise_for :user do
+  devise_for :user,:controllers => {:registrations => "users/registrations"} do
     get "signup", :to => "devise/registrations#new"
     get "login", :to => "devise/sessions#new"
   end
@@ -73,7 +72,7 @@ Shopqi::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "home#index"
+  root :to => "home#dashboard"
 
   match '/media(/:dragonfly)', :to => Dragonfly[:images]
   post '/kindeditor/upload_image'

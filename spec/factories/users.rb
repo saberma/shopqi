@@ -8,7 +8,8 @@ end
 
 Factory.define :user_liwh, :parent => :user do |u|
   u.email 'liwh87@shopqi.com'
-  u.shop  { Factory(:shop_liwh)}
+  u.shop_permanent_domain 'liwh'
+  u.shop_name '陶瓷商店'
 end
 
 Factory.define :user_admin, :parent => :user do |u|
