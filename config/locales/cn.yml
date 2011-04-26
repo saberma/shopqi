@@ -11,9 +11,9 @@ cn:
       user:
         email: 邮箱
         password: 密码
-      shop:
-        permanent_domain: 二级域名
-        name: 网店名
+        shop:
+          permanent_domain: 二级域名
+          name: 网店名
       product:
         title: 标题
         description: 描述
@@ -42,6 +42,7 @@ cn:
           attributes:
             permanent_domain:
               blank: 不能为空
+              too_short: 必须是3位以上,20位以下的字母组合
 
   date:
     formats:
