@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20110425043757) do
     t.string   "title"
     t.boolean  "published",  :default => false
     t.string   "handle",                        :null => false
-    t.text     "content"
+    t.text     "body_html"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
