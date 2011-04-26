@@ -1,13 +1,16 @@
 - use_kindeditor
+=content_for :javascripts do
+  =javascript_include_tag 'controllers/pages'
+
 %h2#title= link_to page.title, "/pages/#{page.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
   %ul
     %li.no-icon
-      %a#page-edit-link{:href => "#"} 编辑
+      %a#page-edit-link{:href => "#pages/edit"} 编辑
     %li.no-pad
       = link_to image_tag('admin/icons/trash.gif'), page_path(page), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
 
-.page-edit.hide
+.page-edit
   .group(style="margin-top:0")
     =form_for page do |f|
       #page-form
@@ -25,14 +28,14 @@
               )
           %dt
             %label(for="page_body_html") 编写您的页面
-          %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor'
+          %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 282px;"
           %dd.btns.editor-btns
             %div(style="padding:5px")
               %input#submit-page-btn.btn(name="commit" type="submit" value="新增页面")
               或者
-              = link_to '取消', pages_path
+              = link_to '取消', '#'
 
-#page-show.box2.article(style="cursor: pointer" title="Edit")
+#page-show.box2.article(style="cursor: pointer" title="点击修改")
   #page-body.textile.pgroup
     / Table Wrapper to prevent the layout from breaking due to invalid user text!
     %table.table-wrapper
@@ -48,3 +51,9 @@
       %em 隐藏
   =form_for page, remote: true, html: {id: 'edit_page_form'} do |f|
     =f.select :published, [['显示', true], ['隐藏', false]], {}, style: "width: 120px; font-size: 13px", onchange: "$('#edit_page_form').submit();"
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Pages();
+    Backbone.history.start();
+  }
