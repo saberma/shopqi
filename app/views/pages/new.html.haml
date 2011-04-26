@@ -20,7 +20,7 @@
             )
         %dt
           %label(for="page_body_html") 编写您的页面
-        %dd(style="margin-bottom:0")=f.text_area :content, :id => 'kindeditor'
+        %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor'
         %dd.btns.editor-btns
           %div(style="padding:5px")
             %input#submit-page-btn.btn(name="commit" type="submit" value="新增页面")

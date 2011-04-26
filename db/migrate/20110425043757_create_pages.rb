@@ -6,7 +6,7 @@ class CreatePages < ActiveRecord::Migration
       t.string :title, comment: '标题'
       t.boolean :published, comment: '是否可见', default: false
       t.string :handle, comment: '用于模板中的Permalink/Handle', null: false
-      t.text :content, comment: '内容'
+      t.text :body_html, comment: '内容'
 
       t.timestamps
     end
