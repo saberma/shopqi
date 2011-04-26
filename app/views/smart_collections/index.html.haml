@@ -1,24 +1,29 @@
+=content_for :stylesheets do
+  %style
+    :sass
+      ul.collection-list
+        list-style-type: none
+        margin: 0 10px 0px 5px
+        padding: 0 5px
+        width: 98%
+        li.collection
+          padding-left: 30px
+          background: url(/images/admin/icons/smart-label.gif) no-repeat
+          width: 33%
+          color: #777
+          border-bottom: 1px dotted #DDD
+          padding: 0 5px 10px 5px
+          vertical-align: top
+
 %h2#title 商品集合
 #action-links
   %ul
+    %li#new-smt-lbl= link_to "新增智能集合", '#new_smart'
     %li#new-std-lbl
       %a(href="/admin/custom_collections/new") 新增自定义集合
-    %li#new-smt-lbl= link_to "新增智能集合", '#new_smart'
 #smart-collections.pgroup.sst
   %h3 智能集合
-  %table.collection-list
-    %tr
-      %td.collection
-        %a(href="/admin/smart_collections/3723882" title="handle: high-price")
-          high price
-        %p
-          0 products
-        %p
-          Variant price is greater than 2 and Vendor is less than 2
-      %td
-        \&nbsp;
-      %td
-        \&nbsp;
+  %ul.collection-list=render smart_collections
   #pagination
 -#
   =render 'custom_collections/index'

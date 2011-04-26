@@ -10,6 +10,7 @@
     = stylesheet_link_tag 'print', :media => "print"
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
+    =yield :stylesheets
     = javascript_include_tag :admin
     =yield :kindeditor
     =yield :javascripts
