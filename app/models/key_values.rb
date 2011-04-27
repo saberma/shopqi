@@ -25,5 +25,18 @@ module KeyValues
       ]
     end
 
+    class Order < ActiveHash::Base
+      self.data = [
+        {:id => 1, :name => '按字母升序: A-Z', :code => 'alpha-asc'},
+        {:id => 2, :name => '按字母降序: Z-A', :code => 'alpha-desc'},
+        {:id => 3, :name => '按销售量排序', :code => 'best-selling'},
+        {:id => 4, :name => '按创建日期: 最近-最久', :code => 'created-desc'},
+        {:id => 5, :name => '按创建日期: 最久-最近', :code => 'created'},
+        {:id => 6, :name => '按价格排序: 最高-最低', :code => 'price-desc'},
+        {:id => 7, :name => '按价格排序: 最低-最高', :code => 'price-asc'},
+        {:id => 8, :name => '手动排序', :code => 'manual'},
+      ]
+    end
+
   end
 end
