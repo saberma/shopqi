@@ -21,6 +21,12 @@ cn:
         market_price: 销售价格
         number: 编号
         brand: 品牌
+      page:
+        title: 标题
+        description: 描述
+      smart_collection:
+        title: 标题
+        description: 描述
     errors:
       models:
         user:

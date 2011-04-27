@@ -6,20 +6,29 @@
 #action-links
   %ul
     %li.no-icon=link_to "取消", '#'
-%form#new_smart_collection.new_smart_collection(accept-charset="UTF-8" action="/admin/smart_collections" method="post")
+=form_for smart_collection do |f|
   .group
     %dl
       %dt.top
         %label 标题
-      %dd=text_field_tag :title, nil, class: :big
+      %dd=f.text_field :title, class: :big
       %dt
         %label 描述
         %span.note (非必填)
-      %dd(style="margin-bottom:0")=text_area_tag :body_html, nil, id: 'kindeditor', style: "width: 895px; height: 200px;"
+      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200px;"
   #smart-form.pgroup.sst
     %h3 设置条件
     %p.hint 你可以通过右边的按钮新增多个条件
     %ul#smartcollectionform.nobull(style="margin:0;padding:0")
+      %li.condition-line
+        %span.smart-tools
+          = link_to image_tag('admin/icons/add.gif'), '#'
+          = link_to image_tag('admin/icons/delete.gif'), '#', class: :del, title: '删除它'
+        %select.field(name="rules[column]" style="width: 120px;")
+          =options_for_select rule_columns.map{|t| [t.name, t.code]}
+        %select.relation(name="rules[relation]" style="width: 120px;")
+          =options_for_select rule_relations.map{|t| [t.name, t.code]}
+        %input.condition(name="rules[condition]" style="width: 120px;" value="")
       %li.condition-line
         %span.smart-tools
           = link_to image_tag('admin/icons/add.gif'), '#'

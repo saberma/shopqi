@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20110426120958) do
     t.integer  "shop_id"
     t.string   "title"
     t.boolean  "published",  :default => false
+    t.string   "handle",                        :null => false
     t.text     "body_html"
     t.datetime "created_at"
     t.datetime "updated_at"
