@@ -32,3 +32,14 @@
 .message_block ul.warn {
   background: #fcf6d0 url(../../images/message_block/warn.gif) 1em 50% no-repeat;
 }
+
+field_with_errors {
+  display: inline;
+}
+
+.field_with_errors .message {
+  color: #D00;
+  padding-left: 5px;
+  font-size: 12px;
+}
+

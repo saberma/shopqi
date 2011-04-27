@@ -3,7 +3,7 @@
     %h1{:style => "font-family:hevletica, arial, sans-serif"} Sign up
 .content.subpage
   #signup
-    =form_for(resource, :url => registration_path(resource_name)) do |f|
+    =form_for(resource, :url => registration_path(resource_name),:validate => true) do |f|
       =message_block :on => [:user,:shop]
       %div{:style => "margin:0;padding:0;display:inline"}
       #info

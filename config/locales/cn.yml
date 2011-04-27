@@ -28,13 +28,7 @@ cn:
             email:
               blank: 不能为空
               taken: 已被占用
-            shop_name:
-              blank: 不能为空
-            shop_permanent_domain:
-              blank: 不能为空
-              too_short: 长度太短(最短为 %{count} 个字符)
-              too_long: 长度太长(最短为 %{count} 个字符)
-              invalid: 格式不正确(须由字母和数字组成)
+              invalid: 格式不正确
             password:
               blank: 不能为空
               confirmation: 和确认密码需一致
@@ -43,6 +37,10 @@ cn:
             permanent_domain:
               blank: 不能为空
               too_short: 必须是3位以上,20位以下的字母组合
+              invalid: 非法字符，只能是数字和字母组合
+              taken: 已被占用
+            name:
+              blank: 不能为空
 
   date:
     formats:

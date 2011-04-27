@@ -1,7 +1,7 @@
 Shopqi::Application.routes.draw do
 
   devise_for :user,:controllers => {:registrations => "users/registrations"} do
-    get "signup", :to => "devise/registrations#new"
+    get "signup", :to => "users/registrations#new"
     get "login", :to => "devise/sessions#new"
   end
 
