@@ -1,9 +1,10 @@
 %li.condition-line
   %span.smart-tools
-    = link_to image_tag('admin/icons/add.gif'), '#'
-    = link_to image_tag('admin/icons/delete.gif'), '#', class: :del, title: '删除它'
+    = link_to image_tag('admin/icons/add.gif'), '#', class: :add_rule
+    = link_to image_tag('admin/icons/delete.gif'), '#', class: :del_rule, title: '删除它'
   %select.field(name="smart_collection[rules_attributes][][column]" style="width: 120px;")
-    =options_for_select rule_columns
+    =options_for_select rule_columns, rule.column
   %select.relation(name="smart_collection[rules_attributes][][relation]" style="width: 120px;")
-    =options_for_select rule_relations
-  %input.condition(name="smart_collection[rules_attributes][][condition]" style="width: 120px;" value="")
+    =options_for_select rule_relations, rule.relation
+  %input.condition(name="smart_collection[rules_attributes][][condition]" style="width: 120px;" value="#{rule.condition}")
+  %input(type='hidden' name="smart_collection[rules_attributes][][id]" value="#{rule.id}")

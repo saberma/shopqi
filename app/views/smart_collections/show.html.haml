@@ -1,3 +1,7 @@
+- use_kindeditor
+=content_for :javascripts do
+  =javascript_include_tag 'controllers/smart_collections'
+
 %h2#title= link_to smart_collection.title, "/collection/#{smart_collection.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
   %ul
@@ -44,15 +48,7 @@
       %h3 设置条件
       %p.hint 你可以通过右边的按钮新增多个条件
       %ul#smartcollectionform.nobull(style="margin:0;padding:0")
-        %li.condition-line
-          %span.smart-tools
-            = link_to image_tag('admin/icons/add.gif'), '#'
-            = link_to image_tag('admin/icons/delete.gif'), '#', class: :del, title: '删除它'
-          %select.field(name="rules[column]" style="width: 120px;")
-            =options_for_select rule_columns
-          %select.relation(name="rules[relation]" style="width: 120px;")
-            =options_for_select rule_relations
-          %input.condition(name="rules[condition]" style="width: 120px;" value="")
+        =render partial: "rule", collection: smart_collection.rules
     %p
       %input.btn(name="commit" type="submit" value="保存")
 
@@ -82,3 +78,9 @@
     \.
   =form_for smart_collection, remote: true, html: {id: 'smart_collection_publicshed_form'} do |f|
     =f.select :published, [['显示', true], ['隐藏', false]], {}, style: "width: 120px; font-size: 13px", onchange: "$('#smart_collection_publicshed_form').submit();"
+
+:javascript
+  App.init = function(){
+    new App.Controllers.SmartCollections();
+    Backbone.history.start();
+  }
