@@ -20,7 +20,7 @@
     %h3 设置条件
     %p.hint 你可以通过右边的按钮新增多个条件
     %ul#smartcollectionform.nobull(style="margin:0;padding:0")
-      -#=render :partial => "rule", collection: smart_collection.rules
+      =render :partial => "rule", collection: smart_collection.rules
   .pgroup.sst
     %p.hint
       如果你需要为集合挑选指定的商品，请使用

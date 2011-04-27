@@ -8,6 +8,11 @@ class SmartCollectionsController < ApplicationController
   expose(:rule_relations) { KeyValues::SmartCollectionRule::Relation.options }
   expose(:rule_orders) { KeyValues::SmartCollectionRule::Order.options }
 
+  def new
+    #保证至少有一个条件
+    smart_collection.rules << SmartCollectionRule.new if smart_collection.rules.empty?
+  end
+
   def create
     smart_collection.save
     redirect_to smart_collection_path(smart_collection)

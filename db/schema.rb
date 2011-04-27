@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110426120958) do
+ActiveRecord::Schema.define(:version => 20110427115317) do
 
   create_table "kindeditors", :force => true do |t|
     t.string   "kindeditor_image_uid"
@@ -81,6 +81,15 @@ ActiveRecord::Schema.define(:version => 20110426120958) do
     t.string   "address"
     t.string   "keywords"
     t.boolean  "public",           :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "smart_collection_rules", :force => true do |t|
+    t.integer  "smart_collection_id"
+    t.string   "column"
+    t.string   "relation"
+    t.string   "condition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
