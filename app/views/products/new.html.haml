@@ -211,7 +211,8 @@
             %h4.st Upload an image
             %p.note Allowed file types are .gif, .jpg, .jpeg, and .png
             %p#file-input.st.sb
-              %input{:id => "", :name => "", :type => "file"}/
+              =f.fields_for :photo do |p|
+                =p.file_field :product_image
         / product images
   %p.btns.cl
     =f.submit "新增商品",:id => "create-product-btn",:class => 'btn'

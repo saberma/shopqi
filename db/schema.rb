@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(:version => 20110426120958) do
     t.datetime "updated_at"
   end
 
+  create_table "photos", :force => true do |t|
+    t.string   "product_image_uid"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "products", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title"
