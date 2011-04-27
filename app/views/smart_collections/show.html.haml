@@ -1,0 +1,84 @@
+%h2#title= link_to smart_collection.title, "/collection/#{smart_collection.handle}", title: '在网店中查看此页面', target: '_blank'
+#action-links
+  %ul
+    %li.no-icon
+      %a#collection-edit-link(href="#smart_collections/edit") 修改
+    %li.no-icon
+      = link_to image_tag('admin/icons/trash.gif'), smart_collection_path(smart_collection), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它'
+
+#collection-description
+  .box2
+    %h3 描述
+    #collection-description-body
+      %table.table-wrapper(style="width: 100%")
+        %tr
+          %td.no-style
+            %p=raw smart_collection.body_html
+
+
+#collection-edit.group.hide
+  =form_for smart_collection do |f|
+    %dl
+      %dt=f.label :title
+      %dd=f.text_field :title, class: :big
+      %dt#edit-handle-label.st(style="font-size: 85%") 链接/处理
+      %dd#edit-handle.ssb
+        %span.note==http://#{current_user.shop.permanent_domain}.shopqi.com/collections/
+        =f.text_field :handle, style: 'width: 175px'
+        %span.note
+          (
+          %a(href="http://wiki.shopqi.com/Handle" target="_blank") 这是什么?
+          )
+      %dt.sst
+        =f.label :body_html
+        %span.note (非必填)
+      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 282px;"
+    %p.btns(style="margin: 20px 0 0 0")
+      %input#submit-collection-btn.btn(name="commit" type="submit" value="保存")
+      或者
+      = link_to '取消', '#'
+
+#smart-form.box2.sst
+  =form_for smart_collection, class: :edit_smart_collection do
+    .ssb
+      %h3 设置条件
+      %p.hint 你可以通过右边的按钮新增多个条件
+      %ul#smartcollectionform.nobull(style="margin:0;padding:0")
+        %li.condition-line
+          %span.smart-tools
+            = link_to image_tag('admin/icons/add.gif'), '#'
+            = link_to image_tag('admin/icons/delete.gif'), '#', class: :del, title: '删除它'
+          %select.field(name="rules[column]" style="width: 120px;")
+            =options_for_select rule_columns
+          %select.relation(name="rules[relation]" style="width: 120px;")
+            =options_for_select rule_relations
+          %input.condition(name="rules[condition]" style="width: 120px;" value="")
+    %p
+      %input.btn(name="commit" type="submit" value="保存")
+
+#reorder-drop-down
+  %table(cellpadding="0" cellspacing="0" style="width: 100%")
+    %tr
+      %td(style="text-align: left")
+        %h4
+          %span#collection-product-count
+            0 个商品
+          在此集合
+      %td
+        %p
+          %span.note 集合排序
+          %select#reorder-options(name="reorder-options" onchange="reOrder();")
+            =options_for_select rule_orders
+%ul#products.nobull.products_for_collection
+#no-products.pgroup(style="")
+  %em.highlight-alt 没有商品符合您的集合条件.
+
+.pgroup.sst
+  / The parent is needed for the nested resource Article (blog is the parent)
+  %h3 集合可见性
+  %p.sb.note
+    如果你不需要此集合显示在您的网店中，您可以设置它的可见性为
+    %em 隐藏
+    \.
+  =form_for smart_collection, remote: true, html: {id: 'smart_collection_publicshed_form'} do |f|
+    =f.select :published, [['显示', true], ['隐藏', false]], {}, style: "width: 120px; font-size: 13px", onchange: "$('#smart_collection_publicshed_form').submit();"

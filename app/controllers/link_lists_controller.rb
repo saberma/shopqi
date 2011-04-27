@@ -5,7 +5,7 @@ class LinkListsController < ApplicationController
 
   expose(:link_lists) { LinkList.all }
   expose(:link_list)
-  expose(:link_types) { LinkType.all }
+  expose(:link_types) { KeyValues::Link::Type.options }
   expose(:link)
 
   def index

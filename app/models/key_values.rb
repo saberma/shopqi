@@ -1,8 +1,33 @@
 # encoding: utf-8
 module KeyValues
+
+  class Base < ActiveHash::Base
+    def self.options
+      all.map {|t| [t.name, t.code]}
+    end
+  end
+
+  module Link
+
+    #链接类型
+    class Type < KeyValues::Base
+      self.data = [
+        #{:id => 1, :name => '博客', :code => 'blog'},
+        #{:id => 2, :name => '商店首页', :code => 'frontpage'},
+        #{:id => 3, :name => '商品列表', :code => 'collection'},
+        #{:id => 4, :name => '指定页面', :code => 'page'},
+        #{:id => 5, :name => '指定商品', :code => 'product'},
+        #{:id => 6, :name => '查询页面', :code => 'search'},
+        {:id => 7, :name => '其他网址', :code => 'http'}
+      ]
+    end
+
+  end
+
   module SmartCollectionRule
 
-    class Column < ActiveHash::Base
+    #规则相关列
+    class Column < KeyValues::Base
       self.data = [
         {:id => 1, :name => '商品名称', :code => 'title'},
         {:id => 2, :name => '商品类型', :code => 'type'},
@@ -14,7 +39,8 @@ module KeyValues
       ]
     end
 
-    class Relation < ActiveHash::Base
+    #规则关系
+    class Relation < KeyValues::Base
       self.data = [
         {:id => 1, :name => '等于', :code => 'equals'},
         {:id => 2, :name => '大于', :code => 'greater_than'},
@@ -25,7 +51,8 @@ module KeyValues
       ]
     end
 
-    class Order < ActiveHash::Base
+    #排序
+    class Order < KeyValues::Base
       self.data = [
         {:id => 1, :name => '按字母升序: A-Z', :code => 'alpha-asc'},
         {:id => 2, :name => '按字母降序: Z-A', :code => 'alpha-desc'},
@@ -39,4 +66,5 @@ module KeyValues
     end
 
   end
+
 end
