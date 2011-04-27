@@ -1,20 +1,14 @@
 App.Controllers.SmartCollections = Backbone.Controller.extend
-  initialize: ->
-    this.index()
 
   routes:
-    "smart_collections/:id/edit":      "edit"
-    "new":                             "newOne"
+    "smart_collections/edit":      "edit"
+    "":                            "index"
 
   edit: (id) ->
-    model = App.smart_collections.get(id)
-    if model
-      new App.Views.SmartCollection.Edit
-        model: model
-        el: $("#edit_form_link_container_smart_collection_#{model.id}")
+    $('.page-edit').show()
+    $('#page-show').hide()
 
   index: ->
-    new App.Views.SmartCollection.Index collection: App.smart_collections
-
-  newOne: ->
-    new App.Views.SmartCollection.New
+    $('.page-edit').hide()
+    $('#page-show').show().bind 'click', ->
+      window.location = '#pages/edit'

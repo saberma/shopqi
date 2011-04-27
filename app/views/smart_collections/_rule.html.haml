@@ -1,0 +1,9 @@
+%li.condition-line
+  %span.smart-tools
+    = link_to image_tag('admin/icons/add.gif'), '#'
+    = link_to image_tag('admin/icons/delete.gif'), '#', class: :del, title: '删除它'
+  %select.field(name="rules[][column]" style="width: 120px;")
+    =options_for_select rule_columns
+  %select.relation(name="rules[][relation]" style="width: 120px;")
+    =options_for_select rule_relations
+  %input.condition(name="rules[][condition]" style="width: 120px;" value="")
