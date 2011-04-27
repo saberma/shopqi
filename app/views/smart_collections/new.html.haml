@@ -1,0 +1,46 @@
+- use_kindeditor
+=content_for :javascripts do
+  =javascript_include_tag 'views/smart_collections/index', 'views/smart_collections/new', 'views/smart_collections/show', 'views/smart_collections/edit', 'models/link', 'collections/links', 'models/smart_collection', 'collections/smart_collections', 'controllers/smart_collections'
+
+%h2#title 新增智能集合
+#action-links
+  %ul
+    %li.no-icon=link_to "取消", '#'
+%form#new_smart_collection.new_smart_collection(accept-charset="UTF-8" action="/admin/smart_collections" method="post")
+  .group
+    %dl
+      %dt.top
+        %label 标题
+      %dd=text_field_tag :title, nil, class: :big
+      %dt
+        %label 描述
+        %span.note (非必填)
+      %dd(style="margin-bottom:0")=text_area_tag :body_html, nil, id: 'kindeditor', style: "width: 895px; height: 200px;"
+  #smart-form.pgroup.sst
+    %h3 设置条件
+    %p.hint 你可以通过右边的按钮新增多个条件
+    %ul#smartcollectionform.nobull(style="margin:0;padding:0")
+      %li.condition-line
+        %span.smart-tools
+          = link_to image_tag('admin/icons/add.gif'), '#'
+          = link_to image_tag('admin/icons/delete.gif'), '#', class: :del, title: '删除它'
+        %select.field(name="rules[column]" style="width: 120px;")
+          =options_for_select rule_columns.map{|t| [t.name, t.code]}
+        %select.relation(name="rules[relation]" style="width: 120px;")
+          =options_for_select rule_relations.map{|t| [t.name, t.code]}
+        %input.condition(name="rules[condition]" style="width: 120px;" value="")
+  .pgroup.sst
+    %p.hint
+      如果你需要为集合挑选指定的商品，请使用
+      %a(href="/admin/custom_collections/new") 自定义集合
+      \.
+  %p.btns
+    %input#submit-collection-btn.btn(name="commit" type="submit" value="保存")
+    或者
+    %a.cancel(href="#") 取消
+
+:javascript
+  App.init = function(){
+    new App.Controllers.SmartCollections();
+    Backbone.history.start();
+  }

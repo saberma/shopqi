@@ -3,6 +3,7 @@ class Shop < ActiveRecord::Base
   has_many :users
   has_many :products, :dependent => :destroy
   has_many :pages, :dependent => :destroy
+  has_many :smart_collections, :dependent => :destroy
   
   #二级域名须为3到20位数字和字母组成的，且唯一
   validates :permanent_domain,:presence =>true,:uniqueness => true, :format => {:with => /\A([a-z0-9])*\Z/ },:length => 3..20

@@ -10,7 +10,8 @@
     = stylesheet_link_tag 'print', :media => "print"
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
-    = javascript_include_tag :admin,'jquery','rails.validations'
+    =yield :stylesheets
+    = javascript_include_tag :admin
     =yield :kindeditor
     =yield :javascripts
     = csrf_meta_tag
@@ -34,15 +35,13 @@
           %li
             =link_to "退出登录", destroy_user_session_path
           %li
-            %a{ :href => "/admin/account" }
-              Account
+            %a{ :href => "/admin/account" } 帐号
           %li
-            %a{ :href => "/admin/support", "data-popup" => "true" }
-              Support
+            %a{ :href => "/admin/support", "data-popup" => "true" } 帮助
           %li{ :style => "padding-top: 2px" }
             #search
               %form#admin-lookup-form{ :action => "/admin/lookup/query", :method => "get" }
-                %input#q{ :type => "text", :name => "q", :value => "Search shop...", :tabindex => "1" }
+                %input#q{ :type => "text", :name => "q", :value => "查询商品...", :tabindex => "1" }
                 %div
                 %input{ :type => "hidden", :name => "bias", :value => "links" }
       /
@@ -60,60 +59,46 @@
       begin div.container
     #container.clearfix
       %ul#secondary
-        %li#apps-link
-          #apps-dropdown.nav-dropdown.dropdown{ :style => "display: none;" }
-            %h3
-              No apps installed yet
-            %p#apps-manage
-              %a{ :href => "https://github.shopqi.com/admin/applications" }
-                Manage apps
-            %p.more
-              %a{ :href => "http://apps.shopify.com" }
-                Get more apps
-              %span
-                visit the App Store
+        -#
+          %li#apps-link
+            %a(href="#" onclick="$('#apps-dropdown').toggle()" class="nav-link") 应用
+            #apps-dropdown.nav-dropdown.dropdown.hide
+              %h3 未安装应用
+              %p#apps-manage
+                %a{ :href => "https://github.shopqi.com/admin/applications" } 管理应用
+              %p.more
+                %a{ :href => "http://apps.shopqi.com" } 获取更多应用
+                %span 访问应用商店
         %li#theme-link
-          #theme-dropdown.nav-dropdown.dropdown{ :style => "display: none;" }
-            %h3
-              Modifying Your Theme
+          #theme-dropdown.nav-dropdown.dropdown.hide(style="right: 10px")
+            %h3 修改网店外观
             %ul
               %li#nav-theme-settings
-                %a{ :href => "/admin/themes/current/settings" }
-                  Theme Settings
+                %a{ :href => "/admin/themes/current/settings" } 外观设置
               %li#nav-template-editor
-                %a{ :href => "/admin/themes/current" }
-                  Template Editor
+                %a{ :href => "/admin/themes/current" } 模板编辑器
             %p.more
-              %a{ :href => "http://themes.shopify.com?shop=github.shopqi.com" }
-                Browse Themes
-              %span
-                visit the Theme Store
+              %a{ :href => "http://themes.shopqi.com?shop=github.shopqi.com" } 浏览外观
+              %span 访问外观商店
         %li#preferences-link
-          #preferences-dropdown.nav-dropdown.dropdown{ :style => "display: none;" }
-            %h3
-              Your store settings
+          #preferences-dropdown.nav-dropdown.dropdown.hide
+            %h3 您的商店设置
             %ul
               %li#settings
-                %a{ :href => "https://github.shopqi.com/admin/general_preferences" }
-                  General Settings
+                %a{ :href => "https://github.shopqi.com/admin/general_preferences" } 一般设置
               %li#regions
-                %a{ :href => "https://github.shopqi.com/admin/countries" }
-                  Regions &amp; Taxes
+                %a{ :href => "https://github.shopqi.com/admin/countries" } 区域 &amp; 税收
               %li#payment
-                %a{ :href => "https://github.shopqi.com/admin/payments" }
-                  Checkout &amp; Payment
+                %a{ :href => "https://github.shopqi.com/admin/payments" } 支付
               %li#shipping
-                %a{ :href => "https://github.shopqi.com/admin/shipping/index" }
-                  Shipping
-              %li#fulfillment
-                %a{ :href => "https://github.shopqi.com/admin/fulfillment_services" }
-                  Fulfillment Services
+                %a{ :href => "https://github.shopqi.com/admin/shipping/index" } 快递
+              -#
+                %li#fulfillment
+                  %a{ :href => "https://github.shopqi.com/admin/fulfillment_services" } 其他服务
               %li#email
-                %a{ :href => "https://github.shopqi.com/admin/notifications" }
-                  Email &amp; Notifications
+                %a{ :href => "https://github.shopqi.com/admin/notifications" } Email &amp; 通知
               %li#network
-                %a{ :href => "https://github.shopqi.com/admin/domains" }
-                  DNS &amp; Domains
+                %a{ :href => "https://github.shopqi.com/admin/domains" } 域名
       /
         begin div.main
       #main.clearfix.col-12.last.fullscreen
@@ -125,17 +110,13 @@
     #footer
       %ul
         %li
-          %a{ :href => "http://forums.shopify.com/community", :target => "shopify-forum" }
-            Forum
+          %a{ :href => "/community", :target => :_blank } 论坛
         %li
-          %a{ :href => "http://blog.shopify.com/", :target => "shopify-blog" }
-            Blog
+          %a{ :href => "http://blog.shopqi.com/", :target => :_blank } 博客
         %li
-          %a{ :href => "#", :onclick => "window.open('/legal/terms.html','popup','width=800,height=600,directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no'); return false;" }
-            Terms &amp; Conditions
+          %a{ :href => "#"} 服务条款
         %li
-          %a{ :href => "#", :onclick => "window.open('/legal/privacy.html','popup','width=800,height=600,directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no'); return false;" }
-            Privacy Policy
+          %a{ :href => "#"} 隐私声明
     #dialog-overlay{ :style => "display:none" }
     #dialog-content{ :style => "display:none" }
     #flasherrors{ :style => "display:none;" }

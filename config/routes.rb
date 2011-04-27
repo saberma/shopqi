@@ -26,6 +26,8 @@ Shopqi::Application.routes.draw do
       end
     end
 
+    resources :smart_collections
+
   end
 
   # The priority is based upon order of creation:
