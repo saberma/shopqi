@@ -29,7 +29,8 @@ module ApplicationHelper
 
   #是否为当前页面
   def current(menu)
-    (current_page?(menu[:url]) ? :current : '')
+    #(current_page?(menu[:url]) ? :current : '')
+    request.path.start_with?(menu[:url]) ? :current : ''
   end
 
 end
