@@ -2,7 +2,7 @@ App.Controllers.Pages = Backbone.Controller.extend
 
   routes:
     "pages/edit":      "edit"
-    "":                    "index"
+    "":                "index"
 
   edit: ->
     $('.page-edit').show()

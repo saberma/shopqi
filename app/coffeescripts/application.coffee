@@ -2,6 +2,7 @@ App =
   Views:
     LinkList: {}
     Link: {}
+    SmartCollection: {}
   Controllers: {}
   Collections: {}
   init: ->
