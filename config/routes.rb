@@ -26,7 +26,11 @@ Shopqi::Application.routes.draw do
       end
     end
 
-    resources :smart_collections, :except => :edit
+    resources :smart_collections, :except => :edit do
+      collection do
+        post :sort
+      end
+    end
 
   end
 

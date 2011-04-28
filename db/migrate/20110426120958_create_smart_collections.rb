@@ -10,9 +10,29 @@ class CreateSmartCollections < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    create_table :smart_collection_rules do |t|
+      t.integer :smart_collection_id, comment: '所属集合'
+      t.string :column, comment: '列'
+      t.string :relation, comment: '判断关系'
+      t.string :condition, comment: '判断值'
+
+      t.timestamps
+    end
+
+    create_table :smart_collection_products do |t|
+      t.integer :smart_collection_id, comment: '所属集合'
+      t.integer :product_id, comment: '关联商品'
+      t.integer :position, comment: '排序序号'
+
+      t.timestamps
+    end
+
   end
 
   def self.down
+    drop_table :smart_collection_products
+    drop_table :smart_collection_rules
     drop_table :smart_collections
   end
 end
