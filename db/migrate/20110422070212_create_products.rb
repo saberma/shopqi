@@ -8,6 +8,7 @@ class CreateProducts < ActiveRecord::Migration
       t.float :price ,:comment => "商品价格"
       t.float :market_price,:comment => "商品市场价格，即销售价格"
       t.string :number ,:comment => "编号"
+      t.string :type ,:comment => "类型(类别)"
       t.string :vendor ,:comment => "品牌(供应商)"
 
       t.timestamps

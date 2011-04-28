@@ -66,6 +66,7 @@
           %select#reorder-options(name="reorder-options" onchange="reOrder();")
             =options_for_select rule_orders
 %ul#products.nobull.products_for_collection
+  =render products
 #no-products.pgroup(style="")
   %em.highlight-alt 没有商品符合您的集合条件.
 
