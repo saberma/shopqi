@@ -12,14 +12,14 @@ App.Controllers.SmartCollections = Backbone.Controller.extend
       false
 
   routes:
-    "smart_collections/edit":      "edit"
-    "":                            "index"
+    "edit":      "edit"
+    "":          "index"
 
   edit: (id) ->
-    $('.page-edit').show()
-    $('#page-show').hide()
+    $('#collection-edit').show()
+    $('#collection-description').hide()
 
   index: ->
-    $('.page-edit').hide()
-    $('#page-show').show().bind 'click', ->
-      window.location = '#pages/edit'
+    $('#collection-edit').hide()
+    $('#collection-description').show().bind 'click', ->
+      window.location = '#edit'

@@ -6,11 +6,11 @@
 #action-links
   %ul
     %li.no-icon
-      %a#collection-edit-link(href="#smart_collections/edit") 修改
+      %a#collection-edit-link(href="#edit") 修改
     %li.no-icon
       = link_to image_tag('admin/icons/trash.gif'), smart_collection_path(smart_collection), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它'
 
-#collection-description
+#collection-description(style="cursor: pointer" title="点击修改")
   .box2
     %h3 描述
     #collection-description-body
@@ -21,7 +21,7 @@
 
 
 #collection-edit.group.hide
-  =form_for smart_collection do |f|
+  =form_for smart_collection, html: {id: 'edit_smart_collection_form'} do |f|
     %dl
       %dt=f.label :title
       %dd=f.text_field :title, class: :big
@@ -36,7 +36,7 @@
       %dt.sst
         =f.label :body_html
         %span.note (非必填)
-      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 282px;"
+      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200;"
     %p.btns(style="margin: 20px 0 0 0")
       %input#submit-collection-btn.btn(name="commit" type="submit" value="保存")
       或者
@@ -77,7 +77,7 @@
     %em 隐藏
     \.
   =form_for smart_collection, remote: true, html: {id: 'smart_collection_publicshed_form'} do |f|
-    =f.select :published, [['显示', true], ['隐藏', false]], {}, style: "width: 120px; font-size: 13px", onchange: "$('#smart_collection_publicshed_form').submit();"
+    =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#smart_collection_publicshed_form').submit();"
 
 :javascript
   App.init = function(){

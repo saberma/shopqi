@@ -26,7 +26,7 @@ cn:
         description: 描述
       smart_collection:
         title: 标题
-        description: 描述
+        body_html: 描述
     errors:
       models:
         user:
@@ -47,6 +47,19 @@ cn:
               taken: 已被占用
             name:
               blank: 不能为空
+
+  # flash message
+  flash:
+    actions:
+      create:
+        notice: "新增成功!"
+        alert: "新增失败!"
+      update:
+        notice: "修改成功!"
+        alert: "修改失败!"
+      destroy:
+        notice: "删除成功!"
+        alert: "删除失败!"
 
   date:
     formats:

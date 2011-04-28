@@ -7,6 +7,14 @@ module KeyValues
     end
   end
 
+  # 是否发布
+  class PublishState < KeyValues::Base
+    self.data = [
+      {:id => 1, :name => '显示', :code => 'true'},
+      {:id => 2, :name => '隐藏', :code => 'false'},
+    ]
+  end
+
   module Link
 
     #链接类型
