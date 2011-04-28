@@ -1,2 +1,0 @@
-class SmartCollectionRulesController < ApplicationController
-end
