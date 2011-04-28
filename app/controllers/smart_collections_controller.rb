@@ -6,11 +6,7 @@ class SmartCollectionsController < ApplicationController
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:smart_collection)
   expose(:products) do
-    conditions = smart_collection.rules.inject({}) do |results, rule|
-      results["#{rule.column}_#{rule.relation}"] = rule.condition
-      results
-    end
-    current_user.shop.products.search(conditions).all
+    []
   end
 
   expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.options }
@@ -30,11 +26,30 @@ class SmartCollectionsController < ApplicationController
 
   def update
     smart_collection.save
+    redirect_to smart_collection_path(smart_collection)
+  end
+
+  #更新可见性
+  def update_published
     flash.now[:notice] = I18n.t("flash.actions.#{action_name}.notice")
-    respond_to do |format|
-      format.html { redirect_to smart_collection_path(smart_collection) }
-      format.js { render :template => "shared/msg" }
+    smart_collection.save
+    render :template => "shared/msg"
+  end
+
+  #更新排序
+  def update_order
+    smart_collection.save
+    #手动排序的话，则保存排序记录
+    if KeyValues::SmartCollectionRule::Order.is_manual?(smart_collection.update_order)
+      products.each_with_index do |product, index|
+        smart_collection.products.update product: product, position: index
+      end
     end
+    flash.now[:notice] = '重新排序成功!'
+  end
+
+  #手动调整排序
+  def sort
   end
 
 end

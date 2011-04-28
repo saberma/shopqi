@@ -30,6 +30,10 @@ Shopqi::Application.routes.draw do
       collection do
         post :sort
       end
+      member do
+        put :update_order
+        put :update_published
+      end
     end
 
   end

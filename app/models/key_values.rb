@@ -64,15 +64,20 @@ module KeyValues
     #排序
     class Order < KeyValues::Base
       self.data = [
-        {:id => 1, :name => '按字母升序: A-Z', :code => 'alpha-asc'},
-        {:id => 2, :name => '按字母降序: Z-A', :code => 'alpha-desc'},
-        {:id => 3, :name => '按销售量排序', :code => 'best-selling'},
-        {:id => 4, :name => '按创建日期: 最近-最久', :code => 'created-desc'},
-        {:id => 5, :name => '按创建日期: 最久-最近', :code => 'created'},
-        {:id => 6, :name => '按价格排序: 最高-最低', :code => 'price-desc'},
-        {:id => 7, :name => '按价格排序: 最低-最高', :code => 'price-asc'},
+        {:id => 1, :name => '按标题拼音升序: A-Z', :code => 'title.asc'},
+        {:id => 2, :name => '按标题拼音降序: Z-A', :code => 'title.desc'},
+        #{:id => 3, :name => '按销售量排序', :code => 'best-selling'},
+        {:id => 4, :name => '按创建日期: 最近-最远', :code => 'created_at.desc'},
+        {:id => 5, :name => '按创建日期: 最远-最近', :code => 'created_at.asc'},
+        {:id => 6, :name => '按价格排序: 最高-最低', :code => 'price.desc'},
+        {:id => 7, :name => '按价格排序: 最低-最高', :code => 'price.asc'},
         {:id => 8, :name => '手动排序', :code => 'manual'},
       ]
+
+      #手动排序?
+      def self.is_manual?(order)
+        'manual' == order
+      end
     end
 
   end

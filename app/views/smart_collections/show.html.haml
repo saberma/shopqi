@@ -62,8 +62,8 @@
       %td
         %p
           %span.note 集合排序
-          %select#reorder-options(name="reorder-options" onchange="reOrder();")
-            =options_for_select rule_orders
+          =form_for smart_collection, url: update_order_smart_collection_path(smart_collection), remote: true, html: {id: 'smart_collection_orders_form'} do |f|
+            =f.select :products_order, rule_orders, {}, onchange: "$('#smart_collection_orders_form').submit();"
 %ul#products.nobull.products_for_collection
   =render partial: 'product', collection: products
 -if products.empty?
@@ -77,7 +77,7 @@
     如果你不需要此集合显示在您的网店中，您可以设置它的可见性为
     %em 隐藏
     \.
-  =form_for smart_collection, remote: true, html: {id: 'smart_collection_publicshed_form'} do |f|
+  =form_for smart_collection, url: update_published_smart_collection_path(smart_collection), remote: true, html: {id: 'smart_collection_publicshed_form'} do |f|
     =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#smart_collection_publicshed_form').submit();"
 
 :javascript

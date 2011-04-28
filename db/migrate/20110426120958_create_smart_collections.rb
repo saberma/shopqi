@@ -7,6 +7,7 @@ class CreateSmartCollections < ActiveRecord::Migration
       t.boolean :published, comment: '是否可见', default: false
       t.string :handle, comment: '用于模板中的Permalink/Handle', null: false
       t.text :body_html, comment: '内容'
+      t.string :products_order, comment: '归属商品的排序'
 
       t.timestamps
     end
