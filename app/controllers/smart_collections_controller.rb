@@ -6,7 +6,11 @@ class SmartCollectionsController < ApplicationController
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:smart_collection)
   expose(:products) do
-    []
+    conditions = smart_collection.rules.inject({}) do |results, rule|
+      results["#{rule.column}_#{rule.relation}"] = rule.condition
+      results
+    end
+    current_user.shop.products.search(conditions).all
   end
 
   expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.options }

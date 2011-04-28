@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20110427115317) do
     t.float    "price"
     t.float    "market_price"
     t.string   "number"
+    t.string   "type"
     t.string   "vendor"
     t.datetime "created_at"
     t.datetime "updated_at"

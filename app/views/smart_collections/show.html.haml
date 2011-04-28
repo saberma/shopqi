@@ -57,18 +57,18 @@
     %tr
       %td(style="text-align: left")
         %h4
-          %span#collection-product-count
-            0 个商品
-          在此集合
+          %span#collection-product-count==#{products.size} 个商品
+          属于此集合
       %td
         %p
           %span.note 集合排序
           %select#reorder-options(name="reorder-options" onchange="reOrder();")
             =options_for_select rule_orders
 %ul#products.nobull.products_for_collection
-  =render products
-#no-products.pgroup(style="")
-  %em.highlight-alt 没有商品符合您的集合条件.
+  =render partial: 'product', collection: products
+-if products.empty?
+  #no-products.pgroup(style="")
+    %em.highlight-alt 没有商品符合您的集合条件.
 
 .pgroup.sst
   / The parent is needed for the nested resource Article (blog is the parent)

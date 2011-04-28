@@ -1,11 +1,11 @@
-=content_tag :li, product, class: :clear
+=content_tag :li, product, class: :clear do
   .sortable-related
-    .sortable-related{:style => "float: left; position: relative; top: 15px"}
+    .sortable-related(style="float: left; position: relative; top: 15px")
       .vlistitem
-        =image_tag 'admin/icons/drag_handle.gif', style: "width: 11px; height: 11px"
+        =image_tag 'admin/icons/drag_handle.gif', class: 'drag-handle', style: "width: 11px; height: 11px"
     .small-product-image
       =image_tag 'admin/no-image-icon.gif', class: :images
     .collection-info
       %p
-        =link_to product_path(product), product.name
+        =link_to product.title, product_path(product)
       .hint==#{product.vendor}, #{product.type}

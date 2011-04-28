@@ -40,8 +40,10 @@ module KeyValues
         {:id => 1, :name => '商品名称', :code => 'title'},
         {:id => 2, :name => '商品类型', :code => 'type'},
         {:id => 3, :name => '商品厂商', :code => 'vendor'},
-        {:id => 4, :name => '商品价格', :code => 'variant_price'},
-        {:id => 5, :name => '比较价格', :code => 'variant_compare_at_price'},
+        #{:id => 4, :name => '商品价格', :code => 'variant_price'},
+        #{:id => 5, :name => '比较价格', :code => 'variant_compare_at_price'},
+        {:id => 4, :name => '商品价格', :code => 'price'},
+        {:id => 5, :name => '比较价格', :code => 'market_price'},
         {:id => 6, :name => '库存现货', :code => 'variant_inventory'},
         {:id => 7, :name => '属性名称', :code => 'variant_title'}
       ]
