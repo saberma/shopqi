@@ -5,9 +5,7 @@ class SmartCollectionsController < ApplicationController
 
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:smart_collection)
-  expose(:products) do
-    []
-  end
+  expose(:products) { smart_collection.products.map(&:product) }
 
   expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.options }
   expose(:rule_relations) { KeyValues::SmartCollectionRule::Relation.options }
@@ -39,12 +37,6 @@ class SmartCollectionsController < ApplicationController
   #更新排序
   def update_order
     smart_collection.save
-    #手动排序的话，则保存排序记录
-    if KeyValues::SmartCollectionRule::Order.is_manual?(smart_collection.update_order)
-      products.each_with_index do |product, index|
-        smart_collection.products.update product: product, position: index
-      end
-    end
     flash.now[:notice] = '重新排序成功!'
   end
 

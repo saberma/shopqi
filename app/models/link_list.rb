@@ -4,3 +4,9 @@ class LinkList < ActiveRecord::Base
 
   accepts_nested_attributes_for :links
 end
+
+class Link < ActiveRecord::Base
+  belongs_to :link_list
+
+  default_scope :order => 'position asc'
+end

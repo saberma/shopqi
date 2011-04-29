@@ -1,7 +1,7 @@
 class SmartCollection < ActiveRecord::Base
   belongs_to :shop
   has_many :rules, class_name: 'SmartCollectionRule', dependent: :destroy
-  has_many :products, class_name: 'SmartCollectionProducts', dependent: :destroy
+  has_many :products, class_name: 'SmartCollectionProduct', dependent: :destroy
   accepts_nested_attributes_for :rules, :allow_destroy => true
 
   before_create do
@@ -10,9 +10,16 @@ class SmartCollection < ActiveRecord::Base
   end
 
   after_save do
-    ids = self.products.map(&:id)
-    rules_products.map(&:id).each_with_index do |id, index|
-      self.products.create product_id: id, postion: index
+    ids = rules_products.map(&:id)
+    # 删除不匹配的商品排序记录
+    products.each do |collection_product|
+      unless ids.include?(collection_product.product.id)
+        collection_product.destroy
+      end
+    end
+    rules_products.each_with_index do |product, index|
+      collection_product = self.products.where(product: product).first || self.products.new(product: product)
+      collection_product.update_attribute :position, index
     end
   end
 
@@ -37,7 +44,9 @@ class SmartCollectionRule < ActiveRecord::Base
 end
 
 #集合关联的商品，用于手动排序
-class SmartCollectionProducts < ActiveRecord::Base
+class SmartCollectionProduct < ActiveRecord::Base
   belongs_to :smart_collection
   belongs_to :product
+
+  default_scope :order => 'position asc'
 end

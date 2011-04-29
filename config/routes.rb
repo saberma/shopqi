@@ -14,7 +14,7 @@ Shopqi::Application.routes.draw do
 
   scope "/admin" do
 
-    resources :products, :only => [:index,:new,:create,:destroy,:update]
+    resources :products, :except => :edit
 
     resources :pages, :except => :edit
 
