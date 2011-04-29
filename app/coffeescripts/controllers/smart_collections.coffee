@@ -19,6 +19,9 @@ App.Controllers.SmartCollections = Backbone.Controller.extend
       else
         li.remove()
       false
+    #手动排序
+    $("#products").sortable handle: '.drag-handle', update: (event, ui) ->
+      #$.post "#{self.model.links.url}/sort", $(this).sortable('serialize')
 
   routes:
     "edit":      "edit"

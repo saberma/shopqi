@@ -64,7 +64,7 @@
           %span.note 集合排序
           =form_for smart_collection, url: update_order_smart_collection_path(smart_collection), remote: true, html: {id: 'smart_collection_orders_form'} do |f|
             =f.select :products_order, rule_orders, {}, onchange: "$('#smart_collection_orders_form').submit();"
-%ul#products.nobull.products_for_collection
+%ul#products.nobull.products_for_collection(url="#{sort_smart_collection_path(smart_collection)}")
   =render partial: 'product', collection: products
 -if products.empty?
   #no-products.pgroup(style="")
