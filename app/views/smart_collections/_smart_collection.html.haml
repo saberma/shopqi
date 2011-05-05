@@ -1,4 +1,4 @@
 %li.collection
   = link_to smart_collection.title, smart_collection_path(smart_collection), title: "handle: #{smart_collection.handle}"
-  %p 0 products
-  %p Variant price is greater than 2 and Vendor is less than 2
+  %p==#{smart_collection.products.size} 个商品
+  %p=smart_collection.rules_info

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SmartCollection < ActiveRecord::Base
   belongs_to :shop
   has_many :rules, class_name: 'SmartCollectionRule', dependent: :destroy
@@ -50,10 +51,21 @@ class SmartCollection < ActiveRecord::Base
   def set_default_order
     self.products_order = KeyValues::SmartCollectionRule::Order.first.code
   end
+
+  #规则信息
+  def rules_info
+    rules.map(&:info).join '并且'
+  end
 end
 
 class SmartCollectionRule < ActiveRecord::Base
   belongs_to :smart_collection
+
+  def info
+    column_name = KeyValues::SmartCollectionRule::Column.find_by_code(self.column).name
+    relation_name = KeyValues::SmartCollectionRule::Relation.find_by_code(self.relation).name
+    "#{column_name} #{relation_name} #{self.condition}"
+  end
 end
 
 #集合关联的商品，用于手动排序
