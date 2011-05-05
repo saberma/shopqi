@@ -28,13 +28,22 @@ class SmartCollection < ActiveRecord::Base
   end
 
   #找出rule相关的所有商品
-  def rules_products
+  def rules_products(product_id = nil)
     conditions = self.rules.inject({}) do |results, rule|
       results["#{rule.column}_#{rule.relation}"] = rule.condition
       results
     end
     conditions.merge! meta_sort: self.products_order
+    if product_id
+      conditions.merge! id_equals: product_id
+    end
     self.shop.products.search(conditions).all
+  end
+
+  #商品是否符合当前条件
+  def match?(product)
+    results = rules_products(product.id)
+    !results.empty?
   end
 
   #默认排序

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Photo < ActiveRecord::Base
   belongs_to :product, inverse_of:"photos"
   image_accessor :product_image
