@@ -5,7 +5,7 @@ class SmartCollectionsController < ApplicationController
 
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:smart_collection)
-  expose(:products) { smart_collection.products.map(&:product) }
+  expose(:products) { smart_collection.products }
 
   expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.all }
   expose(:rule_relations) { KeyValues::SmartCollectionRule::Relation.all }
@@ -42,6 +42,11 @@ class SmartCollectionsController < ApplicationController
 
   #手动调整排序
   def sort
+    smart_collection.update_attribute :products_order, :manual
+    params[:product].each_with_index do |id, index|
+      current_user.shop.smart_collections.find(params[:id]).products.find(id).update_attribute :position, index
+    end
+    render :nothing => true
   end
 
 end

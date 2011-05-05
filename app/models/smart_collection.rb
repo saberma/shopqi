@@ -10,16 +10,20 @@ class SmartCollection < ActiveRecord::Base
   end
 
   after_save do
-    ids = rules_products.map(&:id)
-    # 删除不匹配的商品排序记录
-    products.each do |collection_product|
-      unless ids.include?(collection_product.product.id)
-        collection_product.destroy
+    unless self.products_order.to_sym == :manual
+      # 预保存所有条件内商品记录，可以保证在修改条件时，排序不变
+      # 例如，价格大于0的条件改为大于10，原有手动排序不能改变
+      ids = rules_products.map(&:id)
+      # 删除不匹配的商品排序记录
+      products.each do |collection_product|
+        unless ids.include?(collection_product.product.id)
+          collection_product.destroy
+        end
       end
-    end
-    rules_products.each_with_index do |product, index|
-      collection_product = self.products.where(product: product).first || self.products.new(product: product)
-      collection_product.update_attribute :position, index
+      rules_products.each_with_index do |product, index|
+        collection_product = self.products.where(product: product).first || self.products.new(product: product)
+        collection_product.update_attribute :position, index
+      end
     end
   end
 

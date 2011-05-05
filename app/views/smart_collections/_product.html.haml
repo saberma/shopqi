@@ -1,4 +1,4 @@
-=content_tag :li, product, class: :clear do
+%li(id="product_#{product.id}" class="clear")
   .sortable-related
     .sortable-related(style="float: left; position: relative; top: 15px")
       .vlistitem
@@ -7,5 +7,5 @@
       =image_tag 'admin/no-image-icon.gif', class: :images
     .collection-info
       %p
-        =link_to product.title, product_path(product)
-      .hint==#{product.vendor}, #{product.type}
+        =link_to product.product.title, product_path(product.product)
+      .hint==#{product.product.vendor}, #{product.product.type}
