@@ -14,6 +14,8 @@
             %td{class: smart_collection && :collection}
               -if smart_collection
                 = link_to smart_collection.title, smart_collection_path(smart_collection), title: "handle: #{smart_collection.handle}"
+                -unless smart_collection.published
+                  %span.status-hidden(style='margin:0') 隐藏
                 %p==#{smart_collection.products.size} 个商品
                 %p=smart_collection.rules_info
   #pagination
