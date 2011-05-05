@@ -27,6 +27,11 @@ class SmartCollectionsController < ApplicationController
     redirect_to smart_collection_path(smart_collection)
   end
 
+  def destroy
+    smart_collection.destroy
+    redirect_to smart_collections_path
+  end
+
   #更新可见性
   def update_published
     flash.now[:notice] = I18n.t("flash.actions.#{action_name}.notice")
