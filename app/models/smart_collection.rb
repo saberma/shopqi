@@ -54,7 +54,7 @@ class SmartCollection < ActiveRecord::Base
 
   #规则信息
   def rules_info
-    rules.map(&:info).join '并且'
+    rules.map(&:info).join ' 并且 '
   end
 end
 
