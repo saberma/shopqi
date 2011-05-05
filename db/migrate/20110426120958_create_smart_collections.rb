@@ -4,7 +4,7 @@ class CreateSmartCollections < ActiveRecord::Migration
     create_table :smart_collections do |t|
       t.integer :shop_id, comment: '所属网店'
       t.string :title, comment: '标题'
-      t.boolean :published, comment: '是否可见', default: false
+      t.boolean :published, comment: '是否可见', default: true
       t.string :handle, comment: '用于模板中的Permalink/Handle', null: false
       t.text :body_html, comment: '内容'
       t.string :products_order, comment: '归属商品的排序'

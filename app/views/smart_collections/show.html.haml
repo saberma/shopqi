@@ -8,7 +8,7 @@
     %li.no-icon
       %a#collection-edit-link(href="#edit") 修改
     %li.no-icon
-      = link_to image_tag('admin/icons/trash.gif'), smart_collection_path(smart_collection), method: :delete, confirm: '您确定要删除?', title: '删除它'
+      = link_to image_tag('admin/icons/trash.gif'), smart_collection_path(smart_collection), method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
 
 #collection-description(style="cursor: pointer" title="点击修改")
   .box2
