@@ -1,6 +1,6 @@
 Shopqi::Application.routes.draw do
 
-  devise_for :user,:controllers => {:registrations => "users/registrations"} do
+  devise_for :user, :controllers => {:registrations => "users/registrations"} do
     get "signup", :to => "users/registrations#new"
     get "login", :to => "devise/sessions#new"
   end
@@ -26,7 +26,15 @@ Shopqi::Application.routes.draw do
       end
     end
 
-    resources :smart_collections, :except => :edit do
+    resources :custom_collections, except: :edit do
+      member do
+        put :update_order
+        put :update_published
+        post :sort
+      end
+    end
+
+    resources :smart_collections, except: [:index, :edit] do
       member do
         put :update_order
         put :update_published

@@ -1,9 +1,3 @@
-%h2#title 商品集合
-#action-links
-  %ul
-    %li#new-smt-lbl= link_to "新增智能集合", new_smart_collection_path
-    %li#new-std-lbl
-      %a(href="/admin/custom_collections/new") 新增自定义集合
 #smart-collections.pgroup.sst
   %h3 智能集合
   %table.collection-list
@@ -19,5 +13,4 @@
                 %p==#{smart_collection.products.size} 个商品
                 %p=smart_collection.rules_info
   #pagination
--#
-  =render 'custom_collections/index'
+

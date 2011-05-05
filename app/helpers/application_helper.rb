@@ -19,7 +19,7 @@ module ApplicationHelper
       { label: '订单', url: '/admin/orders' },
       { label: '会员', url: '/admin/customers' },
       { label: '商品', url: products_path },
-      { label: '集合', url: smart_collections_path },
+      { label: '集合', url: custom_collections_path },
       { label: '博客 & 页面', url: pages_path },
       { label: '链接列表', url: link_lists_path },
       { label: '市场营销', url: '/admin/marketing' }

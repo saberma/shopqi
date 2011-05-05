@@ -1,0 +1,2 @@
+class CustomCollectionsController < ApplicationController
+end
