@@ -1,6 +1,19 @@
 App.Controllers.SmartCollections = Backbone.Controller.extend
 
   initialize: ->
+    #限制条件选项，字符串类型不能选择"大于"、"等于"，否则meta_search插件会报错
+    $('#smartcollectionform').delegate "select[name='smart_collection[rules_attributes][][column]']", 'change', ->
+      clazz = $(this).children(':selected').attr('clazz')
+      next_select = $(this).next()
+      next_select.children().each ->
+        if $(this).attr('clazz') in [clazz, 'all']
+          $(this).removeClass('hide')
+        else
+          $(this).addClass('hide')
+      if next_select.children(':selected').hasClass('hide')
+        next_select.children().first().attr 'selected', 'selected'
+    $("#smartcollectionform select[name='smart_collection[rules_attributes][][column]']").change()
+    #增加删除条件
     $('#smartcollectionform').delegate '.add_rule', 'click', ->
       li = $('#smartcollectionform > li').first().clone()
       #去掉id属性

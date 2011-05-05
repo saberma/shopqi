@@ -37,27 +37,27 @@ module KeyValues
     #规则相关列
     class Column < KeyValues::Base
       self.data = [
-        {:id => 1, :name => '商品名称', :code => 'title'},
-        {:id => 2, :name => '商品类型', :code => 'type'},
-        {:id => 3, :name => '商品厂商', :code => 'vendor'},
-        #{:id => 4, :name => '商品价格', :code => 'variant_price'},
-        #{:id => 5, :name => '比较价格', :code => 'variant_compare_at_price'},
-        {:id => 4, :name => '商品价格', :code => 'price'},
-        {:id => 5, :name => '比较价格', :code => 'market_price'},
-        {:id => 6, :name => '库存现货', :code => 'variant_inventory'},
-        {:id => 7, :name => '属性名称', :code => 'variant_title'}
+        {:id => 1, :name => '商品名称', :code => 'title', :clazz => 'string'},
+        #{:id => 2, :name => '商品类型', :code => 'type', :clazz => 'string'},
+        #{:id => 3, :name => '商品厂商', :code => 'vendor', :clazz => 'string'},
+        #{:id => 4, :name => '商品价格', :code => 'variant_price', :clazz => 'string'},
+        #{:id => 5, :name => '比较价格', :code => 'variant_compare_at_price', :clazz => 'string'},
+        {:id => 4, :name => '商品价格', :code => 'price', :clazz => 'integer'},
+        {:id => 5, :name => '比较价格', :code => 'market_price', :clazz => 'integer'},
+        #{:id => 6, :name => '库存现货', :code => 'variant_inventory', :clazz => 'string'},
+        #{:id => 7, :name => '属性名称', :code => 'variant_title', :clazz => 'string'}
       ]
     end
 
     #规则关系
     class Relation < KeyValues::Base
       self.data = [
-        {:id => 1, :name => '等于', :code => 'equals'},
-        {:id => 2, :name => '大于', :code => 'greater_than'},
-        {:id => 3, :name => '小于', :code => 'less_than'},
-        {:id => 4, :name => '以此开头', :code => 'starts_with'},
-        {:id => 5, :name => '以此结束', :code => 'ends_with'},
-        {:id => 6, :name => '包含', :code => 'contains'},
+        {:id => 1, :name => '等于', :code => 'equals', :clazz => 'all'},
+        {:id => 2, :name => '大于', :code => 'greater_than', :clazz => 'integer'},
+        {:id => 3, :name => '小于', :code => 'less_than', :clazz => 'integer'},
+        {:id => 4, :name => '以此开头', :code => 'starts_with', :clazz => 'string'},
+        {:id => 5, :name => '以此结束', :code => 'ends_with', :clazz => 'string'},
+        {:id => 6, :name => '包含', :code => 'contains', :clazz => 'string'},
       ]
     end
 

@@ -7,8 +7,8 @@ class SmartCollectionsController < ApplicationController
   expose(:smart_collection)
   expose(:products) { smart_collection.products.map(&:product) }
 
-  expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.options }
-  expose(:rule_relations) { KeyValues::SmartCollectionRule::Relation.options }
+  expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.all }
+  expose(:rule_relations) { KeyValues::SmartCollectionRule::Relation.all }
   expose(:rule_orders) { KeyValues::SmartCollectionRule::Order.options }
   expose(:publish_states) { KeyValues::PublishState.options }
 

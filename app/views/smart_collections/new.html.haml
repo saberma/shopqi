@@ -5,7 +5,7 @@
 %h2#title 新增智能集合
 #action-links
   %ul
-    %li.no-icon=link_to "取消", '#'
+    %li.no-icon=link_to "取消", smart_collection_path
 =form_for smart_collection do |f|
   .group
     %dl
@@ -29,7 +29,7 @@
   %p.btns
     %input#submit-collection-btn.btn(name="commit" type="submit" value="保存")
     或者
-    %a.cancel(href="#") 取消
+    =link_to "取消", smart_collections_path, class: :cancel
 
 :javascript
   App.init = function(){
