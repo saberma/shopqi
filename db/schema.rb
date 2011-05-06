@@ -10,7 +10,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110426171618) do
+ActiveRecord::Schema.define(:version => 20110505153806) do
+
+  create_table "custom_collection_products", :force => true do |t|
+    t.integer  "custom_collection_id"
+    t.integer  "product_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "custom_collections", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "title"
+    t.boolean  "published",      :default => true
+    t.string   "handle",                           :null => false
+    t.text     "body_html"
+    t.string   "products_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "kindeditors", :force => true do |t|
     t.string   "kindeditor_image_uid"
@@ -106,8 +125,8 @@ ActiveRecord::Schema.define(:version => 20110426171618) do
   create_table "smart_collections", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title"
-    t.boolean  "published",      :default => false
-    t.string   "handle",                            :null => false
+    t.boolean  "published",      :default => true
+    t.string   "handle",                           :null => false
     t.text     "body_html"
     t.string   "products_order"
     t.datetime "created_at"

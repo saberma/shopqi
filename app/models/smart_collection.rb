@@ -49,7 +49,7 @@ class SmartCollection < ActiveRecord::Base
 
   #默认排序
   def set_default_order
-    self.products_order = KeyValues::SmartCollectionRule::Order.first.code
+    self.products_order = KeyValues::Collection::Order.first.code
   end
 
   #规则信息
@@ -62,13 +62,13 @@ class SmartCollectionRule < ActiveRecord::Base
   belongs_to :smart_collection
 
   def info
-    column_name = KeyValues::SmartCollectionRule::Column.find_by_code(self.column).name
-    relation_name = KeyValues::SmartCollectionRule::Relation.find_by_code(self.relation).name
+    column_name = KeyValues::Collection::Column.find_by_code(self.column).name
+    relation_name = KeyValues::Collection::Relation.find_by_code(self.relation).name
     "#{column_name} #{relation_name} #{self.condition}"
   end
 end
 
-#集合关联的商品，用于手动排序
+#集合关联的商品
 class SmartCollectionProduct < ActiveRecord::Base
   belongs_to :smart_collection
   belongs_to :product

@@ -32,7 +32,7 @@ module KeyValues
 
   end
 
-  module SmartCollectionRule
+  module Collection
 
     #规则相关列
     class Column < KeyValues::Base

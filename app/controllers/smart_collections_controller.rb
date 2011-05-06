@@ -3,13 +3,12 @@ class SmartCollectionsController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 
-  expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:smart_collection)
   expose(:products) { smart_collection.products }
 
-  expose(:rule_columns) { KeyValues::SmartCollectionRule::Column.all }
-  expose(:rule_relations) { KeyValues::SmartCollectionRule::Relation.all }
-  expose(:rule_orders) { KeyValues::SmartCollectionRule::Order.options }
+  expose(:rule_columns) { KeyValues::Collection::Column.all }
+  expose(:rule_relations) { KeyValues::Collection::Relation.all }
+  expose(:rule_orders) { KeyValues::Collection::Order.options }
   expose(:publish_states) { KeyValues::PublishState.options }
 
   def new

@@ -1,17 +1,15 @@
 #custom-collections.pgroup.sst
   %h3 自定义集合
   %table.collection-list
-    %tr
-      %td.collection
-        %a(href="/admin/custom_collections/3650022" title="handle: frontpage")
-          Frontpage
-        %span.status-hidden(style="margin:0")
-          hidden
-        %p
-          7 products
-        %p
-      %td
-        \&nbsp;
-      %td
-        \&nbsp;
+    %tbody
+      -custom_collections.in_groups_of(3) do |group|
+        %tr
+          -group.each do |custom_collection|
+            %td{class: custom_collection && :collection}
+              -if custom_collection
+                = link_to custom_collection.title, custom_collection_path(custom_collection), title: "handle: #{custom_collection.handle}"
+                -unless custom_collection.published
+                  %span.status-hidden(style='margin:0') 隐藏
+                %p==#{custom_collection.products.size} 个商品
+                %p
   #pagination
