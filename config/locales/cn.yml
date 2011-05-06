@@ -7,6 +7,7 @@ cn:
       user: 用户
       shop: 商店
       product: 商品
+      custom_collection: 集合
     attributes:
       user:
         email: 邮箱
@@ -24,10 +25,25 @@ cn:
       page:
         title: 标题
         description: 描述
+      custom_collection:
+        title: 标题
+        body_html: 描述
       smart_collection:
         title: 标题
         body_html: 描述
     errors:
+      template:
+        header: ""
+        body: ""
+      messages:
+        blank: 不能为空
+        taken: 已经存在
+        too_short: 长度不能少于%{count}个字符
+        too_long: 长度不能超过%{count}个字符
+        not_a_number: 只能是数字
+        invalid: 必须是有效的
+        at_least_one: 至少有一项必填
+        select: 尚未选择
       models:
         user:
           attributes:
@@ -196,3 +212,23 @@ cn:
       create: "新增%{model}"
       update: "更新%{model}"
       submit: "储存%{model}"
+
+  #页面中的文字
+  web:
+    save: 保存
+    cancel: 取消
+    list: 列表
+    edit: 编辑
+    new: 新增
+    show: 查看
+    delete: 删除
+    confirm: 您是否确定?
+    created_at: 创建于
+    all: 全部
+    design: 管理网店布局
+    show: 查看网店
+    profile: 个人资料
+    settings: 设置
+    logout: 退出
+    optional: (非必填)
+    or: 或者

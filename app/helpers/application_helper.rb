@@ -33,4 +33,11 @@ module ApplicationHelper
     request.path.start_with?(menu[:url]) ? :current : ''
   end
 
+  #国际化
+  def w(str)
+    str, model = str.split('.')
+    str = I18n.t "web.#{str}"
+    str += I18n.t("activerecord.models.#{model}") if model
+    str
+  end
 end

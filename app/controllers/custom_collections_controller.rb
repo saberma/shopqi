@@ -4,6 +4,7 @@ class CustomCollectionsController < ApplicationController
   layout 'admin'
 
   expose(:custom_collections) { current_user.shop.custom_collections }
+  expose(:custom_collection)
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
 
