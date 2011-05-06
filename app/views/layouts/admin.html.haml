@@ -121,6 +121,8 @@
     #dialog-content{ :style => "display:none" }
     #flasherrors{ :style => "display:none;" }
     #flashnotice{ :style => "display:none;" }
+    #indicator{:style => "z-index: 1000; position: absolute; width: 20px; height: 20px; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; display: none; top: 1236px; left: 591px; "}
+      %img{:border => "0", :src => "/images/spinner.gif"}/
 
     -if flash[:notice]
       :javascript
