@@ -28,6 +28,7 @@ Shopqi::Application.routes.draw do
 
     resources :custom_collections, except: :edit do
       member do
+        get :available_products
         put :update_order
         put :update_published
         post :sort

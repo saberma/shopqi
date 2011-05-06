@@ -8,7 +8,7 @@ class SmartCollectionsController < ApplicationController
 
   expose(:rule_columns) { KeyValues::Collection::Column.all }
   expose(:rule_relations) { KeyValues::Collection::Relation.all }
-  expose(:rule_orders) { KeyValues::Collection::Order.options }
+  expose(:orders) { KeyValues::Collection::Order.options }
   expose(:publish_states) { KeyValues::PublishState.options }
 
   def new

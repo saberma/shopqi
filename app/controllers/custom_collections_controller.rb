@@ -7,6 +7,7 @@ class CustomCollectionsController < ApplicationController
   expose(:custom_collection)
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
+  expose(:orders) { KeyValues::Collection::Order.options }
 
   def new
   end

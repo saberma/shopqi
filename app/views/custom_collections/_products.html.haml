@@ -1,0 +1,12 @@
+%li(id="product_#{product.id}" class="clear")
+  .sortable-related
+    =link_to image_tag('admin/icons/trash.gif'), '#', title: '删除它', class: 'remove-product'
+    .sortable-related(style="float: left; position: relative; top: 15px")
+      .vlistitem
+        =image_tag 'admin/icons/drag_handle.gif', class: 'drag-handle', style: "width: 11px; height: 11px"
+    .small-product-image
+      =image_tag 'admin/no-image-icon.gif', class: :images
+    .collection-info
+      %p
+        =link_to product.product.title, product_path(product.product)
+      .hint==#{product.product.vendor}, #{product.product.type}

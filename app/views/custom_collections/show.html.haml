@@ -1,0 +1,89 @@
+=content_for :javascripts do
+  =javascript_include_tag 'controllers/custom_collections'
+
+%h2#title= link_to custom_collection.title, "/collection/#{custom_collection.handle}", title: '在网店中查看此页面', target: '_blank'
+#action-links
+  %ul
+    %li.no-icon
+      %a(href="#edit") 修改
+    %li.no-icon
+      = link_to image_tag('admin/icons/trash.gif'), custom_collection_path(custom_collection), method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+
+#collection-description(style="cursor: pointer" title="点击修改")
+  .box2
+    %h3 描述
+    #collection-description-body
+      %table.no-style(cellpadding="0" cellspacing="0")
+        %tr
+          %td.no-style
+            %p=raw custom_collection.body_html
+
+#collection-edit.group.hide
+  =form_for custom_collection, html: {id: 'edit_custom_collection_form'} do |f|
+    %dl
+      %dt=f.label :title
+      %dd=f.text_field :title, class: :big
+      %dt#edit-handle-label.st(style="font-size: 85%") 链接/处理
+      %dd#edit-handle.ssb
+        %span.note==http://#{current_user.shop.permanent_domain}.shopqi.com/collections/
+        =f.text_field :handle, style: 'width: 175px'
+        %span.note
+          (
+          %a(href="http://wiki.shopqi.com/Handle" target="_blank") 这是什么?
+          )
+      %dt.sst
+        =f.label :body_html
+        %span.note (非必填)
+      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200;"
+    %p.btns(style="margin: 20px 0 0 0")
+      %input#submit-collection-btn.btn(name="commit" type="submit" value="#{w('save')}")
+      =w('or')
+      =link_to w('canel'), '#'
+
+#standard-form
+  .clearfix
+    #browse-view.col-4
+      .box2.sst.clearfix
+        =form_for custom_collection, url: available_products_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_available_products_form'} do |f|
+          %h4.st 1. 开始输入商品名称
+          %input#product-query(type="text" name="q" value="")
+          %input.btn.st(name="commit" type="submit" value="查找")
+          %p.note.st 您可以通过输入部分商品名称来缩小商品列表的范围
+        %h4.sst.sb 2. 选择您需要添加的商品
+        #product-select
+          %ul.small-collection.clearfix
+            %li#no-items.hide 没有候选商品
+            %li#possible-product-39258582.candidate.tiny-with-thumb.added
+              %span=image_tag 'admin/no-image-pico.gif', class: :images, alt: '找不到图片...'
+              = link_to "111", "#add/product", class: :title
+          #pagination
+    .col-8.last
+      #reorder-drop-down
+        %table(cellpadding="0" cellspacing="0" style="width: 100%")
+          %tr
+            %td(style="text-align: left")
+              %h4
+                %span#collection-product-count 9 个商品
+                属于此集合
+            %td
+              %p
+                %span.note 集合排序
+                =form_for custom_collection, url: update_order_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_orders_form'} do |f|
+                  =f.select :products_order, orders, {}, onchange: "$('#custom_collection_orders_form').submit();"
+      %ul#products.nobull.products_for_collection
+      #no-products.pgroup.hide
+        %em.highlight-alt 点击左边的商品将它添加到这个集合
+  .pgroup.sst
+    %h3 集合可见性
+    %p.sb.note
+      如果你不需要此自定义集合显示在您的商店中，您可以设置它的可见性为
+      %em 隐藏
+      \.
+    =form_for custom_collection, url: update_published_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_publicshed_form'} do |f|
+      =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#custom_collection_publicshed_form').submit();"
+
+:javascript
+  App.init = function(){
+    new App.Controllers.CustomCollections();
+    Backbone.history.start();
+  }

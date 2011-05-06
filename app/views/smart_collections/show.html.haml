@@ -19,7 +19,6 @@
           %td.no-style
             %p=raw smart_collection.body_html
 
-
 #collection-edit.group.hide
   =form_for smart_collection, html: {id: 'edit_smart_collection_form'} do |f|
     %dl
@@ -63,7 +62,7 @@
         %p
           %span.note 集合排序
           =form_for smart_collection, url: update_order_smart_collection_path(smart_collection), remote: true, html: {id: 'smart_collection_orders_form'} do |f|
-            =f.select :products_order, rule_orders, {}, onchange: "$('#smart_collection_orders_form').submit();"
+            =f.select :products_order, orders, {}, onchange: "$('#smart_collection_orders_form').submit();"
 %ul#products.nobull.products_for_collection(url="#{sort_smart_collection_path(smart_collection)}")
   =render partial: 'product', collection: products
 -if products.empty?
@@ -71,10 +70,9 @@
     %em.highlight-alt 没有商品符合您的集合条件.
 
 .pgroup.sst
-  / The parent is needed for the nested resource Article (blog is the parent)
   %h3 集合可见性
   %p.sb.note
-    如果你不需要此集合显示在您的网店中，您可以设置它的可见性为
+    如果您不需要此集合显示在您的网店中，您可以设置它的可见性为
     %em 隐藏
     \.
   =form_for smart_collection, url: update_published_smart_collection_path(smart_collection), remote: true, html: {id: 'smart_collection_publicshed_form'} do |f|
