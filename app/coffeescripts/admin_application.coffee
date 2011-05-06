@@ -3,6 +3,7 @@ App =
     LinkList: {}
     Link: {}
     SmartCollection: {}
+    CustomCollection: {}
   Controllers: {}
   Collections: {}
   init: ->
