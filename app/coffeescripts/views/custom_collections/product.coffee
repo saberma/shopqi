@@ -3,7 +3,7 @@ App.Views.CustomCollection.Product = Backbone.View.extend
   className: 'clear'
 
   events:
-    "click .destroy": "destroy"
+    "click .remove-product": "destroy"
 
   initialize: ->
     _.bindAll this, 'render', 'destroy'
@@ -16,5 +16,6 @@ App.Views.CustomCollection.Product = Backbone.View.extend
     $('#products').append this.el
 
   destroy: ->
-    $(this.el).addClass('added')
+    App.products.remove(this.model)
+    $(this.el).remove()
     return false
