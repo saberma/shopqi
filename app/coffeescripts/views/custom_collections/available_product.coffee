@@ -19,5 +19,5 @@ App.Views.CustomCollection.AvailableProduct = Backbone.View.extend
   addToCollection: ->
     unless $(this.el).hasClass('added')
       $(this.el).addClass('added')
-      App.custom_collection_products.add this.model
+      App.custom_collection_products.create product_id: this.model.id, position: App.custom_collection_products.length
     return false

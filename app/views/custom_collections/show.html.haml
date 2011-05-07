@@ -67,7 +67,7 @@
                 =form_for custom_collection, url: update_order_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_orders_form'} do |f|
                   %span.note 集合排序
                   =f.select :products_order, orders, {}, onchange: "$('#custom_collection_orders_form').submit();"
-      %ul#products.nobull.products_for_collection
+      %ul#products.nobull.products_for_collection(url="#{sort_custom_collection_products_path(custom_collection)}")
       #no-products.pgroup.hide
         %em.highlight-alt 点击左边的商品将它添加到这个集合
   .pgroup.sst

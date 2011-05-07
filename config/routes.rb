@@ -27,14 +27,15 @@ Shopqi::Application.routes.draw do
     end
 
     resources :custom_collections, except: :edit do
+      resources :custom_collection_products, path: :products, as: :products, except: [:index, :new, :edit, :update] do
+        post :sort, on: :collection
+      end
       collection do
         get :available_products
       end
       member do
         put :update_order
         put :update_published
-        post :add_product
-        post :sort
       end
     end
 
