@@ -9,6 +9,7 @@ App.Views.CustomCollection.AvailableProduct = Backbone.View.extend
     _.bindAll this, 'render', 'addToCollection'
     $(this.el).attr 'id', "possible-product-#{this.model.id}"
     this.render()
+    this.model.view = this
 
   render: ->
     self = this
@@ -16,6 +17,7 @@ App.Views.CustomCollection.AvailableProduct = Backbone.View.extend
     $('#product-select > .small-collection').append this.el
 
   addToCollection: ->
-    $(this.el).addClass('added')
-    App.products.add this.model
+    unless $(this.el).hasClass('added')
+      $(this.el).addClass('added')
+      App.products.add this.model
     return false

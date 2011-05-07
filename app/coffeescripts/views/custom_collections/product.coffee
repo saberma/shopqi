@@ -18,4 +18,5 @@ App.Views.CustomCollection.Product = Backbone.View.extend
   destroy: ->
     App.products.remove(this.model)
     $(this.el).remove()
+    $(this.model.view.el).removeClass('added')
     return false

@@ -100,7 +100,7 @@
     new App.Controllers.CustomCollections();
     Backbone.history.start();
   }
-  App.available_products = new App.Collections.AvailableProducts();
   App.products = new App.Collections.Products();
-  App.available_products.refresh(#{candidate_products.to_json(except: [ :created_at, :updated_at ])});
+  App.available_products = new App.Collections.AvailableProducts();
   App.products.refresh(#{products.to_json(except: [ :created_at, :updated_at ])});
+  App.available_products.refresh(#{candidate_products.to_json(except: [ :created_at, :updated_at ])});
