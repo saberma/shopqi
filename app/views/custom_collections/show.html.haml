@@ -48,7 +48,7 @@
           %h4.st 1. 开始输入商品名称
           %input#product-query(type="text" name="q" value="")
           %input.btn.st(name="commit" type="submit" value="查找")
-          %p.note.st 您可以通过输入部分商品名称来缩小商品列表的范围
+          %p.note.st 您可以输入商品名称来缩小商品列表的范围
         %h4.sst.sb 2. 选择您需要添加的商品
         #product-select
           %ul.small-collection.clearfix
@@ -60,8 +60,8 @@
           %tr
             %td(style="text-align: left")
               %h4
-                %span#collection-product-count #{products.size} 个商品
-                属于此集合
+                %span#collection-product-count #{products.size}
+                个商品 属于此集合
             %td
               %p
                 =form_for custom_collection, url: update_order_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_orders_form'} do |f|
@@ -92,7 +92,7 @@
       =image_tag 'admin/no-image-icon.gif', class: :images
     .collection-info
       %p
-        =link_to '${title}', product_path(id: '${id}')
+        =link_to '${title}', '/admin/products/${id}'
       .hint ${vendor}, ${type}
 
 :javascript
