@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'views/custom_collections/product', 'views/custom_collections/products', 'views/custom_collections/available_product', 'views/custom_collections/available_products', 'models/product', 'collections/products', 'collections/available_products','controllers/custom_collections'
+  =javascript_include_tag 'views/custom_collections/product', 'views/custom_collections/products', 'views/custom_collections/available_product', 'views/custom_collections/available_products', 'models/product', 'models/custom_collection_product', 'collections/custom_collection_products', 'collections/available_products','controllers/custom_collections'
 
 %h2#title= link_to custom_collection.title, "/collection/#{custom_collection.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -92,15 +92,16 @@
       =image_tag 'admin/no-image-icon.gif', class: :images
     .collection-info
       %p
-        =link_to '${title}', '/admin/products/${id}'
-      .hint ${vendor}, ${type}
+        =link_to '${product.title}', '/admin/products/${product.id}'
+      .hint ${product.vendor}, ${product.type}
 
 :javascript
   App.init = function(){
     new App.Controllers.CustomCollections();
     Backbone.history.start();
   }
-  App.products = new App.Collections.Products();
+  App.custom_collection_id = #{custom_collection.id};
+  App.custom_collection_products = new App.Collections.CustomCollectionProducts();
   App.available_products = new App.Collections.AvailableProducts();
-  App.products.refresh(#{products.to_json(except: [ :created_at, :updated_at ])});
+  App.custom_collection_products.refresh(#{products.to_json(except: [ :created_at, :updated_at ], include: :product)});
   App.available_products.refresh(#{candidate_products.to_json(except: [ :created_at, :updated_at ])});

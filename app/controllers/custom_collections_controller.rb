@@ -31,6 +31,20 @@ class CustomCollectionsController < ApplicationController
     redirect_to custom_collections_path
   end
 
+  #商品加入集合
+  def add_product
+    flash.now[:notice] = I18n.t("flash.actions.update.notice")
+    custom_collection.products.create product_id: params[:product_id], position: 0
+    render :template => "shared/msg"
+  end
+
+  #商品移除集合
+  def remove_product
+    flash.now[:notice] = I18n.t("flash.actions.update.notice")
+    custom_collection.products.where(product_id: params[:product_id]).first.(&:destroy)
+    render :template => "shared/msg"
+  end
+
   #更新可见性
   def update_published
     flash.now[:notice] = I18n.t("flash.actions.update.notice")

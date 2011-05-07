@@ -33,6 +33,7 @@ Shopqi::Application.routes.draw do
       member do
         put :update_order
         put :update_published
+        post :add_product
         post :sort
       end
     end
