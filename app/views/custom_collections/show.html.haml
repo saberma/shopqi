@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'views/custom_collections/available_product', 'views/custom_collections/available_products', 'models/product', 'collections/available_products','controllers/custom_collections'
+  =javascript_include_tag 'views/custom_collections/product', 'views/custom_collections/products', 'views/custom_collections/available_product', 'views/custom_collections/available_products', 'models/product', 'collections/products', 'collections/available_products','controllers/custom_collections'
 
 %h2#title= link_to custom_collection.title, "/collection/#{custom_collection.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -44,7 +44,7 @@
   .clearfix
     #browse-view.col-4
       .box2.sst.clearfix
-        =form_for custom_collection, url: available_products_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_available_products_form'} do |f|
+        =form_for custom_collection, url: '#', html: {id: 'custom_collection_available_products_form'} do |f|
           %h4.st 1. 开始输入商品名称
           %input#product-query(type="text" name="q" value="")
           %input.btn.st(name="commit" type="submit" value="查找")
@@ -60,7 +60,7 @@
           %tr
             %td(style="text-align: left")
               %h4
-                %span#collection-product-count 9 个商品
+                %span#collection-product-count #{products.size} 个商品
                 属于此集合
             %td
               %p
@@ -82,6 +82,18 @@
 %script(id="available_product_item" type="text/x-jquery-tmpl")
   %span=image_tag 'admin/no-image-pico.gif', class: :images, alt: '找不到图片...'
   =link_to "${title}", "#", class: :title
+%script(id="product_item" type="text/x-jquery-tmpl")
+  .sortable-related
+    =link_to image_tag('admin/icons/trash.gif'), '#', title: '删除它', class: 'remove-product'
+    .sortable-related(style="float: left; position: relative; top: 15px")
+      .vlistitem
+        =image_tag 'admin/icons/drag_handle.gif', class: 'drag-handle', style: "width: 11px; height: 11px"
+    .small-product-image
+      =image_tag 'admin/no-image-icon.gif', class: :images
+    .collection-info
+      %p
+        =link_to '${title}', product_path(id: '${id}')
+      .hint ${vendor}, ${type}
 
 :javascript
   App.init = function(){
@@ -89,4 +101,6 @@
     Backbone.history.start();
   }
   App.available_products = new App.Collections.AvailableProducts();
-  App.available_products.refresh(#{available_products.to_json(except: [ :created_at, :updated_at ])});
+  App.products = new App.Collections.Products();
+  App.available_products.refresh(#{candidate_products.to_json(except: [ :created_at, :updated_at ])});
+  App.products.refresh(#{products.to_json(except: [ :created_at, :updated_at ])});

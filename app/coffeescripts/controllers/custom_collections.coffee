@@ -17,6 +17,8 @@ App.Controllers.CustomCollections = Backbone.Controller.extend
   index: ->
     # 显示候选商品列表
     new App.Views.CustomCollection.AvailableProducts collection: App.available_products
+    # 显示商品列表
+    new App.Views.CustomCollection.Products collection: App.products
     $('#collection-edit').hide()
     $('#collection-description').show().bind 'click', ->
       window.location = '#edit'

@@ -17,4 +17,5 @@ App.Views.CustomCollection.AvailableProduct = Backbone.View.extend
 
   addToCollection: ->
     $(this.el).addClass('added')
+    App.products.add this.model
     return false

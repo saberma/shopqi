@@ -5,8 +5,10 @@ class CustomCollectionsController < ApplicationController
 
   expose(:custom_collections) { current_user.shop.custom_collections }
   expose(:custom_collection)
-  expose(:available_products) { current_user.shop.products }
+  expose(:candidate_products) { current_user.shop.products }
+  expose(:products) { custom_collection.products }
   expose(:smart_collections) { current_user.shop.smart_collections }
+
   expose(:publish_states) { KeyValues::PublishState.options }
   expose(:orders) { KeyValues::Collection::Order.options }
 
@@ -40,6 +42,13 @@ class CustomCollectionsController < ApplicationController
   def update_order
     custom_collection.save
     flash.now[:notice] = '重新排序成功!'
+  end
+
+  #获取商品列表
+  def available_products
+    list = candidate_products
+    list = list.where(:title.matches => "%#{params[:q]}%") unless params[:q].blank?
+    render json: list.to_json(except: [ :created_at, :updated_at ])
   end
 
   #手动调整排序
