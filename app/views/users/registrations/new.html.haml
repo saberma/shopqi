@@ -1,6 +1,6 @@
 #banner
   .content
-    %h1{:style => "font-family:hevletica, arial, sans-serif"} Sign up
+    %h1{:style => "font-family:hevletica, arial, sans-serif"} 注册
 .content.subpage
   #signup
     =form_for(resource, :url => registration_path(resource_name),:validate => true) do |f|
@@ -8,19 +8,19 @@
       %div{:style => "margin:0;padding:0;display:inline"}
       #info
       #top-section.section
-        %h3 商店名
+        %h3 商店名称
         %p
           =f.fields_for :shop do |s|
             =s.text_field :name, id:"shop_name",size:22, style:"font-size: 20px; width: 400px"
         .box.note{:style => "width: 350px; text-align: justify; float: right; display: none"}
-          You can choose the myshopify.com address where you and others will access your store.
-          You
-          %strong can not
-          change this later but you can add additional addresses to your store
-          such as
+          您可以选择 shopqi.com 作为你和其他人访问商店的地址
+          您
+          %strong 不可以
+          再修改它，但您可以为您的商店增加额外的顶级域名
+          比如
           = succeed "." do
             %em www.example.com
-          More about this in the shopify administration pages.
+          更多信息请查看后台管理页面
         %label#subdomain-label{:for => "domain_subdomain"} 二级域名
         #domain-field
           %label#protocol{:for => "domain_subdomain"} http://
@@ -33,10 +33,10 @@
             #ajax-notice{:style => "display:none;"}
             %span#domain-available
         %p.hint.clear
-          if you have your own domain such as
+          如果您拥有顶级域名，比如
           %strong www.example.com
-          you can add it later
-        %h4 Your Login
+          您随后可以将它与您的商店关联起来
+        %h4 您的注册信息
         %label.inlined{:for => "user_email"} 邮箱
         =f.text_field :email, :id => "user_email",:size => 26, :class => "input-text large"
         .toggle
@@ -47,19 +47,19 @@
           =f.password_field :password, :id => "user_password_confirmation",:size => 26, :class => "input-text large",:autocomplete => "off"
         %input#auth_style{:name => "auth_style", :type => "hidden", :value => "login"}/
       .block.cl
-        %h3 Terms and conditions
+        %h3 服务条款
         %dl
           %dd#user-agreement
-            %p You must agree to the Shopify terms and conditions before you can create your account.
+            %p 创建您的帐号前，您必须同意ShopQi的服务条件
             %p
               %input{:name => "shop[terms_and_conditions]", :type => "hidden", :value => "0"}/
               %input#shop_terms_and_conditions{:name => "shop[terms_and_conditions]", :style => "display: inline; margin-bottom: 0", :type => "checkbox", :value => "1"}/
               %label#terms-and-conditions-label{:for => "shop_terms_and_conditions"}
-                I have read and agree to the
-                %a{:href => "https://www.shopify.com/services/signup/new/basic#", :onclick => "window.open('http://app.shopify.com/legal/terms.html','popup','width=800,height=600,directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');return false;; return false;"} Terms &amp; Conditions
+                我已经阅读并同意此
+                %a{:href => "https://www.shopqi.com/services/signup/new/basic#", :onclick => "window.open('http://app.shopqi.com/legal/terms.html','popup','width=800,height=600,directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');return false;; return false;"} 服务条款
         %p.btns{:style => "margin-bottom: 0; clear: left"}
           %input{:name => "plan", :type => "hidden", :value => "basic"}/
           %input{:name => "ref", :type => "hidden", :value => ""}/
-          %input#shop_submit{:name => "commit", :type => "submit", :value => "Create my Shopify store"}
+          %input#shop_submit{:name => "commit", :type => "submit", :value => "创建我的ShopQi商店"}
 / content
 #push
