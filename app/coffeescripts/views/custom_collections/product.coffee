@@ -16,8 +16,11 @@ App.Views.CustomCollection.Product = Backbone.View.extend
     $('#products').append this.el
 
   destroy: ->
-    App.custom_collection_products.remove(this.model)
-    $(this.el).remove()
-    available_product = App.available_products.get(this.model.attributes.product_id)
-    $(available_product.view.el).removeClass('added')
+    self = this
+    this.model.destroy
+      success: (model, response) ->
+        App.custom_collection_products.remove(self.model)
+        available_product = App.available_products.get(self.model.attributes.product_id)
+        $(available_product.view.el).removeClass('added')
+        self.remove()
     return false
