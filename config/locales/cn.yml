@@ -21,6 +21,8 @@ cn:
         price: 价格
         market_price: 销售价格
         number: 编号
+        type: 商品类型
+        vendor: 商品生产商
         brand: 品牌
       page:
         title: 标题

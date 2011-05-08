@@ -2,9 +2,11 @@
 class ProductsController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
-  expose(:shop){current_user.shop}
-  expose(:products){shop.products}
+  expose(:shop) { current_user.shop }
+  expose(:products) { shop.products }
   expose(:product)
+  expose(:types) { shop.types.map {|t| [t.name, t.id]} }
+  expose(:vendors) { shop.vendors.map {|t| [t.name, t.id]} }
 
   def create
     product.save

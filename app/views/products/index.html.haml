@@ -3,10 +3,11 @@
   %ul
     %li#add-prod
       =link_to "新增商品",new_product_path
-    %li.csv
-      %a{:href => "#", :onclick => "$('export-products').toggle(); return false;"} Export products
-    %li.csv
-      %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/product_imports"} Import products
+    -#
+      %li.csv
+        %a{:href => "#", :onclick => "$('export-products').toggle(); return false;"} Export products
+      %li.csv
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/product_imports"} Import products
 =render :partial => "shared/noscript"      
 =render :partial => "shared/upgrade_ie"
 #export-products.box2.ssb.sst{:style => "display: none"}
@@ -18,26 +19,27 @@
   %a.btn{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products.csv"} Export currently shown products
   %a.btn.sl{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/product_exports.csv"} Export all products
 #product-filters.box2.ssb.sst
-  Showing products by
-  %a#vendor-filter-link{:href => "#", :onclick => "; return false;"} all vendors
-  with
-  %a#type-filter-link{:href => "#", :onclick => "; return false;"} any product type
+  显示
+  %a#vendor-filter-link{:href => "#", :onclick => "; return false;"} 所有厂商
+  和
+  %a#type-filter-link{:href => "#", :onclick => "; return false;"} 所有类型
+  的商品
   #vendor-status-select
     %ul.nobull.filter-select.dropdown{:style => "display: none"}
       %li
-        %strong Vendors
+        %strong 厂商
       %li
         %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products?vendor=Shopify"} Shopify
       %li.filter-show-all.current
-        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} show all
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} 显示所有
   #type-status-select
     %ul.nobull.filter-select.dropdown{:style => "display: none"}
       %li
-        %strong Product Types
+        %strong 商品类型
       %li
         %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products?product_type=Shirts"} Shirts
       %li.filter-show-all.current
-        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} show all
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} 显示所有
 .view-switcher
   %a.btn.btn-group.btn-left.active{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products"} list view
   %a.btn.btn-group.btn-right{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/products/inventory"} inventory view
@@ -99,15 +101,15 @@
                   %td{:style => "padding-left: 3px; vertical-align: middle;"}
                     %p
                       =link_to p.title,products_path(p),:title => "处理:#{p.title}"
-                    %p.list-product-type Shirts
-                    %p.list-vendor Shopify
+                    %p.list-product-type=p.product_type
+                    %p.list-vendor=p.vendor
                   %td.list-variants
                     .expand-collapse-info.notification{:style => "display:none"}
                       %p{:style => "position: absolute; top: 11px"}
                         %a#expand-38663892{:href => "#", :onclick => "Product.expandList(38663892); return false;"}
-                          %img{:alt => "Arrow_right_small", :src => "products_files/arrow_right_small.png"}/
+                          =image_tag 'admin/icons/arrow_right_small.png'
                         %a#collapse-38663892{:href => "#", :onclick => "Product.collapseList(38663892); return false;", :style => "display: none;"}
-                          %img{:alt => "Arrow_down_small", :src => "products_files/arrow_down_small.png"}/
+                          =image_tag 'admin/icons/arrow_down_small.png'
                     %ul#variant-list-38663892.variant-list.nobull.product-list-option-1
                       %li#variant-89269152.variant-list-item{:onmouseout => "$('variant-tip-89269152').hide();", :onmouseover => "$('variant-tip-89269152').show();"}
                         %p.note{:style => "font-size: 9px; line-height: 11px; margin: 0"} Small

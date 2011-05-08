@@ -1,5 +1,5 @@
 - use_kindeditor
-%h2#title 新 增 商 品
+%h2#title 新增商品
 #action-links
   %ul
     %li.no-icon
@@ -26,24 +26,18 @@
           .padding
             %dl
               %dt
-            %p
-              %label(for="product_product_type") Product type
+            %p=f.label :type
             %span.note 例如: 服装,电脑,家用电器
             %dd
               %select#product-type-select
-                %option(selected="selected" value="Shirts") Shirts
-                %option(value="") --------
-                %option(value="create_new") Create new type...
-              %input#product_product_type.hide(name="" size="30" type="text" value="Shirts")/
+                =options_for_select types, product.product_type
+              =f.text_field :product_type, class: :hide
             %dt.sst
-            %p
-              %label(for="product_vendor") Product vendor
-            %span.note The creator or manufacturer of the product. Examples: IBM, Adidas
+            %p=f.label :vendor
+            %span.note 产品制造商。例子：IBM，TCL
             %dd
               %select#product-vendor-select
-                %option(selected="selected" value="Shopify") Shopify
-                %option(value="") --------
-                %option(value="create_new") Create new vendor...
+                =options_for_select vendors, product.vendor
               =f.text_field :vendor, class: :hide
             %table.data2.sst.ssb
               %tbody

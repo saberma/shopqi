@@ -81,18 +81,20 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.float    "price"
     t.float    "market_price"
     t.string   "number"
-    t.string   "type"
+    t.string   "product_type"
     t.string   "vendor"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "shop_product_types", :force => true do |t|
-    t.string "name"
+    t.integer "shop_id"
+    t.string  "name"
   end
 
   create_table "shop_product_vendors", :force => true do |t|
-    t.string "name"
+    t.integer "shop_id"
+    t.string  "name"
   end
 
   create_table "shops", :force => true do |t|
