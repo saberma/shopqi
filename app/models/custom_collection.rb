@@ -12,6 +12,11 @@ class CustomCollection < ActiveRecord::Base
   def set_default_order
     self.products_order = KeyValues::Collection::Order.first.code
   end
+
+  #排序后的商品
+  def ordered_products
+    products.ordered("products.#{self.products_order.sub '.', ' '}")
+  end
 end
 
 #集合关联的商品
@@ -19,5 +24,7 @@ class CustomCollectionProduct < ActiveRecord::Base
   belongs_to :custom_collection
   belongs_to :product
 
-  default_scope :order => 'position asc'
+  def self.ordered(products_order = 'position asc')
+    joins(:product).order(products_order)
+  end
 end

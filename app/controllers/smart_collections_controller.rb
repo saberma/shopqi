@@ -50,7 +50,7 @@ class SmartCollectionsController < ApplicationController
   def sort
     smart_collection.update_attribute :products_order, :manual
     params[:product].each_with_index do |id, index|
-      current_user.shop.smart_collections.find(params[:id]).products.find(id).update_attribute :position, index
+      smart_collection.products.find(id).update_attribute :position, index
     end
     render :nothing => true
   end

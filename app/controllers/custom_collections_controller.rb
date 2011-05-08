@@ -6,7 +6,7 @@ class CustomCollectionsController < ApplicationController
   expose(:custom_collections) { current_user.shop.custom_collections }
   expose(:custom_collection)
   expose(:candidate_products) { current_user.shop.products }
-  expose(:products) { custom_collection.products }
+  expose(:products) { custom_collection.products.ordered }
   expose(:smart_collections) { current_user.shop.smart_collections }
 
   expose(:publish_states) { KeyValues::PublishState.options }
@@ -31,20 +31,6 @@ class CustomCollectionsController < ApplicationController
     redirect_to custom_collections_path
   end
 
-  #商品加入集合
-  def add_product
-    flash.now[:notice] = I18n.t("flash.actions.update.notice")
-    custom_collection.products.create product_id: params[:product_id], position: 0
-    render :template => "shared/msg"
-  end
-
-  #商品移除集合
-  def remove_product
-    flash.now[:notice] = I18n.t("flash.actions.update.notice")
-    custom_collection.products.where(product_id: params[:product_id]).first.(&:destroy)
-    render :template => "shared/msg"
-  end
-
   #更新可见性
   def update_published
     flash.now[:notice] = I18n.t("flash.actions.update.notice")
@@ -55,6 +41,9 @@ class CustomCollectionsController < ApplicationController
   #更新排序
   def update_order
     custom_collection.save
+    custom_collection.ordered_products.each_with_index do |product, index|
+      product.update_attribute :position, index
+    end
     flash.now[:notice] = '重新排序成功!'
   end
 
@@ -63,15 +52,6 @@ class CustomCollectionsController < ApplicationController
     list = candidate_products
     list = list.where(:title.matches => "%#{params[:q]}%") unless params[:q].blank?
     render json: list.to_json(except: [ :created_at, :updated_at ])
-  end
-
-  #手动调整排序
-  def sort
-    custom_collection.update_attribute :products_order, :manual
-    params[:product].each_with_index do |id, index|
-      current_user.shop.custom_collections.find(params[:id]).products.find(id).update_attribute :position, index
-    end
-    render :nothing => true
   end
 
 end
