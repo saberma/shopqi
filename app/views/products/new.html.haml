@@ -68,10 +68,6 @@
                     %input#variant_requires_shipping(checked="checked" name="" type="checkbox" value="1")/
                     %label(for="variant_requires_shipping") Require a shipping address
                     %span.hint not needed for services or digital goods
-                    :javascript
-                      //
-                      new Form.Element.EventObserver('variant_requires_shipping', function(element, value) {var weight=$('variant_weight'); if (value) {weight.disabled=false;) else {weight.disabled=true; weight.value='0.0';)))
-                      //
             #options
               %h3 Product Options
               %p.note.sb This is how your customers distinguish variations of your product.
@@ -115,7 +111,7 @@
                         %input#option-value-1(disabled="disabled" name="" size="16" type="text" value="Default Title")/
                         %span.fr.sr(style="margin-top: 5px")
                           %a#del-option-1(href="#" onclick="ProductOptions.remove(1);; return false;" tabindex="-1")
-                            %img(alt="Trash" src="new_files/trash.gif")/
+                            =image_tag 'admin/icons/trash.gif', alt: '删除'
                     %tr#new-option-2.edit-option.even(style="display: none;")
                       %td
                         %select#option-selector-2.option-selector(disabled="disabled")
@@ -131,7 +127,7 @@
                         %input#option-value-2(disabled="disabled" name="" size="16" type="text" value="Default Title")/
                         %span.fr.sr(style="margin-top: 5px")
                           %a#del-option-2(href="#" onclick="ProductOptions.remove(2);; return false;" tabindex="-1")
-                            %img(alt="Trash" src="new_files/trash.gif")/
+                            =image_tag 'admin/icons/trash.gif', alt: '删除'
                     %tr#add-option-bt.edit-option(style="")
                       %td
                         %a(href="#" onclick="ProductOptions.add();; return false;") add another Option
