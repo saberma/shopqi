@@ -41,27 +41,28 @@
               =f.text_field :vendor, class: :hide
             %table.data2.sst.ssb
               %tbody
-                %tr
-                  %th.clean=f.label :price
-                  %th.clean
-                  %th.clean=f.label :market_price
-                %tr
-                  %td
-                    =f.text_field :price, id:"variant_price", style: 'width: 50px'
-                    元 
-                  %td
-                  %td
-                    =f.text_field :market_price, id:"variant_price", style: 'width: 50px'
-                    元 
-                %tr
-                  %td(colspan="3")
-                    %input#variant_taxable(checked="checked" name="" type="checkbox" value="1")/
-                    %label(for="variant_taxable") Charge taxes
-                %tr
-                  %td(colspan="3")
-                    %input#variant_requires_shipping(checked="checked" name="" type="checkbox" value="1")/
-                    %label(for="variant_requires_shipping") Require a shipping address
-                    %span.hint not needed for services or digital goods
+                =f.fields_for :variants do |v|
+                  %tr
+                    %th.clean=v.label :price
+                    %th.clean
+                    %th.clean=v.label :compare_at_price
+                  %tr
+                    %td
+                      =v.text_field :price, id:"variant_price", style: 'width: 50px'
+                      元 
+                    %td
+                    %td
+                      =v.text_field :compare_at_price, id:"variant_price", style: 'width: 50px'
+                      元 
+                  %tr
+                    %td(colspan="3")
+                      %input#variant_taxable(checked="checked" name="" type="checkbox" value="1")/
+                      %label(for="variant_taxable") Charge taxes
+                  %tr
+                    %td(colspan="3")
+                      %input#variant_requires_shipping(checked="checked" name="" type="checkbox" value="1")/
+                      %label(for="variant_requires_shipping") Require a shipping address
+                      %span.hint not needed for services or digital goods
             #options
               %h3 Product Options
               %p.note.sb This is how your customers distinguish variations of your product.
@@ -128,16 +129,17 @@
                         %br/
                         %span.note e.g. Color, Size
                       %td &nbsp;
-          .section-header Inventory
+          .section-header 库存
           .padding
             %dl.ssb
               %dt
                 %label(for="variant_sku") SKU
-                %span.note (optional)
+                %span.note (非必填)
                 %br/
-                %span.note Unique identifier for organization of larger inventories.
+                %span.note 唯一标识符.
               %dd
-                %input#variant_sku(name="" size="30" type="text")/
+                =f.fields_for :variants do |v|
+                  =v.text_field :sku
               %dd
                 %p
                   %select#inventory-select-new.st(name="" onchange="Product.updateTrackingOptions('new');")

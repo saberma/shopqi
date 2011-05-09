@@ -16,6 +16,11 @@ class ProductsController < ApplicationController
   expose(:vendors) { shop.vendors }
   expose(:vendors_options) { vendors.map {|t| [t.name, t.id]} }
 
+  def new
+    #保证至少有一个款式
+    product.variants.build if product.variants.empty?
+  end
+
   def create
     product.save
     redirect_to products_path, notice: "新增商品成功!"

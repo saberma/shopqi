@@ -18,12 +18,13 @@ cn:
       product:
         title: 标题
         description: 描述
-        price: 价格
-        market_price: 销售价格
-        number: 编号
         type: 商品类型
         vendor: 商品生产商
-        brand: 品牌
+      product_variant:
+        price: 价格
+        weight: 重量
+        compare_at_price: 市场价
+        sku: 商品唯一标识符
       page:
         title: 标题
         description: 描述

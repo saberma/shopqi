@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
   end
 
   create_table "link_lists", :force => true do |t|
+    t.integer  "shop_id"
     t.string   "title"
     t.string   "handle"
     t.boolean  "system_default", :default => false
@@ -74,13 +75,20 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  create_table "product_variants", :force => true do |t|
+    t.integer "product_id",         :null => false
+    t.float   "price",              :null => false
+    t.float   "weight",             :null => false
+    t.float   "compare_at_price"
+    t.string  "sku"
+    t.integer "inventory_quantity"
+    t.string  "inventory_policy"
+  end
+
   create_table "products", :force => true do |t|
-    t.integer  "shop_id"
-    t.string   "title"
+    t.integer  "shop_id",      :null => false
+    t.string   "title",        :null => false
     t.text     "description"
-    t.float    "price"
-    t.float    "market_price"
-    t.string   "number"
     t.string   "product_type"
     t.string   "vendor"
     t.datetime "created_at"
