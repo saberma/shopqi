@@ -17,6 +17,12 @@ GIT
     activemerchant_patch_for_china (0.1.5)
       activemerchant (>= 1.4.2)
 
+GIT
+  remote: git://github.com/thedarkone/rails-dev-boost.git
+  revision: e2716ad0bceefbd840528cc5de329de075b602e1
+  specs:
+    rails-dev-boost (0.1.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -268,6 +274,7 @@ DEPENDENCIES
   pg
   rack-cache
   rails (= 3.0.6)
+  rails-dev-boost!
   rails3-generators
   resque
   resque_spec

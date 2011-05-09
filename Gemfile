@@ -51,6 +51,8 @@ gem "resque"
 group :development, :test do
   # 调试
   gem "awesome_print", :require => 'ap'
+  # 加快开发时的响应速度
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git', :require => 'rails_development_boost'
 end
 
 group :development do
