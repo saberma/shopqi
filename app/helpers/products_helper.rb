@@ -10,4 +10,9 @@ module ProductsHelper
     products_path(search: current_search)
   end
 
+  #查询标签
+  def search_label(params_key, plain_label)
+    (params[:search] && params[:search][params_key]) || plain_label
+  end
+
 end

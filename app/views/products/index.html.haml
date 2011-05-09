@@ -1,3 +1,6 @@
+=content_for :javascripts do
+  =javascript_include_tag 'controllers/products'
+
 %h2#title 商品管理 
 #action-links
   %ul
@@ -20,9 +23,9 @@
   %a.btn.sl(href="/admin/product_exports.csv") 导出所有商品
 #product-filters.box2.ssb.sst
   显示
-  %a#vendor-filter-link(href="#" onclick="$('#vendor-status-select > .filter-select').toggle(); return false;")=(params[:search] && params[:search][:vendor_eq]) || "所有厂商"
+  %a#vendor-filter-link(href="#")=search_label :vendor_eq, '所有厂商'
   和
-  %a#type-filter-link(href="#" onclick="$('#type-status-select > .filter-select').toggle(); return false;")=(params[:search] && params[:search][:product_type_eq]) || "所有类型"
+  %a#type-filter-link(href="#")=search_label :product_type_eq, "所有类型"
   的商品
   #vendor-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 50px')
@@ -88,3 +91,9 @@
               =render products
 #btm-nav.act-screen
   #pagination
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Products();
+    Backbone.history.start();
+  }
