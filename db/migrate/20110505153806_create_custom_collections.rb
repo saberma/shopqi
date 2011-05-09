@@ -19,6 +19,9 @@ class CreateCustomCollections < ActiveRecord::Migration
 
       t.timestamps
     end
+    
+    add_index :custom_collections        , :shop_id
+    add_index :custom_collection_products, :custom_collection_id
   end
 
   def self.down

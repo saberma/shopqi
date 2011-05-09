@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  add_index "custom_collection_products", ["custom_collection_id"], :name => "index_custom_collection_products_on_custom_collection_id"
+
   create_table "custom_collections", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title"
@@ -30,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "custom_collections", ["shop_id"], :name => "index_custom_collections_on_shop_id"
 
   create_table "kindeditors", :force => true do |t|
     t.string   "kindeditor_image_uid"
@@ -46,6 +50,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  add_index "link_lists", ["shop_id"], :name => "index_link_lists_on_shop_id"
+
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "link_type"
@@ -58,6 +64,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  add_index "links", ["link_list_id"], :name => "index_links_on_link_list_id"
+
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title"
@@ -68,12 +76,16 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  add_index "pages", ["shop_id"], :name => "index_pages_on_shop_id"
+
   create_table "photos", :force => true do |t|
-    t.string   "product_image_uid"
     t.integer  "product_id"
+    t.string   "product_image_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
 
   create_table "product_variants", :force => true do |t|
     t.integer "product_id",         :null => false
@@ -81,9 +93,12 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.float   "weight",             :null => false
     t.float   "compare_at_price"
     t.string  "sku"
+    t.boolean "requires_shipping"
     t.integer "inventory_quantity"
     t.string  "inventory_policy"
   end
+
+  add_index "product_variants", ["product_id"], :name => "index_product_variants_on_product_id"
 
   create_table "products", :force => true do |t|
     t.integer  "shop_id",      :null => false
@@ -95,15 +110,21 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  add_index "products", ["shop_id"], :name => "index_products_on_shop_id"
+
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"
     t.string  "name"
   end
 
+  add_index "shop_product_types", ["shop_id"], :name => "index_shop_product_types_on_shop_id"
+
   create_table "shop_product_vendors", :force => true do |t|
     t.integer "shop_id"
     t.string  "name"
   end
+
+  add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
 
   create_table "shops", :force => true do |t|
     t.string   "name"
@@ -131,6 +152,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "updated_at"
   end
 
+  add_index "smart_collection_products", ["smart_collection_id"], :name => "index_smart_collection_products_on_smart_collection_id"
+
   create_table "smart_collection_rules", :force => true do |t|
     t.integer  "smart_collection_id"
     t.string   "column"
@@ -139,6 +162,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "smart_collection_rules", ["smart_collection_id"], :name => "index_smart_collection_rules_on_smart_collection_id"
 
   create_table "smart_collections", :force => true do |t|
     t.integer  "shop_id"
@@ -150,6 +175,8 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "smart_collections", ["shop_id"], :name => "index_smart_collections_on_shop_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false
@@ -169,5 +196,6 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["shop_id"], :name => "index_users_on_shop_id"
 
 end

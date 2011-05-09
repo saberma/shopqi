@@ -11,6 +11,14 @@ class CreateProducts < ActiveRecord::Migration
       t.timestamps
     end
 
+    #图片
+    create_table :photos do |t|
+      t.references :product
+      t.string :product_image_uid
+
+      t.timestamps
+    end
+
     #商品款式
     create_table :product_variants do |t|
       t.references :product        , comment: '所属商品'                          , null: false
@@ -18,12 +26,18 @@ class CreateProducts < ActiveRecord::Migration
       t.float :weight              , comment: '重量kg'                            , null: false
       t.float :compare_at_price    , comment: '相对价格(市场价)'
       t.string :sku                , comment: '商品唯一标识符'
+      t.boolean :requires_shipping , comment: '要求送货地址'
       t.integer :inventory_quantity, comment: '库存'
       t.string :inventory_policy   , comment: '库存跟踪发现缺货时的处理:拒绝(deny), 继续(continue)'
     end
+
+    add_index :products        , :shop_id
+    add_index :product_variants, :product_id
+    add_index :photos          , :product_id
   end
 
   def self.down
+    drop_table :photos
     drop_table :product_variants
     drop_table :products
   end

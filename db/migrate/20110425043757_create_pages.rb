@@ -10,6 +10,8 @@ class CreatePages < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :pages, :shop_id
   end
 
   def self.down

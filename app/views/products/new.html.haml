@@ -44,25 +44,30 @@
                 =f.fields_for :variants do |v|
                   %tr
                     %th.clean=v.label :price
+                    %th.clean=v.label :weight
                     %th.clean
-                    %th.clean=v.label :compare_at_price
+                      =v.label :compare_at_price
+                      %span.note 非必填
                   %tr
                     %td
-                      =v.text_field :price, id:"variant_price", style: 'width: 50px'
+                      =v.text_field :price, style: 'width: 50px'
                       元 
                     %td
+                      =v.text_field :weight, style: 'width: 50px'
+                      kg
                     %td
-                      =v.text_field :compare_at_price, id:"variant_price", style: 'width: 50px'
+                      =v.text_field :compare_at_price, style: 'width: 50px'
                       元 
+                  -#
+                    %tr
+                      %td(colspan="3")
+                        %input#variant_taxable(checked="checked" name="" type="checkbox" value="1")/
+                        %label(for="variant_taxable") 费税
                   %tr
                     %td(colspan="3")
-                      %input#variant_taxable(checked="checked" name="" type="checkbox" value="1")/
-                      %label(for="variant_taxable") Charge taxes
-                  %tr
-                    %td(colspan="3")
-                      %input#variant_requires_shipping(checked="checked" name="" type="checkbox" value="1")/
-                      %label(for="variant_requires_shipping") Require a shipping address
-                      %span.hint not needed for services or digital goods
+                      =v.check_box :requires_shipping
+                      =v.label :requires_shipping
+                      %span.hint 服务性质或者数字之类的商品不需要勾选
             #options
               %h3 Product Options
               %p.note.sb This is how your customers distinguish variations of your product.

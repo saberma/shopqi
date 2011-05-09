@@ -23,6 +23,9 @@ class CreateLinkLists < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :link_lists, :shop_id
+    add_index :links     , :link_list_id
+
   end
 
   def self.down

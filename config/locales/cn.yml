@@ -25,6 +25,7 @@ cn:
         weight: 重量
         compare_at_price: 市场价
         sku: 商品唯一标识符
+        requires_shipping: 要求送货地址
       page:
         title: 标题
         description: 描述

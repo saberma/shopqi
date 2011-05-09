@@ -29,6 +29,10 @@ class CreateSmartCollections < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :smart_collections        , :shop_id
+    add_index :smart_collection_rules   , :smart_collection_id
+    add_index :smart_collection_products, :smart_collection_id
+
   end
 
   def self.down

@@ -31,6 +31,9 @@ class CreateShops < ActiveRecord::Migration
       t.references :shop, comment: "所属商店"
       t.string :name    , comment: "名称"
     end
+
+    add_index :shop_product_types  , :shop_id
+    add_index :shop_product_vendors, :shop_id
   end
 
   def self.down
