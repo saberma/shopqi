@@ -29,17 +29,15 @@
       %li
         %strong 厂商
       -vendors.each do |vendor|
-        %li=link_to vendor.name, products_path(search: {vendor_eq: vendor.name})
-      %li.filter-show-all.current
-        %a(href="/admin/products") 显示所有
+        %li=link_to vendor.name, search_path(vendor_eq: vendor.name)
+      %li.filter-show-all.current=link_to "显示所有", search_path(vendor_eq: nil)
   #type-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 120px')
       %li
         %strong 商品类型
       -types.each do |product_type|
-        %li=link_to product_type.name, products_path(search: {product_type_eq: product_type.name})
-      %li.filter-show-all.current
-        %a(href="/admin/products") 显示所有
+        %li=link_to product_type.name, search_path(product_type_eq: product_type.name)
+      %li.filter-show-all.current=link_to "显示所有", search_path(producty_type_eq: nil)
 .view-switcher
   %a.btn.btn-group.btn-left.active(href="/admin/products") 列表视图
   %a.btn.btn-group.btn-right(href="/admin/products/inventory") 清单视图
