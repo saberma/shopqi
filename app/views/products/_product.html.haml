@@ -4,7 +4,7 @@
   %td.list-image(style="text-align: center ! important;")
     %label(for="checkbox-38663892")=image_tag 'other/no-image-thumb.gif'
   %td(style="padding-left: 3px; vertical-align: middle;")
-    %p=link_to product.title, products_path(product), title: "处理:#{product.title}"
+    %p=link_to product.title, product_path(product), title: "处理:#{product.title}"
     %p.list-product-type=product.product_type
     %p.list-vendor=product.vendor
   %td.list-variants

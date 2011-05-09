@@ -3,14 +3,21 @@ class ProductsController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
   expose(:shop) { current_user.shop }
-  expose(:products) { shop.products }
+  expose(:products) do
+    if params[:search]
+      shop.products.search(params[:search]).all
+    else
+      shop.products
+    end
+  end
   expose(:product)
-  expose(:types) { shop.types.map {|t| [t.name, t.id]} }
-  expose(:vendors) { shop.vendors.map {|t| [t.name, t.id]} }
+  expose(:types) { shop.types }
+  expose(:types_options) { types.map {|t| [t.name, t.id]} }
+  expose(:vendors) { shop.vendors }
+  expose(:vendors_options) { vendors.map {|t| [t.name, t.id]} }
 
   def create
     product.save
     redirect_to products_path, notice: "新增商品成功!"
   end
-
 end

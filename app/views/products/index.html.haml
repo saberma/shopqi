@@ -20,26 +20,26 @@
   %a.btn.sl(href="/admin/product_exports.csv") 导出所有商品
 #product-filters.box2.ssb.sst
   显示
-  %a#vendor-filter-link(href="#" onclick="; return false;") 所有厂商
+  %a#vendor-filter-link(href="#" onclick="$('#vendor-status-select > .filter-select').toggle(); return false;")=(params[:search] && params[:search][:vendor_eq]) || "所有厂商"
   和
-  %a#type-filter-link(href="#" onclick="; return false;") 所有类型
+  %a#type-filter-link(href="#" onclick="$('#type-status-select > .filter-select').toggle(); return false;")=(params[:search] && params[:search][:product_type_eq]) || "所有类型"
   的商品
   #vendor-status-select
-    %ul.nobull.filter-select.dropdown.hide
+    %ul.nobull.filter-select.dropdown.hide(style='left: 50px')
       %li
         %strong 厂商
-      %li
-        %a(href="https://medhurst-shields-and-kunde7896.myshopify.com/admin/products?vendor=Shopify") Shopify
+      -vendors.each do |vendor|
+        %li=link_to vendor.name, products_path(search: {vendor_eq: vendor.name})
       %li.filter-show-all.current
-        %a(href="https://medhurst-shields-and-kunde7896.myshopify.com/admin/products") 显示所有
+        %a(href="/admin/products") 显示所有
   #type-status-select
-    %ul.nobull.filter-select.dropdown.hide
+    %ul.nobull.filter-select.dropdown.hide(style='left: 120px')
       %li
         %strong 商品类型
-      %li
-        %a(href="https://medhurst-shields-and-kunde7896.myshopify.com/admin/products?product_type=Shirts") Shirts
+      -types.each do |product_type|
+        %li=link_to product_type.name, products_path(search: {product_type_eq: product_type.name})
       %li.filter-show-all.current
-        %a(href="https://medhurst-shields-and-kunde7896.myshopify.com/admin/products") 显示所有
+        %a(href="/admin/products") 显示所有
 .view-switcher
   %a.btn.btn-group.btn-left.active(href="/admin/products") 列表视图
   %a.btn.btn-group.btn-right(href="/admin/products/inventory") 清单视图
@@ -84,9 +84,9 @@
                 %th.nosort.sortcol(style="width: 16px;")
                   %input#select-all(type="checkbox")/
                 %th.nosort.sortcol(style="width: 12px; text-align: center ! important;") &nbsp;
-                %th#product-col.sortcol.sortasc(style="padding-left: 3px; min-width: 150px;") Product
-                %th.nosort.sortcol Inventory
-                %th.sortcol.number(style="text-align: center;") Total
+                %th#product-col.sortcol.sortasc(style="padding-left: 3px; min-width: 150px;") 商品
+                %th.nosort.sortcol 库存
+                %th.sortcol.number(style="text-align: center;") 总数
               =render products
 #btm-nav.act-screen
   #pagination
