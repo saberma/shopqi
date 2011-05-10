@@ -32,6 +32,7 @@ cn:
         compare_at_price: 市场价
         sku: 商品唯一标识符
         requires_shipping: 要求送货地址
+        inventory_quantity: 现有库存量?
       page:
         title: 标题
         description: 描述

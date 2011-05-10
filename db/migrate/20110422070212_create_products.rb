@@ -22,14 +22,15 @@ class CreateProducts < ActiveRecord::Migration
 
     #商品款式
     create_table :product_variants do |t|
-      t.references :product        , comment: '所属商品'                          , null: false
-      t.float :price               , comment: '价格'                              , null: false    , default: 0.00
-      t.float :weight              , comment: '重量kg'                            , null: false    , default: 0.0
-      t.float :compare_at_price    , comment: '相对价格(市场价)'
-      t.string :sku                , comment: '商品唯一标识符'
-      t.boolean :requires_shipping , comment: '要求送货地址'                      , default: true
-      t.integer :inventory_quantity, comment: '库存'
-      t.string :inventory_policy   , comment: '库存跟踪发现缺货时的处理:拒绝(deny), 继续(continue)'
+      t.references :product          , comment: '所属商品'                          , null: false
+      t.float :price                 , comment: '价格'                              , null: false    , default: 0.0
+      t.float :weight                , comment: '重量kg'                            , null: false    , default: 0.0
+      t.float :compare_at_price      , comment: '相对价格(市场价)'
+      t.string :sku                  , comment: '商品唯一标识符'
+      t.boolean :requires_shipping   , comment: '要求送货地址'                      , default: true
+      t.integer :inventory_quantity  , comment: '现有库存量'                        , default: 1
+      t.string :inventory_management , comment: '库存跟踪'
+      t.string :inventory_policy     , comment: '库存跟踪发现缺货时的处理:拒绝(deny), 继续(continue)', default: :deny
     end
 
     add_index :products        , :shop_id

@@ -148,22 +148,18 @@
                   %span.note 唯一标识符.
                 %dd=v.text_field :sku
                 %dd
-                  %p
-                    %select#inventory-select-new.st(name="" onchange="Product.updateTrackingOptions('new');")
-                      %option(selected="selected" value="") Don't track stock level
-                      %option(value="shopify") Shopify tracks this variant's stock level
+                  %p=v.select :inventory_management, inventory_managements, {}, id: 'inventory-select'
                   #inventory-controls-new
-                    #shopify-inventory-new.inventory-option.st(style="display:none")
+                    #shopqi-inventory-new.inventory-option.st.hide
                       %p#inventory-new.soft
-                        %label(for="variant-inventory-quantity-new") How many are in stock?
-                        %input#variant-inventory-quantity-new.small.r.digit-2(name="" size="6" type="text" value="1")/
-                %dd#inventory-policy-new(style="display:none")
+                        =v.label :inventory_quantity
+                        =v.text_field :inventory_quantity, class: [:small, :r, 'digit-2'], size: 6
+                %dd#inventory-policy-new.hide
                   %p.soft
-                    %input#variant_inventory_policy_deny(checked="checked" name="" type="radio" value="deny")/
-                    %label.inline(for="variant_inventory_policy_deny") Deny purchases for this item when not in stock.
-                    %br/
-                    %input#variant_inventory_policy_continue(name="" type="radio" value="continue")/
-                    %label.inline(for="variant_inventory_policy_continue") Allow users to purchase this item when out of stock.
+                    -inventory_policies.each do |policy|
+                      =v.radio_button :inventory_policy, policy.code
+                      %label.inline(for="product_variants_attributes_0_inventory_policy_#{policy.code}")=policy.name
+                      %br/
           .section-header 标签
           .padding
             %dl(style="margin: 0;")

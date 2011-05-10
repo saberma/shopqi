@@ -15,6 +15,29 @@ module KeyValues
     ]
   end
 
+  # 商品相关
+  module Product
+
+    module Inventory
+
+      class Manage < KeyValues::Base
+        self.data = [
+          {:id => 1, :name => '不需要跟踪库存情况', :code => ''},
+          {:id => 2, :name => '需要ShopQi跟踪此款式的库存情况', :code => 'shopqi'}
+        ]
+      end
+
+      class Policy < KeyValues::Base
+        self.data = [
+          {:id => 1, :name => '库存不足时拒绝用户购买此款商品', :code => 'deny'},
+          {:id => 2, :name => '需要ShopQi跟踪此款式的库存情况', :code => 'continue'}
+        ]
+      end
+
+    end
+
+  end
+
   module Link
 
     #链接类型

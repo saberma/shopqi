@@ -16,12 +16,23 @@ App.Controllers.Products = Backbone.Controller.extend
       $('#vendor-status-select > .filter-select').hide()
       $('#type-status-select > .filter-select').hide()
 
-    # 新增页面
+    ###### 新增页面 #####
+    # 是否要求收货地址
     $('#variant_requires_shipping').change ->
       if $(this).attr('checked')
         $('#product_variants_attributes_0_weight').attr('disabled', false)
       else
         $('#product_variants_attributes_0_weight').attr('disabled', true).val('0.0')
+    .change()
+
+    # 是否跟踪库存
+    $('#inventory-select').change ->
+      if $(this).val() is ''
+        $('#shopqi-inventory-new').hide()
+        $('#inventory-policy-new').hide()
+      else
+        $('#shopqi-inventory-new').show()
+        $('#inventory-policy-new').show()
     .change()
 
   routes:
