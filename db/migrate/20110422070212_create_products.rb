@@ -7,6 +7,7 @@ class CreateProducts < ActiveRecord::Migration
       t.text :description   , comment:  "商品描述"
       t.string :product_type, comment:  "类型(类别)"
       t.string :vendor      , comment:  "品牌(供应商)"
+      t.string :tags        , comment: "关键词"
 
       t.timestamps
     end

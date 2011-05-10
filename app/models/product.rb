@@ -13,5 +13,5 @@ end
 #商品款式
 class ProductVariant < ActiveRecord::Base
   belongs_to :product
-  validates_presence_of :price
+  validates_presence_of :price, :weight
 end

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Custom Domain Cookie
 # #
 # # Set the cookie domain to the custom domain if it's present

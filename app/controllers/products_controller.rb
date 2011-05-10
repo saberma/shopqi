@@ -21,6 +21,10 @@ class ProductsController < ApplicationController
     product.variants.build if product.variants.empty?
   end
 
+  def new
+    product.photos.build
+  end
+
   def create
     if product.save
       redirect_to products_path, notice: "新增商品成功!"

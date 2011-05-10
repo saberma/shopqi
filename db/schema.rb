@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.text     "description"
     t.string   "product_type"
     t.string   "vendor"
+    t.string   "tags"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
