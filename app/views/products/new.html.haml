@@ -1,6 +1,6 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'controllers/products'
 
 %h2#title 新增商品
 #action-links
@@ -75,7 +75,7 @@
               #options
                 %h3 商品选项
                 %p.note.sb 选项可以让顾客区分商品的各种款式.
-                %input#enable-options(name="create-options" type="checkbox")
+                %input#enable-options{name:"create-options", type:"checkbox", checked:params['create-options']}
                 %label(for="enable-options")
                   此商品有
                   %strong 多个
@@ -165,17 +165,18 @@
 / end div.container
 -#商品选项
 %script(id="option-item" type="text/x-jquery-tmpl")
-  %tr.edit-option.odd
-    %td
-      %select.option-selector=options_for_select options
-      %input(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
-    %td
-      %input(name="product[options_attributes][][value]" size="16" type="text")
-      %span.fr.sr(style="margin-top: 5px")
-        %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
+  %td
+    %select.option-selector=options_for_select options
+    %input(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
+  %td
+    %input(name="product[options_attributes][][value]" size="16" type="text")
+    %span.fr.sr(style="margin-top: 5px")
+      %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
 
 :javascript
   App.init = function(){
     new App.Controllers.Products();
     Backbone.history.start();
   }
+  App.product_options = new App.Collections.ProductOptions();
+  App.product_options.refresh(#{product.options.to_json(except: [ :created_at, :updated_at ])});
