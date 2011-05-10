@@ -41,6 +41,10 @@ cn:
               taken: 已被占用
             name:
               blank: 不能为空
+        product:
+          attributes:
+            title:
+              blank: 不能为空
 
   date:
     formats:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110426120958) do
+ActiveRecord::Schema.define(:version => 20110426171618) do
 
   create_table "kindeditors", :force => true do |t|
     t.string   "kindeditor_image_uid"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20110426120958) do
     t.float    "market_price"
     t.string   "number"
     t.string   "vendor"
+    t.string   "tags"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -89,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20110426120958) do
     t.integer  "shop_id"
     t.string   "title"
     t.boolean  "published",  :default => false
+    t.string   "handle",                        :null => false
     t.text     "body_html"
     t.datetime "created_at"
     t.datetime "updated_at"

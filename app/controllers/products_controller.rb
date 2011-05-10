@@ -6,9 +6,16 @@ class ProductsController < ApplicationController
   expose(:products){shop.products}
   expose(:product)
 
+  def new
+    product.photos.build
+  end
+
   def create
-    product.save
-    redirect_to products_path, notice: "新增商品成功!"
+    if product.save
+      render edit_products_path, notice: "新增商品成功!"
+    else
+      render action:'new'
+    end
   end
 
 end
