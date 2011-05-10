@@ -109,19 +109,12 @@
                           %option(value="create_new") Custom...
                         %input#option-name-1(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
                       %td
-<<<<<<< HEAD
-                        %input#option-value-1{:disabled => "disabled", :name => "", :size => "16", :type => "text", :value => "Default Title"}/
-                        %span.fr.sr{:style => "margin-top: 5px"}
-                          %a#del-option-1{:href => "#", :onclick => "ProductOptions.remove(1);; return false;", :tabindex => "-1"}
-                            %img{:alt => "Trash", :src => "/images/icons/trash.gif"}/
-                    %tr#new-option-2.edit-option.even{:style => "display: none;"}
-=======
+
                         %input#option-value-1(disabled="disabled" name="" size="16" type="text" value="Default Title")/
                         %span.fr.sr(style="margin-top: 5px")
                           %a#del-option-1(href="#" onclick="ProductOptions.remove(1);; return false;" tabindex="-1")
                             =image_tag 'admin/icons/trash.gif', alt: '删除'
                     %tr#new-option-2.edit-option.even(style="display: none;")
->>>>>>> 12f5782535b76ecbbbd3a5f21dbc27c194a07cf4
                       %td
                         %select#option-selector-2.option-selector(disabled="disabled")
                           %option(disabled="disabled" selected="selected" value="Title") Title
@@ -133,19 +126,12 @@
                           %option(value="create_new") Custom...
                         %input#option-name-2(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
                       %td
-<<<<<<< HEAD
-                        %input#option-value-2{:disabled => "disabled", :name => "", :size => "16", :type => "text", :value => "Default Title"}/
-                        %span.fr.sr{:style => "margin-top: 5px"}
-                          %a#del-option-2{:href => "#", :onclick => "ProductOptions.remove(2);; return false;", :tabindex => "-1"}
-                            %img{:alt => "Trash", :src => "/images/icons/trash.gif"}/
-                    %tr#add-option-bt.edit-option{:style => ""}
-=======
+
                         %input#option-value-2(disabled="disabled" name="" size="16" type="text" value="Default Title")/
                         %span.fr.sr(style="margin-top: 5px")
                           %a#del-option-2(href="#" onclick="ProductOptions.remove(2);; return false;" tabindex="-1")
                             =image_tag 'admin/icons/trash.gif', alt: '删除'
                     %tr#add-option-bt.edit-option(style="")
->>>>>>> 12f5782535b76ecbbbd3a5f21dbc27c194a07cf4
                       %td
                         %a(href="#" onclick="ProductOptions.add();; return false;") add another Option
                         %br/
