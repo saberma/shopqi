@@ -88,12 +88,12 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
   add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
 
   create_table "product_variants", :force => true do |t|
-    t.integer "product_id",         :null => false
-    t.float   "price",              :null => false
-    t.float   "weight",             :null => false
+    t.integer "product_id",                           :null => false
+    t.float   "price",              :default => 0.0,  :null => false
+    t.float   "weight",             :default => 0.0,  :null => false
     t.float   "compare_at_price"
     t.string  "sku"
-    t.boolean "requires_shipping"
+    t.boolean "requires_shipping",  :default => true
     t.integer "inventory_quantity"
     t.string  "inventory_policy"
   end

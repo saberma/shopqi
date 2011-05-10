@@ -1,4 +1,7 @@
 - use_kindeditor
+=content_for :javascripts do
+  =javascript_include_tag 'controllers/products'
+
 %h2#title 新增商品
 #action-links
   %ul
@@ -28,7 +31,7 @@
             .padding
               %dl
                 %dt
-              %p=f.label :type
+              %p=f.label :product_type
               %span.note 例如: 服装,电脑,家用电器
               %dd
                 %select#product-type-select
@@ -66,8 +69,8 @@
                         %label(for="variant_taxable") 费税
                   %tr
                     %td(colspan="3")
-                      =v.check_box :requires_shipping
-                      =v.label :requires_shipping
+                      =v.check_box :requires_shipping, id: :variant_requires_shipping
+                      =v.label :requires_shipping, nil, for: :variant_requires_shipping
                       %span.hint 服务性质或者数字之类的商品不需要勾选
               #options
                 %h3 Product Options
@@ -209,3 +212,9 @@
     =link_to w('cancel'), products_path
 / end div.main
 / end div.container
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Products();
+    Backbone.history.start();
+  }
