@@ -191,8 +191,8 @@
         %td(style="width: 275px; padding: 0pt 0pt 0pt 10px;")
           %h3.section-header(style="margin-bottom: 0") 商品图片
           #product-image-area.group(style="border-bottom: none; padding-top: 0")
-            #pending-files(style="display:none;")
-            #file-selectors(style="display:none;")
+            #pending-files.hide
+            #file-selectors.hide
             %ul#attachments.nobull
               %li#no-product-images-msg.item.note.c
                 %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")/
@@ -200,7 +200,7 @@
             %h4.st 上传图片
             %p.note 允许上传文件类型( .gif, .jpg, .jpeg, .png)
             %p#file-input.st.sb
-              -f.fields_for :photos do |p|
+              =f.fields_for :photos do |p|
                 =p.file_field :product_image
         / product images
   %p.btns.cl

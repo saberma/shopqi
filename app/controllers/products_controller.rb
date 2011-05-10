@@ -19,9 +19,6 @@ class ProductsController < ApplicationController
   def new
     #保证至少有一个款式
     product.variants.build if product.variants.empty?
-  end
-
-  def new
     product.photos.build
   end
 
