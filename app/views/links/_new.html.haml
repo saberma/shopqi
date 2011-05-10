@@ -12,7 +12,7 @@
     .add-link-linksto.link-col
       %span.add-link-header 链接至
       %select.selector(name="link[link_type]")
-        =options_for_select link_types.map{|t| [t.name, t.code]}
+        =options_for_select link_types
       %select.subject(name="link[subject_id]" style="display:none")
       %input.long.subject_http.linkform-hint(data-hint="http://shopqi.com" name="link[subject]" originalname="link[subject]" type="text")
       %input.medium.subject_params.linkform-hint(data-hint="使用标记过滤商品(以逗号,分隔)" originalname="link[subject_params]" type="text" style="display:none;")

@@ -1,0 +1,16 @@
+#smart-collections.pgroup.sst
+  %h3 智能集合
+  %table.collection-list
+    %tbody
+      -smart_collections.in_groups_of(3) do |group|
+        %tr
+          -group.each do |smart_collection|
+            %td{class: smart_collection && :collection}
+              -if smart_collection
+                = link_to smart_collection.title, smart_collection_path(smart_collection), title: "handle: #{smart_collection.handle}"
+                -unless smart_collection.published
+                  %span.status-hidden(style='margin:0') 隐藏
+                %p==#{smart_collection.products.size} 个商品
+                %p=smart_collection.rules_info
+  #pagination
+

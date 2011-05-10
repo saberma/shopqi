@@ -2,7 +2,7 @@
 %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif', :alt => "删除"
 =text_field_tag "title", "${title}", :class => :medium
 %select.selector.sl(name="link_type")
-  =options_for_select link_types.map{|t| [t.name, t.code]}
+  =options_for_select link_types
 %select.subject.hide(name="subject_id")
 %input.subject_value.hide(type="text" value="${subject}")
 =text_field_tag "subject", "${subject}", :class => [:long, :subject_http, 'linkform-hint'], 'data-hint' => "http://shopqi.com"

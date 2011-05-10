@@ -5,7 +5,7 @@
       %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
       %meta{:content => "", :name => "keywords"}/
       %meta{:content => "", :name => "description"}/
-      %title Shopify — Signup
+      %title ShopQi — 注册
       = stylesheet_link_tag "master","message_block"
       = javascript_include_tag 'jquery','rails.validations'
       = csrf_meta_tag
@@ -19,71 +19,73 @@
       #wrapper
         #masthead
           .content
-            %a.logo-shopify{:href => "http://www.shopify.com/"} Shopify
+            -#
+              %a.logo-shopify{:href => "http://www.shopify.com/"} Shopify
+            %a.logo-shopqi{:href => "http://www.shopqi.com/"} ShopQi
             %ul#nav-primary
               %li
-                %a{:href => "http://www.shopify.com/tour/"} Feature Tour
+                %a{:href => "http://www.shopqi.com/tour/"} 功能演示
               %li
-                %a{:href => "http://www.shopify.com/examples/"} Examples
+                %a{:href => "http://www.shopqi.com/examples/"} 成功案例
               %li
-                %a{:href => "http://www.shopify.com/faq/"} FAQ
+                %a{:href => "http://www.shopqi.com/faq/"} 常见问题
               %li.current
-                %a{:href => "https://www.shopify.com/signup/"} Pricing &amp; Signup
+                %a{:href => "/signup"} 价格 &amp; 注册
               %li.sub-nav
                 %ul.utilities
                   %li.megadropdown
-                    %a{:href => "https://www.shopify.com/services/signup/new/basic#"} Resources
+                    %a{:href => "https://www.shopqi.com/services/signup/new/basic#"} 资源
                     %ul
                       %li
-                        %a{:href => "http://support.myshopify.com/", :title => "Welcome - Shopify Support"}
-                          %strong> Support
-                          Talk to Shopify Support
+                        %a{:href => "http://support.myshopqi.com/", :title => "Welcome - ShopQi Support"}
+                          %strong> 支持
+                          联系ShopQi
                       %li
-                        %a{:href => "http://wiki.shopify.com/", :title => "Main Page - Shopify Wiki"}
-                          %strong> Documentation
-                          Learn about Shopify
+                        %a{:href => "http://wiki.shopqi.com/", :title => "Main Page - ShopQi Wiki"}
+                          %strong> 文档
+                          学习ShopQi相关文档
                       %li
-                        %a{:href => "http://forums.shopify.com/", :title => "Shopify Community"}
-                          %strong> Forums
-                          The Shopify community
+                        %a{:href => "http://forums.shopqi.com/", :title => "ShopQi Community"}
+                          %strong> 论坛
+                          ShopQi社区
                       %li
-                        %a{:href => "http://apps.shopify.com/", :title => "Shopify Application Store"}
-                          %strong> Apps
-                          Apps for your shop
+                        %a{:href => "http://apps.shopqi.com/", :title => "ShopQi Application Store"}
+                          %strong> 应用
+                          选择商店应用程序
                       %li
-                        %a{:href => "http://themes.shopify.com/", :title => "Shopify Theme Store"}
-                          %strong> Themes
-                          Themes for your shop
+                        %a{:href => "http://themes.shopqi.com/", :title => "ShopQi Theme Store"}
+                          %strong> 外观
+                          选择商店外观
                   %li.last
-                    %a{:href => "http://www.shopify.com/login/"} Login
+                    %a{:href => "/login"} 登录
         =yield
       #footer
         #footer-wrapper
           .content
             .col-3
-              %h3 Features
+              %h3 功能
               %ul
                 %li
-                  %a{:href => "#"} Overview
+                  %a{:href => "#"} 概览
             .col-3
-              %h3 Resources
+              %h3 资源
               %ul
                 %li
-                  %a{:href => "#"} Shopify Wiki
+                  %a{:href => "#"} ShopQi百科
             .col-3
-              %h3 Shopify
+              %h3 ShopQi
               %ul
                 %li
-                  %a{:href => "http://blog.shopify.com/"} Blog
+                  %a{:href => "http://blog.shopqi.com/"} 博客
             .col-3.contact-us.last
-              %h3 Contact us
+              %h3 联系我们
               %ul
                 %li
                   %img{:alt => "Phone16", :height => "12", :src => "/images/admin/icons/phone16.gif", :width => "12"}/
-                  1.888.746.7439
+                  0755-26748888
           #copyright.center.clear
-            %p © 2006-2011 Jaded Pixel Technologies Inc. | Shopify - A shop in minutes, a business for life.
-            %p *Shopify is a registered trademark of Jaded Pixel Technologies Inc.
+            %p © 2011-2011 ShopQi Inc. | ShopQi - 独立网店平台.
+            %p *ShopQi is a registered trademark of ShopQi Inc.
 -else
   !!!
   %html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}

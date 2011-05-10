@@ -1,0 +1,13 @@
+%li.condition-line
+  %span.smart-tools
+    = link_to image_tag('admin/icons/add.gif'), '#', class: :add_rule
+    = link_to image_tag('admin/icons/delete.gif'), '#', class: :del_rule, title: '删除它'
+  %select.field(name="smart_collection[rules_attributes][][column]" style="width: 120px;")
+    -rule_columns.each do |column|
+      %option{value:column.code, clazz:column.clazz, selected:(column.code == rule.column)}=column.name
+  %select.relation(name="smart_collection[rules_attributes][][relation]" style="width: 120px;")
+    -rule_relations.each do |relation|
+      %option{value:relation.code, clazz:relation.clazz, selected:(relation.code == rule.relation)}=relation.name
+  %input.condition(name="smart_collection[rules_attributes][][condition]" style="width: 120px;" value="#{rule.condition}")
+  %input(type='hidden' name="smart_collection[rules_attributes][][id]" value="#{rule.id}")
+  %input(type='hidden' name="smart_collection[rules_attributes][][_destroy]" value="0")

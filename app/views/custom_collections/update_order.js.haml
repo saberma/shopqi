@@ -1,0 +1,2 @@
+App.custom_collection_products.refresh(#{raw products.to_json(except: [ :created_at, :updated_at ], include: :product)});
+msg('#{flash[:notice]}');

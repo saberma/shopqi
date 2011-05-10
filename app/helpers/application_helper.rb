@@ -19,7 +19,7 @@ module ApplicationHelper
       { label: '订单', url: '/admin/orders' },
       { label: '会员', url: '/admin/customers' },
       { label: '商品', url: products_path },
-      { label: '集合', url: smart_collections_path },
+      { label: '集合', url: custom_collections_path },
       { label: '博客 & 页面', url: pages_path },
       { label: '链接列表', url: link_lists_path },
       { label: '市场营销', url: '/admin/marketing' }
@@ -29,7 +29,15 @@ module ApplicationHelper
 
   #是否为当前页面
   def current(menu)
-    (current_page?(menu[:url]) ? :current : '')
+    #(current_page?(menu[:url]) ? :current : '')
+    request.path.start_with?(menu[:url]) ? :current : ''
   end
 
+  #国际化
+  def w(str)
+    str, model = str.split('.')
+    str = I18n.t "web.#{str}"
+    str += I18n.t("activerecord.models.#{model}") if model
+    str
+  end
 end

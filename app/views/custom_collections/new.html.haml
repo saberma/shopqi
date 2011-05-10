@@ -1,0 +1,19 @@
+- use_kindeditor
+
+%h2#title=w('new.custom_collection')
+#action-links
+  %ul
+    %li.no-icon=link_to w('cancel'), custom_collections_path
+=form_for custom_collection do |f|
+  .group
+    %dl
+      %dt.top=f.label :title
+      %dd=f.text_field :title, class: :big
+      %dt
+        =f.label :body_html
+        %span.note=w('optional')
+      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200px;"
+  %p.btns
+    %input#submit-collection-btn.btn(name="commit" type="submit" value="#{w('save')}")
+    =w('or')
+    =link_to w('cancel'), custom_collections_path, class: :cancel

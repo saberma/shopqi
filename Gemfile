@@ -3,16 +3,12 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.6'
 
-gem 'pg'
-
 ##### 实体相关 #####
+gem 'pg'
 gem 'auto_migrations'
 gem 'devise'
 
-
-#####客户端校验######
-gem 'client_side_validations'
-# 用于保存配置型记录
+# 用于保存配置型(枚举)记录
 gem 'active_hash'
 # 分页
 gem 'kaminari'
@@ -22,23 +18,26 @@ gem 'rack-cache', :require => 'rack/cache'
 #模板语言
 gem 'liquid'
 gem "carrierwave"
-
-# 将current_user设置至线程中                                                                                                                   
-gem 'sentient_user'
-#用于显示错误信息
-gem 'message_block'
-
-# 调用参数说明:http://www.imagemagick.org/Usage/
-gem "mini_magick"
+#查询
+gem 'meta_where'
+gem 'meta_search'
 
 ##### 控制器相关 #####
 gem 'decent_exposure'
+# 将current_user设置至线程中
+gem 'sentient_user'
+# 调用参数说明:http://www.imagemagick.org/Usage/
+gem "mini_magick"
 
 ##### 视图相关 #####
 gem 'haml'
 # 编译coffee-script
 gem 'therubyracer', :require => nil
 gem 'barista'
+#用于显示错误信息
+gem 'message_block'
+#客户端校验
+gem 'client_side_validations'
 
 ##### 其他 #####
 # 支付
@@ -52,6 +51,8 @@ gem "resque"
 group :development, :test do
   # 调试
   gem "awesome_print", :require => 'ap'
+  # 加快开发时的响应速度
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git', :require => 'rails_development_boost'
 end
 
 group :development do

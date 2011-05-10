@@ -1,0 +1,33 @@
+%tr(class="product row#{cycle(:odd, :even)}")
+  %td(style="padding-right: 5px; vertical-align: middle;")
+    %input#checkbox-38663892.selector(name="products[]" type="checkbox" value="38663892")/
+  %td.list-image(style="text-align: center ! important;")
+    %label(for="checkbox-38663892")=image_tag 'other/no-image-thumb.gif'
+  %td(style="padding-left: 3px; vertical-align: middle;")
+    %p=link_to product.title, product_path(product), title: "处理:#{product.title}"
+    %p.list-product-type=product.product_type
+    %p.list-vendor=product.vendor
+  %td.list-variants
+    .expand-collapse-info.notification.hide
+      %p(style="position: absolute; top: 11px")
+        %a#expand-38663892(href="#" onclick="Product.expandList(38663892); return false;")
+          =image_tag 'admin/icons/arrow_right_small.png'
+        %a#collapse-38663892(href="#" onclick="Product.collapseList(38663892); return false;" style="display: none;")
+          =image_tag 'admin/icons/arrow_down_small.png'
+    %ul#variant-list-38663892.variant-list.nobull.product-list-option-1
+      %li#variant-89269152.variant-list-item(onmouseout="$('variant-tip-89269152').hide();" onmouseover="$('variant-tip-89269152').show();")
+        %p.note(style="font-size: 9px; line-height: 11px; margin: 0") Small
+        %span.large(style="font-size: 14px;line-height: 25px") ∞
+        %br/
+        #variant-tip-89269152.newtip(style="display: none")
+          .default
+            .content 2
+      %li#variant-89040472.variant-list-item.last-variant(onmouseout="$('variant-tip-89040472').hide();" onmouseover="$('variant-tip-89040472').show();")
+        %p.note(style="font-size: 9px; line-height: 11px; margin: 0") Medium
+        %span.large(style="font-size: 14px;line-height: 25px") ∞
+        %br/
+        #variant-tip-89040472.newtip(style="display: none")
+          .default
+            .content no SKU
+  %td.list-total(style="text-align: center; vertical-align: middle;")
+    %span(style="font-size: 18px") ∞

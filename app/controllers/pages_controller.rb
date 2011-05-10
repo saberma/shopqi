@@ -1,3 +1,4 @@
+# encoding: utf-8
 class PagesController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
@@ -12,9 +13,10 @@ class PagesController < ApplicationController
 
   def update
     page.save
+    flash.now[:notice] = I18n.t("flash.actions.#{action_name}.notice")
     respond_to do |format|
       format.html { redirect_to page_path(page) }
-      format.js
+      format.js { render :template => "shared/msg" }
     end
   end
 

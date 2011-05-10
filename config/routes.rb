@@ -1,6 +1,6 @@
 Shopqi::Application.routes.draw do
 
-  devise_for :user,:controllers => {:registrations => "users/registrations"} do
+  devise_for :user, :controllers => {:registrations => "users/registrations"} do
     get "signup", :to => "users/registrations#new"
     get "login", :to => "devise/sessions#new"
   end
@@ -14,7 +14,7 @@ Shopqi::Application.routes.draw do
 
   scope "/admin" do
 
-    resources :products, :only => [:index,:new,:create,:destroy,:update]
+    resources :products, :except => :edit
 
     resources :pages, :except => :edit
 
@@ -26,7 +26,26 @@ Shopqi::Application.routes.draw do
       end
     end
 
-    resources :smart_collections
+    resources :custom_collections, except: :edit do
+      resources :custom_collection_products, path: :products, as: :products, except: [:index, :new, :edit, :update] do
+        post :sort, on: :collection
+      end
+      collection do
+        get :available_products
+      end
+      member do
+        put :update_order
+        put :update_published
+      end
+    end
+
+    resources :smart_collections, except: [:index, :edit] do
+      member do
+        put :update_order
+        put :update_published
+        post :sort
+      end
+    end
 
   end
 

@@ -11,3 +11,10 @@ Factory.define :iphone4, :parent => :product do |f|
   f.market_price 4899.00
   f.vendor "Apple"
 end
+
+Factory.define :psp, :parent => :product do |f|
+  f.title "psp"
+  f.description ""
+  f.price 999.00
+  f.market_price 1299.00
+end
