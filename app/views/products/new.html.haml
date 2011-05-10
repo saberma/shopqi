@@ -6,7 +6,8 @@
       =link_to "返回", products_path
 =render "shared/noscript"
 =render "shared/upgrade_ie"
-=form_for product, html: { multipart: true } do |f|
+=form_for product, validate: false, html: { multipart: true } do |f|
+  =message_block on: [product]
   %table(cellpadding="0" cellspacing="0" style="width: 100%;")
     %tbody
       %tr
@@ -22,26 +23,26 @@
           .container=f.text_area :description, id: :kindeditor
       %tr
         %td
-          .section-header.sst(style="margin-top:0") Properties
-          .padding
-            %dl
-              %dt
-            %p=f.label :type
-            %span.note 例如: 服装,电脑,家用电器
-            %dd
-              %select#product-type-select
-                =options_for_select types_options, product.product_type
-              =f.text_field :product_type, class: :hide
-            %dt.sst
-            %p=f.label :vendor
-            %span.note 产品制造商。例子：IBM，TCL
-            %dd
-              %select#product-vendor-select
-                =options_for_select vendors_options, product.vendor
-              =f.text_field :vendor, class: :hide
-            %table.data2.sst.ssb
-              %tbody
-                =f.fields_for :variants do |v|
+          =f.fields_for :variants do |v|
+            .section-header.sst(style="margin-top:0") Properties
+            .padding
+              %dl
+                %dt
+              %p=f.label :type
+              %span.note 例如: 服装,电脑,家用电器
+              %dd
+                %select#product-type-select
+                  =options_for_select types_options, product.product_type
+                =f.text_field :product_type, class: :hide
+              %dt.sst
+              %p=f.label :vendor
+              %span.note 产品制造商。例子：IBM，TCL
+              %dd
+                %select#product-vendor-select
+                  =options_for_select vendors_options, product.vendor
+                =f.text_field :vendor, class: :hide
+              %table.data2.sst.ssb
+                %tbody
                   %tr
                     %th.clean=v.label :price
                     %th.clean=v.label :weight
@@ -68,100 +69,98 @@
                       =v.check_box :requires_shipping
                       =v.label :requires_shipping
                       %span.hint 服务性质或者数字之类的商品不需要勾选
-            #options
-              %h3 Product Options
-              %p.note.sb This is how your customers distinguish variations of your product.
-              %input#enable-options(name="create-options" onclick="ProductOptions.toggle()" type="checkbox" value="")/
-              %label(for="enable-options" onclick="ProductOptions.toggle()")
-                This product's variants have
-                %strong multiple
-                options that distinguish them.
-              %p.note.ssb(style="padding-left: 20px") Example: Size AND Color
-              #create-options-frame.hide
-                %table#product-properties.data2(cellpadding="0" cellspacing="0")
-                  %tbody
-                    %tr
-                      %th.clean(style="width: 180px;") Option Name
-                      %th.clean(style="width: 170px;") Default Value
-                    %tr#new-option-0.edit-option.even(style="")
-                      %td
-                        %select#option-selector-0.option-selector
-                          %option(selected="selected" value="Title") Title
-                          %option(value="Size") Size
-                          %option(value="Color") Color
-                          %option(value="Material") Material
-                          %option(value="Style") Style
-                          %option(value="") --------
-                          %option(value="create_new") Custom...
-                        %input#option-name-0(name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
-                      %td
-                        %input#option-value-0(name="" size="16" type="text" value="Default Title")/
-                    %tr#new-option-1.edit-option.odd(style="display: none;")
-                      %td
-                        %select#option-selector-1.option-selector(disabled="disabled")
-                          %option(disabled="disabled" selected="selected" value="Title") Title
-                          %option(value="Size") Size
-                          %option(value="Color") Color
-                          %option(value="Material") Material
-                          %option(value="Style") Style
-                          %option(value="") --------
-                          %option(value="create_new") Custom...
-                        %input#option-name-1(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
-                      %td
-                        %input#option-value-1(disabled="disabled" name="" size="16" type="text" value="Default Title")/
-                        %span.fr.sr(style="margin-top: 5px")
-                          %a#del-option-1(href="#" onclick="ProductOptions.remove(1);; return false;" tabindex="-1")
-                            =image_tag 'admin/icons/trash.gif', alt: '删除'
-                    %tr#new-option-2.edit-option.even(style="display: none;")
-                      %td
-                        %select#option-selector-2.option-selector(disabled="disabled")
-                          %option(disabled="disabled" selected="selected" value="Title") Title
-                          %option(value="Size") Size
-                          %option(value="Color") Color
-                          %option(value="Material") Material
-                          %option(value="Style") Style
-                          %option(value="") --------
-                          %option(value="create_new") Custom...
-                        %input#option-name-2(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
-                      %td
-                        %input#option-value-2(disabled="disabled" name="" size="16" type="text" value="Default Title")/
-                        %span.fr.sr(style="margin-top: 5px")
-                          %a#del-option-2(href="#" onclick="ProductOptions.remove(2);; return false;" tabindex="-1")
-                            =image_tag 'admin/icons/trash.gif', alt: '删除'
-                    %tr#add-option-bt.edit-option(style="")
-                      %td
-                        %a(href="#" onclick="ProductOptions.add();; return false;") add another Option
-                        %br/
-                        %span.note e.g. Color, Size
-                      %td &nbsp;
-          .section-header 库存
-          .padding
-            %dl.ssb
-              %dt
-                %label(for="variant_sku") SKU
-                %span.note (非必填)
-                %br/
-                %span.note 唯一标识符.
-              %dd
-                =f.fields_for :variants do |v|
-                  =v.text_field :sku
-              %dd
-                %p
-                  %select#inventory-select-new.st(name="" onchange="Product.updateTrackingOptions('new');")
-                    %option(selected="selected" value="") Don't track stock level
-                    %option(value="shopify") Shopify tracks this variant's stock level
-                #inventory-controls-new
-                  #shopify-inventory-new.inventory-option.st(style="display:none")
-                    %p#inventory-new.soft
-                      %label(for="variant-inventory-quantity-new") How many are in stock?
-                      %input#variant-inventory-quantity-new.small.r.digit-2(name="" size="6" type="text" value="1")/
-              %dd#inventory-policy-new(style="display:none")
-                %p.soft
-                  %input#variant_inventory_policy_deny(checked="checked" name="" type="radio" value="deny")/
-                  %label.inline(for="variant_inventory_policy_deny") Deny purchases for this item when not in stock.
+              #options
+                %h3 Product Options
+                %p.note.sb This is how your customers distinguish variations of your product.
+                %input#enable-options(name="create-options" onclick="ProductOptions.toggle()" type="checkbox" value="")/
+                %label(for="enable-options" onclick="ProductOptions.toggle()")
+                  This product's variants have
+                  %strong multiple
+                  options that distinguish them.
+                %p.note.ssb(style="padding-left: 20px") Example: Size AND Color
+                #create-options-frame.hide
+                  %table#product-properties.data2(cellpadding="0" cellspacing="0")
+                    %tbody
+                      %tr
+                        %th.clean(style="width: 180px;") Option Name
+                        %th.clean(style="width: 170px;") Default Value
+                      %tr#new-option-0.edit-option.even(style="")
+                        %td
+                          %select#option-selector-0.option-selector
+                            %option(selected="selected" value="Title") Title
+                            %option(value="Size") Size
+                            %option(value="Color") Color
+                            %option(value="Material") Material
+                            %option(value="Style") Style
+                            %option(value="") --------
+                            %option(value="create_new") Custom...
+                          %input#option-name-0(name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
+                        %td
+                          %input#option-value-0(name="" size="16" type="text" value="Default Title")/
+                      %tr#new-option-1.edit-option.odd(style="display: none;")
+                        %td
+                          %select#option-selector-1.option-selector(disabled="disabled")
+                            %option(disabled="disabled" selected="selected" value="Title") Title
+                            %option(value="Size") Size
+                            %option(value="Color") Color
+                            %option(value="Material") Material
+                            %option(value="Style") Style
+                            %option(value="") --------
+                            %option(value="create_new") Custom...
+                          %input#option-name-1(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
+                        %td
+                          %input#option-value-1(disabled="disabled" name="" size="16" type="text" value="Default Title")/
+                          %span.fr.sr(style="margin-top: 5px")
+                            %a#del-option-1(href="#" onclick="ProductOptions.remove(1);; return false;" tabindex="-1")
+                              =image_tag 'admin/icons/trash.gif', alt: '删除'
+                      %tr#new-option-2.edit-option.even(style="display: none;")
+                        %td
+                          %select#option-selector-2.option-selector(disabled="disabled")
+                            %option(disabled="disabled" selected="selected" value="Title") Title
+                            %option(value="Size") Size
+                            %option(value="Color") Color
+                            %option(value="Material") Material
+                            %option(value="Style") Style
+                            %option(value="") --------
+                            %option(value="create_new") Custom...
+                          %input#option-name-2(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
+                        %td
+                          %input#option-value-2(disabled="disabled" name="" size="16" type="text" value="Default Title")/
+                          %span.fr.sr(style="margin-top: 5px")
+                            %a#del-option-2(href="#" onclick="ProductOptions.remove(2);; return false;" tabindex="-1")
+                              =image_tag 'admin/icons/trash.gif', alt: '删除'
+                      %tr#add-option-bt.edit-option(style="")
+                        %td
+                          %a(href="#" onclick="ProductOptions.add();; return false;") add another Option
+                          %br/
+                          %span.note e.g. Color, Size
+                        %td &nbsp;
+            .section-header 库存
+            .padding
+              %dl.ssb
+                %dt
+                  %label(for="variant_sku") SKU
+                  %span.note (非必填)
                   %br/
-                  %input#variant_inventory_policy_continue(name="" type="radio" value="continue")/
-                  %label.inline(for="variant_inventory_policy_continue") Allow users to purchase this item when out of stock.
+                  %span.note 唯一标识符.
+                %dd=v.text_field :sku
+                %dd
+                  %p
+                    %select#inventory-select-new.st(name="" onchange="Product.updateTrackingOptions('new');")
+                      %option(selected="selected" value="") Don't track stock level
+                      %option(value="shopify") Shopify tracks this variant's stock level
+                  #inventory-controls-new
+                    #shopify-inventory-new.inventory-option.st(style="display:none")
+                      %p#inventory-new.soft
+                        %label(for="variant-inventory-quantity-new") How many are in stock?
+                        %input#variant-inventory-quantity-new.small.r.digit-2(name="" size="6" type="text" value="1")/
+                %dd#inventory-policy-new(style="display:none")
+                  %p.soft
+                    %input#variant_inventory_policy_deny(checked="checked" name="" type="radio" value="deny")/
+                    %label.inline(for="variant_inventory_policy_deny") Deny purchases for this item when not in stock.
+                    %br/
+                    %input#variant_inventory_policy_continue(name="" type="radio" value="continue")/
+                    %label.inline(for="variant_inventory_policy_continue") Allow users to purchase this item when out of stock.
           .section-header Tags
           .padding
             %dl(style="margin: 0;")

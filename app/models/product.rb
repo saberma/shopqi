@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :photos  , allow_destroy: true
   accepts_nested_attributes_for :variants, allow_destroy: true
 
-  validates_presence_of :product_type, :vendor
+  validates_presence_of :title, :product_type, :vendor
 end
 
 #商品款式

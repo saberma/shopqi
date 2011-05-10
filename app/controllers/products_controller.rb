@@ -22,7 +22,10 @@ class ProductsController < ApplicationController
   end
 
   def create
-    product.save
-    redirect_to products_path, notice: "新增商品成功!"
+    if product.save
+      redirect_to products_path, notice: "新增商品成功!"
+    else
+      render action: :new
+    end
   end
 end

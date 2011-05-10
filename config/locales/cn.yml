@@ -18,8 +18,14 @@ cn:
       product:
         title: 标题
         description: 描述
-        type: 商品类型
+        product_type: 商品类型
         vendor: 商品生产商
+        variants:
+          price: 价格
+          weight: 重量
+          compare_at_price: 市场价
+          sku: 商品唯一标识符
+          requires_shipping: 要求送货地址
       product_variant:
         price: 价格
         weight: 重量
