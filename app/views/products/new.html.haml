@@ -73,70 +73,25 @@
                       =v.label :requires_shipping, nil, for: :variant_requires_shipping
                       %span.hint 服务性质或者数字之类的商品不需要勾选
               #options
-                %h3 Product Options
-                %p.note.sb This is how your customers distinguish variations of your product.
-                %input#enable-options(name="create-options" onclick="ProductOptions.toggle()" type="checkbox" value="")/
-                %label(for="enable-options" onclick="ProductOptions.toggle()")
-                  This product's variants have
-                  %strong multiple
-                  options that distinguish them.
-                %p.note.ssb(style="padding-left: 20px") Example: Size AND Color
+                %h3 商品选项
+                %p.note.sb 选项可以让顾客区分商品的各种款式.
+                %input#enable-options(name="create-options" type="checkbox")
+                %label(for="enable-options")
+                  此商品有
+                  %strong 多个
+                  不同的款式.
+                %p.note.ssb(style="padding-left: 20px") 例如: 大小 和 颜色
                 #create-options-frame.hide
                   %table#product-properties.data2(cellpadding="0" cellspacing="0")
                     %tbody
                       %tr
-                        %th.clean(style="width: 180px;") Option Name
-                        %th.clean(style="width: 170px;") Default Value
-                      %tr#new-option-0.edit-option.even(style="")
+                        %th.clean(style="width: 180px;") 选项名称
+                        %th.clean(style="width: 170px;") 默认值
+                      %tr#add-option-bt.edit-option
                         %td
-                          %select#option-selector-0.option-selector
-                            %option(selected="selected" value="Title") Title
-                            %option(value="Size") Size
-                            %option(value="Color") Color
-                            %option(value="Material") Material
-                            %option(value="Style") Style
-                            %option(value="") --------
-                            %option(value="create_new") Custom...
-                          %input#option-name-0(name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
-                        %td
-                          %input#option-value-0(name="" size="16" type="text" value="Default Title")/
-                      %tr#new-option-1.edit-option.odd(style="display: none;")
-                        %td
-                          %select#option-selector-1.option-selector(disabled="disabled")
-                            %option(disabled="disabled" selected="selected" value="Title") Title
-                            %option(value="Size") Size
-                            %option(value="Color") Color
-                            %option(value="Material") Material
-                            %option(value="Style") Style
-                            %option(value="") --------
-                            %option(value="create_new") Custom...
-                          %input#option-name-1(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
-                        %td
-                          %input#option-value-1(disabled="disabled" name="" size="16" type="text" value="Default Title")/
-                          %span.fr.sr(style="margin-top: 5px")
-                            %a#del-option-1(href="#" onclick="ProductOptions.remove(1);; return false;" tabindex="-1")
-                              =image_tag 'admin/icons/trash.gif', alt: '删除'
-                      %tr#new-option-2.edit-option.even(style="display: none;")
-                        %td
-                          %select#option-selector-2.option-selector(disabled="disabled")
-                            %option(disabled="disabled" selected="selected" value="Title") Title
-                            %option(value="Size") Size
-                            %option(value="Color") Color
-                            %option(value="Material") Material
-                            %option(value="Style") Style
-                            %option(value="") --------
-                            %option(value="create_new") Custom...
-                          %input#option-name-2(disabled="disabled" name="" size="16" style="display: none; margin-top: 5px;" type="text" value="Title")/
-                        %td
-                          %input#option-value-2(disabled="disabled" name="" size="16" type="text" value="Default Title")/
-                          %span.fr.sr(style="margin-top: 5px")
-                            %a#del-option-2(href="#" onclick="ProductOptions.remove(2);; return false;" tabindex="-1")
-                              =image_tag 'admin/icons/trash.gif', alt: '删除'
-                      %tr#add-option-bt.edit-option(style="")
-                        %td
-                          %a(href="#" onclick="ProductOptions.add();; return false;") add another Option
+                          %a.add-option(href="#") 新增选项
                           %br/
-                          %span.note e.g. Color, Size
+                          %span.note 例如：颜色、大小
                         %td &nbsp;
             .section-header 库存
             .padding
@@ -208,6 +163,16 @@
     =link_to w('cancel'), products_path
 / end div.main
 / end div.container
+-#商品选项
+%script(id="option-item" type="text/x-jquery-tmpl")
+  %tr.edit-option.odd
+    %td
+      %select.option-selector=options_for_select options
+      %input(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
+    %td
+      %input(name="product[options_attributes][][value]" size="16" type="text")
+      %span.fr.sr(style="margin-top: 5px")
+        %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
 
 :javascript
   App.init = function(){

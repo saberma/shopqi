@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
   expose(:vendors_options) { vendors.map {|t| [t.name, t.id]} }
   expose(:inventory_managements) { KeyValues::Product::Inventory::Manage.options }
   expose(:inventory_policies) { KeyValues::Product::Inventory::Policy.all }
+  expose(:options) { KeyValues::Product::Option.options }
 
   def new
     #保证至少有一个款式
