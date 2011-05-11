@@ -87,16 +87,29 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
 
   add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
 
+  create_table "product_options", :force => true do |t|
+    t.integer "product_id", :null => false
+    t.string  "name"
+    t.integer "positon"
+  end
+
+  add_index "product_options", ["product_id"], :name => "index_product_options_on_product_id"
+
   create_table "product_variants", :force => true do |t|
-    t.integer "product_id",                               :null => false
-    t.float   "price",                :default => 0.0,    :null => false
-    t.float   "weight",               :default => 0.0,    :null => false
-    t.float   "compare_at_price"
-    t.string  "sku"
-    t.boolean "requires_shipping",    :default => true
-    t.integer "inventory_quantity",   :default => 1
-    t.string  "inventory_management"
-    t.string  "inventory_policy",     :default => "deny"
+    t.integer  "product_id",                               :null => false
+    t.float    "price",                :default => 0.0,    :null => false
+    t.float    "weight",               :default => 0.0,    :null => false
+    t.float    "compare_at_price"
+    t.string   "option1"
+    t.string   "option2"
+    t.string   "option3"
+    t.string   "sku"
+    t.boolean  "requires_shipping",    :default => true
+    t.integer  "inventory_quantity",   :default => 1
+    t.string   "inventory_management"
+    t.string   "inventory_policy",     :default => "deny"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "product_variants", ["product_id"], :name => "index_product_variants_on_product_id"

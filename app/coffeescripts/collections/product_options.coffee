@@ -2,11 +2,12 @@ App.Collections.ProductOptions = Backbone.Collection.extend
   model: ProductOption
 
   initialize: ->
+    self = this
     this.bind 'add', this.addOne
     this.bind 'remove', this.removeOne
     # 超过3个则隐藏[新增按钮]
-    this.bind 'all', (method, model, collection) ->
-      if collection.length >= 3
+    this.bind 'all', ->
+      if self.length >= 3
         $('#add-option-bt').hide()
       else
         $('#add-option-bt').show()
