@@ -35,8 +35,5 @@ App.Controllers.Products = Backbone.Controller.extend
         $('#inventory-policy-new').show()
     .change()
 
-    # 显示商品选项
-    new App.Views.ProductOption.Index collection: App.product_options
-
   routes:
     "edit":      ""

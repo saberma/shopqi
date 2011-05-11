@@ -43,6 +43,8 @@ UpdateableSelectBox = (select_box, create_label) ->
       input_field.show()
     else
       select_box.val(value)
+  else
+    input_field.val(select_box.val())
 
 $(document).ready ->
   App.init()
