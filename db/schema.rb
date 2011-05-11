@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505153806) do
+ActiveRecord::Schema.define(:version => 20110511132306) do
 
   create_table "custom_collection_products", :force => true do |t|
     t.integer  "custom_collection_id"
@@ -120,12 +120,16 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
     t.text     "description"
     t.string   "product_type"
     t.string   "vendor"
-    t.string   "tags"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "products", ["shop_id"], :name => "index_products_on_shop_id"
+
+  create_table "products_tags", :id => false, :force => true do |t|
+    t.integer "product_id", :null => false
+    t.integer "tag_id",     :null => false
+  end
 
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"
@@ -192,6 +196,11 @@ ActiveRecord::Schema.define(:version => 20110505153806) do
   end
 
   add_index "smart_collections", ["shop_id"], :name => "index_smart_collections_on_shop_id"
+
+  create_table "tags", :force => true do |t|
+    t.integer "shop_id", :null => false
+    t.string  "name",    :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false

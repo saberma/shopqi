@@ -119,15 +119,14 @@
           .padding
             %dl(style="margin: 0;")
               %dd#multi-options
-                %p.note 标签是用来帮助客户寻找他们所需要的东西的关键词,关键词之间有逗号(,)隔开。
-                -#=f.text_field :tags, size: 50
+                %p.note 标签是用来帮助顾客寻找他们所需商品的关键词,关键词之间用逗号(,)隔开。
+                =f.text_field :tags_text, size: 50
               %dd
                 %p.note{:style => "clear: both"} 先前使用过的关键词，单击增加。
                 %ul#tag-list.nobull.st
-                  %li
-                    %a(href="#") Demo
-                  %li
-                    %a(href="#") T-Shirt
+                  -tags.each do |tag|
+                    %li
+                      %a(href="#")=tag.name
                 .cl
           .section-header.sst 集合
           .padding

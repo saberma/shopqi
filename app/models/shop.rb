@@ -6,6 +6,7 @@ class Shop < ActiveRecord::Base
   has_many :pages             , dependent: :destroy
   has_many :smart_collections , dependent: :destroy
   has_many :custom_collections, dependent: :destroy
+  has_many :tags              , dependent: :destroy
 
   has_many :types             , dependent: :destroy, class_name: 'ShopProductType'
   has_many :vendors           , dependent: :destroy, class_name: 'ShopProductVendor'

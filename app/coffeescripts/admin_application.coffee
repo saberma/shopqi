@@ -43,7 +43,7 @@ UpdateableSelectBox = (select_box, create_label) ->
       input_field.show()
     else
       select_box.val(value)
-  else
+  else if select_box.val() isnt 'create_new'
     input_field.val(select_box.val())
 
 $(document).ready ->
