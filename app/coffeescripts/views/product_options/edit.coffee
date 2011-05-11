@@ -5,6 +5,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
   events:
     "click .del-option": "destroy"
     "change .option-selector": "disableOption"
+    "change .option-selector": "setDefaultValue"
 
   initialize: ->
     _.bindAll this, 'destroy', 'disableOption', 'setDefaultValue'
@@ -26,8 +27,9 @@ App.Views.ProductOption.Edit = Backbone.View.extend
         self.$('.option-selector').val(this.value)
         false
     $('#add-option-bt').before @el
-    #默认值
-    this.setDefaultValue()
+    UpdateableSelectBox this.$('.option-selector'), '\u81EA\u5B9A\u4E49' #自定义
+    #默认值(有值时不设置默认值)
+    this.setDefaultValue() unless @model.attributes.value
     this.disableOption()
 
   destroy: ->
@@ -42,15 +44,16 @@ App.Views.ProductOption.Edit = Backbone.View.extend
       value = $(this).val()
       $(this).children('option').each ->
         val = $(this).val()
-        if val in values and val isnt value
-          $(this).attr('disabled', true)
-        else
-          $(this).attr('disabled', false)
-    #默认值
-    this.setDefaultValue()
+        if val and val isnt 'create_new'
+          if val in values and val isnt value
+            $(this).attr('disabled', true)
+          else
+            $(this).attr('disabled', false)
     return false
 
   # 设置默认值
   setDefaultValue: ->
     #this.$("name['product[options_attributes][][value]']").val("默认#{this.$('.option-selector > option:selected').text()}")
-    this.$("input[name='product[options_attributes][][value]']").val("\u9ED8\u8BA4#{this.$('.option-selector > option:selected').text()}")
+    value = "\u9ED8\u8BA4"
+    value += this.$('.option-selector > option:selected').text() if this.$('.option-selector').val() isnt 'create_new'
+    this.$("input[name='product[options_attributes][][value]']").val(value)

@@ -35,14 +35,14 @@
               %span.note 例如: 服装,电脑,家用电器
               %dd
                 %select#product-type-select
-                  =options_for_select types_options, product.product_type
+                  =options_for_select types_options
                 =f.text_field :product_type, class: :hide
               %dt.sst
               %p=f.label :vendor
               %span.note 产品制造商。例子：IBM，TCL
               %dd
                 %select#product-vendor-select
-                  =options_for_select vendors_options, product.vendor
+                  =options_for_select vendors_options
                 =f.text_field :vendor, class: :hide
               %table.data2.sst.ssb
                 %tbody
@@ -167,9 +167,9 @@
 %script(id="option-item" type="text/x-jquery-tmpl")
   %td
     %select.option-selector=options_for_select options
-    %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
+    %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="${name}")
   %td
-    %input(name="product[options_attributes][][value]" size="16" type="text")
+    %input(name="product[options_attributes][][value]" size="16" type="text" value="${value}")
     {{if destroyable}}
     %span.fr.sr(style="margin-top: 5px")
       %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
@@ -181,4 +181,4 @@
     Backbone.history.start();
   }
   App.product_options = new App.Collections.ProductOptions();
-  App.product_options.refresh(#{product.options.to_json(except: [ :created_at, :updated_at ])});
+  App.product_options.refresh(#{product.options.to_json(methods: :value, except: [ :created_at, :updated_at ])});

@@ -12,9 +12,9 @@ class ProductsController < ApplicationController
   end
   expose(:product)
   expose(:types) { shop.types }
-  expose(:types_options) { types.map {|t| [t.name, t.id]} }
+  expose(:types_options) { types.map {|t| [t.name, t.name]} }
   expose(:vendors) { shop.vendors }
-  expose(:vendors_options) { vendors.map {|t| [t.name, t.id]} }
+  expose(:vendors_options) { vendors.map {|t| [t.name, t.name]} }
   expose(:inventory_managements) { KeyValues::Product::Inventory::Manage.options }
   expose(:inventory_policies) { KeyValues::Product::Inventory::Policy.all }
   expose(:options) { KeyValues::Product::Option.options }
