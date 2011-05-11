@@ -1,6 +1,6 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'views/product_options/edit', 'controllers/products'
 
 %h2#title 新增商品
 #action-links
@@ -89,7 +89,7 @@
                         %th.clean(style="width: 170px;") 默认值
                       %tr#add-option-bt.edit-option
                         %td
-                          %a.add-option(href="#") 新增选项
+                          %a.add-option(href="#") 新增另一个选项
                           %br/
                           %span.note 例如：颜色、大小
                         %td &nbsp;
@@ -167,11 +167,13 @@
 %script(id="option-item" type="text/x-jquery-tmpl")
   %td
     %select.option-selector=options_for_select options
-    %input(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
+    %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
   %td
     %input(name="product[options_attributes][][value]" size="16" type="text")
+    {{if destroyable}}
     %span.fr.sr(style="margin-top: 5px")
       %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
+    {{/if}}
 
 :javascript
   App.init = function(){
