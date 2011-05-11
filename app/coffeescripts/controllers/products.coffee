@@ -35,16 +35,8 @@ App.Controllers.Products = Backbone.Controller.extend
         $('#inventory-policy-new').show()
     .change()
 
-    # 商品款式
-    $('#enable-options').change ->
-      if $(this).attr('checked')
-        App.product_options.add new ProductOption()
-        $('#create-options-frame').show()
-      else
-        App.product_options.each (model) ->
-          App.product_options.remove model
-        $('#create-options-frame').hide()
-    .change()
+    # 显示商品选项
+    new App.Views.ProductOption.Index collection: App.product_options
 
   routes:
     "edit":      ""
