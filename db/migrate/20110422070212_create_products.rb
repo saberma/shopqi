@@ -5,6 +5,8 @@ class CreateProducts < ActiveRecord::Migration
       t.references :shop    , comment: "商品应从属于商店"            , null: false
       t.string :handle      , comment: "用于模板中的Permalink/Handle", null: false
       t.string :title       , comment: "标题， 例如:ipod"            , null: false
+      t.boolean :published  , comment: '是否可见'                    , default: true
+      t.text :body_html     , comment: '描述'
       t.text :description   , comment: "商品描述"
       t.string :product_type, comment: "类型(类别)"
       t.string :vendor      , comment: "品牌(供应商)"

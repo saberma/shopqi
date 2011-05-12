@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
 
   def create
     if product.save
-      redirect_to products_path, notice: "新增商品成功!"
+      redirect_to product_path(product), notice: "新增商品成功!"
     else
       render action: :new
     end

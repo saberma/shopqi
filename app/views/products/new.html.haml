@@ -22,8 +22,8 @@
               %br/
               %span.note 例如: 新一代Iphone4
             %dd=f.text_field :title,  style:"float:none;", id: :product_title, class: :big
-            %dt.sst=f.label :description
-          .container=f.text_area :description, id: :kindeditor
+            %dt.sst=f.label :body_html
+          .container=f.text_area :body_html, id: :kindeditor
       %tr
         %td
           =f.fields_for :variants do |v|

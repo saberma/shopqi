@@ -115,8 +115,11 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   add_index "product_variants", ["product_id"], :name => "index_product_variants_on_product_id"
 
   create_table "products", :force => true do |t|
-    t.integer  "shop_id",      :null => false
-    t.string   "title",        :null => false
+    t.integer  "shop_id",                        :null => false
+    t.string   "handle",                         :null => false
+    t.string   "title",                          :null => false
+    t.boolean  "published",    :default => true
+    t.text     "body_html"
     t.text     "description"
     t.string   "product_type"
     t.string   "vendor"

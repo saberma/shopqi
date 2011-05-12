@@ -17,6 +17,7 @@ Shopqi::Application.routes.draw do
     resources :products, except: :edit do
       member do
         put :update_published
+        post :duplicate
       end
     end
 
