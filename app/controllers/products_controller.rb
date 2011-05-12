@@ -19,6 +19,7 @@ class ProductsController < ApplicationController
   expose(:inventory_policies) { KeyValues::Product::Inventory::Policy.all }
   expose(:options) { KeyValues::Product::Option.all.map {|t| [t.name, t.name]} }
   expose(:tags) { shop.tags.previou_used }
+  expose(:custom_collections) { shop.custom_collections }
 
   def new
     #保证至少有一个款式

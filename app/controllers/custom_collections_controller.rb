@@ -6,7 +6,7 @@ class CustomCollectionsController < ApplicationController
   expose(:custom_collections) { current_user.shop.custom_collections }
   expose(:custom_collection)
   expose(:candidate_products) { current_user.shop.products }
-  expose(:products) { custom_collection.products.ordered }
+  expose(:products) { custom_collection.collection_products.ordered }
   expose(:smart_collections) { current_user.shop.smart_collections }
 
   expose(:publish_states) { KeyValues::PublishState.options }

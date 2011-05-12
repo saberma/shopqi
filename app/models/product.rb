@@ -1,10 +1,13 @@
 # encoding: utf-8
 class Product < ActiveRecord::Base
   belongs_to :shop
-  has_many :photos  , dependent: :destroy
-  has_many :variants, dependent: :destroy, class_name: 'ProductVariant'
-  has_many :options , dependent: :destroy, class_name: 'ProductOption'
+  has_many :photos             , dependent: :destroy
+  has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'
+  has_many :options            , dependent: :destroy           , class_name: 'ProductOption'
+  has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
+  has_many :collections        , class_name: 'CustomCollection', through: :collection_products, source: :custom_collection
   has_and_belongs_to_many :tags
+  # 标签
   attr_accessor :tags_text
 
   accepts_nested_attributes_for :photos  , allow_destroy: true

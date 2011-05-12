@@ -134,12 +134,10 @@
               %dd
                 %p.note 选择此商品所属的自定义集合:
                 %ul.nobull.pgroup.clearfix
-                  %li.product-edit-collection
-                    %input#custom_collection_3670472(name="" type="checkbox" value="3670472")/
-                    %label(for="custom_collection_3670472" title="custom") custom
-                  %li.product-edit-collection
-                    %input#custom_collection_3650022(name="" type="checkbox" value="3650022")/
-                    %label(for="custom_collection_3650022" title="frontpage") Frontpage
+                  -custom_collections.each do |collection|
+                    %li.product-edit-collection
+                      =check_box_tag 'product[collection_ids][]', collection.id, product.collections.include?(collection), id: "collection_#{collection.id}"
+                      %label(for="collection_#{collection.id}")=collection.title
         / product images
         %td(style="width: 275px; padding: 0pt 0pt 0pt 10px;")
           %h3.section-header(style="margin-bottom: 0") 商品图片

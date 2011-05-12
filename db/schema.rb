@@ -131,6 +131,9 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.integer "tag_id",     :null => false
   end
 
+  add_index "products_tags", ["product_id"], :name => "index_products_tags_on_product_id"
+  add_index "products_tags", ["tag_id"], :name => "index_products_tags_on_tag_id"
+
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"
     t.string  "name"
@@ -203,6 +206,8 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false

@@ -5,7 +5,7 @@ class CustomCollectionProductsController < ApplicationController
 
   expose(:custom_collections) { current_user.shop.custom_collections }
   expose(:custom_collection)
-  expose(:custom_collection_products) { custom_collection.products.ordered }
+  expose(:custom_collection_products) { custom_collection.collection_products.ordered }
   expose(:custom_collection_product)
 
   def create
@@ -22,7 +22,7 @@ class CustomCollectionProductsController < ApplicationController
   def sort
     custom_collection.update_attribute :products_order, :manual
     params[:product].each_with_index do |id, index|
-      custom_collection.products.find(id).update_attribute :position, index
+      custom_collection.collection_products.find(id).update_attribute :position, index
     end
     render :nothing => true
   end

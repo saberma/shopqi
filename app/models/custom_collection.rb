@@ -1,7 +1,8 @@
 # encoding: utf-8
 class CustomCollection < ActiveRecord::Base
   belongs_to :shop
-  has_many :products, class_name: 'CustomCollectionProduct', dependent: :destroy
+  has_many :collection_products, dependent: :destroy          , class_name: 'CustomCollectionProduct'
+  has_many :products           , through: :collection_products
 
   before_create do
     self.handle = 'handle'
@@ -15,7 +16,7 @@ class CustomCollection < ActiveRecord::Base
 
   #排序后的商品
   def ordered_products
-    products.ordered("products.#{self.products_order.sub '.', ' '}")
+    collection_products.ordered("products.#{self.products_order.sub '.', ' '}")
   end
 end
 
