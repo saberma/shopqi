@@ -35,4 +35,11 @@ class ProductsController < ApplicationController
       render action: :new
     end
   end
+
+  #更新可见性
+  def update_published
+    flash.now[:notice] = I18n.t("flash.actions.update.notice")
+    product.save
+    render :template => "shared/msg"
+  end
 end

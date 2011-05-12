@@ -10,6 +10,6 @@ class Tag < ActiveRecord::Base
 
   # 分隔逗号
   def self.split(text)
-    text.split(/[,，]\s*/).uniq
+    text ? text.split(/[,，]\s*/).uniq : []
   end
 end
