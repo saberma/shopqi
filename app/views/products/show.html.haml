@@ -1,4 +1,6 @@
 - use_kindeditor
+=content_for :javascripts do
+  =javascript_include_tag 'models/product', 'collections/product_options', 'views/product_options/edit', 'views/product_options/index', 'controllers/products'
 
 %h2#title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -391,3 +393,13 @@
         %input.btn(name="commit" type="submit" value="保存")
         =w('or')
         %a(href="#")=w('cancel')
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Products();
+    Backbone.history.start();
+  }
+  App.product_options = new App.Collections.ProductOptions();
+  App.product_options.refresh(#{product.options.to_json(methods: :value, except: [ :created_at, :updated_at ])});
+  //显示商品选项
+  new App.Views.ProductOption.Index({collection: App.product_options})
