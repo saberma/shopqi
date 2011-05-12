@@ -14,9 +14,14 @@ class Product < ActiveRecord::Base
   validates_presence_of :title, :product_type, :vendor
 
   after_save do
-    tags_text.split(',').uniq.each do |tag_text|
+    Tag.split(tags_text).each do |tag_text|
       tag = shop.tags.where(name: tag_text).first
-      tag = shop.tags.create name: tag_text unless tag
+      if tag
+        # 更新时间，用于显示最近使用过的标签
+        tag.touch
+      else
+        tag = shop.tags.create name: tag_text unless tag
+      end
       self.tags << tag
     end
   end

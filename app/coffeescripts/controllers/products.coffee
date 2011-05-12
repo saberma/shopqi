@@ -35,5 +35,25 @@ App.Controllers.Products = Backbone.Controller.extend
         $('#inventory-policy-new').show()
     .change()
 
+    #标签
+    $('#tag-list a').click ->
+      $(this).toggleClass('active')
+      tags = _.compact $('#product_tags_text').val().split(/[,\uFF0C]\s*/)
+      tag = $(this).text()
+      if tag not in tags
+        tags.push tag
+      else
+        tags = _.without tags, tag
+      $('#product_tags_text').val(tags.join(', '))
+      false
+    $('#product_tags_text').keyup ->
+      tags = _.compact $('#product_tags_text').val().split(/[,\uFF0C]\s*/)
+      $('#tag-list a').each ->
+        if $(this).text() in tags
+          $(this).addClass('active')
+        else
+          $(this).removeClass('active')
+    .keyup()
+
   routes:
     "edit":      ""
