@@ -1,0 +1,3 @@
+%li.product-edit-collection
+  =check_box_tag 'product[collection_ids][]', collection.id, product.collections.include?(collection), id: "collection_#{collection.id}"
+  %label(for="collection_#{collection.id}")=collection.title

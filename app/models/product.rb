@@ -16,6 +16,10 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :title, :product_type, :vendor
 
+  before_save do
+    self.handle = 'handle'
+  end
+
   after_save do
     Tag.split(tags_text).each do |tag_text|
       tag = shop.tags.where(name: tag_text).first

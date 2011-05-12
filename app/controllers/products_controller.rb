@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
   expose(:options) { KeyValues::Product::Option.all.map {|t| [t.name, t.name]} }
   expose(:tags) { shop.tags.previou_used }
   expose(:custom_collections) { shop.custom_collections }
+  expose(:publish_states) { KeyValues::PublishState.options }
 
   def new
     #保证至少有一个款式

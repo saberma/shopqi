@@ -1,0 +1,393 @@
+- use_kindeditor
+
+%h2#title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
+#action-links
+  %ul
+    %li.no-icon
+      %a(href="#edit") 修改
+    %li.no-icon
+      %a(href="#" onclick="promptDuplicate('product', 'Copy of 111'); return false;") 复制此商品
+    %li.no-icon
+      = link_to image_tag('admin/icons/trash.gif'), product_path(product), method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+
+=form_for product, url: duplicate_product_path(product), method: :post, html: {id: 'new_product'} do |f|
+  =f.hidden_field :title
+.st
+  #product-summary
+    %table(cellpadding="0" cellspacing="0" style="width:100%")
+      %tr
+        %td#product-details
+          #product
+            #product-body.textile.ssb
+              %table.data.table-wrapper(cellpadding="0" cellspacing="0")
+                %tr
+                  %th.section-header 描述
+                %tr
+                  %td(style="padding: 10px; font-size: 12px")
+                    %p=product.description
+            #product-options.section
+              %table.data(cellpadding="0" cellspacing="0")
+                %tr
+                  %th.section-header(colspan="2") 属性
+                %tr
+                  %td.cell-title
+                    %strong 商品类型:
+                  %td.middle.cell-data
+                    %span#product-type.small=product.product_type
+                %tr
+                  %td.cell-title
+                    %strong 商品生产商:
+                  %td.middle.cell-data
+                    %span#product-vendor.small=product.vendor
+                %tr
+                  %td.cell-title
+                    %strong 库存:
+                  %td.middle.cell-data \&infin;
+                -product.options.each do |option|
+                  %tr
+                    %td.cell-title.option-1
+                      %strong=option.name
+                    %td#option-values-44821912-show.middle.cell-data
+                      %span.small 默认标题
+            #tagging.section
+              #product-tags
+                %table.data(cellpadding="0" cellspacing="0")
+                  %tr
+                    %th.section-header 标签
+                  %tr
+                    %td(style="padding: 15px 10px;")
+                      %ul#tags
+                        -product.tags.each do |tag|
+                          %li
+                            %span.list-box=tag.name
+                      -if product.tags.empty?
+                        %p 您还没有添加任何标签到此商品
+            .section
+              #product-collections
+                %table.data(cellpadding="0" cellspacing="0")
+                  %tr
+                    %th.section-header 集合
+                  %tr
+                    %td(style="padding: 15px 10px 0 10px;")
+                      %p 此商品属于以下集合:
+                      %ul.product-collection-list.pgroup
+                        -product.collections.each do |collection|
+                        %li=link_to collection.title, custom_collection_path(collection)
+
+          #product-edit.hide
+            =form_for product, class: :edit_product, html: {id: 'product-detail-form'} do |f|
+              #product-body-edit.sb
+                .section-header
+                  %strong 修改此商品
+                .padding
+                  #errors_for_product
+                  %dl(style="background: none; margin-bottom: 0")
+                    %dt=f.label :title, style: "margin: 0"
+                    %dd=f.text_field :title, class: [:big, :sb]
+                    %dt#edit-handle-label
+                      链接/处理
+                      %span.note
+                        (
+                        %a(href="http://wiki.shopqi.com/Handle" target="_blank") 这是什么?
+                        )
+                    %dd#edit-handle.ssb
+                      %span.note==http://#{current_user.shop.permanent_domain}.shopqi.com/products/
+                      =f.text_field :handle, style: 'width: 160px'
+                    %dt=f.label :body_html
+                    %dd=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200;"
+              #product-options-edit.section
+                %table#product-properties.data.sb(cellpadding="0" cellspacing="0")
+                  %tr
+                    %th.section-header(colspan="2") 属性
+                  %tr
+                    %td.cell-title
+                      %strong 商品类型:
+                    %td
+                      %select#product-type-select
+                        =options_for_select types_options
+                      #new_product_type.st.sb.hide
+                        %h4.note 新的商品类型
+                        =f.text_field :product_type
+                  %tr
+                    %td.cell-title
+                      %strong 商品生产商:
+                    %td
+                      %select#product-vendor-select
+                        =options_for_select vendors_options
+                      #new_product_vendor.st.sb.hide
+                        %h4.note 新的商品生产商:
+                        =f.text_field :vendor
+                  %tr#new-option-0.edit-option.hide
+                    %td.cell-title
+                      .option-selector-frame
+                        %select#option-selector-0.option-selector(disabled="disabled")
+                          %option(value="Title") Title
+                          %option(value="Size") Size
+                          %option(value="Color") Color
+                          %option(value="Material") Material
+                          %option(value="Style") Style
+                        %input#option-name-0(type="text" size="16" value="" name="product[options][][name]" disabled="disabled" style="display:none; margin-top: 5px")
+                    %td
+                      %input#option-id-0(type="hidden" value="44821912" name="product[options][][id]")
+                      %span#option-0-value.small 默认标题
+                      %span.fr.sr(style="margin-top: 5px")
+                        %a(href="#" onclick="ProductOptions.destroy(0); return false;" tabindex="-1")
+                          =image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
+                      #option-0-deletemsg.hide
+                        %p.small.highlight-alt 标题将被删除.
+                        %a(href="#" onclick="ProductOptions.restore(0); return false;") 恢复
+                  %tr#add-option-bt.edit-option.hide
+                    %td.cell-title
+                      %a(href="#" onclick="ProductOptions.add();; return false;") 新增另一个选项
+                      %br
+                      %span.note 例如. 颜色, 大小
+                    %td &nbsp;
+              #product-edit-tags
+                .section-header 标签
+                %dl.padding(style="background: none; margin: 0;")
+                  %dd#multi-options
+                    %p.note.sb 标签之间以逗号分隔.
+                    =f.text_field :tags_text, size: 50
+                  %dd.sst
+                    %p.note(style="clear: both") 最近使用过的标签，单击增加.
+                    %ul#tag-list.nobull.st
+                      -tags.each do |tag|
+                        %li
+                          %a(href="#")=tag.name
+                    .cl
+              #product-edit-collections
+                .section-header 集合
+                %p.note(style="margin: 10px 0px 5px 5px;") 选择此商品所属的自定义集合:
+                %ul.nobull.pgroup.clearfix=render partial: "collection", collection: custom_collections
+              .section-submit
+                =f.submit "保存", id:"update-options"
+                =w('or')
+                %a(href="#") 取消
+        %td#product-right-col(style="width: 275px; padding: 0 0 0 10px")
+          %h3.section-header(style="margin-bottom: 0") 商品图片
+          #product-image-area.group
+            #upload-product-image.c
+              %a(href="#" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
+                %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")
+            #upload-label.action-container
+              .action-link.c(style="border-bottom: none" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
+                %span
+                  %a(href="#" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
+                    %span.plus +
+                    上传图片
+            .clearfix
+          #upload-area.hide
+            %p#status.hide
+              =image_tag 'admin/icons/trash.gif', alt: '删除'
+              %img.fr.st.pad(alt="Spinner" src="/images/spinner.gif")
+            %form#product-image-upload-form(accept-charset="UTF-8" action="/admin/products/39258582/images#upload-area" enctype="multipart/form-data" method="post")
+              %input#product_id(name="product[id]" type="hidden" value="39258582")
+              %h4.st 上传图片
+              %p.note 允许上传文件类型( .gif, .jpg, .jpeg, .png)
+              %p#file-input.st.sb
+                %input#add-file(name="image[attachment]" type="file")
+          .sst.pl
+            %h3 商品可见性
+            %p.sb.note
+              如果你不需要此商品显示在您的商店中，您可以设置它的可见性为
+              %em 隐藏
+              \.
+            =form_for product, url: update_published_product_path(product), remote: true, html: {id: 'product_publicshed_form'} do |f|
+              =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#product_publicshed_form').submit();"
+  #variant-inventory.pgroup
+    %h3.sb 库存
+    =form_for product, url: product_path(product), remote: true, html: {id: 'batch-form'} do |f|
+      %table#product-controls.hide(cellpadding="0" cellspacing="0")
+        %tr
+          %td(style="text-align:left;")
+            %select#product-select(name="operation" onchange="pl.updateForm(this)")
+              %option(value="" style="color: #888") 选择操作&hellip;
+              %option.indent(value="price") 修改价格
+              %option.indent(value="quantity") 修改库存量
+              %option.indent(disabled="disabled" value="destroy") 删除
+              %optgroup(label="复制款式&hellip;")
+                %option#dup-option-1(disabled="disabled" value="duplicate-1") \&hellip;使用另一个标题
+            %span#new-value(style="display:none;")
+              %input(type="text" name="new_value" size="10" value="")
+              %input(type="submit" value="Update" onclick="pl.submitForm(this); return false;")
+              =w('or')
+              %a(href="#" onclick="pl.resetDropDown(); return false;")=w('cancel')
+          %td(style="text-align:right; color: #333")
+            %span#product-count.note &nbsp;
+    %table#product-table.data(style="font-size: 12px;" cellpadding="0" cellspacing="0")
+      %tr#row-head
+        %th#option-header-1.option-1(style="width:15%;") 标题
+        %th(style="min-width: 150px") SKU
+        %th.price-cell(style="width: 90px;")
+          价格
+          %span.note 元
+        %th.qty-cell(style="width:50px") 库存量
+        %th.action-cell(style="width: 70px;") &nbsp;
+    %ul#variants-list
+      %li#variant_90540552
+        %table.data(cellpadding="0" cellspacing="0")
+          %tr#row-90540552.inventory-row.odd
+            %td.checkbox-cell
+              %input#variant-90540552-checkbox.selector(type="checkbox" name="" value="90540552" onclick="pl.updateList()")
+            %td.option-1(style="width:15%")
+              %label(for="variant-90540552-checkbox") 默认标题
+            %td(style="min-width: 150px")
+            %td.price-cell(style="width: 90px;") 11.0元
+            %td.qty-cell(style="width: 50px;") &infin;
+            %td.action-cell(style="width: 70px; text-align:right")
+              %a.note(href="#" onclick="toggleVariantRow(90540552); return false") 修改
+          %tr#row-edit-details-90540552.hide
+            %td(colspan="5" style="padding: 0")
+              %table.data.no-border(cellpadding="0" cellspacing="0")
+                %tr.shadow.single-variant-option-cell
+                  %td(style="width: 29px; border: none; border-left: 1px solid #eee;background: #fcfcfc; padding: 0")
+                    \&nbsp;
+                  %td.edit-option-cell.option-1(style="width: 15%;padding-top: 10px !important")
+                    %label(for="variant_90540552_option_1") Title
+                    %br
+                    %input#variant_90540552_option_1(name="variant[option1]" size="30" style="margin-top: 5px;" type="text" value="Default Title")
+                  %td.edit-option-cell(style="border-right: 1px solid #eee; width:20px")
+                    \&nbsp;
+                  %td(style="min-width: 360px; padding: 0; border-bottom: 1px solid #eee" colspan="4")
+                    \&nbsp;
+              .group.variant-edit
+                %table.data.no-border(cellpadding="0" cellspacing="0")
+                  %tr.no-border
+                    %td.checkbox-cell
+                      \&nbsp;
+                    %td
+                      %label(for="variant-90540552-sku") SKU
+                      %span.note Stock Keeping Unit
+                      %br
+                      %input#variant-90540552-sku.st(name="variant[sku]" size="30" style="width:120px" type="text" value="")
+                    %td
+                      %label(for="variant-90540552-price") Selling price
+                      %br
+                      %input#variant-90540552-price.st(name="variant[price]" size="8" style="width: 60px" type="text" value="11.00")
+                      \&nbsp;USD
+                    %td(style="width: 200px;")
+                      %label(for="variant-90540552-compare-at-price")
+                        Compare at price
+                        %span.note (optional)
+                      %br
+                      %input#variant-90540552-compare-at-price.st(name="variant[compare_at_price]" size="8" style="width:80px" type="text")
+                      \&nbsp;USD
+                    %td
+                      %label(for="variant-90540552-weight") Weight
+                      %br
+                      %input#variant-90540552-weight.st(name="variant[weight]" size="8" style="width:40px" type="text" value="0.0")
+                      \&nbsp; lbs
+                  %tr.no-border
+                    %td
+                      \&nbsp;
+                    %td(colspan="4")
+                      %table.secondary-variant-options
+                        %tr.no-border
+                          %td.secondary-header
+                            %label(for="variant-90540552-requires-shipping") Require a shipping address
+                          %td
+                            %input(name="variant[requires_shipping]" type="hidden" value="0")
+                            %input#variant-90540552-requires-shipping(checked="checked" name="variant[requires_shipping]" type="checkbox" value="1")
+                            %span.hint not needed for services or digital goods
+                        %tr.no-border
+                          %td.secondary-header
+                            %label(for="inventory-select-90540552") Inventory
+                          %td
+                            %select#inventory-select-90540552(name="variant[inventory_management]" onchange="Product.updateTrackingOptions('90540552');")
+                              %option(value="" selected="selected") Don't track stock level
+                              %option(value="shopify") Shopify tracks this variant's stock level
+                            #inventory-policy-90540552(style="display:none")
+                              #inventory-controls-90540552
+                                #shopify-inventory-90540552.inventory-option.sst(style="display:none")
+                                  %p#inventory-90540552.soft
+                                    %label(for="variant-inventory-quantity-90540552") How many are in stock?
+                                    %input#variant-inventory-quantity-90540552.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
+                              %p.soft(style="margin: 10px 0 0 0")
+                                %input#variant-inventory-policy-deny-90540552(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
+                                %label.inline(for="variant-inventory-policy-deny-90540552") Deny purchases for items when none are left.
+                                %br
+                                %input#variant-inventory-policy-accept-90540552(type="radio" name="variant[inventory_policy]" value="continue")
+                                %label.inline(for="variant-inventory-policy-accept-90540552") Allow users to purchase this item, even if it is no longer in stock.
+                    %tr
+                      %td &nbsp;
+                      %td(colspan="4" style="padding-top: 12px")
+                        %input#update-90540552(type="submit" name="update" value="update")
+                        =w('or')
+                        %a(href="#" onclick="toggleVariantRow(90540552); return false;")=w('cancel')
+    #new-variant-link.action-row
+      .action-link
+        %p(onclick="$('new-variant-link').hide(); $('new-variant').show(); new Effect.ScrollTo('new-variant'); $('variant_option1').select(); return false;")
+          %a(href="#")
+            %span.plus +
+            新增款式
+  #new-variant.hide
+    %form#variant_new.variant_new(accept-charset="UTF-8" action="/admin/products/39258582/variants" data-remote="true" method="post")
+      .section-header.sst 新的款式
+      %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
+        %tr
+          %td(colspan="4")
+            %p.sb
+              %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
+            .new-variant-option
+              %label.option-1(for="variant_option1") 标题
+              %br
+              %input#variant_option1.st.ssb(name="variant[option1]" size="30" style="font-size:14px; width: 100%" type="text")
+              %input(type="hidden" name="options[]" value="Title")
+            .clearfix
+        %tr.divider
+          %td
+            %label(for="variant_sku")
+              SKU
+              %span.note 库存量单位
+            %br
+            %input#variant_sku.st(name="variant[sku]" size="20" type="text")
+          %td
+            %label(for="variant_price") 销售价格
+            %br
+            %input#variant_price.st(name="variant[price]" size="8" style="width:80px" type="text" value="11.00")
+            元
+          %td
+            %label(for="variant_compare_at_price")
+              市场价
+              %span.note (非必填)
+            %br
+            %input#variant_compare_at_price.st(name="variant[compare_at_price]" size="8" style="width:80px" type="text")
+            元
+          %td
+            %label(for="variant_weight") 重量
+            %br
+            %input#variant_weight.st(name="variant[weight]" size="8" style="width:40px;" type="text" value="0.0")
+            kg
+        %tr.no-border
+          %td(colspan="4")
+            %table.secondary-variant-options
+              %tr.no-border
+                %td.secondary-header
+                  %label(for="variant-new-requires-shipping") 要求收货地址
+                %td
+                  %input(name="variant[requires_shipping]" type="hidden" value="0")
+                  %input#variant-new-requires-shipping(checked="checked" name="variant[requires_shipping]" type="checkbox" value="1")
+                  %span.hint 服务性质或者数字之类的商品不需要勾选
+              %tr.no-border
+                %td.secondary-header
+                  %label(for="inventory-select-new") 库存
+                %td
+                  %select#inventory-select-new(name="variant[inventory_management]" onchange="Product.updateTrackingOptions('new');")
+                    %option(value="") Don't track stock level
+                    %option(value="shopqi") Shopify tracks this variant's stock level
+                  #inventory-policy-new(style="display:none")
+                    #inventory-controls-new
+                      #shopqi-inventory-new.inventory-option.sst.hide
+                        %p#inventory-new.soft
+                          %label(for="variant-inventory-quantity-new") How many are in stock?
+                          %input#variant-inventory-quantity-new.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
+                    %p.soft(style="margin: 10px 0 0 0")
+                      %input#variant-inventory-policy-deny-new(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
+                      %label.inline(for="variant-inventory-policy-deny-new") Deny purchases for items when none are left.
+                      %br
+                      %input#variant-inventory-policy-accept-new(type="radio" name="variant[inventory_policy]" value="continue")
+                      %label.inline(for="variant-inventory-policy-accept-new") Allow users to purchase this item, even if it is no longer in stock.
+      .btns(style="margin-top: 20px")
+        %input.btn(name="commit" type="submit" value="保存")
+        =w('or')
+        %a(href="#")=w('cancel')
