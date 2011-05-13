@@ -56,15 +56,4 @@ App.Controllers.Products = Backbone.Controller.extend
     .keyup()
 
   routes:
-    "edit":      "edit"
-    "":          "index"
-
-  index: ->
-    $('#product-edit').hide()
-    $('#product-right-col').show()
-    $('#product').show()
-
-  edit: (id) ->
-    $('#product-edit').show()
-    $('#product-right-col').hide()
-    $('#product').hide()
+    "nothing":      "nothing"

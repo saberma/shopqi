@@ -36,10 +36,20 @@ class ProductsController < ApplicationController
     end
   end
 
+  def destroy
+    product.destroy
+    redirect_to products_path
+  end
+
+  def update
+    product.save
+    render json: product
+  end
+
   #更新可见性
   def update_published
     flash.now[:notice] = I18n.t("flash.actions.update.notice")
     product.save
-    render :template => "shared/msg"
+    render template: "shared/msg"
   end
 end

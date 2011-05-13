@@ -4,6 +4,7 @@ App =
     Link: {}
     SmartCollection: {}
     CustomCollection: {}
+    Product: { Show: {} }
     ProductOption: {}
   Controllers: {}
   Collections: {}

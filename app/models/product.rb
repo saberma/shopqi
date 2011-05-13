@@ -46,3 +46,5 @@ class ProductOption < ActiveRecord::Base
   #辅助值，用于保存至商品款式中
   attr_accessor :value
 end
+
+CustomCollection
