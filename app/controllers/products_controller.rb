@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
     end
   end
   expose(:product)
+  expose(:product_json) { product.to_json(methods: :tags_text, except: [ :created_at, :updated_at ]) }
   expose(:types) { shop.types }
   expose(:types_options) { types.map {|t| [t.name, t.name]} }
   expose(:vendors) { shop.vendors }
@@ -43,7 +44,7 @@ class ProductsController < ApplicationController
 
   def update
     product.save
-    render json: product
+    render json: product_json
   end
 
   #更新可见性

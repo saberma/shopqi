@@ -8,4 +8,6 @@ App.Views.Product.Show.Show = Backbone.View.extend
       this.render()
 
   render: ->
-    $(@el).html $('#show-product-item').tmpl @model.attributes
+    attrs = _.clone @model.attributes
+    attrs['tags'] = StringUtils.to_a attrs.tags_text
+    $(@el).html $('#show-product-item').tmpl attrs

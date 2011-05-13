@@ -38,7 +38,7 @@ App.Controllers.Products = Backbone.Controller.extend
     #标签
     $('#tag-list a').click ->
       $(this).toggleClass('active')
-      tags = _.compact $('#product_tags_text').val().split(/[,\uFF0C]\s*/)
+      tags = StringUtils.to_a($('#product_tags_text').val())
       tag = $(this).text()
       if tag not in tags
         tags.push tag
@@ -47,7 +47,7 @@ App.Controllers.Products = Backbone.Controller.extend
       $('#product_tags_text').val(tags.join(', '))
       false
     $('#product_tags_text').keyup ->
-      tags = _.compact $('#product_tags_text').val().split(/[,\uFF0C]\s*/)
+      tags = StringUtils.to_a($('#product_tags_text').val())
       $('#tag-list a').each ->
         if $(this).text() in tags
           $(this).addClass('active')

@@ -20,8 +20,19 @@ class Product < ActiveRecord::Base
     self.handle = 'handle'
   end
 
+  def tags_text
+    @tags_text ||= tags.map(&:name).join(', ')
+  end
+
   after_save do
-    Tag.split(tags_text).each do |tag_text|
+    product_tags = self.tags.map(&:name)
+    # 删除tag
+    (product_tags - Tag.split(tags_text)).each do |tag_text|
+      tag = shop.tags.where(name: tag_text).first
+      tags.delete(tag)
+    end
+    # 新增tag
+    (Tag.split(tags_text) - product_tags).each do |tag_text|
       tag = shop.tags.where(name: tag_text).first
       if tag
         # 更新时间，用于显示最近使用过的标签

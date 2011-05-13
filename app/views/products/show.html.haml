@@ -291,11 +291,13 @@
         %tr
           %td(style="padding: 15px 10px;")
             %ul#tags
-              -product.tags.each do |tag|
-                %li
-                  %span.list-box=tag.name
-            -if product.tags.empty?
-              %p 您还没有添加任何标签到此商品
+              {{each(i, tag) tags}}
+              %li
+                %span.list-box ${tag}
+              {{/each}}
+            {{if tags.length == 0}}
+            %p 您还没有添加任何标签到此商品
+            {{/if}}
   .section
     #product-collections
       %table.data(cellpadding="0" cellspacing="0")
@@ -309,7 +311,7 @@
                 %li=link_to collection.title, custom_collection_path(collection)
 
 %script(id="edit-product-item" type="text/x-jquery-tmpl")
-  =form_for product, class: :edit_product, html: {id: 'product-detail-form'} do |f|
+  =form_for product, class: :edit_product, html: {id: 'product-detail-form', onsubmit: 'return false;'} do |f|
     #product-body-edit.sb
       .section-header
         %strong 修改此商品
@@ -381,7 +383,7 @@
       %dl.padding(style="background: none; margin: 0;")
         %dd#multi-options
           %p.note.sb 标签之间以逗号分隔.
-          =text_field_tag :tags_text, '${tags_text}', size: 50
+          =text_field_tag :tags_text, '${tags_text}', size: 50, id: :product_tags_text
         %dd.sst
           %p.note(style="clear: both") 最近使用过的标签，单击增加.
           %ul#tag-list.nobull.st
@@ -403,7 +405,7 @@
     new App.Controllers.Products();
     Backbone.history.start();
   }
-  App.product = new Product(#{product.to_json(except: [ :created_at, :updated_at ])});
+  App.product = new Product(#{product_json});
   App.product.url = "#{product_path(product)}";
   new App.Views.Product.Show.Index({model: App.product})
   App.product_options = new App.Collections.ProductOptions();

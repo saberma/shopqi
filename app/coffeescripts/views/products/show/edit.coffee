@@ -19,7 +19,8 @@ App.Views.Product.Show.Edit = Backbone.View.extend
         handle: this.$("input[name='handle']").val(),
         body_html: this.$("textarea[name='body_html']").val(),
         product_type: this.$("input[name='product_type']").val(),
-        vendor: this.$("input[name='vendor']").val()
+        vendor: this.$("input[name='vendor']").val(),
+        tags_text: this.$("input[name='tags_text']").val()
       },
       success: (model, resp) ->
         #修改成功!

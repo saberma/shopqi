@@ -10,6 +10,12 @@ App =
   Collections: {}
   init: ->
 
+#字符串
+StringUtils =
+  #转化为数组
+  to_a: (text) ->
+    _.uniq _.compact text.split(/[,\uFF0C]\s*/)
+
 #右上角菜单
 NavigationDropdown = (navs) ->
   _.each navs, (label, parent_id) ->
