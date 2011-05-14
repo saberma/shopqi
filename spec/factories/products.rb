@@ -2,6 +2,9 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 Factory.define :product do |f|
+  f.variants_attributes [
+    {price: 0.0, weight: 0.0}
+  ]
 end
 
 Factory.define :iphone4, :parent => :product do |f|

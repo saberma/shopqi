@@ -16,6 +16,14 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :title, :product_type, :vendor
 
+  before_create do
+    if self.options.empty?
+      option_name = KeyValues::Product::Option.first.name
+      self.options.build name: option_name
+      self.variants.first.option1 = "默认#{option_name}"
+    end
+  end
+
   before_save do
     self.handle = 'handle'
   end

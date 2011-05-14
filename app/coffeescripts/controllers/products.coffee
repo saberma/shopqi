@@ -16,13 +16,15 @@ App.Controllers.Products = Backbone.Controller.extend
       $('#vendor-status-select > .filter-select').hide()
       $('#type-status-select > .filter-select').hide()
 
-    ###### 新增页面 #####
+    ###### 新增及查看页面 #####
     # 是否要求收货地址
-    $('#variant_requires_shipping').change ->
+    $('body').delegate "input.requires_shipping", 'change', ->
+      container = $(this).parent().closest('table').parent().closest('table')
+      requires_shipping_relate = $('.requires_shipping_relate', container)
       if $(this).attr('checked')
-        $('#product_variants_attributes__weight').attr('disabled', false)
+        requires_shipping_relate.attr('disabled', false)
       else
-        $('#product_variants_attributes__weight').attr('disabled', true).val('0.0')
+        requires_shipping_relate.attr('disabled', true).val('0.0')
     .change()
 
     # 是否跟踪库存

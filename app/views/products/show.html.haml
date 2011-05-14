@@ -55,7 +55,7 @@
               =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#product_publicshed_form').submit();"
   #variant-inventory.pgroup
     %h3.sb 库存
-    =form_for variant, url: product_variant_path(product, variant), html: {id: 'batch-form'} do |f|
+    =form_for variant, html: {id: 'batch-form'} do |f|
       %table#product-controls.hide(cellpadding="0" cellspacing="0")
         %tr
           %td(style="text-align:left;")
@@ -336,18 +336,20 @@
       =w('or')
       %a.cancel(href="#")=w('cancel')
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
-  =form_for variant, url: product_variant_path(product, variant) do |v|
+  =form_for variant do |v|
     .section-header.sst 新的款式
     %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
       %tr
         %td(colspan="4")
           %p.sb
             %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
-          .new-variant-option
-            %label.option-1(for="variant_option1") 标题
-            %br
-            %input#variant_option1.st.ssb(name="variant[option1]" size="30" style="font-size:14px; width: 100%" type="text")
-            %input(type="hidden" name="options[]" value="Title")
+          -product.options.each_with_index do |option, index|
+            -position = index + 1
+            .new-variant-option
+              %label(for="product_variant_option#{position}" class="option-#{position}")=option.name
+              %br
+              =text_field_tag "product_variant[option#{position}]", nil, style: "font-size:14px; width:100%", class: [:st, :ssb]
+              -#%input(type="hidden" name="options[]" value="Title")
           .clearfix
       %tr.divider
         %td
@@ -371,16 +373,16 @@
         %td
           %label(for="variant_weight") 重量
           %br
-          =v.text_field :weight, size: 8, class: :st, style: 'width: 40px'
+          =v.text_field :weight, size: 8, class: [:st, :requires_shipping_relate], style: 'width: 40px'
           kg
       %tr.no-border
         %td(colspan="4")
           %table.secondary-variant-options
             %tr.no-border
               %td.secondary-header
-                %label(for="variant-new-requires-shipping") 要求收货地址
+                %label(for="product_variant_requires_shipping") 要求收货地址
               %td
-                =v.check_box :requires_shipping
+                =v.check_box :requires_shipping, class: :requires_shipping
                 %input(name="variant[requires_shipping]" type="hidden" value="0")
                 %span.hint 服务性质或者数字之类的商品不需要勾选
             %tr.no-border
