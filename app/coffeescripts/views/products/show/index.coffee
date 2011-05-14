@@ -3,6 +3,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
 
   events:
     "click #action-links a.edit-btn": "toggleEdit"
+    "click #new-variant-link p": "newVariant"
 
   initialize: ->
     # 先生成修改页面，以便查看页面获取集合名称
@@ -15,4 +16,10 @@ App.Views.Product.Show.Index = Backbone.View.extend
     $('#product-edit').toggle()
     $('#product-right-col').toggle()
     $('#product').toggle()
+    false
+
+  newVariant: ->
+    $('#new-variant-link').hide()
+    $('#new-variant').show()
+    Effect.scrollTo('#new-variant')
     false

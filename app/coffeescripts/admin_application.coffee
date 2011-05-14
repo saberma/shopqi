@@ -16,6 +16,14 @@ StringUtils =
   to_a: (text) ->
     _.uniq _.compact text.split(/[,\uFF0C]\s*/)
 
+#特效
+Effect =
+  scrollTo: (id) ->
+    destination = $(id).offset().top
+    $("html:not(:animated),body:not(:animated)").animate {
+      scrollTop: destination-20
+    }, 1000
+
 #右上角菜单
 NavigationDropdown = (navs) ->
   _.each navs, (label, parent_id) ->
