@@ -20,7 +20,9 @@ App.Views.Product.Show.Edit = Backbone.View.extend
         body_html: this.$("textarea[name='body_html']").val(),
         product_type: this.$("input[name='product_type']").val(),
         vendor: this.$("input[name='vendor']").val(),
-        tags_text: this.$("input[name='tags_text']").val()
+        tags_text: this.$("input[name='tags_text']").val(),
+        collection_ids: _.map this.$("input[name='product[collection_ids][]']:checked"), (input) ->
+          input.value
       },
       success: (model, resp) ->
         #修改成功!

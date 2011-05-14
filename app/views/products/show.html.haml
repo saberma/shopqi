@@ -296,7 +296,7 @@
                 %span.list-box ${tag}
               {{/each}}
             {{if tags.length == 0}}
-            %p 您还没有添加任何标签到此商品
+            %p 您还没有添加任何标签到此商品.
             {{/if}}
   .section
     #product-collections
@@ -305,10 +305,16 @@
           %th.section-header 集合
         %tr
           %td(style="padding: 15px 10px 0 10px;")
+            {{if collections.length == 0}}
+            %p 此商品不属于任何集合.
+            {{else}}
             %p 此商品属于以下集合:
+            {{/if}}
             %ul.product-collection-list.pgroup
-              -product.collections.each do |collection|
-                %li=link_to collection.title, custom_collection_path(collection)
+              {{each(i, collection) collections}}
+              %li
+                %a(href="/admin/custom_collections/${collection.id}") ${collection.title}
+              {{/each}}
 
 %script(id="edit-product-item" type="text/x-jquery-tmpl")
   =form_for product, class: :edit_product, html: {id: 'product-detail-form', onsubmit: 'return false;'} do |f|

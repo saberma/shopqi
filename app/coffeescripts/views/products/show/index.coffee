@@ -5,8 +5,9 @@ App.Views.Product.Show.Index = Backbone.View.extend
     "click #action-links a.edit-btn": "toggleEdit"
 
   initialize: ->
-    new App.Views.Product.Show.Show model: @model
+    # 先生成修改页面，以便查看页面获取集合名称
     new App.Views.Product.Show.Edit model: @model
+    new App.Views.Product.Show.Show model: @model
     @model.bind 'change:title', ->
       $('#product_title > a').text self.attributes.title
 
