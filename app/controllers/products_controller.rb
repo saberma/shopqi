@@ -12,6 +12,8 @@ class ProductsController < ApplicationController
   end
   expose(:product)
   expose(:product_json) { product.to_json(methods: [:tags_text, :collection_ids], except: [ :created_at, :updated_at ]) }
+  expose(:variants) { product.variants }
+  expose(:variant)
   expose(:types) { shop.types }
   expose(:types_options) { types.map {|t| [t.name, t.name]} }
   expose(:vendors) { shop.vendors }

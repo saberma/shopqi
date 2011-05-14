@@ -26,7 +26,7 @@
           .container=f.text_area :body_html, id: :kindeditor
       %tr
         %td
-          =f.fields_for :variants do |v|
+          =f.fields_for :variants, child_index: '' do |v|
             .section-header.sst(style="margin-top:0") 属性
             .padding
               %dl
@@ -103,17 +103,17 @@
                   %span.note 唯一标识符.
                 %dd=v.text_field :sku
                 %dd
-                  %p=v.select :inventory_management, inventory_managements, {}, id: 'inventory-select'
-                  #inventory-controls-new
-                    #shopqi-inventory-new.inventory-option.st.hide
-                      %p#inventory-new.soft
+                  %p=v.select :inventory_management, inventory_managements, {}, class: :inventory_management
+                  %div
+                    .inventory-option.st.inventory_management_relate.hide
+                      %p.soft
                         =v.label :inventory_quantity
                         =v.text_field :inventory_quantity, class: [:small, :r, 'digit-2'], size: 6
-                %dd#inventory-policy-new.hide
+                %dd.inventory_management_relate.hide
                   %p.soft
                     -inventory_policies.each do |policy|
                       =v.radio_button :inventory_policy, policy.code
-                      %label.inline(for="product_variants_attributes_0_inventory_policy_#{policy.code}")=policy.name
+                      %label.inline(for="product_variants_attributes__inventory_policy_#{policy.code}")=policy.name
                       %br/
           .section-header 标签
           .padding

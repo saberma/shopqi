@@ -20,19 +20,19 @@ App.Controllers.Products = Backbone.Controller.extend
     # 是否要求收货地址
     $('#variant_requires_shipping').change ->
       if $(this).attr('checked')
-        $('#product_variants_attributes_0_weight').attr('disabled', false)
+        $('#product_variants_attributes__weight').attr('disabled', false)
       else
-        $('#product_variants_attributes_0_weight').attr('disabled', true).val('0.0')
+        $('#product_variants_attributes__weight').attr('disabled', true).val('0.0')
     .change()
 
     # 是否跟踪库存
-    $('#inventory-select').change ->
+    $('body').delegate "select.inventory_management", 'change', ->
+      container = $(this).parent().parent().parent()
+      inventory_management_relate = $('.inventory_management_relate', container)
       if $(this).val() is ''
-        $('#shopqi-inventory-new').hide()
-        $('#inventory-policy-new').hide()
+        inventory_management_relate.hide()
       else
-        $('#shopqi-inventory-new').show()
-        $('#inventory-policy-new').show()
+        inventory_management_relate.show()
     .change()
 
     #标签

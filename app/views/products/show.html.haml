@@ -55,7 +55,7 @@
               =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#product_publicshed_form').submit();"
   #variant-inventory.pgroup
     %h3.sb 库存
-    =form_for product, url: product_path(product), remote: true, html: {id: 'batch-form'} do |f|
+    =form_for variant, url: product_variant_path(product, variant), html: {id: 'batch-form'} do |f|
       %table#product-controls.hide(cellpadding="0" cellspacing="0")
         %tr
           %td(style="text-align:left;")
@@ -336,7 +336,7 @@
       =w('or')
       %a.cancel(href="#")=w('cancel')
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
-  %form#variant_new.variant_new(accept-charset="UTF-8" action="/admin/products/39258582/variants" data-remote="true" method="post")
+  =form_for variant, url: product_variant_path(product, variant) do |v|
     .section-header.sst 新的款式
     %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
       %tr
@@ -355,23 +355,23 @@
             SKU
             %span.note 库存量单位
           %br
-          %input#variant_sku.st(name="variant[sku]" size="20" type="text")
+          =v.text_field :sku, size: 20, class: :st
         %td
           %label(for="variant_price") 销售价格
           %br
-          %input#variant_price.st(name="variant[price]" size="8" style="width:80px" type="text" value="11.00")
+          =v.text_field :price, size: 8, class: :st
           元
         %td
           %label(for="variant_compare_at_price")
             市场价
             %span.note (非必填)
           %br
-          %input#variant_compare_at_price.st(name="variant[compare_at_price]" size="8" style="width:80px" type="text")
+          =v.text_field :compare_at_price, size: 8, class: :st, style: 'width: 80px'
           元
         %td
           %label(for="variant_weight") 重量
           %br
-          %input#variant_weight.st(name="variant[weight]" size="8" style="width:40px;" type="text" value="0.0")
+          =v.text_field :weight, size: 8, class: :st, style: 'width: 40px'
           kg
       %tr.no-border
         %td(colspan="4")
@@ -380,28 +380,25 @@
               %td.secondary-header
                 %label(for="variant-new-requires-shipping") 要求收货地址
               %td
+                =v.check_box :requires_shipping
                 %input(name="variant[requires_shipping]" type="hidden" value="0")
-                %input#variant-new-requires-shipping(checked="checked" name="variant[requires_shipping]" type="checkbox" value="1")
                 %span.hint 服务性质或者数字之类的商品不需要勾选
             %tr.no-border
               %td.secondary-header
                 %label(for="inventory-select-new") 库存
               %td
-                %select#inventory-select-new(name="variant[inventory_management]" onchange="Product.updateTrackingOptions('new');")
-                  %option(value="") Don't track stock level
-                  %option(value="shopqi") Shopify tracks this variant's stock level
-                #inventory-policy-new(style="display:none")
-                  #inventory-controls-new
-                    #shopqi-inventory-new.inventory-option.sst.hide
-                      %p#inventory-new.soft
-                        %label(for="variant-inventory-quantity-new") How many are in stock?
-                        %input#variant-inventory-quantity-new.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
+                =v.select :inventory_management, inventory_managements, {}, class: :inventory_management
+                .inventory_management_relate.hide
+                  %div
+                    .inventory-option.sst.hide
+                      %p.soft
+                        =v.label :inventory_quantity
+                        =v.text_field :inventory_quantity, class: [:small, :r, 'digit-2'], size: 6
                   %p.soft(style="margin: 10px 0 0 0")
-                    %input#variant-inventory-policy-deny-new(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
-                    %label.inline(for="variant-inventory-policy-deny-new") Deny purchases for items when none are left.
-                    %br
-                    %input#variant-inventory-policy-accept-new(type="radio" name="variant[inventory_policy]" value="continue")
-                    %label.inline(for="variant-inventory-policy-accept-new") Allow users to purchase this item, even if it is no longer in stock.
+                    -inventory_policies.each do |policy|
+                      =v.radio_button :inventory_policy, policy.code
+                      %label.inline(for="product_variant_inventory_policy_#{policy.code}")=policy.name
+                      %br/
     .btns(style="margin-top: 20px")
       %input.btn(name="commit" type="submit" value="保存")
       =w('or')
