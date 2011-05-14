@@ -1,6 +1,6 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/index', 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/index', 'views/products/show/variants/new', 'controllers/products'
 
 %h2#product_title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -175,81 +175,11 @@
                         %a(href="#" onclick="toggleVariantRow(90540552); return false;")=w('cancel')
     #new-variant-link.action-row
       .action-link
-        %p(onclick="$('new-variant-link').hide(); $('new-variant').show(); new Effect.ScrollTo('new-variant'); $('variant_option1').select(); return false;")
+        %p
           %a(href="#")
             %span.plus +
             新增款式
   #new-variant.hide
-    %form#variant_new.variant_new(accept-charset="UTF-8" action="/admin/products/39258582/variants" data-remote="true" method="post")
-      .section-header.sst 新的款式
-      %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
-        %tr
-          %td(colspan="4")
-            %p.sb
-              %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
-            .new-variant-option
-              %label.option-1(for="variant_option1") 标题
-              %br
-              %input#variant_option1.st.ssb(name="variant[option1]" size="30" style="font-size:14px; width: 100%" type="text")
-              %input(type="hidden" name="options[]" value="Title")
-            .clearfix
-        %tr.divider
-          %td
-            %label(for="variant_sku")
-              SKU
-              %span.note 库存量单位
-            %br
-            %input#variant_sku.st(name="variant[sku]" size="20" type="text")
-          %td
-            %label(for="variant_price") 销售价格
-            %br
-            %input#variant_price.st(name="variant[price]" size="8" style="width:80px" type="text" value="11.00")
-            元
-          %td
-            %label(for="variant_compare_at_price")
-              市场价
-              %span.note (非必填)
-            %br
-            %input#variant_compare_at_price.st(name="variant[compare_at_price]" size="8" style="width:80px" type="text")
-            元
-          %td
-            %label(for="variant_weight") 重量
-            %br
-            %input#variant_weight.st(name="variant[weight]" size="8" style="width:40px;" type="text" value="0.0")
-            kg
-        %tr.no-border
-          %td(colspan="4")
-            %table.secondary-variant-options
-              %tr.no-border
-                %td.secondary-header
-                  %label(for="variant-new-requires-shipping") 要求收货地址
-                %td
-                  %input(name="variant[requires_shipping]" type="hidden" value="0")
-                  %input#variant-new-requires-shipping(checked="checked" name="variant[requires_shipping]" type="checkbox" value="1")
-                  %span.hint 服务性质或者数字之类的商品不需要勾选
-              %tr.no-border
-                %td.secondary-header
-                  %label(for="inventory-select-new") 库存
-                %td
-                  %select#inventory-select-new(name="variant[inventory_management]" onchange="Product.updateTrackingOptions('new');")
-                    %option(value="") Don't track stock level
-                    %option(value="shopqi") Shopify tracks this variant's stock level
-                  #inventory-policy-new(style="display:none")
-                    #inventory-controls-new
-                      #shopqi-inventory-new.inventory-option.sst.hide
-                        %p#inventory-new.soft
-                          %label(for="variant-inventory-quantity-new") How many are in stock?
-                          %input#variant-inventory-quantity-new.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
-                    %p.soft(style="margin: 10px 0 0 0")
-                      %input#variant-inventory-policy-deny-new(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
-                      %label.inline(for="variant-inventory-policy-deny-new") Deny purchases for items when none are left.
-                      %br
-                      %input#variant-inventory-policy-accept-new(type="radio" name="variant[inventory_policy]" value="continue")
-                      %label.inline(for="variant-inventory-policy-accept-new") Allow users to purchase this item, even if it is no longer in stock.
-      .btns(style="margin-top: 20px")
-        %input.btn(name="commit" type="submit" value="保存")
-        =w('or')
-        %a(href="#")=w('cancel')
 
 %script(id="show-product-item" type="text/x-jquery-tmpl")
   #product-body.textile.ssb
@@ -404,7 +334,78 @@
     .section-submit
       =f.submit "保存", id:"update-options", class: :btn
       =w('or')
-      %a.cancel(href="#") 取消
+      %a.cancel(href="#")=w('cancel')
+%script(id="new-variant-item" type="text/x-jquery-tmpl")
+  %form#variant_new.variant_new(accept-charset="UTF-8" action="/admin/products/39258582/variants" data-remote="true" method="post")
+    .section-header.sst 新的款式
+    %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
+      %tr
+        %td(colspan="4")
+          %p.sb
+            %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
+          .new-variant-option
+            %label.option-1(for="variant_option1") 标题
+            %br
+            %input#variant_option1.st.ssb(name="variant[option1]" size="30" style="font-size:14px; width: 100%" type="text")
+            %input(type="hidden" name="options[]" value="Title")
+          .clearfix
+      %tr.divider
+        %td
+          %label(for="variant_sku")
+            SKU
+            %span.note 库存量单位
+          %br
+          %input#variant_sku.st(name="variant[sku]" size="20" type="text")
+        %td
+          %label(for="variant_price") 销售价格
+          %br
+          %input#variant_price.st(name="variant[price]" size="8" style="width:80px" type="text" value="11.00")
+          元
+        %td
+          %label(for="variant_compare_at_price")
+            市场价
+            %span.note (非必填)
+          %br
+          %input#variant_compare_at_price.st(name="variant[compare_at_price]" size="8" style="width:80px" type="text")
+          元
+        %td
+          %label(for="variant_weight") 重量
+          %br
+          %input#variant_weight.st(name="variant[weight]" size="8" style="width:40px;" type="text" value="0.0")
+          kg
+      %tr.no-border
+        %td(colspan="4")
+          %table.secondary-variant-options
+            %tr.no-border
+              %td.secondary-header
+                %label(for="variant-new-requires-shipping") 要求收货地址
+              %td
+                %input(name="variant[requires_shipping]" type="hidden" value="0")
+                %input#variant-new-requires-shipping(checked="checked" name="variant[requires_shipping]" type="checkbox" value="1")
+                %span.hint 服务性质或者数字之类的商品不需要勾选
+            %tr.no-border
+              %td.secondary-header
+                %label(for="inventory-select-new") 库存
+              %td
+                %select#inventory-select-new(name="variant[inventory_management]" onchange="Product.updateTrackingOptions('new');")
+                  %option(value="") Don't track stock level
+                  %option(value="shopqi") Shopify tracks this variant's stock level
+                #inventory-policy-new(style="display:none")
+                  #inventory-controls-new
+                    #shopqi-inventory-new.inventory-option.sst.hide
+                      %p#inventory-new.soft
+                        %label(for="variant-inventory-quantity-new") How many are in stock?
+                        %input#variant-inventory-quantity-new.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
+                  %p.soft(style="margin: 10px 0 0 0")
+                    %input#variant-inventory-policy-deny-new(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
+                    %label.inline(for="variant-inventory-policy-deny-new") Deny purchases for items when none are left.
+                    %br
+                    %input#variant-inventory-policy-accept-new(type="radio" name="variant[inventory_policy]" value="continue")
+                    %label.inline(for="variant-inventory-policy-accept-new") Allow users to purchase this item, even if it is no longer in stock.
+    .btns(style="margin-top: 20px")
+      %input.btn(name="commit" type="submit" value="保存")
+      =w('or')
+      %a.cancel(href="#")=w('cancel')
 
 :javascript
   App.init = function(){

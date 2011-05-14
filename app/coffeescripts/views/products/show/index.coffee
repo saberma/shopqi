@@ -19,6 +19,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
     false
 
   newVariant: ->
+    new App.Views.Product.Show.Variant.New()
     $('#new-variant-link').hide()
     $('#new-variant').show()
     Effect.scrollTo('#new-variant')
