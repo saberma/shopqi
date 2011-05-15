@@ -3,9 +3,10 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
 
   events:
     "click .selector": "updateList"
+    "click .edit-btn": "edit"
 
   initialize: ->
-    _.bindAll this, 'render'
+    _.bindAll this, 'render', 'edit'
     $(@el).attr 'id', "variant_#{@model.id}"
     this.render()
 
@@ -16,3 +17,8 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
 
   # 显示或隐藏操作面板
   updateList: ->
+
+  edit: ->
+    this.$('tr.row-edit-details').show()
+    this.$('tr.inventory_row').hide()
+    false

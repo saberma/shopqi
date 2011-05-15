@@ -1,0 +1,84 @@
+=form_for [product, variant] do |v|
+  %table.data(cellpadding="0" cellspacing="0")
+    %tr.inventory-row.odd
+      %td.checkbox-cell
+        %input.selector(type="checkbox" name="" value="${id}")
+      %td.option-1(style="width:15%")
+        %label(for="variant-${id}-checkbox") ${option1}
+      %td(style="min-width: 150px")
+      %td.price-cell(style="width: 90px;") ${price}
+      %td.qty-cell(style="width: 50px;") ${sku}
+      %td.action-cell(style="width: 70px; text-align:right")
+        %a.edit-btn.note(href="#") 修改
+    %tr.row-edit-details.hide
+      %td(colspan="5" style="padding: 0")
+        %table.data.no-border(cellpadding="0" cellspacing="0")
+          %tr.shadow.single-variant-option-cell
+            %td(style="width: 29px; border: none; border-left: 1px solid #eee;background: #fcfcfc; padding: 0") &nbsp;
+            %td.edit-option-cell.option-1(style="width: 15%;padding-top: 10px !important")
+              %label(for="variant_${id}_option_1") Title
+              %br
+              %input(id="variant_${id}_option_1" name="variant[option1]" size="30" style="margin-top: 5px;" type="text" value="${option1}")
+            %td.edit-option-cell(style="border-right: 1px solid #eee; width:20px") &nbsp;
+            %td(style="min-width: 360px; padding: 0; border-bottom: 1px solid #eee" colspan="4") &nbsp;
+        .group.variant-edit
+          %table.data.no-border(cellpadding="0" cellspacing="0")
+            %tr.no-border
+              %td.checkbox-cell &nbsp;
+              %td
+                %label(for="variant-${id}-sku") SKU
+                %span.note 库存量单位
+                %br
+                %input.st(id="variant-${id}-sku" name="variant[sku]" size="30" style="width:120px" type="text" value="${sku}")
+              %td
+                %label(for="variant-${id}-price") 销售价格
+                %br
+                %input.st(id="variant-${id}-price" name="variant[price]" size="8" style="width: 60px" type="text" value="${price}")
+                &nbsp;元
+              %td(style="width: 200px;")
+                %label(for="variant-${id}-compare-at-price")
+                  市场价
+                  %span.note (非必填)
+                %br
+                %input.st(id="variant-${id}-compare-at-price" name="variant[compare_at_price]" size="8" style="width:80px" type="text" value="${compare_at_price}")
+                &nbsp;元
+              %td
+                %label(for="variant-${id}-weight") 重量
+                %br
+                %input.st(id="variant-${id}-weight" name="variant[weight]" size="8" style="width:40px" type="text" value="${weight}")
+                &nbsp; kg
+            %tr.no-border
+              %td &nbsp;
+              %td(colspan="4")
+                %table.secondary-variant-options
+                  %tr.no-border
+                    %td.secondary-header
+                      %label(for="variant-${id}-requires-shipping") 要求收货地址
+                    %td
+                      %input(name="variant[requires_shipping]" type="hidden" value="0")
+                      %input(id="variant-${id}-requires-shipping" checked="checked" name="variant[requires_shipping]" type="checkbox" value="1")
+                      %span.hint 服务性质或者数字之类的商品不需要勾选
+                  %tr.no-border
+                    %td.secondary-header
+                      %label(for="inventory-select-${id}") 库存
+                    %td
+                      =v.select :inventory_management, inventory_managements, {}, class: :inventory_management
+                      %div.hide
+                        %div
+                          .inventory-option.sst.hide
+                            %p.soft
+                              %label(for="variant-inventory-quantity-${id}") How many are in stock?
+                              %input.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
+                        %p.soft(style="margin: 10px 0 0 0")
+                          %input(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
+                          %label.inline(for="variant-inventory-policy-deny-${id}") Deny purchases for items when none are left.
+                          %br
+                          %input(type="radio" name="variant[inventory_policy]" value="continue")
+                          %label.inline(for="variant-inventory-policy-accept-${id}") Allow users to purchase this item, even if it is no longer in stock.
+              %tr
+                %td &nbsp;
+                %td(colspan="4" style="padding-top: 12px")
+                  %input(type="submit" name="update" value="update")
+                  =w('or')
+                  %a(href="#" onclick="toggleVariantRow(${id}); return false;")=w('cancel')
+
