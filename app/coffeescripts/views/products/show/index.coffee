@@ -9,6 +9,8 @@ App.Views.Product.Show.Index = Backbone.View.extend
     # 先生成修改页面，以便查看页面获取集合名称
     new App.Views.Product.Show.Edit model: @model
     new App.Views.Product.Show.Show model: @model
+    # 款式
+    new App.Views.Product.Show.Variant.Index collection: App.product_variants
     @model.bind 'change:title', ->
       $('#product_title > a').text self.attributes.title
 

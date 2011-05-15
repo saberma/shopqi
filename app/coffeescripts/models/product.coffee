@@ -10,3 +10,7 @@ Product = Backbone.Model.extend
 # 商品选项
 ProductOption = Backbone.Model.extend
   name: 'product_option'
+
+# 商品款式
+ProductVariant = Backbone.Model.extend
+  name: 'product_variant'
