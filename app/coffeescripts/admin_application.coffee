@@ -18,6 +18,20 @@ StringUtils =
   to_a: (text) ->
     _.uniq _.compact text.split(/[,\uFF0C]\s*/)
 
+#表单
+FormUtils =
+  #表单输入项转化为hash: option1 => value
+  to_h: (form) ->
+    inputs = {}
+    $(':input', form).each ->
+      #product_variant[option1] => option1
+      name = $(this).attr('name')
+      match = name.match(/.+\[(.+)\]/)
+      return true unless match
+      field = match[1]
+      inputs[field] = $(this).val()
+    inputs
+
 #特效
 Effect =
   scrollTo: (id) ->

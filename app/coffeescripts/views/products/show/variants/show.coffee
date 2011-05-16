@@ -2,6 +2,7 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
   tagName: 'li'
 
   events:
+    "submit form": "save"
     "click .selector": "updateList"
     "click .edit-btn": "edit"
     "click .cancel": "cancel"
@@ -10,11 +11,20 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     _.bindAll this, 'render', 'edit'
     $(@el).attr 'id', "variant_#{@model.id}"
     this.render()
+    $('#variants-list').append @el
+
+  save: ->
+    self = this
+    @model.save FormUtils.to_h(this.$('form')),
+      success: (model, resp) ->
+        self.render()
+        #修改成功!
+        msg '\u4FEE\u6539\u6210\u529F\u0021'
+        self.cancel()
+    false
 
   render: ->
-    self = this
     $(@el).html $('#show-variant-item').tmpl @model.attributes
-    $('#variants-list').append @el
 
   # 显示或隐藏操作面板
   updateList: ->

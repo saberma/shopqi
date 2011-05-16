@@ -12,4 +12,9 @@ class ProductVariantsController < ApplicationController
     product_variant.save
     render json: product_variant_json
   end
+
+  def update
+    product_variant.save
+    render json: product_variant_json
+  end
 end
