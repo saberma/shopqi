@@ -45,7 +45,7 @@
               %td
                 %label(for="variant-${id}-weight") 重量
                 %br
-                %input.st(id="variant-${id}-weight" name="product_variant[weight]" size="8" style="width:40px" type="text" value="${weight}")
+                %input.st.requires_shipping_relate(id="variant-${id}-weight" name="product_variant[weight]" size="8" style="width:40px" type="text" value="${weight}")
                 &nbsp; kg
             %tr.no-border
               %td &nbsp;
@@ -56,7 +56,7 @@
                       %label(for="variant-${id}-requires-shipping") 要求收货地址
                     %td
                       %input(name="product_variant[requires_shipping]" type="hidden" value="0")
-                      %input(id="variant-${id}-requires-shipping" checked="checked" name="product_variant[requires_shipping]" type="checkbox" value="1")
+                      %input.requires_shipping(id="variant-${id}-requires-shipping" checked="checked" name="product_variant[requires_shipping]" type="checkbox" value="1")
                       %span.hint 服务性质或者数字之类的商品不需要勾选
                   %tr.no-border
                     %td.secondary-header
