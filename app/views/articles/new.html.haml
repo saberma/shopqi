@@ -1,0 +1,24 @@
+- use_kindeditor
+%h2#title==#{blog.title} - 新文章
+#action-links
+  %ul
+    %li.no-icon
+      =link_to '取消',blog_path(blog)
+=render partial:"shared/noscript"
+=render partial:"shared/upgrade_ie"
+#preview.group.sst.ssb.textile{:style => "display:none;"}
+  %h2 Preview
+  %h4#preview-title
+  #preview-body
+.group.sst
+  =form_for [blog,article],html:{id:"new_article",class:"new-article"} do |f|
+    #article-form
+      %dl
+        =render partial:"form",locals:{f:f}
+        %dd.btns.editor-btns
+          %div{:style => "padding: 5px"}
+            %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "新增"}/
+            或者
+            =link_to "取消",blog_path(blog)
+            or
+            %a.editor-preview-link{:href => "#"} Preview

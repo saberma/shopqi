@@ -8,6 +8,7 @@ cn:
       shop: 商店
       product: 商品
       custom_collection: 集合
+      blog: 博客
     attributes:
       user:
         email: 邮箱
@@ -38,6 +39,8 @@ cn:
       page:
         title: 标题
         description: 描述
+      blog:
+        title: 标题
       custom_collection:
         title: 标题
         body_html: 描述
@@ -130,7 +133,7 @@ cn:
         other: "不到 %{count} 分钟"
       x_minutes:
         one: "一分钟"
-        other: "%{count} 分钟"
+        other: "%{count} 分钟前"
       about_x_hours:
         one: "大约一小时前"
         other: "大约 %{count} 小时前"

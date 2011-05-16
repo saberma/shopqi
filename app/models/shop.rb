@@ -4,6 +4,7 @@ class Shop < ActiveRecord::Base
   has_many :products          , dependent: :destroy
   has_many :link_lists        , dependent: :destroy
   has_many :pages             , dependent: :destroy
+  has_many :blogs             , dependent: :destroy
   has_many :smart_collections , dependent: :destroy
   has_many :custom_collections, dependent: :destroy
   has_many :tags              , dependent: :destroy

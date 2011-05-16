@@ -26,6 +26,12 @@ Shopqi::Application.routes.draw do
 
     resources :pages, except: :edit
 
+    resources :blogs do
+      resources :articles
+    end
+
+    resources :comments
+
     resources :link_lists, only: [:index, :create, :destroy, :update] do
       resources :links, only: [:create, :destroy] do
         collection do

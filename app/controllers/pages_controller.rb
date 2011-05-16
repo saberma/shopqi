@@ -6,6 +6,8 @@ class PagesController < ApplicationController
   expose(:pages) { current_user.shop.pages }
   expose(:page)
 
+  expose(:blogs) { current_user.shop.blogs }
+
   def create
     page.save
     redirect_to page_path(page)

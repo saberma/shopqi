@@ -10,7 +10,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110511132306) do
+ActiveRecord::Schema.define(:version => 20110511132245) do
+
+  create_table "articles", :force => true do |t|
+    t.integer  "blog_id"
+    t.string   "title"
+    t.text     "body_html"
+    t.string   "tags"
+    t.boolean  "published",  :default => true
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blogs", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "title",       :null => false
+    t.string   "commentable"
+    t.string   "handle",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
+
+  create_table "comments", :force => true do |t|
+    t.integer  "article_id"
+    t.string   "status"
+    t.string   "name"
+    t.string   "email"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "custom_collection_products", :force => true do |t|
     t.integer  "custom_collection_id"

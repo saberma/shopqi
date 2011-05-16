@@ -1,0 +1,8 @@
+.box2.sst
+  %h3  文章可见性
+  %p.sb.note
+    如果你不需要此页面显示在您的网店中，您可以设置它的可见性为
+    = succeed "." do
+      %em 隐藏
+  =form_for [blog,article], remote: true, html: {id: 'edit_article_form'} do |f|
+    =f.select :published, [['显示', true], ['隐藏', false]], {}, style: "width: 120px; font-size: 13px", onchange: "$('#edit_article_form').submit();"

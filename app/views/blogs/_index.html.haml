@@ -9,69 +9,7 @@
     %thead
       %tr
         %th{ :scope => "col" } 标题
-        %th{ :scope => "col", :style => "width: 50px" } \&nbsp;
+        %th{ :scope => "col", :style => "width: 50px" } &nbsp;
     %tbody
-      %tr#blog-892462
-        %td
-          #blog-title-892462
-            %a#blog-title-link-892462.blog{ :href => "/admin/blogs/892462", :title => "handle: introduction" }
-              introduction
-            %span.note
-              \&mdash; 1 article
-        %td
-          \&nbsp;
-      /
-        Show all recent articles with their comments
-      %tr
-        %td{ :colspan => "2", :style => "overflow: hidden" }
-          %table.articles-recent{ :cellspacing => "0", :cellpadding => "0" }
-            %tr.entries
-              %td.border
-                %a{ :href => "/admin/blogs/892462/articles/3023012" }
-                  How to
-              %td{ :style => "width: 35%;" }
-                %p.description
-                  last updated
-                  %em
-                    10 days ago
-                  %br
-                  by development shop
-              %td{ :style => "width:30%" }
-                %p.description
-                  Comments are disabled
-            %tr
-              %td.border{ :colspan => "5" }
-                %a.icon.action.add-entry{ :href => "/admin/blogs/892462/articles/new" }
-                  Write a new article
-      %tr#blog-890622
-        %td
-          #blog-title-890622
-            %a#blog-title-link-890622.blog{ :href => "/admin/blogs/890622", :title => "handle: news" }
-              News
-            %span.note
-              \&mdash; 1 article
-        %td
-          \&nbsp;
-      /
-        Show all recent articles with their comments
-      %tr
-        %td{ :colspan => "2", :style => "overflow: hidden" }
-          %table.articles-recent{ :cellspacing => "0", :cellpadding => "0" }
-            %tr.entries
-              %td.border
-                %a{ :href => "/admin/blogs/890622/articles/3015452" }
-                  First Post
-              %td{ :style => "width: 35%;" }
-                %p.description
-                  last updated
-                  %em
-                    11 days ago
-                  %br
-                  by Shopify
-              %td{ :style => "width:30%" }
-                %p.description
-                  Comments are disabled
-            %tr
-              %td.border{ :colspan => "5" }
-                %a.icon.action.add-entry{ :href => "/admin/blogs/890622/articles/new" }
-                  Write a new article
+      -blogs.each do |blog|
+        =render partial:"blogs/blogs",locals:{blog:blog}
