@@ -1,6 +1,6 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'views/product_options/edit', 'views/product_options/index', 'controllers/products'
 
 %h2#title 新增商品
 #action-links
@@ -22,11 +22,11 @@
               %br/
               %span.note 例如: 新一代Iphone4
             %dd=f.text_field :title,  style:"float:none;", id: :product_title, class: :big
-            %dt.sst=f.label :description
-          .container=f.text_area :description, id: :kindeditor
+            %dt.sst=f.label :body_html
+          .container=f.text_area :body_html, id: :kindeditor
       %tr
         %td
-          =f.fields_for :variants do |v|
+          =f.fields_for :variants, child_index: '' do |v|
             .section-header.sst(style="margin-top:0") 属性
             .padding
               %dl
@@ -35,14 +35,14 @@
               %span.note 例如: 服装,电脑,家用电器
               %dd
                 %select#product-type-select
-                  =options_for_select types_options, product.product_type
+                  =options_for_select types_options
                 =f.text_field :product_type, class: :hide
               %dt.sst
               %p=f.label :vendor
               %span.note 产品制造商。例子：IBM，TCL
               %dd
                 %select#product-vendor-select
-                  =options_for_select vendors_options, product.vendor
+                  =options_for_select vendors_options
                 =f.text_field :vendor, class: :hide
               %table.data2.sst.ssb
                 %tbody
@@ -60,16 +60,11 @@
                       =v.text_field :weight, style: 'width: 50px'
                       kg
                     %td
-                      =v.text_field :compare_at_price, style: 'width: 50px'
+                      =v.text_field :compare_at_price, class: :requires_shipping_relate, style: 'width: 50px'
                       元 
-                  -#
-                    %tr
-                      %td(colspan="3")
-                        %input#variant_taxable(checked="checked" name="" type="checkbox" value="1")/
-                        %label(for="variant_taxable") 费税
                   %tr
                     %td(colspan="3")
-                      =v.check_box :requires_shipping, id: :variant_requires_shipping
+                      =v.check_box :requires_shipping, class: :requires_shipping, id: :variant_requires_shipping
                       =v.label :requires_shipping, nil, for: :variant_requires_shipping
                       %span.hint 服务性质或者数字之类的商品不需要勾选
               #options
@@ -89,7 +84,7 @@
                         %th.clean(style="width: 170px;") 默认值
                       %tr#add-option-bt.edit-option
                         %td
-                          %a.add-option(href="#") 新增选项
+                          %a.add-option(href="#") 新增另一个选项
                           %br/
                           %span.note 例如：颜色、大小
                         %td &nbsp;
@@ -103,44 +98,37 @@
                   %span.note 唯一标识符.
                 %dd=v.text_field :sku
                 %dd
-                  %p=v.select :inventory_management, inventory_managements, {}, id: 'inventory-select'
-                  #inventory-controls-new
-                    #shopqi-inventory-new.inventory-option.st.hide
-                      %p#inventory-new.soft
+                  %p=v.select :inventory_management, inventory_managements, {}, class: :inventory_management
+                  %div
+                    .inventory-option.st.inventory_management_relate.hide
+                      %p.soft
                         =v.label :inventory_quantity
                         =v.text_field :inventory_quantity, class: [:small, :r, 'digit-2'], size: 6
-                %dd#inventory-policy-new.hide
+                %dd.inventory_management_relate.hide
                   %p.soft
                     -inventory_policies.each do |policy|
                       =v.radio_button :inventory_policy, policy.code
-                      %label.inline(for="product_variants_attributes_0_inventory_policy_#{policy.code}")=policy.name
+                      %label.inline(for="product_variants_attributes__inventory_policy_#{policy.code}")=policy.name
                       %br/
           .section-header 标签
           .padding
             %dl(style="margin: 0;")
               %dd#multi-options
-                %p.note 标签是用来帮助客户寻找他们所需要的东西的关键词,关键词之间有逗号(,)隔开。
-                -#=f.text_field :tags, size: 50
+                %p.note 标签是用来帮助顾客寻找他们所需商品的关键词,关键词之间用逗号(,)隔开。
+                =f.text_field :tags_text, size: 50
               %dd
-                %p.note{:style => "clear: both"} 先前使用过的关键词，单击增加。
+                %p.note{:style => "clear: both"} 最近使用过的标签，单击增加。
                 %ul#tag-list.nobull.st
-                  %li
-                    %a(href="#") Demo
-                  %li
-                    %a(href="#") T-Shirt
+                  -tags.each do |tag|
+                    %li
+                      %a(href="#")=tag.name
                 .cl
           .section-header.sst 集合
           .padding
             %dl(style="margin: 0;")
               %dd
                 %p.note 选择此商品所属的自定义集合:
-                %ul.nobull.pgroup.clearfix
-                  %li.product-edit-collection
-                    %input#custom_collection_3670472(name="" type="checkbox" value="3670472")/
-                    %label(for="custom_collection_3670472" title="custom") custom
-                  %li.product-edit-collection
-                    %input#custom_collection_3650022(name="" type="checkbox" value="3650022")/
-                    %label(for="custom_collection_3650022" title="frontpage") Frontpage
+                %ul.nobull.pgroup.clearfix=render partial: "collection", collection: custom_collections
         / product images
         %td(style="width: 275px; padding: 0pt 0pt 0pt 10px;")
           %h3.section-header(style="margin-bottom: 0") 商品图片
@@ -156,7 +144,6 @@
             %p#file-input.st.sb
               =f.fields_for :photos do |p|
                 =p.file_field :product_image
-        / product images
   %p.btns.cl
     =f.submit "保存", id:"create-product-btn", class: :btn
     =w('or')
@@ -167,11 +154,13 @@
 %script(id="option-item" type="text/x-jquery-tmpl")
   %td
     %select.option-selector=options_for_select options
-    %input(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text")
+    %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="${name}")
   %td
-    %input(name="product[options_attributes][][value]" size="16" type="text")
+    %input(name="product[options_attributes][][value]" size="16" type="text" value="${value}")
+    {{if destroyable}}
     %span.fr.sr(style="margin-top: 5px")
       %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
+    {{/if}}
 
 :javascript
   App.init = function(){
@@ -179,4 +168,6 @@
     Backbone.history.start();
   }
   App.product_options = new App.Collections.ProductOptions();
-  App.product_options.refresh(#{product.options.to_json(except: [ :created_at, :updated_at ])});
+  App.product_options.refresh(#{product.options.to_json(methods: :value, except: [ :created_at, :updated_at ])});
+  //显示商品选项
+  new App.Views.ProductOption.Index({collection: App.product_options})

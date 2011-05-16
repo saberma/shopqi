@@ -1,8 +1,8 @@
 Shopqi::Application.routes.draw do
 
-  devise_for :user, :controllers => {:registrations => "users/registrations"} do
-    get "signup", :to => "users/registrations#new"
-    get "login", :to => "devise/sessions#new"
+  devise_for :user, controllers: {registrations: "users/registrations"} do
+    get "signup", to: "users/registrations#new"
+    get "login", to: "devise/sessions#new"
   end
 
 
@@ -14,9 +14,17 @@ Shopqi::Application.routes.draw do
 
   scope "/admin" do
 
-    resources :products, :except => :edit
+    resources :products, except: :edit do
+      member do
+        put :update_published
+        post :duplicate
+      end
+      resources :product_variants, path: :variants, except: [:index, :new, :edit] do
+        post :sort, on: :collection
+      end
+    end
 
-    resources :pages, :except => :edit
+    resources :pages, except: :edit
 
     resources :blogs do
       resources :articles
@@ -24,8 +32,8 @@ Shopqi::Application.routes.draw do
 
     resources :comments
 
-    resources :link_lists, :only => [:index, :create, :destroy, :update] do
-      resources :links, :only => [:create, :destroy] do
+    resources :link_lists, only: [:index, :create, :destroy, :update] do
+      resources :links, only: [:create, :destroy] do
         collection do
           post :sort
         end
@@ -63,8 +71,8 @@ Shopqi::Application.routes.draw do
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+  #   match 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # This route can be invoked with purchase_url(id: product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
@@ -91,7 +99,7 @@ Shopqi::Application.routes.draw do
   #   resources :products do
   #     resources :comments
   #     resources :sales do
-  #       get 'recent', :on => :collection
+  #       get 'recent', on: :collection
   #     end
   #   end
 
@@ -104,9 +112,9 @@ Shopqi::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "home#dashboard"
+  root to: "home#dashboard"
 
-  match '/media(/:dragonfly)', :to => Dragonfly[:images]
+  match '/media(/:dragonfly)', to: Dragonfly[:images]
   post '/kindeditor/upload_image'
 
   # See how all your routes lay out with "rake routes"

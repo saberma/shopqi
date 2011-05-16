@@ -4,9 +4,27 @@ App =
     Link: {}
     SmartCollection: {}
     CustomCollection: {}
+    Product:
+      Show:
+        Variant: {}
+    ProductOption: {}
   Controllers: {}
   Collections: {}
   init: ->
+
+#字符串
+StringUtils =
+  #转化为数组
+  to_a: (text) ->
+    _.uniq _.compact text.split(/[,\uFF0C]\s*/)
+
+#特效
+Effect =
+  scrollTo: (id) ->
+    destination = $(id).offset().top
+    $("html:not(:animated),body:not(:animated)").animate {
+      scrollTop: destination-20
+    }, 1000
 
 #右上角菜单
 NavigationDropdown = (navs) ->
@@ -20,11 +38,11 @@ NavigationDropdown = (navs) ->
     $('#secondary > li > .nav-dropdown').hide()
 
 #可新增下拉框
-UpdateableSelectBox = (select_id, input_id, create_label) ->
-  select_box = $("##{select_id}")
-  input_field = $("##{input_id}")
+UpdateableSelectBox = (select_box, create_label) ->
+  input_field = select_box.next()
+  input_field = input_field.children('input') if input_field.hasClass('field_with_errors')
   if select_box.children().size() > 0
-    select_box.append('<option value="">--------</option>')
+    select_box.append("<option value='' disabled='disabled'>--------</option>")
   else
     input_field.show()
   select_box.append("<option value='create_new'>#{create_label}...</option>")
@@ -33,8 +51,17 @@ UpdateableSelectBox = (select_id, input_id, create_label) ->
       input_field.show().val('')
     else
       input_field.hide().val($(this).val())
-
-
+  #回显
+  values = select_box.children().map -> this.value
+  value = input_field.val()
+  if value
+    if value not in values
+      select_box.val('create_new')
+      input_field.show()
+    else
+      select_box.val(value)
+  else if select_box.val() isnt 'create_new'
+    input_field.val(select_box.val())
 
 $(document).ready ->
   App.init()
@@ -51,5 +78,5 @@ $(document).ready ->
   NavigationDropdown 'theme-link': '\u5916\u89C2', 'preferences-link': '\u8BBE\u7F6E'
 
   #下拉框
-  UpdateableSelectBox 'product-type-select', 'product_product_type', '\u65B0\u589E\u7C7B\u578B' #新增类型
-  UpdateableSelectBox 'product-vendor-select', 'product_vendor', '\u65B0\u589E\u5382\u5546' #新增厂商
+  UpdateableSelectBox $('#product-type-select'), '\u65B0\u589E\u7C7B\u578B' #新增类型
+  UpdateableSelectBox $('#product-vendor-select'), '\u65B0\u589E\u5382\u5546' #新增厂商

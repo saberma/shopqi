@@ -14,16 +14,16 @@ class LinkListsController < ApplicationController
 
   def create
     link_list.save
-    render :json => link_list
+    render json: link_list
   end
 
   def destroy
     link_list.destroy
-    render :json => link_list
+    render json: link_list
   end
 
   def update
     link_list.save
-    render :json => link_list
+    render json: link_list
   end
 end

@@ -16,32 +16,46 @@ App.Controllers.Products = Backbone.Controller.extend
       $('#vendor-status-select > .filter-select').hide()
       $('#type-status-select > .filter-select').hide()
 
-    ###### 新增页面 #####
+    ###### 新增及查看页面 #####
     # 是否要求收货地址
-    $('#variant_requires_shipping').change ->
+    $('body').delegate "input.requires_shipping", 'change', ->
+      container = $(this).parent().closest('table').parent().closest('table')
+      requires_shipping_relate = $('.requires_shipping_relate', container)
       if $(this).attr('checked')
-        $('#product_variants_attributes_0_weight').attr('disabled', false)
+        requires_shipping_relate.attr('disabled', false)
       else
-        $('#product_variants_attributes_0_weight').attr('disabled', true).val('0.0')
+        requires_shipping_relate.attr('disabled', true).val('0.0')
     .change()
 
     # 是否跟踪库存
-    $('#inventory-select').change ->
+    $('body').delegate "select.inventory_management", 'change', ->
+      container = $(this).parent().parent().parent()
+      inventory_management_relate = $('.inventory_management_relate', container)
       if $(this).val() is ''
-        $('#shopqi-inventory-new').hide()
-        $('#inventory-policy-new').hide()
+        inventory_management_relate.hide()
       else
-        $('#shopqi-inventory-new').show()
-        $('#inventory-policy-new').show()
+        inventory_management_relate.show()
     .change()
 
-    # 商品款式
-    $('#enable-options').change ->
-      if $(this).attr('checked')
-        $('#create-options-frame').show()
+    #标签
+    $('#tag-list a').click ->
+      $(this).toggleClass('active')
+      tags = StringUtils.to_a($('#product_tags_text').val())
+      tag = $(this).text()
+      if tag not in tags
+        tags.push tag
       else
-        $('#create-options-frame').hide()
-    .change()
+        tags = _.without tags, tag
+      $('#product_tags_text').val(tags.join(', '))
+      false
+    $('#product_tags_text').keyup ->
+      tags = StringUtils.to_a($('#product_tags_text').val())
+      $('#tag-list a').each ->
+        if $(this).text() in tags
+          $(this).addClass('active')
+        else
+          $(this).removeClass('active')
+    .keyup()
 
   routes:
-    "edit":      ""
+    "nothing":      "nothing"

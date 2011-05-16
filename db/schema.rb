@@ -147,17 +147,27 @@ ActiveRecord::Schema.define(:version => 20110511132245) do
   add_index "product_variants", ["product_id"], :name => "index_product_variants_on_product_id"
 
   create_table "products", :force => true do |t|
-    t.integer  "shop_id",      :null => false
-    t.string   "title",        :null => false
+    t.integer  "shop_id",                        :null => false
+    t.string   "handle",                         :null => false
+    t.string   "title",                          :null => false
+    t.boolean  "published",    :default => true
+    t.text     "body_html"
     t.text     "description"
     t.string   "product_type"
     t.string   "vendor"
-    t.string   "tags"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "products", ["shop_id"], :name => "index_products_on_shop_id"
+
+  create_table "products_tags", :id => false, :force => true do |t|
+    t.integer "product_id", :null => false
+    t.integer "tag_id",     :null => false
+  end
+
+  add_index "products_tags", ["product_id"], :name => "index_products_tags_on_product_id"
+  add_index "products_tags", ["tag_id"], :name => "index_products_tags_on_tag_id"
 
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"
@@ -224,6 +234,15 @@ ActiveRecord::Schema.define(:version => 20110511132245) do
   end
 
   add_index "smart_collections", ["shop_id"], :name => "index_smart_collections_on_shop_id"
+
+  create_table "tags", :force => true do |t|
+    t.integer  "shop_id",    :null => false
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false

@@ -18,7 +18,7 @@ cn:
           name: 网店名
       product:
         title: 标题
-        description: 描述
+        body_html: 描述
         product_type: 商品类型
         vendor: 商品生产商
         variants:
