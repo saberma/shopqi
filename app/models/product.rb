@@ -12,7 +12,7 @@ class Product < ActiveRecord::Base
 
   accepts_nested_attributes_for :photos  , allow_destroy: true
   accepts_nested_attributes_for :variants, allow_destroy: true
-  accepts_nested_attributes_for :options
+  accepts_nested_attributes_for :options, allow_destroy: true
 
   validates_presence_of :title, :product_type, :vendor
 

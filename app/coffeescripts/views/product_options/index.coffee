@@ -8,11 +8,11 @@ App.Views.ProductOption.Index = Backbone.View.extend
     _.bindAll this, 'addOption'
     self = this
     # 商品款式
+    if App.product_options.length > 0
+      self.render()
     $('#enable-options').change ->
       if $(this).attr('checked')
-        if App.product_options.length > 0
-          self.render()
-        else
+        if App.product_options.length <= 0
           App.product_options.add new ProductOption()
         $('#create-options-frame').show()
       else
@@ -23,8 +23,9 @@ App.Views.ProductOption.Index = Backbone.View.extend
     .change()
 
   render: ->
-    _(this.collection.models).each (model) ->
+    _(@collection.models).each (model) ->
       new App.Views.ProductOption.Edit model: model
+    @collection.showBtn()
 
   addOption: ->
     App.product_options.add new ProductOption()

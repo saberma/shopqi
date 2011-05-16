@@ -14,6 +14,15 @@ App.Views.Product.Show.Edit = Backbone.View.extend
 
   save: ->
     self = this
+    # 选项
+    options_attributes = []
+    this.$(".edit-option").each ->
+      option = {}
+      id = $("input[name='product[options_attributes][][id]']", this).val()
+      option['id'] = id if id
+      option['name'] = $("input[name='product[options_attributes][][name]']", this).val()
+      option['_destroy'] = $("input[name='product[options_attributes][][_destroy]']", this).val()
+      options_attributes.push option
     @model.save {
         title: this.$("input[name='title']").val(),
         handle: this.$("input[name='handle']").val(),
@@ -21,6 +30,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
         product_type: this.$("input[name='product_type']").val(),
         vendor: this.$("input[name='vendor']").val(),
         tags_text: this.$("input[name='tags_text']").val(),
+        options_attributes: options_attributes,
         collection_ids: _.map this.$("input[name='product[collection_ids][]']:checked"), (input) ->
           input.value
       },

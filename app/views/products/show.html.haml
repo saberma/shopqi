@@ -199,28 +199,9 @@
             #new_product_vendor.st.sb.hide
               %h4.note 新的商品生产商:
               =text_field_tag :vendor, '${vendor}'
-        %tr#new-option-0.edit-option.hide
-          %td.cell-title
-            .option-selector-frame
-              %select#option-selector-0.option-selector(disabled="disabled")
-                %option(value="Title") Title
-                %option(value="Size") Size
-                %option(value="Color") Color
-                %option(value="Material") Material
-                %option(value="Style") Style
-              %input#option-name-0(type="text" size="16" value="" name="product[options][][name]" disabled="disabled" style="display:none; margin-top: 5px")
-          %td
-            %input#option-id-0(type="hidden" value="44821912" name="product[options][][id]")
-            %span#option-0-value.small 默认标题
-            %span.fr.sr(style="margin-top: 5px")
-              %a(href="#" onclick="ProductOptions.destroy(0); return false;" tabindex="-1")
-                =image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
-            #option-0-deletemsg.hide
-              %p.small.highlight-alt 标题将被删除.
-              %a(href="#" onclick="ProductOptions.restore(0); return false;") 恢复
         %tr#add-option-bt.edit-option.hide
           %td.cell-title
-            %a(href="#" onclick="ProductOptions.add();; return false;") 新增另一个选项
+            %a.add-option(href="#") 新增另一个选项
             %br
             %span.note 例如. 颜色, 大小
           %td &nbsp;
@@ -249,6 +230,21 @@
   =render partial: "product_variants/show"
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
   =render partial: "product_variants/new"
+%script(id="option-item" type="text/x-jquery-tmpl")
+  %td.cell-title
+    .option-selector-frame
+      %select.option-selector=options_for_select options
+      %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="${name}")
+  %td
+    %input(type="hidden" value="0" name="product[options_attributes][][_destroy]")
+    %input(type="hidden" value="${id}" name="product[options_attributes][][id]")
+    %span.option-value.small ${variants_option0}
+    %span.fr.sr(style="margin-top: 5px")
+      %a.del-option(href="#" tabindex="-1")=image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
+      .option-deletemsg.hide
+        %p.small.highlight-alt
+          ${name}将被删除.
+          %a.resume-option(href="#") 恢复
 
 :javascript
   App.init = function(){
