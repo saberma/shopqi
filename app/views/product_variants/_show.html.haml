@@ -62,23 +62,21 @@
                     %td.secondary-header
                       %label(for="inventory-select-${id}") 库存
                     %td
-                      =v.select :inventory_management, inventory_managements, {}, class: :inventory_management
-                      %div.hide
+                      =v.select :inventory_management, inventory_managements, {}, class: :inventory_management, id: "inventory-select-${id}"
+                      %div.inventory_management_relate.hide
                         %div
-                          .inventory-option.sst.hide
+                          .inventory-option.sst.inventory_management_relate.hide
                             %p.soft
-                              %label(for="variant-inventory-quantity-${id}") How many are in stock?
-                              %input.small.r.digit-2(name="variant[inventory_quantity]" size="6" type="text" value="1")
+                              %label(for="variant-inventory-quantity-${id}") 现有库存量?
+                              %input.small.r.digit-2(id="variant-inventory-quantity-${id}" name="variant[inventory_quantity]" size="6" type="text" value="${inventory_quantity}")
                         %p.soft(style="margin: 10px 0 0 0")
-                          %input(type="radio" name="variant[inventory_policy]" value="deny" checked="checked")
-                          %label.inline(for="variant-inventory-policy-deny-${id}") Deny purchases for items when none are left.
-                          %br
-                          %input(type="radio" name="variant[inventory_policy]" value="continue")
-                          %label.inline(for="variant-inventory-policy-accept-${id}") Allow users to purchase this item, even if it is no longer in stock.
+                          -inventory_policies.each do |policy|
+                            =radio_button_tag 'variant[inventory_policy]', policy.code, false, id: "variant-inventory-policy-#{policy.code}-${id}"
+                            %label.inline(for="variant-inventory-policy-#{policy.code}-${id}")=policy.name
+                            %br/
               %tr
                 %td &nbsp;
                 %td(colspan="4" style="padding-top: 12px")
-                  %input(type="submit" name="update" value="update")
+                  %input.btn(type="submit" name="update" value="保存")
                   =w('or')
-                  %a(href="#" onclick="toggleVariantRow(${id}); return false;")=w('cancel')
-
+                  %a.cancel(href="#")=w('cancel')

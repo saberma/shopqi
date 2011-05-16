@@ -54,7 +54,7 @@
               =v.select :inventory_management, inventory_managements, {}, class: :inventory_management
               .inventory_management_relate.hide
                 %div
-                  .inventory-option.sst.hide
+                  .inventory-option.sst.inventory_management_relate.hide
                     %p.soft
                       =v.label :inventory_quantity
                       =v.text_field :inventory_quantity, class: [:small, :r, 'digit-2'], size: 6

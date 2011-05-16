@@ -4,6 +4,7 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
   events:
     "click .selector": "updateList"
     "click .edit-btn": "edit"
+    "click .cancel": "cancel"
 
   initialize: ->
     _.bindAll this, 'render', 'edit'
@@ -19,6 +20,15 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
   updateList: ->
 
   edit: ->
+    $('#row-head').css opacity: 0.5
+    this.$('.inventory-row').hide()
     this.$('tr.row-edit-details').show()
     this.$('tr.inventory_row').hide()
+    false
+
+  cancel: ->
+    $('#row-head').removeAttr('style')
+    this.$('.inventory-row').show()
+    this.$('tr.row-edit-details').hide()
+    this.$('tr.inventory_row').show()
     false

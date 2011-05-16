@@ -30,7 +30,7 @@ module KeyValues
       class Policy < KeyValues::Base
         self.data = [
           {id: 1, name: '库存不足时拒绝用户购买此款商品', code: 'deny'    },
-          {id: 2, name: '需要ShopQi跟踪此款式的库存情况', code: 'continue'}
+          {id: 2, name: '允许用户购买此款商品，即使库存不足', code: 'continue'}
         ]
       end
 
