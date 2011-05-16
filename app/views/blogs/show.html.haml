@@ -1,0 +1,29 @@
+%h2#title
+  =link_to blog.title,blog_path(blog)
+#action-links
+  %ul
+    %li#add-entry.icon
+      =link_to "新增文章",new_blog_article_path(blog)
+    %li.no-icon
+      =link_to "编辑",edit_blog_path(blog),id:"blog-edit-link"
+    %li.no-icon
+      = link_to image_tag('admin/icons/trash.gif'), blog_path(blog), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+/ begin action_links
+#blog-show
+  %p.note.r{:style => "margin-bottom: 5px"}
+    ==此博客有#{articles.size}篇文章
+  #articles
+    #page-list{:style => ""}
+      %table.data.row-space{:cellpadding => "0", :cellspacing => "0"}
+        %thead
+          %tr
+            %th{:scope => "col"} 标题
+            %th{:scope => "col", :style => "width: 150px; text-align: right; padding-right: 0"} 创建时间
+            %th{:scope => "col", :style => "width: 150px; text-align: right; padding-right: 0"} 最后更新时间
+            %th{:scope => "col", :style => "width: 50px"} &nbsp;
+        %tbody=render articles
+  / PAGINATION LINKS
+  #btm-nav.act-screen
+    #pagination     
+  / Required arguments: parent, counts
+  =render partial:"comments"

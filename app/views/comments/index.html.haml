@@ -1,0 +1,94 @@
+/ begin div.main
+#main.clearfix.col-12.last.fullscreen
+  %h2#title==文章"#{article.title}"的评论
+  #action-links
+    %ul
+  =render partial:"shared/noscript"
+  =render partial:"shared/upgrade_ie"
+  %div{:style => "margin: 15px 5px 0 5px"}
+    %h3 仅显示
+    = succeed "," do
+      %span
+        =link_to "已删除评论",comments_path(status:"removed"),title:"显示已删除评论"
+    = succeed "," do
+      %span
+        =link_to "垃圾评论",comments_path(status:"removed"),title:"显示垃圾评论"
+    %span.current
+      =link_to "所有评论",comments_path,title:"显示所有评论"
+  #comments
+    %h4 Showing 2 comments
+    %p.description
+      你可以管理发表在你博客上的所有评论，
+    / Required arguments: parent, counts
+    %p#comment-counts.info.c.st
+      This article has
+      2 comments |
+      %span#comment_published_count.status_tag.published
+        %a{:href => "/admin/comments?article_id=3198442&amp;blog_id=941902&amp;status=published", :title => "Show all published comments for article &quot;bbbbbbb&quot;"} 1 published
+      |
+      %span#comment_unapproved_count.status_tag.unapproved
+        %a{:href => "/admin/comments?article_id=3198442&amp;blog_id=941902&amp;status=unapproved", :title => "Show all unapproved comments for article &quot;bbbbbbb&quot;"} 1 unapproved
+      |
+      %span#comment_removed_count.status_tag.removed
+        %a{:href => "/admin/comments?article_id=3198442&amp;blog_id=941902&amp;status=removed", :title => "Show all removed comments for article &quot;bbbbbbb&quot;"} 0 removed
+    / Don't show table if there are no comments
+    %table.data{:cellpadding => "0", :cellspacing => "0"}
+      %thead
+        %tr
+          %th{:scope => "col"} Status
+          %th{:scope => "col"} Comment
+          %th{:scope => "col", :style => "text-align: right;"} &nbsp;
+      %tbody
+        / Required arguments: comment, parent
+        %tr#comment_18223242.row_class
+          %td#comment_18223242_status{:style => "width: 100px;"}
+            %span.status_tag.unapproved
+              %a{:href => "/admin/comments?status=unapproved", :title => "Show all unapproved comments..."} unapproved
+          %td{:style => "padding-right: 5px"}
+            %p.comment-metadata
+              www
+              (
+              %a.note{:href => "mailto:liwh87@gmail.com", :title => "From IP address: 119.123.220.88"}> liwh87@gmail.com
+              ) wrote:
+            .comment-body{:style => "font-size: 14px"}
+              %p bbbb
+            %p{:style => "font-size: 8pt"}
+              posted 14. May 11:00 AM as comment to
+              %a{:href => "/admin/blogs/941902/articles/3198442"} bbbbbbb
+              in blog
+              %a{:href => "/admin/blogs/941902"} aaa
+          %td{:style => "text-align: right; width: 150px"}
+            %span#comment_18223242_actions
+              %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/spam", :loading => "var action = $('comment_18223242_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
+              |
+              %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/approve", :loading => "var action = $('comment_18223242_actions'); action.update('approving...'); action.addClassName('hint');", :rel => "nofollow", :title => "Approve this comment"} approve
+              |
+              %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/remove", :loading => "var action = $('comment_18223242_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
+                %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c1ee14f9ff77d4750b90a715494a2bc2d2868e8e"}/
+        / Required arguments: comment, parent
+        %tr#comment_18190332.row_class
+          %td#comment_18190332_status{:style => "width: 100px;"}
+            %span.status_tag.published
+              %a{:href => "/admin/comments?status=published", :title => "Show all published comments..."} published
+          %td{:style => "padding-right: 5px"}
+            %p.comment-metadata
+              eee
+              (
+              %a.note{:href => "mailto:liwh87@gmail.com", :title => "From IP address: 119.122.153.111"}> liwh87@gmail.com
+              ) wrote:
+            .comment-body{:style => "font-size: 14px"}
+              %p fjkfjsakfsaj
+            %p{:style => "font-size: 8pt"}
+              posted 11. May 11:06 PM as comment to
+              %a{:href => "/admin/blogs/941902/articles/3198442"} bbbbbbb
+              in blog
+              %a{:href => "/admin/blogs/941902"} aaa
+          %td{:style => "text-align: right; width: 150px"}
+            %span#comment_18190332_actions
+              %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18190332/spam", :loading => "var action = $('comment_18190332_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
+              |
+              %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18190332/remove", :loading => "var action = $('comment_18190332_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
+                %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c1ee14f9ff77d4750b90a715494a2bc2d2868e8e"}/
+  / PAGINATION LINKS
+  #btm-nav.act-screen
+    #pagination 

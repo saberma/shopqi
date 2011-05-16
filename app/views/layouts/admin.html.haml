@@ -129,3 +129,7 @@
         window.onload = function(){
           msg("#{flash[:notice]}");
         }
+/[if lte IE 6]
+<script type="text/javascript">
+$("upgrade-ie6").show();
+</script>

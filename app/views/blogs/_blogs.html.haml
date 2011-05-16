@@ -1,0 +1,18 @@
+%tr#blog
+  %td
+    #blog-title
+      =link_to blog.title, blog_path(blog),class:"blog"
+      %span.note
+        ==&mdash;#{blog.articles.size}篇文章
+  %td
+    \&nbsp;
+/
+  Show all recent articles with their comments
+%tr
+  %td{ :colspan => "2", :style => "overflow: hidden" }
+    %table.articles-recent{ :cellspacing => "0", :cellpadding => "0" }
+      -blog.articles.each do |article|
+        =render partial:"articles/articles",locals:{blog:blog,article:article}
+      %tr
+        %td.border{ :colspan => "5" }
+          =link_to "新增文章",new_blog_article_path(blog),class:"icon action add-entry"

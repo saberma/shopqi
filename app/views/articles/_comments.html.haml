@@ -1,0 +1,16 @@
+-if blog.commentable == 'no' 
+  %p.description.highlight(style="text-align: center")
+    ==此博客评论已被禁用，你可以#{link_to "启用评论",edit_blog_path(blog)}
+-else
+  %p#comment-counts.info.c.st
+    ==这篇文章共有#{article.comments.size}条评论
+    |
+    %span#comment_published_count.status_tag.published
+      =link_to "#{article.published_comments.size}条公开评论",comments_path(article_id:article.id,blog_id:blog.id,status:"published"),title:"显示所有公开评论"
+    |
+    %span#comment_unapproved_count.status_tag.unapproved
+      =link_to "#{article.unapproved_comments.size}条待审核评论",comments_path(article_id:article.id,blog_id:blog.id,status:"unapproved"),title:"显示所有待审核评论"
+    |
+    %span#comment_removed_count.status_tag.removed
+      =link_to "#{article.removed_comments.size}条已删除评论",comments_path(article_id:article.id,blog_id:blog.id,status:"removed"),title:"显示所有已删除评论"
+

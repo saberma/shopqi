@@ -1,0 +1,13 @@
+%tr.entries
+  %td.border
+    =link_to article.title,blog_article_path(blog,article)
+  %td{ :style => "width: 35%;" }
+    %p.description
+      最后更新于:
+      %em
+        ==#{distance_of_time_in_words(article.updated_at,Time.now)}
+      %br
+        ==由#{article.user.name }更新
+  %td{ :style => "width:30%" }
+    %p.description
+      =render partial:"articles/comments_count",locals:{article:article,blog:blog}
