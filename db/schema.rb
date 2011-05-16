@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110511132245) do
+ActiveRecord::Schema.define(:version => 20110511132306) do
 
   create_table "articles", :force => true do |t|
     t.integer  "blog_id"
@@ -152,7 +152,6 @@ ActiveRecord::Schema.define(:version => 20110511132245) do
     t.string   "title",                          :null => false
     t.boolean  "published",    :default => true
     t.text     "body_html"
-    t.text     "description"
     t.string   "product_type"
     t.string   "vendor"
     t.datetime "created_at"
