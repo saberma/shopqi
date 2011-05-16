@@ -25,7 +25,7 @@ App.Controllers.Products = Backbone.Controller.extend
         requires_shipping_relate.attr('disabled', false)
       else
         requires_shipping_relate.attr('disabled', true).val('0.0')
-    .change()
+    $("input.requires_shipping").change()
 
     # 是否跟踪库存
     $('body').delegate "select.inventory_management", 'change', ->
@@ -35,7 +35,7 @@ App.Controllers.Products = Backbone.Controller.extend
         inventory_management_relate.hide()
       else
         inventory_management_relate.show()
-    .change()
+    $("select.inventory_management").change()
 
     #标签
     $('#tag-list a').click ->

@@ -25,6 +25,11 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
 
   render: ->
     $(@el).html $('#show-variant-item').tmpl @model.attributes
+    this.$("input.requires_shipping").change()
+    this.$("select.inventory_management").val(@model.attributes.inventory_management)
+    this.$("select.inventory_management").change()
+    this.$("select.inventory_management").change()
+    this.$("input[name='product_variant[inventory_policy]'][value='#{@model.attributes.inventory_policy}']").attr('checked', true)
 
   # 显示或隐藏操作面板
   updateList: ->

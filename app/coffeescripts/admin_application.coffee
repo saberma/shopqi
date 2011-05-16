@@ -32,7 +32,6 @@ FormUtils =
       return true if $(this).attr('type') in ['radio', 'checkbox'] and !$(this).attr('checked')
       field = match[1]
       inputs[field] = $(this).val()
-      log "#{field}: #{inputs[field]}"
     inputs
 
 #特效
