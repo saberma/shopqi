@@ -7,5 +7,6 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     this.render()
 
   render: ->
+    $('#row-head').html $('#row-head-item').tmpl()
     _(@collection.models).each (model) ->
       new App.Views.Product.Show.Variant.Show model: model

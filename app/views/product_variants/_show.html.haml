@@ -3,24 +3,28 @@
     %tr.inventory-row.odd
       %td.checkbox-cell
         %input.selector(type="checkbox" name="" value="${id}")
-      %td.option-1(style="width:15%")
-        %label(for="variant-${id}-checkbox") ${option1}
+      {{each(i, option) App.product.options.models}}
+      %td(style="width:15%" class="option-${i+1}")
+        %label(for="variant-${id}-checkbox") ${$data['option' + (i+1)]}
+      {{/each}}
       %td(style="min-width: 150px")
       %td.price-cell(style="width: 90px;") ${price}
       %td.qty-cell(style="width: 50px;") ${inventory_quantity}
       %td.action-cell(style="width: 70px; text-align:right")
         %a.edit-btn.note(href="#") 修改
     %tr.row-edit-details.hide
-      %td(colspan="5" style="padding: 0")
+      %td(colspan="${App.product.options.length + 5}" style="padding: 0")
         %table.data.no-border(cellpadding="0" cellspacing="0")
-          %tr.shadow.single-variant-option-cell
+          %tr.shadow(class='{{if(App.product.options.length==1)}}single-variant-option-cell{{/if}}')
             %td(style="width: 29px; border: none; border-left: 1px solid #eee;background: #fcfcfc; padding: 0") &nbsp;
-            %td.edit-option-cell.option-1(style="width: 15%;padding-top: 10px !important")
-              %label(for="variant_${id}_option_1") Title
+            {{each(i, option) App.product.options.models}}
+            %td.edit-option-cell(class="option-${i+1}" style="width: 15%;padding-top: 10px !important")
+              %label(for="variant_${id}_option_${i+1}") ${option.attributes.name}
               %br
-              %input(id="variant_${id}_option_1" name="product_variant[option1]" size="30" style="margin-top: 5px;" type="text" value="${option1}")
+              %input(id="variant_${id}_option_${i+1}" name="product_variant[option${i+1}]" size="30" style="margin-top: 5px;" type="text" value="${$data['option' + (i+1)]}")
+            {{/each}}
             %td.edit-option-cell(style="border-right: 1px solid #eee; width:20px") &nbsp;
-            %td(style="min-width: 360px; padding: 0; border-bottom: 1px solid #eee" colspan="4") &nbsp;
+            %td(style="min-width: 360px; padding: 0; border-bottom: 1px solid #eee" colspan="${5 - App.product.options.length}") &nbsp;
         .group.variant-edit
           %table.data.no-border(cellpadding="0" cellspacing="0")
             %tr.no-border

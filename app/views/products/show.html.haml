@@ -75,13 +75,6 @@
             %span#product-count.note &nbsp;
     %table#product-table.data(style="font-size: 12px;" cellpadding="0" cellspacing="0")
       %tr#row-head
-        %th#option-header-1.option-1(style="width:15%;") 标题
-        %th(style="min-width: 150px") SKU
-        %th.price-cell(style="width: 90px;")
-          价格
-          %span.note 元
-        %th.qty-cell(style="width:50px") 库存量
-        %th.action-cell(style="width: 70px;") &nbsp;
     %ul#variants-list
     #new-variant-link.action-row
       .action-link
@@ -222,6 +215,16 @@
       =f.submit "保存", id:"update-options", class: :btn
       =w('or')
       %a.cancel(href="#")=w('cancel')
+%script(id="row-head-item" type="text/x-jquery-tmpl")
+  {{each(i, option) App.product.options.models}}
+  %th(id="option-header-${i+1}" class="option-${i+1}" style="width:15%;") ${option.attributes.name}
+  {{/each}}
+  %th(style="min-width: 150px") SKU
+  %th.price-cell(style="width: 90px;")
+    价格
+    %span.note 元
+  %th.qty-cell(style="width:50px") 库存量
+  %th.action-cell(style="width: 70px;") &nbsp;
 %script(id="show-variant-item" type="text/x-jquery-tmpl")
   =render partial: "product_variants/show"
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
@@ -234,6 +237,9 @@
   %td
     %input(type="hidden" value="0" name="product[options_attributes][][_destroy]")
     %input(type="hidden" value="${id}" name="product[options_attributes][][id]")
+    {{if typeof(id) == 'undefined'}}
+    %input(type="text" name="product[options_attributes][][value]" size="16" value="${value}")
+    {{/if}}
     %span.option-value.small ${variants_option0}
     %span.fr.sr(style="margin-top: 5px")
       %a.del-option(href="#" tabindex="-1")=image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
