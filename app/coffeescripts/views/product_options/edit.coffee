@@ -20,7 +20,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
     $(@el).addClass cycle
     attrs = _.clone @model.attributes
     attrs['destroyable'] = position isnt 0
-    $(@el).html $('#option-item').tmpl attrs
+    $(@el).html $('#edit-option-item').tmpl attrs
     #选择第一个未被选择的option
     values = $('.option-selector').map -> this.value
     this.$('.option-selector').children('option').each ->
@@ -44,7 +44,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
     false
 
   destroy: ->
-    undestroy_product_options = _(App.product_options.models).reject (model) -> typeof(model._destroy) isnt "undefined" and model._destroy
+    undestroy_product_options = _(@model.collection.models).reject (model) -> typeof(model._destroy) isnt "undefined" and model._destroy
     if undestroy_product_options.length == 1
       #alert '最后一个商品选项不能删除. 商品至少需要一个选项.'
       alert '\u6700\u540E\u4E00\u4E2A\u5546\u54C1\u9009\u9879\u4E0D\u80FD\u5220\u9664\u002E\u0020\u5546\u54C1\u81F3\u5C11\u9700\u8981\u4E00\u4E2A\u9009\u9879.'
@@ -58,7 +58,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
       #已保存过的删除时要带上_destroy属性
       this.$("input[name='product[options_attributes][][_destroy]']").val('1')
       return false
-    App.product_options.remove @model
+    @model.collection.remove @model
     this.disableOption()
     return false
 

@@ -11,7 +11,13 @@ class ProductsController < ApplicationController
     end
   end
   expose(:product)
-  expose(:product_json) { product.to_json(methods: [:tags_text, :collection_ids], except: [ :created_at, :updated_at ]) }
+  expose(:product_json) do
+    product.to_json({
+      include: { options: { methods: :value, except: [ :created_at, :updated_at ] } },
+      methods: [:tags_text, :collection_ids],
+      except: [ :created_at, :updated_at ]
+    })
+  end
   expose(:variants) { product.variants }
   expose(:variant) { variants.build }
   expose(:types) { shop.types }
@@ -46,6 +52,7 @@ class ProductsController < ApplicationController
 
   def update
     product.save
+    product.reload
     render json: product_json
   end
 

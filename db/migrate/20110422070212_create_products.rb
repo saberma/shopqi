@@ -43,7 +43,7 @@ class CreateProducts < ActiveRecord::Migration
     create_table :product_options do |t|
       t.references :product, comment: '所属商品', null: false
       t.string :name       , comment: '名称'
-      t.integer :positon   , comment: '位置'
+      t.integer :position  , comment: '位置'
     end
 
     add_index :products        , :shop_id

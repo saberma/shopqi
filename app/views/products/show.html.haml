@@ -1,6 +1,6 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'controllers/products'
 
 %h2#product_title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -101,28 +101,24 @@
           %p {{html body_html}}
   #product-options.section
     %table.data(cellpadding="0" cellspacing="0")
-      %tr
-        %th.section-header(colspan="2") 属性
-      %tr
-        %td.cell-title
-          %strong 商品类型:
-        %td.middle.cell-data
-          %span#product-type.small ${product_type}
-      %tr
-        %td.cell-title
-          %strong 商品生产商:
-        %td.middle.cell-data
-          %span#product-vendor.small ${vendor}
-      %tr
-        %td.cell-title
-          %strong 库存:
-        %td.middle.cell-data &infin;
-      -product.options.each do |option|
+      %tbody
         %tr
-          %td.cell-title.option-1
-            %strong=option.name
-          %td#option-values-44821912-show.middle.cell-data
-            %span.small 默认标题
+          %th.section-header(colspan="2") 属性
+        %tr
+          %td.cell-title
+            %strong 商品类型:
+          %td.middle.cell-data
+            %span#product-type.small ${product_type}
+        %tr
+          %td.cell-title
+            %strong 商品生产商:
+          %td.middle.cell-data
+            %span#product-vendor.small ${vendor}
+        %tr
+          %td.cell-title
+            %strong 库存:
+          %td.middle.cell-data &infin;
+      %tbody#product-options-list
   #tagging.section
     #product-tags
       %table.data(cellpadding="0" cellspacing="0")
@@ -230,7 +226,7 @@
   =render partial: "product_variants/show"
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
   =render partial: "product_variants/new"
-%script(id="option-item" type="text/x-jquery-tmpl")
+%script(id="edit-option-item" type="text/x-jquery-tmpl")
   %td.cell-title
     .option-selector-frame
       %select.option-selector=options_for_select options
@@ -245,6 +241,11 @@
         %p.small.highlight-alt
           ${name}将被删除.
           %a.resume-option(href="#") 恢复
+%script(id="show-option-item" type="text/x-jquery-tmpl")
+  %td.cell-title(class="option-${position}")
+    %strong ${name}
+  %td.option-values-show.middle.cell-data
+    %span.small
 
 :javascript
   App.init = function(){
@@ -253,10 +254,8 @@
   }
   App.product = new Product(#{product_json});
   App.product.url = "#{product_path(product)}";
-  App.product_options = new App.Collections.ProductOptions();
-  App.product_options.refresh(#{product.options.to_json(methods: :value, except: [ :created_at, :updated_at ])});
   App.product_variants = new App.Collections.ProductVariants();
   App.product_variants.refresh(#{variants.to_json(except: [ :created_at, :updated_at ])});
   new App.Views.Product.Show.Index({model: App.product})
   //显示商品选项
-  new App.Views.ProductOption.Index({collection: App.product_options})
+  new App.Views.ProductOption.Index({collection: App.product.options})

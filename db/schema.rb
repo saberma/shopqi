@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   create_table "product_options", :force => true do |t|
     t.integer "product_id", :null => false
     t.string  "name"
-    t.integer "positon"
+    t.integer "position"
   end
 
   add_index "product_options", ["product_id"], :name => "index_product_options_on_product_id"
