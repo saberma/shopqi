@@ -8,6 +8,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :name
       t.references :shop
 
+      #增加用户权限
+      t.boolean :admin, default: true
+
       # t.encryptable
       # t.confirmable
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both

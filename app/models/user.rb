@@ -13,4 +13,5 @@ class User < ActiveRecord::Base
   has_many :articles, dependent: :destroy
   accepts_nested_attributes_for :shop
 
+
 end
