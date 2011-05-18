@@ -216,6 +216,8 @@
       =w('or')
       %a.cancel(href="#")=w('cancel')
 %script(id="row-head-item" type="text/x-jquery-tmpl")
+  %th(class="checkbox-cell")
+    %input#select-all(type="checkbox")
   {{each(i, option) App.product.options.models}}
   %th(id="option-header-${i+1}" class="option-${i+1}" style="width:15%;") ${option.attributes.name}
   {{/each}}

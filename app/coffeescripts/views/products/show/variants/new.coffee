@@ -10,7 +10,7 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
     this.render()
 
   render: ->
-    $(@el).html $('#new-variant-item').html()
+    $(@el).html $('#new-variant-item').tmpl()
 
   save: ->
     App.product_variants.create FormUtils.to_h this.$('form')

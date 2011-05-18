@@ -5,13 +5,13 @@
       %td(colspan="4")
         %p.sb
           %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
-        -product.options.each_with_index do |option, index|
-          -position = index + 1
+          {{each(i, option) App.product.options.models}}
           .new-variant-option
-            %label(for="product_variant_option#{position}" class="option-#{position}")=option.name
+            %label(for="product_variant_option${i+1}" class="option-${i+1}") ${option.attributes.name}
             %br
-            =text_field_tag "product_variant[option#{position}]", nil, style: "font-size:14px; width:100%", class: [:st, :ssb]
+            =text_field_tag "product_variant[option${i+1}]", nil, style: "font-size:14px; width:100%", class: [:st, :ssb]
             -#%input(type="hidden" name="options[]" value="Title")
+          {{/each}}
         .clearfix
     %tr.divider
       %td

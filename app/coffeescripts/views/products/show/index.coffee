@@ -13,6 +13,8 @@ App.Views.Product.Show.Index = Backbone.View.extend
     new App.Views.Product.Show.Variant.Index collection: App.product_variants
     @model.bind 'change:title', ->
       $('#product_title > a').text self.attributes.title
+    @model.bind 'change:options', ->
+      new App.Views.Product.Show.Variant.Index collection: App.product_variants
 
   toggleEdit: ->
     $('#product-edit').toggle()
