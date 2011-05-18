@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
     })
   end
   expose(:variants) { product.variants }
-  expose(:variant) { variants.build }
+  expose(:variant) { variants.new }
   expose(:types) { shop.types }
   expose(:types_options) { types.map {|t| [t.name, t.name]} }
   expose(:vendors) { shop.vendors }
