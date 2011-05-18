@@ -13,6 +13,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
     new App.Views.Product.Show.Variant.Index collection: App.product_variants
     @model.bind 'change:title', ->
       $('#product_title > a').text self.attributes.title
+    # 修改商品选项后要重新渲染所有款式
     @model.bind 'change:options', ->
       new App.Views.Product.Show.Variant.Index collection: App.product_variants
 

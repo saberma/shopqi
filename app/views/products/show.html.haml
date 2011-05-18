@@ -65,10 +65,10 @@
               %option.indent(value="quantity") 修改库存量
               %option.indent(disabled="disabled" value="destroy") 删除
               %optgroup(label="复制款式&hellip;")
-                %option#dup-option-1(disabled="disabled" value="duplicate-1") \&hellip;使用另一个标题
-            %span#new-value(style="display:none;")
+                %option#dup-option-1(disabled="disabled" value="duplicate-1") &hellip;使用另一个标题
+            %span#new-value.hide
               %input(type="text" name="new_value" size="10" value="")
-              %input(type="submit" value="Update" onclick="pl.submitForm(this); return false;")
+              %input(type="submit" value="保存")
               =w('or')
               %a(href="#" onclick="pl.resetDropDown(); return false;")=w('cancel')
           %td(style="text-align:right; color: #333")
