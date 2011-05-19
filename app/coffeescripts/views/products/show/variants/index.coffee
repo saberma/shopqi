@@ -97,6 +97,13 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
         model.view.$('.inventory-row').addClass(cycle).removeClass(not_cycle)
 
   render: ->
+    #选项快捷选择
+    data = option1: [], option2: [], option3: []
+    @collection.each (model) ->
+      data.option1.push model.attributes.option1
+      data.option2.push model.attributes.option2
+      data.option3.push model.attributes.option3
+    $('#variant-options').html  $('#variant-options-item').tmpl data
     $('#variants-list').html('')
     #操作区域
     $('#product-select').html $('#product-select-item').tmpl()

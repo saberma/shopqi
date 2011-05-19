@@ -56,6 +56,7 @@
   #variant-inventory.pgroup
     %h3.sb 库存
     =form_for [product, variant], html: {id: 'batch-form'} do |f|
+      #variant-options.note(style="margin=10px 0")
       %table#product-controls.hide(cellpadding="0" cellspacing="0")
         %tr
           %td(style="text-align:left;")
@@ -225,6 +226,16 @@
   =render partial: "product_variants/show"
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
   =render partial: "product_variants/new"
+%script(id="variant-options-item" type="text/x-jquery-tmpl")
+  选择:
+  %a(href="#" style="color:#000") 所有
+  %a(href="#" style="color:#000") 清空
+  {{each(i, option) App.product.options.models}}
+  %span(class='option-${i+1}')
+    {{each(i, name) $data['option'+(i+1)]}}
+    %a(href="#") ${name}
+    {{/each}}
+  {{/each}}
 %script(id="edit-option-item" type="text/x-jquery-tmpl")
   %td.cell-title
     .option-selector-frame
