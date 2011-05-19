@@ -5,6 +5,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
   events:
     "change .selector": 'changeProductCheckbox'
     "change #product-select": 'changeProductSelect'
+    "click #select-all": 'selectAll'
     "click #new-value .cancel": 'cancelUpdate'
     "submit form#batch-form": "saveBatchForm"
 
@@ -39,13 +40,19 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
         self.cancelUpdate()
     false
 
+  # 款式复选框全选操作
+  selectAll: ->
+    this.$('.selector').attr 'checked', this.$('#select-all').attr('checked')
+
   # 款式复选框操作
   changeProductCheckbox: ->
     checked_variants = this.$('.selector:checked')
+    all_checked = (checked_variants.size() == this.$('.selector').size())
+    this.$('#select-all').attr 'checked', all_checked
     if checked_variants[0]
       #全选，则不能删除
       this.$("#product-select option[value='destroy']").attr
-        disabled: (checked_variants.size() == this.$('.selector').size())
+        disabled: all_checked
       #单选，则可以复制
       this.$('#product-select').children('optgroup').children().attr
         disabled: (checked_variants.size() isnt 1)
@@ -54,6 +61,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
       $('#product-controls').show()
     else
       $('#product-controls').hide()
+      this.$("#new-value input[name='new_value']").val('')
 
   # 操作面板修改
   changeProductSelect: ->
