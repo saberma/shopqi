@@ -13,6 +13,7 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     $(@el).attr 'id', "variant_#{@model.id}"
     this.render()
     $('#variants-list').append @el
+    @model.view = this
     # 批量修改价格、库存量
     @model.bind 'change:price', (model, price)->
       self.$('.price-cell').text price
@@ -20,6 +21,9 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     @model.bind 'change:inventory_quantity', (model, inventory_quantity)->
       self.$('.qty-cell').text inventory_quantity
       $("#variant-inventory-quantity-#{model.id}").val inventory_quantity
+    # 删除
+    @model.bind 'remove', (model)->
+      self.remove()
 
   save: ->
     self = this

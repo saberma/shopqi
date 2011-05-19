@@ -20,7 +20,13 @@ class ProductVariantsController < ApplicationController
 
   # 批量修改
   def set
-    product_variants.where(id:params[:variants]).update_all params[:operation] => params[:new_value]
+    operation = params[:operation]
+    ids = params[:variants]
+    if operation.to_sym == :destroy
+      product_variants.find(ids).map(&:destroy)
+    else
+      product_variants.where(id:ids).update_all operation => params[:new_value]
+    end
     render nothing: true
   end
 end
