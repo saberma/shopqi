@@ -59,18 +59,12 @@
       %table#product-controls.hide(cellpadding="0" cellspacing="0")
         %tr
           %td(style="text-align:left;")
-            %select#product-select(name="operation" onchange="pl.updateForm(this)")
-              %option(value="" style="color: #888") 选择操作&hellip;
-              %option.indent(value="price") 修改价格
-              %option.indent(value="quantity") 修改库存量
-              %option.indent(disabled="disabled" value="destroy") 删除
-              %optgroup(label="复制款式&hellip;")
-                %option#dup-option-1(disabled="disabled" value="duplicate-1") &hellip;使用另一个标题
+            %select#product-select(name="operation")
             %span#new-value.hide
               %input(type="text" name="new_value" size="10" value="")
               %input(type="submit" value="保存")
               =w('or')
-              %a(href="#" onclick="pl.resetDropDown(); return false;")=w('cancel')
+              %a.cancel(href="#")=w('cancel')
           %td(style="text-align:right; color: #333")
             %span#product-count.note &nbsp;
     %table#product-table.data(style="font-size: 12px;" cellpadding="0" cellspacing="0")
@@ -254,6 +248,15 @@
     %strong ${name}
   %td.option-values-show.middle.cell-data
     %span.small
+%script(id="product-select-item" type="text/x-jquery-tmpl")
+  %option(value="" style="color: #888") 选择操作&hellip;
+  %option.indent(value="price") 修改价格
+  %option.indent(value="inventory_quantity") 修改库存量
+  %option.indent(disabled="disabled" value="destroy") 删除
+  %optgroup(label="复制款式&hellip;")
+    {{each(i, option) App.product.options.models}}
+    %option(id="dup-option-${i+1}" disabled="disabled" value="duplicate-${i+1}") &hellip;使用另一个${option.attributes.name}
+    {{/each}}
 
 :javascript
   App.init = function(){

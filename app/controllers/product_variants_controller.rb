@@ -17,4 +17,10 @@ class ProductVariantsController < ApplicationController
     product_variant.save
     render json: product_variant_json
   end
+
+  # 批量修改
+  def set
+    product_variants.where(id:params[:variants]).update_all params[:operation] => params[:new_value]
+    render nothing: true
+  end
 end

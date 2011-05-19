@@ -20,7 +20,10 @@ Shopqi::Application.routes.draw do
         post :duplicate
       end
       resources :product_variants, path: :variants, except: [:index, :new, :edit] do
-        post :sort, on: :collection
+        collection do
+          post :sort
+          post :set
+        end
       end
     end
 

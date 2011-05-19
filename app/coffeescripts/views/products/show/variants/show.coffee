@@ -8,10 +8,18 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     "click .cancel": "cancel"
 
   initialize: ->
+    self = this
     _.bindAll this, 'render', 'edit'
     $(@el).attr 'id', "variant_#{@model.id}"
     this.render()
     $('#variants-list').append @el
+    # 批量修改价格、库存量
+    @model.bind 'change:price', (model, price)->
+      self.$('.price-cell').text price
+      $("#variant-#{model.id}-price").val price
+    @model.bind 'change:inventory_quantity', (model, inventory_quantity)->
+      self.$('.qty-cell').text inventory_quantity
+      $("#variant-inventory-quantity-#{model.id}").val inventory_quantity
 
   save: ->
     self = this
