@@ -34,10 +34,11 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     checked_variants = this.$('.selector:checked')
     if checked_variants[0]
       #全选，则不能删除
-      if checked_variants.size() == this.$('.selector').size()
-        this.$("#product-select option[value='destroy']").attr('disabled', true)
-      else
-        this.$("#product-select option[value='destroy']").attr('disabled', false)
+      this.$("#product-select option[value='destroy']").attr
+        disabled: (checked_variants.size() == this.$('.selector').size())
+      #单选，则可以复制
+      this.$('#product-select').children('optgroup').children().attr
+        disabled: (checked_variants.size() isnt 1)
       #已选中款式总数
       this.$('#product-count').text "已选中 #{checked_variants.size()} 个款式"
       $('#product-controls').show()
