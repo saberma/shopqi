@@ -14,19 +14,29 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     checked_variant_ids = _.map self.$('.selector:checked'), (checkbox) -> checkbox.value
     operation = this.$('#product-select').val()
     new_value = this.$("#new-value input[name='new_value']").val()
-    $.post "/admin/products/#{App.product.id}/variants/set", operation: operation, new_value: new_value, 'variants[]': checked_variant_ids, ->
-      _(checked_variant_ids).each (id) ->
-        model = App.product_variants.get id
-        if operation is 'destroy'
-          $('#product-controls').hide()
-          App.product_variants.remove model
-          msg '批量删除成功!'
-        else
-          attr = {}
-          attr[operation] = new_value
-          model.set attr
-          msg '批量更新成功!'
-      self.cancelUpdate()
+    # 复制
+    if operation in ['duplicate-1', 'duplicate-2', 'duplicate-3']
+      model = App.product_variants.get checked_variant_ids[0]
+      attrs = model.attributes
+      attrs['id'] = null
+      index = operation.match(/duplicate-(\d)/)[1]
+      attrs["option#{index}"] = new_value
+      App.product_variants.create attrs
+      this.$('#product-select').val('').change()
+    else
+      $.post "/admin/products/#{App.product.id}/variants/set", operation: operation, new_value: new_value, 'variants[]': checked_variant_ids, ->
+        _(checked_variant_ids).each (id) ->
+          model = App.product_variants.get id
+          if operation is 'destroy'
+            $('#product-controls').hide()
+            App.product_variants.remove model
+            msg '批量删除成功!'
+          else
+            attr = {}
+            attr[operation] = new_value
+            model.set attr
+            msg '批量更新成功!'
+        self.cancelUpdate()
     false
 
   # 款式复选框操作
