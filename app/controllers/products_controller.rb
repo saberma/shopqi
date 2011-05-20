@@ -56,6 +56,17 @@ class ProductsController < ApplicationController
     render json: product_json
   end
 
+  # 复制
+  def duplicate
+    new_product = product.clone
+    new_product.variants = product.variants.map(&:clone)
+    new_product.options = product.options.map(&:clone)
+    new_product.collection_products = product.collection_products.map(&:clone)
+    new_product.tags_text = product.tags_text
+    new_product.update_attribute :title, params[:new_title]
+    render json: {id: new_product.id}
+  end
+
   #更新可见性
   def update_published
     flash.now[:notice] = I18n.t("flash.actions.update.notice")

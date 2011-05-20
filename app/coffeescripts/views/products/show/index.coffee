@@ -3,6 +3,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
 
   events:
     "click #action-links a.edit-btn": "toggleEdit"
+    "click #action-links a.dup-btn": "duplicate"
     "click #new-variant-link p": "newVariant"
 
   initialize: ->
@@ -13,8 +14,8 @@ App.Views.Product.Show.Index = Backbone.View.extend
     new App.Views.ProductOption.Index collection: @model.options
     # 款式
     new App.Views.Product.Show.Variant.Index collection: App.product_variants
-    @model.bind 'change:title', ->
-      $('#product_title > a').text self.attributes.title
+    @model.bind 'change:title', (model) ->
+      $('#product_title > a').text model.attributes.title
     # 修改商品选项后要重新渲染所有款式
     @model.bind 'change:options', ->
       new App.Views.Product.Show.Variant.Index collection: App.product_variants
@@ -23,6 +24,14 @@ App.Views.Product.Show.Index = Backbone.View.extend
     $('#product-edit').toggle()
     $('#product-right-col').toggle()
     $('#product').toggle()
+    false
+
+  duplicate: ->
+    title = prompt('请输入新商品的标题', "复制 #{@model.attributes.title}")
+    if title
+      $.post "/admin/products/#{@model.id}/duplicate", new_title: title, (data) ->
+        window.location = "/admin/products/#{data.id}"
+      , "json"
     false
 
   newVariant: ->
