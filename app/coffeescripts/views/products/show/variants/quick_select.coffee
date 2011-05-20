@@ -16,6 +16,10 @@ App.Views.Product.Show.Variant.QuickSelect = Backbone.View.extend
         option.push model.attributes["option#{i++}"]
         data[key] = _.uniq _.compact option
     $(@el).html  $('#variant-options-item').tmpl data
+    #商品信息中的选项
+    $('#product-options-list tr').each (index) ->
+      text = data["option#{index+1}"].join(', ')
+      $('.option-values-show .small', this).text text
 
   # 款式选项快捷选择
   select: (ev) ->

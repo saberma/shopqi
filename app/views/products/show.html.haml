@@ -279,5 +279,3 @@
   App.product_variants = new App.Collections.ProductVariants();
   App.product_variants.refresh(#{variants.to_json(except: [ :created_at, :updated_at ])});
   new App.Views.Product.Show.Index({model: App.product})
-  //显示商品选项
-  new App.Views.ProductOption.Index({collection: App.product.options})

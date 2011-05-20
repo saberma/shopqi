@@ -27,6 +27,7 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
         new App.Views.Product.Show.Variant.QuickSelect collection: model.collection
     # 删除
     @model.bind 'remove', (model)->
+      new App.Views.Product.Show.Variant.QuickSelect collection: App.product_variants
       self.remove()
 
   save: ->
