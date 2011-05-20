@@ -1,6 +1,6 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'views/products/show/variants/quick_select', 'controllers/products'
 
 %h2#product_title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links

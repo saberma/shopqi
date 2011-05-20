@@ -21,6 +21,10 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     @model.bind 'change:inventory_quantity', (model, inventory_quantity)->
       self.$('.qty-cell').text inventory_quantity
       $("#variant-inventory-quantity-#{model.id}").val inventory_quantity
+    # 修改款式选项值后要更新快捷选择区域
+    _([1,2,3]).each (i) ->
+      self.model.bind "change:option#{i}", (model, option)->
+        new App.Views.Product.Show.Variant.QuickSelect collection: model.collection
     # 删除
     @model.bind 'remove', (model)->
       self.remove()

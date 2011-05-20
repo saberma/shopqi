@@ -5,7 +5,6 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
   events:
     "change .selector": 'changeProductCheckbox'
     "change #product-select": 'changeProductSelect'
-    "click #variant-options a": 'selectQuick'
     "click #select-all": 'selectAll'
     "click #new-value .cancel": 'cancelUpdate'
     "submit form#batch-form": "saveBatchForm"
@@ -39,23 +38,6 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
             model.set attr
             msg '批量更新成功!'
         self.cancelUpdate()
-    false
-
-  # 款式选项快捷选择
-  selectQuick: (ev) ->
-    value = $(ev.currentTarget).text()
-    if value is '所有'
-      this.$('.selector').attr('checked', true)
-    else if value is '清空'
-      this.$('.selector').attr('checked', false)
-    else
-      this.$('.selector').attr('checked', false)
-      attr = $(ev.currentTarget).parent('span').attr('class').replace /-/, ''
-      relate_models = @collection.select (model) ->
-        model.attributes[attr] is value
-      _(relate_models).each (model) ->
-        model.view.$('.selector').attr('checked', true)
-    this.changeProductCheckbox()
     false
 
   # 款式复选框全选操作
@@ -104,6 +86,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
 
   initialize: ->
     self = this
+    @collection.view = this
     _.bindAll this, 'render'
     this.render()
     # 删除集合内实体后要重新调整行class(odd, even)
@@ -115,14 +98,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
         model.view.$('.inventory-row').addClass(cycle).removeClass(not_cycle)
 
   render: ->
-    #选项快捷选择
-    data = option1: [], option2: [], option3: []
-    @collection.each (model) ->
-      i = 1
-      _(data).each (option, key) ->
-        option.push model.attributes["option#{i++}"]
-        data[key] = _.compact option
-    $('#variant-options').html  $('#variant-options-item').tmpl data
+    new App.Views.Product.Show.Variant.QuickSelect collection: @collection
     $('#variants-list').html('')
     #操作区域
     $('#product-select').html $('#product-select-item').tmpl()
