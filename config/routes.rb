@@ -15,6 +15,9 @@ Shopqi::Application.routes.draw do
   scope "/admin" do
 
     resources :products, except: :edit do
+      collection do
+        get :inventory
+      end
       member do
         put :update_published
         post :duplicate

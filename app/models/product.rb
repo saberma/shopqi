@@ -57,6 +57,14 @@ end
 class ProductVariant < ActiveRecord::Base
   belongs_to :product
   validates_presence_of :price, :weight
+
+  def options
+    [option1, option2, option3].compact
+  end
+
+  def inventory_policy_name
+    KeyValues::Product::Inventory::Policy.find_by_code(inventory_policy).name
+  end
 end
 
 #商品选项

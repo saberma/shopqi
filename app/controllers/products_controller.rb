@@ -31,6 +31,10 @@ class ProductsController < ApplicationController
   expose(:custom_collections) { shop.custom_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
 
+  def inventory
+    @product_variants = ProductVariant.joins(:product).where(inventory_management: 'shopqi', product: {shop_id: shop.id})
+  end
+
   def new
     #保证至少有一个款式
     product.variants.build if product.variants.empty?

@@ -42,8 +42,8 @@
         %li=link_to product_type.name, search_path(product_type_eq: product_type.name)
       %li.filter-show-all.current=link_to "显示所有", search_path(producty_type_eq: nil)
 .view-switcher
-  %a.btn.btn-group.btn-left.active(href="/admin/products") 列表视图
-  %a.btn.btn-group.btn-right(href="/admin/products/inventory") 清单视图
+  %a.btn.btn-group.btn-left.active(href="#{products_path}") 列表视图
+  %a.btn.btn-group.btn-right(href="#{inventory_products_path}")> 清单视图
 / PRODUCTS LIST
 .listing.sst
   #products
@@ -56,11 +56,11 @@
               %tr
                 %td(style="text-align: left; vertical-align: middle;")
                   %select#product-select(name="operation" onchange="pl.submitForm(this)")
-                    %option(selected="selected" style="color: rgb(136, 136, 136);" value="") Select action…
-                    %option.indent(value="publish") Publish
-                    %option.indent(value="unpublish") Hide
-                    %option.indent(value="destroy") Delete
-                    %optgroup(label="Add to collection:")
+                    %option(selected="selected" style="color: rgb(136, 136, 136);" value="") 选择操作…
+                    %option.indent(value="publish") 发布
+                    %option.indent(value="unpublish") 隐藏
+                    %option.indent(value="destroy") 删除
+                    %optgroup(label="加入自定义集合:")
                       %option(value="add_to_collection-3670472") custom
                       %option(value="add_to_collection-3650022") Frontpage
                 %td(style="text-align: center; vertical-align: middle;")
