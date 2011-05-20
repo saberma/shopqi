@@ -31,18 +31,18 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
           if operation is 'destroy'
             $('#product-controls').hide()
             App.product_variants.remove model
-            msg '批量删除成功!'
           else
             attr = {}
             attr[operation] = new_value
             model.set attr
-            msg '批量更新成功!'
+        msg "批量#{operation is 'destroy' ? '删除' : '更新'}成功!"
         self.cancelUpdate()
     false
 
   # 款式复选框全选操作
   selectAll: ->
     this.$('.selector').attr 'checked', this.$('#select-all').attr('checked')
+    this.changeProductCheckbox()
 
   # 款式复选框操作
   changeProductCheckbox: ->

@@ -29,6 +29,12 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     @model.bind 'remove', (model)->
       new App.Views.Product.Show.Variant.QuickSelect collection: App.product_variants
       self.remove()
+    # 校验
+    @model.bind 'error', (model, error)->
+      errors = _(error).map (err, key) ->
+        "#{key} #{err}"
+      .join(' ')
+      error_msg  "无法保存款式: #{errors}"
 
   save: ->
     self = this
