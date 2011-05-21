@@ -1,8 +1,16 @@
 App.Views.Product.Index.Show = Backbone.View.extend
   tagName: 'tr'
 
+  events:
+    "click .selector": 'select'
+
   initialize: ->
+    self = this
     this.render()
+    @model.bind 'change:published', (model) ->
+      self.$('.status-hidden').toggle(!model.attributes.published)
+    @model.bind 'remove', (model) ->
+      self.remove()
 
   render: ->
     attrs = _.clone @model.attributes
@@ -16,3 +24,6 @@ App.Views.Product.Index.Show = Backbone.View.extend
     cycle = if position % 2 == 0 then 'odd' else 'even'
     $(@el).addClass "row#{cycle}"
     $('#product-table > tbody').append @el
+
+  select: ->
+    $(@el).toggleClass 'active', this.$('.selector').attr('checked')

@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
     operation = params[:operation].to_sym
     ids = params[:products]
     if [:publish, :unpublish].include? operation #可见性
-      products.where(id:ids).update_all operation: (operation == :publish)
+      products.where(id:ids).update_all published: (operation == :publish)
     elsif operation == :destroy #删除
       products.find(ids).map(&:destroy)
     else #加入集合
