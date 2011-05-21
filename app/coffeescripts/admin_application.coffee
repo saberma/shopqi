@@ -7,6 +7,7 @@ App =
     Product:
       Show:
         Variant: {}
+      Index: {}
     ProductOption: {}
   Controllers: {}
   Collections: {}

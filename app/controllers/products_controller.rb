@@ -31,6 +31,10 @@ class ProductsController < ApplicationController
   expose(:custom_collections) { shop.custom_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
 
+  def index
+    @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at]})
+  end
+
   def inventory
     @product_variants = ProductVariant.joins(:product).where(inventory_management: 'shopqi', product: {shop_id: shop.id})
   end
@@ -58,6 +62,19 @@ class ProductsController < ApplicationController
     product.save
     product.reload
     render json: product_json
+  end
+
+  # 批量修改
+  def set
+    operation = params[:operation].to_sym
+    ids = params[:products]
+    if [:publish, :unpublish].include? operation #可见性
+      products.where(id:ids).update_all operation: (operation == :publish)
+    elsif operation == :destroy #删除
+      products.find(ids).map(&:destroy)
+    else #加入集合
+    end
+    render nothing: true
   end
 
   # 复制

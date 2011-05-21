@@ -17,6 +17,7 @@ Shopqi::Application.routes.draw do
     resources :products, except: :edit do
       collection do
         get :inventory
+        post :set
       end
       member do
         put :update_published
