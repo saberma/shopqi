@@ -61,8 +61,8 @@
                     %option.indent(value="unpublish") 隐藏
                     %option.indent(value="destroy") 删除
                     %optgroup(label="加入自定义集合:")
-                      %option(value="add_to_collection-3670472") custom
-                      %option(value="add_to_collection-3650022") Frontpage
+                      -custom_collections.each do |collection|
+                        %option(value="add_to_collection-#{collection.id}")=collection.title
                 %td(style="text-align: center; vertical-align: middle;")
                   #multipage-page.hide
                     All

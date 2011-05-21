@@ -73,6 +73,15 @@ class ProductsController < ApplicationController
     elsif operation == :destroy #删除
       products.find(ids).map(&:destroy)
     else #加入集合
+      #'add_to_collection-1'
+      collection_id = operation.to_s.sub 'add_to_collection-', ''
+      collection = shop.custom_collections.find(collection_id)
+      ids.each do |id|
+        unless collection.collection_products.exists?(product_id: id)
+          collection.collection_products.build product_id: id
+        end
+      end
+      collection.save
     end
     render nothing: true
   end
