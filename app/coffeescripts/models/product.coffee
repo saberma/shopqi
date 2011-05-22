@@ -44,3 +44,25 @@ ProductOption = Backbone.Model.extend
 # 商品款式
 ProductVariant = Backbone.Model.extend
   name: 'product_variant'
+
+  validate: (attrs) ->
+    self = this
+    i = 1
+    error = {}
+    # 必填
+    _(App.product.options.models).each (model) ->
+      unless attrs["option#{i++}"]
+        error["基本选项#{model.attributes.name}"] = "不能为空!"
+    # 唯一性
+    exists = App.product_variants.find (variant) ->
+      result = variant.id isnt self.id
+      i = 1
+      _(App.product.options.models).each ->
+        attr = "option#{i++}"
+        result = result and variant.attributes[attr] is attrs[attr]
+      result
+    if exists then error["基本选项"] = "已经存在!"
+    if _(error).size() is 0
+      return
+    else
+      error

@@ -32,8 +32,12 @@ App.Controllers.Products = Backbone.Controller.extend
       container = $(this).parent().parent().parent()
       inventory_management_relate = $('.inventory_management_relate', container)
       if $(this).val() is ''
+        $("input[name='product[variants_attributes][][inventory_quantity]']").val('')
         inventory_management_relate.hide()
       else
+        quantity = $("input[name='product[variants_attributes][][inventory_quantity]']")
+        if !quantity.val()
+          quantity.val('1')
         inventory_management_relate.show()
     $("select.inventory_management").change()
 

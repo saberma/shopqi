@@ -14,3 +14,4 @@ App.Collections.ProductVariants = Backbone.Collection.extend
     $('#new-variant-link').show()
     $('#new-variant').hide()
     new App.Views.Product.Show.Variant.Show model: model
+    new App.Views.Product.Show.Variant.QuickSelect collection: collection

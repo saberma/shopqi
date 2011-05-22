@@ -17,4 +17,16 @@ class ProductVariantsController < ApplicationController
     product_variant.save
     render json: product_variant_json
   end
+
+  # 批量修改
+  def set
+    operation = params[:operation]
+    ids = params[:variants]
+    if operation.to_sym == :destroy
+      product_variants.find(ids).map(&:destroy)
+    else
+      product_variants.where(id:ids).update_all operation => params[:new_value]
+    end
+    render nothing: true
+  end
 end

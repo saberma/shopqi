@@ -1,16 +1,16 @@
 - use_kindeditor
 =content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'controllers/products'
+  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'views/products/show/variants/quick_select', 'controllers/products'
 
 %h2#product_title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
   %ul
     %li.no-icon
-      %a.edit-btn(href="#edit") 修改
+      %a.edit-btn(href="#") 修改
     %li.no-icon
-      %a(href="#" onclick="promptDuplicate('product', 'Copy of 111'); return false;") 复制此商品
+      %a.dup-btn(href="#") 复制此商品
     %li.no-icon
-      = link_to image_tag('admin/icons/trash.gif'), product_path(product), method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+      = link_to image_tag('admin/icons/trash.gif'), product_path(product), method: :delete, confirm: '您确定要删除此商品吗?', title: '删除它', class: :del
 
 =form_for product, url: duplicate_product_path(product), method: :post, html: {id: 'new_product'} do |f|
   =hidden_field_tag 'new_product[title]'
@@ -56,21 +56,16 @@
   #variant-inventory.pgroup
     %h3.sb 库存
     =form_for [product, variant], html: {id: 'batch-form'} do |f|
+      #variant-options.note(style="margin:10px 0")
       %table#product-controls.hide(cellpadding="0" cellspacing="0")
         %tr
           %td(style="text-align:left;")
-            %select#product-select(name="operation" onchange="pl.updateForm(this)")
-              %option(value="" style="color: #888") 选择操作&hellip;
-              %option.indent(value="price") 修改价格
-              %option.indent(value="quantity") 修改库存量
-              %option.indent(disabled="disabled" value="destroy") 删除
-              %optgroup(label="复制款式&hellip;")
-                %option#dup-option-1(disabled="disabled" value="duplicate-1") &hellip;使用另一个标题
+            %select#product-select(name="operation")
             %span#new-value.hide
               %input(type="text" name="new_value" size="10" value="")
               %input(type="submit" value="保存")
               =w('or')
-              %a(href="#" onclick="pl.resetDropDown(); return false;")=w('cancel')
+              %a.cancel(href="#")=w('cancel')
           %td(style="text-align:right; color: #333")
             %span#product-count.note &nbsp;
     %table#product-table.data(style="font-size: 12px;" cellpadding="0" cellspacing="0")
@@ -188,7 +183,7 @@
             #new_product_vendor.st.sb.hide
               %h4.note 新的商品生产商:
               =text_field_tag :vendor, '${vendor}'
-        %tr#add-option-bt.edit-option.hide
+        %tr#add-option-bt.hide
           %td.cell-title
             %a.add-option(href="#") 新增另一个选项
             %br
@@ -231,6 +226,16 @@
   =render partial: "product_variants/show"
 %script(id="new-variant-item" type="text/x-jquery-tmpl")
   =render partial: "product_variants/new"
+%script(id="variant-options-item" type="text/x-jquery-tmpl")
+  选择:
+  %a(href="#" style="color:#000") 所有
+  %a(href="#" style="color:#000") 清空
+  {{each(i, option) App.product.options.models}}
+  %span(class='option-${i+1}')
+    {{each(i, name) $data['option'+(i+1)]}}
+    %a(href="#") ${name}
+    {{/each}}
+  {{/each}}
 %script(id="edit-option-item" type="text/x-jquery-tmpl")
   %td.cell-title
     .option-selector-frame
@@ -254,6 +259,15 @@
     %strong ${name}
   %td.option-values-show.middle.cell-data
     %span.small
+%script(id="product-select-item" type="text/x-jquery-tmpl")
+  %option(value="" style="color: #888") 选择操作&hellip;
+  %option.indent(value="price") 修改价格
+  %option.indent(value="inventory_quantity") 修改库存量
+  %option.indent(disabled="disabled" value="destroy") 删除
+  %optgroup(label="复制款式&hellip;")
+    {{each(i, option) App.product.options.models}}
+    %option(id="dup-option-${i+1}" disabled="disabled" value="duplicate-${i+1}") &hellip;使用另一个${option.attributes.name}
+    {{/each}}
 
 :javascript
   App.init = function(){
@@ -265,5 +279,3 @@
   App.product_variants = new App.Collections.ProductVariants();
   App.product_variants.refresh(#{variants.to_json(except: [ :created_at, :updated_at ])});
   new App.Views.Product.Show.Index({model: App.product})
-  //显示商品选项
-  new App.Views.ProductOption.Index({collection: App.product.options})

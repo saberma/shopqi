@@ -23,13 +23,13 @@ class CreateShops < ActiveRecord::Migration
     #商品类型
     create_table :shop_product_types do |t|
       t.references :shop, comment: "所属商店"
-      t.string :name    , comment: "名称"
+      t.string :title    , comment: "名称"
     end
 
     #商品厂商
     create_table :shop_product_vendors do |t|
       t.references :shop, comment: "所属商店"
-      t.string :name    , comment: "名称"
+      t.string :title    , comment: "名称"
     end
 
     add_index :shop_product_types  , :shop_id

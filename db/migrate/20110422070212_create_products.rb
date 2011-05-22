@@ -32,7 +32,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :option3              , comment: '选项3'
       t.string :sku                  , comment: '商品唯一标识符'
       t.boolean :requires_shipping   , comment: '要求送货地址'                      , default: true
-      t.integer :inventory_quantity  , comment: '现有库存量'                        , default: 1
+      t.integer :inventory_quantity  , comment: '现有库存量'
       t.string :inventory_management , comment: '库存跟踪'
       t.string :inventory_policy     , comment: '库存跟踪发现缺货时的处理:拒绝(deny), 继续(continue)', default: :deny
 

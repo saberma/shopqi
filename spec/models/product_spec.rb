@@ -12,6 +12,14 @@ describe Product do
       iphone4.options.first.name.should eql '标题'
       iphone4.variants.first.option1.should eql '默认标题'
     end
+
+    it 'should be add' do
+      iphone4.options_attributes = [
+        {name: '大小', value: '默认大小'}
+      ]
+      iphone4.save
+      iphone4.variants.first.option2.should eql '默认大小'
+    end
   end
 
   describe Tag do

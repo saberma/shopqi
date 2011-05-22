@@ -3,6 +3,9 @@
   %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
     %tr
       %td(colspan="4")
+        #errors_for_product_variant.hide
+          #errorExplanation.errorExplanation
+            %ul
         %p.sb
           %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
           {{each(i, option) App.product.options.models}}

@@ -26,6 +26,13 @@ class Product < ActiveRecord::Base
 
   before_save do
     self.handle = 'handle'
+    # 新增的选项默认值要设置到所有款式中
+    self.options.each_with_index do |option, index|
+      next if option.value.blank?
+      self.variants.each do |variant|
+        variant.send "option#{index+1}=", option.value
+      end
+    end
   end
 
   def tags_text
@@ -57,6 +64,14 @@ end
 class ProductVariant < ActiveRecord::Base
   belongs_to :product
   validates_presence_of :price, :weight
+
+  def options
+    [option1, option2, option3].compact
+  end
+
+  def inventory_policy_name
+    KeyValues::Product::Inventory::Policy.find_by_code(inventory_policy).name
+  end
 end
 
 #商品选项

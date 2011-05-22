@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.string   "option3"
     t.string   "sku"
     t.boolean  "requires_shipping",    :default => true
-    t.integer  "inventory_quantity",   :default => 1
+    t.integer  "inventory_quantity"
     t.string   "inventory_management"
     t.string   "inventory_policy",     :default => "deny"
     t.datetime "created_at"
@@ -170,14 +170,14 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
 
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"
-    t.string  "name"
+    t.string  "title"
   end
 
   add_index "shop_product_types", ["shop_id"], :name => "index_shop_product_types_on_shop_id"
 
   create_table "shop_product_vendors", :force => true do |t|
     t.integer "shop_id"
-    t.string  "name"
+    t.string  "title"
   end
 
   add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
