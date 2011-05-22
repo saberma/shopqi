@@ -57,16 +57,16 @@
                       =v.text_field :price, style: 'width: 50px'
                       元 
                     %td
-                      =v.text_field :weight, style: 'width: 50px'
+                      =v.text_field :weight, class: :requires_shipping_relate, style: 'width: 50px'
                       kg
                     %td
-                      =v.text_field :compare_at_price, class: :requires_shipping_relate, style: 'width: 50px'
+                      =v.text_field :compare_at_price, style: 'width: 50px'
                       元 
                   %tr
                     %td(colspan="3")
                       -#check_box包含hidden require_shipping，会产生多个variant
                       -#=v.check_box :requires_shipping, class: :requires_shipping, id: :variant_requires_shipping
-                      =check_box_tag 'product[variants_attributes][][requires_shipping]', 1, product.variants.first.requires_shipping
+                      =check_box_tag 'product[variants_attributes][][requires_shipping]', 1, product.variants.first.requires_shipping, id: :variant_requires_shipping, class: :requires_shipping
                       =v.label :requires_shipping, nil, for: :variant_requires_shipping
                       %span.hint 服务性质或者数字之类的商品不需要勾选
               #options
