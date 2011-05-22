@@ -10,8 +10,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,:name, :shop_attributes
 
   belongs_to :shop
-  has_many :articles, dependent: :destroy
+  #has_many :articles, dependent: :destroy
   accepts_nested_attributes_for :shop
 
-
+  def is_admin?
+    admin
+  end
 end
+

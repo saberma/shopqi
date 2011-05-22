@@ -11,8 +11,13 @@ cn:
       blog: 博客
     attributes:
       user:
+        name: 姓名
+        phone: 电话
+        bio: 个人介绍
         email: 邮箱
+        current_password: 当前密码
         password: 密码
+        password_confirmation: 确认密码
         shop:
           permanent_domain: 二级域名
           name: 网店名

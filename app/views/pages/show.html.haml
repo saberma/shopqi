@@ -1,6 +1,5 @@
-- use_kindeditor
-=content_for :javascripts do
-  =javascript_include_tag 'controllers/pages'
+-use_kindeditor
+-use_javascripts 'controllers/pages'
 
 %h2#title= link_to page.title, "/pages/#{page.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links

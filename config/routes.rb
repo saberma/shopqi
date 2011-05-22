@@ -30,6 +30,14 @@ Shopqi::Application.routes.draw do
       resources :articles
     end
 
+    resources :users
+
+    resources :account, only: [:index] do
+      collection do 
+        post :change_ownership
+      end
+    end
+
     resources :comments
 
     resources :link_lists, only: [:index, :create, :destroy, :update] do

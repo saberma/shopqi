@@ -1,34 +1,10 @@
+=content_for :javascripts do
+  =javascript_include_tag 'models/user','controllers/users','collections/users'
 %h2#title
 #action-links
   %ul
-%noscript
-  .announcement
-    %h4 Javascript disabled
-    %p
-      %strong
-        In order to use the Shopify admin interface you
-        %em must enable javascript
-        in your browser
-    %p
-      Find out
-      = succeed "." do
-        %a{:href => "http://www.enable-javascript.com/"} how to enable javascript
-#upgrade-ie6.announcement{:style => "display:none;"}
-  %h4 Please upgrade your browser
-  %p
-    %strong
-      We are discontinuing support for
-      = succeed "." do
-        %em IE6
-      To get the most out of Shopify, please upgrade to a modern web browser
-  %p
-    We recommend
-    = succeed "," do
-      %a{:href => "http://www.google.com/chrome"} Google Chrome
-    %a{:href => "http://www.getfirefox.com/"} Mozilla Firefox
-    or
-    = succeed "." do
-      %a{:href => "http://www.apple.com/safari/download/"} Safari
+=render partial:"shared/noscript"
+=render partial:"shared/upgrade_ie"
 .col-12.last
   #dashboard-facts.box2
     %ul
@@ -54,20 +30,6 @@
         %p.big 7
         %span SKUs
 .col-8
-  :javascript
-    //
-    
-            Event.observe(document, 'dom:loaded', function() {
-              var range = '20110420T00:00:00-20110420T00:00:00'
-              new Ajax.Request("/admin/dashboard/stats", { 
-                parameters: paramsWithAuthentication({timespan: range}), 
-                onFailure: function(transport) {
-                  $('stats').replace('<p class="sst ssb"><span class="highlight">Statistics are temporarily not available</span></p>');
-                } 
-              });
-            });
-    
-    //
   #stats-spinner{:style => "display:none"}
     Updating…
   #stats
@@ -285,9 +247,18 @@
     -shop.users.each do |u|
       %li.box2
         %img#gravatar{:alt => "", :src => "/images/avatar.jpg"}/
-        =link_to u.name,"#",:class => "closure-lightbox"
+        =link_to u.name,edit_user_path(u),:class => "closure-lightbox"
         -#%a.closure-lightbox{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/dashboard/show_user/1019492", :title => "development shop"} development shop
         %br/
         %small.note
-          ==最后登录:#{distance_of_time_in_words(u.last_sign_in_at,Time.now)}
+          -if u.last_sign_in_at
+            ==最后登录:#{distance_of_time_in_words(u.last_sign_in_at ,Time.now)}
+          -else
+            该用户到目前为止，没有登录过
 #user-details-area{:style => "display:none"}
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Users();
+    Backbone.history.start();
+  }

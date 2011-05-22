@@ -1,3 +1,4 @@
+#encoding: utf-8
 class DeviseCreateUsers < ActiveRecord::Migration
   def self.up
     create_table(:users) do |t|
@@ -5,7 +6,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.recoverable
       t.rememberable
       t.trackable
-      t.string :name
+      t.string :name, comment:"姓名"
+      t.string :phone, comment:"电话"
+      t.text :bio,comment:"用户介绍"
+      t.boolean :receive_announcements,comment:"是否接收网店邮件信息",default: true
       t.references :shop
 
       #增加用户权限

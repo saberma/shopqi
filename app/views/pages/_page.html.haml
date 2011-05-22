@@ -1,4 +1,4 @@
-%tr(class="#{cycle(:odd, :event)}")
+%tr(class="#{cycle(:odd, :even)}")
   %td
     =link_to page.title, page_path(page), :title => "handle: #{page.title}"
     -if page.published?
