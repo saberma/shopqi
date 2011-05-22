@@ -216,10 +216,39 @@ describe "Products" do
           shop.products.all.size.should eql 1
 
           #款式选项默认值
-          #within(:xpath, "//tr[contains(@class, 'inventory-row')][1]") do
-          #  find('.option-1').should have_content('默认标题') 
-          #  find('.option-2').should have_content('默认大小')
-          #end
+          within(:xpath, "//tr[contains(@class, 'inventory-row')][1]") do
+            find('.option-1').should have_content('默认标题')
+            find('.option-2').should have_content('默认大小')
+          end
+
+        end
+
+      end
+
+      # 库存操作
+      describe "inventory" do
+
+        it "should be ignore", js: true do
+          visit new_product_path
+          fill_in 'product[title]', with: 'iphone'
+          click_on '保存'
+          shop.products.first.variants.first.inventory_quantity.should be_nil
+        end
+
+        it "should be save", js: true do
+          visit new_product_path
+          find_field('现有库存量?').visible?.should be_false
+          select '需要ShopQi跟踪此款式的库存情况'
+          find_field('现有库存量?')[:value].should eql '1'
+          fill_in '现有库存量?', with: 10
+
+          click_on '保存'
+
+          find_field('现有库存量?')[:value].should eql '10'
+
+          fill_in 'product[title]', with: 'iphone'
+          click_on '保存'
+          shop.products.first.variants.first.inventory_quantity.should eql 10
         end
 
       end

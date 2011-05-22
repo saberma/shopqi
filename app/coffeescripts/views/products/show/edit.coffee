@@ -18,6 +18,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
     @model.options.each (model) ->
       model.set
         name: model.view.$("input[name='product[options_attributes][][name]']").val()
+        value: model.view.$("input[name='product[options_attributes][][value]']").val()
         _destroy: model.view.$("input[name='product[options_attributes][][_destroy]']").val()
     #修正:只修改option item时也要触发change事件，更新列表
     @model._changed = true

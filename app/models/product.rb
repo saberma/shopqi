@@ -26,6 +26,13 @@ class Product < ActiveRecord::Base
 
   before_save do
     self.handle = 'handle'
+    # 新增的选项默认值要设置到所有款式中
+    self.options.each_with_index do |option, index|
+      next if option.value.blank?
+      self.variants.each do |variant|
+        variant.send "option#{index+1}=", option.value
+      end
+    end
   end
 
   def tags_text

@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.string   "option3"
     t.string   "sku"
     t.boolean  "requires_shipping",    :default => true
-    t.integer  "inventory_quantity",   :default => 1
+    t.integer  "inventory_quantity"
     t.string   "inventory_management"
     t.string   "inventory_policy",     :default => "deny"
     t.datetime "created_at"
