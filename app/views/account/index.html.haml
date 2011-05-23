@@ -185,8 +185,7 @@
       -if current_user.is_admin?
         %tr
           %td.r{:colspan => "4", :style => "border-bottom:none"}
-            #add-user
-              =link_to '新增用户',"#user/new",class:'btn'
+            =link_to '新增用户',"#",id:"add-user",class:'btn'
             #new-user-form{:style => "display:none; text-align: left"}
               =form_for user,remote:true,html:{id:"new_user",class:"new_user"} do |f|
                 %h3 增加新的用户
@@ -208,7 +207,7 @@
                 %p.sst
                   %input.btn{:name => "commit", :type => "submit", :value => "发送邀请"}/
                   or
-                  %a{:href => "#"} Cancel
+                  %a{:href => "#",id:'cancel'} 返回
 #billing-cycles.group.box2
   %h3 费用清单
 -if current_user.is_admin?

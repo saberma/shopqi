@@ -1,24 +1,15 @@
 App.Controllers.Users = Backbone.Controller.extend
-  
-  routes:
-    "users/:id": "show"
-    "user/new": "new"
-    "": "index"
 
+  initialize: ->
+    $('#add-user').click ->
+      $("#new-user-form").toggle()
+      $("#add-user").toggle()
+      false
 
-  show: (id) ->
+    $('#cancel').click ->
+      $('#new-user-form').hide()
+      $('#add-user').show()
+      false
 
-
-  new: ->
-    $("#new-user-form").toggle()
-    $("#add-user").toggle()
-
-  index: ->
-    $("#new-user-form").hide()
-    $("#add-user").show()
-
-
-
-    
 
 
