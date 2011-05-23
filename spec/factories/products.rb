@@ -8,7 +8,7 @@ Factory.define :product do |f|
 end
 
 Factory.define :iphone4, :parent => :product do |f|
-  f.title "苹果iphone 4手机"
+  f.title "iphone4"
   f.body_html "iphone 4是一款基于WCDMA制式的3G手机"
   f.vendor "Apple"
 end
