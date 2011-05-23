@@ -114,7 +114,7 @@
         {{each(j, option) options}}
         %p.note(style="font-size: 9px; line-height: 11px; margin: 0") ${variant['option'+(j+1)]}
         {{/each}}
-        %span.large(style="font-size: 14px;line-height: 25px") ${inventory_quantity}
+        %span.large(style="font-size: 14px;line-height: 25px") ${inventory_quantity ? inventory_quantity : '&infin;'}
         %br/
         .variant-tip.newtip.hide
           .default

@@ -7,6 +7,10 @@ describe "Products" do
 
   let(:shop) { user_admin.shop }
 
+  let(:iphone4) { Factory :iphone4, shop: shop, product_type: '智能手机', vendor: '苹果' }
+
+  let(:psp) { Factory :psp, shop: shop, product_type: '游戏机', vendor: '索尼' }
+
   before :each do
     visit new_user_session_path
     fill_in 'user[email]', with: user_admin.email
@@ -30,9 +34,9 @@ describe "Products" do
           click_on '保存'
 
           #校验
-          page.should have_content('标题 不能为空')
-          page.should have_content('商品类型 不能为空')
-          page.should have_content('商品生产商 不能为空')
+          page.has_content? '标题 不能为空'
+          page.has_content? '商品类型 不能为空'
+          page.has_content? '商品生产商 不能为空'
 
           #校验不通过仍然显示新增类型、生产商
           find_field('product[product_type]').visible?.should be_true
@@ -44,9 +48,9 @@ describe "Products" do
           click_on '保存'
 
           #校验
-          page.should have_content('标题 不能为空')
-          page.should_not have_content('商品类型 不能为空')
-          page.should_not have_content('商品生产商 不能为空')
+          page.has_content? '标题 不能为空'
+          page.has_no_content? '商品类型 不能为空'
+          page.has_no_content? '商品生产商 不能为空'
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
@@ -59,7 +63,7 @@ describe "Products" do
 
         it "should be validate", js: true do
           #系统已存在类型
-          shop.types.create title: '手机'
+          shop.types.create name: '手机'
           visit new_product_path
 
           #选中已有类型
@@ -81,7 +85,7 @@ describe "Products" do
 
         it "should be validate", js: true do
           #系统已存在生产商
-          shop.vendors.create title: '苹果'
+          shop.vendors.create name: '苹果'
           visit new_product_path
 
           #选中已有生产商
@@ -105,8 +109,8 @@ describe "Products" do
 
       before :each do
         #系统已存在类型、生产商
-        shop.types.create title: '手机'
-        shop.vendors.create title: '苹果'
+        shop.types.create name: '手机'
+        shop.vendors.create name: '苹果'
       end
 
       # 不要求收货地址，则重量置灰
@@ -217,8 +221,8 @@ describe "Products" do
 
           #款式选项默认值
           within(:xpath, "//tr[contains(@class, 'inventory-row')][1]") do
-            find('.option-1').should have_content('默认标题')
-            find('.option-2').should have_content('默认大小')
+            find('.option-1').has_content? '默认标题'
+            find('.option-2').has_content? '默认大小'
           end
 
         end
@@ -251,6 +255,102 @@ describe "Products" do
           shop.products.first.variants.first.inventory_quantity.should eql 10
         end
 
+      end
+
+      # 标签操作
+      describe "tags" do
+
+        it "should be save", js: true do
+          visit new_product_path
+          fill_in 'product[tags_text]', with: '智能手机，触摸屏, GPS'
+
+          click_on '保存'
+
+          find_field('product[tags_text]')[:value].should eql '智能手机，触摸屏, GPS'
+
+          fill_in 'product[title]', with: 'iphone'
+          click_on '保存'
+
+          page.has_content? '智能手机'
+          page.has_content? '触摸屏'
+          page.has_content? 'GPS'
+
+          # 最近使用
+          visit new_product_path
+          page.has_content? '智能手机'
+          page.has_content? '触摸屏'
+          page.has_content? 'GPS'
+        end
+
+      end
+
+      # 集合操作
+      describe "collections" do
+
+        it "should be save", js: true do
+          shop.custom_collections.create title: '热门商品'
+
+          visit new_product_path
+          check '热门商品'
+
+          click_on '保存'
+
+          find_field('热门商品').checked?.should be_true
+          fill_in 'product[title]', with: 'iphone'
+          click_on '保存'
+
+          page.has_no_content? '此商品不属于任何集合.'
+          page.has_content? '热门商品'
+        end
+
+      end
+
+    end
+
+  end
+
+  describe "GET /products" do
+
+    context "(with two products)" do
+
+      before :each do
+        iphone4
+        psp
+      end
+
+      it "should be search" do
+        visit products_path
+        page.has_content? 'iphone4'
+        page.has_content? 'psp'
+
+        click_on '所有厂商'
+        click_on '苹果'
+        page.has_content? 'iphone4'
+        page.has_no_content? 'psp'
+
+        # 苹果手机
+        click_on '所有类型'
+        click_on '手机'
+        page.has_content? 'iphone4'
+        page.has_no_content? 'psp'
+
+        # 苹果游戏机
+        click_on '手机'
+        click_on '游戏机'
+        page.has_no_content? 'iphone4'
+        page.has_no_content? 'psp'
+
+        # 索尼游戏机
+        click_on '苹果'
+        click_on '索尼'
+        page.has_no_content? 'iphone4'
+        page.has_content? 'psp'
+
+        # 索尼手机
+        click_on '游戏机'
+        click_on '手机'
+        page.has_no_content? 'iphone4'
+        page.has_no_content? 'psp'
       end
 
     end
