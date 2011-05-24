@@ -6,8 +6,14 @@ class UsersController < ApplicationController
   expose(:user)
 
   def update
+    #若没填密码，则不需要更新密码
+    params[:user].delete(:password) if params[:user][:password].blank?
+    params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].blank? && params[:user][:password].blank?
+
     if user.save
-      redirect_to users_path
+      flash.now[:notice] = I18n.t("flash.actions.#{action_name}.notice")
+      sign_in user
+      redirect_to account_index_path
     else
       render action:"edit"
     end
@@ -30,6 +36,5 @@ class UsersController < ApplicationController
     flash[:notice] = "删除用户成功！"
     render js: "window.location = '#{account_index_path}';msg('#{flash[:notice]}');"
   end
-
 
 end

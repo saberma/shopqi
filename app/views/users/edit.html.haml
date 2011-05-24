@@ -8,38 +8,24 @@
     =message_block on:[user]
     %h4 个人信息
     %dl.group
-      %dt
-        =f.label :name
-      %dd
-        =f.text_field :name
+      %dt=f.label :name
+      %dd=f.text_field :name
       %dt
         =f.label :phone
         %span.hint (可选的)
-      %dd
-        =f.text_field :phone
+      %dd=f.text_field :phone
       %dt
         =f.label :bio
         %span.hint (可选的)
-      %dd
-        =f.text_area :bio,cols:40,rows:10
-    %h4 登录信息
+      %dd=f.text_area :bio,cols:40,rows:10
+    %h4 登录信息(更新此信息需重新登录)
     %dl.group
-      %dt
-        =f.label :email
-      %dd
-        =f.text_field :email
-      %dt
-        =f.label :current_password
-      %dd
-        =f.password_field :current_password
-      %dt.toggle
-        =f.label :password
-      %dd.toggle
-        =f.password_field :password
-      %dt.toggle
-        =f.label :password_confirmation
-      %dd.toggle
-        =f.password_field :password_confirmation
+      %dt=f.label :email
+      %dd=f.text_field :email
+      %dt.toggle=f.label :password
+      %dd.toggle=f.password_field :password
+      %dt.toggle=f.label :password_confirmation
+      %dd.toggle=f.password_field :password_confirmation
     %h4 联系
     %dl.group
       %dd

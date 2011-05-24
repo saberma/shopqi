@@ -7,10 +7,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me,:name, :shop_attributes
+  attr_accessible :email, :password, :password_confirmation, :remember_me,:name, :shop_attributes,:phone, :bio,  :receive_announcements
 
   belongs_to :shop
-  #has_many :articles, dependent: :destroy
+  has_many :articles, dependent: :destroy
   accepts_nested_attributes_for :shop
 
   def is_admin?
@@ -18,3 +18,4 @@ class User < ActiveRecord::Base
   end
 end
 
+Blog
