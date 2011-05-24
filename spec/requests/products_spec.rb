@@ -415,6 +415,7 @@ describe "Products", js: true do
 
       describe '#edit' do
 
+=begin
         it 'should save title' do
           visit product_path(iphone4)
           click_on '修改'
@@ -432,10 +433,94 @@ describe "Products", js: true do
           within '#product-options' do
             has_content? '智能手机'
             has_content? 'Apple'
+            has_content? '默认标题'
           end
+        end
+=end
+
+        it 'should save options' do
+          visit product_path(iphone4)
+          click_on '修改'
+
+          sleep 300
+          find('.del-option').click
+          click_link '新增另一个选项' # 第二个选项
+          within(:xpath, "//tr[contains(@class, 'edit-option')][2]") do
+            fill_in 'product[options_attributes][][value]', with: '8G'
+          end
+          click_on '保存'
+
+          within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
+            find('.option-1 strong').text.should eql '标题'
+            find('.option-values-show .small').text.should eql '默认标题'
+          end
+          within(:xpath, "//tbody[@id='product-options-list']/tr[2]") do
+            find('.option-2 strong').text.should eql '大小'
+            find('.option-values-show .small').text.should eql '8G'
+          end
+
+          click_on '修改'
+          click_link '新增另一个选项' # 第三个选项
+          within(:xpath, "//tr[contains(@class, 'edit-option')][3]") do
+            fill_in 'product[options_attributes][][value]', with: '黑色'
+          end
+          click_on '保存'
+
+          within(:xpath, "//tbody[@id='product-options-list']/tr[3]") do
+            find('.option-3 strong').text.should eql '颜色'
+            find('.option-values-show .small').text.should eql '黑色'
+          end
+
+          # 款式区域
+          within('#row-head') do
+            find('#option-header-1').text.should eql '标题'
+            find('#option-header-2').text.should eql '大小'
+            find('#option-header-3').text.should eql '颜色'
+          end
+
+          # 回显
+          visit product_path(iphone4)
+
+          within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
+            find('.option-1 strong').text.should eql '标题'
+            find('.option-values-show .small').text.should eql '默认标题'
+          end
+          within(:xpath, "//tbody[@id='product-options-list']/tr[2]") do
+            find('.option-2 strong').text.should eql '大小'
+            find('.option-values-show .small').text.should eql '8G'
+          end
+          within(:xpath, "//tbody[@id='product-options-list']/tr[3]") do
+            find('.option-3 strong').text.should eql '颜色'
+            find('.option-values-show .small').text.should eql '黑色'
+          end
+
+
+          #click_on '修改'
+          # 删除
+          #within(:xpath, "//tr[contains(@class, 'edit-option')][1]") do
+          #  find('.del-option').visible?.should be_true
+          #  find('.del-option').click
+          #end
+          #click_on '保存'
+          #within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
+          #  find('.option-2 strong').text.should eql '大小'
+          #  find('.option-values-show .small').text.should eql '8G'
+          #end
+          #within(:xpath, "//tbody[@id='product-options-list']/tr[2]") do
+          #  find('.option-3 strong').text.should eql '颜色'
+          #  find('.option-values-show .small').text.should eql '黑色'
+          #end
+
+          ## 款式区域
+          #within('#row-head') do
+          #  find('#option-header-1').visible?.should be_false
+          #  find('#option-header-2').text.should eql '大小'
+          #  find('#option-header-3').text.should eql '颜色'
+          #end
         end
 
       end
+
     end
 
   end

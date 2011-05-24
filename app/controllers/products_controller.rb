@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
 
   def update
     product.save
-    product.reload
+    product.options.reject! {|option| option.marked_for_destruction?} #rails bug：使用_destroy标记删除后，需要reload后，删除集合中的元素才消失，而reload后value值将被置空
     render json: product_json
   end
 

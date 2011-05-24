@@ -17,7 +17,15 @@ App.Views.Product.Show.Index = Backbone.View.extend
     @model.bind 'change:title', (model) ->
       $('#product_title > a').text model.attributes.title
     # 修改商品选项后要重新渲染所有款式
-    @model.bind 'change:options', ->
+    @model.bind 'change:options', (model) ->
+      i = 0
+      model.options.each (option) ->
+        i++
+        if option.attributes.value
+          App.product_variants.each (variant) ->
+            attr = {}
+            attr["option#{i}"] = option.attributes.value
+            variant.set attr, silent: true
       new App.Views.Product.Show.Variant.Index collection: App.product_variants
 
   toggleEdit: ->

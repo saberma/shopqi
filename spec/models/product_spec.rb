@@ -20,6 +20,22 @@ describe Product do
       iphone4.save
       iphone4.variants.first.option2.should eql '默认大小'
     end
+
+    it 'should be destroy' do
+      iphone4.options_attributes = [
+        {name: '大小', value: '默认大小'}
+      ]
+      iphone4.save
+      option = iphone4.options.second
+      option.value.should eql '默认大小'
+      iphone4.options_attributes = [
+        {id: option.id, _destroy: true}
+      ]
+      iphone4.save
+      iphone4.options.reject! {|option| option.marked_for_destruction?} #rails bug，使用_destroy标记删除后，需要reload后，删除集合中的元素才消失
+      iphone4.options.size.should eql 1
+    end
+
   end
 
   describe Tag do

@@ -25,9 +25,11 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     _([1,2,3]).each (i) ->
       self.model.bind "change:option#{i}", (model, option)->
         new App.Views.Product.Show.Variant.QuickSelect collection: model.collection
+        new App.Views.ProductOption.Index collection: App.product.options
     # 删除
     @model.bind 'remove', (model)->
       new App.Views.Product.Show.Variant.QuickSelect collection: App.product_variants
+      new App.Views.ProductOption.Index collection: App.product.options
       self.remove()
     # 校验
     @model.bind 'error', (model, error)->

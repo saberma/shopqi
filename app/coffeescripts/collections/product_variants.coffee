@@ -15,3 +15,14 @@ App.Collections.ProductVariants = Backbone.Collection.extend
     $('#new-variant').hide()
     new App.Views.Product.Show.Variant.Show model: model
     new App.Views.Product.Show.Variant.QuickSelect collection: collection
+    new App.Views.ProductOption.Index collection: App.product.options
+
+  options: ->
+    #return @data if @data
+    @data = option1: [], option2: [], option3: []
+    _(@models).each (model) =>
+      i = 1
+      _(@data).each (option, key) =>
+        option.push model.attributes["option#{i++}"]
+        @data[key] = _.uniq _.compact option
+    @data
