@@ -33,8 +33,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
           input.value
       },
       success: (model, resp) ->
-        #修改成功!
-        msg '\u4FEE\u6539\u6210\u529F\u0021'
+        msg '修改成功!'
         self.show()
         #显示商品选项
         new App.Views.ProductOption.Index collection: self.model.options

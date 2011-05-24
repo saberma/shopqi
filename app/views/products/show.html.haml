@@ -148,7 +148,7 @@
       .padding
         #errors_for_product
         %dl(style="background: none; margin-bottom: 0")
-          %dt=f.label :title, nil, style: "margin: 0"
+          %dt=f.label :title, nil, style: "margin: 0", for: :title
           %dd=text_field_tag :title, '${title}', class: [:big, :sb]
           %dt#edit-handle-label
             链接/处理
@@ -258,7 +258,7 @@
   %td.cell-title(class="option-${position}")
     %strong ${name}
   %td.option-values-show.middle.cell-data
-    %span.small
+    %span.small ${options}
 %script(id="product-select-item" type="text/x-jquery-tmpl")
   %option(value="" style="color: #888") 选择操作&hellip;
   %option.indent(value="price") 修改价格

@@ -21,9 +21,9 @@ class ProductsController < ApplicationController
   expose(:variants) { product.variants }
   expose(:variant) { variants.new }
   expose(:types) { shop.types }
-  expose(:types_options) { types.map {|t| [t.title, t.title]} }
+  expose(:types_options) { types.map {|t| [t.name, t.name]} }
   expose(:vendors) { shop.vendors }
-  expose(:vendors_options) { vendors.map {|t| [t.title, t.title]} }
+  expose(:vendors_options) { vendors.map {|t| [t.name, t.name]} }
   expose(:inventory_managements) { KeyValues::Product::Inventory::Manage.options }
   expose(:inventory_policies) { KeyValues::Product::Inventory::Policy.all }
   expose(:options) { KeyValues::Product::Option.all.map {|t| [t.name, t.name]} }
@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
 
   def update
     product.save
-    product.reload
+    product.options.reject! {|option| option.marked_for_destruction?} #rails bug：使用_destroy标记删除后，需要reload后，删除集合中的元素才消失，而reload后value值将被置空
     render json: product_json
   end
 
