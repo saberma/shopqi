@@ -3,9 +3,8 @@ require 'spec_helper'
 require 'shared_stuff'
 
 describe "Users" do
-
-  include_context 'login'
   describe "GET /admin/account" do
+    include_context 'login liwh'
     it "works", js:true do
       visit account_index_path
       click_on '新增用户'
