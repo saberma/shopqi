@@ -6,7 +6,7 @@ describe "Pages" do
 
     let(:user_admin) { Factory :user_admin }
 
-    it "works!", :js => true do
+    it "works!", js: true do
       visit new_user_session_path
       fill_in 'user[email]', with: user_admin.email
       fill_in 'user[password]', with: user_admin.password
