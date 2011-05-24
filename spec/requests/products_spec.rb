@@ -442,8 +442,6 @@ describe "Products", js: true do
           visit product_path(iphone4)
           click_on '修改'
 
-          sleep 300
-          find('.del-option').click
           click_link '新增另一个选项' # 第二个选项
           within(:xpath, "//tr[contains(@class, 'edit-option')][2]") do
             fill_in 'product[options_attributes][][value]', with: '8G'
@@ -494,29 +492,28 @@ describe "Products", js: true do
             find('.option-values-show .small').text.should eql '黑色'
           end
 
+          page.execute_script("window.alert = function(msg) { return true; }")
+          click_on '修改'
+          #删除
+          within(:xpath, "//tr[contains(@class, 'edit-option')][1]") do
+            find('.del-option').click
+          end
+          click_on '保存'
+          within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
+            find('.option-1 strong').text.should eql '大小'
+            find('.option-values-show .small').text.should eql '8G'
+          end
+          within(:xpath, "//tbody[@id='product-options-list']/tr[2]") do
+            find('.option-2 strong').text.should eql '颜色'
+            find('.option-values-show .small').text.should eql '黑色'
+          end
 
-          #click_on '修改'
-          # 删除
-          #within(:xpath, "//tr[contains(@class, 'edit-option')][1]") do
-          #  find('.del-option').visible?.should be_true
-          #  find('.del-option').click
-          #end
-          #click_on '保存'
-          #within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
-          #  find('.option-2 strong').text.should eql '大小'
-          #  find('.option-values-show .small').text.should eql '8G'
-          #end
-          #within(:xpath, "//tbody[@id='product-options-list']/tr[2]") do
-          #  find('.option-3 strong').text.should eql '颜色'
-          #  find('.option-values-show .small').text.should eql '黑色'
-          #end
-
-          ## 款式区域
-          #within('#row-head') do
-          #  find('#option-header-1').visible?.should be_false
-          #  find('#option-header-2').text.should eql '大小'
-          #  find('#option-header-3').text.should eql '颜色'
-          #end
+          # 款式区域
+          within('#row-head') do
+            find('#option-header-1').visible?.should be_false
+            find('#option-header-2').text.should eql '大小'
+            find('#option-header-3').text.should eql '颜色'
+          end
         end
 
       end
