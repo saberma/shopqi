@@ -13,6 +13,12 @@ module ApplicationHelper
     end
   end
 
+  def use_javascripts(*args)
+    content_for :javascripts do 
+      javascript_include_tag(*args)
+    end
+  end
+
   #后台管理顶端菜单
   def menus
     @menus ||= [
