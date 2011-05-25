@@ -27,7 +27,7 @@ class Product < ActiveRecord::Base
   before_save do
     self.handle = 'handle'
     # 新增的选项默认值要设置到所有款式中
-    self.options.each_with_index do |option, index|
+    self.options.reject{|option| option.marked_for_destruction?}.each_with_index do |option, index|
       next if option.value.blank?
       self.variants.each do |variant|
         variant.send "option#{index+1}=", option.value
@@ -77,8 +77,20 @@ end
 #商品选项
 class ProductOption < ActiveRecord::Base
   belongs_to :product
+  acts_as_list scope: :product
   #辅助值，用于保存至商品款式中
   attr_accessor :value
+
+  # 更新商品所有款式
+  before_destroy do
+    options_size = product.options.size
+    product.variants.each do |variant|
+      (position...options_size).each do |i|
+        variant.send("option#{i}=", variant.send("option#{i+1}"))
+      end
+      variant.save
+    end
+  end
 end
 
 CustomCollection
