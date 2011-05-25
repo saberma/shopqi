@@ -5,7 +5,7 @@ App.Views.ProductOption.Show = Backbone.View.extend
     this.render()
 
   render: ->
-    return unless $('#product-options-list').size()[0] #商品新增页面不需要Show
+    return unless $('#product-options-list')[0] #商品新增页面不需要Show
     self = this
     position = _.indexOf @model.collection.models, @model
     attrs = _.clone @model.attributes

@@ -249,7 +249,9 @@
     {{/if}}
     %span.option-value.small ${variants_option0}
     %span.fr.sr(style="margin-top: 5px")
-      %a.del-option(href="#" tabindex="-1")=image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
+      %a.del-option(href="#" tabindex="-1" style="text-decoration:none")
+        =image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
+        &nbsp;
       .option-deletemsg.hide
         %p.small.highlight-alt
           ${name}将被删除.

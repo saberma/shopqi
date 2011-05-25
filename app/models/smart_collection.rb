@@ -3,7 +3,7 @@ class SmartCollection < ActiveRecord::Base
   belongs_to :shop
   has_many :rules, class_name: 'SmartCollectionRule', dependent: :destroy
   has_many :products, class_name: 'SmartCollectionProduct', dependent: :destroy
-  accepts_nested_attributes_for :rules, :allow_destroy => true
+  accepts_nested_attributes_for :rules, allow_destroy: true
 
   before_create do
     self.handle = 'handle'
@@ -73,5 +73,5 @@ class SmartCollectionProduct < ActiveRecord::Base
   belongs_to :smart_collection
   belongs_to :product
 
-  default_scope :order => 'position asc'
+  default_scope order: 'position asc'
 end
