@@ -23,13 +23,26 @@ Product = Backbone.Model.extend
   with_options: ->
     if @id? and @attributes.options
       #清除原有选项
-      if @options
-        _(@options.models).each (model) ->
+      @last_options = @options
+      if @last_options
+        _(@last_options.models).each (model) ->
           model.view.remove()
       #@see http://documentcloud.github.com/backbone/#FAQ-nested
       @options = new App.Collections.ProductOptions
       @options.refresh @attributes.options
       this.unset 'options', silent: true
+      #找出已删除的选项，用于更新款式选项值
+      if @last_options
+        options_size = @last_options.length
+        removed_options = _(@last_options.models).select (model) ->
+          model.attributes._destroy is '1'
+        _(removed_options).each (option) ->
+          position = option.attributes.position
+          _(App.product_variants.models).each (variant) ->
+            _(_.range(position, options_size)).each (i) ->
+              attr = {}
+              attr["option#{i}"] = variant.get("option#{i+1}")
+              variant.set attr, silent: true
     this
 
   addedTo: (collection) ->
