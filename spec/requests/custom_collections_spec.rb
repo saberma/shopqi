@@ -20,7 +20,7 @@ describe "CustomCollections" do
       click_on '保存'
       page.should have_content('low price')
 
-      select '隐藏', :from => 'custom_collection_published'
+      select '隐藏', from: 'custom_collection_published'
       find('#flashnotice').should have_content('修改成功!')
 
       page.execute_script("window.confirm = function(msg) { return true; }")

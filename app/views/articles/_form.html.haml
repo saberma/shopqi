@@ -1,11 +1,8 @@
 %dt=f.label :title
 %dd=f.text_field :title,class:"big"
-%dt.sst
-  %label{:for => "article_body_html"}
-    文章内容
+%dt.sst=f.label :body_html
 %dd{:style => "margin-bottom: 0"}=f.text_area :body_html,id:"kindeditor",style:  "width: 895px; height: 282px;"
-%dt.sst
-  %label{:for => "article_tags"} Tags
+%dt.sst=f.label :tags
 %dd.ssb
   %p.note.sb Add multiple tags separated by comma.
   %p
