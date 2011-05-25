@@ -9,6 +9,7 @@ cn:
       product: 商品
       custom_collection: 集合
       blog: 博客
+      article: 文章
     attributes:
       user:
         name: 姓名
@@ -46,6 +47,10 @@ cn:
         description: 描述
       blog:
         title: 标题
+      article:
+        title: 标题
+        body_html: 内容
+        tags: 标签
       custom_collection:
         title: 标题
         body_html: 描述

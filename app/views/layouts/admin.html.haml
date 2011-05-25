@@ -12,6 +12,7 @@
       = stylesheet_link_tag 'ie'
     =yield :stylesheets
     = javascript_include_tag :admin
+    = javascript_tag '$.fx.off = true'
     =yield :kindeditor
     =yield :javascripts
     = csrf_meta_tag
