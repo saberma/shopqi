@@ -225,6 +225,7 @@ module ActiveRecord
 
           # This has the effect of moving all the higher items up one.
           def decrement_positions_on_higher_items(position)
+            self.reload
             acts_as_list_class.update_all(
               "#{position_column} = (#{position_column} - 1)", "#{scope_condition} AND #{position_column} <= #{position}"
             )
@@ -233,6 +234,7 @@ module ActiveRecord
           # This has the effect of moving all the lower items up one.
           def decrement_positions_on_lower_items
             return unless in_list?
+            self.reload
             acts_as_list_class.update_all(
               "#{position_column} = (#{position_column} - 1)", "#{scope_condition} AND #{position_column} > #{send(position_column).to_i}"
             )
@@ -241,6 +243,7 @@ module ActiveRecord
           # This has the effect of moving all the higher items down one.
           def increment_positions_on_higher_items
             return unless in_list?
+            self.reload
             acts_as_list_class.update_all(
               "#{position_column} = (#{position_column} + 1)", "#{scope_condition} AND #{position_column} < #{send(position_column).to_i}"
             )
@@ -248,6 +251,7 @@ module ActiveRecord
 
           # This has the effect of moving all the lower items down one.
           def increment_positions_on_lower_items(position)
+            self.reload
             acts_as_list_class.update_all(
               "#{position_column} = (#{position_column} + 1)", "#{scope_condition} AND #{position_column} >= #{position}"
            )
@@ -255,6 +259,7 @@ module ActiveRecord
 
           # Increments position (<tt>position_column</tt>) of all items in the list.
           def increment_positions_on_all_items
+            self.reload
             acts_as_list_class.update_all(
               "#{position_column} = (#{position_column} + 1)",  "#{scope_condition}"
             )
