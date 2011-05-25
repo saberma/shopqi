@@ -1,19 +1,15 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'shared_stuff'
 
 describe "LinkLists" do
   #do use  in integration tests(http://rdoc.info/github/plataformatec/devise/master/Devise/TestHelpers)
   #include Devise::TestHelpers
 
   describe "GET /admin/link_lists" do
-
-    let(:user_admin) { Factory :user_admin }
+    include_context 'login admin'
 
     it "should be index", :js => true do
-      visit new_user_session_path
-      fill_in 'user[email]', with: user_admin.email
-      fill_in 'user[password]', with: user_admin.password
-      click_on 'log in'
 
       visit link_lists_path
       click_on '新增链接列表'

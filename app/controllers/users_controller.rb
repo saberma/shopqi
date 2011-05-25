@@ -11,9 +11,8 @@ class UsersController < ApplicationController
     params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].blank? && params[:user][:password].blank?
 
     if user.save
-      flash.now[:notice] = I18n.t("flash.actions.#{action_name}.notice")
       sign_in user
-      redirect_to account_index_path
+      redirect_to account_index_path,notice: I18n.t("flash.actions.#{action_name}.notice")
     else
       render action:"edit"
     end

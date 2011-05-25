@@ -1,9 +1,10 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'shared_stuff'
 
 describe "Products", js: true do
 
-  let(:user_admin) { Factory :user_admin }
+  include_context 'login admin'
 
   let(:shop) { user_admin.shop }
 
@@ -11,12 +12,6 @@ describe "Products", js: true do
 
   let(:psp) { Factory :psp, shop: shop, product_type: '游戏机', vendor: '索尼' }
 
-  before :each do
-    visit new_user_session_path
-    fill_in 'user[email]', with: user_admin.email
-    fill_in 'user[password]', with: user_admin.password
-    click_on 'log in'
-  end
 
 =begin
   ##### 新增 #####

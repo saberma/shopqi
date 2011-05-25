@@ -1,16 +1,11 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'shared_stuff'
 
 describe "SmartCollections" do
   describe "GET /admin/smart_collections" do
-
-    let(:user_admin) { Factory :user_admin }
-
+    include_context 'login admin'
     it "works!", js: true do
-      visit new_user_session_path
-      fill_in 'user[email]', with: user_admin.email
-      fill_in 'user[password]', with: user_admin.password
-      click_on 'log in'
 
       visit custom_collections_path
       click_on '新增智能集合'

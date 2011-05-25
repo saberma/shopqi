@@ -8,11 +8,11 @@ App.Controllers.Articles = Backbone.Controller.extend
     $('#article-edit').show()
     $('#article-edit-link').attr("href","#")
     #返回
-    $('#article-edit-link').html('\u8FD4\u56DE')
+    $('#article-edit-link').html('返回')
     $('#article-show').hide()
 
   index: ->
     $('#article-edit').hide()
-    $('#article-edit-link').html('\u4FEE\u6539')
+    $('#article-edit-link').html('修改')
     $('#article-show').show().bind 'click', ->
       window.location = '#articles/edit'
