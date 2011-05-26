@@ -1,9 +1,11 @@
 class ArticlesController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
+  expose(:shop) { current_user.shop }
   expose(:blog)
   expose(:articles){ blog.articles }
   expose(:article)
+  expose(:tags) { shop.tags.previou_used(2) }
 
   def create
     article.user = current_user

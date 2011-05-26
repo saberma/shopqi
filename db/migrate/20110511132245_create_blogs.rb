@@ -13,7 +13,6 @@ class CreateBlogs < ActiveRecord::Migration
       t.integer :blog_id, comment: '所属博客'
       t.string :title, comment: '标题'
       t.text :body_html, comment: '内容'
-      t.string :tags, comment: '标签'
       t.boolean :published, comment: '是否可见', default: true
       t.integer :user_id, comment: '更新人'
 

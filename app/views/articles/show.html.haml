@@ -1,6 +1,5 @@
 -use_kindeditor
-=content_for :javascripts do
-  =javascript_include_tag 'controllers/articles'
+-use_javascripts 'controllers/articles'
 
 %h2#title
   =link_to "#{blog.title} - #{article.title}","#"
@@ -9,7 +8,7 @@
     %li.no-icon
       =link_to "所有文章", blog_path(blog)
     %li.no-icon
-      %a#article-edit-link.editButton(href="#articles/edit") 修改
+      %a#article-edit-link.editButton(href="#") 修改
     %li.no-pad
       = link_to image_tag('admin/icons/trash.gif'), blog_article_path(blog,article), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
 =render partial:"shared/noscript"
@@ -24,7 +23,7 @@
             %div{:style => "padding: 5px"}
               %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "保存"}/
               or
-              %a{:href => "#"} 返回
+              %a.cancel{:href => "#"} 返回
             / inline padding
 #article-show.box2.article(style="cursor: pointer" title="点击修改")
   %h3#article-ttl==#{article.title}

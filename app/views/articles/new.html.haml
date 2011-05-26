@@ -1,4 +1,5 @@
 - use_kindeditor
+- use_javascripts 'controllers/articles'
 %h2#title==#{blog.title} - 新文章
 #action-links
   %ul
@@ -7,7 +8,7 @@
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
 #preview.group.sst.ssb.textile{:style => "display:none;"}
-  %h2 Preview
+  %h2 预览
   %h4#preview-title
   #preview-body
 .group.sst
@@ -21,4 +22,4 @@
             或者
             =link_to "取消",blog_path(blog)
             or
-            %a.editor-preview-link{:href => "#"} Preview
+            %a.editor-preview-link{:href => "#"} 预览

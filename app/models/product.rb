@@ -43,17 +43,17 @@ class Product < ActiveRecord::Base
     product_tags = self.tags.map(&:name)
     # 删除tag
     (product_tags - Tag.split(tags_text)).each do |tag_text|
-      tag = shop.tags.where(name: tag_text).first
+      tag = shop.tags.where(name: tag_text,category: 1).first
       tags.delete(tag)
     end
     # 新增tag
     (Tag.split(tags_text) - product_tags).each do |tag_text|
-      tag = shop.tags.where(name: tag_text).first
+      tag = shop.tags.where(name: tag_text,category: 2).first
       if tag
         # 更新时间，用于显示最近使用过的标签
         tag.touch
       else
-        tag = shop.tags.create name: tag_text unless tag
+        tag = shop.tags.create(name: tag_text,category: 1) unless tag
       end
       self.tags << tag
     end

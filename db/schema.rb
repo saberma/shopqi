@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.datetime "updated_at"
   end
 
+  create_table "articles_tags", :id => false, :force => true do |t|
+    t.integer "article_id", :null => false
+    t.integer "tag_id",     :null => false
+  end
+
+  add_index "articles_tags", ["article_id"], :name => "index_articles_tags_on_article_id"
+  add_index "articles_tags", ["tag_id"], :name => "index_articles_tags_on_tag_id"
+
   create_table "blogs", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title",       :null => false
@@ -237,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   create_table "tags", :force => true do |t|
     t.integer  "shop_id",    :null => false
     t.string   "name",       :null => false
+    t.integer  "category"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -244,18 +253,21 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "",   :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",   :null => false
+    t.string   "email",                                :default => "",   :null => false
+    t.string   "encrypted_password",    :limit => 128, :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                        :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
+    t.string   "phone"
+    t.text     "bio"
+    t.boolean  "receive_announcements",                :default => true
     t.integer  "shop_id"
-    t.boolean  "admin",                               :default => true
+    t.boolean  "admin",                                :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
