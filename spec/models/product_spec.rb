@@ -69,6 +69,20 @@ describe Product do
           end
         end
 
+        it 'at middle' do
+          iphone4.options_attributes = [
+            {id: iphone4.options.second.id, _destroy: true}
+          ]
+          iphone4.save
+          iphone4.reload
+          iphone4.options.map(&:name).should eql %w(标题 网络)
+          iphone4.options.map(&:position).should eql [1,2]
+          iphone4.variants.each do |variant|
+            variant.option1.should eql '默认标题'
+            variant.option2.should eql 'WIFI'
+          end
+        end
+
         it 'first two options' do
           iphone4.options_attributes = [
             {id: iphone4.options.first.id, _destroy: true},

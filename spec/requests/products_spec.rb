@@ -13,7 +13,6 @@ describe "Products", js: true do
   let(:psp) { Factory :psp, shop: shop, product_type: '游戏机', vendor: '索尼' }
 
 
-=begin
   ##### 新增 #####
   describe "GET /products/new" do
 
@@ -218,8 +217,8 @@ describe "Products", js: true do
 
           #款式选项默认值
           within(:xpath, "//tr[contains(@class, 'inventory-row')][1]") do
-            find('.option-1').has_content? '默认标题'
-            find('.option-2').has_content? '默认大小'
+            find('.option-1').text.should eql '默认标题'
+            find('.option-2').text.should eql '默认大小'
           end
 
         end
@@ -397,7 +396,6 @@ describe "Products", js: true do
     end
 
   end
-=end
 
   describe "GET /products/id" do
 
@@ -410,7 +408,6 @@ describe "Products", js: true do
 
       describe '#edit' do
 
-=begin
         it 'should save title' do
           visit product_path(iphone4)
           click_on '修改'
@@ -431,7 +428,6 @@ describe "Products", js: true do
             has_content? '默认标题'
           end
         end
-=end
 
         it 'should save options' do
           visit product_path(iphone4)
@@ -465,10 +461,20 @@ describe "Products", js: true do
           end
 
           # 款式区域
-          within('#row-head') do
+          within '#row-head' do
             find('#option-header-1').text.should eql '标题'
             find('#option-header-2').text.should eql '大小'
             find('#option-header-3').text.should eql '颜色'
+          end
+          within :xpath, "//tr[contains(@class, 'inventory-row')]" do
+            find('.option-1').text.should eql '默认标题'
+            find('.option-2').text.should eql '8G'
+            find('.option-3').text.should eql '黑色'
+          end
+          within('#variant-options') do #快捷选择区域
+            find('.option-1').text.should eql '默认标题'
+            find('.option-2').text.should eql '8G'
+            #find('.option-3').text.should eql '黑色'
           end
 
           # 回显
@@ -488,10 +494,10 @@ describe "Products", js: true do
           end
 
           page.execute_script("window.alert = function(msg) { return true; }")
+          page.execute_script("$('.delete-option-link').removeClass('fr')") # 修改删除按钮不可见无法点击的问题
           click_on '修改'
-          #删除
           within(:xpath, "//tr[contains(@class, 'edit-option')][1]") do
-            find('.del-option').click
+            find('.del-option').click #删除
           end
           click_on '保存'
           within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
@@ -505,9 +511,17 @@ describe "Products", js: true do
 
           # 款式区域
           within('#row-head') do
-            find('#option-header-1').visible?.should be_false
-            find('#option-header-2').text.should eql '大小'
-            find('#option-header-3').text.should eql '颜色'
+            find('#option-header-1').text.should eql '大小'
+            find('#option-header-2').text.should eql '颜色'
+            has_no_css?('#option-header-3')
+          end
+          within :xpath, "//tr[contains(@class, 'inventory-row')]" do
+            find('.option-1').text.should eql '8G'
+            find('.option-2').text.should eql '黑色'
+          end
+          within('#variant-options') do #快捷选择
+            find('.option-1').text.should eql '8G'
+            find('.option-2').text.should eql '黑色'
           end
         end
 

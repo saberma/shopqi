@@ -9,7 +9,7 @@ App.Views.Product.Show.Variant.QuickSelect = Backbone.View.extend
 
   render: ->
     #选项快捷选择
-    $(@el).html  $('#variant-options-item').tmpl @collection.data
+    $(@el).html $('#variant-options-item').tmpl @collection.options()
 
   # 款式选项快捷选择
   select: (ev) ->
