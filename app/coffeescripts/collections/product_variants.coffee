@@ -17,6 +17,7 @@ App.Collections.ProductVariants = Backbone.Collection.extend
     new App.Views.Product.Show.Variant.QuickSelect collection: collection
     new App.Views.ProductOption.Index collection: App.product.options
 
+  # 所有款式的选项合集
   options: ->
     #return @data if @data
     @data = option1: [], option2: [], option3: []

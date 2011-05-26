@@ -23,7 +23,9 @@ App.Views.ProductOption.Index = Backbone.View.extend
     .change()
 
   render: ->
-    $('#product-options-list').html('') #清空原有选项
+    #清空原有选项
+    $('#product-options-list').html('')
+    $('.edit-option').remove()
     _(@collection.models).each (model) ->
       new App.Views.ProductOption.Edit model: model
       new App.Views.ProductOption.Show model: model

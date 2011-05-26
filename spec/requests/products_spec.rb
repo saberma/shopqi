@@ -216,7 +216,7 @@ describe "Products", js: true do
           shop.products.all.size.should eql 1
 
           #款式选项默认值
-          within(:xpath, "//tr[contains(@class, 'inventory-row')][1]") do
+          within(:xpath, "//tr[contains(@class, 'inventory-row')]") do
             find('.option-1').text.should eql '默认标题'
             find('.option-2').text.should eql '默认大小'
           end
@@ -523,6 +523,74 @@ describe "Products", js: true do
             find('.option-1').text.should eql '8G'
             find('.option-2').text.should eql '黑色'
           end
+        end
+
+        # 款式
+        describe 'varaint' do
+
+          it 'should be validate' do
+            visit product_path(iphone4)
+            find('#new-variant-link a').click
+            within '#new-variant' do
+              click_on '保存'
+              has_content? '基本选项标题 不能为空!' #必填校验
+              fill_in 'product_variant[option1]', with: '默认标题'
+              click_on '保存'
+              has_content? '基本选项 已经存在!' #唯一性校验
+            end
+          end
+
+          it 'should be edit' do
+            visit product_path(iphone4)
+            within :xpath, "//ul[@id='variants-list']/li[1]" do
+              find('.option-1').text.should eql '默认标题'
+              click_link '修改'
+              find('.inventory-row').visible?.should be_false
+              within '.row-edit-details' do
+                fill_in 'product_variant[option1]', with: '最新上市'
+              end
+              click_on '保存'
+              find('.option-1').text.should eql '最新上市'
+            end
+            within('#variant-options') do #快捷选择
+              find('.option-1').text.should eql '最新上市'
+            end
+          end
+
+          it 'should be add' do
+            visit product_path(iphone4)
+
+            find('#new-variant-link a').click
+            within '#new-variant' do
+              fill_in 'product_variant[option1]', with: '最新上市'
+              click_on '保存'
+            end
+
+            within :xpath, "//ul[@id='variants-list']/li[2]" do
+              find('.inventory-row .option-1').text.should eql '最新上市'
+            end
+            within('#variant-options') do #快捷选择
+              find('.option-1').text.should eql '默认标题 最新上市'
+            end
+          end
+
+          it 'should update product options' do
+            visit product_path(iphone4)
+
+            find('#new-variant-link a').click
+            within '#new-variant' do
+              fill_in 'product_variant[option1]', with: '最新上市'
+              click_on '保存'
+            end
+
+            within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
+              find('.option-values-show .small').text.should eql '默认标题,最新上市'
+            end
+
+            has_no_xpath?("//tr[contains(@class, 'edit-option')][2]").should be_true # Bug: 不应该新增重复的选项输入项
+
+          end
+
         end
 
       end
