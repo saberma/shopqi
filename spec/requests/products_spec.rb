@@ -30,9 +30,9 @@ describe "Products", js: true do
           click_on '保存'
 
           #校验
-          has_content? '标题 不能为空'
-          has_content? '商品类型 不能为空'
-          has_content? '商品生产商 不能为空'
+          has_content?('标题 不能为空').should be_true
+          has_content?('商品类型 不能为空').should be_true
+          has_content?('商品生产商 不能为空').should be_true
 
           #校验不通过仍然显示新增类型、生产商
           find_field('product[product_type]').visible?.should be_true
@@ -44,9 +44,9 @@ describe "Products", js: true do
           click_on '保存'
 
           #校验
-          has_content? '标题 不能为空'
-          has_no_content? '商品类型 不能为空'
-          has_no_content? '商品生产商 不能为空'
+          has_content?('标题 不能为空').should be_true
+          has_no_content?('商品类型 不能为空').should be_true
+          has_no_content?('商品生产商 不能为空').should be_true
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
@@ -133,7 +133,7 @@ describe "Products", js: true do
             find_field('product[options_attributes][][name]').value.should eql '标题'
             find_field('product[options_attributes][][name]').visible?.should be_false
             find_field('product[options_attributes][][value]').value.should eql '默认标题'
-            has_no_css?('.del-option') # 第一个选项没有删除按钮
+            has_no_css?('.del-option').should be_true # 第一个选项没有删除按钮
           end
           click_on '新增另一个选项'
           within(:xpath, "//tr[contains(@class, 'edit-option')][2]") do
@@ -179,7 +179,7 @@ describe "Products", js: true do
             find_field('product[options_attributes][][name]').value.should eql '标题'
             find_field('product[options_attributes][][name]').visible?.should be_false
             find_field('product[options_attributes][][value]').value.should eql '默认标题'
-            has_no_css?('.del-option') # 第一个选项没有删除按钮
+            has_no_css?('.del-option').should be_true # 第一个选项没有删除按钮
             # 不能选择大小
             find("option[value='标题']")[:disabled].should eql 'false'
             find("option[value='大小']")[:disabled].should eql 'true'
@@ -208,7 +208,7 @@ describe "Products", js: true do
           within(:xpath, "//tr[contains(@class, 'edit-option')][3]") do
             find('.del-option').click
           end
-          has_no_xpath? "//tr[contains(@class, 'edit-option')][3]" # 已删除
+          has_no_xpath?("//tr[contains(@class, 'edit-option')][3]").should be_true # 已删除
           find_link('新增另一个选项').visible?.should be_true #显示
 
           fill_in 'product[title]', with: 'iphone'
@@ -267,15 +267,15 @@ describe "Products", js: true do
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
 
-          has_content? '智能手机'
-          has_content? '触摸屏'
-          has_content? 'GPS'
+          has_content?('智能手机').should be_true
+          has_content?('触摸屏').should be_true
+          has_content?('GPS').should be_true
 
           # 最近使用
           visit new_product_path
-          has_content? '智能手机'
-          has_content? '触摸屏'
-          has_content? 'GPS'
+          has_content?('智能手机').should be_true
+          has_content?('触摸屏').should be_true
+          has_content?('GPS').should be_true
         end
 
       end
@@ -295,8 +295,10 @@ describe "Products", js: true do
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
 
-          has_no_content? '此商品不属于任何集合.'
-          has_content? '热门商品'
+          within '#product-edit-collections' do
+            has_no_content?('此商品不属于任何集合.').should be_true
+            has_content?('热门商品').should be_true
+          end
         end
 
       end
@@ -318,51 +320,51 @@ describe "Products", js: true do
       # 查询
       it "should be search" do
         visit products_path
-        has_content? 'iphone4'
-        has_content? 'psp'
+        has_content?('iphone4').should be_true
+        has_content?('psp').should be_true
 
         click_on '所有厂商'
         click_on '苹果'
-        has_content? 'iphone4'
-        has_no_content? 'psp'
+        has_content?('iphone4').should be_true
+        has_no_content?('psp').should be_true
 
         # 苹果手机
         click_on '所有类型'
         click_on '手机'
-        has_content? 'iphone4'
-        has_no_content? 'psp'
+        has_content?('iphone4').should be_true
+        has_no_content?('psp').should be_true
 
         # 苹果游戏机
         click_on '手机'
         click_on '游戏机'
-        has_no_content? 'iphone4'
-        has_no_content? 'psp'
+        has_no_content?('iphone4').should be_true
+        has_no_content?('psp').should be_true
 
         # 索尼游戏机
         click_on '苹果'
         click_on '索尼'
-        has_no_content? 'iphone4'
-        has_content? 'psp'
+        has_no_content?('iphone4').should be_true
+        has_content?('psp').should be_true
 
         # 索尼手机
         click_on '游戏机'
         click_on '手机'
-        has_no_content? 'iphone4'
-        has_no_content? 'psp'
+        has_no_content?('iphone4').should be_true
+        has_no_content?('psp').should be_true
       end
 
       # 显示款式
       it "should show inventory" do
         visit products_path
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") do
-          has_no_content? 'iphone4'
-          has_no_content? '默认标题'
-          has_no_content? '∞'
+          has_content?('psp').should be_true
+          has_content?('默认标题').should be_true
+          has_content?('∞').should be_true
         end
         within(:xpath, "//table[@id='product-table']/tbody/tr[2]") do
-          has_no_content? 'psp'
-          has_no_content? '默认标题'
-          has_no_content? '∞'
+          has_content?('iphone4').should be_true
+          has_content?('默认标题').should be_true
+          has_content?('∞').should be_true
         end
       end
 
@@ -375,22 +377,22 @@ describe "Products", js: true do
           check 'products[]'
         end
         select '隐藏'
-        has_content? '隐藏'
+        within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_true }
         select '发布'
-        has_no_content? '隐藏'
+        within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_false } #隐藏提示消失
         select '热门商品'
         shop.products.where(title: 'psp').first.collections.first.title.should eql '热门商品'
         page.execute_script("window.confirm = function(msg) { return true; }")
         select '删除'
-        has_no_content? 'psp'
+        within("#product-table") { has_no_content?('psp').should be_true }
       end
 
       # 库存视图
       it "should list inventory" do
         variant = iphone4.variants.first
-        variant.update_attributes inventory_management: true, inventory_quantity: 20, inventory_policy: 'continue'
+        variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 20, inventory_policy: 'continue'
         visit inventory_products_path
-        has_content? 'iphone4'
+        has_content?('iphone4').should be_true
       end
 
     end
@@ -423,9 +425,9 @@ describe "Products", js: true do
 
           find('#product_title a').text.should eql 'iphone'
           within '#product-options' do
-            has_content? '智能手机'
-            has_content? 'Apple'
-            has_content? '默认标题'
+            has_content?('智能手机').should be_true
+            has_content?('Apple').should be_true
+            has_content?('默认标题').should be_true
           end
         end
 
@@ -513,7 +515,7 @@ describe "Products", js: true do
           within('#row-head') do
             find('#option-header-1').text.should eql '大小'
             find('#option-header-2').text.should eql '颜色'
-            has_no_css?('#option-header-3')
+            has_no_css?('#option-header-3').should be_true
           end
           within :xpath, "//tr[contains(@class, 'inventory-row')]" do
             find('.option-1').text.should eql '8G'
@@ -533,10 +535,10 @@ describe "Products", js: true do
             find('#new-variant-link a').click
             within '#new-variant' do
               click_on '保存'
-              has_content? '基本选项标题 不能为空!' #必填校验
+              has_content?('基本选项标题 不能为空!').should be_true #必填校验
               fill_in 'product_variant[option1]', with: '默认标题'
               click_on '保存'
-              has_content? '基本选项 已经存在!' #唯一性校验
+              has_content?('基本选项 已经存在!').should be_true #唯一性校验
             end
           end
 
