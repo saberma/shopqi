@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.integer  "blog_id"
     t.string   "title"
     t.text     "body_html"
-    t.string   "tags"
     t.boolean  "published",  :default => true
     t.integer  "user_id"
     t.datetime "created_at"
