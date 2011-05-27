@@ -11,13 +11,6 @@ GIT
       xpath (~> 0.1.3)
 
 GIT
-  remote: git://github.com/saberma/activemerchant_patch_for_china.git
-  revision: a2d6f061aef47194730dca2fc22038ce7b4ebef5
-  specs:
-    activemerchant_patch_for_china (0.1.5)
-      activemerchant (>= 1.4.2)
-
-GIT
   remote: git://github.com/thedarkone/rails-dev-boost.git
   revision: e2716ad0bceefbd840528cc5de329de075b602e1
   specs:
@@ -46,6 +39,8 @@ GEM
       activesupport (>= 2.3.8)
       braintree (>= 2.0.0)
       builder (>= 2.0.0)
+    activemerchant_patch_for_china (0.1.6)
+      activemerchant (>= 1.4.2)
     activemodel (3.0.6)
       activesupport (= 3.0.6)
       builder (~> 2.1.2)
@@ -244,7 +239,7 @@ PLATFORMS
 DEPENDENCIES
   active_hash
   activemerchant
-  activemerchant_patch_for_china!
+  activemerchant_patch_for_china
   auto_migrations
   awesome_print
   barista
