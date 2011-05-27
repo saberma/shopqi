@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Shop < ActiveRecord::Base
-  has_many :users
+  has_many :users             , dependent: :destroy
   has_many :products          , dependent: :destroy
   has_many :link_lists        , dependent: :destroy
   has_many :pages             , dependent: :destroy

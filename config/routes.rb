@@ -7,7 +7,8 @@ Shopqi::Application.routes.draw do
 
 
   constraints(Subdomain) do
-    match '/' => 'home#dashboard'
+    #match '/' => 'home#dashboard'
+    match '/' => 'shop#show'
   end
 
   match "/admin" => "home#dashboard"

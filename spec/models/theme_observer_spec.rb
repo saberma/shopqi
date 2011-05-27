@@ -4,7 +4,7 @@ describe ThemeObserver do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:path) { path = File.join Rails.root, 'public', 'themes', shop.id.to_s }
+  let(:path) { path = File.join Rails.root, 'public', 'themes', 'test', shop.id.to_s }
 
   let(:theme) { File.join path, 'layout', 'theme.liquid' }
 

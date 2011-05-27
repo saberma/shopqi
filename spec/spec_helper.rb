@@ -60,6 +60,7 @@ Spork.each_run do
     end
 
     config.after(:each) do
+      Shop.destroy_all #清空主题目录
       DatabaseCleaner.clean
       #CarrierWave.clean_cached_files!
     end
