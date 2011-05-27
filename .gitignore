@@ -45,3 +45,6 @@ public/javascripts/views
 public/javascripts/models
 public/javascripts/controllers
 public/javascripts/*application.js
+
+#主题
+public/themes
