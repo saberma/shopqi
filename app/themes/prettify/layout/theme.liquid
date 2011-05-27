@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>{{shop.name}} - {{page_title}}</title>
+	{{ 'textile.css'                | global_asset_url | stylesheet_tag }}	
+  {{ 'lightbox/v204/lightbox.css' | global_asset_url | stylesheet_tag }}
+	
+  {{ 'prototype/1.6/prototype.js'           | global_asset_url  | script_tag }}
+  {{ 'scriptaculous/1.8.2/scriptaculous.js' | global_asset_url  | script_tag }}
+  {{ 'lightbox/v204/lightbox.js'            | global_asset_url  | script_tag }}
+  {{ 'option_selection.js'                  | shopqi_asset_url | script_tag }}
+
+	{{ 'shop.css' | asset_url | stylesheet_tag }}
+	{{ 'style.css' | asset_url | stylesheet_tag }}
+	
+	<!-- There are four colour versions of this theme. Change blue.css above to green, red or aqua. You can make changes to the corresponding style sheet in the Assets folder -->
+
+  {{ content_for_header }}
+</head>
+<body>
+<div id="navigation">
+  <ul class="navigate">
+    {% for link in linklists.footer.links %}
+    <li><a href="{{ link.url }}">{{ link.title }}</a> | </li>
+    {% endfor %}
+    <li><a href="/cart">Cart [{% if cart.item_count == 0 %}0{% else %}{{ cart.item_count }}{% endif %}]</a></li>
+  </ul>
+</div>
+<div id="frame">
+  <div id="contentheader">
+    <div id="header">
+       {% if settings.use_logo_image %}
+
+       {% else %}
+         <h1><a href="/">{{shop.name}}</a></h1>
+       {% endif %}
+    </div>
+  </div>
+  <div id="content">
+    <div id="sidebar">
+      <div id="searchbar">
+        <h3>Shop Search</h3>
+        <form action="/search">
+          <input type="text" class="search" name="q" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div id="cartside">
+        <p><a href="/cart">You have {% if cart.item_count == 1 %}1 item {% else %}{{ cart.item_count }} items {% endif %} <br />
+          in your cart</a></p>
+      </div>
+      <div id="sidelinks">
+        <ul>
+          {% for link in linklists.main-menu.links %}
+          <li>{{ link.title | escape | link_to: link.url }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% if template == "index" %}
+      <div id="bio">
+        <div class="avatar">{{"avatar.jpg" | asset_url | img_tag }}</div>
+        {{pages.about-us.content | strip_html | truncatewords:50}} <br /><br /><a href="{{ pages.about-us.url }}">More about {{shop.name}} >></a></p>
+      </div>
+      {% else %}
+      <div id="feature-sidebar">
+        <h3>Featured Items</h3>
+        <table>
+          {% for product in collections.frontpage.products limit: 3 %}
+          <tr>
+            <td class="featuring-image"><a href="{{ product.url | within: collections.frontpage }}" title="{{ product.title | escape }} &mdash; {{ product.description | strip_html | truncate: 50 }}"><img src="{{ product.images.first | product_img_url: 'icon' }}" alt="{{ product.title | escape }}" /></a></td>
+            <td class="featuring-info"><a href="{{ product.url | within: collections.frontpage }}">{{ product.title | strip_html | truncate: 28 }}</a><br />
+              <small>{{ product.price | money }}</small> </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %} </div>
+    <div id="contentcenter"> {{ content_for_layout }} </div>
+    <br clear="all" />
+  </div>
+</div>
+<div id="shopqi">
+  <ul id="footer">
+    {% for link in linklists.footer.links %}
+    <li>{{ link.title | link_to: link.url }}</li>
+    {% endfor %}
+    <li>All prices are in {{ shop.currency }} &sim; {{ powered_by_link }}</li>
+  </ul>
+</div>
+</body>
+</html>
