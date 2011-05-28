@@ -12,7 +12,7 @@ describe ShopController do
 
   it 'should be show' do
     get :show
-    response.body.should eql 'success'
+    response.should be_success
   end
 
 end

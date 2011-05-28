@@ -3,16 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>{{shop.name}} - {{page_title}}</title>
-  {{ 'textile.css'                | global_asset_url | stylesheet_tag }}
-  {{ 'lightbox/v204/lightbox.css' | global_asset_url | stylesheet_tag }}
-  
-  {{ 'prototype/1.6/prototype.js'           | global_asset_url  | script_tag }}
-  {{ 'scriptaculous/1.8.2/scriptaculous.js' | global_asset_url  | script_tag }}
-  {{ 'lightbox/v204/lightbox.js'            | global_asset_url  | script_tag }}
-  {{ 'option_selection.js'                  | shopqi_asset_url | script_tag }}
+  {{ 'textile.css'           |global_asset_url|stylesheet_tag }}
 
-  {{ 'shop.css' | asset_url | stylesheet_tag }}
-  {{ 'style.css' | asset_url | stylesheet_tag }}
+  {{ 'jquery/1.5.2/jquery.js'|global_asset_url|script_tag }}
+  {{ 'option_selection.js'   |shopqi_asset_url|script_tag }}
+
+  {{ 'shop.css'              |asset_url       |stylesheet_tag }}
+  {{ 'style.css'             |asset_url       |stylesheet_tag }}
   
   <!-- There are four colour versions of this theme. Change blue.css above to green, red or aqua. You can make changes to the corresponding style sheet in the Assets folder -->
 

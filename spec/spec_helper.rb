@@ -51,6 +51,11 @@ Spork.each_run do
     config.before(:suite) do
       DatabaseCleaner.strategy = :truncation
       DatabaseCleaner.clean_with(:truncation)
+      FileUtils.mkdir_p(File.join(Rails.root, 'public', 'themes', 'test'))
+    end
+
+    config.after(:suite) do
+      FileUtils.rm_rf(File.join(Rails.root, 'public', 'themes', 'test'))
     end
 
     config.before(:each) do
@@ -60,7 +65,6 @@ Spork.each_run do
     end
 
     config.after(:each) do
-      Shop.destroy_all #清空主题目录
       DatabaseCleaner.clean
       #CarrierWave.clean_cached_files!
     end

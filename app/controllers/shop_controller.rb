@@ -6,7 +6,16 @@ class ShopController < ApplicationController
   def show
     path = File.join Rails.root, 'public', 'themes', shop.id.to_s
     theme = File.join path, 'layout', 'theme.liquid'
-    render text: Liquid::Template.parse('hi').render(), layout: nil
+    html = Liquid::Template.parse(theme).render({
+      #content_for_header: '',
+      #linklist: shop.link_list
+    })
+    render text: html, layout: nil
+  end
+
+  private
+  def theme
+    File.join Rails.root, 'public', 'themes', shop.id.to_s, 'layout', 'theme.liquid'
   end
 
 end
