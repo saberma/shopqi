@@ -5,14 +5,14 @@ class ShopController < ApplicationController
 
   def show
     html = Liquid::Template.parse(theme).render({
-      shop: ShopDrop.new,
+      'shop' => ShopDrop.new(shop), #shop将在filter中调用，不能使用symbol key
       content_for_header: '', # google analysis js, shopqi tracker
       content_for_layout: '',
       powered_by_link: '',
       linklist: LinkListDrop.new,
       collections: CollectionsDrop.new,
       template: :index,
-    }, filter: [TagFilter, UrlFilter])
+    })
     render text: html, layout: nil
   end
 
