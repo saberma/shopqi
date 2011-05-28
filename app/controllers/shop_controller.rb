@@ -9,7 +9,7 @@ class ShopController < ApplicationController
       content_for_header: '', # google analysis js, shopqi tracker
       content_for_layout: '',
       powered_by_link: '',
-      linklist: LinkListDrop.new,
+      'linklists' => LinkListDrop.new(shop),
       collections: CollectionsDrop.new,
       template: :index,
     })
