@@ -4,18 +4,21 @@ class ShopController < ApplicationController
   expose(:shop) { Shop.where(permanent_domain: request.subdomain).first }
 
   def show
-    path = File.join Rails.root, 'public', 'themes', shop.id.to_s
-    theme = File.join path, 'layout', 'theme.liquid'
     html = Liquid::Template.parse(theme).render({
-      #content_for_header: '',
-      #linklist: shop.link_list
-    })
+      shop: ShopDrop.new,
+      content_for_header: '', # google analysis js, shopqi tracker
+      content_for_layout: '',
+      powered_by_link: '',
+      linklist: LinkListDrop.new,
+      collections: CollectionsDrop.new,
+      template: :index,
+    }, filter: [TagFilter, UrlFilter])
     render text: html, layout: nil
   end
 
   private
   def theme
-    File.join Rails.root, 'public', 'themes', shop.id.to_s, 'layout', 'theme.liquid'
+    IO.read File.join Rails.root, 'public', 'themes', shop.id.to_s, 'layout', 'theme.liquid'
   end
 
 end

@@ -1,16 +1,18 @@
 require 'spec_helper'
 
-include UrlFilter
 describe UrlFilter do
 
   let(:shop) { Factory(:user).shop }
 
   it 'should get asset_url' do
-    asset_url('shop.css').should eql "/themes/#{shop.id}/assets/shop.css"
+    variant = "{{ 'shop.css' | asset_url }}"
+    params = { 'shop' => ShopDrop.new(shop) } # 不能使用 { shop: shop }，即key不能为symbol，否则会找不到shop对象
+    Liquid::Template.parse(variant).render(params, filters: [UrlFilter]).should eql "/themes/#{shop.id}/assets/shop.css"
   end
 
   it 'should get global_asset_url' do
-    global_asset_url('textile.css').should eql '/global/textile.css'
+    variant = "{{ 'textile.css' | global_asset_url }}"
+    Liquid::Template.parse(variant).render({}, filters: [UrlFilter]).should eql '/global/textile.css'
   end
 
 end
