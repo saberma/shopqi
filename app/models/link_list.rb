@@ -10,4 +10,26 @@ class Link < ActiveRecord::Base
   belongs_to :link_list
 
   default_scope order: 'position asc'
+
+  def url
+    shop = link_list.shop
+    case link_type
+    when 'blog'
+      blog = shop.blogs.find(subject_id)
+      "/blogs/#{blog.handle}"
+    when 'frontpage'
+      "/"
+    when 'collection'
+      collection = shop.custom_collections.find(subject_id)
+      "/collections/#{collection.handle}"
+    when 'page'
+      page = shop.pages.find(subject_id)
+      "/pages/#{page.handle}"
+    when 'product'
+      product = shop.products.find(subject_id)
+      "/products/#{product.handle}"
+    when 'http'
+      "#{subject}"
+    end
+  end
 end

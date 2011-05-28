@@ -35,7 +35,7 @@ class LinkDrop < Liquid::Drop
   end
 
   def url
-    @link.subject
+    @link.url
   end
 
 end

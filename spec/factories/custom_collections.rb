@@ -1,6 +1,5 @@
-# Read about factories at http://github.com/thoughtbot/factory_girl
-
+# encoding: utf-8
 Factory.define :custom_collection do |f|
-  f.title "MyString"
-  f.body_html "MyText"
+  f.title "集合"
+  f.body_html ""
 end
