@@ -10,7 +10,7 @@ class ShopController < ApplicationController
       'content_for_layout' => '',
       'powered_by_link' => '',
       'linklists' => LinkListDrop.new(shop),
-      'pages' => PagesDrop.new(shop),
+      'pages' => PageDrop.new(shop),
       'collections' => CollectionsDrop.new,
       'template' => 'index',
     })

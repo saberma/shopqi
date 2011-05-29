@@ -20,6 +20,14 @@ describe ShopObserver do
       end.to change(Page, :count).by(2)
     end
 
+    it "should save collection and products" do
+      expect do
+        expect do
+          shop
+        end.to change(CustomCollection, :count).by(1)
+      end.to change(Product, :count).by(6)
+    end
+
   end
   
 end

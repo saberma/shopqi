@@ -3,8 +3,25 @@
 class ShopObserver < ActiveRecord::Observer
 
   def after_create(shop)
+    # 集合
+    frontpage_collection = shop.custom_collections.create title: '首页商品', handle: 'frontpage'
+    # 商品
+    product_description = %q{
+<p>这是一个商品.</p>
+<p>您在这里看到的文字是商品的描述。每个商品都有价格、重量、照片和说明。您可以打开后台管理的<a href="/admin/products">商品标签页面</a>修改商品说明或者新增一个商品。</p>
+<p>当您已经掌握商品的新增和修改，您会希望商品显示在您的ShopQi网站上。只需要完成以下两个步骤：</p>
+<p>首先，您需要将您的商品添加到集合中。集合是把商品组织在一起的简单方法。如果您打开后台管理的<a href="/admin/custom_collections">集合标签页面</a>，您就可以开始新增集合，并把商品添加进去。</p>
+<p>然后，您需要为商店的导航菜单新增一个链接，指向您的集合。您可以打开后台管理的<a href="/admin/link_lists">链接标签</a>，并点击“新增链接”。</p>
+<p>一切顺利!</p>
+    }
+    1.upto(6) do |i|
+      product = shop.products.create title: "示例商品#{i}", handle: "example-#{i}", body_html: product_description, product_type: '手机', vendor: 'ShopQi'
+      product.collections << frontpage_collection
+      product.save
+    end
+
     # 页面
-    welcome = shop.pages.create title: '欢迎', handle: 'frontpage', body_html: %q{
+    welcome_page = shop.pages.create title: '欢迎', handle: 'frontpage', body_html: %q{
       恭喜！您已成功发布网上商店！
 
       这是您的网店首页，当您的顾客进入网店时将看到这里的内容。您可以重新修改此内容。
@@ -13,7 +30,7 @@ class ShopObserver < ActiveRecord::Observer
 
       ShopQi团队。
     }
-    about_us = shop.pages.create title: '关于我们', handle: 'about-us', body_html: %q{
+    about_us_page = shop.pages.create title: '关于我们', handle: 'about-us', body_html: %q{
       商店的[关于我们]页面是非常重要的，因此顾客将通过访问此页面来了解您的商店。此页面的内容可以包括以下部分：
 
       介绍您的公司
@@ -27,10 +44,10 @@ class ShopObserver < ActiveRecord::Observer
     main_menu = shop.link_lists.create title: '主菜单', handle: 'main-menu', system_default: true
     main_menu.links.create title: '首页', link_type: 'frontpage', subject: '/', position: 1
     main_menu.links.create title: '商品列表', link_type: 'http', subject: '/collections/all', position: 2
-    main_menu.links.create title: '关于我们', link_type: 'page', subject_id: about_us.id, position: 3
+    main_menu.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 3
     footer = shop.link_lists.create title: '页脚', handle: 'footer', system_default: true
     footer.links.create title: '查询', link_type: 'search', position: 1
-    footer.links.create title: '关于我们', link_type: 'page', subject_id: about_us.id, position: 2
+    footer.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 2
   end
 
 end

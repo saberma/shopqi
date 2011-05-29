@@ -1,4 +1,4 @@
-class PagesDrop < Liquid::Drop
+class PageDrop < Liquid::Drop
 
   def initialize(shop, page = nil)
     @shop = shop
@@ -14,5 +14,8 @@ class PagesDrop < Liquid::Drop
     @page.body_html
   end
 
-end
+  def url
+    "/pages/#{@page.handle}"
+  end
 
+end
