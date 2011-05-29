@@ -28,6 +28,8 @@ class Link < ActiveRecord::Base
     when 'product'
       product = shop.products.find(subject_id)
       "/products/#{product.handle}"
+    when 'search'
+      "/search"
     when 'http'
       "#{subject}"
     end

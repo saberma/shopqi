@@ -12,4 +12,8 @@ module TagFilter
     "<img src='#{input}' alt='' />"
   end
 
+  def link_to(input, url)
+    "<a href='#{url}'>#{input}</a>"
+  end
+
 end

@@ -62,6 +62,24 @@ describe LinkList do
 
     end
 
+    context '(search)' do
+
+      it 'should get url' do
+        link = link_list.links.build title: '查询', link_type: 'search'
+        link.url.should eql "/search"
+      end
+
+    end
+
+    context '(http)' do
+
+      it 'should get url' do
+        link = link_list.links.build title: '其他', link_type: 'http', subject: 'http://shopqi.com'
+        link.url.should eql "http://shopqi.com"
+      end
+
+    end
+
   end
 
 end
