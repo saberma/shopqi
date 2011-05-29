@@ -200,7 +200,9 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.string   "title"
     t.string   "province"
     t.string   "city"
+    t.string   "district"
     t.string   "address"
+    t.string   "zip_code"
     t.string   "keywords"
     t.boolean  "public",           :default => true
     t.datetime "created_at"

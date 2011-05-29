@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ShopController do
+describe ShopsController do
 
   let(:shop) { Factory(:user_admin).shop }
 

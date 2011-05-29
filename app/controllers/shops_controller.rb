@@ -1,5 +1,5 @@
 # encoding: utf-8
-class ShopController < ApplicationController
+class ShopsController < ApplicationController
 
   expose(:shop) { Shop.where(permanent_domain: request.subdomain).first }
 
