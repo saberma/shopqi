@@ -12,8 +12,11 @@ Shopqi::Application.routes.draw do
   end
 
   match "/admin" => "home#dashboard"
+  match "/admin/general_preferences" => "shop#edit"
 
   scope "/admin" do
+
+    resources :shops
 
     resources :products, except: :edit do
       collection do

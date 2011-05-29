@@ -13,8 +13,11 @@ class CreateShops < ActiveRecord::Migration
       t.string :title           , comment: "标题"
       t.string :province        , comment: "省份"
       t.string :city            , comment: "城市"
+      t.string :district        , comment: "地区"
+      t.string :zip_code        , comment: "邮政编码"
       t.string :address         , comment: "详细地址"
       t.string :keywords        , comment: "关键字"
+      t.string :password        , comment: "密码"
       t.boolean :public         , comment: "是否公开", default: true
 
       t.timestamps
