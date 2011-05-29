@@ -8,4 +8,8 @@ class ShopDrop < Liquid::Drop
     @shop.id
   end
 
+  def name
+    @shop.name
+  end
+
 end

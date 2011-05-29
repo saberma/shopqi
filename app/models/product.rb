@@ -17,6 +17,9 @@ class Product < ActiveRecord::Base
   validates_presence_of :title, :product_type, :vendor
 
   before_create do
+    if self.variants.empty?
+      self.variants.build price: 0.0, weight: 0.0
+    end
     if self.options.empty?
       option_name = KeyValues::Product::Option.first.name
       self.options.build name: option_name
@@ -48,12 +51,12 @@ class Product < ActiveRecord::Base
     end
     # 新增tag
     (Tag.split(tags_text) - product_tags).each do |tag_text|
-      tag = shop.tags.where(name: tag_text,category: 2).first
+      tag = shop.tags.where(name: tag_text, category: 1).first
       if tag
         # 更新时间，用于显示最近使用过的标签
         tag.touch
       else
-        tag = shop.tags.create(name: tag_text,category: 1) unless tag
+        tag = shop.tags.create(name: tag_text, category: 1) unless tag
       end
       self.tags << tag
     end

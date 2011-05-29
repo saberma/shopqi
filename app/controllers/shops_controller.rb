@@ -6,12 +6,13 @@ class ShopController < ApplicationController
   def show
     html = Liquid::Template.parse(theme).render({
       'shop' => ShopDrop.new(shop), #shop将在filter中调用，不能使用symbol key
-      content_for_header: '', # google analysis js, shopqi tracker
-      content_for_layout: '',
-      powered_by_link: '',
+      'content_for_header' => '', # google analysis js, shopqi tracker
+      'content_for_layout' => '',
+      'powered_by_link' => '',
       'linklists' => LinkListDrop.new(shop),
-      collections: CollectionsDrop.new,
-      template: :index,
+      'pages' => PageDrop.new(shop),
+      'collections' => CollectionsDrop.new,
+      'template' => 'index',
     })
     render text: html, layout: nil
   end
