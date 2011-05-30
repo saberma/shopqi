@@ -17,7 +17,6 @@ class CollectionDrop < Liquid::Drop
   end
 
   def products
-    p '---------'
     @collection.products.map do |product|
       ProductDrop.new product
     end
