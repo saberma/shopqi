@@ -18,4 +18,9 @@ class ProductDrop < Liquid::Drop
     @product.variants.map(&:price).min
   end
 
+  #TODO: 完成上传照片后显示商品照片
+  def featured_image
+    "/images/admin/no-image-medium.gif"
+  end
+
 end

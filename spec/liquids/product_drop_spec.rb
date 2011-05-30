@@ -14,8 +14,8 @@ describe ProductDrop do
   end
 
 =begin
-  it 'should get featured-image' do
-    product_drop.send('featured-image').should eql "/products/"
+  it 'should get featured_image' do
+    product_drop.send('featured_image').should eql "/products/"
   end
 =end
 
@@ -24,7 +24,7 @@ describe ProductDrop do
   end
 
   it 'should get price' do
-    product_drop.price.should eql "0.0"
+    product_drop.price.should eql 0.0
   end
 
 end

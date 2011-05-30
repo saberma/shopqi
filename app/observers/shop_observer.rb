@@ -48,6 +48,9 @@ class ShopObserver < ActiveRecord::Observer
     footer = shop.link_lists.create title: '页脚', handle: 'footer', system_default: true
     footer.links.create title: '查询', link_type: 'search', position: 1
     footer.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 2
+
+    # 博客(最新动态)
+    shop.blogs.create title: '最新动态', handle: 'latest-news'
   end
 
 end

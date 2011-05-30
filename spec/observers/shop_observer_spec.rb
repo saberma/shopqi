@@ -25,6 +25,10 @@ describe ShopObserver do
       shop.products.empty?.should be_false
     end
 
+    it "should save latest-news blog" do
+      shop.blogs.where(handle: 'latest-news').first.should_not be_nil
+    end
+
   end
   
 end
