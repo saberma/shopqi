@@ -37,6 +37,7 @@ gem "activemerchant" # 支付
 gem "activemerchant_patch_for_china"
 gem "httparty"
 gem "resque" # 后台任务
+gem "chinese_pinyin" # 汉字转拼音
 
 group :development, :test do
   gem "awesome_print", :require => 'ap' # 调试
