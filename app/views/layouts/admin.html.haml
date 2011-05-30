@@ -12,7 +12,6 @@
       = stylesheet_link_tag 'ie'
     =yield :stylesheets
     = javascript_include_tag :admin
-    = javascript_tag '$.fx.off = true'
     =yield :kindeditor
     =yield :javascripts
     = csrf_meta_tag
@@ -85,8 +84,7 @@
           #preferences-dropdown.nav-dropdown.dropdown.hide
             %h3 您的商店设置
             %ul
-              %li#settings
-                %a{ :href => "https://github.shopqi.com/admin/general_preferences" } 一般设置
+              %li#settings=link_to '一般设置', admin_general_preferences_path
               %li#regions
                 %a{ :href => "https://github.shopqi.com/admin/countries" } 区域 &amp; 税收
               %li#payment

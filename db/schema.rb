@@ -201,9 +201,12 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
     t.string   "province"
     t.string   "city"
     t.string   "district"
-    t.string   "address"
     t.string   "zip_code"
+    t.string   "address"
     t.string   "keywords"
+    t.string   "password"
+    t.boolean  "password_enabled", :default => false
+    t.string   "password_message"
     t.boolean  "public",           :default => true
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,5 +1,6 @@
 # encoding: utf-8
 class ShopsController < ApplicationController
+  layout 'admin', only: :edit
 
   expose(:shop) { Shop.where(permanent_domain: request.subdomain).first }
 
@@ -15,6 +16,12 @@ class ShopsController < ApplicationController
       'template' => 'index',
     })
     render text: html, layout: nil
+  end
+
+  def update
+    shop.update_attributes(params[:shop])
+    flash.now[:notice] = I18n.t("flash.actions.#{action_name}.notice")
+    render action:"edit",layout:'admin'
   end
 
   private

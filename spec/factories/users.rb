@@ -9,7 +9,7 @@ Factory.define :user do |u|
 end
 
 Factory.define :user_liwh, :parent => :user do |u|
-  u.email 'liwh87@shopqi.com'
+  u.email 'liwh87@gmail.com'
   u.name 'liwh'
 end
 
