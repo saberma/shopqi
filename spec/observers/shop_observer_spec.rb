@@ -21,11 +21,12 @@ describe ShopObserver do
     end
 
     it "should save collection and products" do
-      expect do
-        expect do
-          shop
-        end.to change(CustomCollection, :count).by(1)
-      end.to change(Product, :count).by(6)
+      shop.custom_collections.where(handle: :frontpage).first.should_not be_nil
+      shop.products.empty?.should be_false
+    end
+
+    it "should save latest-news blog" do
+      shop.blogs.where(handle: 'latest-news').first.should_not be_nil
     end
 
   end

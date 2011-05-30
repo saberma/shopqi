@@ -7,6 +7,27 @@ describe Product do
 
   let(:iphone4) { Factory :iphone4, shop: shop, product_type: '智能手机', vendor: 'Apple', tags_text: 'phone,phone,apple' }
 
+  context '#create' do
+
+    context '(without handle)' do
+
+      it 'should save handle' do
+        product = shop.products.create title: 'iphone手机', product_type: '智能手机', vendor: 'Apple'
+        product.handle.should eql 'iphone-shou-ji'
+      end
+    end
+
+    context '(with handle)' do
+
+      it 'should save handle' do
+        product = shop.products.create title: 'iphone手机', handle: 'iphone', product_type: '手机', vendor: 'Apple'
+        product.handle.should eql 'iphone'
+      end
+
+    end
+
+  end
+
   describe 'Option' do
 
     it 'should be save' do

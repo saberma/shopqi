@@ -1,9 +1,9 @@
 #encoding: utf-8
 require 'spec_helper'
 
-describe LinkList do
+describe LinkListsDrop do
 
-  describe Link do
+  describe LinkDrop do
 
     it 'should get the title' do
       link = Link.new title: '首页', subject: '/'
