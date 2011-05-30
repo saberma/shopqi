@@ -17,7 +17,7 @@ describe UrlFilter do
 
   it 'should get product_img_url' do
     variant = "{{ '/products/1.png' | product_img_url: 'medium' }}"
-    Liquid::Template.parse(variant).render.should eql '/products/1_medium.png'
+    Liquid::Template.parse(variant).render.should eql '/products/1-medium.png'
   end
 
 end

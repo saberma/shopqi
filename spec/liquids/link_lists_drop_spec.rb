@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'spec_helper'
 
-describe LinkListDrop do
+describe LinkListsDrop do
 
   describe LinkDrop do
 
