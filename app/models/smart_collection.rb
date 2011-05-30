@@ -3,10 +3,11 @@ class SmartCollection < ActiveRecord::Base
   belongs_to :shop
   has_many :rules, class_name: 'SmartCollectionRule', dependent: :destroy
   has_many :products, class_name: 'SmartCollectionProduct', dependent: :destroy
+  validates_presence_of :title
   accepts_nested_attributes_for :rules, allow_destroy: true
 
-  before_create do
-    self.handle = 'handle'
+  before_save do
+    self.handle = Pinyin.t(self.title, '-') if self.handle.blank? # 新增时初始化handle
     set_default_order
   end
 

@@ -4,9 +4,14 @@ class CustomCollection < ActiveRecord::Base
   has_many :collection_products, dependent: :destroy          , class_name: 'CustomCollectionProduct'
   has_many :products           , through: :collection_products
 
+  validates_presence_of :title
+
   before_create do
-    self.handle = 'handle'
     set_default_order
+  end
+
+  before_save do
+    self.handle = Pinyin.t(self.title, '-') if self.handle.blank?
   end
 
   #默认排序

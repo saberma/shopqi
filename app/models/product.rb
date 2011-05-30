@@ -28,7 +28,7 @@ class Product < ActiveRecord::Base
   end
 
   before_save do
-    self.handle = 'handle'
+    self.handle = Pinyin.t(self.title, '-') if self.handle.blank?
     # 新增的选项默认值要设置到所有款式中
     self.options.reject{|option| option.marked_for_destruction?}.each_with_index do |option, index|
       next if option.value.blank?
