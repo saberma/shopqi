@@ -6,12 +6,13 @@ class CollectionDrop < Liquid::Drop
   end
   
   def frontpage
-    self.class.new @shop.custom_collections.where(handle: :frontpage).first
+    self.class.new @shop, @shop.custom_collections.where(handle: :frontpage).first
   end
 
   def products
-    @collection.products
+    @collection.products.map do |product|
+      ProductDrop.new product
+    end
   end
 
 end
-

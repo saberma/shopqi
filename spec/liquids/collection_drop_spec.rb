@@ -7,7 +7,7 @@ describe CollectionDrop do
 
   it 'should get frontpage' do
     collection_drop = CollectionDrop.new shop
-    collection_drop.frontpage.products.should eql []
+    collection_drop.frontpage.products.size.should eql 6
   end
 
 end

@@ -19,4 +19,24 @@ describe ThemeObserver do
     File.exist?(theme).should be_false
   end
 
+  context '(shop)' do
+
+    it 'should get the app_theme' do
+      shop.app_theme.should eql "#{Rails.root}/app/themes/#{shop.theme}"
+    end
+
+    it 'should get the public_theme' do
+      shop.public_theme.should eql "#{Rails.root}/public/themes/test/#{shop.id}"
+    end
+
+    it 'should get the layout_theme' do
+      shop.layout_theme.should eql "#{Rails.root}/public/themes/test/#{shop.id}/layout/theme.liquid"
+    end
+
+    it 'should get the template_theme' do
+      shop.template_theme('index').should eql "#{Rails.root}/public/themes/test/#{shop.id}/templates/index.liquid"
+    end
+
+  end
+
 end
