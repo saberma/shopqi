@@ -1,5 +1,4 @@
-=content_for :javascripts do
-  =javascript_include_tag 'models/user','controllers/users','collections/users'
+-use_javascripts 'models/user','controllers/users','collections/users'
 %h2#title
 #action-links
   %ul
@@ -255,9 +254,3 @@
           -else
             该用户到目前为止，没有登录过
 #user-details-area{:style => "display:none"}
-
-:javascript
-  App.init = function(){
-    new App.Controllers.Users();
-    Backbone.history.start();
-  }

@@ -1,0 +1,67 @@
+%h2#title 一般设置
+#action-links
+  %ul
+#general-settings
+  =form_for shop do |f|
+    %h3 关于你 
+    %p.hint.sb
+      可以为商店命名，这个名字将显示在网页的标题上
+    .box2
+      %dl
+        %dt.nst=f.label :name
+        %dd=f.text_field :name ,class:"big"
+        %dt=f.label :email
+        %dd=f.text_field :email ,class:"big"
+    %h3 商店地址
+    .box2
+      %dl
+        %dd
+          %table.data2{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "width: 600px"}
+            -#
+              %tr
+                %td{:colspan => "2"}
+                  %label{:for => "shop_address1"} 地址
+                  %br/
+                  =select_tag :province
+                  =select_tag :city
+                  =select_tag :district
+            %tr
+              %td{:style => "padding-right: 5px"}
+                =f.label :address
+                %br/
+                =f.text_field :address,size:50
+            %tr
+              %td{:style => "padding-right: 5px"}
+                =f.label :zip_code
+                %br/
+                =f.text_field :zip_code,size:7
+              %td
+                =f.label :phone
+                %br/
+                =f.text_field :phone ,size:20
+    %h3 安全
+    %p.hint.sb
+      您可以为您的商店增加密码，这样，当用户访问您的商店的时候，就需要输入这个密码。这个功能在您维护或者处理你的商店信息的时候是非常有用的。或者您是一个批发商，只卖到特定的客户群，这也是非常有用的。
+    .box2
+      %dl.nsb
+        %dd
+          =f.check_box :password_enabled,value:1
+          %label{:for => "shop_password_enabled"} 密码保护店面
+      %dl#password-details.nst{:style => "display:none"}
+        %dt.nst
+          =f.label :password
+        %dd
+          =f.password_field :password
+        %dt.sst
+          %label{:for => "shop_password_message"} 告知顾客的信息
+        %dd
+          %textarea#shop_password_message.image-target{:cols => "20", :name => "shop[password_message]", :rows => "8"}
+    %p.btn-divider{:style => "margin: 0"}
+      =f.submit "保存",class:"btn"
+    
+:javascript
+  $(function(){
+    $('#shop_password_enabled').click(function(){
+      $('#password-details').toggle();
+    });
+  })

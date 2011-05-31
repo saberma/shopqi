@@ -1,5 +1,6 @@
 # encoding: utf-8
-class ShopController < ApplicationController
+class ShopsController < ApplicationController
+  layout 'admin', only: :edit
 
   expose(:shop) { Shop.where(permanent_domain: request.subdomain).first }
 
@@ -17,6 +18,17 @@ class ShopController < ApplicationController
       'template' => template,
     })
     render text: html, layout: nil
+  end
+
+  def update
+    shop.update_attributes(params[:shop])
+    flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
+    redirect_to admin_general_preferences_path
+  end
+
+  private
+  def theme
+    IO.read File.join Rails.root, 'public', 'themes', shop.id.to_s, 'layout', 'theme.liquid'
   end
 
 end

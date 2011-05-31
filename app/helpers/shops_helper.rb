@@ -1,4 +1,4 @@
-module ShopHelper
+module ShopsHelper
 
   #用于获得当前请求商店的地址
   #如果，未存在对应的商店，则显示

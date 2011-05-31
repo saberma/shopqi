@@ -8,11 +8,11 @@ Shopqi::Application.routes.draw do
 
   constraints(Subdomain) do
     #match '/' => 'home#dashboard'
-    match '/' => 'shop#show'
+    match '/' => 'shops#show'
   end
 
   match "/admin" => "home#dashboard"
-  match "/admin/general_preferences" => "shop#edit"
+  match "/admin/general_preferences" => "shops#edit"
 
   scope "/admin" do
 

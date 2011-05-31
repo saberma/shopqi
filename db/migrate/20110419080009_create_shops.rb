@@ -18,6 +18,8 @@ class CreateShops < ActiveRecord::Migration
       t.string :address         , comment: "详细地址"
       t.string :keywords        , comment: "关键字"
       t.string :password        , comment: "密码"
+      t.boolean :password_enabled, comment: "是否让密码生效", default: false
+      t.string :password_message, comment: "提供给用户看的信息"
       t.boolean :public         , comment: "是否公开", default: true
 
       t.timestamps

@@ -45,6 +45,17 @@ cn:
       page:
         title: 标题
         description: 描述
+      shop:
+        permanent_domain: 二级域名
+        name: 网店名
+        zip_code: 邮政编码
+        keywords: 关键字
+        phone: 电话
+        theme: 主题
+        deadline: 到期时间
+        password: 密码
+        email: 邮箱
+        address: 详细地址
       blog:
         title: 标题
       article:
