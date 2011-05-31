@@ -21,7 +21,6 @@ class CreateTags < ActiveRecord::Migration
       t.references :tag    , comment: '所属标签', null: false
     end
 
-
     add_index :tags         , :shop_id
     add_index :products_tags, :product_id
     add_index :products_tags, :tag_id

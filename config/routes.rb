@@ -80,6 +80,8 @@ Shopqi::Application.routes.draw do
       end
     end
 
+    resources :themes
+
   end
 
   # The priority is based upon order of creation:
