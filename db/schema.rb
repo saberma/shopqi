@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110511132306) do
+ActiveRecord::Schema.define(:version => 20110531020209) do
 
   create_table "articles", :force => true do |t|
     t.integer  "blog_id"
@@ -189,6 +189,25 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
 
   add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
 
+  create_table "shop_theme_settings", :force => true do |t|
+    t.integer  "theme_id",   :null => false
+    t.string   "name",       :null => false
+    t.string   "value",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shop_theme_settings", ["theme_id"], :name => "index_shop_theme_settings_on_theme_id"
+
+  create_table "shop_themes", :force => true do |t|
+    t.integer  "shop_id",     :null => false
+    t.string   "load_preset", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shop_themes", ["shop_id"], :name => "index_shop_themes_on_shop_id"
+
   create_table "shops", :force => true do |t|
     t.string   "name"
     t.string   "domain"
@@ -255,6 +274,16 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   end
 
   add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
+
+  create_table "themes", :force => true do |t|
+    t.string   "name",                       :null => false
+    t.string   "style",                      :null => false
+    t.integer  "price",       :default => 0, :null => false
+    t.string   "color",                      :null => false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "",   :null => false

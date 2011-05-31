@@ -8,18 +8,22 @@ describe ThemeObserver do
 
   let(:theme) { File.join path, 'layout', 'theme.liquid' }
 
-  it 'should be create' do
-    File.exist?(path).should be_true
-    File.exist?(theme).should be_true
+  describe 'Files' do
+
+    it 'should be create' do
+      File.exist?(path).should be_true
+      File.exist?(theme).should be_true
+    end
+
+    it 'should be delete' do
+      shop.destroy
+      File.exist?(path).should be_false
+      File.exist?(theme).should be_false
+    end
+
   end
 
-  it 'should be delete' do
-    shop.destroy
-    File.exist?(path).should be_false
-    File.exist?(theme).should be_false
-  end
-
-  context '(shop)' do
+  describe Shop do
 
     it 'should get the app_theme' do
       shop.app_theme.should eql "#{Rails.root}/app/themes/#{shop.theme}"
@@ -35,6 +39,13 @@ describe ThemeObserver do
 
     it 'should get the template_theme' do
       shop.template_theme('index').should eql "#{Rails.root}/public/themes/test/#{shop.id}/templates/index.liquid"
+    end
+
+  end
+
+  describe ThemeSettings do
+
+    it 'should be create' do
     end
 
   end

@@ -8,6 +8,7 @@ class Shop < ActiveRecord::Base
   has_many :smart_collections , dependent: :destroy
   has_many :custom_collections, dependent: :destroy
   has_many :tags              , dependent: :destroy
+  has_many :themes            , dependent: :destroy
 
   has_many :types             , dependent: :destroy, class_name: 'ShopProductType'
   has_many :vendors           , dependent: :destroy, class_name: 'ShopProductVendor'
@@ -36,4 +37,16 @@ end
 #商品厂商
 class ShopProductVendor < ActiveRecord::Base
   belongs_to :shop
+end
+
+#商店外观主题
+class ShopTheme < ActiveRecord::Base
+  belongs_to :shop
+  has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy
+
+  validates_presence_of :load_preset
+end
+
+class ShopThemeSetting < ActiveRecord::Base
+  belongs_to :theme, class_name: 'ShopTheme'
 end

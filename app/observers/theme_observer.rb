@@ -2,7 +2,7 @@ class ThemeObserver < ActiveRecord::Observer
   observe :shop
 
   def after_create(shop)
-    shop.theme = 'prettify'
+    shop.theme = 'prettify' #TODO: update
     FileUtils.cp_r shop.app_theme, shop.public_theme
   end
 
