@@ -268,6 +268,7 @@ DEPENDENCIES
   meta_search
   meta_where
   mini_magick
+  nokogiri
   pg
   rack-cache
   rails (= 3.0.6)

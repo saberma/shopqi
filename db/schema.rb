@@ -190,17 +190,18 @@ ActiveRecord::Schema.define(:version => 20110531020209) do
   add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
 
   create_table "shop_theme_settings", :force => true do |t|
-    t.integer  "theme_id",   :null => false
-    t.string   "name",       :null => false
-    t.string   "value",      :null => false
+    t.integer  "shop_theme_id", :null => false
+    t.string   "name",          :null => false
+    t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "shop_theme_settings", ["theme_id"], :name => "index_shop_theme_settings_on_theme_id"
+  add_index "shop_theme_settings", ["shop_theme_id"], :name => "index_shop_theme_settings_on_shop_theme_id"
 
   create_table "shop_themes", :force => true do |t|
     t.integer  "shop_id",     :null => false
+    t.integer  "theme_id",    :null => false
     t.string   "load_preset", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -214,7 +215,6 @@ ActiveRecord::Schema.define(:version => 20110531020209) do
     t.string   "permanent_domain"
     t.string   "email"
     t.string   "phone"
-    t.string   "theme",            :default => "shopqi"
     t.date     "deadline"
     t.string   "title"
     t.string   "province"

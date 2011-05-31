@@ -13,6 +13,7 @@ class CreateThemes < ActiveRecord::Migration
     end
 
     Theme.create [
+      {name: 'Prettify'    , style: 'default'       , color: ''},
       {name: 'Couture'     , style: 'Arioso'        , color: ''},
       {name: 'Couture'     , style: 'Faust'         , color: ''},
       {name: 'Monochrome'  , style: 'Blue/Orange'   , color: ''},

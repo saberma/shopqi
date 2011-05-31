@@ -10,5 +10,5 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe SettingsHelper do
+describe ShopThemeSettingsHelper do
 end

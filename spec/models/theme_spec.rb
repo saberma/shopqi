@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Theme do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it 'should get default' do
+    Theme.default.should_not be_nil
+  end
+
 end

@@ -2,32 +2,17 @@ class ThemeObserver < ActiveRecord::Observer
   observe :shop
 
   def after_create(shop)
-    shop.theme = 'prettify' #TODO: update
-    FileUtils.cp_r shop.app_theme, shop.public_theme
+    shop.create_theme(theme_id: Theme.default.id) unless shop.theme
+    theme = shop.theme
+    FileUtils.mkdir_p theme.public_path
+    FileUtils.cp_r "#{theme.app_path}/.", theme.public_path
+    # 初始化主题设置
+    theme.config_settings.each_pair do |name, value|
+      theme.settings.create name: name, value: value
+    end
   end
 
   def after_destroy(shop)
-    FileUtils.rm_rf shop.public_theme
+    FileUtils.rm_rf shop.theme.public_path
   end
-end
-
-class Shop
-
-  def app_theme
-    File.join Rails.root, 'app', 'themes', self.theme.to_s
-  end
-
-  def public_theme
-    test = (Rails.env == 'test') ? 'test' : '' #测试目录与其他环境分开,不干扰
-    shop_theme = File.join Rails.root, 'public', 'themes', test, self.id.to_s
-  end
-
-  def layout_theme
-    File.join public_theme, 'layout', 'theme.liquid'
-  end
-
-  def template_theme(template)
-    File.join public_theme, 'templates', "#{template}.liquid"
-  end
-
 end

@@ -8,7 +8,6 @@ class CreateShops < ActiveRecord::Migration
       t.string :permanent_domain , comment: "二级域名"
       t.string :email            , comment: "商店邮箱"
       t.string :phone            , comment: "商店电话"
-      t.string :theme            , comment: "主题"              , default: 'shopqi'
       t.date   :deadline         , comment: "到期时间"
       t.string :title            , comment: "标题"
       t.string :province         , comment: "省份"
@@ -39,17 +38,18 @@ class CreateShops < ActiveRecord::Migration
 
     #商店外观主题(可以支持多个主题切换)
     create_table :shop_themes do |t|
-      t.references :shop   , comment: '所属商店', null: false
-      t.string :load_preset, comment: '预设'    , null: false
+      t.references :shop   , comment: '所属商店'    , null: false
+      t.references :theme  , comment: '所使用的主题', null: false
+      t.string :load_preset, comment: '预设'        , null: false
 
       t.timestamps
     end
 
     #商店外观主题设置
     create_table :shop_theme_settings do |t|
-      t.references :theme, comment: '所属主题', null: false
-      t.string :name     , comment: '名称'    , null: false
-      t.string :value    , comment: '值'      , null: false
+      t.references :shop_theme, comment: '所属主题', null: false
+      t.string :name          , comment: '名称'    , null: false
+      t.string :value         , comment: '值'
 
       t.timestamps
     end
@@ -57,7 +57,7 @@ class CreateShops < ActiveRecord::Migration
     add_index :shop_product_types  , :shop_id
     add_index :shop_product_vendors, :shop_id
     add_index :shop_themes         , :shop_id
-    add_index :shop_theme_settings , :theme_id
+    add_index :shop_theme_settings , :shop_theme_id
   end
 
   def self.down
