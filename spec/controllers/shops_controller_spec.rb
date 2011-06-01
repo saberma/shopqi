@@ -15,4 +15,9 @@ describe ShopsController do
     response.should be_success
   end
 
+  it 'should get css file' do
+    get :asset, id: shop.id, file: 'style', format: 'css'
+    response.should be_success
+  end
+
 end

@@ -26,4 +26,14 @@ class ShopsController < ApplicationController
     redirect_to admin_general_preferences_path
   end
 
+  # 附件
+  def asset
+    asset = "#{params[:file]}.#{params[:format]}" # style.css
+    html = Liquid::Template.parse(File.read(shop.theme.asset_path(asset))).render({
+      'shop' => ShopDrop.new(shop),
+      'settings' => SettingsDrop.new(shop),
+    })
+    render text: html, layout: nil
+  end
+
 end

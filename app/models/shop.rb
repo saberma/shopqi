@@ -55,9 +55,27 @@ class ShopTheme < ActiveRecord::Base
     File.join Rails.root, 'app', 'themes', self.theme.name.downcase
   end
 
-  def public_path
+  def files_relative_path
     test = (Rails.env == 'test') ? 'test' : '' #测试目录与其他环境分开,不干扰
-    shop_theme = File.join Rails.root, 'public', 'files', test, self.id.to_s, 'theme'
+    File.join 'files', test, self.id.to_s, 'theme'
+  end
+
+  def public_path
+    File.join Rails.root, 'public', files_relative_path
+  end
+
+  def asset_relative_path(asset)
+    File.join files_relative_path, 'assets', asset
+  end
+
+  def asset_path(asset)
+    asset_liquid = "#{asset}.liquid"
+    path = File.join public_path, 'assets', asset_liquid
+    if File.exist?(path) #存在liquid文件，则解释liquid
+      path
+    else
+      File.join public_path, 'assets', asset
+    end
   end
 
   def layout_theme_path
@@ -76,8 +94,13 @@ class ShopTheme < ActiveRecord::Base
     doc = Nokogiri::HTML(File.read(config_settings_path))
     inputs = doc.css('input').map do |input|
       [input[:name], input[:value]]
-    end.flatten
-    Hash[*inputs]
+    end
+    selects = doc.css('select').map do |select|
+      value = select.at_css("option[selected='selected']")[:value]
+      [select[:name], value]
+    end
+    elements = (inputs + selects).flatten
+    Hash[*elements]
   end
 end
 

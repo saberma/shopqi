@@ -1,7 +1,8 @@
 module UrlFilter
 
   def asset_url(input)
-    "/files/#{@context['shop'].id}/themes/assets/#{input}"
+    shop = @context['shop'] #ShopDrop
+    "/#{shop.asset_path(input)}"
   end
 
   def global_asset_url(input)

@@ -11,6 +11,8 @@ Shopqi::Application.routes.draw do
   constraints(Subdomain) do
     #match '/' => 'home#dashboard'
     match '/' => 'shops#show'
+    #match '/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
+    match '/files/:id/theme/assets/:file.:format' => 'shops#asset'
   end
 
   match "/admin" => "home#dashboard"

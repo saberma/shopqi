@@ -39,6 +39,13 @@ describe ThemeObserver do
       theme.public_path.should eql "#{Rails.root}/public/files/test/#{shop.id}/theme"
     end
 
+    it 'should get the asset_path' do
+      theme.asset_path('style.css').should eql "#{Rails.root}/public/files/test/#{shop.id}/theme/assets/style.css.liquid"
+      File.exist?(theme.asset_path('style.css')).should be_true
+      theme.asset_path('shop.css').should eql "#{Rails.root}/public/files/test/#{shop.id}/theme/assets/shop.css"
+      File.exist?(theme.asset_path('shop.css')).should be_true
+    end
+
     it 'should get the layout_theme' do
       theme.layout_theme_path.should eql "#{Rails.root}/public/files/test/#{shop.id}/theme/layout/theme.liquid"
     end
