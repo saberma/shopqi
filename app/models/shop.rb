@@ -93,7 +93,16 @@ class ShopTheme < ActiveRecord::Base
   def config_settings
     doc = Nokogiri::HTML(File.read(config_settings_path))
     inputs = doc.css('input').map do |input|
-      [input[:name], input[:value]]
+      type = input[:type]
+      value = case type
+        when 'checkbox'
+          input[:checked].blank? ? 'false' : 'true'
+        when 'file'
+          '' #暂时为空
+        else
+          input[:value]
+        end
+      [input[:name], value]
     end
     selects = doc.css('select').map do |select|
       value = select.at_css("option[selected='selected']")[:value]
