@@ -1,18 +1,18 @@
-if ((typeof Shopify) == 'undefined') {
-  var Shopify = {};
+if ((typeof ShopQi) == 'undefined') {
+  var ShopQi = {};
 }
 
 
 // ---------------------------------------------------------------------------
-// Shopify generic helper methods
+// ShopQi generic helper methods
 // ---------------------------------------------------------------------------
-Shopify.each = function(ary, callback) {
+ShopQi.each = function(ary, callback) {
   for (var i = 0; i < ary.length; i++) {
     callback(ary[i], i);
   }
 };
 
-Shopify.map = function(ary, callback) {
+ShopQi.map = function(ary, callback) {
   var result = [];
   for (var i = 0; i < ary.length; i++) {
     result.push(callback(ary[i], i));
@@ -20,7 +20,7 @@ Shopify.map = function(ary, callback) {
   return result;
 };
 
-Shopify.arrayIncludes = function(ary, obj) {
+ShopQi.arrayIncludes = function(ary, obj) {
   for (var i = 0; i < ary.length; i++) {
     if (ary[i] == obj) {
       return true;
@@ -29,23 +29,23 @@ Shopify.arrayIncludes = function(ary, obj) {
   return false;
 };
 
-Shopify.uniq = function(ary) {
+ShopQi.uniq = function(ary) {
   var result = [];
   for (var i = 0; i < ary.length; i++) {
-    if (!Shopify.arrayIncludes(result, ary[i])) { result.push(ary[i]); }
+    if (!ShopQi.arrayIncludes(result, ary[i])) { result.push(ary[i]); }
   }
   return result;
 };
 
-Shopify.isDefined = function(obj) {
+ShopQi.isDefined = function(obj) {
   return ((typeof obj == 'undefined') ? false : true);
 };
 
-Shopify.getClass = function(obj) {
+ShopQi.getClass = function(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 };
 
-Shopify.extend = function(subClass, baseClass) {
+ShopQi.extend = function(subClass, baseClass) {
   function inheritance() {}
   inheritance.prototype = baseClass.prototype;
 
@@ -58,22 +58,22 @@ Shopify.extend = function(subClass, baseClass) {
 
 
 // ---------------------------------------------------------------------------
-// Shopify Product object
+// ShopQi Product object
 // JS representation of Product
 // ---------------------------------------------------------------------------
-Shopify.Product = function(json) {
-  if (Shopify.isDefined(json)) { this.update(json); }
+ShopQi.Product = function(json) {
+  if (ShopQi.isDefined(json)) { this.update(json); }
 };
 
-Shopify.Product.prototype.update = function(json) {
+ShopQi.Product.prototype.update = function(json) {
   for (property in json) {
     this[property] = json[property];
   }
 };
 
 // returns array of option names for product
-Shopify.Product.prototype.optionNames = function() {
-  if (Shopify.getClass(this.options) == 'Array') {
+ShopQi.Product.prototype.optionNames = function() {
+  if (ShopQi.getClass(this.options) == 'Array') {
     return this.options;
   } else {
     return [];
@@ -81,21 +81,21 @@ Shopify.Product.prototype.optionNames = function() {
 };
 
 // returns array of all option values (in order) for a given option name index
-Shopify.Product.prototype.optionValues = function(index) {
-  if (!Shopify.isDefined(this.variants)) { return null; }
-  var results = Shopify.map(this.variants, function(e) {
+ShopQi.Product.prototype.optionValues = function(index) {
+  if (!ShopQi.isDefined(this.variants)) { return null; }
+  var results = ShopQi.map(this.variants, function(e) {
     var option_col = "option" + (index+1);
     return (e[option_col] == undefined) ? null : e[option_col];
   });
-  return (results[0] == null ? null : Shopify.uniq(results));
+  return (results[0] == null ? null : ShopQi.uniq(results));
 };
 
 // return the variant object if exists with given values, otherwise return null
-Shopify.Product.prototype.getVariant = function(selectedValues) {
+ShopQi.Product.prototype.getVariant = function(selectedValues) {
   var found = null;
   if (selectedValues.length != this.options.length) { return found; }
   
-  Shopify.each(this.variants, function(variant) {
+  ShopQi.each(this.variants, function(variant) {
     var satisfied = true;
     for (var j = 0; j < selectedValues.length; j++) {
       var option_col = "option"+(j+1);
@@ -118,8 +118,8 @@ Shopify.Product.prototype.getVariant = function(selectedValues) {
 // ---------------------------------------------------------------------------
 // Money format handler
 // ---------------------------------------------------------------------------
-Shopify.money_format = "$ {{amount}}";
-Shopify.formatMoney = function(cents, format) {
+ShopQi.money_format = "$ {{amount}}";
+ShopQi.formatMoney = function(cents, format) {
   if (typeof cents == 'string') cents = cents.replace('.','');
   var value = '';
   var patt = /\{\{\s*(\w+)\s*\}\}/;
@@ -147,7 +147,7 @@ function floatToString(numeric, decimals) {
 // OptionSelectors(domid, options)
 // 
 // ---------------------------------------------------------------------------
-Shopify.OptionSelectors = function(existingSelectorId, options) {
+ShopQi.OptionSelectors = function(existingSelectorId, options) {
   this.selectorDivClass       = 'selector-wrapper';
   this.selectorClass          = 'single-option-selector';
   this.variantIdFieldIdSuffix = '-variant-id';
@@ -155,8 +155,8 @@ Shopify.OptionSelectors = function(existingSelectorId, options) {
   this.variantIdField    = null;
   this.selectors         = [];
   this.domIdPrefix       = existingSelectorId;
-  this.product           = new Shopify.Product(options.product);
-  this.onVariantSelected = Shopify.isDefined(options.onVariantSelected) ? options.onVariantSelected : function(){};
+  this.product           = new ShopQi.Product(options.product);
+  this.onVariantSelected = ShopQi.isDefined(options.onVariantSelected) ? options.onVariantSelected : function(){};
   
   this.replaceSelector(existingSelectorId); // create the dropdowns
   this.selectors[0].element.onchange();     // init the new dropdown
@@ -164,10 +164,10 @@ Shopify.OptionSelectors = function(existingSelectorId, options) {
 };
 
 // insert new multi-selectors and hide original selector
-Shopify.OptionSelectors.prototype.replaceSelector = function(domId) {
+ShopQi.OptionSelectors.prototype.replaceSelector = function(domId) {
   var oldSelector = document.getElementById(domId);
   var parent = oldSelector.parentNode;
-  Shopify.each(this.buildSelectors(), function(el) {
+  ShopQi.each(this.buildSelectors(), function(el) {
     parent.insertBefore(el, oldSelector);
   });
   oldSelector.style.display = 'none';
@@ -177,23 +177,23 @@ Shopify.OptionSelectors.prototype.replaceSelector = function(domId) {
 
 // insertSelectors(domId, msgDomId)
 // create multi-selectors in the given domId, and use msgDomId to show messages
-Shopify.OptionSelectors.prototype.insertSelectors = function(domId, messageElementId) {
-  if (Shopify.isDefined(messageElementId)) { this.setMessageElement(messageElementId); }
+ShopQi.OptionSelectors.prototype.insertSelectors = function(domId, messageElementId) {
+  if (ShopQi.isDefined(messageElementId)) { this.setMessageElement(messageElementId); }
 
   this.domIdPrefix = "product-" + this.product.id + "-variant-selector";
 
   var parent = document.getElementById(domId);
-  Shopify.each(this.buildSelectors(), function(el) {
+  ShopQi.each(this.buildSelectors(), function(el) {
     parent.appendChild(el);
   });
 };
 
 // buildSelectors(index)
 // create and return new selector element for given option
-Shopify.OptionSelectors.prototype.buildSelectors = function() {
+ShopQi.OptionSelectors.prototype.buildSelectors = function() {
   // build selectors
   for (var i = 0; i < this.product.optionNames().length; i++) {
-    var sel = new Shopify.SingleOptionSelector(this, i, this.product.optionNames()[i], this.product.optionValues(i));
+    var sel = new ShopQi.SingleOptionSelector(this, i, this.product.optionNames()[i], this.product.optionValues(i));
     sel.element.disabled = false;
     this.selectors.push(sel);
   }
@@ -201,7 +201,7 @@ Shopify.OptionSelectors.prototype.buildSelectors = function() {
   // replace existing selector with new selectors, new hidden input field, new hidden messageElement
   var divClass = this.selectorDivClass;
   var optionNames = this.product.optionNames();
-  var elements = Shopify.map(this.selectors, function(selector) {
+  var elements = ShopQi.map(this.selectors, function(selector) {
     var div = document.createElement('div');
     div.setAttribute('class', divClass);
     // create label if more than 1 option (ie: more than one drop down)
@@ -220,7 +220,7 @@ Shopify.OptionSelectors.prototype.buildSelectors = function() {
 };
 
 // returns array of currently selected values from all multiselectors
-Shopify.OptionSelectors.prototype.selectedValues = function() {
+ShopQi.OptionSelectors.prototype.selectedValues = function() {
   var currValues = [];
   for (var i = 0; i < this.selectors.length; i++) {
     var thisValue = this.selectors[i].element.value;
@@ -230,7 +230,7 @@ Shopify.OptionSelectors.prototype.selectedValues = function() {
 };
 
 // callback when a selector is updated.
-Shopify.OptionSelectors.prototype.updateSelectors = function(index) {
+ShopQi.OptionSelectors.prototype.updateSelectors = function(index) {
   var currValues = this.selectedValues(); // get current values
   var variant    = this.product.getVariant(currValues);
   if (variant) {
@@ -247,7 +247,7 @@ Shopify.OptionSelectors.prototype.updateSelectors = function(index) {
 // 
 // ---------------------------------------------------------------------------
 
-Shopify.OptionSelectorsFromDOM = function(existingSelectorId, options){
+ShopQi.OptionSelectorsFromDOM = function(existingSelectorId, options){
   // build product json from selectors
   // create new options hash
   var optionNames = options.optionNames || [];
@@ -255,15 +255,15 @@ Shopify.OptionSelectorsFromDOM = function(existingSelectorId, options){
   var delimiter = options.delimiter || '/';
   var productObj = this.createProductFromSelector(existingSelectorId, optionNames, priceFieldExists, delimiter);
   options.product = productObj;
-  Shopify.OptionSelectorsFromDOM.baseConstructor.call(this, existingSelectorId, options);
+  ShopQi.OptionSelectorsFromDOM.baseConstructor.call(this, existingSelectorId, options);
 };
 
-Shopify.extend(Shopify.OptionSelectorsFromDOM, Shopify.OptionSelectors);
+ShopQi.extend(ShopQi.OptionSelectorsFromDOM, ShopQi.OptionSelectors);
 
 // updates the product_json from existing select element
-Shopify.OptionSelectorsFromDOM.prototype.createProductFromSelector = function(domId, optionNames, priceFieldExists, delimiter) {
-  if (!Shopify.isDefined(priceFieldExists)) { var priceFieldExists = true; }
-  if (!Shopify.isDefined(delimiter)) { var delimiter = '/'; }
+ShopQi.OptionSelectorsFromDOM.prototype.createProductFromSelector = function(domId, optionNames, priceFieldExists, delimiter) {
+  if (!ShopQi.isDefined(priceFieldExists)) { var priceFieldExists = true; }
+  if (!ShopQi.isDefined(delimiter)) { var delimiter = '/'; }
 
   var oldSelector = document.getElementById(domId);
   var options = oldSelector.childNodes;
@@ -275,7 +275,7 @@ Shopify.OptionSelectorsFromDOM.prototype.createProductFromSelector = function(do
   // build product json + messages array
   var variants = [];
   var self = this;
-  Shopify.each(options, function(option, variantIndex) {
+  ShopQi.each(options, function(option, variantIndex) {
     if (option.nodeType == 1 && option.tagName.toLowerCase() == 'option') {
       var chunks = option.innerHTML.split(new RegExp('\\s*\\'+ delimiter +'\\s*'));
 
@@ -313,7 +313,7 @@ Shopify.OptionSelectorsFromDOM.prototype.createProductFromSelector = function(do
 // SingleOptionSelector
 // takes option name and values and creates a option selector from them
 // ---------------------------------------------------------------------------
-Shopify.SingleOptionSelector = function(multiSelector, index, name, values) {
+ShopQi.SingleOptionSelector = function(multiSelector, index, name, values) {
   this.multiSelector = multiSelector;
   this.values = values;
   this.index = index;

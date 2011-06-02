@@ -92,7 +92,7 @@ var selectCallback = function(variant, selector) {
     // selected a valid variant
     jQuery('#purchase').removeClass('disabled').removeAttr('disabled'); // remove unavailable class from add-to-cart button, and re-enable button
     jQuery('#purchase').fadeIn();
-    jQuery('.price-field').html(Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));  // update price field
+    jQuery('.price-field').html(ShopQi.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));  // update price field
   } else {
     // variant doesn't exist
     jQuery('#purchase').addClass('disabled').attr('disabled', 'disabled');      // set add-to-cart button to unavailable class and disable button
@@ -106,7 +106,7 @@ var selectCallback = function(variant, selector) {
 // initialize multi selector for product      
 {% if product.options.size > 1 %}
 jQuery(document).ready(function() {
-  new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
+  new ShopQi.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
   $('#options div').addClass("selector-wrapper");
 });   
 // ]]>  

@@ -15,6 +15,11 @@ describe UrlFilter do
     Liquid::Template.parse(variant).render.should eql '/global/textile.css'
   end
 
+  it 'should get shopqi_asset_url' do
+    variant = "{{ 'option_selection.js' | shopqi_asset_url }}"
+    Liquid::Template.parse(variant).render.should eql '/shopqi/option_selection.js'
+  end
+
   it 'should get product_img_url' do
     variant = "{{ '/products/1.png' | product_img_url: 'medium' }}"
     Liquid::Template.parse(variant).render.should eql '/products/1-medium.png'

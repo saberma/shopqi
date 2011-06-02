@@ -9,6 +9,10 @@ module UrlFilter
     "/global/#{input}"
   end
 
+  def shopqi_asset_url(input)
+    "/global/#{input}"
+  end
+
   def product_img_url(input, size)
     "#{input[0..-5]}-#{size}#{input[-4..-1]}"
   end
