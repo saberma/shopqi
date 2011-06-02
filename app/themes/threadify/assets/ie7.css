@@ -1,0 +1,9 @@
+.clearfix, .search-results ul li,#content,.selector-wrapper:after, .product-thumbs ul li  { zoom: 1; display:inline-block; }
+
+form.product-variants .selector-wrapper { list-style-type:none;  padding-bottom:10px;  }
+
+
+
+.search form p input {vertical-align:middle}
+
+

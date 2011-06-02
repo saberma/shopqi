@@ -1,0 +1,61 @@
+<h1>Shopping Cart</h1>
+{% if cart.item_count == 0 %}
+	<p><strong>Your shopping cart is empty.</strong>Take a peek at some of the featured items below.</p>
+
+	<table id="product-listings">
+    {% tablerow product in collections.frontpage.products cols: 4 limit: 12 %} 
+
+    <a href="{{ product.url | within: collections.frontpage }}" title="{{ product.title }}"><img src="{{ product.images.first | product_img_url: 'medium' }}" width="185" alt="{{ product.title | escape }}" /></a>
+
+    <a href="{{ product.url |  within:  collections.frontpage }}">{{ product.title }}</a><strong>{{ product.price | money }}</strong>
+    {% endtablerow %}
+  </table>
+
+  
+{% else %}
+<script type="text/javascript">
+  function remove_item(id) {
+      document.getElementById('updates_'+id).value = 0;
+      document.getElementById('checkout').submit();
+  }
+</script>
+<form action="/cart" method="post" id="checkout">
+	<table>
+		<tr>
+			<th>Item Description</th>
+			<th>Price</th>
+			<th>Qty</th>
+			<th>Delete</th>
+			<th>Total</th>
+		</tr>{% for item in cart.items %}
+		<tr class="{% cycle 'odd', 'even' %}">
+			<td>
+				<div class="product-image">
+					<a href="{{ item.product.url }}" title="{{ item.title | escape }} &mdash; {{ item.product.description | strip_html | truncate: 50 | escape }}"><img src="{{ item.product.images.first | product_img_url: 'thumb' }}" alt="{{ item.title | escape }}" /></a>
+				</div>
+				<div class="product-description">
+					<a href="{{ item.product.url }}">{{ item.title }}</a>
+					{{ item.product.description | strip_html | truncate: 120 }}
+				</div>
+			</td>
+			<td>{{ item.price | money }}</td>
+			<td><input type="text" size="4" name="updates[{{item.variant.id}}]" id="updates_{{ item.variant.id }}" value="{{ item.quantity }}" onfocus="this.select();"/></td>
+			<td><a href="#" onclick="remove_item({{ item.variant.id }}); return false;" >Remove</a></td>
+			<td>{{ item.line_price | money }}</td>
+		</tr>{% endfor %}
+	</table>
+	<div id="cart-total">
+		<h3>Subtotal {{ cart.total_price | money }}</h3>
+		<input type="submit" src="{{ 'update.png' | asset_url }}" id="update-cart" name="update" value="Update" />
+		<input type="submit" src="{{ 'checkout.png' | asset_url }}" name="checkout" value="Checkout" />
+		
+		{% if additional_checkout_buttons %}
+      <div class="additional-checkout-buttons">
+        <p>- or -</p>
+        {{ content_for_additional_checkout_buttons }}
+      </div>
+    {% endif %}
+		
+		
+	</div>
+</form>{% endif %}

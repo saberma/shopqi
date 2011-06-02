@@ -1,0 +1,8 @@
+<ul class="recent-posts">
+    {% for article in blogs.news.articles limit:3 %}
+    <li>
+      <h4><a href="{{ article.url }}">{{ article.title }}</a></h4>
+      {{ article.content | truncate:100 | strip_html }}
+    </li>
+    {% endfor %}
+</ul>
