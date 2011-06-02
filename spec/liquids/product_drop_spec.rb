@@ -27,4 +27,8 @@ describe ProductDrop do
     product_drop.price.should eql 0.0
   end
 
+  it 'should get description' do
+    product_drop.description.should eql iphone4.body_html
+  end
+
 end

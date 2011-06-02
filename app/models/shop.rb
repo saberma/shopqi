@@ -18,6 +18,11 @@ class Shop < ActiveRecord::Base
   validates_presence_of :name
   
   before_create :init_valid_date
+
+  # 域名
+  def self.at(domain)
+    Shop.where(permanent_domain: domain).first
+  end
   
   protected
   def init_valid_date
@@ -105,7 +110,7 @@ class ShopTheme < ActiveRecord::Base
       [input[:name], value]
     end
     selects = doc.css('select').map do |select|
-      value = select.at_css("option[selected='selected']")[:value]
+      value = select.at_css("option[selected]")[:value]
       [select[:name], value]
     end
     elements = (inputs + selects).flatten

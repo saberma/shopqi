@@ -5,6 +5,16 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
+  def variants
+    @product.variants.map do |variant|
+      ProductVariantDrop.new variant
+    end
+  end
+
+  def images
+    ProductImagesDrop.new
+  end
+
   def url
     #Rails.application.routes.url_helpers.product_path(@product)
     "/products/#{@product.handle}"
@@ -16,6 +26,10 @@ class ProductDrop < Liquid::Drop
 
   def price
     @product.variants.map(&:price).min
+  end
+
+  def description
+    @product.body_html
   end
 
   #TODO: 完成上传照片后显示商品照片
