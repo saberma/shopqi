@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
   has_many :collections        , class_name: 'CustomCollection', through: :collection_products        , source: :custom_collection
   has_and_belongs_to_many :tags
   # 标签
-  attr_accessor :tags_text
+  attr_accessor :tags_text,:images
 
   accepts_nested_attributes_for :photos  , allow_destroy: true
   accepts_nested_attributes_for :variants, allow_destroy: true

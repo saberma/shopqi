@@ -1,6 +1,5 @@
-- use_kindeditor
-=content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'views/products/show/variants/quick_select', 'controllers/products'
+-use_kindeditor
+-use_javascripts 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'views/products/show/variants/quick_select', 'controllers/products'
 
 %h2#product_title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -25,16 +24,7 @@
         %td#product-right-col(style="width: 275px; padding: 0 0 0 10px")
           %h3.section-header(style="margin-bottom: 0") 商品图片
           #product-image-area.group
-            #upload-product-image.c
-              %a(href="#" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
-                %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")
-            #upload-label.action-container
-              .action-link.c(style="border-bottom: none" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
-                %span
-                  %a(href="#" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
-                    %span.plus +
-                    上传图片
-            .clearfix
+            =render partial:'upload_photos',locals:{product:product}
           #upload-area.hide
             %p#status.hide
               =image_tag 'admin/icons/trash.gif', alt: '删除'
@@ -44,7 +34,7 @@
               %h4.st 上传图片
               %p.note 允许上传文件类型( .gif, .jpg, .jpeg, .png)
               %p#file-input.st.sb
-                %input#add-file(name="image[attachment]" type="file")
+                =file_field_tag "image",id:"add-file"
           .sst.pl
             %h3 商品可见性
             %p.sb.note

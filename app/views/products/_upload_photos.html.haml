@@ -1,0 +1,20 @@
+-if product.photos.blank?
+  #upload-product-image.c
+    %a.show-upload-link
+      %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")
+-else
+  %ul#image_list.clearfix
+    -product.photos.each do |photo|
+      %li
+        .product_image
+          =link_to image_tag(photo.product_image.thumb('110x73#').url),photo.product_image.url
+        = link_to image_tag('admin/icons/trash.gif'), product_photo_path(product,photo), method: :delete, confirm: '您确定要删除此张图片吗?', title: '删除它', class: 'image-delete',remote: true
+        =image_tag 'admin/icons/drag_handle.gif', :alt => '拖动排序', :class => "image-drag"
+        .featured
+#upload-label.action-container
+  .action-link.c(style="border-bottom: none" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
+    %span
+      %a.show-upload-link
+        %span.plus +
+        上传图片
+.clearfix

@@ -1,0 +1,2 @@
+$("#product-image-area").html("#{escape_javascript(render partial:'products/upload_photos',locals:{product: product})}" );
+msg('#{flash[:notice]}');

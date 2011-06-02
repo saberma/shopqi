@@ -61,5 +61,10 @@ App.Controllers.Products = Backbone.Controller.extend
           $(this).removeClass('active')
     .keyup()
 
+    #显示上传图片的form
+    $('.show-upload-link').click ->
+      $(this).hide()
+      $("#upload-area").toggle()
+
   routes:
     "nothing":      "nothing"
