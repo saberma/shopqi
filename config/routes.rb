@@ -37,7 +37,11 @@ Shopqi::Application.routes.draw do
         post :duplicate
       end
 
-      resources :photos,only: :destroy
+      resources :photos,only: :destroy do
+        collection do
+          post :sort
+        end
+      end
 
       resources :product_variants, path: :variants, except: [:index, :new, :edit] do
         collection do

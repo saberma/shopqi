@@ -47,8 +47,8 @@ class ProductsController < ApplicationController
 
   def create
     images = params[:product][:images]
-    images.each do |i|
-      product.photos.build(product_image: i)
+    images.each_with_index do |i,pos|
+      product.photos.build(product_image: i,position: pos)
     end
     #保存商品图片
     if product.save

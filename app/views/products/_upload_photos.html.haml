@@ -3,9 +3,9 @@
     %a.show-upload-link
       %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")
 -else
-  %ul#image_list.clearfix
+  %ul#image_list.clearfix(url="#{sort_product_photos_path(product)}")
     -product.photos.each do |photo|
-      %li
+      %li(id="photo_#{photo.id}")
         .product_image
           =link_to image_tag(photo.product_image.thumb('110x73#').url),photo.product_image.url
         = link_to image_tag('admin/icons/trash.gif'), product_photo_path(product,photo), method: :delete, confirm: '您确定要删除此张图片吗?', title: '删除它', class: 'image-delete',remote: true

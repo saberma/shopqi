@@ -66,5 +66,10 @@ App.Controllers.Products = Backbone.Controller.extend
       $(this).hide()
       $("#upload-area").toggle()
 
+    #照片排序
+    $("#image_list").sortable handle: '.image-drag', update: (event,ui) ->
+      $.post $(this).attr('url'), $(this).sortable('serialize')
+
+
   routes:
     "nothing":      "nothing"

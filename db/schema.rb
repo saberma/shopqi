@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   create_table "photos", :force => true do |t|
     t.integer  "product_id"
     t.string   "product_image_uid"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
