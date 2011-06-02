@@ -41,6 +41,7 @@ App.Controllers.Products = Backbone.Controller.extend
         inventory_management_relate.show()
     $("select.inventory_management").change()
 
+
     #标签
     $('#tag-list a').click ->
       $(this).toggleClass('active')
