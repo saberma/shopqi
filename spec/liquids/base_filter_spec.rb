@@ -13,8 +13,7 @@ describe BaseFilter do
     it 'should get product' do
       variant = "{{ product | json }}"
       assign = { product: product_drop }
-      ap product_drop.to_json
-      Liquid::Template.parse(variant).render(assign).should eql { }
+      Liquid::Template.parse(variant).render(assign).should_not be_empty
     end
 
   end

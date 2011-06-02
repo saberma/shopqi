@@ -5,6 +5,10 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
+  def id
+    @product.id
+  end
+
   def variants
     @product.variants.map do |variant|
       ProductVariantDrop.new variant
@@ -47,6 +51,17 @@ class ProductDrop < Liquid::Drop
     "/images/admin/no-image.gif"
   end
 
+  def as_json(options={})
+    result = {}
+    keys = self.public_methods(false)
+    keys.delete(:as_json)
+    keys.inject(result) do |result, method|
+      result[method] = self.send(method)
+      result
+    end
+    result
+  end
+
 end
 
 class ProductImagesDrop < Liquid::Drop
@@ -61,6 +76,10 @@ class ProductOptionDrop < Liquid::Drop
 
   def initialize(option)
     @option = option
+  end
+
+  def as_json(options={})
+    @option.name
   end
 
 end

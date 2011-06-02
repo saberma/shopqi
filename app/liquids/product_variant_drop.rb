@@ -65,4 +65,15 @@ class ProductVariantDrop < Liquid::Drop
   #  @variant.taxable
   #end
 
+  def as_json(options={})
+    result = {}
+    keys = self.public_methods(false)
+    keys = keys - [:as_json, :options]
+    keys.inject(result) do |result, method|
+      result[method] = self.send(method)
+      result
+    end
+    result
+  end
+
 end

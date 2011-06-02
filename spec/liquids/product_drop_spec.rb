@@ -43,4 +43,13 @@ describe ProductDrop do
     product_drop.options.size().should eql 1
   end
 
+  describe ProductOptionDrop do
+
+    it 'should get json' do
+      result = {name: '标题'}
+      product_drop.options.first.as_json.should eql result
+    end
+
+  end
+
 end
