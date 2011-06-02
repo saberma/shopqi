@@ -42,10 +42,14 @@ class ProductsController < ApplicationController
   def new
     #保证至少有一个款式
     product.variants.build if product.variants.empty?
-    product.photos.build
   end
 
   def create
+    images = params[:product][:images]
+    images.each do |i|
+      product.photos.build(product_image: i)
+    end
+    #保存商品图片
     if product.save
       redirect_to product_path(product), notice: "新增商品成功!"
     else
