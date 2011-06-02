@@ -8,6 +8,7 @@ class Shop::ProductsController < ApplicationController
   def show
     template = 'product'
     shop_drop = ShopDrop.new(shop)
+    settings_drop = SettingsDrop.new(shop)
     linklists_drop = LinkListsDrop.new(shop)
     collection_drop = CollectionsDrop.new(shop)
     pages_drop = PagesDrop.new(shop)
@@ -20,6 +21,7 @@ class Shop::ProductsController < ApplicationController
     content_for_layout = Liquid::Template.parse(File.read(shop.theme.template_path(template))).render(template_assign)
     assign = {
       'shop' => shop_drop,
+      'settings' => settings_drop,
       'template' => template,
       'linklists' => linklists_drop,
       'pages' => pages_drop,
