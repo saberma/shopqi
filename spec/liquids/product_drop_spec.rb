@@ -27,4 +27,29 @@ describe ProductDrop do
     product_drop.price.should eql 0.0
   end
 
+  it 'should get description' do
+    product_drop.description.should eql iphone4.body_html
+  end
+
+  it 'should get available' do
+    product_drop.available.should eql true
+  end
+
+  it 'should get variants' do
+    product_drop.variants.size().should eql 1
+  end
+
+  it 'should get options' do
+    product_drop.options.size().should eql 1
+  end
+
+  describe ProductOptionDrop do
+
+    it 'should get json' do
+      result = {name: '标题'}
+      product_drop.options.first.as_json.should eql result
+    end
+
+  end
+
 end

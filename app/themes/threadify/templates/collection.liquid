@@ -1,0 +1,21 @@
+{% paginate collection.products by 12 %}
+{% if collection.products.size == 0 %}
+<em>There are no products in this product collection</em>
+{% else %}
+<h1>{{ collection.title }}</h1>
+{{ collection.description }}
+<table id="product-listings">
+  {% tablerow product in collection.products cols:4 %}
+  <a href="{{ product.url | within: collections.frontpage }}" title="{{ product.title }}"><img src="{{ product.images.first | product_img_url: 'medium' }}" width="185" alt="{{ product.title | escape }}" /></a>
+
+  <a href="{{ product.url |  within:  collections.frontpage }}">{{ product.title }}</a><strong>{{ product.price | money }}</strong>
+
+  {% endtablerow %}
+</table>
+{% if paginate.pages > 1 %}
+<div class="paginate">
+  {{ paginate | default_pagination }}
+</div><!-- .paginate -->
+{% endif %}
+{% endif %}
+{% endpaginate %}

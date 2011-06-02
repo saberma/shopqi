@@ -1,0 +1,47 @@
+<div>
+  <h2>{{ shop.name | capitalize }} Blog </h2>
+
+  {% paginate blog.articles by 7 %}
+
+  <div class="col-8 clearfix">
+
+    {% for article in blog.articles  %}
+<div class="article clearfix ">
+  
+
+
+<div class="col-1 date">
+    <span class="month">{{ article.created_at | date: "%b" }}</span>
+  <span class="day">{{ article.created_at | date: "%d" }} </span>
+    <span class="year">{{ article.created_at | date: "%Y" }} </span>
+</div><!-- .col-1 date -->
+
+<div class="col-7 last">
+  <h3>
+    <a href="{{article.url}}">{{ article.title }}</a>
+  </h3>
+  {% if blog.comments_enabled? %}<p class="comments"><a href="{{article.url}}#comments">{{ article.comments_count }} comments</a></p>{% endif %}
+  
+  <div class="article-content">
+    {{ article.content }}
+  </div><!-- article-body -->
+</div><!-- .col-7 -->
+</div><!-- .article  -->
+    {% endfor %}
+    
+    <div id="pagination">
+      {{ paginate | default_pagination }}
+    </div>
+
+  </div><!-- col-8 -->
+  
+  <div class="col-4 last">
+    
+    <h3>Recent Posts</h3>
+    {% include 'recent-posts' %}
+
+  </div><!-- .col-4 -->
+
+  {% endpaginate %}
+
+</div>

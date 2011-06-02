@@ -6,7 +6,11 @@ module UrlFilter
   end
 
   def global_asset_url(input)
-    "/global/#{input}"
+    "/s/global/#{input}"
+  end
+
+  def shopqi_asset_url(input)
+    "/s/shopqi/#{input}"
   end
 
   def product_img_url(input, size)

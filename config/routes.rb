@@ -8,11 +8,16 @@ Shopqi::Application.routes.draw do
   end
 
 
+  # 前台商店
   constraints(Subdomain) do
     #match '/' => 'home#dashboard'
     match '/' => 'shops#show'
-    #match '/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
-    match '/files/:id/theme/assets/:file.:format' => 'shops#asset'
+    #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
+    match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
+
+    scope module: :shop do
+      get '/products/:handle' => 'products#show', as: :shop_product
+    end
   end
 
   match "/admin" => "home#dashboard"

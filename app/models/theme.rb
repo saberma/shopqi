@@ -31,6 +31,6 @@ class Theme < ActiveHash::Base
   ]
 
   def self.default
-    find_by_name('Prettify')
+    find_by_name('Threadify')
   end
 end

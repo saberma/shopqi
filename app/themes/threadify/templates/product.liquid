@@ -1,0 +1,115 @@
+<div class="col-7 product-description clearfix">
+  <h1>{{ product.title }}</h1>
+  {{ product.description }}
+
+
+  {% if product.available  %} 
+
+  {% if product.variants.size > 1 and product.options.size == 1 %}
+  <!-- If the product ONLY has variants -->
+  <form action="/cart/add" method="post" class="product-variants">     
+     <div id="options">
+       <!-- updates the price field for a list of variants. -->
+       <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){ 
+
+        var first_variant_price = $("ul li input[type='radio']:checked").attr("data-price"); 
+
+        $(".variant-price").text( first_variant_price );
+        $("input[type='radio']").click(function() {
+          var variant_price = $(this).attr('data-price');
+          $(".variant-price").text( variant_price);
+        });
+        });
+       </script>
+      
+       <ul class="variant-list">
+         {% for variant in product.variants %}
+         <!-- The first element needs to be checked -->
+         <li>
+           <input type="radio" data-price="{{ variant.price | money }}" id="{{ variant.id }}" value="{{ variant.id }}" name="id" {% if forloop.first %} checked {% endif %} >
+           <label for="{{ variant.id }}">{{ variant.title }}</label>
+         </li>
+         {% endfor %}
+       </ul>
+
+     </div> <!-- options --> 
+     <div class="variant-price">{{ variant.price | money }}</div>
+     <input type="submit"  name="add" value="Add to cart" id="purchase" />
+
+   </form>
+
+  {% elsif product.variants.size > 1 %}
+  <!-- If the product only has MULTIPLE OPTIONS -->
+  <form action="/cart/add" method="post" class="product-variants">     
+    <div id="options">
+      <select id="product-select" name='id'>
+        {% for variant in product.variants %}
+        <option value="{{ variant.id }}">{{ variant.title }}</option>
+        {% endfor %}
+      </select>
+    </div> <!-- options --> 
+    <div class="price-field"></div>
+    <input type="submit"  name="add" value="Add to cart" id="purchase" />
+  </form>
+
+  {% else %}
+   <!-- If the product only has ONE variant -->
+  <form action="/cart/add" method="post" class="product-variants">     
+    <div class="price-field"> {{ product.price | money }}</div>
+    <input type="submit"  name="add" value="Add to cart" id="purchase" />
+    <input  type="hidden" id="{{ variant.id }}" name="id" value="{{ product.variants[0].id }}" /> <!-- passes variant id -->
+  </form>
+
+  {% endif %}
+  
+  {% else %}
+
+  <p>This product is not available</p>
+
+  {% endif %}  
+  
+</div><!-- .col-7 -->
+
+<div class="col-5 last product-thumbs">
+  <ul>
+    {% for image in product.images %}
+
+    {% if forloop.first %}
+    <li class="featured-image" ><a class="zoom " href="{{ image | product_img_url: 'large' }}"><img  src="{{ image | product_img_url: 'large' }}" alt="{{ product.title | escape }}" /></a></li>
+    {% else %}
+    <li><a class="zoom" href="{{ image | product_img_url: 'large' }}"><img class="" src="{{ image | product_img_url: 'small' }}" alt="{{ product.title | escape }}" /></a></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+
+</div><!-- .col-5 -->
+
+<script type="text/javascript">
+// <![CDATA[  
+var selectCallback = function(variant, selector) {
+  if (variant && variant.available == true) {
+    // selected a valid variant
+    jQuery('#purchase').removeClass('disabled').removeAttr('disabled'); // remove unavailable class from add-to-cart button, and re-enable button
+    jQuery('#purchase').fadeIn();
+    jQuery('.price-field').html(ShopQi.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));  // update price field
+  } else {
+    // variant doesn't exist
+    jQuery('#purchase').addClass('disabled').attr('disabled', 'disabled');      // set add-to-cart button to unavailable class and disable button
+    jQuery('#purchase').fadeOut();
+    var message = variant ? "Sold Out" : "We don't offer the product in this combination"; 
+    jQuery('.price-field').text(message); // update price-field message
+  }
+};
+
+
+// initialize multi selector for product      
+{% if product.options.size > 1 %}
+jQuery(document).ready(function() {
+  new ShopQi.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
+  $('#options div').addClass("selector-wrapper");
+});   
+// ]]>  
+{% endif %}        
+</script>   
+            

@@ -6,9 +6,9 @@ class SettingsDrop < Liquid::Drop
 
   def before_method(name) #相当于method_missing
     value = @shop.theme.settings.where(name: name).first.try(:value)
-    value = if value == 'true'
+    value = if value == 't'
               true
-            elsif value == 'false'
+            elsif value == 'f'
               false
             else
               value
