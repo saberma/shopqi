@@ -14,6 +14,7 @@ class PhotosController < ApplicationController
   end
 
   def create
+    photo.position = photos.blank? ? 0 : photos.last.position + 1
     photo.save
     flash[:notice] = notice_msg
     redirect_to product_path(product)

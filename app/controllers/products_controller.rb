@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
   expose(:product)
   expose(:product_json) do
     product.to_json({
-      include: { options: { methods: :value, except: [ :created_at, :updated_at ] } },
+      include: { options: { methods: :value, except: [ :created_at, :updated_at ] },photos: {methods: :icon} },
       methods: [:tags_text, :collection_ids],
       except: [ :created_at, :updated_at ]
     })
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
   expose(:photo){ Photo.new } 
 
   def index
-    @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at]})
+    @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at],methods:[:index_photo]})
   end
 
   def inventory

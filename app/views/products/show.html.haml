@@ -24,9 +24,9 @@
         %td#product-right-col(style="width: 275px; padding: 0 0 0 10px")
           %h3.section-header(style="margin-bottom: 0") 商品图片
           #product-image-area.group
-            =render partial:'upload_photos',locals:{product:product}
+            #image-show-area=render partial:'upload_photos',locals:{product:product}
             #upload-label.action-container
-              .action-link.c(style="border-bottom: none" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
+              .action-link.c(style="border-bottom: none")
                 %span
                   %a.show-upload-link
                     %span.plus +

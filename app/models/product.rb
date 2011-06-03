@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Product < ActiveRecord::Base
   belongs_to :shop
-  has_many :photos             , dependent: :destroy
+  has_many :photos             , dependent: :destroy           ,order: :position.asc
   has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'
   has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: :position.asc
   has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
@@ -15,6 +15,15 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
 
   validates_presence_of :title, :product_type, :vendor
+  
+  #商品列表中显示的产品图片
+  def index_photo
+    unless photos.blank?
+      photos.first.icon
+    else
+      '/images/other/no-image-thumb.gif'
+    end
+  end
 
   before_create do
     if self.variants.empty?
@@ -102,25 +111,26 @@ class Photo < ActiveRecord::Base
 
   image_accessor :product_image
 
-  validates_size_of :product_image, maximum: 6000.kilobytes
+  validates_size_of :product_image, maximum: 8000.kilobytes
 
-  validates_property :mime_type, of: :product_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "请上传正确格式的图片"
+  validates_property :mime_type, of: :product_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
 
   #定义图片显示大小种类
   def self.versions(opt={})
-    opt.each_pair do |k,validates_property|
+    opt.each_pair do |k,v|
       define_method k do
         if product_image
-          product_image.thumb(v)
+          product_image.thumb(v).url
         end
       end
     end
   end
 
-  #显示在产品详情页中的缩略图(icon)
-  # 显示在产品列表页中的缩略图(small)
+  #显示在产品列表的缩略图(icon)
+  # 显示在产品查看页中的缩略图(small)
   # 显示在产品详情页中的图片(middle)
   # 显示在产品详情页中的放大镜图片(big)
-  versions icon:'60x60#', small:'175x175#', middle:'418x418#', big:'1024x1024#', accordion:'220x118#'
+  versions icon:'50x31#', small:'110x73#', middle:'418x418#', big:'1024x1024#', accordion:'220x118#'
 end
+
 CustomCollection

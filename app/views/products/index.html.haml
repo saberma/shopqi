@@ -96,10 +96,11 @@
   %td(style="padding-right: 5px; vertical-align: middle;")
     %input.selector(id="checkbox-${id}" name="products[]" type="checkbox" value="${id}")
   %td.list-image(style="text-align: center ! important;")
-    %label(for="checkbox-${id}")=image_tag 'other/no-image-thumb.gif'
+    %label(for="checkbox-${id}")
+      %img(src="${index_photo}")
   %td(style="padding-left: 3px; vertical-align: middle;")
     %p
-      %a(href="/admin/products/${id}" title="handle: ${handle}") ${title}
+      %a(href="/admin/products/${id}" title=" handle: ${handle}") ${title}
       %span(class="status-hidden {{if published}}hide{{/if}}" style="margin:0") 隐藏
     %p.list-product-type ${product_type}
     %p.list-vendor ${vendor}
