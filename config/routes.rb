@@ -16,7 +16,9 @@ Shopqi::Application.routes.draw do
       match '/' => 'shops#show'
       #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
       match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
-      get '/products/:handle' => 'products#show', as: :shop_product
+      get '/products/:handle' => 'products#show'
+      post '/cart/add' => 'cart#add'
+      get '/cart' => 'cart#show'
     end
   end
 

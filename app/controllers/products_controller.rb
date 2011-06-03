@@ -32,7 +32,7 @@ class ProductsController < ApplicationController
   expose(:publish_states) { KeyValues::PublishState.options }
 
   def index
-    @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at]})
+    @products_json = products.order(:id.asc).to_json({include: [:variants, :options], except: [:created_at, :updated_at]})
   end
 
   def inventory
