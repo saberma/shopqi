@@ -291,10 +291,10 @@
         
         // Create label elements
         var
-         r = $('<div class="MultiFile-label"></div>'),
+         r = $('<li class="item"></li>'),
          v = String(slave.value || ''/*.attr('value)*/),
-         a = $('<span class="MultiFile-title" title="'+MultiFile.STRING.selected.replace('$file', v)+'">'+MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0])+'</span>'),
-         b = $('<a class="MultiFile-remove" href="#'+MultiFile.wrapID+'">'+MultiFile.STRING.remove+'</a>');
+         a = $("<img src='/images/admin/icons/attachment.png'/>"+'<span class="MultiFile-title" title="'+MultiFile.STRING.selected.replace('$file', v)+'">'+MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0])+'</span>'),
+         b = $('<a class="delete fr" href="#'+MultiFile.wrapID+'">'+"<img src='/images/admin/icons/trash.gif'/>"+'</a>');
         
         // Insert label
         MultiFile.list.append(
@@ -478,7 +478,7 @@
 			denied:'You cannot select a $ext file.\nTry again...',
 			file:'$file',
 			selected:'File selected: $file',
-			duplicate:'This file has already been selected:\n$file'
+			duplicate:'\u8FD9\u4E2A\u6587\u4EF6\u5DF2\u7ECF\u9009\u62E9\u4E86:\n$file'
 		},
 		
 		// name of methods that should be automcatically intercepted so the plugin can disable
