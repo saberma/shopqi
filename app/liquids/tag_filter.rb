@@ -8,8 +8,8 @@ module TagFilter
     "<script src='#{input}' type='text/javascript'></script>"
   end
 
-  def img_tag(input)
-    "<img src='#{input}' alt='' />"
+  def img_tag(input, alt = nil)
+    "<img src='#{input}' alt='#{alt}' />"
   end
 
   def link_to(input, url)

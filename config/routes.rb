@@ -11,11 +11,11 @@ Shopqi::Application.routes.draw do
   # 前台商店
   constraints(Subdomain) do
     #match '/' => 'home#dashboard'
-    match '/' => 'shops#show'
-    #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
-    match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
 
     scope module: :shop do
+      match '/' => 'shops#show'
+      #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
+      match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
       get '/products/:handle' => 'products#show', as: :shop_product
     end
   end

@@ -22,7 +22,7 @@ class ProductDrop < Liquid::Drop
   end
 
   def images
-    [] #TODO:增加照片
+    ["/images/admin/no-image.gif"] #TODO:增加照片
   end
 
   def available

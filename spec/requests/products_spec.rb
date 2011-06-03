@@ -12,6 +12,11 @@ describe "Products", js: true do
 
   let(:psp) { Factory :psp, shop: shop, product_type: '游戏机', vendor: '索尼' }
 
+  before :each do
+    # 删除默认商品，方便测试
+    shop.products.clear
+    shop.reload
+  end
 
   ##### 新增 #####
   describe "GET /products/new" do
