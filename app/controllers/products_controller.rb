@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    images = params[:product][:images]
+    images = params[:product][:images] || []
     images.each_with_index do |i,pos|
       product.photos.build(product_image: i,position: pos)
     end
