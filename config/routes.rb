@@ -37,7 +37,7 @@ Shopqi::Application.routes.draw do
         post :duplicate
       end
 
-      resources :photos,only: :destroy do
+      resources :photos,only:[:destroy,:new,:create] do
         collection do
           post :sort
         end

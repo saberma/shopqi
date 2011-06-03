@@ -25,16 +25,22 @@
           %h3.section-header(style="margin-bottom: 0") 商品图片
           #product-image-area.group
             =render partial:'upload_photos',locals:{product:product}
+            #upload-label.action-container
+              .action-link.c(style="border-bottom: none" onclick="Element.show('upload-area');Element.hide('upload-label'); return false;")
+                %span
+                  %a.show-upload-link
+                    %span.plus +
+                    上传图片
+            .clearfix
           #upload-area.hide
             %p#status.hide
               =image_tag 'admin/icons/trash.gif', alt: '删除'
               %img.fr.st.pad(alt="Spinner" src="/images/spinner.gif")
-            %form#product-image-upload-form(accept-charset="UTF-8" action="/admin/products/39258582/images#upload-area" enctype="multipart/form-data" method="post")
-              %input#product_id(name="product[id]" type="hidden" value="39258582")
+            =form_for [product,photo], html: { multipart: true },remote: true do |p|
               %h4.st 上传图片
               %p.note 允许上传文件类型( .gif, .jpg, .jpeg, .png)
               %p#file-input.st.sb
-                =file_field_tag "image",id:"add-file"
+                =p.file_field :product_image,id:"add-file",onchange: "$('#new_photo').submit();"
           .sst.pl
             %h3 商品可见性
             %p.sb.note

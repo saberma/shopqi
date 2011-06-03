@@ -30,7 +30,8 @@ class ProductsController < ApplicationController
   expose(:tags) { shop.tags.previou_used(1) }
   expose(:custom_collections) { shop.custom_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
-  expose(:photos){product.photos}
+  expose(:photos){ product.photos }
+  expose(:photo){ Photo.new } 
 
   def index
     @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at]})

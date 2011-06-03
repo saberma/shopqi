@@ -13,10 +13,16 @@ class PhotosController < ApplicationController
     end
   end
 
+  def create
+    photo.save
+    flash[:notice] = notice_msg
+    redirect_to product_path(product)
+  end
+
   def sort
     params[:photo].each_with_index do |id, index|
       product.photos.find(id).update_attributes :position => index
     end
-    render :js => "markFeaturedImage()"
+    render js: "markFeaturedImage()"
   end
 end
