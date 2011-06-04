@@ -2,6 +2,7 @@
 class Shop < ActiveRecord::Base
   has_many :users             , dependent: :destroy
   has_many :products          , dependent: :destroy
+  has_many :variants          , through:   :products
   has_many :link_lists        , dependent: :destroy
   has_many :pages             , dependent: :destroy
   has_many :blogs             , dependent: :destroy
