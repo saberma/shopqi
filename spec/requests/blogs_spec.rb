@@ -3,8 +3,11 @@ require 'spec_helper'
 require 'shared_stuff'
 
 describe "Blogs" do
+
   include_context 'login liwh'
+
   describe "GET /admin/blogs" do
+
     it "works! ",js:true do
       visit pages_path
       #新增博客
@@ -14,7 +17,6 @@ describe "Blogs" do
       click_on '新增'
       page.should have_content('商品介绍')
       page.should have_content('启用评论')
-      Blog.all.size.should eql 1
       
 
       #修改博客
@@ -46,8 +48,8 @@ describe "Blogs" do
       visit blog_path(Blog.first)
       page.execute_script("window.confirm = function(msg) { return true; }")
       find('.del').click
-      Blog.all.size.should eql 0
-      
     end
+
   end
+
 end

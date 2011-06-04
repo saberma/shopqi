@@ -16,6 +16,10 @@ class PageDrop < Liquid::Drop
     @page = page
   end
 
+  def title
+    @page.title
+  end
+
   def content
     @page.body_html
   end

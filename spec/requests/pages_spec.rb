@@ -3,6 +3,7 @@ require 'spec_helper'
 require 'shared_stuff'
 
 describe "Pages" do
+
   describe "GET /admin/pages" do
 
     include_context 'login admin'
@@ -14,7 +15,6 @@ describe "Pages" do
       fill_in 'page[title]', with: 'welcome'
       click_on '保存'
       page.should have_content('welcome')
-      Page.all.size.should eql 1
 
       click_on '修改'
       fill_in 'page[title]', with: 'new-welcome'
@@ -28,5 +28,7 @@ describe "Pages" do
       find('.del').click
       page.should_not have_content('new-welcome')
     end
+
   end
+
 end

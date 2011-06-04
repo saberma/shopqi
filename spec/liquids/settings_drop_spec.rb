@@ -10,7 +10,7 @@ describe SettingsDrop do
 
   it 'should get value' do
     variant = "{{ settings.text_color }}"
-    result = "#444444"
+    result = "#000000"
     Liquid::Template.parse(variant).render(assign).should eql result
   end
 

@@ -46,7 +46,7 @@ describe ProductDrop do
   describe ProductOptionDrop do
 
     it 'should get json' do
-      result = {name: '标题'}
+      result = '标题'
       product_drop.options.first.as_json.should eql result
     end
 

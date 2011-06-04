@@ -3,13 +3,14 @@ require 'spec_helper'
 
 describe LinkListsDrop do
 
+  let(:shop) { Factory(:user).shop }
+
   describe LinkDrop do
 
     it 'should get the title' do
-      link = Link.new title: '首页', subject: '/'
-      link_drop = LinkDrop.new link
-      link_drop.title.should eql '首页'
-      link_drop.url.should eql '/'
+      variant = "{% for link in linklists.main-menu.links %}<span>{{ link.title }}</span>{% endfor %}"
+      result = "<span>首页</span><span>商品列表</span><span>关于我们</span>"
+      Liquid::Template.parse(variant).render('linklists' => LinkListsDrop.new(shop)).should eql result
     end
 
   end

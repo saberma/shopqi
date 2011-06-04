@@ -4,12 +4,16 @@ require 'spec_helper'
 describe LinkListsController do
   include Devise::TestHelpers
 
-  let(:link_list) { Factory(:link_list) }
+  let(:admin) { Factory(:user_admin) }
+
+  let(:shop) { admin.shop }
+
+  let(:link_list) { Factory(:link_list, shop: shop) }
   
-  let(:link_list_with_links) { Factory(:link_list_with_links) }
+  let(:link_list_with_links) { Factory(:link_list_with_links, shop: shop) }
 
   before :each do
-    sign_in(Factory(:user_admin))
+    sign_in(admin)
   end
 
   context '#update' do

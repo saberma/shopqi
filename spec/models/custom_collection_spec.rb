@@ -5,6 +5,12 @@ describe CustomCollection do
 
   let(:shop) { Factory(:user).shop }
 
+  before :each do
+    # 删除默认记录，方便测试
+    shop.custom_collections.clear
+    shop.reload
+  end
+
   context '#create' do
 
     context '(without handle)' do

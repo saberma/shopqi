@@ -5,9 +5,15 @@ describe ProductObserver do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:iphone4) { Factory :iphone4, shop: shop, product_type: '智能手机', vendor: 'Apple' }
+  let(:iphone4) { Factory :iphone4, shop: shop }
 
-  let(:psp) { Factory :psp, shop: shop, product_type: '游戏机', vendor: 'Sony' }
+  let(:psp) { Factory :psp, shop: shop }
+
+  before :each do
+    # 删除默认商品，方便测试
+    shop.products.clear
+    shop.reload
+  end
 
   context '(brand new product type)' do
     it "should be insert" do
