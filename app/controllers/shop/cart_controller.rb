@@ -9,7 +9,7 @@ class Shop::CartController < Shop::ApplicationController
     # 格式: variant_id|quantity;variant_id|quantity
     cart = cookies['cart'].split(';').map {|item| item.split('|')}
     cart_hash = Hash[*cart.flatten]
-    cart_hash[params[:id]] = cart_hash[params[:id]].to_i + params[:quantity].to_i
+    cart_hash[params[:id]] = cart_hash[params[:id]].to_i + 1
     cookies['cart'] = cart_hash.to_a.map{|item| item.join('|')}.join(';')
     redirect_to cart_path
   end
