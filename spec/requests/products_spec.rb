@@ -362,12 +362,12 @@ describe "Products", js: true do
       it "should show inventory" do
         visit products_path
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") do
-          has_content?('psp').should be_true
+          has_content?('iphone4').should be_true
           has_content?('默认标题').should be_true
           has_content?('∞').should be_true
         end
         within(:xpath, "//table[@id='product-table']/tbody/tr[2]") do
-          has_content?('iphone4').should be_true
+          has_content?('psp').should be_true
           has_content?('默认标题').should be_true
           has_content?('∞').should be_true
         end
@@ -386,10 +386,13 @@ describe "Products", js: true do
         select '发布'
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_false } #隐藏提示消失
         select '热门商品'
-        shop.products.where(title: 'psp').first.collections.first.title.should eql '热门商品'
+        title = ''
+        within(:xpath, "//table[@id='product-table']/tbody/tr[1]/td[3]") { title = find('a').text }
+        product = shop.products.where(title: title).first
+        product.collections.first.title.should eql '热门商品'
         page.execute_script("window.confirm = function(msg) { return true; }")
         select '删除'
-        within("#product-table") { has_no_content?('psp').should be_true }
+        within("#product-table") { has_no_content?(title).should be_true }
       end
 
       # 库存视图

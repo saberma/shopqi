@@ -16,7 +16,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get title' do
-    variant_drop.title.should eql '标题'
+    variant_drop.title.should eql '默认标题'
   end
 
   it 'should get price' do
