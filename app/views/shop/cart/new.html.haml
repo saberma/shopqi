@@ -1,0 +1,180 @@
+!!!
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
+  %head
+    %meta(http-equiv="content-type" content="text/html; charset=UTF-8")
+    %meta(http-equiv="X-UA-Compatible" content="chrome=1")
+    %meta(http-equiv="imagetoolbar" content="no")
+    %meta(name="MSSmartTagsPreventParsing" content="true")
+    %title 鞋子 - 结帐
+    =stylesheet_link_tag "forms","checkout"
+    /[if lt IE 7]
+      =stylesheet_link_tag "ie-checkout"
+    %link(href="#{@shop.theme.asset_relative_path('checkout.css')}" media="screen" rel="stylesheet" type="text/css")
+  %body
+    #info-bar
+      =image_tag 'admin/icons/lock.gif'
+      %span 您现在浏览的是加密的服务器。
+    #container
+      #header
+        #logo
+          / css hook for logos
+        %h1#tagline
+          %span.title 鞋子
+          %span.subtitle 创建您的订单
+      #main
+        / begin overview
+        #overview.clearfix
+          #products
+            %h2 您购买了&hellip;
+            %table#thumbs(cellspacing="0" cellpadding="0")
+              %tr
+                %td
+                  %div=image_tag 'admin/no-image-thumb.gif', alt:'商品无图片...', class: :images
+                  %h3.plisthead(title="Public-key 6th generation synergy") Public-key 6th generation synergy
+                  %span.plist-line-price 1x $19.00
+          #wallet
+            %span#cost
+              $19.00
+              =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
+            %br
+            %span#steps 步骤 1 之 2
+          %div(style="clear:left")
+        /
+          \/end overview
+        #content
+          %form#order_new.order_new(accept-charset="UTF-8" action="/carts/726342/b3c937559763adb78f4329a4a9803e56/create_order" method="post")
+            #email
+              %label(for="order_email") 您的 Email 地址
+              %input#order_email(name="order[email]" size="30" tabindex="1" type="text" value="")
+            / begin addresses
+            #addresses.group.clearfix
+              .gleft
+                %h3 发单地址
+                %table#billing.form(cellspacing="0" cellpadding="0")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_first_name") 名
+                    %td
+                      %input#billing_address_first_name.short(name="billing_address[first_name]" size="30" tabindex="2" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_last_name") 姓
+                    %td
+                      %input#billing_address_last_name.short(name="billing_address[last_name]" size="30" tabindex="3" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_company") 公司
+                    %td
+                      %input#billing_address_company.short(name="billing_address[company]" size="30" tabindex="4" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_address1") 地址
+                    %td(style="width: 260px")
+                      %input#billing_address_address1(name="billing_address[address1]" size="30" tabindex="5" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_address2") 地址 续
+                    %td(style="width: 260px")
+                      %input#billing_address_address2(autocomplete="off" name="billing_address[address2]" size="30" tabindex="6" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_city") 城市
+                    %td
+                      %input#billing_address_city.medium(name="billing_address[city]" size="30" tabindex="7" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_zip") 邮政编码
+                    %td
+                      %input#billing_address_zip.short(name="billing_address[zip]" size="30" tabindex="8" type="text")
+                  %tr
+                    %td(colspan="2" style="width: 360px")
+                      %ul.inline
+                        %li(style="width: 160px")
+                          %label(for="billing_address_country") 国家
+                          %select#billing_address_country(name="billing_address[country]" style="width:150px" tabindex="9")
+                            %option(value="")
+                              \- 请选择 --
+                            %option(value="United States" selected="selected")
+                              United States
+                        %li#billing_address_province_li(style="width: 160px;margin-right: 5px")
+                          %label#billing_zonelabel(for="billing_address_province") 地区
+                          %input#billing_address_province(name="billing_address[province]" size="30" style="width:150px" tabindex="10" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="billing_address_phone") 电话
+                    %td
+                      %input#billing_address_phone.short(name="billing_address[phone]" size="30" tabindex="11" type="text")
+                  %tr#billing-is-shipping
+                    %td(colspan="2")
+                      %input#shipping-toggle(type="checkbox" name="billing_is_shipping" checked="checked" style="width: auto" tabindex="12")
+                      %label(for="shipping-toggle") 将货品发送至发单地址
+              .gright
+                %h3 发货地址
+                #shipping-same.address-notification(style="display:none;")
+                  %span 货品将会被发送至您的发单地址.
+                %table#shipping.form(cellspacing="0" cellpadding="0")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_first_name") 名
+                    %td
+                      %input#shipping_address_first_name.short(name="shipping_address[first_name]" size="30" tabindex="21" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_last_name") 姓
+                    %td
+                      %input#shipping_address_last_name.short(name="shipping_address[last_name]" size="30" tabindex="22" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_company") 公司
+                    %td
+                      %input#shipping_address_company.short(name="shipping_address[company]" size="30" tabindex="23" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_address1") 地址
+                    %td(style="width: 260px")
+                      %input#shipping_address_address1(name="shipping_address[address1]" size="30" tabindex="24" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_address2") 地址 续
+                    %td(style="width: 260px")
+                      %input#shipping_address_address2(autocomplete="off" name="shipping_address[address2]" size="30" tabindex="25" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_city") 城市
+                    %td
+                      %input#shipping_address_city.medium(name="shipping_address[city]" size="30" tabindex="26" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_zip") 邮政编码
+                    %td
+                      %input#shipping_address_zip.short(name="shipping_address[zip]" size="30" tabindex="27" type="text")
+                  %tr
+                    %td(colspan="2")
+                      %ul.inline
+                        %li(style="width: 150px; margin-right: 10px")
+                          %label(for="shipping_address_country") 国家
+                          %select#shipping_address_country(name="shipping_address[country]" style="width:150px" tabindex="28")
+                            %option(value="") -- 请选择 --
+                            %option(value="United States" selected="selected") United States
+                            %option(value="") ---
+                            %option(value="Afghanistan") Afghanistan
+                        %li#shipping_address_province_li(style="width: 150px")
+                          %label#shipping_zonelabel(for="shipping_address_province") 地区
+                          %input#shipping_address_province(name="shipping_address[province]" size="30" style="width:150px" tabindex="29" type="text")
+                  %tr
+                    %td.lbl
+                      %label(for="shipping_address_phone") 电话
+                    %td
+                      %input#shipping_address_phone.short(name="shipping_address[phone]" size="30" tabindex="30" type="text")
+              %div(style="clear: both")
+            / end addresses
+            #buttons
+              %input#commit-button(name="commit" tabindex="40" type="submit" value="去到下一步")
+              %small#cancel-purchase
+                或
+                %a(href="http://#{@shop.permanent_domain}.myshopqi.com") 回到商店
+      #footer
+        #shop-policies(style="text-align:center; font-size: 11px;")
+        %p 保留一切权利 &copy; 2011 鞋子.
+    / This element is required to read the background color for highlight effects in custom checkout stylesheets
+    #wallet-highlight.wallet-highlight(style="display: none;")

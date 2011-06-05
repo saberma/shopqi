@@ -23,7 +23,20 @@ class Shop::CartController < Shop::ApplicationController
       cart_hash[variant_id] = quantity.to_i
     end
     save_cookie_cart(cart_hash)
-    redirect_to cart_path
+    if params[:checkout].blank?
+      redirect_to cart_path
+    else
+      checkout_url = "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{shop.id}"
+      redirect_to checkout_url
+    end
+  end
+
+  # 订单提交
+  def new
+    @shop = Shop.find(params[:shop_id])
+  end
+
+  def create
   end
 
   private

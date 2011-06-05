@@ -23,6 +23,11 @@ Shopqi::Application.routes.draw do
     end
   end
 
+  # 订单页面
+  scope module: :shop do
+    get '/carts/:shop_id' => 'cart#new', constraints: { subdomain: 'checkout' }
+  end
+
   match "/admin" => "home#dashboard"
   match "/admin/general_preferences" => "shops#edit"
 
