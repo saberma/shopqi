@@ -31,24 +31,4 @@ class Shop::CartController < Shop::ApplicationController
     end
   end
 
-  # 订单提交
-  def new
-    @shop = Shop.find(params[:shop_id])
-  end
-
-  def create
-  end
-
-  private
-  def cookie_cart_hash
-    cookies['cart'] = '' if cookies['cart'].nil?
-    # 格式: variant_id|quantity;variant_id|quantity
-    cart = cookies['cart'].split(';').map {|item| item.split('|')}
-    Hash[*cart.flatten]
-  end
-
-  def save_cookie_cart(cart_hash)
-    cart_hash.delete_if {|key, value| value.zero?}
-    cookies['cart'] = cart_hash.to_a.map{|item| item.join('|')}.join(';')
-  end
 end

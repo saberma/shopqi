@@ -9,6 +9,7 @@ class Shop < ActiveRecord::Base
   has_many :smart_collections , dependent: :destroy
   has_many :custom_collections, dependent: :destroy
   has_many :tags              , dependent: :destroy
+  has_many :orders            , dependent: :destroy
   has_one  :theme             , dependent: :destroy, class_name: 'ShopTheme'
 
   has_many :types             , dependent: :destroy, class_name: 'ShopProductType'

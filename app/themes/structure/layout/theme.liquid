@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<title>{{ shop.name | escape }} &mdash; {% if template == "404" %}Page Not Found{% else %}{{ page_title | escape }}{% endif %}</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="copyright" content="{{ shop.name | escape }}" />
+	{{ content_for_header }}
+	{{ "screen.css" | asset_url | stylesheet_tag }}
+	{{ "theme.css" | asset_url | stylesheet_tag }}
+	<!--[if lte IE 6]>{{ "ie6.css" | asset_url | stylesheet_tag }}<![endif]-->{% if template == "product" %}{% if product.available %}{% if product.variants.size > 1 %}
+	{{ "option_selection.js" | shopify_asset_url | script_tag }}{% endif %}{% endif %}{% endif %}
+	{{ "jquery-1-3-1.js" | asset_url | script_tag }}{% if template == "product" %}
+	{{ "jquery-slimbox-2-02.js" | asset_url | script_tag }}{% endif %}
+	{{ "jquery-theme-1-0.js" | asset_url | script_tag }}
+</head>
+
+<body>
+	<!-- START HEADER -->
+	<div id="header">
+		<div class="container clear">
+			<!-- START LOGO -->{% if settings.logo == "enabled" %}
+			<div class="logo{% if settings.logo_width == "wide" %} wide{% endif %}">
+				<a href="/"><img src="{{ "logo.png" | asset_url }}" alt="{{ shop.name | escape }}" /></a>
+			</div>{% else %}
+			<h2{% if settings.title_width == "wide" %} class="wide"{% endif %}><a href="/">{{ shop.name | escape }}</a></h2>{% endif %}
+			<!-- END LOGO -->
+			<!-- START NAVIGATE -->
+			<div class="navigate{% if settings.logo_width == "wide" or settings.title_width == "wide" %} pad{% endif %}">
+				<!-- START GOCART -->
+				<div id="gocart">
+					<p><a href="/cart">Your Cart</a> ({{ cart.item_count }})</p>
+				</div>
+				<!-- END GOCART -->
+				<!-- START NAV -->{% capture active_url %}{% if template == "index" %}/{% elsif template == "collection" %}/collections/{{ collection.handle }}{% elsif template == "product" %}{% if collection %}/collections/{{ collection.handle }}{% endif %}/products/{{ product.handle }}{% elsif template == "page" %}/pages/{{ page.handle }}{% elsif template == "blog" %}/blogs/{{ blog.handle }}{% elsif template == "cart" %}/cart{% elsif template == "search" %}/search{% endif %}{% endcapture %}
+				<ul id="nav" class="clear">{% for link in linklists.main-menu.links %}
+					<li><a href="{{ link.url }}"{% if link.url == active_url %} class="active"{% endif %}>{{ link.title | escape }}</a></li>{% endfor %}
+				</ul>
+				<!-- END NAV -->
+			</div>
+			<!-- END NAVIGATE -->
+		</div>
+	</div>
+	<!-- END HEADER -->
+	<!-- START FINDER -->
+	<div id="finder">
+		<div class="container">
+			<div class="clear">
+				<form method="get" action="/search">
+					<input type="text" name="q" value="{% if search.performed %}{{ search.terms | escape | downcase }}{% else %}Search...{% endif %}" class="field" /> 
+					<input type="image" src="{{ settings.finder_go_image | asset_url }}" alt="Go" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- END FINDER -->
+	<!-- START CONTENT -->
+	<div id="{% if template == "404" %}missing{% else %}{{ template }}{% endif %}" class="content">
+		<div class="container clear">{% if template == "page" or template == "blog" or template == "article" %}
+			<!-- START MAIN -->
+			<div id="main">
+				{{ content_for_layout }}
+			</div>
+			<!-- END MAIN -->
+			<!-- START SIDEBAR -->
+			<div id="sidebar">
+				<!-- START POSTS -->
+				<div id="posts">
+					<div class="bg">
+						<h3>Latest Posts</h3>{% if blogs.news.articles.size > 0 %}{% for article in blogs.news.articles limit: 2 %}
+						<!-- START POST {{ forloop.index }} -->
+						<div class="post">
+							<h5><a href="{{ article.url }}">{{ article.title | escape }}</a></h5>
+							<h6>by {{ article.author }} on {{ article.created_at | date: "%d %B" }}</h6>
+							<p>{{ article.content | strip_html | strip_newlines | truncate: 95 }}</p>
+						</div>
+						<!-- END POST {{ forloop.index }} -->{% endfor %}{% else %}
+						<p><a href="/admin/blogs/new">Create a blog</a> with handle <strong>news</strong> for articles to show here.</p>{% endif %}
+						<p id="feed"><a href="{{ shop.url }}/blogs/news.atom">RSS Feed</a></p>
+					</div>
+				</div>
+				<!-- END POSTS -->{% if settings.featured == 'enabled' %}
+				<!-- START FEATURED -->
+				<div id="featured">
+					<div class="bg">
+						<h3>Featured Products</h3>{% if collections.featured.products.size > 0 %}{% for product in collections.featured.products limit: 3 %}
+						<!-- START PRODUCT -->
+						<div class="product{% if forloop.last %} end{% endif %} clear">
+							<!-- START IMAGE -->
+							<div class="image">
+								<a href="{{ product.url | within: collections.all }}"><img src="{{ product.images[0] | product_img_url: "thumb" }}" alt="{{ product.title | escape }}" /></a>
+							</div>
+							<!-- END IMAGE -->
+							<!-- START TITLE -->
+							<div class="title">
+								<h5><a href="{{ product.url | within: collections.all }}">{{ product.title | escape }}</a></h5>
+								<h6>{{ product.price | money }}</h6>
+							</div>
+							<!-- END TITLE -->
+						</div>
+						<!-- END PRODUCT -->{% endfor %}{% else %}
+						<p><a href="/admin/custom_collections">Create a collection</a> with handle <strong>featured</strong> for products to show here. You can also hide that box in your {{ 'theme settings' | link_to: '/admin/themes/settings' }} in the <strong>Sidebar</strong> section.</p>{% endif %}
+					</div>
+				</div>
+				<!-- END FEATURED -->{% endif %}
+			</div>
+			<!-- END SIDEBAR -->{% else %}
+			{{ content_for_layout }}{% endif %}
+		</div>
+	</div>
+	<!-- END CONTENT -->
+	<!-- START OVERVIEW -->
+	<div id="overview">
+		<div class="container">
+			<ul class="titles clear">
+				<li>
+					<h3>{{ pages.about-us.title | escape }}</h3>
+				</li>
+				<li>
+					<h3>From Our Blog</h3>
+				</li>{% if settings.newsletter == "enabled" %}
+				<li>
+					<h3>Newsletter</h3>
+				</li>{% endif %}
+			</ul>
+			<ul class="clear">
+				<li>{% if pages.about-us.content.size > 0 %}
+					<p>{{ pages.about-us.content | strip_html | strip_newlines | truncate: 225 }}</p>
+					<p><a href="/pages/about-us">Read More</a></p>{% else %}
+					<p>Create a page with handle <strong>about-us</strong> for content to show here.</p>
+					<p><a href="/admin/pages/new">Add Page</a></p>{% endif %}
+				</li>
+				<li>{% if blogs.news.articles.size > 0 %}{% for article in blogs.news.articles limit: 1 %}
+					<h5><a href="{{ article.url }}">{{ article.title | escape }}</a></h5>
+					<h6>Posted by {{ article.author }} on {{ article.created_at | date: "%d %B" }}</h6>
+					<p>{{ article.content | strip_html | strip_newlines | truncate: 150 }}</p>{% endfor %}{% else %}
+					<p>Create a blog with handle <strong>news</strong> for content to show here.</p>
+					<p><a href="/admin/blogs/new">Add Blog</a></p>{% endif %}
+				</li>{% if settings.newsletter == "disabled" %}{% if blogs.news.articles.size > 1 %}
+				<li>{% for article in blogs.news.articles offset: 1 limit: 1 %}
+					<h5><a href="{{ article.url }}">{{ article.title | escape }}</a></h5>
+					<h6>Posted by {{ article.author }} on {{ article.created_at | date: "%d %B" }}</h6>
+					<p>{{ article.content | strip_html | strip_newlines | truncate: 150 }}</p>{% endfor %}
+				</li>{% endif %}{% else %}
+				<li class="newsletter">
+					<form method="post" action="{{ settings.newsletter_action }}">
+						<label for="name">Subscribe to our newsletter</label>
+						<p><input type="text" value="First Name..." name="{{ settings.newsletter_first_name }}" id="fname" class="field" /></p>
+						<p><input type="text" value="Last Name..." name="{{ settings.newsletter_last_name }}" id="lname" class="field" /></p>
+						<p><input type="text" value="Email Address..." name="{{ settings.newsletter_email }}" id="email" class="field" /></p>
+						<input type="image" src="{{ settings.overview_subscribe_image | asset_url }}" alt="Subscribe" />
+					</form>
+				</li>{% endif %}
+			</ul>
+		</div>
+	</div>
+	<!-- END OVERVIEW -->
+	<!-- START FOOTER -->
+	<div id="footer">
+		<div class="container clear">
+			<p>&copy; {{ "now" | date: "%Y" }} {{ shop.name | escape }}. {{ powered_by_link }}.</p>{% if linklists.footer.links.size > 0 %}
+			<p class="links">{% for link in linklists.footer.links %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% unless forloop.last %} <span>&#124;</span> {% endunless %}{% endfor %}</p>{% endif %}
+		</div>
+	</div>
+	<!-- END FOOTER -->{% if template == "product" %}{% if product.available %}{% if product.variants.size > 1 %}
+	<script type="text/javascript">
+		// <![CDATA[
+		var selectCallback = function(variant, selector) {
+			if (variant && variant.available == true) {
+				$("input#add").removeClass("disabled").removeAttr("disabled");
+				$("h2#price span").html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}"));
+				if ($("h2#price del").length > 0) {
+					$("h2#price del").html(Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}"));
+				};
+			} else {
+				$("input#add").addClass("disabled").attr("disabled", "disabled");
+				var message = variant ? "Sold Out" : "Unavailable";
+				$("h2#price span").text(message);
+				if ($("h2#price del").length > 0) { $("h2#price del").text(""); };
+			}
+		};
+		$(function() {
+			new Shopify.OptionSelectors("id", { product: {{ product | json }}, onVariantSelected: selectCallback });
+			// Using trick by Caroline Schnapp. See http://forums.shopify.com/categories/2/posts/38738
+			{% if product.available %}
+			{% assign found_one_in_stock = false %}
+			{% for variant in product.variants %}
+			  {% if variant.available and found_one_in_stock == false %}
+			    {% assign found_one_in_stock = true %}
+			    {% for option in product.options %}
+			      $('#id-option-' + {{ forloop.index0 }}).val('{{ variant.options[forloop.index0] }}').trigger('change');
+			    {% endfor %}
+			  {% endif %}
+			{% endfor %}
+			{% endif %}
+		});
+		// ]]>
+	</script>{% endif %}{% endif %}{% endif %}
+</body>
+</html>
