@@ -23,6 +23,7 @@ class CustomCollection < ActiveRecord::Base
   def ordered_products
     collection_products.ordered("products.#{self.products_order.sub '.', ' '}")
   end
+
 end
 
 #集合关联的商品

@@ -46,4 +46,5 @@ module ApplicationHelper
     str += I18n.t("activerecord.models.#{model}") if model
     str
   end
+
 end

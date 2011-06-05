@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
   expose(:product)
   expose(:product_json) do
     product.to_json({
-      include: { options: { methods: :value, except: [ :created_at, :updated_at ] } },
+      include: { options: { methods: :value, except: [ :created_at, :updated_at ] },photos: {methods: :icon} },
       methods: [:tags_text, :collection_ids],
       except: [ :created_at, :updated_at ]
     })
@@ -30,9 +30,11 @@ class ProductsController < ApplicationController
   expose(:tags) { shop.tags.previou_used(1) }
   expose(:custom_collections) { shop.custom_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
+  expose(:photos){ product.photos }
+  expose(:photo){ Photo.new } 
 
   def index
-    @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at]})
+    @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at],methods:[:index_photo]})
   end
 
   def inventory
@@ -42,10 +44,14 @@ class ProductsController < ApplicationController
   def new
     #保证至少有一个款式
     product.variants.build if product.variants.empty?
-    product.photos.build
   end
 
   def create
+    images = params[:product][:images] || []
+    images.each_with_index do |i,pos|
+      product.photos.build(product_image: i,position: pos)
+    end
+    #保存商品图片
     if product.save
       redirect_to product_path(product), notice: "新增商品成功!"
     else

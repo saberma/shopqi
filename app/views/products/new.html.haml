@@ -1,6 +1,5 @@
 - use_kindeditor
-=content_for :javascripts do
-  =javascript_include_tag 'models/product', 'collections/product_options', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'controllers/products'
+-use_javascripts 'models/product', 'collections/product_options', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'controllers/products','jquery.MultiFile'
 
 %h2#title 新增商品
 #action-links
@@ -134,20 +133,14 @@
         / product images
         %td(style="width: 275px; padding: 0pt 0pt 0pt 10px;")
           %h3.section-header(style="margin-bottom: 0") 商品图片
-          #product-image-area.group(style="border-bottom: none; padding-top: 0")
-            #pending-files.hide
-            #file-selectors.hide
-            %ul#attachments.nobull
-              %li#no-product-images-msg.item.note.c
-                %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")/
           #upload-area
             %h4.st 上传图片
             %p.note 允许上传文件类型( .gif, .jpg, .jpeg, .png)
             %p#file-input.st.sb
-              =f.fields_for :photos do |p|
-                =p.file_field :product_image
+              =file_field_tag 'product[images][]', :class => 'multi nofixed'
+
   %p.btns.cl
-    =f.submit "保存", id:"create-product-btn", class: :btn
+    =f.submit w('save'), id:"create-product-btn", class: :btn
     =w('or')
     =link_to w('cancel'), products_path
 / end div.main

@@ -38,6 +38,13 @@ Shopqi::Application.routes.draw do
         put :update_published
         post :duplicate
       end
+
+      resources :photos,only:[:destroy,:new,:create] do
+        collection do
+          post :sort
+        end
+      end
+
       resources :product_variants, path: :variants, except: [:index, :new, :edit] do
         collection do
           post :sort

@@ -41,6 +41,7 @@ App.Controllers.Products = Backbone.Controller.extend
         inventory_management_relate.show()
     $("select.inventory_management").change()
 
+
     #标签
     $('#tag-list a').click ->
       $(this).toggleClass('active')
@@ -60,6 +61,16 @@ App.Controllers.Products = Backbone.Controller.extend
         else
           $(this).removeClass('active')
     .keyup()
+
+    #显示上传图片的form
+    $('.show-upload-link').click ->
+      $(this).hide()
+      $("#upload-area").toggle()
+
+    #照片排序
+    $("#image_list").sortable handle: '.image-drag', update: (event,ui) ->
+      $.post $(this).attr('url'), $(this).sortable('serialize')
+
 
   routes:
     "nothing":      "nothing"

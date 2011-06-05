@@ -17,6 +17,7 @@ class CreateProducts < ActiveRecord::Migration
     create_table :photos do |t|
       t.references :product
       t.string :product_image_uid
+      t.integer :position     , comment: '排序序号'
 
       t.timestamps
     end

@@ -13,3 +13,4 @@ window.msg = function(text){
 window.error_msg = function(text){
   $('#flasherrors').html(text).fadeIn(100).delay(2000).fadeOut(500)
 }
+

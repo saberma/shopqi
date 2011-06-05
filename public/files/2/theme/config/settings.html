@@ -1,0 +1,175 @@
+<fieldset>
+  <legend>Colors</legend>
+  <table>
+    <tr>
+      <td><label for="backdrop">Backdrop</label></td>
+      <td><input id="backdrop" name="backdrop" class="color" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="top_nav_bg">Top Navigation Background</label></td>
+      <td><input id="top_nav_bg" name="top_nav_bg" class="color" value="#f38dbc" /></td>
+    </tr>
+    <tr>
+      <td><label for="top_nav_links">Top Navigation Links</label></td>
+      <td><input id="top_nav_links" name="top_nav_links" class="color" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="top_nav_links_hover">Top Navigation Links (hover)</label></td>
+      <td><input id="top_nav_links_hover" name="top_nav_links_hover" class="color" value="#333333" /></td>
+    </tr>
+    <tr>
+      <td><label for="site_title_color">Site title</label></td>
+      <td><input id="site_title_color" name="site_title_color" class="color" value="#000000" /></td>
+    </tr>
+  
+    <tr>
+      <td><label for="header_color">Headers</label></td>
+      <td><input id="header_color" name="header_color" class="color" value="#444444" /></td>
+    </tr>
+    <tr>
+      <td><label for="text_color">Regular text</label></td>
+      <td><input id="text_color" name="text_color" class="color" value="#444444" /></td>
+    </tr>
+    <tr>
+      <td><label for="links_color">Links</label></td>
+      <td><input id="links_color" name="links_color" class="color" value="#3b97f4" /></td>
+    </tr>
+    <tr>
+      <td><label for="articles_bg">Articles Background</label></td>
+      <td><input id="articles_bg" name="articles_bg" class="color" value="#f9f9f9" /></td>
+    </tr>
+  </table>
+
+  <h3>Side Navigation Links</h3>
+  <table>
+    <tr>
+      <td><label for="nav_link_color">Links</label></td>
+      <td><input id="nav_link_color" name="nav_link_color" class="color" value="#366da5" /></td>
+    </tr>
+    <tr>
+      <td><label for="nav_link_hover_color">Links (hover)</label></td>
+      <td><input id="nav_link_hover_color" name="nav_link_hover_color" class="color" value="#f5f5f5" /></td>
+    </tr>
+    <tr>
+      <td><label for="side_header">Side Nav Header</label></td>
+      <td><input id="side_header" name="side_header" class="color" value="#f5f5f5" /></td>
+    </tr>
+    <tr>
+      <td><label for="side_bg">Side Navigation Background</label></td>
+      <td><input id="side_bg" name="side_bg" class="color" value="#f9f9f9" /></td>
+    </tr>
+  </table>
+
+
+  <h3>Footer</h3>
+  <table>
+    <tr>
+      <td><label for="footer_nav_bg">Footer Navigation Background</label></td>
+      <td><input id="footer_nav_bg" name="footer_nav_bg" class="color" value="#93afd1" /></td>
+    </tr>
+    <tr>
+      <td><label for="footer_links">Footer Links</label></td>
+      <td><input id="footer_links" name="footer_links" class="color" value="#333333" /></td>
+    </tr>
+    <tr>
+      <td><label for="footer_text">Footer Text</label></td>
+      <td><input id="footer_text" name="footer_text" class="color" value="#333333" /></td>
+    </tr>
+  </table>
+
+</fieldset>
+<fieldset>
+  <legend>Typography</legend>
+  <table>
+    <tr>
+      <td><label for="header_font">Headers</label></td>
+      <td>
+        <select class="font" name="header_font" id="header_font"><option value="Helvetica, Arial, sans-serif" selected="selected">Helvetica, Arial, sans-serif</option><option value="Helvetica, Arial, sans-serif">Helvetica/Arial</option>
+          <option value="Helvetica,Arial,Sans-Serif">Helvetica/Arial</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="header_letter_spacing">Header letter spacing</label>
+      </td>
+      <td>
+        <select name="header_letter_spacing" id="header_letter_spacing">
+          <option value="-0.1em">Narrow</option>
+          <option value="0">Regular</option>
+          <option value="0.1em" selected="selected">Wide</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label for="regular_font">Regular text</label></td>
+      <td>
+        <select class="font" name="regular_font" id="regular_font"><option value="Helvetica, Arial, sans-serif" selected="selected">Helvetica/Arial</option><option value="Helvetica, Arial, sans-serif">Helvetica/Arial</option>
+          <option value="Helvetica,Arial,Sans-Serif">Helvetica/Arial</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>Background Image</legend>
+  <table>
+    <tr>
+      <td><label for="use_bg_image">Use a background image?</label></td>
+      <td><input type="checkbox" id="use_bg_image" name="use_bg_image" value="1" /></td>
+    </tr>
+    <tr>
+      <td>Image</td>
+      <td><input type="file" id="bg_image" name="bg.gif" /></td>
+    </tr>
+    <tr>
+      <td><label for="bg_image_position">Position</label></td>
+      <td id="bg_image_position">
+        <select name="bg_image_y_position" id="bg_image_y_position">
+          <option value="top" selected="selected">Top</option>
+          <option value="center">Center</option>
+          <option value="bottom">Bottom</option>
+        </select>
+        <select name="bg_image_x_position" id="bg_image_x_position">
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right" selected="selected">Right</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="bg_image_repeat">Tiling</label></td>
+      <td>
+        <select name="bg_image_repeat" id="bg_image_repeat">
+          <option value="no-repeat" selected="selected">Do not tile</option>
+          <option value="repeat-x">Tile horizontally</option>
+          <option value="repeat-y">Tile vertically</option>
+          <option value="repeat">Tile everywhere</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="bg_image_attachment">Scrolling</label></td>
+      <td>
+        <select name="bg_image_attachment" id="bg_image_attachment">
+          <option value="scroll">Scrolls with page</option>
+          <option value="fixed" selected="selected">Stays fixed</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>Site logo</legend>
+  <table>
+    <tr>
+      <td><label for="use_logo_image">Use your own logo?</label></td>
+      <td><input type="checkbox" id="use_logo_image" name="use_logo_image" value="1" /></td>
+    </tr>
+    <tr>
+      <td>Image</td>
+      <td><input type="file" id="logo_image" name="logo.png" data-max-height="100" data-max-width="900" /></td>
+    </tr>
+  </table>
+</fieldset>
