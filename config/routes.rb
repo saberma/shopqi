@@ -19,6 +19,7 @@ Shopqi::Application.routes.draw do
       get '/products/:handle' => 'products#show'
       post '/cart/add' => 'cart#add'
       get '/cart' => 'cart#show'
+      post '/cart' => 'cart#update'
     end
   end
 
