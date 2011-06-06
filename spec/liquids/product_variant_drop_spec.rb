@@ -20,7 +20,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get price' do
-    variant_drop.price.should eql 3000
+    variant_drop.price.should eql 3000.0
   end
 
   it 'should get compare_at_price' do

@@ -63,7 +63,6 @@ describe CartDrop do
 
       it 'should get line_price' do
         text = "{% for item in cart.items %}{{ item.line_price | money }}{% endfor %}"
-        p Liquid::Template.parse(text).render(assign)
         Liquid::Template.parse(text).render(assign).should eql "#{variant.price}"
       end
 
