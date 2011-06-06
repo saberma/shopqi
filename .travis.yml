@@ -2,7 +2,7 @@ rvm:
   - 1.9.2
 
 script:
- - "bundle exec rake db:drop db:create db:migrate --trace 2>&1"
+ - "bundle exec rake db:drop db:create db:migrate && bundle exec rspec spec --trace 2>&1"
 
 env: "LANG='en_US.UTF-8' RAILS_ENV='test'"
 

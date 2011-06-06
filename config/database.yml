@@ -38,11 +38,11 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  #host: localhost
+  #host: localhost #travis-ci的服务器只支持此认证
   database: travis_test
   pool: 5
   min_messages: warning
-  #username: postgres
+  username: postgres
   #password:
 
 production:
