@@ -38,7 +38,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  #host: localhost
+  #host: localhost #travis-ci的服务器不允许host
   database: shopqi_test
   pool: 5
   #username: postgres #travis-ci的服务器只支持此空用户名认证
