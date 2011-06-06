@@ -38,11 +38,12 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  host: localhost
+  #host: localhost
   database: travis_test
   pool: 5
-  username: postgres
-  password:
+  min_messages: warning
+  #username: postgres
+  #password:
 
 production:
   adapter: postgresql
