@@ -1,7 +1,9 @@
 rvm:
   - 1.9.2
 
-env: "LANG='en_US.UTF-8'"
+script: "rake db:drop db:create db:migrate && bundle exec rspec spec"
+
+env: "LANG='en_US.UTF-8' RAILS_ENV='test'"
 
 notifications:
   recipients:
