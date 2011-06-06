@@ -1,6 +1,7 @@
 rvm:
   - 1.9.2
-  - jruby
+
+env: "LANG='en_us.UTF-8'"
 
 notifications:
   recipients:
