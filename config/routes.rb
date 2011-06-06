@@ -26,8 +26,10 @@ Shopqi::Application.routes.draw do
   # 订单页面
   constraints(subdomain: 'checkout') do
     scope module: :shop do
-      get '/carts/:shop_id' => 'order#new'
+      get '/carts/:shop_id' => 'order#address'
       post '/carts/:shop_id/create_order' => 'order#create'
+      get '/orders/:shop_id/pay' => 'order#pay'
+      get '/orders/:shop_id/commit' => 'order#create', as: :commit_order
     end
   end
 

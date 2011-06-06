@@ -1,5 +1,5 @@
 class Shop::OrderController < Shop::ApplicationController
-  layout nil
+  layout 'shop/checkout'
 
   expose(:shop) { Shop.find(params[:shop_id]) }
 
@@ -23,11 +23,35 @@ class Shop::OrderController < Shop::ApplicationController
     end.sum
   end
 
-  # 订单提交
-  def new
+  # 订单提交Step1
+  def address
+    session[:order_params] ||= {}
     order.build_billing_address if order.billing_address.nil?
+    order.build_shipping_address if order.shipping_address.nil?
+  end
+
+  # 发货方式、付款方式Step2
+  def pay
   end
 
   def create
+    session[:order_params].deep_merge!(params[:order]) if params[:order]
+    @_resources ||= {}
+    @_resources[:order] = orders.build(session[:order_params]) #reset decent_exposure object
+    order.current_step = session[:order_step]
+    if order.valid?
+      if order.last_step?
+        order.save if order.all_valid?
+      else
+        order.next_step
+      end
+      session[:order_step] = order.current_step
+    end
+    if order.new_record?
+      render action: order.current_step
+    else
+      session[:order_step] = session[:order_params] = nil
+      redirect_to commit_order_path
+    end
   end
 end

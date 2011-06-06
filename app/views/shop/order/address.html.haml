@@ -1,0 +1,120 @@
+#header
+  #logo
+    / css hook for logos
+  %h1#tagline
+    %span.title=shop.name
+    %span.subtitle 创建您的订单
+#main
+  / begin overview
+  #overview.clearfix
+    #products
+      %h2 您购买了&hellip;
+      %table#thumbs(cellspacing="0" cellpadding="0")
+        -variant_items.each_pair do |variant, quantity|
+          %tr
+            %td
+              %div=image_tag 'admin/no-image-thumb.gif', alt:'商品无图片...', class: :images
+              %h3.plisthead(title="#{variant.product.title}")=variant.product.title
+              %span.plist-line-price==#{quantity}x #{variant.price}
+    #wallet
+      %span#cost
+        =total_price
+        =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
+      %br
+      %span#steps 步骤 1 之 2
+    %div(style="clear:left")
+  /
+    \/end overview
+  #content
+    =form_for order, url: "/carts/#{shop.id}/create_order" do |f|
+      #email
+        =f.label :email, '您的 Email 地址'
+        =f.text_field :email
+      / begin addresses
+      #addresses.group.clearfix
+        .gleft
+          %h3 发单地址
+          %table#billing.form(cellspacing="0" cellpadding="0")
+            =f.fields_for :billing_address do |b|
+              %tr
+                %td.lbl=b.label :name
+                %td=b.text_field :name, class: :short
+              %tr
+                %td.lbl=b.label :company
+                %td=b.text_field :company, class: :short
+              %tr
+                %td.lbl=b.label :address1
+                %td(style="width: 260px")=b.text_field :address1
+              %tr
+                %td.lbl=b.label :address2
+                %td(style="width: 260px")=b.text_field :address2
+              %tr
+                %td.lbl=b.label :city
+                %td=b.text_field :city, class: :medium
+              %tr
+                %td.lbl=b.label :zip
+                %td=b.text_field :zip, class: :zip
+              %tr
+                %td(colspan="2" style="width: 360px")
+                  %ul.inline
+                    %li(style="width: 160px")
+                      =b.label :country
+                      =b.select :country, {}, style: 'width: 150px'
+                      -#
+                        %option(value="")
+                          \- 请选择 --
+                        %option(value="United States" selected="selected")
+                          United States
+                    %li#billing_address_province_li(style="width: 160px;margin-right: 5px")
+                      =b.label :province
+                      =b.text_field :province, style: 'width: 150px'
+              %tr
+                %td.lbl=b.label :phone
+                %td=b.text_field :phone, class: :short
+            %tr#billing-is-shipping
+              %td(colspan="2")
+                %input#shipping-toggle(type="checkbox" name="billing_is_shipping" checked="checked" style="width: auto" tabindex="12")
+                %label(for="shipping-toggle") 将货品发送至发单地址
+        .gright
+          %h3 发货地址
+          #shipping-same.address-notification(style="display:none;")
+            %span 货品将会被发送至您的发单地址.
+          %table#shipping.form(cellspacing="0" cellpadding="0")
+            =f.fields_for :shipping_address do |s|
+              %tr
+                %td.lbl=s.label :name
+                %td=s.text_field :name, class: :short
+              %tr
+                %td.lbl=s.label :company
+                %td=s.text_field :company, class: :short
+              %tr
+                %td.lbl=s.label :address1
+                %td(style="width: 260px")=s.text_field :address1
+              %tr
+                %td.lbl=s.label :address2
+                %td(style="width: 260px")=s.text_field :address2
+              %tr
+                %td.lbl=s.label :city
+                %td=s.text_field :city, class: :medium
+              %tr
+                %td.lbl=s.label :zip
+                %td=s.text_field :zip, class: :short
+              %tr
+                %td(colspan="2")
+                  %ul.inline
+                    %li(style="width: 150px; margin-right: 10px")
+                      =s.label :country
+                      =s.text_field :country, {}, style: 'width: 150px'
+                    %li#shipping_address_province_li(style="width: 150px")
+                      =s.label :province
+                      =s.text_field :province
+              %tr
+                %td.lbl=s.label :phone
+                %td=s.text_field :phone, class: :short
+        %div(style="clear: both")
+      / end addresses
+      #buttons
+        %input#commit-button(name="commit" tabindex="40" type="submit" value="去到下一步")
+        %small#cancel-purchase
+          或
+          %a(href="http://#{shop.permanent_domain}.myshopqi.com") 回到商店

@@ -1,0 +1,64 @@
+#header
+  #logo
+    / css hook for logos
+  %h1#tagline
+    %span.title=shop.name
+    %span.subtitle 发货及付款
+#main
+  / begin overview
+  #overview.clearfix
+    #products
+      %h2 您购买了&hellip;
+      %table#thumbs(cellspacing="0" cellpadding="0")
+        -variant_items.each_pair do |variant, quantity|
+          %tr
+            %td
+              %div=image_tag 'admin/no-image-thumb.gif', alt:'商品无图片...', class: :images
+              %h3.plisthead(title="#{variant.product.title}")=variant.product.title
+              %span.plist-line-price==#{quantity}x #{variant.price}
+    #wallet
+      %span#cost
+        =total_price
+        =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
+      %span#shipping_span.hint .. 包含货运费 $25.00.
+      %br
+      %span#tax_span.hint .. 包含 $2.76 的税
+      %br
+      %span#steps 步骤 2 之 2
+    %div(style="clear:left")
+  / end overview
+  #content
+    =form_for order, url: "/orders/#{shop.id}/commit" do |f|
+      #payment
+        .group.clearfix
+          %h3 发货方式
+          %p 请选择您需要的发货方式.
+          %p.sst
+            %select#shipping-rates(name="shipping_rate")
+              %option(value="shopify-international-shipping-25.00" selected="selected") International Shipping - $25.00
+      .group
+        %h3 购买
+        %p.hint 所有的交易都是经过加密且安全的, 我们不会储存您的信用卡信息以及其他任何个人信息. 如想了解更多请浏览我们的隐私政策.
+        .sst
+          .gleft
+            %span.error-message
+            %ul#payment-methods
+              %li#credit-cards
+                %input(checked="checked" class="payment-method" id="direct-payment" name="gateway" type="radio" value="1072012")
+                %label(for="direct-payment") 货到付款
+          #pay-info.gright
+        %p(style="clear:both;height: 0")
+      #marketing-box.group.clearfix
+        %h3 如果有更新就通知我
+        %p.sst
+          %input#marketing(type="checkbox" name="buyer_accepts_marketing" checked="checked" value="true")
+          %label(for="marketing" style="font-weight:normal") 我想接收关于新产品或促销以及其他更新的电子邮件.
+      %table#buttons(border="0" cellspacing="0" cellpadding="0" style="height: 55px; width: 100%")
+        %tr
+          %td(style="vertical-align:middle")
+            %input#complete-purchase(name="commit" onclick="this.setAttribute('originalValue' this.value);this.disabled=true;this.value='正在完成订单...';;result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) (this.value = this.getAttribute('originalValue'); this.disabled = false);return false" type="submit" value="购买")
+            %small#cancel-purchase
+              或
+              %a(href="http://#{shop.permanent_domain}.myshopqi.com") 取消，然后返回商店
+          %td(style="text-align:right;vertical-align:bottom")
+            %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'
