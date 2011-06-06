@@ -24,7 +24,7 @@ describe ProductDrop do
   end
 
   it 'should get price' do
-    product_drop.price.should eql 0.0
+    product_drop.price.should eql 3000
   end
 
   it 'should get description' do
