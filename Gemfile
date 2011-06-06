@@ -40,7 +40,7 @@ gem "resque" # 后台任务
 gem "chinese_pinyin" # 汉字转拼音
 gem "nokogiri" # 解释模板config/settings.html
 
-group :development, :test do
+group :development, :test, :travis do
   gem "awesome_print", require: 'ap' # 调试
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
 end
@@ -56,7 +56,7 @@ group :development do
   gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
 end
 
-group :test do
+group :test, :travis do
   gem "rspec-rails"
   gem "factory_girl"
   gem "factory_girl_rails"
