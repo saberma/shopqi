@@ -39,7 +39,7 @@ test:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: shopqi_test
+  database: travis_test
   pool: 5
   username: postgres
   password:
