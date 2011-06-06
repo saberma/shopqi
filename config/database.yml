@@ -50,6 +50,9 @@ travis:
   encoding: unicode
   database: shopqi_test
   pool: 5
+  #host: localhost
+  #username: postgres
+  #password:
 
 production:
   adapter: postgresql
