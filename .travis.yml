@@ -1,7 +1,8 @@
 rvm:
   - 1.9.2
 
-script: "rake db:drop db:create db:migrate --trace 2>&1"
+script:
+ - "bundle exec rake db:drop db:create db:migrate --trace 2>&1"
 
 env: "LANG='en_US.UTF-8' RAILS_ENV='test'"
 
