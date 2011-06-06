@@ -3,6 +3,8 @@ h2. ShoqQi
 中国开源电子商务平台，基于rails3开发
 注意：现阶段ShopQi处于频繁更新中(有破坏性)，仅用于学习研究，请勿部署在生产环境
 
+"!http://travis-ci.org/saberma/shopqi.png!":http://travis-ci.org/saberma/shopqi
+
 h3. 安装
 
 为了便于安装，ShopQi的开发环境将基于Vagrant虚拟工具
