@@ -67,7 +67,7 @@
                           United States
                     %li#billing_address_province_li(style="width: 160px;margin-right: 5px")
                       =b.label :province
-                      =b.text_field :province, style: 'width: 150px'
+                      =b.text_field :province, class: :short
               %tr
                 %td.lbl=b.label :phone
                 %td=b.text_field :phone, class: :short
@@ -104,10 +104,10 @@
                   %ul.inline
                     %li(style="width: 150px; margin-right: 10px")
                       =s.label :country
-                      =s.text_field :country, {}, style: 'width: 150px'
+                      =s.select :country, {}, style: 'width: 150px'
                     %li#shipping_address_province_li(style="width: 150px")
                       =s.label :province
-                      =s.text_field :province
+                      =s.text_field :province, class: :short
               %tr
                 %td.lbl=s.label :phone
                 %td=s.text_field :phone, class: :short
