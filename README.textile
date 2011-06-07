@@ -69,3 +69,5 @@ weihuilee
 h2. License
 
 产品协议: "GNU Affero GPL 3":http://www.gnu.org/licenses/agpl-3.0.html
+
+"!http://i.imgur.com/K8vsw.gif!":https://github.com/saberma/shopqi/issues
