@@ -27,11 +27,12 @@ Shopqi::Application.routes.draw do
   constraints(subdomain: 'checkout') do
     scope module: :shop do
       get '/carts/:shop_id' => 'order#address'
-      post '/carts/:shop_id/create_order' => 'order#create'
+      match '/carts/:shop_id/create_order' => 'order#create'
       get '/orders/:shop_id/pay' => 'order#pay'
       get '/orders/:shop_id/commit' => 'order#create', as: :commit_order
     end
   end
+  match '/district/:id' => 'district#list' # 地区选择(创建订单页面)
 
   match "/admin" => "home#dashboard"
   match "/admin/general_preferences" => "shops#edit"

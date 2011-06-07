@@ -25,9 +25,10 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order, comment: '所属订单', null: false
       t.string :name     , comment: '姓名'    , null: false
       t.string :company  , comment: '公司'
-      t.string :country  , comment: '国家'    , null: false
-      t.string :province , comment: '地区(省)', null: false
-      t.string :city     , comment: '城市'    , null: false
+      t.string :country  , comment: '国家'
+      t.string :province , comment: '地区(省)'
+      t.string :city     , comment: '城市'
+      t.string :district , comment: '区'
       t.string :address1 , comment: '地址'    , null: false
       t.string :address2 , comment: '地址 续'
       t.string :zip      , comment: '邮编'
@@ -39,12 +40,13 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order, comment: '所属订单', null: false
       t.string :name     , comment: '姓名'    , null: false
       t.string :company  , comment: '公司'
+      t.string :country  , comment: '国家'
+      t.string :province , comment: '地区(省)'
+      t.string :city     , comment: '城市'
+      t.string :district , comment: '区'
       t.string :address1 , comment: '地址'    , null: false
       t.string :address2 , comment: '地址 续'
-      t.string :city     , comment: '城市'    , null: false
       t.string :zip      , comment: '邮编'
-      t.string :country  , comment: '国家'    , null: false
-      t.string :province , comment: '地区(省)', null: false
       t.string :phone    , comment: '电话'    , null: false
     end
 

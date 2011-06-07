@@ -9,9 +9,9 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
 
-  #validates_associated :billing_address
-  validates_presence_of :email, :billing_address, :if => lambda { |o| o.current_step == steps.first }
-  validates_presence_of :shipping_rate, :gateway, :if => lambda { |o| o.current_step == steps.last }
+  validates_associated :billing_address
+  validates_presence_of :email, :billing_address, if: :first_step?, message: '此栏不能为空白'
+  validates_presence_of :shipping_rate, :gateway, if: :last_step?, message: '此栏不能为空白'
 
   attr_writer :current_step
 
@@ -55,7 +55,7 @@ end
 # 发单人信息
 class OrderBillingAddress < ActiveRecord::Base
   belongs_to :order
-  validates_presence_of :name, :province, :city, :address1, :phone
+  validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
 
   before_create do
     self.country = 'china'
@@ -65,5 +65,9 @@ end
 # 收货人信息
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
-  validates_presence_of :name, :province, :city, :address1, :phone
+  validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
+
+  before_create do
+    self.country = 'china'
+  end
 end

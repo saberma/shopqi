@@ -5,46 +5,30 @@ describe Shop::OrderController do
 
   let(:shop) { Factory(:user).shop }
 
-  context '#new' do
+  context '#address' do
 
-    describe 'validate' do
+    let(:billing_address_attributes) { {name: 'ma', province: 'guandong', city: 'shenzhen', address1: '311', phone: '13912345678' } }
 
-      it 'should validate billing_address' do
-        post :create, shop_id: shop.id
-        assigns['_resources']['order'].errors[:email].should_not be_nil
-      end
+    before :each do
+      get :address, shop_id: shop.id #初始化cookie
+    end
 
-      it 'should validate billing_address' do
-        get :address, shop_id: shop.id
-        post :create, shop_id: shop.id, order: { billing_address_attributes: { name: '' } }
-        assigns['_resources']['order'].errors['billing_address.name'].should_not be_empty
-      end
-
+    it 'should copy the billding address' do
+      post :create, shop_id: shop.id, billing_is_shipping: true, order: {
+        email: 'mahb45@gmail.com',
+        billing_address_attributes: billing_address_attributes
+      }
+      order = assigns['_resources']['order']
+      order.shipping_address.name.should eql order.billing_address.name
+      order.shipping_address.address1.should eql order.billing_address.address1
     end
 
     it 'should go to pay' do
-      get :address, shop_id: shop.id
       post :create, shop_id: shop.id, order: {
         email: 'mahb45@gmail.com',
-        billing_address_attributes: {
-          name: 'ma', province: 'guandong', city: 'shenzhen', address1: '311', phone: '13912345678'
-        }
+        billing_address_attributes: billing_address_attributes
       }
       response.should be_success
-    end
-
-  end
-
-  context '#pay' do
-
-    describe 'validate' do
-
-      it 'should validate gateway' do
-        get :pay, shop_id: shop.id
-        post :create, shop_id: shop.id
-        assigns['_resources']['order'].errors[:email].should_not be_nil
-      end
-
     end
 
   end

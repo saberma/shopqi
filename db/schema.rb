@@ -109,9 +109,10 @@ ActiveRecord::Schema.define(:version => 20110605085310) do
     t.integer "order_id", :null => false
     t.string  "name",     :null => false
     t.string  "company"
-    t.string  "country",  :null => false
-    t.string  "province", :null => false
-    t.string  "city",     :null => false
+    t.string  "country"
+    t.string  "province"
+    t.string  "city"
+    t.string  "district"
     t.string  "address1", :null => false
     t.string  "address2"
     t.string  "zip"
@@ -127,16 +128,19 @@ ActiveRecord::Schema.define(:version => 20110605085310) do
     t.integer "quantity",           :null => false
   end
 
+  add_index "order_products", ["order_id"], :name => "index_order_products_on_order_id"
+
   create_table "order_shipping_addresses", :force => true do |t|
     t.integer "order_id", :null => false
     t.string  "name",     :null => false
     t.string  "company"
+    t.string  "country"
+    t.string  "province"
+    t.string  "city"
+    t.string  "district"
     t.string  "address1", :null => false
     t.string  "address2"
-    t.string  "city",     :null => false
     t.string  "zip"
-    t.string  "country",  :null => false
-    t.string  "province", :null => false
     t.string  "phone",    :null => false
   end
 

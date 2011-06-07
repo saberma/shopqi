@@ -38,6 +38,7 @@ class Shop::OrderController < Shop::ApplicationController
     session[:order_params].deep_merge!(params[:order]) if params[:order]
     @_resources ||= {}
     @_resources[:order] = orders.build(session[:order_params]) #reset decent_exposure object
+    order.build_shipping_address(order.billing_address.attributes) if params[:billing_is_shipping]
     order.current_step = session[:order_step]
     if order.valid?
       if order.last_step?
