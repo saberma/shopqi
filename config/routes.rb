@@ -14,8 +14,6 @@ Shopqi::Application.routes.draw do
 
     scope module: :shop do
       match '/' => 'shops#show'
-      #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
-      match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
       get '/products/:handle' => 'products#show'
       post '/cart/add' => 'cart#add'
       get '/cart' => 'cart#show'
@@ -29,10 +27,16 @@ Shopqi::Application.routes.draw do
       get '/carts/:shop_id' => 'order#address'
       match '/carts/:shop_id/create_order' => 'order#create'
       get '/orders/:shop_id/pay' => 'order#pay'
-      get '/orders/:shop_id/commit' => 'order#create', as: :commit_order
+      match '/orders/:shop_id/commit' => 'order#commit', as: :commit_order
     end
   end
+
+  ##### 商店及后台管理通用 #####
   match '/district/:id' => 'district#list' # 地区选择(创建订单页面)
+  #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
+  scope module: :shop do
+    match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
+  end
 
   match "/admin" => "home#dashboard"
   match "/admin/general_preferences" => "shops#edit"

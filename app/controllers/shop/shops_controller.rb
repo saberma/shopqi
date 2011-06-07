@@ -2,7 +2,13 @@
 class Shop::ShopsController < Shop::ApplicationController
   layout nil
 
-  expose(:shop) { Shop.where(permanent_domain: request.subdomain).first }
+  expose(:shop) do
+    if params[:id]
+      Shop.find(params[:id]) #checkout页面
+    else
+      Shop.where(permanent_domain: request.subdomain).first
+    end
+  end
 
   def show
     html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign)

@@ -52,6 +52,13 @@ class Order < ActiveRecord::Base
 
 end
 
+# 订单商品
+class OrderProducts < ActiveRecord::Base
+  belongs_to :order
+  belongs_to :product_variant
+  validates_presence_of :price, :quantity
+end
+
 # 发单人信息
 class OrderBillingAddress < ActiveRecord::Base
   belongs_to :order

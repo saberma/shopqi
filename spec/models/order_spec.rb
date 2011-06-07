@@ -10,7 +10,6 @@ describe Order do
 
     it 'should validate email' do
       order.valid?.should be_false
-      ap order.errors
       order.errors[:email].should_not be_nil
       order.errors[:billing_address].should_not be_nil
     end

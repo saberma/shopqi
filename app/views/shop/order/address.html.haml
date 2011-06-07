@@ -9,13 +9,7 @@
   #overview.clearfix
     #products
       %h2 您购买了&hellip;
-      %table#thumbs(cellspacing="0" cellpadding="0")
-        -variant_items.each_pair do |variant, quantity|
-          %tr
-            %td
-              %div=image_tag 'admin/no-image-thumb.gif', alt:'商品无图片...', class: :images
-              %h3.plisthead(title="#{variant.product.title}")=variant.product.title
-              %span.plist-line-price==#{quantity}x #{variant.price}
+      %table#thumbs(cellspacing="0" cellpadding="0")=render partial: 'products', collection: variant_items
     #wallet
       %span#cost
         =total_price

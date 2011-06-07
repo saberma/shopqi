@@ -3,7 +3,7 @@ class District
 
   def self.list(parent_id = '000000')
     result = []
-    return result if parent_id.nil?
+    return result if parent_id.blank?
     id_match = parent_id.match(/(\d{2})(\d{2})(\d{2})/)
     province_id = id_match[1].ljust(6, '0')
     city_id = "#{id_match[1]}#{id_match[2]}".ljust(6, '0')

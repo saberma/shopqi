@@ -1,0 +1,17 @@
+#header
+  #logo
+    / css hook for logos
+  %h1#tagline
+    %span.title 谢谢您
+    %span.subtitle 我们已经成功接收了您的订单.
+#main
+  #overview
+    %h2 您购买的是
+    %table#thumbs(cellspacing="0" cellpadding="0")=render 'products', collection: variant_items
+  #content
+    .group
+      %p
+        您的订单号为：
+        %strong #1004
+      %p 我们将会发送收据到您的电子邮箱中 请保留以作为您的纪录.
+      %p 感谢您的惠顾 .

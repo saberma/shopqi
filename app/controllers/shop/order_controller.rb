@@ -1,6 +1,8 @@
 class Shop::OrderController < Shop::ApplicationController
   layout 'shop/checkout'
 
+  prepend_before_filter :check_products!
+
   expose(:shop) { Shop.find(params[:shop_id]) }
 
   expose(:orders) { shop.orders }
@@ -26,6 +28,7 @@ class Shop::OrderController < Shop::ApplicationController
   # 订单提交Step1
   def address
     session[:order_params] ||= {}
+    session[:order_step] = order.steps.first
     order.build_billing_address if order.billing_address.nil?
     order.build_shipping_address if order.shipping_address.nil?
   end
@@ -53,6 +56,12 @@ class Shop::OrderController < Shop::ApplicationController
     else
       session[:order_step] = session[:order_params] = nil
       redirect_to commit_order_path
+    end
+  end
+
+  def check_products!
+    if cookie_cart_hash.empty?
+      render(action: 'error', layout: false) and return
     end
   end
 end
