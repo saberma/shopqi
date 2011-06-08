@@ -80,12 +80,14 @@ UpdateableSelectBox = (select_box, create_label) ->
   else if select_box.val() isnt 'create_new'
     input_field.val(select_box.val())
 
+
 $(document).ready ->
   App.init()
   $(".closure-lightbox").click ->
     id = $(this).attr("href").substr(1)
     $.getJSON "/admin/users/#{id}", (user) ->
-      $.blockUI {message: ich.user_details_area(user)}
+      template = Handlebars.compile $('#user-details-area').html()
+      $.blockUI {message: template user}
       $('.blockOverlay,.shopify-dialog-title-close').attr('title','单击关闭').click($.unblockUI) 
 
   $('#indicator').ajaxStart ->
