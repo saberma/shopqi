@@ -16,15 +16,15 @@ describe ProductVariantDrop do
   end
 
   it 'should get title' do
-    variant_drop.title.should eql '标题'
+    variant_drop.title.should eql '默认标题'
   end
 
   it 'should get price' do
-    variant_drop.price.should eql 10
+    variant_drop.price.should eql 3000.0
   end
 
   it 'should get compare_at_price' do
-    variant_drop.compare_at_price.should eql 0.0
+    variant_drop.compare_at_price.should be_nil
   end
 
   it 'should get available' do
@@ -40,7 +40,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get weight' do
-    variant_drop.weight.should eql 0.0
+    variant_drop.weight.should eql 2.9
   end
 
   it 'should get sku' do
@@ -48,7 +48,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get option1' do
-    variant_drop.option1.should eql '标题'
+    variant_drop.option1.should eql '默认标题'
   end
 
   it 'should get option2' do
@@ -60,7 +60,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get requires_shipping' do
-    variant_drop.sku.should be_true
+    variant_drop.requires_shipping.should be_true
   end
 
 end

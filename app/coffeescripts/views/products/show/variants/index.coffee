@@ -18,7 +18,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     # 复制
     if operation in ['duplicate-1', 'duplicate-2', 'duplicate-3']
       model = App.product_variants.get checked_variant_ids[0]
-      attrs = model.attributes
+      attrs = _.clone model.attributes
       attrs['id'] = null
       index = operation.match(/duplicate-(\d)/)[1]
       attrs["option#{index}"] = new_value
@@ -35,7 +35,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
             attr = {}
             attr[operation] = new_value
             model.set attr
-        msg "批量#{operation is 'destroy' ? '删除' : '更新'}成功!"
+        msg "批量#{if operation is 'destroy' then '删除' else '修改'}成功!"
         self.cancelUpdate()
     false
 

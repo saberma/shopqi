@@ -11,13 +11,31 @@ Shopqi::Application.routes.draw do
   # 前台商店
   constraints(Subdomain) do
     #match '/' => 'home#dashboard'
-    match '/' => 'shops#show'
-    #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
-    match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
 
     scope module: :shop do
-      get '/products/:handle' => 'products#show', as: :shop_product
+      match '/' => 'shops#show'
+      get '/products/:handle' => 'products#show'
+      post '/cart/add' => 'cart#add'
+      get '/cart' => 'cart#show'
+      post '/cart' => 'cart#update'
     end
+  end
+
+  # 订单页面
+  constraints(subdomain: 'checkout') do
+    scope module: :shop do
+      get '/carts/:shop_id' => 'order#address'
+      match '/carts/:shop_id/create_order' => 'order#create'
+      get '/orders/:shop_id/pay' => 'order#pay'
+      match '/orders/:shop_id/commit' => 'order#commit', as: :commit_order
+    end
+  end
+
+  ##### 商店及后台管理通用 #####
+  match '/district/:id' => 'district#list' # 地区选择(创建订单页面)
+  #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
+  scope module: :shop do
+    match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
   end
 
   match "/admin" => "home#dashboard"

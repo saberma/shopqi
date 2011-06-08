@@ -31,7 +31,7 @@ class ShopTheme < ActiveRecord::Base
   end
 
   def files_relative_path
-    test = (Rails.env == 'test') ? 'test' : '' #测试目录与其他环境分开,不干扰
+    test = %w(test travis).include?(Rails.env) ? Rails.env : '' #测试目录与其他环境分开,不干扰
     File.join 's', 'files', test, self.id.to_s, 'theme'
   end
 

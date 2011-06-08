@@ -1,7 +1,9 @@
-h2. ShoqQi
+h2. ShoqQi "!http://stillmaintained.com/saberma/shopqi.png!":http://stillmaintained.com/saberma/shopqi
 
 中国开源电子商务平台，基于rails3开发
 注意：现阶段ShopQi处于频繁更新中(有破坏性)，仅用于学习研究，请勿部署在生产环境
+
+"!http://travis-ci.org/saberma/shopqi.png!":http://travis-ci.org/saberma/shopqi
 
 h3. 安装
 
@@ -67,3 +69,5 @@ weihuilee
 h2. License
 
 产品协议: "GNU Affero GPL 3":http://www.gnu.org/licenses/agpl-3.0.html
+
+"!http://i.imgur.com/K8vsw.gif!":https://github.com/saberma/shopqi/issues

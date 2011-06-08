@@ -16,6 +16,10 @@ class BlogDrop < Liquid::Drop
     @blog = blog
   end
 
+  def title
+    @blog.title
+  end
+
   def articles
     @blog.articles.map do |article|
       ArticleDrop.new article

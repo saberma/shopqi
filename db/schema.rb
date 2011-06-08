@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110511132306) do
+ActiveRecord::Schema.define(:version => 20110605085310) do
 
   create_table "articles", :force => true do |t|
     t.integer  "blog_id"
@@ -104,6 +104,60 @@ ActiveRecord::Schema.define(:version => 20110511132306) do
   end
 
   add_index "links", ["link_list_id"], :name => "index_links_on_link_list_id"
+
+  create_table "order_billing_addresses", :force => true do |t|
+    t.integer "order_id", :null => false
+    t.string  "name",     :null => false
+    t.string  "company"
+    t.string  "country"
+    t.string  "province"
+    t.string  "city"
+    t.string  "district"
+    t.string  "address1", :null => false
+    t.string  "address2"
+    t.string  "zip"
+    t.string  "phone",    :null => false
+  end
+
+  add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
+
+  create_table "order_products", :force => true do |t|
+    t.integer "order_id",           :null => false
+    t.integer "product_variant_id", :null => false
+    t.float   "price",              :null => false
+    t.integer "quantity",           :null => false
+  end
+
+  add_index "order_products", ["order_id"], :name => "index_order_products_on_order_id"
+
+  create_table "order_shipping_addresses", :force => true do |t|
+    t.integer "order_id", :null => false
+    t.string  "name",     :null => false
+    t.string  "company"
+    t.string  "country"
+    t.string  "province"
+    t.string  "city"
+    t.string  "district"
+    t.string  "address1", :null => false
+    t.string  "address2"
+    t.string  "zip"
+    t.string  "phone",    :null => false
+  end
+
+  add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
+
+  create_table "orders", :force => true do |t|
+    t.integer  "shop_id",       :null => false
+    t.string   "email",         :null => false
+    t.string   "shipping_rate"
+    t.string   "gateway"
+    t.float    "total_price",   :null => false
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["shop_id"], :name => "index_orders_on_shop_id"
 
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"

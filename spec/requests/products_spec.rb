@@ -12,6 +12,11 @@ describe "Products", js: true do
 
   let(:psp) { Factory :psp, shop: shop, product_type: '游戏机', vendor: '索尼' }
 
+  before :each do
+    # 删除默认商品，方便测试
+    shop.products.clear
+    shop.reload
+  end
 
   ##### 新增 #####
   describe "GET /products/new" do
@@ -357,12 +362,12 @@ describe "Products", js: true do
       it "should show inventory" do
         visit products_path
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") do
-          has_content?('psp').should be_true
+          has_content?('iphone4').should be_true
           has_content?('默认标题').should be_true
           has_content?('∞').should be_true
         end
         within(:xpath, "//table[@id='product-table']/tbody/tr[2]") do
-          has_content?('iphone4').should be_true
+          has_content?('psp').should be_true
           has_content?('默认标题').should be_true
           has_content?('∞').should be_true
         end
@@ -381,10 +386,13 @@ describe "Products", js: true do
         select '发布'
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_false } #隐藏提示消失
         select '热门商品'
-        shop.products.where(title: 'psp').first.collections.first.title.should eql '热门商品'
+        title = ''
+        within(:xpath, "//table[@id='product-table']/tbody/tr[1]/td[3]") { title = find('a').text }
+        product = shop.products.where(title: title).first
+        product.collections.first.title.should eql '热门商品'
         page.execute_script("window.confirm = function(msg) { return true; }")
         select '删除'
-        within("#product-table") { has_no_content?('psp').should be_true }
+        within("#product-table") { has_no_content?(title).should be_true }
       end
 
       # 库存视图
@@ -557,6 +565,7 @@ describe "Products", js: true do
             within('#variant-options') do #快捷选择
               find('.option-1').text.should eql '最新上市'
             end
+            has_content?('修改成功!').should be_true
           end
 
           it 'should be add' do
@@ -574,6 +583,7 @@ describe "Products", js: true do
             within('#variant-options') do #快捷选择
               find('.option-1').text.should eql '默认标题 最新上市'
             end
+            has_content?('新增成功!').should be_true
           end
 
           it 'should update product options' do
@@ -590,6 +600,61 @@ describe "Products", js: true do
             end
 
             has_no_xpath?("//tr[contains(@class, 'edit-option')][2]").should be_true # Bug: 不应该新增重复的选项输入项
+          end
+
+          # 批量操作
+          describe '(batch)' do
+
+            it 'should change price' do
+              visit product_path(iphone4)
+              check('默认标题')
+              within('#product-controls') do
+                has_content?('已选中 1 个款式').should be_true
+                within('#product-select') do
+                  find("option[value='destroy']")[:disabled].should eql 'true' #只剩下一个款式，不能删除
+                  find('#dup-option-1')[:disabled].should eql 'false' #只选中一个款式，可以复制
+                end
+                select '修改价格', from: 'product-select'
+                fill_in 'new_value', with: '10'
+                click_on '保存'
+              end
+
+              has_content?('批量修改成功!').should be_true
+              within :xpath, "//ul[@id='variants-list']/li[1]" do
+                find('.price-cell').text.should eql '10'
+              end
+            end
+
+            it 'should be copy' do
+              visit product_path(iphone4)
+              check('默认标题')
+              within('#product-controls') do
+                select '…使用另一个标题', from: 'product-select'
+                fill_in 'new_value', with: '热卖'
+                click_on '保存'
+              end
+              within :xpath, "//ul[@id='variants-list']/li[2]" do
+                find('.option-1').text.should eql '热卖'
+              end
+            end
+
+            it 'should be delete' do
+              visit product_path(iphone4)
+              # 新增款式，两个以上才能执行删除操作
+              find('#new-variant-link a').click
+              within '#new-variant' do
+                fill_in 'product_variant[option1]', with: '最新上市'
+                click_on '保存'
+              end
+              check('默认标题')
+              within('#product-controls') do
+                page.execute_script("window.confirm = function(msg) { return true; }")
+                select '删除', from: 'product-select'
+              end
+              has_content?('批量删除成功!').should be_true
+              find('#product-controls').visible?.should be_false
+              has_no_xpath?("//ul[@id='variants-list']/li[2]").should be_true
+            end
 
           end
 

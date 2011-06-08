@@ -19,7 +19,7 @@ describe SmartCollectionObserver do
     it "should be insert" do
       expect do
         iphone4
-        iphone4.update_attribute :description, ''
+        iphone4.update_attribute :body_html, '' #update will not insert again
       end.to change(SmartCollectionProduct, :count).by(1)
     end
   end
@@ -34,7 +34,9 @@ describe SmartCollectionObserver do
     it "should be delete" do
       iphone4
       expect do
-        iphone4.update_attribute :price, 999
+        variant = iphone4.variants.first
+        variant.price = 999
+        iphone4.save
       end.to change(SmartCollectionProduct, :count).by(-1)
     end
   end

@@ -3,16 +3,17 @@ require 'spec_helper'
 require 'shared_stuff'
 
 describe "SmartCollections" do
-  describe "GET /admin/smart_collections" do
-    include_context 'login admin'
-    it "works!", js: true do
 
+  describe "GET /admin/smart_collections" do
+
+    include_context 'login admin'
+
+    it "works!", js: true do
       visit custom_collections_path
       click_on '新增智能集合'
       fill_in 'smart_collection[title]', with: 'high price'
       click_on '保存'
       page.should have_content('high price')
-      SmartCollection.all.size.should eql 1
 
       click_on '修改'
       fill_in 'smart_collection[title]', with: 'low price'
@@ -28,4 +29,5 @@ describe "SmartCollections" do
     end
 
   end
+
 end

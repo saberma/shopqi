@@ -63,6 +63,7 @@ ProductVariant = Backbone.Model.extend
   name: 'product_variant'
 
   validate: (attrs) ->
+    return unless attrs.option1? #没有修改option值则不校验
     self = this
     i = 1
     error = {}

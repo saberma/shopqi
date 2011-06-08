@@ -71,15 +71,13 @@ module KeyValues
     #规则相关列
     class Column < KeyValues::Base
       self.data = [
-        {id: 1 , name: '商品名称', code: 'title'                   , clazz: 'string' },
-        #{id: 2, name: '商品类型', code: 'type'                    , clazz: 'string' },
-        #{id: 3, name: '商品厂商', code: 'vendor'                  , clazz: 'string' },
-        #{id: 4, name: '商品价格', code: 'variant_price'           , clazz: 'string' },
-        #{id: 5, name: '比较价格', code: 'variant_compare_at_price', clazz: 'string' },
-        {id: 4 , name: '商品价格', code: 'price'                   , clazz: 'integer'},
-        {id: 5 , name: '比较价格', code: 'market_price'            , clazz: 'integer'},
-        #{id: 6, name: '库存现货', code: 'variant_inventory'       , clazz: 'string' },
-        #{id: 7, name: '属性名称', code: 'variant_title'           , clazz: 'string' }
+        {id: 1 , name: '商品名称', code: 'title'                    , clazz: 'string'  },
+        {id: 2 , name: '商品类型', code: 'product_type'             , clazz: 'string'  },
+        {id: 3 , name: '商品厂商', code: 'vendor'                   , clazz: 'string'  },
+        {id: 4 , name: '商品价格', code: 'variants_price'           , clazz: 'integer' },
+        {id: 5 , name: '比较价格', code: 'variants_compare_at_price', clazz: 'integer' },
+        {id: 6 , name: '库存现货', code: 'variants_inventory'       , clazz: 'integer' },
+        {id: 7 , name: '款式名称', code: 'variants_option1'         , clazz: 'string'  }
       ]
     end
 

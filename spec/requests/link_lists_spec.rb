@@ -7,6 +7,7 @@ describe "LinkLists" do
   #include Devise::TestHelpers
 
   describe "GET /admin/link_lists" do
+
     include_context 'login admin'
 
     it "should be index", :js => true do
@@ -16,9 +17,8 @@ describe "LinkLists" do
       fill_in 'link_list[title]', with: 'products'
       click_on '保存'
       find('#flashnotice').should have_content('新增成功!')
-      LinkList.all.size.should eql 1
 
-      within '.links' do
+      within(:xpath, "//li[contains(@class, 'link-list')][3]") do
         click_on '新增链接'
         find_field('link[title]').visible?
         fill_in 'link[title]', with: 'shirt-1'
@@ -26,7 +26,6 @@ describe "LinkLists" do
         click_on '保存'
         page.should have_content('shirt-1')
         page.should have_content('/shirt')
-        Link.all.size.should eql 1
 
         click_on '修改链接列表'
         fill_in 'link_list[title]', with: 'new-products'
@@ -42,10 +41,11 @@ describe "LinkLists" do
         find('.delete').click
         click_on '保存'
         page.should_not have_content('new-shirt-1')
+        click_on '删除链接列表'
       end
-
-      click_on '删除链接列表'
       page.should_not have_content('new-products')
     end
+
   end
+
 end

@@ -1,0 +1,56 @@
+{% if settings.subnav == "enabled" %}{% include "subnav" %}
+{% endif %}<!-- START SUMMARY -->
+<div id="summary" class="clear">
+	<!-- START DETAILS -->
+	<div id="details">
+		<h1>{{ product.title | escape }}</h1>
+		<h2 id="price"><span>{{ product.price | money }}</span>{% if product.compare_at_price_max > product.price %} <del>{{ product.compare_at_price_max | money }}</del>{% endif %}</h2>
+		<!-- START DESC -->
+		<div id="desc">
+			{{ product.description }}
+		</div>
+		<!-- END DESC -->
+		<!-- START OPTIONS -->
+		<div id="options">
+			<form method="post" action="/cart/add">{% if product.variants.size > 1 %}
+				<!-- START VARIANTS -->
+				<div id="variants">
+					<div id="bg">
+						<select name="id" id="id">{% for variant in product.variants %}{% if variant.available %}
+							<option value="{{ variant.id }}">{{ variant.title | escape }} ({{ variant.price | money }})</option>{% else %}
+							<option value="{{ variant.id }}" disabled="disabled">{{ variant.title | escape }} ({{ variant.price | money }}) - SOLD OUT</option>{% endif %}{% endfor %}
+						</select>
+					</div>
+				</div>
+				<!-- END VARIANTS -->{% else %}{% for variant in product.variants %}
+				<input type="hidden" name="id" value="{{ variant.id }}" />{% endfor %}{% endif %}
+				<!-- START BUY -->
+				<div id="buy">{% if product.available %}
+					<input type="image" src="{{ settings.add_image | asset_url }}" alt="Add to Cart" id="add" />{% else %}
+					<h6>Sold Out</h6>{% endif %}
+				</div>
+				<!-- END BUY -->
+			</form>
+		</div>
+		<!-- END OPTIONS -->
+	</div>
+	<!-- END DETAILS -->
+	<!-- START IMAGES -->
+	<div id="images">
+		<!-- START IMAGE -->
+		<div id="image" class="clear">
+			<img src="{{ product.images[0] | product_img_url: "large" }}" alt="{{ product.title | escape }}" />
+		</div>
+		<!-- END IMAGE -->{% if product.images.size > 1 %}
+		<!-- START THUMBS -->
+		<div id="thumbs">
+			<h6>More Images <span>(click to enlarge)</span></h6>
+			<ul class="clear">{% for image in product.images offset: 1 %}
+				<li{% cycle '', '', '', ' class="end"' %}><a href="{{ image | product_img_url: "large" }}" rel="lightbox-images"><img src="{{ image | product_img_url: "small" }}" alt="{{ product.title | escape }}" /></a></li>{% endfor %}
+			</ul>
+		</div>
+		<!-- END THUMBS -->{% endif %}
+	</div>
+	<!-- END IMAGES -->
+</div>
+<!-- END SUMMARY -->

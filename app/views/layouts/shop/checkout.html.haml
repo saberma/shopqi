@@ -1,0 +1,24 @@
+!!!
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
+  %head
+    %meta(http-equiv="content-type" content="text/html; charset=UTF-8")
+    %meta(http-equiv="X-UA-Compatible" content="chrome=1")
+    %meta(http-equiv="imagetoolbar" content="no")
+    %meta(name="MSSmartTagsPreventParsing" content="true")
+    %title==#{shop.title} - 结帐
+    =stylesheet_link_tag "forms","checkout"
+    /[if lt IE 7]
+      =stylesheet_link_tag "ie-checkout"
+    %link(href="/#{shop.theme.asset_relative_path('checkout.css')}" media="screen" rel="stylesheet" type="text/css")
+    = javascript_include_tag 'jquery.min', 'rails', 'shop/checkout'
+  %body
+    #info-bar
+      =image_tag 'admin/icons/lock.gif'
+      %span 您现在浏览的是加密的服务器。
+    #container
+      =yield
+      #footer
+        #shop-policies(style="text-align:center; font-size: 11px;")
+        %p==保留一切权利 &copy; 2011 #{shop.title}.
+    / This element is required to read the background color for highlight effects in custom checkout stylesheets
+    #wallet-highlight.wallet-highlight(style="display: none;")

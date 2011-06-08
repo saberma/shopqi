@@ -13,9 +13,8 @@ describe PagesController do
 
     it "success" do
       expect do
-        post :create, page: { title: 'Welcome', content: 'Hello'}
-        response.should be_success
-        assign[:page].shop.should_not be_nil
+        post :create, page: { title: 'Welcome', body_html: 'Hello'}
+        response.should be_redirect
       end.should change(Page, :count).by(1)
     end
 

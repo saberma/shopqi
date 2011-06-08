@@ -70,6 +70,28 @@ cn:
       smart_collection:
         title: 标题
         body_html: 描述
+      order:
+        email: 邮箱地址
+      order_billing_address:
+        name: 姓名
+        company: 公司
+        country: 国家
+        province: 省份
+        city: 城市
+        address1: 地址
+        address2: 地址 续
+        zip: 邮编
+        phone: 电话
+      order_shipping_address:
+        name: 姓名
+        company: 公司
+        country: 国家
+        province: 省份
+        city: 城市
+        address1: 地址
+        address2: 地址 续
+        zip: 邮编
+        phone: 电话
     errors:
       template:
         header: ""

@@ -12,6 +12,9 @@ Factory.define :iphone4, parent: :product do |f|
   f.body_html "iphone 4是一款基于WCDMA制式的3G手机"
   f.product_type "手机"
   f.vendor "Apple"
+  f.variants_attributes [
+    {price: 3000, weight: 2.9}
+  ]
 end
 
 Factory.define :psp, parent: :product do |f|

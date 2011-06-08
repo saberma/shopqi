@@ -44,6 +44,16 @@ test:
   username: postgres
   password:
 
+#持续测试,travis-ci的服务器不允许host,username,password
+travis:
+  adapter: postgresql
+  encoding: unicode
+  database: shopqi_test
+  pool: 5
+  #host: localhost
+  #username: postgres
+  #password:
+
 production:
   adapter: postgresql
   encoding: unicode
