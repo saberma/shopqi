@@ -1,7 +1,7 @@
-%script(id="user-details-area" type="text/x-jquery-tmpl")
+%script(id="user_details_area" type="text/html")
   .shopify-dialog{"aria-labelledby" => ":0", :role => "dialog", :style => "left: 503px; top: 747.5px; ", :tabindex => "0",}
     .shopify-dialog-title.shopify-dialog-title-draggable{:style => "text-align: left; "}
-      %span.shopify-dialog-title-text ${ name }
+      %span.shopify-dialog-title-text {{ name }}
       %span.shopify-dialog-title-close x
     .shopify-dialog-content
       .user{:style => "width:380px;"}
@@ -9,12 +9,12 @@
           %img#gravatar{:alt => "ee ee", :height => "50", :src => "/images/avatar.jpg", :title => "ee ee", :width => "50"}/
         %p.st
           %span.label.fl 邮箱:
-          %a{:href => "mailto:${email}"} ${ email }
+          %a{:href => "mailto:{{email}}"} {{ email }}
         %p
           %span.label.fl 电话:
-          ${ phone }
-        {{if is_current_user }}
+          {{ phone }}
+        {{#is_current_user }}
         %p.user-action
-          %a{:href => "/admin/users/${id}/edit"} 修改用户资料
-        {{/if}}
+          %a{:href => "/admin/users/{{id}}/edit"} 修改用户资料
+        {{/is_current_user}}
     %span{:tabindex => "0"}

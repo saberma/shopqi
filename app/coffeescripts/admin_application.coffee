@@ -85,7 +85,7 @@ $(document).ready ->
   $(".closure-lightbox").click ->
     id = $(this).attr("href").substr(1)
     $.getJSON "/admin/users/#{id}", (user) ->
-      $.blockUI {message: $('#user-details-area').tmpl(user)}
+      $.blockUI {message: ich.user_details_area(user)}
       $('.blockOverlay,.shopify-dialog-title-close').attr('title','单击关闭').click($.unblockUI) 
 
   $('#indicator').ajaxStart ->

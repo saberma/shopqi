@@ -8,6 +8,7 @@ gem 'pg'
 gem 'auto_migrations'
 gem 'devise'
 
+
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'kaminari' # 分页
 #用于处理图片(缩略图)
