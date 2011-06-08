@@ -28,6 +28,7 @@ class UsersController < ApplicationController
         flash[:notice] = "新增用户成功！"
         render js: "window.location = '#{account_index_path}';msg('#{flash[:notice]}');"
       end
+      #Todo 
     end
   end
 

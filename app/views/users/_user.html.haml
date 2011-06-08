@@ -1,6 +1,6 @@
 %tr#user_list(class="#{cycle(:odd,:even)}")
   %td
-    =link_to user.name, "#",class:"closure-lightbox"
+    =link_to user.name, "#users/#{user.id}",class:"closure-lightbox"
     -if current_user == user
       ==(#{link_to "修改",edit_user_path(user)})
       %br/
