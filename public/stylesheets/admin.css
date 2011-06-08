@@ -229,7 +229,7 @@ a.bottab { background: #fff; border: 1px solid #eee; border-top: 0; padding: 4px
 
 /* closure dialog */
 .shopify-dialog-bg {position: fixed; background-color: #666; opacity:0.3; top: 0; left: 0; z-index:5000;}
-.shopify-dialog {position: absolute; background-color: #fff; border:1px solid #AAAAAA; width:auto !important; padding:1px; outline:none; z-index:9999; box-shadow:0 0 15px rgba(0,0,0,0.1); -moz-box-shadow:0 0 15px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(0,0,0,0.1);}
+.shopify-dialog { background-color: #fff; border:1px solid #AAAAAA; width:auto !important; padding:1px; outline:none; z-index:9999; box-shadow:0 0 15px rgba(0,0,0,0.1); -moz-box-shadow:0 0 15px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(0,0,0,0.1);}
 .shopify-dialog-title {position: relative; background:url("/images/editor/toolbar-bg.png") repeat-x scroll left bottom #FAFAFA; border-bottom:1px solid #bbb; color:#333; cursor:move; font-size:16px; font-weight:700; padding:10px 15px; vertical-align:middle;}
 .shopify-dialog-title.no-title {background:none; padding:0; border:none;}
 

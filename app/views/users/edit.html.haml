@@ -36,6 +36,6 @@
         %label{:for => "user_receive_announcements"} 通过电子邮件保持最新的信息
     %p.btns
       %input.btn{:name => "commit", :type => "submit", :value => "保存"}/
-      or
-      %a{:href => "/admin/users"} 取消
+      =w('or')
+      =link_to w('cancel'),account_index_path
 

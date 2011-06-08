@@ -1,4 +1,4 @@
--use_javascripts 'models/user','controllers/users','collections/users'
+-use_javascripts 'models/user','controllers/users','collections/users','jquery.blockUI'
 %h2#title
 #action-links
   %ul
@@ -246,11 +246,11 @@
     -shop.users.each do |u|
       %li.box2
         %img#gravatar{:alt => "", :src => "/images/avatar.jpg"}/
-        =link_to u.name,edit_user_path(u),:class => "closure-lightbox"
+        =link_to u.name,"##{u.id}",:class => "closure-lightbox"
         %br/
         %small.note
           -if u.last_sign_in_at
             ==最后登录:#{distance_of_time_in_words(u.last_sign_in_at ,Time.now)}
           -else
             该用户到目前为止，没有登录过
-#user-details-area{:style => "display:none"}
+=render partial:"show_user"
