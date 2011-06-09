@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Shop::OrderController < Shop::ApplicationController
   layout 'shop/checkout'
 
