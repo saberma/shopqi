@@ -34,10 +34,6 @@ class Shop::OrderController < Shop::ApplicationController
     order.build_shipping_address if order.shipping_address.nil?
   end
 
-  # 发货方式、付款方式Step2
-  def pay
-  end
-
   # 提交订单: 填写完收货地址等就可以创建订单了
   def create
     address #初始化billing_address,shipping_address
@@ -47,6 +43,10 @@ class Shop::OrderController < Shop::ApplicationController
     else
       render action: :address
     end
+  end
+
+  # 发货方式、付款方式Step2
+  def pay
   end
 
   # 支付

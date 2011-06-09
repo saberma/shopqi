@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
   create_table "carts", :id => false, :force => true do |t|
     t.integer  "shop_id",                  :null => false
     t.string   "uuid",       :limit => 32, :null => false
-    t.string   "session_id",               :null => false
+    t.string   "session_id", :limit => 32, :null => false
     t.string   "cart_hash",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -120,15 +120,15 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
   create_table "order_billing_addresses", :force => true do |t|
     t.string "order_uuid", :limit => 32, :null => false
     t.string "name",                     :null => false
-    t.string "company"
-    t.string "country"
-    t.string "province"
-    t.string "city"
-    t.string "district"
+    t.string "company",    :limit => 64
+    t.string "country",    :limit => 64
+    t.string "province",   :limit => 64
+    t.string "city",       :limit => 64
+    t.string "district",   :limit => 64
     t.string "address1",                 :null => false
     t.string "address2"
-    t.string "zip"
-    t.string "phone",                    :null => false
+    t.string "zip",        :limit => 12
+    t.string "phone",      :limit => 64, :null => false
   end
 
   add_index "order_billing_addresses", ["order_uuid"], :name => "index_order_billing_addresses_on_order_uuid"
@@ -145,15 +145,15 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
   create_table "order_shipping_addresses", :force => true do |t|
     t.string "order_uuid", :limit => 32, :null => false
     t.string "name",                     :null => false
-    t.string "company"
-    t.string "country"
-    t.string "province"
-    t.string "city"
-    t.string "district"
+    t.string "company",    :limit => 64
+    t.string "country",    :limit => 64
+    t.string "province",   :limit => 64
+    t.string "city",       :limit => 64
+    t.string "district",   :limit => 64
     t.string "address1",                 :null => false
     t.string "address2"
-    t.string "zip"
-    t.string "phone",                    :null => false
+    t.string "zip",        :limit => 12
+    t.string "phone",      :limit => 64, :null => false
   end
 
   add_index "order_shipping_addresses", ["order_uuid"], :name => "index_order_shipping_addresses_on_order_uuid"
@@ -161,9 +161,9 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
   create_table "orders", :id => false, :force => true do |t|
     t.string   "uuid",          :limit => 32, :null => false
     t.integer  "shop_id",                     :null => false
-    t.string   "email",                       :null => false
-    t.string   "shipping_rate"
-    t.string   "gateway"
+    t.string   "email",         :limit => 32, :null => false
+    t.string   "shipping_rate", :limit => 32
+    t.string   "gateway",       :limit => 32
     t.float    "total_price",                 :null => false
     t.string   "note"
     t.datetime "created_at"
