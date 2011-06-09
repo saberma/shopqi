@@ -130,7 +130,8 @@ class Photo < ActiveRecord::Base
   # 显示在产品查看页中的缩略图(small)
   # 显示在产品详情页中的图片(middle)
   # 显示在产品详情页中的放大镜图片(big)
-  versions icon:'50x31#', small:'110x73#', middle:'418x418#', big:'1024x1024#', accordion:'220x118#'
+  #versions icon:'50x31#', small:'110x73#', middle:'418x418#', big:'1024x1024#', accordion:'220x118#'
+  versions icon:'50x31#', small:'100x100#', middle:'418x418#', big:'1024x1024#', accordion:'220x118#'
 end
 
 CustomCollection
