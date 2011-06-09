@@ -80,8 +80,10 @@ UpdateableSelectBox = (select_box, create_label) ->
   else if select_box.val() isnt 'create_new'
     input_field.val(select_box.val())
 
+
 $(document).ready ->
   App.init()
+
 
   $('#indicator').ajaxStart ->
     $(this).show()

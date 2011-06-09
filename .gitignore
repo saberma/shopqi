@@ -27,6 +27,8 @@ config/initializers/payment.rb
 *.box
 config/unicorn.conf.rb
 
+.rvmrc
+
 #bundle deployment
 vendor/bundle
 

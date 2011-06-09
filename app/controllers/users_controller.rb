@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   layout 'admin'
   expose(:users){current_user.shop.users}
   expose(:user)
+  expose(:user_json){ {name: user.name,email:user.email,is_current_user:current_user.id == user.id,id:user.id }.to_json}
 
   def update
     #若没填密码，则不需要更新密码
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
         flash[:notice] = "新增用户成功！"
         render js: "window.location = '#{account_index_path}';msg('#{flash[:notice]}');"
       end
+      #Todo 
     end
   end
 
@@ -34,6 +36,12 @@ class UsersController < ApplicationController
     user.destroy
     flash[:notice] = "删除用户成功！"
     render js: "window.location = '#{account_index_path}';msg('#{flash[:notice]}');"
+  end
+
+  def show
+    respond_to do |format|
+      format.json {render json: user_json}
+    end
   end
 
 end
