@@ -2,6 +2,7 @@
 db/*.sqlite3
 log/*.log
 log/.nfs*
+tmp/*
 tmp/**/*
 
 #cucumber测试生成的临时文件
