@@ -12,6 +12,7 @@ class Shop::CartController < Shop::ApplicationController
   end
 
   def show
+    cart_hash = cookie_cart_hash
     template_assign = { 'cart' => cart_drop }
     html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign('cart', template_assign))
     render text: html
@@ -26,7 +27,8 @@ class Shop::CartController < Shop::ApplicationController
     if params[:checkout].blank?
       redirect_to cart_path
     else
-      checkout_url = "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{shop.id}"
+      cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)
+      checkout_url = "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{shop.id}/#{cart.uuid}"
       redirect_to checkout_url
     end
   end

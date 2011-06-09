@@ -4,9 +4,9 @@ describe Order do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:order) { shop.orders.build }
-
   describe 'validate' do
+
+    let(:order) { shop.orders.build }
 
     it 'should validate email' do
       order.valid?.should be_false
@@ -19,8 +19,33 @@ describe Order do
       order.errors['billing_address.name'].should_not be_empty
     end
 
+  end
+
+  describe 'create' do
+
+    let(:order) { Factory :order, shop: shop }
+
+    it 'should save address' do
+      expect do
+        expect do
+          expect do
+            order
+          end.should change(Order, :count).by(1)
+        end.should change(OrderBillingAddress, :count).by(1)
+      end.should change(OrderShippingAddress, :count).by(1)
+    end
+
+    it 'should save address' do
+    end
+
+  end
+
+  describe 'update' do
+
+    let(:order) { Factory :order, shop: shop }
+
     it 'should validate gateway' do
-      order.next_step
+      order.save
       order.errors[:gateway].should_not be_nil
     end
 

@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Shop::ApplicationController < ActionController::Base
-  protect_from_forgery
+  #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   # 顾客创建订单时的页面显示的错误提示
   ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
@@ -64,15 +64,15 @@ class Shop::ApplicationController < ActionController::Base
   begin 'cart'
 
     def cookie_cart_hash
-      cookies['cart'] = '' if cookies['cart'].nil?
+      session['cart'] = '' if session['cart'].nil?
       # 格式: variant_id|quantity;variant_id|quantity
-      cart = cookies['cart'].split(';').map {|item| item.split('|')}
+      cart = session['cart'].split(';').map {|item| item.split('|')}
       Hash[*cart.flatten]
     end
 
     def save_cookie_cart(cart_hash)
-      cart_hash.delete_if {|key, value| value.zero?}
-      cookies['cart'] = cart_hash.to_a.map{|item| item.join('|')}.join(';')
+      cart_hash.delete_if {|key, value| value.to_i.zero?}
+      session['cart'] = cart_hash.to_a.map{|item| item.join('|')}.join(';')
     end
 
   end

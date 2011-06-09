@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110605085310) do
+ActiveRecord::Schema.define(:version => 20110609014732) do
 
   create_table "articles", :force => true do |t|
     t.integer  "blog_id"
@@ -40,6 +40,18 @@ ActiveRecord::Schema.define(:version => 20110605085310) do
   end
 
   add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
+
+  create_table "carts", :id => false, :force => true do |t|
+    t.integer  "shop_id",                  :null => false
+    t.string   "uuid",       :limit => 32, :null => false
+    t.string   "session_id",               :null => false
+    t.string   "cart_hash",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "carts", ["shop_id"], :name => "index_carts_on_shop_id"
+  add_index "carts", ["uuid"], :name => "index_carts_on_uuid"
 
   create_table "comments", :force => true do |t|
     t.integer  "article_id"
@@ -106,58 +118,60 @@ ActiveRecord::Schema.define(:version => 20110605085310) do
   add_index "links", ["link_list_id"], :name => "index_links_on_link_list_id"
 
   create_table "order_billing_addresses", :force => true do |t|
-    t.integer "order_id", :null => false
-    t.string  "name",     :null => false
-    t.string  "company"
-    t.string  "country"
-    t.string  "province"
-    t.string  "city"
-    t.string  "district"
-    t.string  "address1", :null => false
-    t.string  "address2"
-    t.string  "zip"
-    t.string  "phone",    :null => false
+    t.string "order_uuid", :limit => 32, :null => false
+    t.string "name",                     :null => false
+    t.string "company"
+    t.string "country"
+    t.string "province"
+    t.string "city"
+    t.string "district"
+    t.string "address1",                 :null => false
+    t.string "address2"
+    t.string "zip"
+    t.string "phone",                    :null => false
   end
 
-  add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
+  add_index "order_billing_addresses", ["order_uuid"], :name => "index_order_billing_addresses_on_order_uuid"
 
-  create_table "order_products", :force => true do |t|
-    t.integer "order_id",           :null => false
-    t.integer "product_variant_id", :null => false
-    t.float   "price",              :null => false
-    t.integer "quantity",           :null => false
+  create_table "order_product_variants", :force => true do |t|
+    t.string  "order_uuid",         :limit => 32, :null => false
+    t.integer "product_variant_id",               :null => false
+    t.float   "price",                            :null => false
+    t.integer "quantity",                         :null => false
   end
 
-  add_index "order_products", ["order_id"], :name => "index_order_products_on_order_id"
+  add_index "order_product_variants", ["order_uuid"], :name => "index_order_product_variants_on_order_uuid"
 
   create_table "order_shipping_addresses", :force => true do |t|
-    t.integer "order_id", :null => false
-    t.string  "name",     :null => false
-    t.string  "company"
-    t.string  "country"
-    t.string  "province"
-    t.string  "city"
-    t.string  "district"
-    t.string  "address1", :null => false
-    t.string  "address2"
-    t.string  "zip"
-    t.string  "phone",    :null => false
+    t.string "order_uuid", :limit => 32, :null => false
+    t.string "name",                     :null => false
+    t.string "company"
+    t.string "country"
+    t.string "province"
+    t.string "city"
+    t.string "district"
+    t.string "address1",                 :null => false
+    t.string "address2"
+    t.string "zip"
+    t.string "phone",                    :null => false
   end
 
-  add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
+  add_index "order_shipping_addresses", ["order_uuid"], :name => "index_order_shipping_addresses_on_order_uuid"
 
-  create_table "orders", :force => true do |t|
-    t.integer  "shop_id",       :null => false
-    t.string   "email",         :null => false
+  create_table "orders", :id => false, :force => true do |t|
+    t.string   "uuid",          :limit => 32, :null => false
+    t.integer  "shop_id",                     :null => false
+    t.string   "email",                       :null => false
     t.string   "shipping_rate"
     t.string   "gateway"
-    t.float    "total_price",   :null => false
+    t.float    "total_price",                 :null => false
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "orders", ["shop_id"], :name => "index_orders_on_shop_id"
+  add_index "orders", ["uuid"], :name => "index_orders_on_uuid"
 
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"

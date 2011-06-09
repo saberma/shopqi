@@ -9,7 +9,7 @@
   #overview.clearfix
     #products
       %h2 您购买了&hellip;
-      %table#thumbs(cellspacing="0" cellpadding="0")=render partial: 'products', collection: variant_items
+      %table#thumbs(cellspacing="0" cellpadding="0")=render 'variants', variants: variant_items
     #wallet
       %span#cost
         =total_price
@@ -20,7 +20,7 @@
   /
     \/end overview
   #content
-    =form_for order, url: "/carts/#{shop.id}/create_order" do |f|
+    =form_for order, url: "/carts/#{shop.id}/#{cart.uuid}/create_order" do |f|
       #email
         =f.label :email, '您的 Email 地址'
         =f.text_field :email
