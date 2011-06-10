@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   create_table "photos", :force => true do |t|
     t.integer  "product_id"
     t.string   "product_image_uid"
+    t.string   "product_image_format"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
