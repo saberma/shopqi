@@ -14,7 +14,9 @@ class Paginate < Liquid::Block
   def render(context)
     collection = context[@collection_name] or return ''
     current_page = (context['current_page'] || 1).to_i
+    items = collection.size
     in_page_collection = collection[(current_page-1)*@size, @size]
+    collection.reject! {|item| !in_page_collection.include?(item)} #注意:drop中的集合要缓存，否则替换后还是会没有用
 
     context.stack do
 
@@ -22,17 +24,9 @@ class Paginate < Liquid::Block
         'page_size'  => @size,
         'current_page'  => current_page,
         'current_offset'  => current_page,
-        'pages'  => (collection.size + @size -1) / @size,
-        'items'  => in_page_collection.size
+        'pages'  => (items + @size -1) / @size,
+        'items'  => items
       }
-
-      #替换同名集合为当前页Item #a = 'a.b.c' #{a: {b: {c: 1}}}
-      result = context
-      names = @collection_name.split('.')
-      names.each do |name|
-        result[name] = (name == names.last) ? in_page_collection : {}
-        result=result[name]
-      end
 
       super
     end

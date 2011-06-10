@@ -16,8 +16,8 @@ class CollectionDrop < Liquid::Drop
     @collection = collection
   end
 
-  def products
-    @collection.products.map do |product|
+  def products #数组要缓存，以便paginate替换为当前页
+    @products ||= @collection.products.map do |product|
       ProductDrop.new product
     end
   end

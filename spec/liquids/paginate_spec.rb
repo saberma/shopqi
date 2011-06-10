@@ -21,7 +21,8 @@ describe Paginate do
       1128
     end
     def number
-      (1..10).to_a
+      #(1..10).to_a #一定要缓存，否则无法分页
+      @number ||= (1..10).to_a
     end
   end
 
