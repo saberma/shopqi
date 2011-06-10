@@ -22,4 +22,12 @@ class CollectionDrop < Liquid::Drop
     end
   end
 
+  def title
+    @collection.title
+  end
+
+  def description
+    @collection.body_html
+  end
+
 end

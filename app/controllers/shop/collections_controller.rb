@@ -6,8 +6,10 @@ class Shop::CollectionsController < Shop::ApplicationController
   expose(:product) { shop.products.where(handle: params[:handle]).first }
 
   def show
-    template_assign = { 'product' => ProductDrop.new(product) }
-    html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign('product', template_assign))
+    CollectionsDrop
+    collection = CustomCollection.new(title: '所有商品', products: shop.products)
+    assign = template_assign('collection' => CollectionDrop.new(collection))
+    html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign('collection', assign))
     render text: html
   end
 end
