@@ -39,6 +39,18 @@
                 =f.label :phone
                 %br/
                 =f.text_field :phone ,size:20
+    %h3 调整标准和格式
+    %p.hint.sb
+      标准和格式，用于计算的产品价格，运输重量和进行中，放置时间等内容。
+    .box2
+      %dl.nsb
+        %dt
+          =f.label :order_number_format
+          %small=link_to "自定义订单编号格式","#",id:"formatting"
+        %dd
+          %p.note.sb#order-number-format-notes(style="display:none") 您可以在此处改变您订单编号的格式，其中{{number}}是占位符,将被订单号取代。
+          =f.text_field :order_number_format,style:'display:none'
+          %span#order-number-format-example #1234
     %h3 安全
     %p.hint.sb
       您可以为您的商店增加密码，这样，当用户访问您的商店的时候，就需要输入这个密码。这个功能在您维护或者处理你的商店信息的时候是非常有用的。或者您是一个批发商，只卖到特定的客户群，这也是非常有用的。

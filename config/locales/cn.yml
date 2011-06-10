@@ -58,6 +58,7 @@ cn:
         password: 密码
         email: 邮箱
         address: 详细地址
+        order_number_format: 订单号格式
       blog:
         title: 标题
       article:

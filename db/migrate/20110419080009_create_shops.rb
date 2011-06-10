@@ -20,6 +20,7 @@ class CreateShops < ActiveRecord::Migration
       t.boolean :password_enabled, comment: "是否让密码生效"    , default: false
       t.string :password_message , comment: "提供给用户看的信息"
       t.boolean :public          , comment: "是否公开"          , default: true
+      t.string :order_number_format,default: '#{{number}}'
 
       t.timestamps
     end
