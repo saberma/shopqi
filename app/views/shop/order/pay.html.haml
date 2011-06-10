@@ -9,16 +9,10 @@
   #overview.clearfix
     #products
       %h2 您购买了&hellip;
-      %table#thumbs(cellspacing="0" cellpadding="0")
-        -variant_items.each_pair do |variant, quantity|
-          %tr
-            %td
-              %div=image_tag 'admin/no-image-thumb.gif', alt:'商品无图片...', class: :images
-              %h3.plisthead(title="#{variant.product.title}")=variant.product.title
-              %span.plist-line-price==#{quantity}x #{variant.price}
+      %table#thumbs(cellspacing="0" cellpadding="0")=render 'variants', variants: order_variant_items
     #wallet
       %span#cost
-        =total_price
+        =order_total_price
         =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
       %span#shipping_span.hint .. 包含货运费 $25.00.
       %br
@@ -28,13 +22,13 @@
     %div(style="clear:left")
   / end overview
   #content
-    =form_for order, url: "/orders/#{shop.id}/commit" do |f|
+    =form_for order, url: "/orders/#{shop.id}/#{order.uuid}/commit" do |f|
       #payment
         .group.clearfix
           %h3 发货方式
           %p 请选择您需要的发货方式.
           %p.sst
-            %select#shipping-rates(name="shipping_rate")
+            %select#shipping-rates(name="order[shipping_rate]")
               %option(value="shopify-international-shipping-25.00" selected="selected") International Shipping - $25.00
       .group
         %h3 购买
@@ -44,7 +38,7 @@
             %span.error-message
             %ul#payment-methods
               %li#credit-cards
-                %input(checked="checked" class="payment-method" id="direct-payment" name="gateway" type="radio" value="1072012")
+                %input(checked="checked" class="payment-method" id="direct-payment" name="order[gateway]" type="radio" value="1072012")
                 %label(for="direct-payment") 货到付款
           #pay-info.gright
         %p(style="clear:both;height: 0")

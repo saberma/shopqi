@@ -27,7 +27,7 @@ Shopqi::Application.routes.draw do
       get '/carts/:shop_id/:cart_uuid' => 'order#address'
       match '/carts/:shop_id/:cart_uuid/create_order' => 'order#create'
       get '/orders/:shop_id/:uuid/pay' => 'order#pay', as: :pay_order
-      match '/orders/:shop_id/:order_uuid/commit' => 'order#commit', as: :commit_order
+      match '/orders/:shop_id/:uuid/commit' => 'order#commit', as: :commit_order
     end
   end
 

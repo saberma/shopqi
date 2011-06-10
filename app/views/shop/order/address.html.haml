@@ -9,10 +9,10 @@
   #overview.clearfix
     #products
       %h2 您购买了&hellip;
-      %table#thumbs(cellspacing="0" cellpadding="0")=render 'variants', variants: variant_items
+      %table#thumbs(cellspacing="0" cellpadding="0")=render 'variants', variants: cart_variant_items
     #wallet
       %span#cost
-        =total_price
+        =cart_total_price
         =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
       %br
       %span#steps 步骤 1 之 2

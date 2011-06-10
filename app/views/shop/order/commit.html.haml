@@ -7,7 +7,7 @@
 #main
   #overview
     %h2 您购买的是
-    %table#thumbs(cellspacing="0" cellpadding="0")=render 'products', collection: variant_items
+    %table#thumbs(cellspacing="0" cellpadding="0")=render 'variants', variants: order_variant_items
   #content
     .group
       %p

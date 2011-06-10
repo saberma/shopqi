@@ -11,8 +11,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
 
-  validates_associated :billing_address
-  validates_presence_of :email, :billing_address, message: '此栏不能为空白'
+  validates_presence_of :email, message: '此栏不能为空白'
   validates_presence_of :shipping_rate, :gateway, on: :update
 
   before_create do
