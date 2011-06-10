@@ -93,6 +93,19 @@ $(document).ready ->
     $(this).hide()
     $(document).unbind 'mousemove'
 
+  $('#formatting').click ->
+    $('#order-number-format-notes,#shop_order_number_format').each ->
+      $(this).toggle()
+    false
+  $('#shop_order_number_format').keyup ->
+    if $(this).val().match /{{number}}/
+      val = $(this).val().replace /{{number}}/,1234
+    else
+      val = '#1234'
+    $('#order-number-format-example').html val
+
+
+
   #外观、设置
   NavigationDropdown 'theme-link': '\u5916\u89C2', 'preferences-link': '\u8BBE\u7F6E'
 

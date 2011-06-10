@@ -85,7 +85,7 @@ GEM
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
     diff-lcs (1.1.2)
-    dragonfly (0.8.2)
+    dragonfly (0.9.3)
       rack
     em-websocket (0.2.1)
       addressable (>= 2.1.1)

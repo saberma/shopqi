@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609014732) do
+ActiveRecord::Schema.define(:version => 20110609075449) do
 
   create_table "articles", :force => true do |t|
     t.integer  "blog_id"
@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
   end
 
   add_index "custom_collections", ["shop_id"], :name => "index_custom_collections_on_shop_id"
+
+  create_table "emails", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "title",        :null => false
+    t.text     "body",         :null => false
+    t.boolean  "include_html"
+    t.text     "body_html"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "kindeditors", :force => true do |t|
     t.string   "kindeditor_image_uid"
@@ -188,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
   create_table "photos", :force => true do |t|
     t.integer  "product_id"
     t.string   "product_image_uid"
+    t.string   "product_image_format"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -293,9 +304,10 @@ ActiveRecord::Schema.define(:version => 20110609014732) do
     t.string   "address"
     t.string   "keywords"
     t.string   "password"
-    t.boolean  "password_enabled", :default => false
+    t.boolean  "password_enabled",    :default => false
     t.string   "password_message"
-    t.boolean  "public",           :default => true
+    t.boolean  "public",              :default => true
+    t.string   "order_number_format", :default => "\#{{number}}"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

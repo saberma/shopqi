@@ -18,4 +18,3 @@ App.Controllers.Users = Backbone.Controller.extend
         $.blockUI {message: template user}
         $('.blockOverlay,.shopify-dialog-title-close').attr('title','单击关闭').click($.unblockUI) 
 
-

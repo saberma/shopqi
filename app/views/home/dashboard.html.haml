@@ -254,8 +254,6 @@
           -else
             该用户到目前为止，没有登录过
 =render partial:"show_user"
+
 :javascript
-  App.init = function(){
-    new App.Controllers.Users();
-    Backbone.history.start();
-  }
+  new App.Controllers.Users();
