@@ -31,13 +31,13 @@ class ShopObserver < ActiveRecord::Observer
       ShopQi团队。
     }
     about_us_page = shop.pages.create title: '关于我们', handle: 'about-us', body_html: %q{
-      商店的[关于我们]页面是非常重要的，因此顾客将通过访问此页面来了解您的商店。此页面的内容可以包括以下部分：
-
-      介绍您的公司
-      商店主要销售商品类型
-      公司地址
-
-      请进入后台管理的页面&博客，修改此页面内容。
+      <p>商店的<strong>关于我们</strong>页面是非常重要的，因此顾客将通过访问此页面来了解您的商店。此页面的内容可以包括以下部分：</p>
+      <ul>
+      <li>介绍您的公司</li>
+      <li>商店主要销售商品类型</li>
+      <li>公司地址</li>
+      </ul>
+      <p>请进入后台管理的<a href="/admin/pages">页面&博客</a>，修改此页面内容。</p>
     }
 
     # 主菜单(首页、商品列表、关于我们)，页脚(查询、关于我们)
