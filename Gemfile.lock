@@ -57,8 +57,6 @@ GEM
     addressable (2.2.5)
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
-    auto_migrations (1.1.0)
-      rails (>= 3.0.1)
     awesome_print (0.3.2)
     barista (1.0.0)
       coffee-script (~> 2.1.1)
@@ -80,6 +78,7 @@ GEM
     crack (0.1.8)
     database_cleaner (0.6.6)
     decent_exposure (1.0.1)
+    default_value_for (1.0.1)
     devise (1.2.1)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
@@ -244,7 +243,6 @@ DEPENDENCIES
   active_hash
   activemerchant
   activemerchant_patch_for_china
-  auto_migrations
   awesome_print
   barista
   capybara!
@@ -253,6 +251,7 @@ DEPENDENCIES
   client_side_validations
   database_cleaner
   decent_exposure
+  default_value_for
   devise
   dragonfly
   factory_girl
