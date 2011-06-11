@@ -16,7 +16,7 @@ class Paginate < Liquid::Block
     current_page = (context['current_page'] || 1).to_i
     items = collection.size
     pages = (items + @size -1) / @size
-    in_page_collection = collection[(current_page-1)*@size, @size]
+    in_page_collection = collection[(current_page-1)*@size, @size] or return ''
     collection.reject! {|item| !in_page_collection.include?(item)} #注意:drop中的集合要缓存，否则替换后还是会没有用
 
     context.stack do

@@ -48,10 +48,14 @@ class Shop::AppController < ActionController::Base
     # 渲染template时的hash
     def template_assign(extra_assign)
       shop_drop = ShopDrop.new(shop)
+      settings_drop = SettingsDrop.new(shop)
+      linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       {
         'shop' => shop_drop,
-        'collections' => collections_drop,
+        'settings' => settings_drop,
+        'linklists' => linklists_drop,
+        'collections' => collections_drop
       }.merge(extra_assign)
     end
 
