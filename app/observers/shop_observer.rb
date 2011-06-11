@@ -51,6 +51,8 @@ class ShopObserver < ActiveRecord::Observer
 
     # 博客(最新动态)
     shop.blogs.create title: '最新动态', handle: 'latest-news'
+    # 创建各个邮件样板
+    shop.emails.create title: '{{shop.name}}',mail_type: KeyValues::Mail::Type.first.code, body: '{{shop.name}}'
   end
 
 end
