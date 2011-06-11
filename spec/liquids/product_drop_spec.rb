@@ -10,37 +10,46 @@ describe ProductDrop do
   let(:product_drop) { ProductDrop.new iphone4 }
 
   it 'should get url' do
-    product_drop.url.should eql "/products/#{iphone4.handle}"
+    variant = "{{ product.url }}"
+    liquid(variant).should eql "/products/#{iphone4.handle}"
   end
-
-=begin
-  it 'should get featured_image' do
-    product_drop.send('featured_image').should eql "/products/"
-  end
-=end
 
   it 'should get title' do
-    product_drop.title.should eql "iphone4"
+    variant = "{{ product.title }}"
+    liquid(variant).should eql "iphone4"
   end
 
   it 'should get price' do
-    product_drop.price.should eql 3000.0
+    variant = "{{ product.price }}"
+    liquid(variant).should eql "3000.0"
   end
 
   it 'should get description' do
-    product_drop.description.should eql iphone4.body_html
+    variant = "{{ product.description }}"
+    liquid(variant).should eql iphone4.body_html
   end
 
   it 'should get available' do
-    product_drop.available.should eql true
+    variant = "{{ product.available }}"
+    liquid(variant).should eql 'true'
   end
 
   it 'should get variants' do
-    product_drop.variants.size().should eql 1
+    variant = "{{ product.variants | size }}"
+    liquid(variant).should eql '1'
   end
 
   it 'should get options' do
-    product_drop.options.size().should eql 1
+    variant = "{{ product.options | size }}"
+    liquid(variant).should eql '1'
+  end
+
+  it 'should get images' do
+    photo = iphone4.photos.build
+    photo.product_image = Rails.root.join('public/images/avatar.jpg')
+    photo.save!
+    variant = "{{ product.images | size }}"
+    liquid(variant, {'product' => ProductDrop.new(iphone4)}).should eql '1'
   end
 
   describe ProductOptionDrop do
@@ -50,6 +59,11 @@ describe ProductDrop do
       product_drop.options.first.as_json.should eql result
     end
 
+  end
+
+  private
+  def liquid(variant, assign = {'product' => product_drop})
+    Liquid::Template.parse(variant).render(assign)
   end
 
 end

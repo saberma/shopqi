@@ -1,5 +1,6 @@
 #encoding: utf-8
 class ProductDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   def initialize(product)
     @product = product
@@ -14,16 +15,21 @@ class ProductDrop < Liquid::Drop
       ProductVariantDrop.new variant
     end
   end
+  memoize :variants
 
   def options
     @product.options.map do |option|
       ProductOptionDrop.new option
     end
   end
+  memoize :options
 
   def images
-    ["/images/admin/no-image.gif"] #TODO:增加照片
+    @product.photos.map do |image|
+      ProductImageDrop.new image
+    end
   end
+  memoize :images
 
   def available
     @product.published
@@ -46,9 +52,8 @@ class ProductDrop < Liquid::Drop
     @product.body_html
   end
 
-  #TODO: 完成上传照片后显示商品照片
   def featured_image
-    "/images/admin/no-image.gif"
+    @product.photos.first
   end
 
   def as_json(options={})
@@ -64,10 +69,14 @@ class ProductDrop < Liquid::Drop
 
 end
 
-class ProductImagesDrop < Liquid::Drop
+class ProductImageDrop < Liquid::Drop
 
   def initialize(image)
     @image = image
+  end
+
+  def version(size) #相当于method_missing
+    @image.send(size)
   end
 
 end
