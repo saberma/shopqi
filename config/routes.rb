@@ -1,3 +1,4 @@
+#encoding: utf-8
 Shopqi::Application.routes.draw do
 
   resources :settings
@@ -15,6 +16,7 @@ Shopqi::Application.routes.draw do
     scope module: :shop do
       match '/' => 'shops#show'
       get '/products/:handle' => 'products#show'
+      get '/collections/all' => 'collections#show'
       post '/cart/add' => 'cart#add'
       get '/cart' => 'cart#show'
       post '/cart' => 'cart#update'
