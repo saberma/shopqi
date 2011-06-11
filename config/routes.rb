@@ -78,7 +78,7 @@ Shopqi::Application.routes.draw do
     resources :users
 
     resources :account, only: [:index] do
-      collection do 
+      collection do
         post :change_ownership
       end
     end
