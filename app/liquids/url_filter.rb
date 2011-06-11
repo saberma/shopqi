@@ -13,8 +13,8 @@ module UrlFilter
     "/s/shopqi/#{input}"
   end
 
-  def product_img_url(input, size)
-    "#{input[0..-5]}-#{size}#{input[-4..-1]}"
+  def product_img_url(photo, size)
+    photo ? photo.version(size) : "/images/admin/no-image-#{size}.gif"
   end
 
 end

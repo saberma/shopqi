@@ -18,10 +18,14 @@ class Product < ActiveRecord::Base
   
   #商品列表中显示的产品图片
   def index_photo
+    photo
+  end
+
+  def photo(version = :icon)
     unless photos.blank?
-      photos.first.icon
+      photos.first.send(version)
     else
-      '/images/other/no-image-thumb.gif'
+      "/images/other/no-image-#{version}.gif"
     end
   end
 
@@ -106,7 +110,7 @@ class ProductOption < ActiveRecord::Base
 end
 
 class Photo < ActiveRecord::Base
-  belongs_to :product, inverse_of: "photos"
+  belongs_to :product
   default_scope order: 'position asc'
 
   image_accessor :product_image

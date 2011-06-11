@@ -4,6 +4,8 @@ describe UrlFilter do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:iphone4) { Factory :iphone4, shop: shop }
+
   it 'should get asset_url' do
     variant = "{{ 'shop.css' | asset_url }}"
     params = { 'shop' => ShopDrop.new(shop) } # 不能使用 { shop: shop }，即key不能为symbol，否则会找不到shop对象
@@ -21,8 +23,8 @@ describe UrlFilter do
   end
 
   it 'should get product_img_url' do
-    variant = "{{ '/products/1.png' | product_img_url: 'medium' }}"
-    Liquid::Template.parse(variant).render.should eql '/products/1-medium.png'
+    variant = "{{ product.photos.first | product_img_url: 'medium' }}"
+    Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql '/images/admin/no-image-medium.gif'
   end
 
 end
