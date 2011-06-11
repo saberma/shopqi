@@ -1,5 +1,6 @@
 # encoding: utf-8
-class Shop::ShopsController < Shop::ApplicationController
+#class Shop::ShopsController < Shop::ApplicationController #warning: toplevel constant ApplicationController referenced by
+class Shop::ShopsController < Shop::AppController
   layout nil
 
   expose(:shop) do

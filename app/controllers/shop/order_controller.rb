@@ -1,5 +1,5 @@
 #encoding: utf-8
-class Shop::OrderController < Shop::ApplicationController
+class Shop::OrderController < Shop::AppController
   layout 'shop/checkout'
 
   expose(:shop) { Shop.find(params[:shop_id]) }

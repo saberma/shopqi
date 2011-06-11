@@ -1,5 +1,5 @@
 #encoding: utf-8
-class Shop::ProductsController < Shop::ApplicationController
+class Shop::ProductsController < Shop::AppController
   layout nil
 
   expose(:shop) { Shop.at(request.subdomain) }
