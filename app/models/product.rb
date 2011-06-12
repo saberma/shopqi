@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
   end
 
   define_index do
-    has :shop_id #只能查询当前商店下的商品
+    has :shop_id #只能查询当前商店下的商品，查询时使用shop.products.search
     indexes :title
     indexes :body_html
     indexes :product_type
@@ -93,6 +93,10 @@ end
 class ProductVariant < ActiveRecord::Base
   belongs_to :product
   validates_presence_of :price, :weight
+
+  after_save do
+    product.update_attribute delta: true #新增修改款式要更新商品的索引
+  end
 
   def options
     [option1, option2, option3].compact
