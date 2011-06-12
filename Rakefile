@@ -5,3 +5,4 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 Shopqi::Application.load_tasks
+require 'thinking_sphinx/deltas/resque_delta/tasks'

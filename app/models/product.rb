@@ -39,7 +39,7 @@ class Product < ActiveRecord::Base
     indexes variants(:option2)
     indexes variants(:option3)
     indexes variants(:sku)
-    set_property delta: true #增量更新索引
+    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
   end
 
   before_create do
