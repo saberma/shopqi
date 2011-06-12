@@ -30,7 +30,16 @@ class Product < ActiveRecord::Base
   end
 
   define_index do
+    has :shop_id #只能查询当前商店下的商品
     indexes :title
+    indexes :body_html
+    indexes :product_type
+    indexes :vendor
+    indexes variants(:option1)
+    indexes variants(:option2)
+    indexes variants(:option3)
+    indexes variants(:sku)
+    set_property delta: true #增量更新索引
   end
 
   before_create do

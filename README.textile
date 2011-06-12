@@ -37,6 +37,7 @@ vagrant box add lucid32-shopqi-new ~/vagrant-package-shopqi-new.box
 # unicorn 3.5.0
 # postgrel 0.8.4
 # redis 2.2.0rc2
+# coreseek(sphinx) 3.2.14
 
 h3. 下载源代码:
 

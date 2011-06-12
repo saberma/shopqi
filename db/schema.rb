@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.text     "body_html"
     t.string   "product_type"
     t.string   "vendor"
+    t.boolean  "delta",        :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
