@@ -2,6 +2,8 @@ DEFAULTS: &DEFAULTS
   charset_type: zh_cn.utf-8
   charset_dictpath: <%= Rails.root.join('lib') %>
   bin_path: /opt/coreseek/bin #用于运行rake ts:conf等任务
+  #searchd_binary_name: searchd
+  #indexer_binary_name: indexer
 
 production:
   port: 9312
