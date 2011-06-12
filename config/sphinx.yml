@@ -1,0 +1,16 @@
+DEFAULTS: &DEFAULTS
+  charset_type: zh_cn.utf-8
+  charset_dictpath: <%= Rails.root.join('lib') %>
+  bin_path: /opt/coreseek/bin #用于运行rake ts:conf等任务
+
+production:
+  port: 9312
+  <<: *DEFAULTS
+
+development:
+  port: 9313
+  <<: *DEFAULTS
+
+test:
+  port: 9314
+  <<: *DEFAULTS

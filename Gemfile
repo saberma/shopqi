@@ -7,7 +7,7 @@ gem 'rails', '3.0.6'
 gem 'pg'
 gem 'devise'
 gem 'default_value_for'
-
+gem 'thinking-sphinx', '2.0.5'
 
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'kaminari' # 分页

@@ -29,6 +29,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  define_index do
+    indexes :title
+  end
+
   before_create do
     if self.variants.empty?
       self.variants.build price: 0.0, weight: 0.0

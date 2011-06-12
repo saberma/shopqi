@@ -1,7 +1,6 @@
 .bundle
 db/*.sqlite3
-log/*.log
-log/.nfs*
+log/*
 tmp/*
 tmp/**/*
 
@@ -51,3 +50,6 @@ public/javascripts/*application.js
 
 #主题
 public/s/files
+
+#全文检索CoreSeek(sphinx)
+db/sphinx
