@@ -22,22 +22,22 @@ class ShopObserver < ActiveRecord::Observer
 
     # 页面
     welcome_page = shop.pages.create title: '欢迎', handle: 'frontpage', body_html: %q{
-      恭喜！您已成功发布网上商店！
+<p><strong>恭喜！您已成功发布网上商店！</strong></p
 
-      这是您的网店首页，当您的顾客进入网店时将看到这里的内容。您可以重新修改此内容。
+<p>这是您的网店首页，当您的顾客进入网店时将看到这里的内容。您可以重新修改此内容。</p>
 
-      请您进入后台管理，开始为您的网店新增商品。
+<p>请您进入<a href="/admin">后台管理</a>，开始为您的网店新增商品。</p>
 
-      ShopQi团队。
+<p>ShopQi团队。</p>
     }
     about_us_page = shop.pages.create title: '关于我们', handle: 'about-us', body_html: %q{
-      <p>商店的<strong>关于我们</strong>页面是非常重要的，因此顾客将通过访问此页面来了解您的商店。此页面的内容可以包括以下部分：</p>
-      <ul>
-      <li>介绍您的公司</li>
-      <li>商店主要销售商品类型</li>
-      <li>公司地址</li>
-      </ul>
-      <p>请进入后台管理的<a href="/admin/pages">页面&博客</a>，修改此页面内容。</p>
+<p>商店的<strong>关于我们</strong>页面是非常重要的，因此顾客将通过访问此页面来了解您的商店。此页面的内容可以包括以下部分：</p>
+<ul>
+<li>介绍您的公司</li>
+<li>商店主要销售商品类型</li>
+<li>公司地址</li>
+</ul>
+<p>请进入后台管理的<a href="/admin/pages">页面&博客</a>，修改此页面内容。</p>
     }
 
     # 主菜单(首页、商品列表、关于我们)，页脚(查询、关于我们)
