@@ -73,9 +73,9 @@
                   %input.btn{:name => "commit", :type => "submit", :value => "新增"}/
                   =w('or')
                   %a{:href => "#",id:'cancel'} 返回
-#billing-cycles.group.box2
-  %h3 费用清单
 -if current_user.is_admin?
+  #billing-cycles.group.box2
+    %h3 费用清单
   .group.box2
     %h4 需要改变商店所有者?
     =form_for user,url:{action:"change_ownership"} do |f|

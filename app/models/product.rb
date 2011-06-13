@@ -15,17 +15,17 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
 
   validates_presence_of :title, :product_type, :vendor
-  
+
   #商品列表中显示的产品图片
   def index_photo
-    photo
+    photo('medium')
   end
 
   def photo(version = :icon)
     unless photos.blank?
       photos.first.send(version)
     else
-      "/images/other/no-image-#{version}.gif"
+      "/images/admin/no-image-#{version}.gif"
     end
   end
 

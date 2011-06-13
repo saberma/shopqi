@@ -247,6 +247,8 @@
       %li.box2
         %img#gravatar{:alt => "", :src => "/images/avatar.jpg"}/
         =link_to u.name,"#users/#{u.id}",:class => "closure-lightbox"
+        -if u.is_admin?
+          %span.state.owner 帐户所有者
         %br/
         %small.note
           -if u.last_sign_in_at

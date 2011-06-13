@@ -15,23 +15,24 @@ class Shop < ActiveRecord::Base
 
   has_many :types             , dependent: :destroy, class_name: 'ShopProductType'
   has_many :vendors           , dependent: :destroy, class_name: 'ShopProductVendor'
-  
+  has_many :emails            , dependent: :destroy
+
   #二级域名须为3到20位数字和字母组成的，且唯一
   validates :permanent_domain, presence: true, uniqueness: true, format: {with:  /\A([a-z0-9])*\Z/ }, length: 3..20
   validates_presence_of :name
-  
+
   before_create :init_valid_date
 
   # 域名
   def self.at(domain)
     Shop.where(permanent_domain: domain).first
   end
-  
+
   protected
   def init_valid_date
     self.deadline = Date.today.next_day(10)
   end
-  
+
   def available?
     !self.deadline.past?
   end

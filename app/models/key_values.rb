@@ -19,14 +19,14 @@ module KeyValues
 
     class Type < KeyValues::Base
         self.data = [
-          {id: 1, name: '订单确认提醒'            , code: 'order_confirm'   },
-          {id: 2, name: '新订单提醒'          , code: 'new_order_notify'},
-          {id: 3, name: '货物发送提醒'        , code: 'ship_confirm'    },  
-          {id: 4, name: '货物发送信息更改提醒', code: 'ship_update'     },  
-          {id: 5, name: '订单取消提醒', code: 'order_cancelled'     },  
-          {id: 6, name: '顾客帐号激活提醒', code: 'customer_account_activation'  },  
-          {id: 7, name: '顾客帐号密码更改提醒', code: 'customer_password_reset'  },  
-          {id: 7, name: '顾客帐号确认提醒', code: 'customer_account_welcome'  } 
+          {id: 1, name: '订单确认提醒'            , code: 'order_confirm'                 , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 2, name: '新订单提醒'              , code: 'new_order_notify'              , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 3, name: '货物发送提醒'            , code: 'ship_confirm'                  , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 4, name: '货物发送信息更改提醒'    , code: 'ship_update'                   , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 5, name: '订单取消提醒'            , code: 'order_cancelled'               , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 6, name: '顾客帐号激活提醒'        , code: 'customer_account_activation'   , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 7, name: '顾客帐号密码更改提醒'    , code: 'customer_password_reset'       , des: '当订单创建时，给客户发送此邮件'         },
+          {id: 8, name: '顾客帐号确认提醒'        , code: 'customer_account_welcome'      , des: '当订单创建时，给客户发送此邮件'         }
         ]
     end
   end

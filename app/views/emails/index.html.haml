@@ -1,0 +1,176 @@
+%h2#title 邮件 &amp; 提醒
+#action-links
+  %ul
+=render partial:"shared/noscript"
+=render partial:"shared/upgrade_ie"
+.pgroup
+  %h3 Edit Your Email Templates
+  %p.note These emails are automatically sent out to either you or the customer. Click on the templates below to edit the template.
+  %br/
+  %ul#email-templates.clearfix
+    %li
+      %a{:href => edit_email_path(emails.first)}
+        %strong Order Confirmation
+        %em Sent to the customer when an order is created
+    %li
+      %a{:href => "/admin/notifications/email/9534662"}
+        %strong New Order Notification
+        %em Sent to all subscribers of Order Confirmation Notifications
+    %li
+      %a{:href => "/admin/notifications/email/9534672"}
+        %strong New Order Notification (mobile)
+        %em Sent to all subscribers of Order Confirmation Notifications for mobile
+    %li
+      %a{:href => "/admin/notifications/email/9534682"}
+        %strong Shipping confirmation
+        %em Sent to the customer when order an order is shipped
+    %li
+      %a{:href => "/admin/notifications/email/9534692"}
+        %strong Shipping update
+        %em Sent to the customer when an order's shipping information is updated
+    %li
+      %a{:href => "/admin/notifications/email/9534702"}
+        %strong Contact Buyer
+        %em Used as a default template for 'Email Buyer' emails
+    %li
+      %a{:href => "/admin/notifications/email/9534712"}
+        %strong Order Cancelled
+        %em Sent to the customer when an order is cancelled
+    %li
+      %a{:href => "/admin/notifications/email/9534722"}
+        %strong Customer Account Activation
+        %em Sent to customer with information on how to activate their account
+    %li
+      %a{:href => "/admin/notifications/email/9534732"}
+        %strong Customer Password Reset
+        %em Sent to customer when they wish to reset their password
+    %li
+      %a{:href => "/admin/notifications/email/9534742"}
+        %strong Customer Account Welcome
+        %em Sent to customer when they activate their account
+/ pgroup
+.pgroup
+  %h3 Order Notifications
+  %p.note.sb
+    When a new order is placed, you can notify other email addresses and cell phones of incoming orders. You can also
+    = succeed "." do
+      %a.feed{:href => "/admin/feed"} subscribe to your orders RSS feed
+  #order-notification-list
+    %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
+      %tr
+        %th{:colspan => "4", :style => "padding-left: 10px"} When a new order is placed:
+      %tr#subscription-919172.order-subscription
+        %td{:colspan => "2"}
+          %span.note send email to
+          %strong &quot;development shop&quot; &lt;mahb45@gmail.com&gt;
+        %td.r
+          %a{:href => "#", :onclick => "new Ajax.Request('/admin/notifications/test_subscription/919172?kind=OrderUserSubscription', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('hbyZAEcXGhR0mx6BEXWYj/nz4kFVZpIAw3dEsMp1SWE=')}); return false;"} send test notification
+        %td.r{:style => "width:25px"}
+          %a{"data-method" => "delete", "data-remote" => "true", :href => "/admin/notifications/919172/unsubscribe?kind=OrderUserSubscription", :rel => "nofollow"}
+            %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?276001be6df6889f02aac5e423769ef9a8d5ed26"}/
+      %tr#subscription-1013982.order-subscription
+        %td{:colspan => "2"}
+          %span.note send email to
+          %strong liwh87@gmail.com
+        %td.r
+          %a{:href => "#", :onclick => "new Ajax.Request('/admin/notifications/test_subscription/1013982?kind=OrderEmailSubscription', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('hbyZAEcXGhR0mx6BEXWYj/nz4kFVZpIAw3dEsMp1SWE=')}); return false;"} send test notification
+        %td.r{:style => "width:25px"}
+          %a{"data-method" => "delete", "data-remote" => "true", :href => "/admin/notifications/1013982/unsubscribe?kind=OrderEmailSubscription", :rel => "nofollow"}
+            %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?276001be6df6889f02aac5e423769ef9a8d5ed26"}/
+      %tr#add-subscription
+        %td.action-link{:colspan => "4"}
+          %p{:onclick => "Element.toggle('add-subscription'); Element.toggle('add-subscription-details'); return false;"}
+            %span.plus +
+            %a{:style => "display:inline"} Add a new email or SMS notification
+      / end add-subscription
+  / end order-notification-list
+  %p#add-subscription-btn
+    %input.btn{:onclick => "Element.toggle('add-subscription-details'); Element.toggle('add-subscription-btn');;", :type => "button", :value => "Add a new order notification"}/
+  #add-subscription-details{:style => "display:none"}
+    %form{"accept-charset" => "UTF-8", :action => "/admin/notifications/subscribe", "data-remote" => "true", :method => "post"}
+      %div{:style => "margin:0;padding:0;display:inline"}
+        %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+        %input{:name => "authenticity_token", :type => "hidden", :value => "hbyZAEcXGhR0mx6BEXWYj/nz4kFVZpIAw3dEsMp1SWE="}/
+      %dl
+        %dt Add a new order notification
+        %dd.sb
+          %label{:for => "subscription-type"} Notify
+          %select#subscription-type{:name => "subscribe", :onchange => "$$('dd.details').invoke('hide');  if($(this.value + '-detail')) { $(this.value + '-detail').show(); }"}
+            %optgroup{:label => "Notification method..."}
+              %option{:value => "email"} Email address&hellip;
+              %option{:value => "cellphone"} Cell phone&hellip;
+            %optgroup{:label => "or email a staff member"}
+              %option{:value => "1093382"} ee ee
+              %option{:value => "1019492"} development shop
+        %dd#email-detail.details.st.sb{:style => "display:none"}
+          %label{:for => "address"} Email address
+          %input#address{:name => "address", :size => "30", :type => "text", :value => ""}/
+        %dd#cellphone-detail.details.sb{:style => "display:none"}
+          %p.sb
+            %label{:for => "number"} Cell phone number
+            %input#number{:name => "number", :size => "15", :type => "text", :value => ""}/
+          %p.cl
+            %label{:for => "provider"} cellphone provider
+            %select{:name => "provider"}
+              %option{:value => ""} Select a provider...
+              %optgroup{:label => "USA/Canada"}
+                %option{:value => "airtouch.net"} Airtouch Pager
+                %option{:value => "wirefree.informe.ca"} Aliant/NBTel
+                %option{:value => "message.alltel.com"} Alltel
+                %option{:value => "paging.acswireless.com"} Ameritech (ACS)
+                %option{:value => "txt.att.net"} AT&amp;T
+                %option{:value => "mmode.com"} AT&amp;T mmode
+                %option{:value => "txt.bellmobility.ca"} Bell Mobility Canada
+                %option{:value => "bellsouth.cl"} Bellsouth
+                %option{:value => "mobile.mycingular.com"} Cingular
+                %option{:value => "fido.ca"} Fido Canada
+                %option{:value => "messaging.nextel.com"} Nextel
+                %option{:value => "pager.qualcomm.com"} Qualcomm
+                %option{:value => "qwestmp.com"} Qwest
+                %option{:value => "pcs.rogers.com"} Rogers Wireless
+                %option{:value => "email.skytel.com"} Skytel Pager
+                %option{:value => "messaging.sprintpcs.com"} Sprint PCS
+                %option{:value => "tmomail.net"} T-Mobile USA
+                %option{:value => "msg.telus.com"} Telus Mobility
+                %option{:value => "utext.com"} Unicel
+                %option{:value => "email.uscc.net"} US Cellular
+                %option{:value => "vtext.com"} Verizon
+                %option{:value => "voicestream.net"} Voicestream
+                %option{:value => "vmobile.ca"} Virgin Mobile Canada
+                %option{:value => "vmobl.com"} Virgin Mobile USA
+              %optgroup{:label => "Elsewhere"}
+                %option{:value => "orange.net"} Orange
+                %option{:value => "sms.orange.nl"} Dutchtone/Orange-NL
+                %option{:value => "kapow.co.uk"} Kapow!
+                %option{:value => "m1.com.sg"} MobileOne
+                %option{:value => "sms.netcom.no"} Netcom
+                %option{:value => "optusmobile.com.au"} Optus
+                %option{:value => "mujoskar.cz"} Oskar
+                %option{:value => "o2online.de"} O2 Germany
+                %option{:value => "mysmart.mymobile.ph"} Smart Com (Philippines)
+                %option{:value => "starhub.net.sg"} StarHub (Singapore)
+                %option{:value => "T-D1-SMS.de"} T-Mobile Germany
+                %option{:value => "t-mobile.co.uk"} T-Mobile UK
+                %option{:value => "gsm1800.telia.dk"} Telia Denmark
+                %option{:value => "mobilpost.no"} Telenor
+                %option{:value => "virginextra.com"} Virgin Mobile UK
+                %option{:value => "vodafone.de"} Vodafone Germany
+                %option{:value => "sms.vodafone.it"} Vodafone Italy
+                %option{:value => "vodafone.pt"} Vodafone Portugal
+                %option{:value => "euromail.se"} Vodafone Sweden
+                %option{:value => "c.vodafone.ne.jp"} Vodafone Japan C
+                %option{:value => "h.vodafone.ne.jp"} Vodafone Japan H
+                %option{:value => "t.vodafone.ne.jp"} Vodafone Japan T
+          %p.note.st.sb
+            The digit
+            %strong 1
+            is not required before your area code.
+            %strong Your cell phone provider may charge you for incoming text messages, please check with your provider.
+        %dd.sst.btn-divider.cl
+          %input.btn{:name => "commit", :type => "submit", :value => "Subscribe"}/
+          or
+          %a{:href => "#", :onclick => "Element.hide('add-subscription-details'); if($('order-notification-list').visible()){ Element.show('add-subscription'); } else { Element.show('add-subscription-btn')}; return false;"} Close
+    %script{:charset => "utf-8", :type => "text/javascript"} $('subscription-type').onchange();
+    %pre#testing-log.sst{:style => "display:none; border: 1px dashed #aaa; background: #efefef; padding: 5px; overflow: auto"}
+      :preserve
+

@@ -10,8 +10,7 @@ class ShopsController < ApplicationController
       params[:shop][:order_number_format] = '#{{number}}'
     end
     shop.update_attributes(params[:shop])
-    flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
-    redirect_to admin_general_preferences_path
+    redirect_to admin_general_preferences_path, notice: notice_msg
   end
 
 end

@@ -26,7 +26,7 @@ class BlogsController < ApplicationController
   def destroy
     blog.destroy
     respond_to do |format|
-      format.js { render :template => "pages/destroy" }
+      format.js { render template: "pages/destroy" }
     end
   end
 end
