@@ -14,6 +14,8 @@ Vagrant::Config.run do |config|
   config.vm.forward_port "redis-shopqi", 6379, 6379
   config.vm.forward_port "resque-web", 8282, 8282
   config.vm.forward_port "livereload", 35729, 35729
+  config.vm.forward_port "sphinx", 9313, 9313
+  config.vm.forward_port "sphinx-test", 9314, 9314
 
   #fixed: share folder performance. http://vagrantup.com/docs/nfs.html
   config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)

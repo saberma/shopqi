@@ -4,4 +4,8 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
+require 'thinking_sphinx/deltas/resque_delta/tasks'
+require 'resque/tasks'
+task "resque:setup" => :environment
+
 Shopqi::Application.load_tasks

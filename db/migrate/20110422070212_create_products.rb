@@ -9,6 +9,7 @@ class CreateProducts < ActiveRecord::Migration
       t.text :body_html     , comment: '描述'
       t.string :product_type, comment: "类型(类别)"
       t.string :vendor      , comment: "品牌(供应商)"
+      t.boolean :delta      , comment: "ts全文检索增量更新标记"      , default: true, null: false
 
       t.timestamps
     end
@@ -49,6 +50,7 @@ class CreateProducts < ActiveRecord::Migration
     end
 
     add_index :products        , :shop_id
+    add_index :products        , :delta
     add_index :product_variants, :product_id
     add_index :product_options , :product_id
     add_index :photos          , :product_id
