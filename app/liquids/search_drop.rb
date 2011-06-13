@@ -32,7 +32,12 @@ class SearchItemDrop < Liquid::Drop
   end
 
   def url
-    "/#{@item.class.table_name}/#{@item.handle}"
+    if @item.is_a?(Article)
+      blog = @item.blog
+      "/#{blog.class.table_name}/#{blog.handle}/#{@item.id}"
+    else
+      "/#{@item.class.table_name}/#{@item.handle}"
+    end
   end
 
   def featured_image

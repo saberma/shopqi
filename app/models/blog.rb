@@ -4,14 +4,6 @@ class Blog < ActiveRecord::Base
   belongs_to :shop
   validates_presence_of :title
 
-  define_index do
-    has :shop_id
-    indexes :title
-    indexes articles(:title)
-    indexes articles(:body_html)
-    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
-  end
-
   before_save do 
     self.handle = Pinyin.t(self.title, '-') if self.handle.blank? # 新增时初始化handle
   end
@@ -30,12 +22,23 @@ class Article < ActiveRecord::Base
   #已删除评论
   has_many :removed_comments,class_name:"Comment",conditions:"comments.status = 'removed'"
 
+  define_index do
+    has :shop_id
+    indexes :title
+    indexes :body_html
+    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
+  end
+
   # 标签
   attr_accessor :tags_text
   
   def tags_text
     @tags_text ||= tags.map(&:name).join(',')
   end 
+  
+  before_create do
+    self.shop_id = blog.shop_id #冗余商店ID，方便全文检索过滤
+  end
 
   after_save do
     article_tags = self.tags.map(&:name)

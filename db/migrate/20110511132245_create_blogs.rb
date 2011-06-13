@@ -6,31 +6,34 @@ class CreateBlogs < ActiveRecord::Migration
       t.string :title, comment: '标题',null: false
       t.string :commentable,comment: '评论权限'
       t.string :handle, comment: '用于模板中的Permalink/Handle', null: false
-      t.boolean :delta, comment: "ts全文检索增量更新标记"      , null: false, default: true
 
       t.timestamps
     end
     create_table :articles do |t|
-      t.integer :blog_id, comment: '所属博客'
-      t.string :title, comment: '标题'
-      t.text :body_html, comment: '内容'
-      t.boolean :published, comment: '是否可见', default: true
-      t.integer :user_id, comment: '更新人'
+      t.integer :shop_id  , comment: '所属商店(冗余方便全文检索)'
+      t.integer :blog_id  , comment: '所属博客'
+      t.string :title     , comment: '标题'
+      t.text :body_html   , comment: '内容'
+      t.boolean :published, comment: '是否可见'                  , default: true
+      t.integer :user_id  , comment: '更新人'
+      t.boolean :delta    , comment: "ts全文检索增量更新标记"    , default: true, null: false  
 
       t.timestamps
     end
     create_table :comments do |t|
       t.integer :article_id, comment: '所属文章'
-      t.string :status, comment: '状态'
-      t.string :name, comment: '评论人'
-      t.string :email, comment: '邮箱'
-      t.text :comment,comment: '评论内容'
+      t.string :status     , comment: '状态'
+      t.string :name       , comment: '评论人'
+      t.string :email      , comment: '邮箱'
+      t.text :comment      , comment: '评论内容'
 
       t.timestamps
     end
 
-    add_index :blogs, :delta
-    add_index :blogs, :shop_id
+    add_index :blogs   , :shop_id
+    add_index :articles, :blog_id
+    add_index :articles, :delta
+    add_index :comments, :article_id
   end
 
   def self.down

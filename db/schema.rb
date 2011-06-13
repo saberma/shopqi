@@ -13,14 +13,19 @@
 ActiveRecord::Schema.define(:version => 20110609075449) do
 
   create_table "articles", :force => true do |t|
+    t.integer  "shop_id"
     t.integer  "blog_id"
     t.string   "title"
     t.text     "body_html"
     t.boolean  "published",  :default => true
     t.integer  "user_id"
+    t.boolean  "delta",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "articles", ["blog_id"], :name => "index_articles_on_blog_id"
+  add_index "articles", ["delta"], :name => "index_articles_on_delta"
 
   create_table "articles_tags", :id => false, :force => true do |t|
     t.integer "article_id", :null => false
@@ -32,15 +37,13 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "shop_id"
-    t.string   "title",                         :null => false
+    t.string   "title",       :null => false
     t.string   "commentable"
-    t.string   "handle",                        :null => false
-    t.boolean  "delta",       :default => true, :null => false
+    t.string   "handle",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "blogs", ["delta"], :name => "index_blogs_on_delta"
   add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
 
   create_table "carts", :id => false, :force => true do |t|
@@ -64,6 +67,8 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "comments", ["article_id"], :name => "index_comments_on_article_id"
 
   create_table "custom_collection_products", :force => true do |t|
     t.integer  "custom_collection_id"

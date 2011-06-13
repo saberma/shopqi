@@ -7,7 +7,7 @@ class Shop::SearchController < Shop::AppController
     if params[:q].blank?
       nil
     else
-      ThinkingSphinx.search params[:q], classes: [Product, Blog, Page], with: { shop_id: shop.id }
+      ThinkingSphinx.search params[:q], classes: [Product, Article, Page], with: { shop_id: shop.id }
     end
   end
 
