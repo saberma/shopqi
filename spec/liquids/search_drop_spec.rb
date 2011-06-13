@@ -7,7 +7,7 @@ describe SearchDrop do
 
   let(:iphone4) { Factory :iphone4, shop: shop }
 
-  let(:search_drop) { SearchDrop.new(iphone4, 'iphone4') }
+  let(:search_drop) { SearchDrop.new([iphone4], 'iphone') }
 
   it 'should get terms' do
     variant = "{{ search.terms }}"
@@ -15,7 +15,7 @@ describe SearchDrop do
   end
 
   it 'should get performed' do
-    variant = "{{ product.performed }}"
+    variant = "{{ search.performed }}"
     liquid(variant).should eql "true"
   end
 
@@ -28,7 +28,7 @@ describe SearchDrop do
 
     it 'should get url' do
       variant = "{% for item in search.results %}{{ item.url }}{% endfor %}"
-      result = '/products/#{iphone4.handle}'
+      result = "/products/#{iphone4.handle}"
       liquid(variant).should eql result
     end
 

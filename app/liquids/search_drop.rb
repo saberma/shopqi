@@ -2,8 +2,8 @@
 class SearchDrop < Liquid::Drop
   extend ActiveSupport::Memoizable
 
-  def initialize(products, terms)
-    @products = products
+  def initialize(results, terms)
+    @results = results
     @terms = terms
   end
 
@@ -16,8 +16,8 @@ class SearchDrop < Liquid::Drop
   end
 
   def results
-    @product.variants.map do |variant|
-      SearchItemDrop.new variant
+    @results.map do |item|
+      SearchItemDrop.new item
     end
   end
   memoize :results
@@ -32,11 +32,13 @@ class SearchItemDrop < Liquid::Drop
   end
 
   def url
-    "/products/#{@item.handle}"
+    "/#{@item.class.table_name}/#{@item.handle}"
   end
 
   def featured_image
-    @item.photos.first
+    if @item.respond_to?(:photos)
+      @item.photos.first
+    end
   end
 
   def title

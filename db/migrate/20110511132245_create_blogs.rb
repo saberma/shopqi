@@ -6,6 +6,7 @@ class CreateBlogs < ActiveRecord::Migration
       t.string :title, comment: '标题',null: false
       t.string :commentable,comment: '评论权限'
       t.string :handle, comment: '用于模板中的Permalink/Handle', null: false
+      t.boolean :delta, comment: "ts全文检索增量更新标记"      , null: false, default: true
 
       t.timestamps
     end
@@ -27,6 +28,8 @@ class CreateBlogs < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :blogs, :delta
     add_index :blogs, :shop_id
   end
 

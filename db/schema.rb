@@ -32,13 +32,15 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "shop_id"
-    t.string   "title",       :null => false
+    t.string   "title",                         :null => false
     t.string   "commentable"
-    t.string   "handle",      :null => false
+    t.string   "handle",                        :null => false
+    t.boolean  "delta",       :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "blogs", ["delta"], :name => "index_blogs_on_delta"
   add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
 
   create_table "carts", :id => false, :force => true do |t|
@@ -190,10 +192,12 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.boolean  "published",  :default => false
     t.string   "handle",                        :null => false
     t.text     "body_html"
+    t.boolean  "delta",      :default => true,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "pages", ["delta"], :name => "index_pages_on_delta"
   add_index "pages", ["shop_id"], :name => "index_pages_on_shop_id"
 
   create_table "photos", :force => true do |t|
@@ -247,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.datetime "updated_at"
   end
 
+  add_index "products", ["delta"], :name => "index_products_on_delta"
   add_index "products", ["shop_id"], :name => "index_products_on_shop_id"
 
   create_table "products_tags", :id => false, :force => true do |t|
