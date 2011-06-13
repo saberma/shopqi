@@ -13,6 +13,7 @@ Shopqi::Application.routes.draw do
 
     scope module: :shop do
       match '/' => 'shops#show'
+      get '/search' => 'search#show'
       get '/products/:handle' => 'products#show'
       get '/collections/all' => 'collections#show'
       get '/pages/:handle' => 'pages#show'

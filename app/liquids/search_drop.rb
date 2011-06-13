@@ -12,7 +12,7 @@ class SearchDrop < Liquid::Drop
   end
 
   def performed
-    true
+    !@results.nil?
   end
 
   def results

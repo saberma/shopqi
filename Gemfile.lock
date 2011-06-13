@@ -288,6 +288,7 @@ DEPENDENCIES
   rails3-generators
   resque
   resque_spec
+  riddle
   rspec-rails
   ruby-debug19
   sentient_user

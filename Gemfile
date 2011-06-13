@@ -8,6 +8,7 @@ gem 'pg'
 gem 'devise'
 gem 'default_value_for'
 gem 'thinking-sphinx', '2.0.5'
+gem 'riddle', require: 'riddle/0.9.9' #sphinx无法获取CoreSeek版本
 #gem 'riddle', git: 'git://github.com/saberma/riddle.git', branch: 'patch-1' #修改无法找到版本号的问题
 gem 'ts-resque-delta', '1.0.0', require: 'thinking_sphinx/deltas/resque_delta'
 
