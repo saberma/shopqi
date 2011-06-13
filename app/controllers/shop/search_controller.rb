@@ -1,13 +1,13 @@
 #encoding: utf-8
-class Shop::PagesController < Shop::AppController
+class Shop::SearchController < Shop::AppController
 
   expose(:shop) { Shop.at(request.subdomain) }
 
-  expose(:page) { shop.pages.where(handle: params[:handle]).first }
+  expose(:products) { shop.products.search(params[:q]) }
 
   def show
     PagesDrop
-    assign = template_assign('page' => PageDrop.new(page))
+    assign = template_assign('search' => PageDrop.new(page))
     html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign('page', assign))
     render text: html
   end

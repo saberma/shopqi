@@ -1,5 +1,7 @@
 # encoding: utf-8
 class Shop::AppController < ActionController::Base
+  layout nil #默认不需要layout，使用liquid
+
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   # 顾客创建订单时的页面显示的错误提示

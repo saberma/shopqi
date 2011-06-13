@@ -95,7 +95,7 @@ class ProductVariant < ActiveRecord::Base
   validates_presence_of :price, :weight
 
   after_save do
-    product.update_attribute delta: true #新增修改款式要更新商品的索引
+    product.update_attribute :delta, true #新增修改款式要更新商品的索引
   end
 
   def options

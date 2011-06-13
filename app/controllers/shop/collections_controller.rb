@@ -1,9 +1,7 @@
 #encoding: utf-8
 class Shop::CollectionsController < Shop::AppController
-  layout nil
 
   expose(:shop) { Shop.at(request.subdomain) }
-  expose(:product) { shop.products.where(handle: params[:handle]).first }
 
   def show
     CollectionsDrop
