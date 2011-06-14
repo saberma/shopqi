@@ -20,7 +20,7 @@ Vagrant::Config.run do |config|
   config.vm.forward_port "resque-web", 8282, 8282
   config.vm.forward_port "livereload", 35729, 35729
   config.vm.forward_port "sphinx", 9313, 9313
-  config.vm.forward_port "sphinx-test", 9314, 9314
+  #config.vm.forward_port "sphinx-test", 9314, 9314 #在宿主机运行测试
 
   #fixed: share folder performance. http://vagrantup.com/docs/nfs.html
   config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
@@ -40,8 +40,8 @@ Vagrant::Config.run do |config|
     chef.log_level = :debug
   end
 
-  config.vm.customize do |vm|
-    vm.memory_size = 1024
-  end
+  #config.vm.customize do |vm|
+  #  vm.memory_size = 1024
+  #end
 
 end
