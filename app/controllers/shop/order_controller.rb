@@ -7,8 +7,8 @@ class Shop::OrderController < Shop::AppController
   expose(:orders) { shop.orders }
 
   expose(:order) do
-    if params[:uuid]
-      o = orders.where(uuid: params[:uuid]).first
+    if params[:token]
+      o = orders.where(token: params[:token]).first
       o.update_attributes(params[:order]) if params[:order]
       o
     else
@@ -16,7 +16,7 @@ class Shop::OrderController < Shop::AppController
     end
   end
 
-  expose(:cart) { shop.carts.where(uuid: params[:cart_uuid]).first }
+  expose(:cart) { shop.carts.where(token: params[:cart_token]).first }
 
   expose(:cart_variant_items) do
     JSON(cart.cart_hash).inject({}) do |result, (variant_id, quantity)|
@@ -63,7 +63,7 @@ class Shop::OrderController < Shop::AppController
       order.variants.build product_variant: variant, price: variant.price, quantity: quantity
     end
     if order.save
-      redirect_to pay_order_path(order, shop_id: shop.id)
+      redirect_to pay_order_path(shop_id: shop.id, token: order.token)
     else
       render action: :address
     end

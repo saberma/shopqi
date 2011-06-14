@@ -1,3 +1,8 @@
+# sudo sv stop coreseek && sudo sv stop unicorn-vagrant && sudo sv stop resque-vagrant
+# sudo sv start coreseek && sudo sv start unicorn-vagrant && sudo sv start resque-vagrant
+# tail -f /etc/sv/unicorn-vagrant/log/main/current
+# tail -f /etc/sv/resque-vagrant/log/main/current
+
 Vagrant::Config.run do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
@@ -35,8 +40,8 @@ Vagrant::Config.run do |config|
     chef.log_level = :debug
   end
 
-  #config.vm.customize do |vm|
-  #  vm.memory_size = 1024
-  #end
+  config.vm.customize do |vm|
+    vm.memory_size = 1024
+  end
 
 end

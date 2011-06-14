@@ -17,6 +17,8 @@ class Shop < ActiveRecord::Base
   has_many :vendors           , dependent: :destroy, class_name: 'ShopProductVendor'
   has_many :emails            , dependent: :destroy
 
+  attr_readonly :orders_count
+
   #二级域名须为3到20位数字和字母组成的，且唯一
   validates :permanent_domain, presence: true, uniqueness: true, format: {with:  /\A([a-z0-9])*\Z/ }, length: 3..20
   validates_presence_of :name

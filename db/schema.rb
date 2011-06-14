@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
 
-  create_table "carts", :id => false, :force => true do |t|
+  create_table "carts", :force => true do |t|
     t.integer  "shop_id",                  :null => false
-    t.string   "uuid",       :limit => 32, :null => false
+    t.string   "token",      :limit => 32, :null => false
     t.string   "session_id", :limit => 32, :null => false
     t.string   "cart_hash",                :null => false
     t.datetime "created_at"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "carts", ["shop_id"], :name => "index_carts_on_shop_id"
-  add_index "carts", ["uuid"], :name => "index_carts_on_uuid"
+  add_index "carts", ["token"], :name => "index_carts_on_token"
 
   create_table "comments", :force => true do |t|
     t.integer  "article_id"
@@ -136,48 +136,51 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   add_index "links", ["link_list_id"], :name => "index_links_on_link_list_id"
 
   create_table "order_billing_addresses", :force => true do |t|
-    t.string "order_uuid", :limit => 32, :null => false
-    t.string "name",                     :null => false
-    t.string "company",    :limit => 64
-    t.string "country",    :limit => 64
-    t.string "province",   :limit => 64
-    t.string "city",       :limit => 64
-    t.string "district",   :limit => 64
-    t.string "address1",                 :null => false
-    t.string "address2"
-    t.string "zip",        :limit => 12
-    t.string "phone",      :limit => 64, :null => false
+    t.integer "order_id",               :null => false
+    t.string  "name",                   :null => false
+    t.string  "company",  :limit => 64
+    t.string  "country",  :limit => 64
+    t.string  "province", :limit => 64
+    t.string  "city",     :limit => 64
+    t.string  "district", :limit => 64
+    t.string  "address1",               :null => false
+    t.string  "address2"
+    t.string  "zip",      :limit => 12
+    t.string  "phone",    :limit => 64, :null => false
   end
 
-  add_index "order_billing_addresses", ["order_uuid"], :name => "index_order_billing_addresses_on_order_uuid"
+  add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
 
   create_table "order_product_variants", :force => true do |t|
-    t.string  "order_uuid",         :limit => 32, :null => false
-    t.integer "product_variant_id",               :null => false
-    t.float   "price",                            :null => false
-    t.integer "quantity",                         :null => false
+    t.integer "order_id",           :null => false
+    t.integer "product_variant_id", :null => false
+    t.float   "price",              :null => false
+    t.integer "quantity",           :null => false
   end
 
-  add_index "order_product_variants", ["order_uuid"], :name => "index_order_product_variants_on_order_uuid"
+  add_index "order_product_variants", ["order_id"], :name => "index_order_product_variants_on_order_id"
 
   create_table "order_shipping_addresses", :force => true do |t|
-    t.string "order_uuid", :limit => 32, :null => false
-    t.string "name",                     :null => false
-    t.string "company",    :limit => 64
-    t.string "country",    :limit => 64
-    t.string "province",   :limit => 64
-    t.string "city",       :limit => 64
-    t.string "district",   :limit => 64
-    t.string "address1",                 :null => false
-    t.string "address2"
-    t.string "zip",        :limit => 12
-    t.string "phone",      :limit => 64, :null => false
+    t.integer "order_id",               :null => false
+    t.string  "name",                   :null => false
+    t.string  "company",  :limit => 64
+    t.string  "country",  :limit => 64
+    t.string  "province", :limit => 64
+    t.string  "city",     :limit => 64
+    t.string  "district", :limit => 64
+    t.string  "address1",               :null => false
+    t.string  "address2"
+    t.string  "zip",      :limit => 12
+    t.string  "phone",    :limit => 64, :null => false
   end
 
-  add_index "order_shipping_addresses", ["order_uuid"], :name => "index_order_shipping_addresses_on_order_uuid"
+  add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
 
-  create_table "orders", :id => false, :force => true do |t|
-    t.string   "uuid",          :limit => 32, :null => false
+  create_table "orders", :force => true do |t|
+    t.string   "token",         :limit => 32, :null => false
+    t.string   "name",          :limit => 32, :null => false
+    t.integer  "number",                      :null => false
+    t.integer  "order_number",                :null => false
     t.integer  "shop_id",                     :null => false
     t.string   "email",         :limit => 32, :null => false
     t.string   "shipping_rate", :limit => 32
@@ -189,7 +192,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "orders", ["shop_id"], :name => "index_orders_on_shop_id"
-  add_index "orders", ["uuid"], :name => "index_orders_on_uuid"
+  add_index "orders", ["token"], :name => "index_orders_on_token"
 
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"
@@ -319,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.boolean  "password_enabled",    :default => false
     t.string   "password_message"
     t.boolean  "public",              :default => true
+    t.integer  "orders_count",        :default => 0
     t.string   "order_number_format", :default => "\#{{number}}"
     t.datetime "created_at"
     t.datetime "updated_at"

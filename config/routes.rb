@@ -1,4 +1,5 @@
 #encoding: utf-8
+#include Rails.application.routes.url_helpers #在console中调用orders_path等
 Shopqi::Application.routes.draw do
 
   devise_for :user, controllers: {registrations: "users/registrations"} do
@@ -26,10 +27,10 @@ Shopqi::Application.routes.draw do
   # 订单页面
   constraints(subdomain: 'checkout') do
     scope module: :shop do
-      get '/carts/:shop_id/:cart_uuid' => 'order#address'
-      match '/carts/:shop_id/:cart_uuid/create_order' => 'order#create'
-      get '/orders/:shop_id/:uuid/pay' => 'order#pay', as: :pay_order
-      match '/orders/:shop_id/:uuid/commit' => 'order#commit', as: :commit_order
+      get '/carts/:shop_id/:cart_token' => 'order#address'
+      match '/carts/:shop_id/:cart_token/create_order' => 'order#create'
+      get '/orders/:shop_id/:token/pay' => 'order#pay', as: :pay_order
+      match '/orders/:shop_id/:token/commit' => 'order#commit', as: :commit_order
     end
   end
 

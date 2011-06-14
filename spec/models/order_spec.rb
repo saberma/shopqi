@@ -35,7 +35,10 @@ describe Order do
       end.should change(OrderShippingAddress, :count).by(1)
     end
 
-    it 'should save address' do
+    it 'should save name' do
+      order.number.should eql 1
+      order.order_number.should eql 1001
+      order.name.should eql '#1001'
     end
 
   end

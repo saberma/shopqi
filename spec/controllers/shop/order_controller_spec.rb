@@ -24,13 +24,13 @@ describe Shop::OrderController do
   context '#address' do
 
     it 'should be show' do
-      get :address, shop_id: shop.id, cart_uuid: cart.uuid
+      get :address, shop_id: shop.id, cart_token: cart.token
       response.should be_success
     end
 
     it 'should copy the billding address' do
       expect do
-        post :create, shop_id: shop.id, cart_uuid: cart.uuid, billing_is_shipping: true, order: {
+        post :create, shop_id: shop.id, cart_token: cart.token, billing_is_shipping: true, order: {
           email: 'mahb45@gmail.com',
           billing_address_attributes: billing_address_attributes
         }
@@ -46,14 +46,14 @@ describe Shop::OrderController do
   context '#update' do
 
     it 'should be pay' do
-      get :pay, shop_id: shop.id, uuid: order.uuid
+      get :pay, shop_id: shop.id, token: order.token
       response.should be_success
     end
 
     it 'should show product variants' do
       order
       expect do
-        post :commit, shop_id: shop.id, uuid: order.uuid, order: { shipping_rate: '1', gateway: '1' }
+        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', gateway: '1' }
         order = assigns['_resources']['order']
         order.errors.should be_empty
         order.shipping_rate.should eql '1'

@@ -20,7 +20,7 @@
   /
     \/end overview
   #content
-    =form_for order, url: "/carts/#{shop.id}/#{cart.uuid}/create_order" do |f|
+    =form_for order, url: "/carts/#{shop.id}/#{cart.token}/create_order" do |f|
       #email
         =f.label :email, '您的 Email 地址'
         =f.text_field :email
