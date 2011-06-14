@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   expose(:shop) { current_user.shop }
   expose(:products) do
     if params[:search]
-      shop.products.search(params[:search]).all
+      shop.products.metasearch(params[:search]).all
     else
       shop.products
     end

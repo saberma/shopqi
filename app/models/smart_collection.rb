@@ -37,7 +37,7 @@ class SmartCollection < ActiveRecord::Base
     end
     conditions.merge! meta_sort: self.products_order
     conditions.merge! id_equals: product_id if product_id # 用于检查某个商品是否符合条件
-    self.shop.products.search(conditions).all
+    self.shop.products.metasearch(conditions).all
   end
 
   #商品是否符合当前条件
