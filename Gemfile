@@ -45,9 +45,8 @@ gem "chinese_pinyin" # 汉字转拼音
 gem "nokogiri" # 解释模板config/settings.html
 gem "uuid" # 生成36位(或32位)唯一序列号
 
-group :development, :test, :travis do
+group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
-  gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
 end
 
 group :development do
@@ -59,6 +58,7 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-spork'
   gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
+  gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
 end
 
 group :test, :travis do
