@@ -1,3 +1,5 @@
+bundler_args: --without development #rails-dev-boost: invalid byte sequence in US-ASCI
+
 rvm:
   - 1.9.2
 
