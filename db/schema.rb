@@ -177,15 +177,18 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
 
   create_table "orders", :force => true do |t|
-    t.string   "token",         :limit => 32, :null => false
-    t.string   "name",          :limit => 32, :null => false
-    t.integer  "number",                      :null => false
-    t.integer  "order_number",                :null => false
-    t.integer  "shop_id",                     :null => false
-    t.string   "email",         :limit => 32, :null => false
-    t.string   "shipping_rate", :limit => 32
-    t.string   "gateway",       :limit => 32
-    t.float    "total_price",                 :null => false
+    t.integer  "shop_id",                          :null => false
+    t.string   "token",              :limit => 32, :null => false
+    t.string   "name",               :limit => 32, :null => false
+    t.integer  "number",                           :null => false
+    t.integer  "order_number",                     :null => false
+    t.string   "status",             :limit => 16, :null => false
+    t.string   "financial_status",   :limit => 16, :null => false
+    t.string   "fulfillment_status", :limit => 16, :null => false
+    t.string   "email",              :limit => 32, :null => false
+    t.string   "shipping_rate",      :limit => 32
+    t.string   "gateway",            :limit => 32
+    t.float    "total_price",                      :null => false
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"

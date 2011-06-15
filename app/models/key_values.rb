@@ -5,6 +5,11 @@ module KeyValues
     def self.options
       all.map {|t| [t.name, t.code]}
     end
+
+    # {code1: name1, code2: name2}
+    def self.hash
+      Hash[*(all.map{|t| [t.code, t.name]}.flatten)]
+    end
   end
 
   # 是否发布
@@ -83,7 +88,7 @@ module KeyValues
       self.data = [
         {id: 1, name: '正常'  , code: 'open'    },
         {id: 2, name: '已关闭', code: 'closed'  },
-        {id: 3, name: '已取消', code: 'cncelled'}
+        {id: 3, name: '已取消', code: 'cancelled'}
       ]
     end
 
@@ -93,14 +98,14 @@ module KeyValues
         {id: 1, name: '已支付', code: 'paid'      },
         {id: 2, name: '待支付', code: 'pending'   },
         {id: 3, name: '认证'  , code: 'authorized'},
-        {id: 3, name: '放弃'  , code: 'abandoned' },
+        {id: 4, name: '放弃'  , code: 'abandoned' },
       ]
     end
 
     # 配送状态
     class FulfillmentStatus < KeyValues::Base
       self.data = [
-        {id: 1, name: '完成'    , code: 'fulfilled'},
+        {id: 1, name: '已发货'  , code: 'fulfilled'},
         {id: 2, name: '部分发货', code: 'partial'  },
         {id: 3, name: '未发货'  , code: 'unshipped'}
       ]

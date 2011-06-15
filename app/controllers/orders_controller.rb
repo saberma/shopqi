@@ -14,11 +14,12 @@ class OrdersController < ApplicationController
   expose(:order)
   expose(:orders_json) do
     orders.to_json({
+      methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
       except: [ :updated_at ]
     })
   end
-  expose(:status) { KeyValues::Order::Status.all }
-  expose(:financial_status) { KeyValues::Order::FinancialStatus.all }
-  expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.all }
-  expose(:page_sizes) { KeyValues::PageSize.all }
+  expose(:status) { KeyValues::Order::Status.hash }
+  expose(:financial_status) { KeyValues::Order::FinancialStatus.hash }
+  expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }
+  expose(:page_sizes) { KeyValues::PageSize.hash }
 end

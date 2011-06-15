@@ -23,24 +23,24 @@
   %a.btn.sl(href="/admin/product_exports.csv") 导出所有商品
 #product-filters.box2.ssb.sst
   显示
-  %a#vendor-filter-link(href="#")=search_label :vendor_eq, '所有厂商'
+  %a#vendor-filter-link(href="#")=search_label :vendor, '所有厂商'
   和
-  %a#type-filter-link(href="#")=search_label :product_type_eq, "所有类型"
+  %a#type-filter-link(href="#")=search_label :product_type, "所有类型"
   的商品
   #vendor-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 50px')
       %li
         %strong 厂商
       -vendors.each do |vendor|
-        %li=link_to vendor.name, search_path(vendor_eq: vendor.name)
-      %li.filter-show-all.current=link_to "显示所有", search_path(vendor_eq: nil)
+        %li=link_to vendor.name, product_search_path(vendor_eq: vendor.name)
+      %li.filter-show-all.current=link_to "显示所有", product_search_path(vendor_eq: nil)
   #type-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 120px')
       %li
         %strong 商品类型
       -types.each do |product_type|
-        %li=link_to product_type.name, search_path(product_type_eq: product_type.name)
-      %li.filter-show-all.current=link_to "显示所有", search_path(producty_type_eq: nil)
+        %li=link_to product_type.name, product_search_path(product_type_eq: product_type.name)
+      %li.filter-show-all.current=link_to "显示所有", product_search_path(producty_type_eq: nil)
 .view-switcher
   %a.btn.btn-group.btn-left.active(href="#{products_path}") 列表视图
   %a.btn.btn-group.btn-right(href="#{inventory_products_path}")> 库存视图

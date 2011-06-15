@@ -24,36 +24,36 @@
   %div(style="float: right; font-size: 12px")
     每页显示条数:
     %select(style="width:60px")
-      -page_sizes.each do |size|
-        %option(value="#{search_path(limit: size.code)}")=size.name
+      -page_sizes.each_pair do |name, code|
+        %option(value="#{order_search_path(limit: code)}")=name
   显示
-  %a#payment-filter-link(href="#") 任何支付状态
+  %a#payment-filter-link(href="#")=search_label :financial_status, '任何支付状态', financial_status
   和
-  %a#shipping-filter-link(href="#") 任何打包状态
+  %a#shipping-filter-link(href="#")=search_label :fulfillment_status, '任何配送状态', fulfillment_status
   的
-  %a#status-filter-link(href="#") 正常
+  %a#status-filter-link(href="#")=search_label :status, '正常', status
   订单
   #order-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 240px')
       %li
         %strong 订单状态
-      -status.each do |state|
-        %li=link_to state.name, search_path(status_eq: state.code)
-      %li.filter-show-all=link_to "显示所有", search_path(status_eq: nil)
+      -status.each_pair do |code, name|
+        %li=link_to name, order_search_path(status_eq: code)
+      %li.filter-show-all=link_to "显示所有", order_search_path(status_eq: nil)
   #payment-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 60px')
       %li
         %strong 支付状态
-      -financial_status.each do |state|
-        %li=link_to state.name, search_path(financial_status_eq: state.code)
-      %li.filter-show-all.current=link_to "显示所有", search_path(financial_status_eq: nil)
+      -financial_status.each_pair do |code, name|
+        %li=link_to name, order_search_path(financial_status_eq: code)
+      %li.filter-show-all.current=link_to "显示所有", order_search_path(financial_status_eq: nil)
   #shipping-status-select
     %ul.nobull.filter-select.dropdown.hide(style='left: 150px')
       %li
         %strong 配送状态
-      -fulfillment_status.each do |state|
-        %li=link_to state.name, search_path(fulfillment_status_eq: state.code)
-      %li.filter-show-all.current=link_to "显示所有", search_path(fulfillment_status_eq: nil)
+      -fulfillment_status.each_pair do |code, name|
+        %li=link_to name, order_search_path(fulfillment_status_eq: code)
+      %li.filter-show-all.current=link_to "显示所有", order_search_path(fulfillment_status_eq: nil)
 -#.announcement.c 公告.
 .listing.sst
   #orders
@@ -94,7 +94,7 @@
                 %th.sortcol.sortasc(style="width: 80px !important") 日期
                 %th.sortcol 顾客
                 %th.sortcol 支付状态
-                %th.sortcol 打包状态
+                %th.sortcol 配送状态
                 %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
             %tbody
               %tr#row-66618532.order
@@ -105,18 +105,18 @@
   %td(style="padding-top: 5px")
     %input.selector(id="checkbox-{{id}}" name="orders[]" type="checkbox" value="{{id}}")
   %td
-    %a(href="/admin/orders/{{id}}") {{name}}
+    %a(href="/admin/orders/{{id}}") {{{name}}}
   %td
     %span.note {{{date created_at}}}
   %td ma saberma
   %td
     %span.o-authorized.oauth-warning(style="font-size: 11px")
-      authorized
+      {{{financial_status_name}}}
       -#%img(alt="Time-small" src="/images/admin/icons/time-small.png" title="此订单授权支付即将过期")
   %td
     %span(style="font-size: 11px")
-      %span.o-not-fulfilled not fulfilled
-  %td(style="text-align: right") ¥44.00
+      %span.o-not-fulfilled {{{fulfillment_status_name}}}
+  %td(style="text-align: right") ¥{{{total_price}}}
 
 :javascript
   App.init = function(){
