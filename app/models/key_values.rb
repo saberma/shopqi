@@ -15,6 +15,16 @@ module KeyValues
     ]
   end
 
+  # 是否发布
+  class PageSize < KeyValues::Base
+    self.data = [
+      {id: 1, name: '25' , code: '25' },
+      {id: 2, name: '50' , code: '50' } ,
+      {id: 3, name: '100', code: '100'},
+      {id: 4, name: '250', code: '250'},
+    ]
+  end
+
   module Mail
 
     class Type < KeyValues::Base
@@ -60,6 +70,39 @@ module KeyValues
         {id: 3, name: '颜色', code: 'color'    },
         {id: 4, name: '材料', code: 'material' },
         {id: 5, name: '风格', code: 'style'    }
+      ]
+    end
+
+  end
+
+  # 订单
+  module Order
+
+    # 状态
+    class Status < KeyValues::Base
+      self.data = [
+        {id: 1, name: '正常'  , code: 'open'    },
+        {id: 2, name: '已关闭', code: 'closed'  },
+        {id: 3, name: '已取消', code: 'cncelled'}
+      ]
+    end
+
+    # 支付状态
+    class FinancialStatus < KeyValues::Base
+      self.data = [
+        {id: 1, name: '已支付', code: 'paid'      },
+        {id: 2, name: '待支付', code: 'pending'   },
+        {id: 3, name: '认证'  , code: 'authorized'},
+        {id: 3, name: '放弃'  , code: 'abandoned' },
+      ]
+    end
+
+    # 配送状态
+    class FulfillmentStatus < KeyValues::Base
+      self.data = [
+        {id: 1, name: '完成'    , code: 'fulfilled'},
+        {id: 2, name: '部分发货', code: 'partial'  },
+        {id: 3, name: '未发货'  , code: 'unshipped'}
       ]
     end
 

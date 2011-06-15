@@ -12,16 +12,6 @@ describe "Shop::Shops", js:true do
 
   after(:each) { Capybara::Server.manual_host = nil }
 
-  # 商品列表
-  describe "GET /collections/all" do
-
-    it "should list products!" do
-      visit '/'
-      click_on '商品列表'
-      page.should have_content('示例商品6')
-    end
-  end
-
   # 首页
   describe "GET /products" do
 
@@ -112,6 +102,16 @@ describe "Shop::Shops", js:true do
       page.should have_content('介绍您的公司')
     end
 
+  end
+
+  # 商品列表
+  describe "GET /collections/all" do
+
+    it "should list products!" do
+      visit '/'
+      click_on '商品列表'
+      page.should have_content('示例商品6')
+    end
   end
 
 end
