@@ -151,14 +151,14 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
 
-  create_table "order_product_variants", :force => true do |t|
+  create_table "order_line_items", :force => true do |t|
     t.integer "order_id",           :null => false
     t.integer "product_variant_id", :null => false
     t.float   "price",              :null => false
     t.integer "quantity",           :null => false
   end
 
-  add_index "order_product_variants", ["order_id"], :name => "index_order_product_variants_on_order_id"
+  add_index "order_line_items", ["order_id"], :name => "index_order_line_items_on_order_id"
 
   create_table "order_shipping_addresses", :force => true do |t|
     t.integer "order_id",               :null => false
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   add_index "product_options", ["product_id"], :name => "index_product_options_on_product_id"
 
   create_table "product_variants", :force => true do |t|
+    t.integer  "shop_id",                                  :null => false
     t.integer  "product_id",                               :null => false
     t.float    "price",                :default => 0.0,    :null => false
     t.float    "weight",               :default => 0.0,    :null => false

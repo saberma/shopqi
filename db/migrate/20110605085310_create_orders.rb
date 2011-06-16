@@ -20,7 +20,7 @@ class CreateOrders < ActiveRecord::Migration
     end
 
     #订单商品
-    create_table :order_product_variants do |t|
+    create_table :order_line_items do |t|
       t.references :order          , comment: '所属订单'    , null: false
       t.references :product_variant, comment: '所属商品款式', null: false
       t.float :price               , comment: '购买时价格'  , null: false
@@ -61,11 +61,11 @@ class CreateOrders < ActiveRecord::Migration
     add_index :orders                  , :token
     add_index :order_billing_addresses , :order_id
     add_index :order_shipping_addresses, :order_id
-    add_index :order_product_variants  , :order_id
+    add_index :order_line_items        , :order_id
   end
 
   def self.down
-    drop_table :order_product_variants
+    drop_table :order_line_items
     drop_table :order_shipping_addresses
     drop_table :order_billing_addresses
     drop_table :orders

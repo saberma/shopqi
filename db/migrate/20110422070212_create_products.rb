@@ -26,6 +26,7 @@ class CreateProducts < ActiveRecord::Migration
 
     #商品款式
     create_table :product_variants do |t|
+      t.references :shop             , comment: '所属商店'                          , null: false
       t.references :product          , comment: '所属商品'                          , null: false
       t.float :price                 , comment: '价格'                              , null: false    , default: 0.0
       t.float :weight                , comment: '重量kg'                            , null: false    , default: 0.0

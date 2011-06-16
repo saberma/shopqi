@@ -129,7 +129,7 @@
         %input.btn(type="button" value="发货")
         %p.instruction
           您需要准备
-          %strong==#{order.variants.size} 款商品
+          %strong==#{order.line_items.size} 款商品
       .sb.shipping-method
         %h3 配送方式
         %p 快递

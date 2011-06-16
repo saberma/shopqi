@@ -3,7 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress'
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
-  has_many :variants       , dependent: :destroy, class_name: 'OrderProductVariant'
+  has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
 
   attr_protected :total_price #总金额只能通过商品价格计算而来，不能从页面传递
 
@@ -43,7 +43,7 @@ class Order < ActiveRecord::Base
 end
 
 # 订单商品
-class OrderProductVariant < ActiveRecord::Base
+class OrderLineItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product_variant
   validates_presence_of :price, :quantity
