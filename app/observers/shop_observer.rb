@@ -52,7 +52,7 @@ class ShopObserver < ActiveRecord::Observer
     # 博客(最新动态)
     shop.blogs.create title: '最新动态', handle: 'latest-news'
     # 创建各个邮件样板
-    shop.emails.create title: '{{shop.name}}',mail_type: KeyValues::Mail::Type.first.code, body: '{{shop.name}}'
+    shop.emails.create title: '您在{{shop_name}}的订单',mail_type: 'order_confirm' , body: '感谢您在{{shop_name}}订购商品 '
   end
 
 end
