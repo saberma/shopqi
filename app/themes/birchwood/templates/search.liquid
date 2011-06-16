@@ -1,0 +1,32 @@
+<h1>Search</h1>
+
+<div id="search">  
+  
+  <div class="col-16">
+    <form action="/search" method="get">
+     <p><input type="text" name="q" value="{{search.terms  | escape}}" size="34" id="result-q" /> <input type="submit" value="Search" /></p>
+    </form>
+    
+    {% if search.performed %}
+      {% paginate search.results by 10 %}  
+      {% if search.results == empty %}  
+        <p class="center-text">We couldn't find anything with the word "{{search.terms | escape}}" in it</p>              
+      {% else %}  
+          <ol>
+          {% for item in search.results %}      
+          <li>
+            <h3>{{ item.title | link_to: item.url }}</h3>
+            {% if item.featured_image %}
+            <div class="result-image"><a href="{{item.url}}" title="">{{ item.featured_image | product_img_url: 'thumb' | img_tag }}</a></div>
+            {% endif %}
+            <span>{{ item.content | strip_html | truncatewords: 40 | highlight: search.terms }}</span>
+            <div style="clear:left"></div>          
+          </li>
+          {% endfor %}
+          </ol>      
+      {% endif %}
+      <p>{{ paginate | default_pagination }}</p>
+      {% endpaginate %}    
+    {% endif %}
+  </div><!-- .col-8 -->
+</div>

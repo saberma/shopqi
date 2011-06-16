@@ -1,0 +1,67 @@
+<script type="text/javascript">
+function remove_item(id) {
+  document.getElementById('updates_'+id).value = 0;
+  document.getElementById('cart').submit();
+}
+</script>
+
+<h1>Shopping Cart</h1>
+{% if cart.item_count == 0 %}
+	<p><strong>Your shopping basket is empty.</strong> Perhaps a featured item below is of interest...</p>
+  <table class="products">
+    {% tablerow product in collections.frontpage.products cols: 4  %}
+    <td>
+      <div>
+        <a href="{{ product.url | within: collections.frontpage }}"><img src="{{ product.images.first | product_img_url: 'medium' }}" width="175px" alt="{{ product.title | escape }}" /><big>{{ product.title }}</big>{% if product.compare_at_price_max > product.price %}<em>was {{ product.compare_at_price_max | money }}</em>{% endif %}<strong>{{ product.price  | money }}</strong></a>
+      </div>
+    </td>
+    {% endtablerow %}
+  </table>
+	
+{% else %}
+
+<form action="/cart" method="post" id="cart">
+	<table>
+		<tr>
+			<th>Item Description</th>
+			<th>Price</th>
+			<th>Qty</th>
+			<th>Delete</th>
+			<th>Total</th>
+		</tr>{% for item in cart.items %}
+		<tr class="{% cycle 'odd', 'even' %}">
+			<td class="product-details">
+					<a  href="{{ item.product.url }}" title="{{ item.title | escape }} &mdash; {{ item.product.description | strip_html | truncate: 50 | escape }}"><img src="{{ item.product.images.first | product_img_url: 'thumb' }}" alt="{{ item.title | escape }}" /></a>
+					<a href="{{ item.product.url }}">{{ item.title }}</a>
+			</td>
+			<td>{{ item.price | money }}</td>
+			<td><input type="text" size="4" name="updates[{{item.variant.id}}]" id="updates_{{ item.variant.id }}" class="quantity-field" value="{{ item.quantity }}" onfocus="this.select();"/></td>
+			<td><a href="#" onclick="remove_item({{ item.variant.id }}); return false;" >Remove</a></td>
+			<td>{{ item.line_price | money }}</td>
+		</tr>{% endfor %}
+	</table>
+	<div class="cart-options">
+		<h3><strong>Subtotal {{ cart.total_price | money }}</strong></h3>
+				<input type="submit" name="checkout" value="Checkout" id="checkout-button"  />
+				
+				{% if settings.show_more_cart_buttons %}
+        {% if additional_checkout_buttons %}
+        <div class="additional-checkout-buttons">
+          <p>or</p>
+          <div class="buttons">
+          {{ content_for_additional_checkout_buttons }}
+          </div><!-- .buttons -->
+        </div>
+        {% endif %}
+        {% endif %}
+
+	</div>
+</form>{% endif %}
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $(".quantity-field").blur(function(){
+      $("#cart").submit();
+    });
+  });
+</script>

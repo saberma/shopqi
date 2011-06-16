@@ -1,0 +1,221 @@
+<p class="note">Woodland version 1.02</p>
+<fieldset>
+    <legend>Colors</legend>
+    <table>
+      <tr>
+        <td><label for="text_color">Body text</label></td>
+        <td><input id="text_color" name="text_color" class="color" value="#333333"/></td>
+      </tr>
+      <tr>
+        <td><label for="logo_color">Logo color</label></td>
+        <td><input id="logo_color" name="logo_color" class="color" value="#594e6c"/></td>
+      </tr>
+      <tr>
+        <td><label for="heading_color">Heading text</label></td>
+        <td><input id="heading_color" name="heading_color" class="color" value="#676161"/></td>
+      </tr>
+      <tr>
+        <td><label for="navigation_color">Primary navigation text</label></td>
+        <td><input id="navigation_color" name="navigation_color" class="color" value="#676161"/></td>
+      </tr>
+       <tr>
+          <td><label for="navigationhover_color">Primary navigation hover text</label></td>
+          <td><input id="navigationhover_color" name="navigationhover_color" class="color" value="#372D36"/></td>
+        </tr>
+        
+        
+      <tr>
+        <td><label for="productborder">Product border</label></td>
+        <td><input id="productborder" name="productborder" class="color" value="#ffffff"/></td>
+      </tr>
+      <tr>
+        <td><label for="productborderhover">Product border hover</label></td>
+        <td><input id="productborderhover" name="productborderhover" class="color" value="#f4f4f4"/></td>
+      </tr>
+      
+      
+      <tr>
+        <td><label for="productbackground">Product background (for odd sized images)</label></td>
+        <td><input id="productbackground" name="productbackground" class="color" value="#ffffff"/></td>
+      </tr>
+
+    
+      <tr>
+        <td><label for="contentbackground_color">Content background</label></td>
+        <td><input id="contentbackground_color" name="contentbackground_color" class="color" value="#ffffff"/></td>
+      </tr>
+
+    <tr>
+      <td><label for="contentborder_border">Content border</label></td>
+      <td><input id="contentborder_border" name="contentborder_border" class="color" value="#cdc2b1"/></td>
+    </tr>
+
+      <tr>
+        <td><label for="pagebackground_color">Website background</label></td>
+        <td><input id="pagebackground_color" name="pagebackground_color" class="color" value="#dbd5af"/></td>
+      </tr>
+      <tr>
+        <td><label for="link_color">Link color</label></td>
+        <td><input id="link_color" name="link_color" class="color" value="#a81600"/></td>
+      </tr>
+      <tr>
+        <td><label for="linkhover_color">Link hover color</label></td>
+        <td><input id="linkhover_color" name="linkhover_color" class="color" value="#530b00"/></td>
+      </tr>
+      <tr>
+        <td><label for="button_color">Button background color</label></td>
+        <td><input id="button_color" name="button_color" class="color" value="#594e6c"/></td>
+      </tr>
+      <tr>
+        <td><label for="buttonhover_color">Button background hover color</label></td>
+        <td><input id="buttonhover_color" name="buttonhover_color" class="color" value="#372d36"/></td>
+      </tr>
+      <tr>
+        <td><label for="buttontext_color">Button text color</label></td>
+        <td><input id="buttontext_color" name="buttontext_color" class="color" value="#594e6c"/></td>
+      </tr>
+    </table>
+  </fieldset>
+
+<fieldset>
+    <legend>Font</legend>
+    <table>
+      <tr>
+        <td><label for="regular_font">Regular text</label></td>
+        <td>
+          <select class="font" name="regular_font" id="regular_font">
+           <option value="'Lucida Grande', 'Lucida Sans Unicode', serif" selected="selected">Lucida Grande</option>
+          </select>
+        </td>
+</tr>
+<tr>
+        <td><label for="logo_font">Logo font</label></td>
+        <td>
+          <select class="font" name="logo_font" id="logo_font">
+            <option value="'Georgia','Palatino Linotype', 'Book Antiqua', 'Palatino', 'Times', serif" selected="selected">Georgia</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+              <td><label for="logo_font">navigation font</label></td>
+              <td>
+                <select class="font" name="nav_font" id="nav_font">
+                  <option value="'Georgia','Palatino Linotype', 'Book Antiqua', 'Palatino', 'Times', serif" selected="selected">Georgia</option>
+                </select>
+              </td>
+            </tr>
+    </table>
+</fieldset>
+<fieldset>
+    <legend>Images</legend>
+    <table>
+    <tr>
+       <td><label for="use_banner_image">Custom banner:</label></td>
+       <td><input type="checkbox" id="use_banner_image" name="use_banner_image" value="1" checked="checked"/></td>
+     </tr>
+     <tr>
+      <td>Banner</td>
+      <td><input type="file" id="logo_image" name="banner.jpg"  data-max-width="877"/></td>
+     </tr> 
+     <tr>
+      <td>Banner URL (include http://)</td>
+      <td><input type="text" id="banner_url" name="banner_url" value="collections/all"/></td>
+     </tr>  
+     <tr>
+       <td><label for="use_logo_image">Custom logo?</label></td>
+       <td><input type="checkbox" id="use_logo_image" name="use_logo_image" value="1"/></td>
+     </tr>
+     <tr>
+      <td>Logo</td>
+      <td><input type="file" id="logo_image" name="logo.png" /></td>
+     </tr>
+    <tr>
+      <td><label for="bg_image">Select your background image</label></td>
+      <td>
+        <select name="bg_image" id="bg_image">
+          <option value="background.jpg">uploaded background</option>
+          <option value="bg-lightwood.jpg">lightwood</option>
+          <option value="bg-darkwood.jpg">dark wood</option>
+          <option value="bg-slate.jpg">slate</option>
+          <option value="nobg">no background</option>
+        </select>
+      </td>
+    </tr>
+     <tr>
+      <td>Upload new background</td>
+      <td><input type="file" id="background_image" name="background.jpg" /></td>
+     </tr>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>Other Options &amp; Contact Information</legend>
+    <table>
+      
+      <tr>
+        <td><label for="show_more_cart_buttons">Show additional payment buttons on Cart page?</label></td>
+        <td><input type="checkbox" id="show_more_cart_buttons" name="show_more_cart_buttons" value="1" checked="checked"/></td>
+      </tr>
+      
+      <tr>
+        <td><label for="show_homepage">What is your site's welcome text? (shown below banner)</label></td>
+       <td><select class="page" name="show_homepage" /></td>
+      </tr>
+
+     <tr>
+        <td><label for="rounded-corners">Content rounded corners (Not shown in internet explorer)</label></td>
+        <td><input type="checkbox" id="rounded-corners" name="rounded-corners" value="1" checked="checked"/></td>
+      </tr>
+
+      <tr>
+          <td><label for="shadows">Content shadow (Not shown in internet explorer)</label></td>
+          <td><input type="checkbox" id="shadows" name="shadows" value="1" checked="checked"/></td>
+        </tr>
+     <tr>
+        <td><label for="show_twitter">Show Twitter?</label></td>
+        <td><input type="checkbox" id="show_twitter" name="show_twitter" value="1" checked="checked"/></td>
+      </tr> 
+      <tr>     
+        <td><label for="twitter_url">Your Twitter url</label></td>
+        <td><input type="text" id="twitter_url" name="twitter_url" value="http://twitter.com/markdunkley" /></td>
+      </tr>
+      <tr>     
+        <td><label for="twitter_name">Your Twitter name</label></td>
+        <td><input type="text" id="twitter_name" name="twitter_name" value="markdunkley" /></td>
+      </tr>        
+      
+      <tr>
+         <td><label for="show_facebook">Show facebook?</label></td>
+         <td><input type="checkbox" id="show_facebook" name="show_facebook" value="1" checked="checked"/></td>
+       </tr> 
+       <tr>     
+         <td><label for="facebook_url">Your facebook url</label></td>
+         <td><input type="text" id="facebook_url" name="facebook_url" value="Mark Dunkley" /></td>
+       </tr>
+       <tr>     
+          <td><label for="facebook_name">Your facebook name</label></td>
+          <td><input type="text" id="facebook_name" name="facebook_name" value="http://facebook.com/markdunkley" /></td> 
+        </tr>     
+      
+      <tr>
+         <td><label for="show_phone">Show Phone?</label></td>
+         <td><input type="checkbox" id="show_phone" name="show_phone" value="1" checked="checked"/></td>
+       </tr> 
+       <tr>     
+         <td><label for="phone_url">Your phone #</label></td>
+         <td><input type="text" id="phone_url" name="phone_url" value="866.704.0252" /></td>
+       </tr>
+      
+      <tr>
+         <td><label for="show_email">Show Email?</label></td>
+         <td><input type="checkbox" id="show_email" name="show_email" value="1" checked="checked"/></td>
+       </tr> 
+       <tr>     
+         <td><label for="email_url">Your email url</label></td>
+         <td><input type="text" id="email_url" name="email_url" value="birch@wood.com" /></td>
+       </tr>
+       
+     
+
+    </table>
+</fieldset>
