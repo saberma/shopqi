@@ -1,4 +1,4 @@
-App.Controllers.Orders = Backbone.Controller.extend
+App.Controllers.Orders.Index = Backbone.Controller.extend
 
   initialize: ->
     # 列表页面的查询条件：状态、支付状态、打包状态

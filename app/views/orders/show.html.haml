@@ -1,9 +1,12 @@
+=content_for :javascripts do
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/fulfillments/index', 'views/orders/fulfillments/show', 'controllers/orders/show'
+
 %h2#title
-  Order #1004
-  %span#order-date 05. June 2011 03:41 AM
+  ==订单 #{order.name}
+  %span#order-date=order.created_at.to_s(:with_year)
 #action-links
   %ul
-    -#%li#email=link_to '联系顾客', '#', class: 'closeure-lightbox'
+    %li#email=link_to '联系顾客', '#', class: 'closeure-lightbox'
     %li#note=link_to '备注', '#'
     -#%li.csv=link_to '导出', '#'
     %li#print
@@ -28,9 +31,6 @@
       %span.key 按'k'键
     %br
     .bg
-%script(type="text/javascript" charset="utf-8")
-  new ToolBox("next");
-  new ToolBox("previous");
 .col-4
   #customer-box.box2(style="margin:20px 0 0 0; padding:10px; width:240px;")
     %table#customer-summary(cellpadding="0" cellspacing="0")
@@ -55,20 +55,22 @@
     %h3 收货人地址
     #shipping-address.vcard
       .tel
-        %span.value 电话: 13928452841
+        %span.value==电话: #{order.billing_address.phone}
       %address.adr
         %span.type.hide 家庭
-        %span.postal-code 518057
+        %span.postal-code=order.billing_address.zip
         %br
-        %span.locality shenzhen
+        %span.locality=order.billing_address.district_name
         %br
-        %span.street-address china
+        %span.locality=order.billing_address.city_name
         %br
-        %span nanshan 311
+        %span.street-address=order.billing_address.province_name
         %br
-        %span.fn saberma ma
+        %span=order.billing_address.address1
         %br
-        %span.country-name CHINA
+        %span.fn=order.billing_address.name
+        %br
+        %span.country-name=order.billing_address.country
         %br
       %a.email(href="mailto:mahb45@gmail.com" style="display: none")
   #bill-addr.customer-col
@@ -81,17 +83,19 @@
         %span.value 电话: 13928452841
       %address.adr
         %span.type.hide 家庭
-        %span.postal-code 518057
+        %span.postal-code=order.shipping_address.zip
         %br
-        %span.locality shenzhen
+        %span.locality=order.shipping_address.district_name
         %br
-        %span.street-address china
+        %span.locality=order.shipping_address.city_name
         %br
-        %span nanshan 311
+        %span.street-address=order.shipping_address.province_name
         %br
-        %span.fn saberma ma
+        %span=order.shipping_address.address1
         %br
-        %span.country-name CHINA
+        %span.fn=order.shipping_address.name
+        %br
+        %span.country-name=order.shipping_address.country
         %br
 .col-8.last
   #payment-accept.box2.hide(style="margin: 20px 0")
@@ -99,10 +103,10 @@
       %h3 接受支付
       %p
         顾客授权您接收款项金额
-        %strong ¥44.00 CNY
+        %strong=order.total_price
       %form#transaction_new.transaction_new(accept-charset="UTF-8" action="/admin/orders/66618532/transactions" method="post")
         %p.sst
-          %input#amount.big(name="transaction[amount]" size="15" type="text" value="44.00")
+          %input#amount.big(name="transaction[amount]" size="15" type="text" value="#{order.total_price}")
           %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
           %input.btn(name="commit" type="submit" value="接收此金额")
           或者
@@ -114,7 +118,7 @@
           %input.btn(type="button" value="接收款项")
           %p.instruction
             已授权您接收
-            %strong ¥44.00 CNY
+            %strong=order.total_price
       %h3 支付方式
       %p#cc-logo
         =image_tag 'admin/icons/payment/visa.png', height: '14', style: "vertical-align:top;position:relative;top:3px;padding-right: 8px" 
@@ -122,46 +126,31 @@
       %p Processed by Trust Commerce
     .order-action-line
       #unshipped-goods.fr.r
-        %input.btn(onclick="Order.showShippingItems();" type="button" value="Fulfill items")
+        %input.btn(type="button" value="发货")
         %p.instruction
-          您需要打包
-          %strong 1 款商品
+          您需要准备
+          %strong==#{order.variants.size} 款商品
       .sb.shipping-method
         %h3 配送方式
         %p 快递
     %form#batch_fulfillment_form(accept-charset="UTF-8" action="/admin/orders/66618532/fulfillments/set" method="post")
       #mark-shipped.hide
         .sb.order-action-line
-          %h3 打包款式
-          %p 选择您已经打包好的商品款式
+          %h3 发货
+          %p 选择您已经发货的商品
         %table.data(cellpadding="0" cellspacing="0")
-          %tr(valign="bottom")
-            %td(style="width: 24px; vertical-align:middle")
-              %input#line-item-110445012.fulfill(checked="checked" name="shipped[]" style="margin:0 0 2px 1px" type="checkbox" value="110445012")
-            %td.c
-              %strong(style="font-size: 14px") 1
-              x
-            %td
-              %strong
-                %label(for="line-item-110445012")
-                  %a.product-link(href="/admin/products/38663852" title="Go to product page") Public-key 6th generation synergy
-              %br
-            %td
-              %label(for="line-item-110445012")
-                %span.note(style="font-weight:normal") 无 SKU
-        -#
-          #manual_shipping_options.sb.sst.fulfillment_service_shipping_options.group(style="margin: 20px 0")
-            #manual_tracking_number_container
-              %h4
-                跟踪数量
-                %span.hint 可以稍后加入
-              %p
-                %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text" value="")
-                %span#manual_tracking_company_area.hide
-                  通过
-                  %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
-                    %option(value="USPS") EMS
-                    %option(value="Other") Other
+        #manual_shipping_options.sb.sst.fulfillment_service_shipping_options.group(style="margin: 20px 0")
+          #manual_tracking_number_container
+            %h4
+              快递单号
+              %span.hint 可以稍后加入
+            %p
+              %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text" value="")
+              %span#manual_tracking_company_area.hide
+                通过
+                %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
+                  %option(value="USPS") EMS
+                  %option(value="Other") Other
         .btns(style="background: none")
           .sb
             %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
@@ -240,3 +229,27 @@
         %td.log-time
           %span 03:41am
         %td 创建订单
+
+%script(id="edit-fulfillment-item" type="text/x-jquery-tmpl")
+  %td(style="width: 24px; vertical-align:middle")
+    %input.fulfill(id="line-item-{{{id}}}" checked="checked" name="shipped[]" style="margin:0 0 2px 1px" type="checkbox" value="{{{id}}}")
+  %td.c
+    %strong(style="font-size: 14px") {{{quantity}}}
+    x
+  %td
+    %strong
+      %label(for="line-item-{{{id}}}")
+        %a.product-link(href="/admin/products/{{{product_id}}}" title="Go to product page") {{{title}}}
+    %br
+  %td
+    %label(for="line-item-{{{id}}}")
+      %span.note(style="font-weight:normal") {{{sku}}}
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Orders.Show();
+    Backbone.history.start();
+  }
+
+  App.order = new Order(#{orders_json});
+  new App.Views.Order.Show.Index({model: App.order})

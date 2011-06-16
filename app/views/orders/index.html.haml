@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'collections/orders', 'views/orders/index/index', 'views/orders/index/show', 'controllers/orders'
+  =javascript_include_tag 'models/order', 'collections/orders', 'views/orders/index/index', 'views/orders/index/show', 'controllers/orders/index'
 
 %h2#title 订单管理
 -#
@@ -122,7 +122,7 @@
 
 :javascript
   App.init = function(){
-    new App.Controllers.Orders();
+    new App.Controllers.Orders.Index();
     Backbone.history.start();
   }
 

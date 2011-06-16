@@ -57,6 +57,18 @@ class OrderBillingAddress < ActiveRecord::Base
   before_create do
     self.country = 'china'
   end
+
+  def province_name
+    District.get(self.province)
+  end
+
+  def city_name
+    District.get(self.city)
+  end
+
+  def district_name
+    District.get(self.district)
+  end
 end
 
 # 收货人信息
@@ -66,5 +78,17 @@ class OrderShippingAddress < ActiveRecord::Base
 
   before_create do
     self.country = 'china'
+  end
+
+  def province_name
+    District.get(self.province)
+  end
+
+  def city_name
+    District.get(self.city)
+  end
+
+  def district_name
+    District.get(self.district)
   end
 end

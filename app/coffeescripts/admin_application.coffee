@@ -11,7 +11,8 @@ App =
         Variant: {}
       Index: {}
     ProductOption: {}
-  Controllers: {}
+  Controllers:
+    Orders: {}
   Collections: {}
   init: ->
 
