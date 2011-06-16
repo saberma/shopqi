@@ -36,11 +36,7 @@ App.Views.Order.Index.Index = Backbone.View.extend
   # 操作面板修改
   changeOrderSelect: ->
     operation = this.$('#order-select').val()
-    self = this
-    checked_ids = _.map self.$('.selector:checked'), (checkbox) -> checkbox.value
+    checked_ids = _.map this.$('.selector:checked'), (checkbox) -> checkbox.value
     $.post "/admin/orders/set", operation: operation, 'orders[]': checked_ids, ->
-      _(checked_ids).each (id) ->
-        model = App.orders.get id
-      msg "批量更新成功!"
-    $('#order-select').val('')
+      document.location.href = document.location.href
     false

@@ -23,9 +23,11 @@
 #order-filters.box2.sst
   %div(style="float: right; font-size: 12px")
     每页显示条数:
-    %select(style="width:60px")
+    -selected_page_size = order_search_path(limit: params[:search] && params[:search][:limit])
+    %select#page-size-select(style="width:60px")
       -page_sizes.each_pair do |name, code|
-        %option(value="#{order_search_path(limit: code)}")=name
+        -value = order_search_path(limit: code)
+        %option{value:"#{value}", selected:(selected_page_size == value)}=name
   显示
   %a#payment-filter-link(href="#")=search_label :financial_status, '任何支付状态', financial_status
   和
@@ -63,7 +65,7 @@
           %table#order-controls.hide(cellpadding="0" cellspacing="0")
             %tr
               %td(style="text-align:left;vertical-align: middle")
-                %select#order-select(name="operation" onchange="ol.submitForm(this)")
+                %select#order-select(name="operation")
                   %option(checked="checked" style="color: #888" value="") 选择操作…
                   %option.indent(value="close") 关闭订单
                   %option.indent(value="open") 恢复订单

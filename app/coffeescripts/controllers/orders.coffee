@@ -23,6 +23,10 @@ App.Controllers.Orders = Backbone.Controller.extend
       $('#shipping-status-select > .filter-select').toggle()
       false
 
+    # 选择页码
+    $('#page-size-select').change ->
+      document.location.href = $(this).val()
+
     $(document).click ->
       $('.filter-select').hide()
 
