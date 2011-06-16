@@ -1,13 +1,21 @@
 App.Views.Order.Show.Fulfillment.Index = Backbone.View.extend
-  el: '#unshipped-goods'
+  el: '#mark-shipped'
 
   events:
-    "click .btn": "show"
+    "click .btn": "save"
+    "click .cancel": "cancel"
 
   initialize: ->
-    _.bindAll this, 'show'
     self = this
+    this.render()
+    _(App.order.get('line_items')).each (line_item) ->
+      new App.Views.Order.Show.Fulfillment.Edit line_item: line_item
 
-  show: ->
-    $('#mark-shipped').show()
+  save: ->
+    this.cancel()
+    false
+
+  cancel: ->
+    $('#mark-shipped').hide()
+    $('#order-fulfillment').show()
     false

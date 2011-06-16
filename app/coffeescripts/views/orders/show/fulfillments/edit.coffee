@@ -1,4 +1,4 @@
-App.Views.Orders.Show.Fulfillments.Edit = Backbone.View.extend
+App.Views.Order.Show.Fulfillment.Edit = Backbone.View.extend
   tagName: 'tr'
 
   initialize: ->
@@ -6,6 +6,6 @@ App.Views.Orders.Show.Fulfillments.Edit = Backbone.View.extend
     this.render()
 
   render: ->
-    template = Handlebars.compile $('#show-order-item').html()
-    $(@el).html template @model.attributes
+    template = Handlebars.compile $('#edit-fulfillment-item').html()
+    $(@el).html template @options.line_item
     $('#mark-shipped table').append @el

@@ -6,6 +6,8 @@ App =
     CustomCollection: {}
     Order:
       Index: {}
+      Show:
+        Fulfillment: {}
     Product:
       Show:
         Variant: {}

@@ -20,6 +20,15 @@ class OrdersController < ApplicationController
       except: [ :updated_at ]
     })
   end
+  expose(:order_json) do
+    order.to_json({
+      methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
+      include: {
+        line_items: { methods: [:title, :options, :sku] }
+      },
+      except: [ :updated_at ]
+    })
+  end
   expose(:status) { KeyValues::Order::Status.hash }
   expose(:financial_status) { KeyValues::Order::FinancialStatus.hash }
   expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }

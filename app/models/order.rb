@@ -25,7 +25,7 @@ class Order < ActiveRecord::Base
   end
 
   before_save do
-    self.total_price = self.variants.map(&:price).sum
+    self.total_price = self.line_items.map(&:price).sum
   end
 
   def status_name
@@ -47,6 +47,16 @@ class OrderLineItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product_variant
   validates_presence_of :price, :quantity
+
+  delegate :sku, to: :product_variant
+
+  def title
+    product_variant.product.title
+  end
+
+  def options
+    product_variant.options.join('/')
+  end
 end
 
 # 发单人信息
