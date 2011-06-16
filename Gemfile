@@ -44,7 +44,7 @@ gem "resque" # 后台任务
 gem "chinese_pinyin" # 汉字转拼音
 gem "nokogiri" # 解释模板config/settings.html
 gem "uuid" # 生成36位(或32位)唯一序列号
-gem 'app_config' # 用于存储系统配置文件
+gem 'settingslogic' #用于解析一些配置信息
 
 group :development, :test, :travis do
   gem "awesome_print", require: 'ap' # 调试
