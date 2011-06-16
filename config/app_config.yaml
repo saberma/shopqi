@@ -1,0 +1,8 @@
+---
+templates:
+  email:
+    order_confirm:
+      title:  您在{{shop_name}}的订单提醒
+      body: 'Thank you for placing your order with {{ shop_name }}!\r\n
+            This email is to confirm your recent order.\r\n'
+
