@@ -58,6 +58,13 @@ Shopqi::Application.routes.draw do
       collection do
         post :set
       end
+      member do
+        post :close  #关闭
+        post :cancel #取消
+        post :previous #上一订单
+        post :next     #下一订单
+        post :transactions     #接受支付款项
+      end
     end
 
     resources :products, except: :edit do

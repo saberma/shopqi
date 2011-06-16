@@ -1,0 +1,242 @@
+%h2#title
+  Order #1004
+  %span#order-date 05. June 2011 03:41 AM
+#action-links
+  %ul
+    -#%li#email=link_to '联系顾客', '#', class: 'closeure-lightbox'
+    %li#note=link_to '备注', '#'
+    -#%li.csv=link_to '导出', '#'
+    %li#print
+      %a(href="#" onclick="window.print();; return false;") 打印
+    %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
+    %li#cancel-order=link_to "取消此订单", cancel_order_path(order), method: :post
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+#previous
+  .tools.hide
+    =link_to previous_order_path(order), class: :message do
+      %em 上一订单
+      %br
+      %span.key 按'j'键
+    %br
+    .bg
+#next
+  .tools.hide
+    =link_to next_order_path(order), class: :message do
+      %em 下一订单
+      %br
+      %span.key 按'k'键
+    %br
+    .bg
+%script(type="text/javascript" charset="utf-8")
+  new ToolBox("next");
+  new ToolBox("previous");
+.col-4
+  #customer-box.box2(style="margin:20px 0 0 0; padding:10px; width:240px;")
+    %table#customer-summary(cellpadding="0" cellspacing="0")
+      %tr.first
+        %td.attribute
+          %a(href="/admin/customers/45648822")=image_tag 'admin/icons/customer.gif', id: :gravatar
+        %td.value
+          %h3
+            %a(href="/admin/customers/45648822") saberma ma
+          %p(style="line-height:18px;")
+            %a(href="mailto:mahb45@gmail.com") mahb45@gmail.com
+            %br
+            13928452841
+      %tr
+        %td.attribute 营销
+        %td.value.image
+          %span.o-authorized 接收营销邮件
+  #ship-addr.customer-col
+    .tools.hide
+      .map-link
+        %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
+    %h3 收货人地址
+    #shipping-address.vcard
+      .tel
+        %span.value 电话: 13928452841
+      %address.adr
+        %span.type.hide 家庭
+        %span.postal-code 518057
+        %br
+        %span.locality shenzhen
+        %br
+        %span.street-address china
+        %br
+        %span nanshan 311
+        %br
+        %span.fn saberma ma
+        %br
+        %span.country-name CHINA
+        %br
+      %a.email(href="mailto:mahb45@gmail.com" style="display: none")
+  #bill-addr.customer-col
+    .tools.hide
+      .map-link
+        %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
+    %h3 发单人地址
+    #billing-address.vcard
+      .tel
+        %span.value 电话: 13928452841
+      %address.adr
+        %span.type.hide 家庭
+        %span.postal-code 518057
+        %br
+        %span.locality shenzhen
+        %br
+        %span.street-address china
+        %br
+        %span nanshan 311
+        %br
+        %span.fn saberma ma
+        %br
+        %span.country-name CHINA
+        %br
+.col-8.last
+  #payment-accept.box2.hide(style="margin: 20px 0")
+    .ssb.order-action-line
+      %h3 接受支付
+      %p
+        顾客授权您接收款项金额
+        %strong ¥44.00 CNY
+      %form#transaction_new.transaction_new(accept-charset="UTF-8" action="/admin/orders/66618532/transactions" method="post")
+        %p.sst
+          %input#amount.big(name="transaction[amount]" size="15" type="text" value="44.00")
+          %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
+          %input.btn(name="commit" type="submit" value="接收此金额")
+          或者
+          %a(href="#") 取消
+  .box2.sst(style="padding-top: 0")
+    #order-status.order-action-line.separator.clearfix
+      .fr.r
+        #authorized
+          %input.btn(type="button" value="接收款项")
+          %p.instruction
+            已授权您接收
+            %strong ¥44.00 CNY
+      %h3 支付方式
+      %p#cc-logo
+        =image_tag 'admin/icons/payment/visa.png', height: '14', style: "vertical-align:top;position:relative;top:3px;padding-right: 8px" 
+        XXXX-XXXX-XXXX-4242
+      %p Processed by Trust Commerce
+    .order-action-line
+      #unshipped-goods.fr.r
+        %input.btn(onclick="Order.showShippingItems();" type="button" value="Fulfill items")
+        %p.instruction
+          您需要打包
+          %strong 1 款商品
+      .sb.shipping-method
+        %h3 配送方式
+        %p 快递
+    %form#batch_fulfillment_form(accept-charset="UTF-8" action="/admin/orders/66618532/fulfillments/set" method="post")
+      #mark-shipped.hide
+        .sb.order-action-line
+          %h3 打包款式
+          %p 选择您已经打包好的商品款式
+        %table.data(cellpadding="0" cellspacing="0")
+          %tr(valign="bottom")
+            %td(style="width: 24px; vertical-align:middle")
+              %input#line-item-110445012.fulfill(checked="checked" name="shipped[]" style="margin:0 0 2px 1px" type="checkbox" value="110445012")
+            %td.c
+              %strong(style="font-size: 14px") 1
+              x
+            %td
+              %strong
+                %label(for="line-item-110445012")
+                  %a.product-link(href="/admin/products/38663852" title="Go to product page") Public-key 6th generation synergy
+              %br
+            %td
+              %label(for="line-item-110445012")
+                %span.note(style="font-weight:normal") 无 SKU
+        -#
+          #manual_shipping_options.sb.sst.fulfillment_service_shipping_options.group(style="margin: 20px 0")
+            #manual_tracking_number_container
+              %h4
+                跟踪数量
+                %span.hint 可以稍后加入
+              %p
+                %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text" value="")
+                %span#manual_tracking_company_area.hide
+                  通过
+                  %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
+                    %option(value="USPS") EMS
+                    %option(value="Other") Other
+        .btns(style="background: none")
+          .sb
+            %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
+            %label.note(for="notify_customer") 发送邮件通知顾客
+          %div
+            %input#fulfill-items.btn(name="commit" type="submit" value="打包")
+            或者
+            %a(href="#") 取消
+  #order-note.message.pgroup.hide
+    %h3 订单备注
+    #note-body
+  #note-form.message.group.hide
+    %form#edit_order_66618532.edit_order(accept-charset="UTF-8" action="/admin/orders/66618532" method="post")
+      %p.sb
+        %strong 输入您的备注:
+      %textarea#order_note(cols="40" name="order[note]" rows="10")
+      %p.hint
+      %p.btns
+        %input.btn(name="commit" type="submit" value="保存备注")
+        或者
+        %a(href="#") 取消
+  #order
+    %table.data(cellspacing="0")
+      %tr
+        %th(style="width: 16px; padding: 0 3px") &nbsp;
+        %th.left 商品
+        %th 价格
+        %th(style="text-align:center") 数量
+        %th.total-col 金额
+      %tr.odd(valign="bottom")
+        %td(style="vertical-align:middle")
+        %td(style="max-width:320px")
+          %strong
+            %label(for="line-item-110445012")
+              %a.product-link(href="/admin/products/38663852" title="Go to product page") Public-key 6th generation synergy
+          %br
+        %td.line-price ¥19.00
+        %td.line-qty.c 1
+        %td.total-col ¥19.00 CNY
+      %tr#sep.summary
+        %td.r(colspan="4") 总共:
+        %td.r.subtotal.total-col ¥19.00 CNY
+      %tr.summary
+        %td.r(colspan="4") Shipping (International Shipping):
+        %td.r.primary.total-col ¥25.00 CNY
+      %tr.summary
+        %td.r(colspan="4") Including VAT:
+        %td.r.primary.total-col ¥2.76 CNY
+      %tr#total.summary
+        %td.totalnum.r(colspan="4") 总金额:
+        %td.r.totalnum.total-col ¥44.00 CNY
+  #conversion-info
+    %h3 订单来源
+    %ul.nobull
+      %li.note
+        入口网页:
+        %a(href="/") \/
+      %li.note
+        引用网站:
+        %a(href="")
+  #order-history
+    %h3 订单历史
+    %table#order-history-table(cellspacing="0")
+      %tr.log-date
+        %td(colspan="2") June  5 2011
+      %tr.log
+        %td.log-time
+          %span 03:49am
+        %td 发送订单确认邮件给顾客
+      %tr.log
+        %td.log-time
+          %span 03:49am
+        %td
+          %a(href="/admin/orders/66618532/transactions/61369342") 顾客成功授权我们接收 44.00 USD
+      %tr.log
+        %td.log-time
+          %span 03:41am
+        %td 创建订单
