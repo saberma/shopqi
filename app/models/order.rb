@@ -6,7 +6,7 @@ class Order < ActiveRecord::Base
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
 
-  attr_protected :total_price #总金额只能通过商品价格计算而来，不能从页面传递
+  attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
@@ -26,7 +26,8 @@ class Order < ActiveRecord::Base
   end
 
   before_save do
-    self.total_price = self.line_items.map(&:price).sum
+    self.total_line_items_price = self.line_items.map(&:price).sum
+    self.total_price = self.total_line_items_price
   end
 
   def status_name
@@ -53,6 +54,10 @@ class OrderLineItem < ActiveRecord::Base
 
   delegate :sku, to: :product_variant
 
+  before_create do
+    self.total_price = self.price * self.quantity
+  end
+
   def fulfillment
     fulfillments.first
   end
@@ -61,7 +66,7 @@ class OrderLineItem < ActiveRecord::Base
     product_variant.product.title
   end
 
-  def options
+  def variant_title
     product_variant.options.join(' - ')
   end
 

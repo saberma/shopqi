@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
@@ -170,34 +170,15 @@
         %a(href="#") 取消
   #order
     %table.data(cellspacing="0")
-      %tr
-        %th(style="width: 16px; padding: 0 3px") &nbsp;
-        %th.left 商品
-        %th 价格
-        %th(style="text-align:center") 数量
-        %th.total-col 金额
-      %tr.odd(valign="bottom")
-        %td(style="vertical-align:middle")
-        %td(style="max-width:320px")
-          %strong
-            %label(for="line-item-110445012")
-              %a.product-link(href="/admin/products/38663852" title="Go to product page") Public-key 6th generation synergy
-          %br
-        %td.line-price ¥19.00
-        %td.line-qty.c 1
-        %td.total-col ¥19.00 CNY
-      %tr#sep.summary
-        %td.r(colspan="4") 总共:
-        %td.r.subtotal.total-col ¥19.00 CNY
-      %tr.summary
-        %td.r(colspan="4") Shipping (International Shipping):
-        %td.r.primary.total-col ¥25.00 CNY
-      %tr.summary
-        %td.r(colspan="4") Including VAT:
-        %td.r.primary.total-col ¥2.76 CNY
-      %tr#total.summary
-        %td.totalnum.r(colspan="4") 总金额:
-        %td.r.totalnum.total-col ¥44.00 CNY
+      %thead
+        %tr
+          %th(style="width: 16px; padding: 0 3px") &nbsp;
+          %th.left 商品
+          %th 价格
+          %th(style="text-align:center") 数量
+          %th.total-col 金额
+      %tbody#line-items
+      %tbody#price-summary
   #conversion-info
     %h3 订单来源
     %ul.nobull
@@ -250,7 +231,7 @@
     %strong
       %label(for="line-item-{{{id}}}")
         %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
-    \- {{{options}}}
+    \- {{{variant_title}}}
     %br
     {{#if fulfilled}}
     %span(class="note")
@@ -260,6 +241,30 @@
   %td
     %label(for="line-item-{{{id}}}")
       %span.note(style="font-weight:normal") {{{sku}}}
+%script(id="line-items-item" type="text/x-jquery-tmpl")
+  %td(style="vertical-align:middle")
+  %td(style="max-width:320px")
+    %strong
+      %label(for="line-item-{{{id}}}")
+        %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
+    \- {{{variant_title}}}
+    %br
+  %td.line-price {{{price}}}
+  %td.line-qty.c {{{quantity}}}
+  %td.total-col {{{total_price}}}
+%script(id="price-summary-item" type="text/x-jquery-tmpl")
+  %tr#sep.summary
+    %td.r(colspan="4") 总共:
+    %td.r.subtotal.total-col {{{total_line_items_price}}}
+  %tr.summary
+    %td.r(colspan="4") 配送费用 (快递):
+    %td.r.primary.total-col 5.00
+  %tr.summary
+    %td.r(colspan="4") 包含增值税:
+    %td.r.primary.total-col 5.00
+  %tr#total.summary
+    %td.totalnum.r(colspan="4") 总金额:
+    %td.r.totalnum.total-col {{{total_price}}}
 
 :javascript
   App.init = function(){

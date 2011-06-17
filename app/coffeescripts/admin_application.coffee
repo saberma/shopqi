@@ -8,6 +8,7 @@ App =
       Index: {}
       Show:
         Fulfillment: {}
+        LineItem: {}
     Product:
       Show:
         Variant: {}

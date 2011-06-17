@@ -25,7 +25,7 @@ describe Order do
         fulfillment = order.fulfillments.build
         fulfillment.line_items << line_item
         fulfillment.save
-        line_item.fulfillment_status.should_not be_nil
+        line_item.reload.fulfilled.should be_true
       end.should change(OrderFulfillment, :count).by(1)
     end
 
