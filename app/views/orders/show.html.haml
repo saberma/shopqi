@@ -1,12 +1,12 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories', 'views/orders/show/note', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
   %span#order-date=order.created_at.to_s(:with_year)
 #action-links
   %ul
-    %li#email=link_to '联系顾客', '#', class: 'closeure-lightbox'
+    -#%li#email=link_to '联系顾客', '#', class: 'closeure-lightbox'
     %li#note=link_to '备注', '#'
     -#%li.csv=link_to '导出', '#'
     %li#print
@@ -161,7 +161,7 @@
     %h3 订单备注
     #note-body
   #note-form.message.group.hide
-    %form#edit_order_66618532.edit_order(accept-charset="UTF-8" action="/admin/orders/66618532" method="post")
+    %form.edit_order(action="#" onsubmit='return false')
       %p.sb
         %strong 输入您的备注:
       %textarea#order_note(cols="40" name="order[note]" rows="10")
@@ -169,7 +169,7 @@
       %p.btns
         %input.btn(name="commit" type="submit" value="保存备注")
         或者
-        %a(href="#") 取消
+        %a.cancel(href="#") 取消
   #order
     %table.data(cellspacing="0")
       %thead
