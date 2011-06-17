@@ -27,6 +27,19 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :quantity          , comment: '数量'        , null: false
     end
 
+    #配送记录
+    create_table :order_fulfillments do |t|
+      t.references :order       , comment: '所属订单', null: false
+      t.string :tracking_number , comment: '快递单号'
+      t.string :tracking_company, comment: '快递公司'
+    end
+
+    #配送记录相关订单商品
+    create_table :order_fulfillments_order_line_items, id: false do |t|
+      t.references :order_fulfillment, comment: '所属订单'    , null: false
+      t.references :order_line_item  , comment: '所属订单商品', null: false
+    end
+
     #发单人信息
     create_table :order_billing_addresses do |t|
       t.references :order, comment: '所属订单', null: false

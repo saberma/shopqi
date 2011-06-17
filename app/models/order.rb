@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress'
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
+  has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
 
   attr_protected :total_price #总金额只能通过商品价格计算而来，不能从页面传递
 
@@ -46,17 +47,32 @@ end
 class OrderLineItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product_variant
+  has_and_belongs_to_many :fulfillments, class_name: 'OrderFulfillment'
   validates_presence_of :price, :quantity
 
   delegate :sku, to: :product_variant
+
+  def fulfillment
+    fulfillments.first
+  end
 
   def title
     product_variant.product.title
   end
 
   def options
-    product_variant.options.join('/')
+    product_variant.options.join(' - ')
   end
+
+  def sku
+    product_variant.sku ? product_variant.sku : '没有SKU'
+  end
+end
+
+# 配送记录相关订单商品
+class OrderFulfillment < ActiveRecord::Base
+  belongs_to :order
+  has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
 end
 
 # 发单人信息

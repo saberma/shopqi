@@ -151,6 +151,17 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
 
+  create_table "order_fulfillments", :force => true do |t|
+    t.integer "order_id",         :null => false
+    t.string  "tracking_number"
+    t.string  "tracking_company"
+  end
+
+  create_table "order_fulfillments_order_line_items", :id => false, :force => true do |t|
+    t.integer "order_fulfillment_id", :null => false
+    t.integer "order_line_item_id",   :null => false
+  end
+
   create_table "order_line_items", :force => true do |t|
     t.integer "order_id",           :null => false
     t.integer "product_variant_id", :null => false

@@ -65,6 +65,13 @@ Shopqi::Application.routes.draw do
         post :next     #下一订单
         post :transactions     #接受支付款项
       end
+
+      # 配送记录(物流信息)
+      resources :fulfillments do
+        collection do
+          post :set
+        end
+      end
     end
 
     resources :products, except: :edit do

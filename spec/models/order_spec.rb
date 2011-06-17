@@ -1,8 +1,34 @@
+#encoding: utf-8
 require 'spec_helper'
 
 describe Order do
 
   let(:shop) { Factory(:user).shop }
+
+  let(:iphone4) { Factory :iphone4, shop: shop, product_type: '智能手机', vendor: '苹果' }
+
+  let(:variant) { iphone4.variants.first }
+
+  describe OrderFulfillment do
+
+    let(:order) do
+      o = Factory.build(:order, shop: shop)
+      o.line_items.build product_variant: variant, price: 10, quantity: 2
+      o.save
+      o
+    end
+
+    let(:line_item) { order.line_items.first }
+
+    it 'should add' do
+      expect do
+        fulfillment = order.fulfillments.build
+        fulfillment.line_items << line_item
+        fulfillment.save
+      end.should change(OrderFulfillment, :count).by(1)
+    end
+
+  end
 
   describe 'validate' do
 
