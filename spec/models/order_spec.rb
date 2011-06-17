@@ -68,6 +68,12 @@ describe Order do
       order.name.should eql '#1001'
     end
 
+    it 'should save history' do
+      expect do
+        order
+      end.should change(OrderHistory, :count).by(1)
+    end
+
   end
 
   describe 'update' do

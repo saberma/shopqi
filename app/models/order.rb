@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
+  has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'
 
   attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes
 
@@ -28,6 +29,10 @@ class Order < ActiveRecord::Base
   before_save do
     self.total_line_items_price = self.line_items.map(&:price).sum
     self.total_price = self.total_line_items_price
+  end
+
+  after_create do
+    self.histories.create body: '创建订单'
   end
 
   def status_name
@@ -134,4 +139,5 @@ end
 # 订单历史
 class OrderHistory < ActiveRecord::Base
   belongs_to :order
+  default_scope order: :created_at.desc
 end
