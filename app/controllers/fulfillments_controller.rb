@@ -8,10 +8,13 @@ class FulfillmentsController < ApplicationController
   expose(:order)
 
   def set
+    fulfillment_status = order.fulfillment_status
     if params[:shipped] and !params[:shipped].empty?
       attrs = params[:shipped].map {|id| {line_item_ids: [id]} }
       order.fulfillments.create attrs
+      fulfillment_status = (order.line_items.unshipped.size > 0) ? :partial : :fulfilled
+      order.update_attribute :fulfillment_status, fulfillment_status
     end
-    render :nothing => true
+    render json: { fulfillment_status: fulfillment_status }
   end
 end

@@ -49,6 +49,7 @@ class OrderLineItem < ActiveRecord::Base
   belongs_to :product_variant
   has_and_belongs_to_many :fulfillments, class_name: 'OrderFulfillment'
   validates_presence_of :price, :quantity
+  scope :unshipped, where(fulfilled: false)
 
   delegate :sku, to: :product_variant
 
@@ -73,6 +74,12 @@ end
 class OrderFulfillment < ActiveRecord::Base
   belongs_to :order
   has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
+
+  after_create do
+    line_items.each do |line_item|
+      line_item.update_attribute :fulfilled, true
+    end
+  end
 end
 
 # 发单人信息

@@ -28,7 +28,9 @@ describe FulfillmentsController do
   it 'should set line_items' do
     expect do
       post :set, order_id: order.id, shipped: [ line_item.id ]
+      line_item.reload.fulfilled.should be_true
       line_item.fulfillment.should_not be_nil
+      order.reload.fulfillment_status.to_sym.should eql :fulfilled
     end.should change(OrderFulfillment, :count).by(1)
   end
 

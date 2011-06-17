@@ -163,10 +163,11 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   create_table "order_line_items", :force => true do |t|
-    t.integer "order_id",           :null => false
-    t.integer "product_variant_id", :null => false
-    t.float   "price",              :null => false
-    t.integer "quantity",           :null => false
+    t.integer "order_id",                              :null => false
+    t.integer "product_variant_id",                    :null => false
+    t.float   "price",                                 :null => false
+    t.integer "quantity",                              :null => false
+    t.boolean "fulfilled",          :default => false
   end
 
   add_index "order_line_items", ["order_id"], :name => "index_order_line_items_on_order_id"

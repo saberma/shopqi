@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
@@ -124,16 +124,12 @@
         =image_tag 'admin/icons/payment/visa.png', height: '14', style: "vertical-align:top;position:relative;top:3px;padding-right: 8px" 
         XXXX-XXXX-XXXX-4242
       %p Processed by Trust Commerce
-    #order-fulfilment.order-action-line
+    #order-fulfillment.order-action-line
       #unshipped-goods.fr.r
-        %input.btn(type="button" value="发货")
-        %p.instruction
-          您需要准备
-          %strong==#{order.line_items.size} 款商品
       .sb.shipping-method
         %h3 配送方式
         %p 快递
-    %form#batch_fulfillment_form(accept-charset="UTF-8" action="/admin/orders/66618532/fulfillments/set" method="post" onsubmit="return false")
+    %form#batch_fulfillment_form(action="#" onsubmit="return false")
       #mark-shipped.hide
         .sb.order-action-line
           %h3 发货
@@ -156,7 +152,7 @@
             %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
             %label.note(for="notify_customer") 发送邮件通知顾客
           %div
-            %input#fulfill-items.btn(name="commit" type="submit" value="打包")
+            %input#fulfill-items.btn(name="commit" type="submit" value="发货")
             或者
             %a.cancel(href="#") 取消
   #order-note.message.pgroup.hide
@@ -230,18 +226,37 @@
           %span 03:41am
         %td 创建订单
 
+%script(id="unshipped-goods-item" type="text/x-jquery-tmpl")
+  {{#if fulfilled}}
+  %h3 完成发货
+  %p.instruction 此订单的所有商品已经发货
+  {{else}}
+  %input.btn(type="button" value="发货")
+  %p.instruction
+    您需要准备
+    %strong==#{order.line_items.size} 款商品
+  {{/if}}
 %script(id="edit-fulfillment-item" type="text/x-jquery-tmpl")
   %td(style="width: 24px; vertical-align:middle")
+    {{#if fulfilled}}
+    =image_tag 'admin/icons/shipping.gif'
+    {{else}}
     %input.fulfill(id="line-item-{{{id}}}" checked="checked" name="shipped[]" style="margin:0 0 2px 1px" type="checkbox" value="{{{id}}}")
+    {{/if}}
   %td.c
     %strong(style="font-size: 14px") {{{quantity}}}
     x
   %td
     %strong
       %label(for="line-item-{{{id}}}")
-        %a.product-link(href="/admin/products/{{{product_id}}}" title="Go to product page") {{{title}}}
+        %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
     \- {{{options}}}
     %br
+    {{#if fulfilled}}
+    %span(class="note")
+      已于03-16发货,
+      %a(href="/admin/orders/68313152/fulfillments/30997762") 输入订单号
+    {{/if}}
   %td
     %label(for="line-item-{{{id}}}")
       %span.note(style="font-weight:normal") {{{sku}}}
