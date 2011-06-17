@@ -35,6 +35,7 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order       , comment: '所属订单', null: false
       t.string :tracking_number , comment: '快递单号'
       t.string :tracking_company, comment: '快递公司'
+      t.timestamps
     end
 
     #配送记录相关订单商品
@@ -73,14 +74,29 @@ class CreateOrders < ActiveRecord::Migration
       t.string :phone    , comment: '电话'    , limit: 64  , null: false
     end
 
-    add_index :orders                  , :shop_id
-    add_index :orders                  , :token
-    add_index :order_billing_addresses , :order_id
-    add_index :order_shipping_addresses, :order_id
-    add_index :order_line_items        , :order_id
+    #订单历史
+    create_table :order_histories do |t|
+      t.references :order, comment: '所属订单'                                                 , null: false
+      t.string :body     , comment: '内容'                                                     , null: false
+      t.string :url      , comment: '相关地址(比如:保存配送记录再通过点击这个地址，输入订单号)', limit: 64
+      t.datetime :created_at
+    end
+
+    add_index :orders                             , :shop_id
+    add_index :orders                             , :token                , unique: true
+    add_index :order_billing_addresses            , :order_id
+    add_index :order_shipping_addresses           , :order_id
+    add_index :order_line_items                   , :order_id
+    add_index :order_fulfillments                 , :order_id
+    add_index :order_fulfillments_order_line_items, :order_fulfillment_id , name: :index_order_fulfillments_items_id
+    add_index :order_fulfillments_order_line_items, [:order_fulfillment_id, :order_line_item_id]                    , name: :index_order_fulfillments_items
+    add_index :order_histories                    , :order_id
   end
 
   def self.down
+    drop_table :order_histories
+    drop_table :order_fulfillments_order_line_items
+    drop_table :order_fulfillments
     drop_table :order_line_items
     drop_table :order_shipping_addresses
     drop_table :order_billing_addresses

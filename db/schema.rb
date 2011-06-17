@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "carts", ["shop_id"], :name => "index_carts_on_shop_id"
-  add_index "carts", ["token"], :name => "index_carts_on_token"
+  add_index "carts", ["token"], :name => "index_carts_on_token", :unique => true
 
   create_table "comments", :force => true do |t|
     t.integer  "article_id"
@@ -152,15 +152,31 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
 
   create_table "order_fulfillments", :force => true do |t|
-    t.integer "order_id",         :null => false
-    t.string  "tracking_number"
-    t.string  "tracking_company"
+    t.integer  "order_id",         :null => false
+    t.string   "tracking_number"
+    t.string   "tracking_company"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "order_fulfillments", ["order_id"], :name => "index_order_fulfillments_on_order_id"
 
   create_table "order_fulfillments_order_line_items", :id => false, :force => true do |t|
     t.integer "order_fulfillment_id", :null => false
     t.integer "order_line_item_id",   :null => false
   end
+
+  add_index "order_fulfillments_order_line_items", ["order_fulfillment_id", "order_line_item_id"], :name => "index_order_fulfillments_items"
+  add_index "order_fulfillments_order_line_items", ["order_fulfillment_id"], :name => "index_order_fulfillments_items_id"
+
+  create_table "order_histories", :force => true do |t|
+    t.integer  "order_id",                 :null => false
+    t.string   "body",                     :null => false
+    t.string   "url",        :limit => 64
+    t.datetime "created_at"
+  end
+
+  add_index "order_histories", ["order_id"], :name => "index_order_histories_on_order_id"
 
   create_table "order_line_items", :force => true do |t|
     t.integer "order_id",                              :null => false
@@ -209,7 +225,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "orders", ["shop_id"], :name => "index_orders_on_shop_id"
-  add_index "orders", ["token"], :name => "index_orders_on_token"
+  add_index "orders", ["token"], :name => "index_orders_on_token", :unique => true
 
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"

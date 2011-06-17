@@ -11,7 +11,7 @@ class CreateCarts < ActiveRecord::Migration
     end
 
     add_index :carts, :shop_id
-    add_index :carts, :token
+    add_index :carts, :token, unique: true
   end
 
   def self.down

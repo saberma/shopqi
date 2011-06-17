@@ -58,19 +58,20 @@
         %span.value==电话: #{order.billing_address.phone}
       %address.adr
         %span.type.hide 家庭
-        %span.postal-code=order.billing_address.zip
-        %br
-        %span.locality=order.billing_address.district_name
+        -#
+          %span.country-name=order.billing_address.country
+          %br
+        %span.street-address=order.billing_address.province_name
         %br
         %span.locality=order.billing_address.city_name
         %br
-        %span.street-address=order.billing_address.province_name
+        %span.locality=order.billing_address.district_name
         %br
         %span=order.billing_address.address1
         %br
-        %span.fn=order.billing_address.name
+        %span.postal-code=order.billing_address.zip
         %br
-        %span.country-name=order.billing_address.country
+        %span.fn=order.billing_address.name
         %br
       %a.email(href="mailto:mahb45@gmail.com" style="display: none")
   #bill-addr.customer-col
@@ -83,19 +84,20 @@
         %span.value 电话: 13928452841
       %address.adr
         %span.type.hide 家庭
-        %span.postal-code=order.shipping_address.zip
-        %br
-        %span.locality=order.shipping_address.district_name
+        -#
+          %span.country-name=order.shipping_address.country
+          %br
+        %span.street-address=order.shipping_address.province_name
         %br
         %span.locality=order.shipping_address.city_name
         %br
-        %span.street-address=order.shipping_address.province_name
+        %span.locality=order.shipping_address.district_name
         %br
         %span=order.shipping_address.address1
         %br
-        %span.fn=order.shipping_address.name
+        %span.postal-code=order.shipping_address.zip
         %br
-        %span.country-name=order.shipping_address.country
+        %span.fn=order.shipping_address.name
         %br
 .col-8.last
   #payment-accept.box2.hide(style="margin: 20px 0")
@@ -179,15 +181,6 @@
           %th.total-col 金额
       %tbody#line-items
       %tbody#price-summary
-  #conversion-info
-    %h3 订单来源
-    %ul.nobull
-      %li.note
-        入口网页:
-        %a(href="/") \/
-      %li.note
-        引用网站:
-        %a(href="")
   #order-history
     %h3 订单历史
     %table#order-history-table(cellspacing="0")

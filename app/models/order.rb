@@ -130,3 +130,8 @@ class OrderShippingAddress < ActiveRecord::Base
     District.get(self.district)
   end
 end
+
+# 订单历史
+class OrderHistory < ActiveRecord::Base
+  belongs_to :order
+end
