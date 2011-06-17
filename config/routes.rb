@@ -67,7 +67,7 @@ Shopqi::Application.routes.draw do
       end
 
       # 配送记录(物流信息)
-      resources :fulfillments do
+      resources :fulfillments, except: [:index, :new, :create, :edit, :update, :destroy] do
         collection do
           post :set
         end

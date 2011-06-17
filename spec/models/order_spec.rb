@@ -20,7 +20,7 @@ describe Order do
 
     let(:line_item) { order.line_items.first }
 
-    it 'should add' do
+    it 'should be add' do
       expect do
         fulfillment = order.fulfillments.build
         fulfillment.line_items << line_item
