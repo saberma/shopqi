@@ -1,0 +1,52 @@
+defaults: &defaults
+  templates:
+    email:
+      order_confirm:
+        title:  您在{{shop_name}}的订单下单成功
+        body: 尊敬的{{customer.name}}：
+                 您好,恭喜您已经在{{shop_name}}商店订购成功!,订单号： {{order_number}}。\r\n\r\n
+                 订单商品明细：
+              {% for line in line_items %}
+                {{ line.quantity }}x {{ line.title }} for {{ line.price | money }} each
+              {% endfor %}
+
+      new_order_notify:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+      ship_confirm:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+      ship_update:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+      order_cancelled:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+      customer_account_activation:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+      customer_password_reset:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+      customer_account_welcome:
+        title:  您在{{shop_name}}的订单提醒
+        body: Thank you for placing your order with {{ shop_name }}!\r\n
+              This email is to confirm your recent order.\r\n
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+travis:
+  <<: *defaults

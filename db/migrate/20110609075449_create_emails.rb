@@ -7,7 +7,7 @@ class CreateEmails < ActiveRecord::Migration
       t.string :title         ,comment: "邮件模板标题"      , null: false
       t.string :mail_type     ,comment: "邮件类型"          , null: false
       t.text :body            ,comment: "邮件内容liquid模板", null: false
-      t.boolean :include_html ,comment: "是否使用html模板"
+      t.boolean :include_html ,comment: "是否使用html模板"  , default: false
       t.text :body_html       ,comment: "html模板内容"
 
       t.timestamps

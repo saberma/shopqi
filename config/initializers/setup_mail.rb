@@ -7,8 +7,3 @@ ActionMailer::Base.smtp_settings = {
   :authentication       => "plain",
   :enable_starttls_auto => false
 }
-
-AppConfig.setup do |config|
-  config[:storage_method] = :yaml
-  config[:path] = Rails.root.join('config/app_config.yaml')
-end
