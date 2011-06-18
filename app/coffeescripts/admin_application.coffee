@@ -4,14 +4,26 @@ App =
     Link: {}
     SmartCollection: {}
     CustomCollection: {}
+    Order:
+      Index: {}
+      Show:
+        Fulfillment: {}
+        LineItem: {}
     Product:
       Show:
         Variant: {}
       Index: {}
     ProductOption: {}
-  Controllers: {}
+  Controllers:
+    Orders: {}
   Collections: {}
   init: ->
+
+##### 注册handlebars helpers #####
+#日期，用于订单列表创建日期的格式化
+Handlebars.registerHelper 'date', (date) ->
+  date = new Date(date)
+  "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
 
 #字符串
 StringUtils =
@@ -107,8 +119,8 @@ $(document).ready ->
 
 
   #外观、设置
-  NavigationDropdown 'theme-link': '\u5916\u89C2', 'preferences-link': '\u8BBE\u7F6E'
+  NavigationDropdown 'theme-link': '外观', 'preferences-link': '设置'
 
   #下拉框
-  UpdateableSelectBox $('#product-type-select'), '\u65B0\u589E\u7C7B\u578B' #新增类型
-  UpdateableSelectBox $('#product-vendor-select'), '\u65B0\u589E\u5382\u5546' #新增厂商
+  UpdateableSelectBox $('#product-type-select'), '新增类型'
+  UpdateableSelectBox $('#product-vendor-select'), '新增厂商'

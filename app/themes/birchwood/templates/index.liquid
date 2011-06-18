@@ -1,0 +1,59 @@
+{% if settings.use_banner_image %}
+<div class="banner">
+  <a href="{{ settings.banner_url }}">{{ 'banner.jpg' | asset_url | img_tag }}</a>
+</div><!-- .banner -->
+{% endif %}  
+
+
+{% if settings.show_homepage != blank %}
+<div class="frontpage-intro clearfix">
+{{ pages[settings.show_homepage].content }}
+</div>
+{% endif %}  
+
+{% if collections.frontpage.handle == "frontpage" %}
+<table class="products">
+  {% tablerow product in collections.frontpage.products cols: 4 limit: 12 %}
+  <div>
+    <a href="{{ product.url | within: collections.frontpage }}"><img src="{{ product.images.first | product_img_url: 'medium' }}" width="175px" alt="{{ product.title | escape }}" /><big>{{ product.title }}</big>{% if product.compare_at_price_max > product.price %}<em>was {{ product.compare_at_price_max | money }}</em>{% endif %}<strong>{{ product.price  | money }}</strong></a>
+  </div>
+  {% endtablerow %}
+</table>
+{% else %}
+<div class="note">
+  You need to create a collection with the handle "frontpage"
+</div><!-- .note -->
+{% endif %}
+
+<div class="col-7 blog">
+  {% include 'recent-posts' %}
+</div><!-- .col-7 -->
+
+<div class="col-5 contact last">
+  <h2>Contact Us</h2>
+  <ul>
+    <li>
+      {% if settings.show_phone  %} 
+      Phone: {{ settings.phone_url }}
+      {% endif %} 
+    </li>
+    <li>
+      {% if settings.show_email %} 
+      Email: <a href="mailto:{{ settings.email_url }}">{{ settings.email_url }}</a> 
+      {% endif %} 
+    </li>
+  </ul>
+  <ul> 
+    <li>
+      {% if settings.show_twitter  %}  
+      Twitter: <a href="{{ settings.twitter_url }}">{{ settings.twitter_name }}</a>
+      {% endif  %} 
+    </li>
+    <li>
+      {% if settings.show_facebook  %}  
+      Facebook: <a href="{{ settings.facebook_url }}">{{ settings.facebook_name }}</a>
+      {% endif %} 
+    </li>
+
+  </ul>
+</div><!-- .col-5 -->

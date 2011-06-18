@@ -91,8 +91,13 @@ end
 
 #商品款式
 class ProductVariant < ActiveRecord::Base
+  belongs_to :shop #冗余字段，前台商店下订单时使用
   belongs_to :product
   validates_presence_of :price, :weight
+
+  before_create do
+    self.shop_id = self.product.shop_id
+  end
 
   after_save do
     product.update_attribute :delta, true #新增修改款式要更新商品的索引

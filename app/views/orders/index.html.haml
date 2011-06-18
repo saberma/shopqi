@@ -1,0 +1,131 @@
+=content_for :javascripts do
+  =javascript_include_tag 'models/order', 'collections/orders', 'views/orders/index/index', 'views/orders/index/show', 'controllers/orders/index'
+
+%h2#title 订单管理
+-#
+  #action-links
+    %ul
+      %li.small-icon
+        %a.feed(href="/admin/feed") RSS订阅订单
+      %li.csv
+        %a(href="#") 导出订单
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+-#
+  #export-orders.box2.ssb.sst(style="display: none")
+    %h3 导出您的订单
+    %p.sb
+      您的订单将导出为
+      %strong .csv 文件
+      (以逗号分隔).
+    %a.btn(href="/admin/orders.csv?limit=50") Export currently shown orders
+    %a.btn.sl(href="/admin/orders/export") Export Orders by Month or Quarter
+#order-filters.box2.sst
+  %div(style="float: right; font-size: 12px")
+    每页显示条数:
+    -selected_page_size = order_search_path(limit: params[:search] && params[:search][:limit])
+    %select#page-size-select(style="width:60px")
+      -page_sizes.each_pair do |name, code|
+        -value = order_search_path(limit: code)
+        %option{value:"#{value}", selected:(selected_page_size == value)}=name
+  显示
+  %a#payment-filter-link(href="#")=search_label :financial_status, '任何支付状态', financial_status
+  和
+  %a#shipping-filter-link(href="#")=search_label :fulfillment_status, '任何配送状态', fulfillment_status
+  的
+  %a#status-filter-link(href="#")=search_label :status, '正常', status
+  订单
+  #order-status-select
+    %ul.nobull.filter-select.dropdown.hide(style='left: 240px')
+      %li
+        %strong 订单状态
+      -status.each_pair do |code, name|
+        %li=link_to name, order_search_path(status_eq: code)
+      %li.filter-show-all=link_to "显示所有", order_search_path(status_eq: nil)
+  #payment-status-select
+    %ul.nobull.filter-select.dropdown.hide(style='left: 60px')
+      %li
+        %strong 支付状态
+      -financial_status.each_pair do |code, name|
+        %li=link_to name, order_search_path(financial_status_eq: code)
+      %li.filter-show-all.current=link_to "显示所有", order_search_path(financial_status_eq: nil)
+  #shipping-status-select
+    %ul.nobull.filter-select.dropdown.hide(style='left: 150px')
+      %li
+        %strong 配送状态
+      -fulfillment_status.each_pair do |code, name|
+        %li=link_to name, order_search_path(fulfillment_status_eq: code)
+      %li.filter-show-all.current=link_to "显示所有", order_search_path(fulfillment_status_eq: nil)
+-#.announcement.c 公告.
+.listing.sst
+  #orders
+    %form#batch-form(action="/admin/orders/set" method="post")
+      .listing
+        %div(style="height: 32px;")
+          %table#order-controls.hide(cellpadding="0" cellspacing="0")
+            %tr
+              %td(style="text-align:left;vertical-align: middle")
+                %select#order-select(name="operation")
+                  %option(checked="checked" style="color: #888" value="") 选择操作…
+                  %option.indent(value="close") 关闭订单
+                  %option.indent(value="open") 恢复订单
+                  -#%option.indent(value="capture") Capture Payments
+              -#
+                %td(style="text-align:center;vertical-align: middle")
+                  #multipage-page.hide
+                    所有
+                    %b#multipage-page-count ###
+                    在此页中已选中的订单.
+                    %a#multipage-select-link(href="#" onclick="return false")
+                      选择所有
+                      %b#multipage-page-total ###
+                      订单
+                  #multipage-all(style="display: none")
+                    %b#multipage-all-count ###
+                    所有页面已选中的订单.
+                    %a#multipage-clear-link(href="#") 清除选中项
+                %td(style="text-align:right;vertical-align: middle")
+                  %span#order-count.note(style="margin-bottom: 5px")  
+        #order-container
+          %table#order-table.ssb.data(cellpadding="0" cellspacing="0")
+            %thead
+              %tr
+                %th.nosort(style="width: 16px")
+                  %input#select-all(type="checkbox")/
+                %th.sortcol 订单
+                %th.sortcol.sortasc(style="width: 80px !important") 日期
+                %th.sortcol 顾客
+                %th.sortcol 支付状态
+                %th.sortcol 配送状态
+                %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
+            %tbody
+              %tr#row-66618532.order
+%div(style="width:100%")
+  #pagination
+
+%script(id="show-order-item" type="text/x-jquery-tmpl")
+  %td(style="padding-top: 5px")
+    %input.selector(id="checkbox-{{id}}" name="orders[]" type="checkbox" value="{{id}}")
+  %td
+    %a(href="/admin/orders/{{id}}") {{{name}}}
+  %td
+    %span.note {{{date created_at}}}
+  %td ma saberma
+  %td
+    %span.o-authorized.oauth-warning(style="font-size: 11px")
+      {{{financial_status_name}}}
+      -#%img(alt="Time-small" src="/images/admin/icons/time-small.png" title="此订单授权支付即将过期")
+  %td
+    %span(style="font-size: 11px")
+      %span.o-not-fulfilled {{{fulfillment_status_name}}}
+  %td(style="text-align: right") ¥{{{total_price}}}
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Orders.Index();
+    Backbone.history.start();
+  }
+
+  App.orders = new App.Collections.Orders();
+  App.orders.refresh(#{orders_json});
+  new App.Views.Order.Index.Index({collection: App.orders})

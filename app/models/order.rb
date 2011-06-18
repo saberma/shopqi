@@ -3,15 +3,21 @@ class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress'
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
-  has_many :variants       , dependent: :destroy, class_name: 'OrderProductVariant'
+  has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
+  has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
+  has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'
 
-  attr_protected :total_price #总金额只能通过商品价格计算而来，不能从页面传递
+  attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
 
   validates_presence_of :email, message: '此栏不能为空白'
-  validates_presence_of :shipping_rate, :gateway, on: :update
+  #validates_presence_of :shipping_rate, :gateway, on: :update
+
+  default_value_for :status, 'open'
+  default_value_for :financial_status, 'abandoned'
+  default_value_for :fulfillment_status, 'unshipped'
 
   before_create do
     self.token = UUID.generate(:compact)
@@ -21,16 +27,69 @@ class Order < ActiveRecord::Base
   end
 
   before_save do
-    self.total_price = self.variants.map(&:price).sum
+    self.total_line_items_price = self.line_items.map(&:price).sum
+    self.total_price = self.total_line_items_price
+  end
+
+  after_create do
+    self.histories.create body: '创建订单'
+  end
+
+  def status_name
+    KeyValues::Order::Status.find_by_code(status).name
+  end
+
+  def financial_status_name
+    KeyValues::Order::FinancialStatus.find_by_code(financial_status).name
+  end
+
+  def fulfillment_status_name
+    KeyValues::Order::FulfillmentStatus.find_by_code(fulfillment_status).name
   end
 
 end
 
 # 订单商品
-class OrderProductVariant < ActiveRecord::Base
+class OrderLineItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :product_variant
+  has_and_belongs_to_many :fulfillments, class_name: 'OrderFulfillment'
   validates_presence_of :price, :quantity
+  scope :unshipped, where(fulfilled: false)
+
+  delegate :sku, to: :product_variant
+
+  before_create do
+    self.total_price = self.price * self.quantity
+  end
+
+  def fulfillment
+    fulfillments.first
+  end
+
+  def title
+    product_variant.product.title
+  end
+
+  def variant_title
+    product_variant.options.join(' - ')
+  end
+
+  def sku
+    product_variant.sku ? product_variant.sku : '没有SKU'
+  end
+end
+
+# 配送记录相关订单商品
+class OrderFulfillment < ActiveRecord::Base
+  belongs_to :order
+  has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
+
+  after_create do
+    line_items.each do |line_item|
+      line_item.update_attribute :fulfilled, true
+    end
+  end
 end
 
 # 发单人信息
@@ -40,6 +99,18 @@ class OrderBillingAddress < ActiveRecord::Base
 
   before_create do
     self.country = 'china'
+  end
+
+  def province_name
+    District.get(self.province)
+  end
+
+  def city_name
+    District.get(self.city)
+  end
+
+  def district_name
+    District.get(self.district)
   end
 end
 
@@ -51,4 +122,22 @@ class OrderShippingAddress < ActiveRecord::Base
   before_create do
     self.country = 'china'
   end
+
+  def province_name
+    District.get(self.province)
+  end
+
+  def city_name
+    District.get(self.city)
+  end
+
+  def district_name
+    District.get(self.district)
+  end
+end
+
+# 订单历史
+class OrderHistory < ActiveRecord::Base
+  belongs_to :order
+  default_scope order: :created_at.desc
 end

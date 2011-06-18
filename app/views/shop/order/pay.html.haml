@@ -9,7 +9,7 @@
   #overview.clearfix
     #products
       %h2 您购买了&hellip;
-      %table#thumbs(cellspacing="0" cellpadding="0")=render 'variants', variants: order_variant_items
+      %table#thumbs(cellspacing="0" cellpadding="0")=render 'line_items', line_items: order_line_items
     #wallet
       %span#cost
         =order_total_price

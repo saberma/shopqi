@@ -39,6 +39,7 @@ Shopqi::Application.routes.draw do
   #match '/s/files/:id/theme/assets/:asset' => 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
   scope module: :shop do
     match '/s/files/:id/theme/assets/:file.:format' => 'shops#asset'
+    match '/s/files/test/:id/theme/assets/:file.:format' => 'shops#asset' #测试中使用
   end
 
   match "/admin" => "home#dashboard"
@@ -53,6 +54,25 @@ Shopqi::Application.routes.draw do
       resources :emails
     end
 
+    resources :orders, only: [:update, :show] do
+      collection do
+        post :set
+      end
+      member do
+        post :close  #关闭
+        post :cancel #取消
+        post :previous #上一订单
+        post :next     #下一订单
+        post :transactions     #接受支付款项
+      end
+
+      # 配送记录(物流信息)
+      resources :fulfillments, except: [:index, :new, :create, :edit, :update, :destroy] do
+        collection do
+          post :set
+        end
+      end
+    end
 
     resources :products, except: :edit do
       collection do

@@ -47,4 +47,28 @@ module ApplicationHelper
     str
   end
 
+  begin 'search'
+
+    #查询条件链接需要存储上一次的查询条件
+    def search_path(path, current_search)
+      if params[:search]
+        current_search = params[:search].symbolize_keys.merge(current_search)
+      end
+      current_search.delete_if {|key, value| value.blank? }
+      send(path, search: current_search) #products_path(search: current_search)
+    end
+
+    #查询标签
+    def search_label(params_key, plain_label, values={})
+      key = "#{params_key}_eq"
+      if params[:search] and params[:search][key]
+        value = params[:search][key]
+        values[value] || value
+      else
+        plain_label
+      end
+    end
+
+  end
+
 end

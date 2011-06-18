@@ -18,7 +18,7 @@ class Shop::OrderController < Shop::AppController
 
   expose(:cart) { shop.carts.where(token: params[:cart_token]).first }
 
-  expose(:cart_variant_items) do
+  expose(:cart_line_items) do
     JSON(cart.cart_hash).inject({}) do |result, (variant_id, quantity)|
       variant = shop.variants.find(variant_id)
       result[variant] = quantity
@@ -27,22 +27,22 @@ class Shop::OrderController < Shop::AppController
   end
 
   expose(:cart_total_price) do
-    cart_variant_items.map do |item|
+    cart_line_items.map do |item|
       variant = item.first
       quantity = item.second
       quantity * variant.price
     end.sum
   end
 
-  expose(:order_variant_items) do
-    order.variants.inject({}) do |result, order_product_variant|
+  expose(:order_line_items) do
+    order.line_items.inject({}) do |result, order_product_variant|
       result[order_product_variant.product_variant] = order_product_variant.quantity
       result
     end
   end
 
   expose(:order_total_price) do
-    order.variants.map(&:price).sum
+    order.line_items.map(&:price).sum
   end
 
   # 订单提交Step1
@@ -60,7 +60,7 @@ class Shop::OrderController < Shop::AppController
     order.build_shipping_address(order.billing_address.attributes) if params[:billing_is_shipping]
     JSON(cart.cart_hash).each_pair do |variant_id, quantity| #保存已购买商品
       variant = shop.variants.find(variant_id)
-      order.variants.build product_variant: variant, price: variant.price, quantity: quantity
+      order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)

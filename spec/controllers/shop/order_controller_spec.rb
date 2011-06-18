@@ -13,7 +13,7 @@ describe Shop::OrderController do
 
   let(:order) do
     o = Factory.build :order, shop: shop
-    o.variants.build product_variant: variant, price: variant.price, quantity: 1
+    o.line_items.build product_variant: variant, price: variant.price, quantity: 1
     o.save
     o
   end
@@ -37,7 +37,7 @@ describe Shop::OrderController do
         order = assigns['_resources']['order']
         order.shipping_address.name.should eql order.billing_address.name
         order.shipping_address.address1.should eql order.billing_address.address1
-        order.variants.should_not be_empty
+        order.line_items.should_not be_empty
       end.should change(Order, :count).by(1)
     end
 
@@ -50,7 +50,7 @@ describe Shop::OrderController do
       response.should be_success
     end
 
-    it 'should show product variants' do
+    it 'should show product line_items' do
       order
       expect do
         post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', gateway: '1' }

@@ -1,0 +1,23 @@
+<h1>
+  {{ collection.title }}
+</h1>
+
+{{ collection.description }}
+
+{% paginate collection.products by 12 %}
+{% if collection.products.size == 0 %}
+<strong>No products found in this collection.</strong>
+{% else %}
+<table class="products">
+  {% tablerow product in collection.products cols: 4  %}
+    <div>
+      <a href="{{ product.url | within: collection }}"><img src="{{ product.images.first | product_img_url: 'medium' }}" width="175px" alt="{{ product.title | escape }}" /><big>{{ product.title }}</big><strong>{{ product.price  | money }}</strong></a>
+    </div>
+  {% endtablerow %}
+</table>
+
+{% if paginate.pages > 1 %}
+<div id="paginate">
+  {{ paginate | default_pagination }}
+</div>{% endif %}{% endif %}
+{% endpaginate %}

@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "carts", ["shop_id"], :name => "index_carts_on_shop_id"
-  add_index "carts", ["token"], :name => "index_carts_on_token"
+  add_index "carts", ["token"], :name => "index_carts_on_token", :unique => true
 
   create_table "comments", :force => true do |t|
     t.integer  "article_id"
@@ -151,14 +151,43 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
 
-  create_table "order_product_variants", :force => true do |t|
-    t.integer "order_id",           :null => false
-    t.integer "product_variant_id", :null => false
-    t.float   "price",              :null => false
-    t.integer "quantity",           :null => false
+  create_table "order_fulfillments", :force => true do |t|
+    t.integer  "order_id",         :null => false
+    t.string   "tracking_number"
+    t.string   "tracking_company"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "order_product_variants", ["order_id"], :name => "index_order_product_variants_on_order_id"
+  add_index "order_fulfillments", ["order_id"], :name => "index_order_fulfillments_on_order_id"
+
+  create_table "order_fulfillments_order_line_items", :id => false, :force => true do |t|
+    t.integer "order_fulfillment_id", :null => false
+    t.integer "order_line_item_id",   :null => false
+  end
+
+  add_index "order_fulfillments_order_line_items", ["order_fulfillment_id", "order_line_item_id"], :name => "index_order_fulfillments_items"
+  add_index "order_fulfillments_order_line_items", ["order_fulfillment_id"], :name => "index_order_fulfillments_items_id"
+
+  create_table "order_histories", :force => true do |t|
+    t.integer  "order_id",                 :null => false
+    t.string   "body",                     :null => false
+    t.string   "url",        :limit => 64
+    t.datetime "created_at"
+  end
+
+  add_index "order_histories", ["order_id"], :name => "index_order_histories_on_order_id"
+
+  create_table "order_line_items", :force => true do |t|
+    t.integer "order_id",                              :null => false
+    t.integer "product_variant_id",                    :null => false
+    t.float   "price",                                 :null => false
+    t.integer "quantity",                              :null => false
+    t.float   "total_price",                           :null => false
+    t.boolean "fulfilled",          :default => false
+  end
+
+  add_index "order_line_items", ["order_id"], :name => "index_order_line_items_on_order_id"
 
   create_table "order_shipping_addresses", :force => true do |t|
     t.integer "order_id",               :null => false
@@ -177,22 +206,26 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
 
   create_table "orders", :force => true do |t|
-    t.string   "token",         :limit => 32, :null => false
-    t.string   "name",          :limit => 32, :null => false
-    t.integer  "number",                      :null => false
-    t.integer  "order_number",                :null => false
-    t.integer  "shop_id",                     :null => false
-    t.string   "email",         :limit => 32, :null => false
-    t.string   "shipping_rate", :limit => 32
-    t.string   "gateway",       :limit => 32
-    t.float    "total_price",                 :null => false
+    t.integer  "shop_id",                              :null => false
+    t.string   "token",                  :limit => 32, :null => false
+    t.string   "name",                   :limit => 32, :null => false
+    t.integer  "number",                               :null => false
+    t.integer  "order_number",                         :null => false
+    t.string   "status",                 :limit => 16, :null => false
+    t.string   "financial_status",       :limit => 16, :null => false
+    t.string   "fulfillment_status",     :limit => 16, :null => false
+    t.string   "email",                  :limit => 32, :null => false
+    t.string   "shipping_rate",          :limit => 32
+    t.string   "gateway",                :limit => 32
+    t.float    "total_line_items_price",               :null => false
+    t.float    "total_price",                          :null => false
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "orders", ["shop_id"], :name => "index_orders_on_shop_id"
-  add_index "orders", ["token"], :name => "index_orders_on_token"
+  add_index "orders", ["token"], :name => "index_orders_on_token", :unique => true
 
   create_table "pages", :force => true do |t|
     t.integer  "shop_id"
@@ -228,6 +261,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   add_index "product_options", ["product_id"], :name => "index_product_options_on_product_id"
 
   create_table "product_variants", :force => true do |t|
+    t.integer  "shop_id",                                  :null => false
     t.integer  "product_id",                               :null => false
     t.float    "price",                :default => 0.0,    :null => false
     t.float    "weight",               :default => 0.0,    :null => false
