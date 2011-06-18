@@ -54,7 +54,7 @@ Shopqi::Application.routes.draw do
       resources :emails
     end
 
-    resources :orders do
+    resources :orders, only: [:update, :show] do
       collection do
         post :set
       end

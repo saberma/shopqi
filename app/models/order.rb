@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :shipping_address
 
   validates_presence_of :email, message: '此栏不能为空白'
-  validates_presence_of :shipping_rate, :gateway, on: :update
+  #validates_presence_of :shipping_rate, :gateway, on: :update
 
   default_value_for :status, 'open'
   default_value_for :financial_status, 'abandoned'

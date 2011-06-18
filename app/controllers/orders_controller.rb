@@ -48,4 +48,8 @@ class OrdersController < ApplicationController
     end
     render nothing: true
   end
+
+  def update
+    render text: order.save
+  end
 end
