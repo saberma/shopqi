@@ -219,6 +219,7 @@ GEM
       json_pure
       rubyzip
     sentient_user (0.3.2)
+    settingslogic (2.0.6)
     sinatra (1.2.3)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
@@ -292,6 +293,7 @@ DEPENDENCIES
   rspec-rails
   ruby-debug19
   sentient_user
+  settingslogic
   spork
   therubyracer
   thinking-sphinx (= 2.0.5)

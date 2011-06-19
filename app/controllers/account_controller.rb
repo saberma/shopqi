@@ -5,11 +5,13 @@ class AccountController < ApplicationController
   expose(:user)
 
   def change_ownership
-    current_user.admin = false
-    u = User.find(params[:user][:id])
-    u.admin = true
-    u.save
-    current_user.save
+    if params[:user]
+      current_user.admin = false
+      u = User.find(params[:user][:id])
+      u.admin = true
+      u.save
+      current_user.save
+    end
     redirect_to account_index_path
   end
 

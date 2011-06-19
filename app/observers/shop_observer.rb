@@ -52,7 +52,12 @@ class ShopObserver < ActiveRecord::Observer
     # 博客(最新动态)
     shop.blogs.create title: '最新动态', handle: 'latest-news'
     # 创建各个邮件样板
-    shop.emails.create title: '{{shop.name}}',mail_type: KeyValues::Mail::Type.first.code, body: '{{shop.name}}'
+    KeyValues::Mail::Type.all.each do |type|
+      code = type.code.to_sym
+      title = Setting.templates.email.send(code).title.gsub("\\r\\n","\r\n")
+      body  = Setting.templates.email.send(code).body.gsub("\\r\\n","\r\n")
+      shop.emails.create title: title,mail_type: code , body: body
+    end
   end
 
 end

@@ -56,17 +56,6 @@ class ProductDrop < Liquid::Drop
     @product.photos.first
   end
 
-  def as_json(options={})
-    result = {}
-    keys = self.public_methods(false)
-    keys.delete(:as_json)
-    keys.inject(result) do |result, method|
-      result[method] = self.send(method)
-      result
-    end
-    result
-  end
-
 end
 
 class ProductImageDrop < Liquid::Drop

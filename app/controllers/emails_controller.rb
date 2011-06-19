@@ -8,6 +8,7 @@ class EmailsController < ApplicationController
   end
 
   def update
+    p params[:email][:body]
     email.save
     redirect_to admin_notifications_path , notice: notice_msg
   end
