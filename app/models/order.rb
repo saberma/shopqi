@@ -67,6 +67,11 @@ class OrderLineItem < ActiveRecord::Base
     fulfillments.first
   end
 
+  # 显示发货时间
+  def fulfillment_created_at
+    fulfillment.try(:created_at)
+  end
+
   def title
     product_variant.product.title
   end
@@ -82,6 +87,7 @@ end
 
 # 配送记录相关订单商品
 class OrderFulfillment < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   belongs_to :order
   has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
 
@@ -89,6 +95,7 @@ class OrderFulfillment < ActiveRecord::Base
     line_items.each do |line_item|
       line_item.update_attribute :fulfilled, true
     end
+    self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
   end
 end
 

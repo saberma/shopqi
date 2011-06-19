@@ -8,5 +8,5 @@ App.Views.Order.Show.Show = Backbone.View.extend
     new App.Views.Order.Show.Fulfillment.Panel
     new App.Views.Order.Show.Fulfillment.Index
     new App.Views.Order.Show.LineItem.Index
-    new App.Views.Order.Show.Histories
+    new App.Views.Order.Show.History.Index
     new App.Views.Order.Show.Note

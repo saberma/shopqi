@@ -20,13 +20,24 @@ describe Order do
 
     let(:line_item) { order.line_items.first }
 
+    let(:fulfillment) do
+      record = order.fulfillments.build
+      record.line_items << line_item
+      record.save
+    end
+
     it 'should be add' do
       expect do
-        fulfillment = order.fulfillments.build
-        fulfillment.line_items << line_item
-        fulfillment.save
+        fulfillment
         line_item.reload.fulfilled.should be_true
       end.should change(OrderFulfillment, :count).by(1)
+    end
+
+    it 'should save history' do
+      expect do
+        fulfillment
+        order.histories.last.url.should_not be_blank
+      end.should change(OrderHistory, :count).by(1)
     end
 
   end

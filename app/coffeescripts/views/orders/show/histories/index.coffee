@@ -1,5 +1,8 @@
-App.Views.Order.Show.Histories = Backbone.View.extend
+App.Views.Order.Show.History.Index = Backbone.View.extend
   el: '#order-history-table'
+
+  events:
+    "click .history-link": "show"
 
   initialize: ->
     this.render()
@@ -22,3 +25,10 @@ App.Views.Order.Show.Histories = Backbone.View.extend
 
     template = Handlebars.compile $('#order-history-table-item').html()
     $(@el).html template histories
+
+  show: (e)->
+    self = e.target
+    $.getJSON $(self).attr('href'), (data) ->
+      data.body = $(self)
+      new App.Views.Order.Show.History.Fulfillment data
+    false

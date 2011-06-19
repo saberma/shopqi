@@ -54,7 +54,7 @@ Shopqi::Application.routes.draw do
       resources :emails
     end
 
-    resources :orders, only: [:update, :show] do
+    resources :orders, only: [:index, :update, :show] do
       collection do
         post :set
       end
@@ -67,7 +67,7 @@ Shopqi::Application.routes.draw do
       end
 
       # 配送记录(物流信息)
-      resources :fulfillments, except: [:index, :new, :create, :edit, :update, :destroy] do
+      resources :fulfillments, except: [:index, :new, :create, :edit, :destroy] do
         collection do
           post :set
         end

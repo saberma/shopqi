@@ -9,6 +9,7 @@ App =
       Show:
         Fulfillment: {}
         LineItem: {}
+        History: {}
     Product:
       Show:
         Variant: {}

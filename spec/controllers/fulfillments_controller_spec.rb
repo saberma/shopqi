@@ -8,18 +8,25 @@ describe FulfillmentsController do
 
   let(:shop) { user.shop }
 
-  let(:iphone4) { Factory :iphone4, shop: shop, product_type: '智能手机', vendor: '苹果' }
+  let(:iphone4) { Factory :iphone4, shop: shop }
 
-  let(:variant) { iphone4.variants.first }
+  let(:psp) { Factory :psp, shop: shop }
+
+  let(:iphone_variant) { iphone4.variants.first }
+
+  let(:psp_variant) { psp.variants.first }
 
   let(:order) do
     o = Factory.build(:order, shop: shop)
-    o.line_items.build product_variant: variant, price: 10, quantity: 2
+    o.line_items.build product_variant: iphone_variant, price: 10, quantity: 2
+    o.line_items.build product_variant: psp_variant, price: 20, quantity: 3
     o.save
     o
   end
 
-  let(:line_item) { order.line_items.first }
+  let(:iphone_line_item) { order.line_items.first }
+
+  let(:psp_line_item) { order.line_items.second }
 
   before :each do 
     sign_in(user)
@@ -27,9 +34,11 @@ describe FulfillmentsController do
 
   it 'should set line_items' do
     expect do
-      post :set, order_id: order.id, shipped: [ line_item.id ]
-      line_item.reload.fulfilled.should be_true
-      line_item.fulfillment.should_not be_nil
+      post :set, order_id: order.id, shipped: [ iphone_line_item.id, psp_line_item.id ]
+      [iphone_line_item, psp_line_item].each do |line_item|
+        line_item.reload.fulfilled.should be_true
+        line_item.fulfillment.should_not be_nil
+      end
       order.reload.fulfillment_status.to_sym.should eql :fulfilled
     end.should change(OrderFulfillment, :count).by(1)
   end

@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories', 'views/orders/show/note', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories/index', 'views/orders/show/histories/fulfillment', 'views/orders/show/note', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
@@ -143,7 +143,7 @@
               快递单号
               %span.hint 可以稍后加入
             %p
-              %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text" value="")
+              %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text")
               %span#manual_tracking_company_area.hide
                 通过
                 %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
@@ -195,10 +195,11 @@
       %span {{{created_at}}}
     %td
       {{#if url}}
-      %a(href="{{{url}}}") {{{body}}}
+      %a.history-link(href="{{{url}}}") {{{body}}}
       {{else}} {{{body}}} {{/if}}
   {{/each}}
   {{/loop}}
+%script(id="order-history-fulfillment-item" type="text/x-jquery-tmpl")=render 'fulfillments/show'
 
 %script(id="unshipped-goods-item" type="text/x-jquery-tmpl")
   {{#if fulfilled}}
@@ -227,9 +228,7 @@
     \- {{{variant_title}}}
     %br
     {{#if fulfilled}}
-    %span(class="note")
-      已于03-16发货,
-      %a(href="/admin/orders/68313152/fulfillments/30997762") 输入订单号
+    %span(class="note") 已于{{{date fulfillment_created_at}}}发货
     {{/if}}
   %td
     %label(for="line-item-{{{id}}}")
@@ -242,6 +241,9 @@
         %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
     \- {{{variant_title}}}
     %br
+    {{#if fulfilled}}
+    %span(class="note") 已于{{{date fulfillment_created_at}}}发货
+    {{/if}}
   %td.line-price {{{price}}}
   %td.line-qty.c {{{quantity}}}
   %td.total-col {{{total_price}}}

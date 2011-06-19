@@ -10,7 +10,12 @@ App.Views.Order.Index.Show = Backbone.View.extend
 
   render: ->
     template = Handlebars.compile $('#show-order-item').html()
-    $(@el).html template @model.attributes
+    attrs = @model.attributes
+    attrs['fulfill_class'] = switch @model.get('fulfillment_status')
+      when 'fulfilled' then 'o-fulfilled'
+      when 'partial' then 'o-partial'
+      when 'unshipped' then 'o-not-fulfilled'
+    $(@el).html template attrs
     position = _.indexOf @model.collection.models, @model
     cycle = if position % 2 == 0 then 'odd' else 'even'
     $(@el).addClass "row#{cycle}"
