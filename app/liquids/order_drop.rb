@@ -62,7 +62,7 @@ class OrderDrop < Liquid::Drop
   end
 
   def line_items
-    @order.variants.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
+    @order.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
   end
 
 end
