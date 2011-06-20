@@ -58,4 +58,14 @@ class OrdersController < ApplicationController
     order.update_attribute :status, :closed
     redirect_to orders_path
   end
+
+  def open
+    order.update_attribute :status, :open
+    redirect_to order_path(order)
+  end
+
+  def destroy
+    order.destroy
+    redirect_to orders_path
+  end
 end

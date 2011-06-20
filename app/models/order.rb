@@ -36,6 +36,8 @@ class Order < ActiveRecord::Base
     if status_changed?
       if self.status.to_sym == :closed
         self.closed_at = Time.now
+      elsif self.status.to_sym == :open
+        self.closed_at = nil
       end
     end
   end

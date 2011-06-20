@@ -30,4 +30,20 @@ describe OrdersController do
     order.closed_at.should_not be_nil
   end
 
+  it 'should be open' do
+    post :open, id: order.id
+    response.should be_redirect
+    order.reload
+    order.status.should eql 'open'
+    order.closed_at.should be_nil
+  end
+
+  it 'should be destroy' do
+    order
+    expect do
+      delete :destroy, id: order.id
+    end.should change(Order, :count).by(-1)
+    response.should be_redirect
+  end
+
 end

@@ -11,8 +11,12 @@
     -#%li.csv=link_to '导出', '#'
     %li#print
       %a(href="#" onclick="window.print();; return false;") 打印
-    %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
-    %li#cancel-order=link_to "取消此订单", cancel_order_path(order), method: :post
+    -if order.closed_at
+      %li#locko=link_to "重新打开此订单", open_order_path(order), method: :post
+      %li.no-icon= link_to image_tag('admin/icons/trash.gif'), order_path(order), method: :delete, confirm: '您确定要删除?'
+    -else
+      %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
+      %li#cancel-order=link_to "取消此订单", cancel_order_path(order), method: :post
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 -if order.closed_at
