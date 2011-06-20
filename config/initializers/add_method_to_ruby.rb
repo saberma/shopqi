@@ -12,6 +12,7 @@ module LiquidDropHelper
     end
     result
   end
+
 end
 
 Liquid::Drop.send :include , LiquidDropHelper

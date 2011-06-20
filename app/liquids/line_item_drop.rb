@@ -51,6 +51,7 @@ class LineItemDrop < Liquid::Drop
     @variant.requires_shipping
   end
 
+
   #def tax
   #end
 
