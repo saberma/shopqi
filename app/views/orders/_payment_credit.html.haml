@@ -1,0 +1,14 @@
+-# 信用卡使用
+  #payment-accept.box2.hide(style="margin: 20px 0")
+    .ssb.order-action-line
+      %h3 接受支付
+      %p
+        顾客授权您接收款项金额
+        %strong=order.total_price
+      %form#transaction_new.transaction_new(accept-charset="UTF-8" action="/admin/orders/66618532/transactions" method="post")
+        %p.sst
+          %input#amount.big(name="transaction[amount]" size="15" type="text" value="#{order.total_price}")
+          %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
+          %input.btn(name="commit" type="submit" value="接收此金额")
+          或者
+          %a(href="#") 取消

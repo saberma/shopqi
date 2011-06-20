@@ -95,10 +95,10 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   create_table "emails", :force => true do |t|
     t.integer  "shop_id"
-    t.string   "title",                           :null => false
-    t.string   "mail_type",                       :null => false
-    t.text     "body",                            :null => false
-    t.boolean  "include_html", :default => false
+    t.string   "title",        :null => false
+    t.string   "mail_type",    :null => false
+    t.text     "body",         :null => false
+    t.boolean  "include_html"
     t.text     "body_html"
     t.datetime "created_at"
     t.datetime "updated_at"

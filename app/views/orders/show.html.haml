@@ -100,32 +100,16 @@
         %span.fn=order.shipping_address.name
         %br
 .col-8.last
-  #payment-accept.box2.hide(style="margin: 20px 0")
-    .ssb.order-action-line
-      %h3 接受支付
-      %p
-        顾客授权您接收款项金额
-        %strong=order.total_price
-      %form#transaction_new.transaction_new(accept-charset="UTF-8" action="/admin/orders/66618532/transactions" method="post")
-        %p.sst
-          %input#amount.big(name="transaction[amount]" size="15" type="text" value="#{order.total_price}")
-          %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
-          %input.btn(name="commit" type="submit" value="接收此金额")
-          或者
-          %a(href="#") 取消
+  -#=render :payment_credit
   .box2.sst(style="padding-top: 0")
     #order-status.order-action-line.separator.clearfix
       .fr.r
-        #authorized
-          %input.btn(type="button" value="接收款项")
-          %p.instruction
-            已授权您接收
-            %strong=order.total_price
+        %form#transaction_new.transaction_new(action="#" onsubmit="return false")
+          %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
+          %input.btn(name="commit" type="submit" value="已收到款项")
+        %p.instruction.r 您还未收到此订单的款项
       %h3 支付方式
-      %p#cc-logo
-        =image_tag 'admin/icons/payment/visa.png', height: '14', style: "vertical-align:top;position:relative;top:3px;padding-right: 8px" 
-        XXXX-XXXX-XXXX-4242
-      %p Processed by Trust Commerce
+      %p 货到付款
     #order-fulfillment.order-action-line
       #unshipped-goods.fr.r
       .sb.shipping-method
