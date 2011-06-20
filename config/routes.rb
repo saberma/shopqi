@@ -63,7 +63,6 @@ Shopqi::Application.routes.draw do
         post :cancel #取消
         post :previous #上一订单
         post :next     #下一订单
-        post :transactions     #接受支付款项
       end
 
       # 配送记录(物流信息)

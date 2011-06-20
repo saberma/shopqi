@@ -9,14 +9,33 @@ describe Order do
 
   let(:variant) { iphone4.variants.first }
 
-  describe OrderFulfillment do
+  let(:order) do
+    o = Factory.build(:order, shop: shop)
+    o.line_items.build product_variant: variant, price: 10, quantity: 2
+    o.save
+    o
+  end
 
-    let(:order) do
-      o = Factory.build(:order, shop: shop)
-      o.line_items.build product_variant: variant, price: 10, quantity: 2
-      o.save
-      o
+  describe OrderTransaction do
+
+    let(:transaction) { order.transactions.create kind: :capture }
+
+    it 'should be add' do
+      expect do
+        transaction
+      end.should change(OrderTransaction, :count).by(1)
     end
+
+    it 'should save history' do
+      order
+      expect do
+        transaction
+      end.should change(OrderHistory, :count).by(1)
+    end
+
+  end
+
+  describe OrderFulfillment do
 
     let(:line_item) { order.line_items.first }
 
@@ -34,9 +53,10 @@ describe Order do
     end
 
     it 'should save history' do
+      order
       expect do
         fulfillment
-        order.histories.last.url.should_not be_blank
+        order.histories.first.url.should_not be_blank
       end.should change(OrderHistory, :count).by(1)
     end
 
@@ -60,8 +80,6 @@ describe Order do
   end
 
   describe 'create' do
-
-    let(:order) { Factory :order, shop: shop }
 
     it 'should save address' do
       expect do
@@ -88,8 +106,6 @@ describe Order do
   end
 
   describe 'update' do
-
-    let(:order) { Factory :order, shop: shop }
 
     it 'should validate gateway' do
       order.save

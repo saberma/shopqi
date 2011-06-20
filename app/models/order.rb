@@ -6,7 +6,7 @@ class Order < ActiveRecord::Base
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
   has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction'
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
-  has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'
+  has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc
 
   attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes
 
@@ -89,6 +89,14 @@ end
 # 支付记录
 class OrderTransaction < ActiveRecord::Base
   belongs_to :order
+
+  before_create do
+    self.amount = order.total_price #非信用卡,手动接收款项
+  end
+
+  after_create do
+    self.order.histories.create body: "我们已经成功接收款项"
+  end
 end
 
 # 配送记录相关订单商品
@@ -152,5 +160,4 @@ end
 # 订单历史
 class OrderHistory < ActiveRecord::Base
   belongs_to :order
-  default_scope order: :created_at.desc
 end

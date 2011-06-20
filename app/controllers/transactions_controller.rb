@@ -11,6 +11,6 @@ class TransactionsController < ApplicationController
 
   def create
     transaction.save
-    render nothing: true
+    render json: transaction.to_json
   end
 end

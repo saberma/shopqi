@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories/index', 'views/orders/show/histories/fulfillment', 'views/orders/show/note', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/transactions/index', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories/index', 'views/orders/show/histories/fulfillment', 'views/orders/show/note', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
@@ -103,13 +103,6 @@
   -#=render :payment_credit
   .box2.sst(style="padding-top: 0")
     #order-status.order-action-line.separator.clearfix
-      .fr.r
-        %form#transaction_new.transaction_new(action="#" onsubmit="return false")
-          %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
-          %input.btn(name="commit" type="submit" value="已收到款项")
-        %p.instruction.r 您还未收到此订单的款项
-      %h3 支付方式
-      %p 货到付款
     #order-fulfillment.order-action-line
       #unshipped-goods.fr.r
       .sb.shipping-method
@@ -169,6 +162,19 @@
     %h3 订单历史
     %table#order-history-table(cellspacing="0")
 
+%script(id="order-status-item" type="text/x-jquery-tmpl")
+  .fr.r
+    {{#if payed}}
+    %h3 已支付
+    %p 您已经收到此订单的款项
+    {{else}}
+    %form#transaction_new.transaction_new(action="#" onsubmit="return false")
+      %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
+      %input.btn(name="commit" type="submit" value="已收到款项")
+    %p.instruction.r 您还未收到此订单的款项
+    {{/if}}
+  %h3 支付方式
+  %p 货到付款
 %script(id="order-history-table-item" type="text/x-jquery-tmpl")
   {{#loop}}
   %tr.log-date
