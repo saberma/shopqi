@@ -95,10 +95,10 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   create_table "emails", :force => true do |t|
     t.integer  "shop_id"
-    t.string   "title",        :null => false
-    t.string   "mail_type",    :null => false
-    t.text     "body",         :null => false
-    t.boolean  "include_html"
+    t.string   "title",                           :null => false
+    t.string   "mail_type",                       :null => false
+    t.text     "body",                            :null => false
+    t.boolean  "include_html", :default => false
     t.text     "body_html"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -204,6 +204,15 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
+
+  create_table "order_transactions", :force => true do |t|
+    t.integer  "order_id",                 :null => false
+    t.string   "kind",       :limit => 16, :null => false
+    t.float    "amount"
+    t.datetime "created_at"
+  end
+
+  add_index "order_transactions", ["order_id"], :name => "index_order_transactions_on_order_id"
 
   create_table "orders", :force => true do |t|
     t.integer  "shop_id",                              :null => false

@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress'
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
+  has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction'
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'
 
@@ -83,6 +84,11 @@ class OrderLineItem < ActiveRecord::Base
   def sku
     product_variant.sku ? product_variant.sku : '没有SKU'
   end
+end
+
+# 支付记录
+class OrderTransaction < ActiveRecord::Base
+  belongs_to :order
 end
 
 # 配送记录相关订单商品

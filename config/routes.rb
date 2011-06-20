@@ -72,6 +72,9 @@ Shopqi::Application.routes.draw do
           post :set
         end
       end
+
+      # 支付记录
+      resources :transactions
     end
 
     resources :products, except: :edit do
