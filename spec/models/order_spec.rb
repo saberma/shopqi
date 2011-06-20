@@ -5,7 +5,7 @@ describe Order do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:iphone4) { Factory :iphone4, shop: shop, product_type: '智能手机', vendor: '苹果' }
+  let(:iphone4) { Factory :iphone4, shop: shop }
 
   let(:variant) { iphone4.variants.first }
 

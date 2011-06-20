@@ -15,6 +15,10 @@
     %li#cancel-order=link_to "取消此订单", cancel_order_path(order), method: :post
 =render "shared/noscript"
 =render "shared/upgrade_ie"
+-if order.closed_at
+  .sst.pgroup.c.warn
+    %p
+      %strong==此订单已于#{order.closed_at.to_s(:full)}关闭.
 #previous
   .tools.hide
     =link_to previous_order_path(order), class: :message do

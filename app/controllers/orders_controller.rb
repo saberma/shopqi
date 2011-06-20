@@ -53,4 +53,9 @@ class OrdersController < ApplicationController
   def update
     render text: order.save
   end
+
+  def close
+    order.update_attribute :status, :closed
+    redirect_to orders_path
+  end
 end

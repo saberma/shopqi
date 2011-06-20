@@ -32,6 +32,14 @@ class Order < ActiveRecord::Base
     self.total_price = self.total_line_items_price
   end
 
+  before_update do
+    if status_changed?
+      if self.status.to_sym == :closed
+        self.closed_at = Time.now
+      end
+    end
+  end
+
   after_create do
     self.histories.create body: '创建订单'
   end

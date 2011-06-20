@@ -16,6 +16,8 @@ class CreateOrders < ActiveRecord::Migration
       t.float :total_line_items_price, comment: '商品总金额'                , null: false
       t.float :total_price           , comment: '总金额(含快递等费用)'      , null: false
       t.string :note                 , comment: '备注'
+      t.datetime :closed_at          , comment: '关闭时间'
+      t.datetime :cancelled_at       , comment: '取消时间'
 
       t.timestamps
     end
