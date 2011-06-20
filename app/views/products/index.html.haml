@@ -8,9 +8,9 @@
       =link_to "新增商品",new_product_path
     -#
       %li.csv
-        %a(href="#" onclick="$('export-products').toggle(); return false;") Export products
+        %a(href="#" onclick="$('export-products').toggle(); return false;") 导出商品
       %li.csv
-        %a(href="https://medhurst-shields-and-kunde7896.myshopify.com/admin/product_imports") Import products
+        %a(href="/admin/product_imports") 导入商品
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 #export-products.box2.ssb.sst.hide

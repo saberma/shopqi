@@ -30,6 +30,14 @@ class CreateOrders < ActiveRecord::Migration
       t.boolean :fulfilled         , comment: '发货状态'    , default: false
     end
 
+    #支付记录
+    create_table :order_transactions do |t|
+      t.references :order   , comment: '所属订单'         , null: false
+      t.string :kind        , comment: '类型(authorization, sale       , capture)', null: false, limit: 16
+      t.float :amount       , comment: '金额'
+      t.datetime :created_at
+    end
+
     #配送记录
     create_table :order_fulfillments do |t|
       t.references :order       , comment: '所属订单', null: false
@@ -87,6 +95,7 @@ class CreateOrders < ActiveRecord::Migration
     add_index :order_billing_addresses            , :order_id
     add_index :order_shipping_addresses           , :order_id
     add_index :order_line_items                   , :order_id
+    add_index :order_transactions                 , :order_id
     add_index :order_fulfillments                 , :order_id
     add_index :order_fulfillments_order_line_items, :order_fulfillment_id , name: :index_order_fulfillments_items_id
     add_index :order_fulfillments_order_line_items, [:order_fulfillment_id, :order_line_item_id]                    , name: :index_order_fulfillments_items
@@ -97,6 +106,7 @@ class CreateOrders < ActiveRecord::Migration
     drop_table :order_histories
     drop_table :order_fulfillments_order_line_items
     drop_table :order_fulfillments
+    drop_table :order_transactions
     drop_table :order_line_items
     drop_table :order_shipping_addresses
     drop_table :order_billing_addresses

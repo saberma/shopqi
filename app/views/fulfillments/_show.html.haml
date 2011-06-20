@@ -1,0 +1,47 @@
+%form(action='#' onsubmit='return false')
+  %table(border="0" cellpadding="5" cellspacing="5" width="100%")
+    %tbody
+      -#
+        %tr
+          %td
+            %strong 服务
+          %td 手动
+      %tr
+        %td
+          %strong 已经发货商品总数
+        %td {{{line_items.length}}}
+      {{#each line_items}}
+      %tr
+        %td
+          %strong 发货商品
+        %td {{{title}}}
+      {{/each}}
+      %tr
+        %td
+          %strong 快递单号
+        %td
+          %div(id="#edit_tracking_number_fulfillment_{{{id}}}")
+            %input.tracking-number(name="tracking_number" size="20" type="text" value="{{{tracking_number}}}")
+            %span.hide
+              通过
+              %select(name="tracking_company")
+                %option(value="ems") EMS
+                %option(value="other") 其他
+            .st
+              %input(id="fulfillment_notify_customer_{{{id}}}" checked="checked" name="notify_customer" type="checkbox" value="1")
+              %label.note(for="fulfillment_notify_customer_{{{id}}}") 发送物流信息给顾客
+              %input(name="commit" type="submit" value="更新")
+      %tr
+        %td
+          %strong 消息
+        %td 商品已经发货
+      %tr
+        %td
+          %strong 状态
+        %td 成功
+      %tr
+        %td
+          %strong 创建时间
+        %td
+          {{{date created_at}}}
+          -#%span.hint (2011-06-18 03:53AM)

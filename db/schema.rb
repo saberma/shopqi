@@ -205,6 +205,15 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
 
   add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
 
+  create_table "order_transactions", :force => true do |t|
+    t.integer  "order_id",                 :null => false
+    t.string   "kind",       :limit => 16, :null => false
+    t.float    "amount"
+    t.datetime "created_at"
+  end
+
+  add_index "order_transactions", ["order_id"], :name => "index_order_transactions_on_order_id"
+
   create_table "orders", :force => true do |t|
     t.integer  "shop_id",                              :null => false
     t.string   "token",                  :limit => 32, :null => false

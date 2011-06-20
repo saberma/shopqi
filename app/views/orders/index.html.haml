@@ -117,7 +117,7 @@
       -#%img(alt="Time-small" src="/images/admin/icons/time-small.png" title="此订单授权支付即将过期")
   %td
     %span(style="font-size: 11px")
-      %span.o-not-fulfilled {{{fulfillment_status_name}}}
+      %span(class='{{{fulfill_class}}}') {{{fulfillment_status_name}}}
   %td(style="text-align: right") ¥{{{total_price}}}
 
 :javascript

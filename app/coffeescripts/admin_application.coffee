@@ -7,8 +7,10 @@ App =
     Order:
       Index: {}
       Show:
+        Transaction: {}
         Fulfillment: {}
         LineItem: {}
+        History: {}
     Product:
       Show:
         Variant: {}

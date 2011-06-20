@@ -4,8 +4,9 @@ class Order < ActiveRecord::Base
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress'
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
+  has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction'
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
-  has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'
+  has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc
 
   attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes
 
@@ -67,6 +68,11 @@ class OrderLineItem < ActiveRecord::Base
     fulfillments.first
   end
 
+  # 显示发货时间
+  def fulfillment_created_at
+    fulfillment.try(:created_at)
+  end
+
   def title
     product_variant.product.title
   end
@@ -80,8 +86,22 @@ class OrderLineItem < ActiveRecord::Base
   end
 end
 
+# 支付记录
+class OrderTransaction < ActiveRecord::Base
+  belongs_to :order
+
+  before_create do
+    self.amount = order.total_price #非信用卡,手动接收款项
+  end
+
+  after_create do
+    self.order.histories.create body: "我们已经成功接收款项"
+  end
+end
+
 # 配送记录相关订单商品
 class OrderFulfillment < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   belongs_to :order
   has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
 
@@ -89,6 +109,7 @@ class OrderFulfillment < ActiveRecord::Base
     line_items.each do |line_item|
       line_item.update_attribute :fulfilled, true
     end
+    self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
   end
 end
 
@@ -139,5 +160,4 @@ end
 # 订单历史
 class OrderHistory < ActiveRecord::Base
   belongs_to :order
-  default_scope order: :created_at.desc
 end

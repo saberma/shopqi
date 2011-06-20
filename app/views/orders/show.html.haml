@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories', 'views/orders/show/note', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/transactions/index', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories/index', 'views/orders/show/histories/fulfillment', 'views/orders/show/note', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
@@ -100,32 +100,9 @@
         %span.fn=order.shipping_address.name
         %br
 .col-8.last
-  #payment-accept.box2.hide(style="margin: 20px 0")
-    .ssb.order-action-line
-      %h3 接受支付
-      %p
-        顾客授权您接收款项金额
-        %strong=order.total_price
-      %form#transaction_new.transaction_new(accept-charset="UTF-8" action="/admin/orders/66618532/transactions" method="post")
-        %p.sst
-          %input#amount.big(name="transaction[amount]" size="15" type="text" value="#{order.total_price}")
-          %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
-          %input.btn(name="commit" type="submit" value="接收此金额")
-          或者
-          %a(href="#") 取消
+  -#=render :payment_credit
   .box2.sst(style="padding-top: 0")
     #order-status.order-action-line.separator.clearfix
-      .fr.r
-        #authorized
-          %input.btn(type="button" value="接收款项")
-          %p.instruction
-            已授权您接收
-            %strong=order.total_price
-      %h3 支付方式
-      %p#cc-logo
-        =image_tag 'admin/icons/payment/visa.png', height: '14', style: "vertical-align:top;position:relative;top:3px;padding-right: 8px" 
-        XXXX-XXXX-XXXX-4242
-      %p Processed by Trust Commerce
     #order-fulfillment.order-action-line
       #unshipped-goods.fr.r
       .sb.shipping-method
@@ -143,7 +120,7 @@
               快递单号
               %span.hint 可以稍后加入
             %p
-              %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text" value="")
+              %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text")
               %span#manual_tracking_company_area.hide
                 通过
                 %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
@@ -185,6 +162,19 @@
     %h3 订单历史
     %table#order-history-table(cellspacing="0")
 
+%script(id="order-status-item" type="text/x-jquery-tmpl")
+  .fr.r
+    {{#if payed}}
+    %h3 已支付
+    %p 您已经收到此订单的款项
+    {{else}}
+    %form#transaction_new.transaction_new(action="#" onsubmit="return false")
+      %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
+      %input.btn(name="commit" type="submit" value="已收到款项")
+    %p.instruction.r 您还未收到此订单的款项
+    {{/if}}
+  %h3 支付方式
+  %p 货到付款
 %script(id="order-history-table-item" type="text/x-jquery-tmpl")
   {{#loop}}
   %tr.log-date
@@ -195,10 +185,11 @@
       %span {{{created_at}}}
     %td
       {{#if url}}
-      %a(href="{{{url}}}") {{{body}}}
+      %a.history-link(href="{{{url}}}") {{{body}}}
       {{else}} {{{body}}} {{/if}}
   {{/each}}
   {{/loop}}
+%script(id="order-history-fulfillment-item" type="text/x-jquery-tmpl")=render 'fulfillments/show'
 
 %script(id="unshipped-goods-item" type="text/x-jquery-tmpl")
   {{#if fulfilled}}
@@ -227,9 +218,7 @@
     \- {{{variant_title}}}
     %br
     {{#if fulfilled}}
-    %span(class="note")
-      已于03-16发货,
-      %a(href="/admin/orders/68313152/fulfillments/30997762") 输入订单号
+    %span(class="note") 已于{{{date fulfillment_created_at}}}发货
     {{/if}}
   %td
     %label(for="line-item-{{{id}}}")
@@ -242,6 +231,9 @@
         %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
     \- {{{variant_title}}}
     %br
+    {{#if fulfilled}}
+    %span(class="note") 已于{{{date fulfillment_created_at}}}发货
+    {{/if}}
   %td.line-price {{{price}}}
   %td.line-qty.c {{{quantity}}}
   %td.total-col {{{total_price}}}

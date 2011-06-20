@@ -24,7 +24,8 @@ class OrdersController < ApplicationController
     order.to_json({
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
       include: {
-        line_items: { methods: [:title, :variant_title, :sku] },
+        line_items: { methods: [:title, :variant_title, :sku, :fulfillment_created_at] },
+        transactions: {},
         histories: {}
       },
       except: [ :updated_at ]
