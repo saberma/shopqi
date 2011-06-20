@@ -62,7 +62,15 @@ class OrderDrop < Liquid::Drop
   end
 
   def line_items
-    @order.variants.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
+    @order.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
+  end
+
+  def billing_address
+    AddressDrop.new @order.billing_address
+  end
+
+  def shipping_address
+    AddressDrop.new @order.shipping_address
   end
 
 end
