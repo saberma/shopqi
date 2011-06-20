@@ -1,0 +1,24 @@
+.shopify-dialog(aria-labelledby=":0" role="dialog")
+  .shopify-dialog-title.shopify-dialog-title-draggable(style="text-align: left; ")
+    %span.shopify-dialog-title-text 取消订单
+    %span.shopify-dialog-title-close x
+  .shopify-dialog-content(style="text-align: left; cursor: default")
+    #cancel_order
+      =form_for order, url: cancel_order_path(order) do |f|
+        %p.st.ssb
+          您应该取消此订单如果它是欺诈性的、顾客改变主意，或者没有商品了。取消订单是
+          =succeed "." do
+            %strong.highlight-alt 不可恢复的
+        %p.st.ssb
+          %label(for="reason") 原因:
+          %select#reason(name="order[cancel_reason]")=options_for_select cancel_reasons
+        .pgroup
+          %table#cancel-data.no-lines
+            %tr
+              %td(style="width: 200px; padding-top: 20px")
+                %input#email(checked="checked" name="email" type="checkbox" value="1")
+                %label(for="email") 发送Email
+              %td.note(style="padding-top: 20px") 发送通知邮件给顾客.
+        %input#submit.btn(name="commit" type="submit" value="取消此订单")
+        或者
+        %a.close-lightbox(href="#") 关闭此窗口

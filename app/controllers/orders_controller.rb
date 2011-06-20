@@ -34,6 +34,7 @@ class OrdersController < ApplicationController
   expose(:status) { KeyValues::Order::Status.hash }
   expose(:financial_status) { KeyValues::Order::FinancialStatus.hash }
   expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }
+  expose(:cancel_reasons) { KeyValues::Order::CancelReason.hash }
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
   # 批量修改
@@ -62,6 +63,11 @@ class OrdersController < ApplicationController
   def open
     order.update_attribute :status, :open
     redirect_to order_path(order)
+  end
+
+  def cancel
+    order.update_attribute :status, :cancelled
+    redirect_to orders_path
   end
 
   def destroy

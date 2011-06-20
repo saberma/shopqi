@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment'
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc
 
-  attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes
+  attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
@@ -34,10 +34,16 @@ class Order < ActiveRecord::Base
 
   before_update do
     if status_changed?
-      if self.status.to_sym == :closed
+      case self.status.to_sym
+      when :closed
         self.closed_at = Time.now
-      elsif self.status.to_sym == :open
+        self.histories.create body: '订单被关闭'
+      when :open
         self.closed_at = nil
+        self.histories.create body: '订单重新打开'
+      when :cancelled
+        self.cancelled_at = Time.now
+        self.histories.create body: '订单被取消.原因:#{cancel_reason_name}'
       end
     end
   end
@@ -56,6 +62,10 @@ class Order < ActiveRecord::Base
 
   def fulfillment_status_name
     KeyValues::Order::FulfillmentStatus.find_by_code(fulfillment_status).name
+  end
+
+  def cancel_reason_name
+    KeyValues::Order::CancelReason.find_by_code(cancel_reason).name
   end
 
 end

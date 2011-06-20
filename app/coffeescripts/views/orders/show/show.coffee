@@ -11,3 +11,4 @@ App.Views.Order.Show.Show = Backbone.View.extend
     new App.Views.Order.Show.LineItem.Index
     new App.Views.Order.Show.History.Index
     new App.Views.Order.Show.Note
+    new App.Views.Order.Show.Cancel

@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.float    "total_price",                          :null => false
     t.string   "note"
     t.datetime "closed_at"
+    t.string   "cancel_reason",          :limit => 16
     t.datetime "cancelled_at"
     t.datetime "created_at"
     t.datetime "updated_at"

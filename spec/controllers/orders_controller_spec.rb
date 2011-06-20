@@ -38,6 +38,15 @@ describe OrdersController do
     order.closed_at.should be_nil
   end
 
+  it 'should be cancel' do
+    post :cancel, id: order.id, order: { cancel_reason: 'customer' }
+    response.should be_redirect
+    order.reload
+    order.status.should eql 'cancelled'
+    order.cancel_reason.should eql 'customer'
+    order.cancelled_at.should_not be_nil
+  end
+
   it 'should be destroy' do
     order
     expect do
