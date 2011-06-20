@@ -24,6 +24,7 @@ describe Order do
       expect do
         transaction
       end.should change(OrderTransaction, :count).by(1)
+      order.reload.financial_status.should eql 'paid'
     end
 
     it 'should save history' do
@@ -48,8 +49,9 @@ describe Order do
     it 'should be add' do
       expect do
         fulfillment
-        line_item.reload.fulfilled.should be_true
       end.should change(OrderFulfillment, :count).by(1)
+      line_item.reload.fulfilled.should be_true
+      order.reload.fulfillment_status.should eql 'fulfilled'
     end
 
     it 'should save history' do

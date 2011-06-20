@@ -95,6 +95,7 @@ class OrderTransaction < ActiveRecord::Base
   end
 
   after_create do
+    self.order.update_attribute :financial_status, :paid
     self.order.histories.create body: "我们已经成功接收款项"
   end
 end
@@ -109,6 +110,8 @@ class OrderFulfillment < ActiveRecord::Base
     line_items.each do |line_item|
       line_item.update_attribute :fulfilled, true
     end
+    fulfillment_status = (self.order.line_items.unshipped.size > 0) ? :partial : :fulfilled
+    self.order.update_attribute :fulfillment_status, fulfillment_status
     self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
   end
 end

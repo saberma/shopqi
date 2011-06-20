@@ -75,6 +75,7 @@ class Shop::OrderController < Shop::AppController
 
   # 支付
   def commit
+    order.financial_status = 'pending'
     order.save
   end
 
