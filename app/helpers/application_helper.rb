@@ -6,7 +6,6 @@ module ApplicationHelper
     current_user ? current_user.shop : Shop.where(:permanent_domain => request.subdomain).first 
   end
 
-
   def use_kindeditor
     content_for :kindeditor do 
       javascript_include_tag("kindeditor/kindeditor-min","kindeditor/kindeditor_config")
@@ -22,7 +21,7 @@ module ApplicationHelper
   #后台管理顶端菜单
   def menus
     @menus ||= [
-      { label: '订单', url: '/admin/orders' },
+      { label: orders_menu_label, url: '/admin/orders' },
       { label: '会员', url: '/admin/customers' },
       { label: '商品', url: products_path },
       { label: '集合', url: custom_collections_path },
