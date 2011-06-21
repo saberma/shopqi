@@ -18,12 +18,15 @@ App.Views.Order.Show.Fulfillment.Index = Backbone.View.extend
   save: ->
     self = this
     line_item_ids = _.map self.$('.fulfill:checked'), (checkbox) -> checkbox.value
-    $.post "/admin/orders/#{App.order.id}/fulfillments/set", 'shipped[]': line_item_ids, tracking_number: $('#manual_tracking_number').val(), tracking_company: $('#manual_tracking_company').val(), (data) ->
-      App.order.set fulfillment_status: data.fulfillment_status #修改订单的发货状态
+    attrs = 'shipped[]': line_item_ids, tracking_number: $('#manual_tracking_number').val(), tracking_company: $('#manual_tracking_company').val()
+    $.post "/admin/orders/#{App.order.id}/fulfillments/set", attrs, (data) ->
       _(App.order.get('line_items')).chain().select (line_item) ->
-        _(line_item_ids).include(line_item.id)
-      .each (line_item) -> line_item.fulfilled = true
+        _(line_item_ids).include("#{line_item.id}")
+      .each (line_item) ->
+        line_item.fulfilled = true
+        line_item.fulfillment_created_at = new Date()
       self.render()
+      App.order.set fulfillment_status: data.fulfillment_status #修改订单的发货状态
     , 'json'
     self.cancel()
     false
@@ -36,3 +39,4 @@ App.Views.Order.Show.Fulfillment.Index = Backbone.View.extend
   showCompany: ->
     active = if $('#manual_tracking_number').val() then true else false
     $('#manual_tracking_company_area').toggle(active)
+    $('#manual_tracking_company').attr 'disabled', !active

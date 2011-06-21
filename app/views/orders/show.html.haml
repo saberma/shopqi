@@ -117,7 +117,7 @@
       %p.note
         如果您联系了顾客，并且知道对方需要继续完成购买操作，您可以将
         = succeed "." do
-          %a(href="https://checkout.shopqi.com/orders/#{shop.id}/#{order.token}") 此链接地址
+          %a(href="https://checkout.shopqi.com/orders/#{shop.id}/#{order.token}/pay") 此链接地址
         发送给顾客
     -else
       #order-status.order-action-line.separator.clearfix
@@ -142,8 +142,8 @@
                 %span#manual_tracking_company_area.hide
                   通过
                   %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
-                    %option(value="USPS") EMS
-                    %option(value="Other") Other
+                    %option(value="ems") EMS
+                    %option(value="other") Other
           .btns(style="background: none")
             .sb
               %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
@@ -217,7 +217,7 @@
   %input.btn(type="button" value="发货")
   %p.instruction
     您需要准备
-    %strong==#{order.line_items.size} 款商品
+    %strong {{{unshipped_line_items.length}}} 款商品
   {{/if}}
 %script(id="edit-fulfillment-item" type="text/x-jquery-tmpl")
   %td(style="width: 24px; vertical-align:middle")

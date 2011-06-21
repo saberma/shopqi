@@ -33,6 +33,7 @@ describe "Orders", js: true do
   ##### 查看 #####
   describe "GET /orders/id" do
 
+=begin
     context "#abandoned" do
 
       it "should show tip" do
@@ -53,6 +54,7 @@ describe "Orders", js: true do
       end
 
     end
+=end
 
     context "#pending" do
 
@@ -60,10 +62,63 @@ describe "Orders", js: true do
         order.update_attribute :financial_status, :pending # 假设顾客已经提交订单
       end
 
+      it "should save fulfillment" do #支持分批发货
+        visit order_path(order)
+        click_on '发货'
+        within '#unshipped-goods' do
+          has_content?('您需要准备 2 款商品').should be_true
+        end
+        within '#batch_fulfillment_form' do # 先发一个商品
+          uncheck 'line-item-2'
+          fill_in 'shipping_options[manual][tracking_number]', with: '123456'
+          select 'EMS', from: 'shipping_options[manual][tracking_company]'
+          click_on '发货'
+        end
+        within '#unshipped-goods' do
+          find_button('发货').visible?.should be_true
+          has_content?('您需要准备 1 款商品').should be_true
+        end
+        visit order_path(order) #回显,订单历史
+        within '#order-history' do
+          click_on '我们已经将1个商品发货' #更新快递单号
+          fill_in 'tracking_number', with: 'E45'
+          select 'EMS', from: 'tracking_company'
+          click_on '更新'
+        end
+        click_on '发货' #发第二个商品
+        within '#batch_fulfillment_form' do
+          fill_in 'shipping_options[manual][tracking_number]', with: '789012'
+          select 'Other', from: 'shipping_options[manual][tracking_company]'
+          click_on '发货'
+        end
+        within '#unshipped-goods' do
+          has_content?('完成发货').should be_true
+          has_content?('此订单的所有商品已经发货').should be_true
+        end
+      end
+
+      it "should accept payment" do
+        visit order_path(order)
+        click_on '已收到款项'
+        within '#order-status' do
+          has_content?('已支付').should be_true
+        end
+        visit order_path(order) #回显
+        within '#order-status' do
+          has_content?('已支付').should be_true
+        end
+        within '#order-history' do
+          has_content?('我们已经成功接收款项').should be_true
+        end
+        visit orders_path #列表显示状态
+        within(:xpath, "//table[@id='order-table']/tbody/tr[1]") do
+          has_content?('已支付').should be_true
+        end
+      end
+
       it "should list products" do
         visit order_path(order)
         within '#line-items' do
-          #within(:xpath, "//tbody[@id='line-items']//tr[1]") do
           within(:xpath, ".//tr[1]") do
             within(:xpath, ".//td[2]") do
               has_content?(iphone4.title).should be_true

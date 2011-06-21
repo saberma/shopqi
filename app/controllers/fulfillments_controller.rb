@@ -13,7 +13,7 @@ class FulfillmentsController < ApplicationController
     if params[:shipped] and !params[:shipped].empty?
       order.fulfillments.create line_item_ids: params[:shipped], tracking_number: params[:tracking_number], tracking_company: params[:tracking_company]
     end
-    render json: { fulfillment_status: order.fulfillment_status }
+    render json: { fulfillment_status: order.reload.fulfillment_status }
   end
 
   def show

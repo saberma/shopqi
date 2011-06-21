@@ -12,7 +12,8 @@ App.Views.Order.Show.Fulfillment.Panel = Backbone.View.extend
   render: ->
     template = Handlebars.compile $('#unshipped-goods-item').html()
     fulfilled = App.order.get('fulfillment_status') == 'fulfilled'
-    attr = { fulfilled: fulfilled }
+    unshipped_line_items = _(App.order.get('line_items')).select (line_item) -> !line_item.fulfilled
+    attr = fulfilled: fulfilled, unshipped_line_items: unshipped_line_items
     $(@el).html template attr
 
   show: ->

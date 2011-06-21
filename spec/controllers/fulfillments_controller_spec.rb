@@ -35,6 +35,7 @@ describe FulfillmentsController do
   it 'should set line_items' do
     expect do
       post :set, order_id: order.id, shipped: [ iphone_line_item.id, psp_line_item.id ]
+      JSON(response.body)['fulfillment_status'].to_sym.should eql :fulfilled
       [iphone_line_item, psp_line_item].each do |line_item|
         line_item.reload.fulfilled.should be_true
         line_item.fulfillment.should_not be_nil
