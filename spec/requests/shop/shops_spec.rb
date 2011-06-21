@@ -123,7 +123,7 @@ class Capybara::Server
   end
 
   def self.manual_host
-    @manual_host ||= host
+    @manual_host ||= '127.0.0.1'
   end
 
   def url(path)
