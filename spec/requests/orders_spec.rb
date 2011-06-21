@@ -33,6 +33,27 @@ describe "Orders", js: true do
   ##### 查看 #####
   describe "GET /orders/id" do
 
+    context "#abandoned" do
+
+      it "should show tip" do
+        visit order_path(order)
+        has_content?('此订单已经被放弃').should be_true
+      end
+
+      it "should not show cancel action" do
+        visit order_path(order)
+        within '#action-links' do
+          has_content?('取消此订单').should be_false
+        end
+      end
+
+      it "should not list abandoned order" do
+        visit orders_path
+        has_content?(order.name).should be_false
+      end
+
+    end
+
     context "#pending" do
 
       before :each do
@@ -112,29 +133,14 @@ describe "Orders", js: true do
       it "should be close" do
         visit order_path(order)
         click_on '关闭此订单' #跳转至订单列表
-        has_content?(order.title).should be_false
+        has_content?(order.name).should be_false
 
         click_on '正常'
         click_on '已关闭'
-        has_content?(order.title).should be_true
-      end
+        has_content?(order.name).should be_true
 
-    end
-
-    context "#abandoned" do
-
-      it "should show tip" do
-        visit order_path(order)
-        has_content?('此订单已经被放弃').should be_true
-        find('.warn').visible?.should be_true
-      end
-
-      it "should not show cancel action" do
-        visit order_path(order)
-        has_content?('取消此订单').should be_false
-      end
-
-      it "should not list abandoned order" do
+        click_on order.name
+        find('.warn').visible?.should be_true #显示关闭的提示
       end
 
     end

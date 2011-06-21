@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/transactions/index', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories/index', 'views/orders/show/histories/fulfillment', 'views/orders/show/note', 'views/orders/show/cancel', 'controllers/orders/show'
+  =javascript_include_tag 'models/order', 'views/orders/show/show', 'views/orders/show/transactions/index', 'views/orders/show/fulfillments/panel', 'views/orders/show/fulfillments/index', 'views/orders/show/fulfillments/edit', 'views/orders/show/line_items/index', 'views/orders/show/line_items/show', 'views/orders/show/histories/index', 'views/orders/show/histories/fulfillment', 'views/orders/show/note', 'controllers/orders/show'
 
 %h2#title
   ==订单 #{order.name}
@@ -16,7 +16,7 @@
       %li.no-icon= link_to image_tag('admin/icons/trash.gif'), order_path(order), method: :delete, confirm: '您确定要删除?'
     -else
       %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
-      -unless order.status == 'abandoned'
+      -unless order.financial_status == 'abandoned'
         %li#cancel-order=link_to "取消此订单", '#'
 =render "shared/noscript"
 =render "shared/upgrade_ie"

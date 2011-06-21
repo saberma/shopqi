@@ -1,13 +1,12 @@
 App.Views.Order.Show.Note = Backbone.View.extend
-  el: '#main'
+  el: '#note-form'
 
   initialize: ->
     this.render()
 
   events:
-    'click #note': 'show'
-    'click #note-form .cancel': 'cancel'
-    'submit #note-form form': 'save'
+    'click .cancel': 'cancel'
+    'submit form': 'save'
 
   render: ->
     value = App.order.get('note')
@@ -15,12 +14,6 @@ App.Views.Order.Show.Note = Backbone.View.extend
       $('#note-body').text value
       $('#order_note').val value
       $('#order-note').show()
-
-
-  show: ->
-    $('#order-note').hide()
-    $('#note-form').show()
-    false
 
   save: ->
     self = this

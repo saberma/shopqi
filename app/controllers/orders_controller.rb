@@ -9,9 +9,10 @@ class OrdersController < ApplicationController
     if params[:search]
       page_size = params[:search].delete(:limit) || page_size
       params[:search][:financial_status_ne] = :abandoned if params[:search][:financial_status_eq].blank?
+      params[:search][:status_eq] = :open if params[:search][:status_eq].blank?
       shop.orders.limit(page_size).metasearch(params[:search]).all
     else
-      shop.orders.limit(page_size).metasearch(financial_status_ne: :abandoned).all
+      shop.orders.limit(page_size).metasearch(status_eq: :open, financial_status_ne: :abandoned).all
     end
   end
   expose(:order)
