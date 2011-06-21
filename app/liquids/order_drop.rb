@@ -6,32 +6,18 @@ class OrderDrop < Liquid::Drop
     @order = order
   end
 
-  def id
-    @order.id
-  end
-
-  def order_name
-    @order.name
-  end
+  delegate :id,:name,:order_number,:shipping_rate,:gate_way,:total_price ,:total_line_items_price, to: :@order
 
   def date
     @order.created_at
   end
 
-  def order_number
-    @order.order_number
-  end
-
-  def shipping_rate
-    @order.shipping_rate
-  end
-
-  def billing_address
-    @order.billing_address
-  end
-
   #支付细节
   def payment_details
+  end
+
+  def requires_shipping
+    !@order.line_items.blank?
   end
 
   #税钱
@@ -46,20 +32,10 @@ class OrderDrop < Liquid::Drop
   def customer
   end
 
-  def order_name
-  end
-
   def shop_name
     @order.shop.name
   end
 
-  def gateway
-    @order.gateway
-  end
-
-  def total_price
-    @order.total_price
-  end
 
   def line_items
     @order.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
@@ -73,5 +49,10 @@ class OrderDrop < Liquid::Drop
     AddressDrop.new @order.shipping_address
   end
 
+  def fulfillment
+  end
+
+  def unfulfilled_line_items
+  end
 end
 

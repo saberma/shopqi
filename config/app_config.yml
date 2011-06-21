@@ -5,14 +5,30 @@ defaults: &defaults
         title:  您在{{shop_name}}的订单下单成功
         body: 尊敬的{{customer.name}}：
                  您好,恭喜您已经在{{shop_name}}商店订购成功!,订单号： {{order_number}}。\r\n\r\n
+                 {% if requires_shipping %}
+                 收货人信息：\r\n
+                 {{ shipping_address.name}}：
+                 {{ shipping_address.province}}
+                 {{ shipping_address.city}}
+                 {{ shipping_address.district}}
+                 {{ shipping_address.address1}}
+                 {% endif %} \r\n
+                 收货人信息：\r\n
+                 {{ billing_address.name}}：
+                 {{ billing_address.province}}
+                 {{ billing_address.city}}
+                 {{ billing_address.district}}
+                 {{ billing_address.address1}}\r\n
                  订单商品明细：
               {% for line in line_items %}
-                {{ line.quantity }}x {{ line.title }} for {{ line.price | money }} each
+                {{ line.quantity }} x {{ line.title }} , 单价： {{ line.price | money }}\r\n
               {% endfor %}
+              总价 ： {{ total_price | money_with_currency }}
 
       new_order_notify:
-        title:  您在{{shop_name}}的订单提醒
-        body: Thank you for placing your order with {{ shop_name }}!\r\n
+        title:  [{{ shop_name }}] 订单 {{ name }} ,由 {{ billing_address.name }} 下单
+        body: {{ shop_name }}!\r\n
+              {{ billing_address.name }} 创建了一个新的订单({{ date | date: }})
               This email is to confirm your recent order.\r\n
       ship_confirm:
         title:  您在{{shop_name}}的订单提醒
