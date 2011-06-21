@@ -33,7 +33,6 @@ describe "Orders", js: true do
   ##### 查看 #####
   describe "GET /orders/id" do
 
-=begin
     context "#abandoned" do
 
       it "should show tip" do
@@ -54,7 +53,6 @@ describe "Orders", js: true do
       end
 
     end
-=end
 
     context "#pending" do
 
