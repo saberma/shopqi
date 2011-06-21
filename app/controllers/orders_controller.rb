@@ -8,9 +8,10 @@ class OrdersController < ApplicationController
     page_size = 25
     if params[:search]
       page_size = params[:search].delete(:limit) || page_size
+      params[:search][:financial_status_ne] = :abandoned if params[:search][:financial_status_eq].blank?
       shop.orders.limit(page_size).metasearch(params[:search]).all
     else
-      shop.orders.limit(page_size)
+      shop.orders.limit(page_size).metasearch(financial_status_ne: :abandoned).all
     end
   end
   expose(:order)
@@ -24,7 +25,7 @@ class OrdersController < ApplicationController
     order.to_json({
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
       include: {
-        line_items: { methods: [:title, :variant_title, :sku, :fulfillment_created_at] },
+        line_items: { methods: [:total_price, :title, :variant_title, :sku, :fulfillment_created_at] },
         transactions: {},
         histories: {}
       },

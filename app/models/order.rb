@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
   end
 
   before_save do
-    self.total_line_items_price = self.line_items.map(&:price).sum
+    self.total_line_items_price = self.line_items.map(&:total_price).sum
     self.total_price = self.total_line_items_price
   end
 
@@ -80,8 +80,8 @@ class OrderLineItem < ActiveRecord::Base
 
   delegate :sku, to: :product_variant
 
-  before_create do
-    self.total_price = self.price * self.quantity
+  def total_price
+    self.price * self.quantity
   end
 
   def fulfillment

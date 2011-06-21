@@ -52,7 +52,7 @@
           %p(style="line-height:18px;")
             %a(href="mailto:mahb45@gmail.com") mahb45@gmail.com
             %br
-            13928452841
+            13928452888
       %tr
         %td.attribute 营销
         %td.value.image
@@ -63,6 +63,32 @@
         %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
     %h3 收货人地址
     #shipping-address.vcard
+      .tel
+        %span.value==电话: #{order.shipping_address.phone}
+      %address.adr
+        %span.type.hide 家庭
+        -#
+          %span.country-name=order.shipping_address.country
+          %br
+        %span.street-address=order.shipping_address.province_name
+        %br
+        %span.locality=order.shipping_address.city_name
+        %br
+        %span.locality=order.shipping_address.district_name
+        %br
+        %span=order.shipping_address.address1
+        %br
+        %span.postal-code=order.shipping_address.zip
+        %br
+        %span.fn=order.shipping_address.name
+        %br
+      %a.email.hide(href="mailto:mahb45@gmail.com")
+  #bill-addr.customer-col
+    .tools.hide
+      .map-link
+        %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
+    %h3 下单人地址
+    #billing-address.vcard
       .tel
         %span.value==电话: #{order.billing_address.phone}
       %address.adr
@@ -81,32 +107,6 @@
         %span.postal-code=order.billing_address.zip
         %br
         %span.fn=order.billing_address.name
-        %br
-      %a.email(href="mailto:mahb45@gmail.com" style="display: none")
-  #bill-addr.customer-col
-    .tools.hide
-      .map-link
-        %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
-    %h3 发单人地址
-    #billing-address.vcard
-      .tel
-        %span.value 电话: 13928452841
-      %address.adr
-        %span.type.hide 家庭
-        -#
-          %span.country-name=order.shipping_address.country
-          %br
-        %span.street-address=order.shipping_address.province_name
-        %br
-        %span.locality=order.shipping_address.city_name
-        %br
-        %span.locality=order.shipping_address.district_name
-        %br
-        %span=order.shipping_address.address1
-        %br
-        %span.postal-code=order.shipping_address.zip
-        %br
-        %span.fn=order.shipping_address.name
         %br
 .col-8.last
   -#=render :payment_credit

@@ -83,6 +83,10 @@ describe Order do
 
   describe 'create' do
 
+    it 'should save total_price' do
+      order.total_price.should eql 20.0
+    end
+
     it 'should save address' do
       expect do
         expect do

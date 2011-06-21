@@ -183,7 +183,6 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.integer "product_variant_id",                    :null => false
     t.float   "price",                                 :null => false
     t.integer "quantity",                              :null => false
-    t.float   "total_price",                           :null => false
     t.boolean "fulfilled",          :default => false
   end
 

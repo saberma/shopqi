@@ -29,7 +29,6 @@ class CreateOrders < ActiveRecord::Migration
       t.references :product_variant, comment: '所属商品款式', null: false
       t.float :price               , comment: '购买时价格'  , null: false
       t.integer :quantity          , comment: '数量'        , null: false
-      t.float :total_price         , comment: '购买金额'    , null: false
       t.boolean :fulfilled         , comment: '发货状态'    , default: false
     end
 
