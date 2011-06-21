@@ -8,9 +8,11 @@ class OrdersController < ApplicationController
     page_size = 25
     if params[:search]
       page_size = params[:search].delete(:limit) || page_size
+      params[:search][:financial_status_ne] = :abandoned if params[:search][:financial_status_eq].blank?
+      params[:search][:status_eq] = :open if params[:search][:status_eq].blank?
       shop.orders.limit(page_size).metasearch(params[:search]).all
     else
-      shop.orders.limit(page_size)
+      shop.orders.limit(page_size).metasearch(status_eq: :open, financial_status_ne: :abandoned).all
     end
   end
   expose(:order)
@@ -24,7 +26,7 @@ class OrdersController < ApplicationController
     order.to_json({
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
       include: {
-        line_items: { methods: [:title, :variant_title, :sku, :fulfillment_created_at] },
+        line_items: { methods: [:total_price, :title, :variant_title, :sku, :fulfillment_created_at] },
         transactions: {},
         histories: {}
       },
@@ -34,6 +36,7 @@ class OrdersController < ApplicationController
   expose(:status) { KeyValues::Order::Status.hash }
   expose(:financial_status) { KeyValues::Order::FinancialStatus.hash }
   expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }
+  expose(:cancel_reasons) { KeyValues::Order::CancelReason.hash }
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
   # 批量修改
@@ -52,5 +55,25 @@ class OrdersController < ApplicationController
 
   def update
     render text: order.save
+  end
+
+  def close
+    order.update_attribute :status, :closed
+    redirect_to orders_path
+  end
+
+  def open
+    order.update_attribute :status, :open
+    redirect_to order_path(order)
+  end
+
+  def cancel
+    order.update_attribute :status, :cancelled
+    redirect_to orders_path
+  end
+
+  def destroy
+    order.destroy
+    redirect_to orders_path
   end
 end

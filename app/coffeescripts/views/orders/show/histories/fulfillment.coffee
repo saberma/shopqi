@@ -12,6 +12,7 @@ App.Views.Order.Show.History.Fulfillment = Backbone.View.extend
     template = Handlebars.compile $('#order-history-fulfillment-item').html()
     $(@el).html template @options.order_fulfillment
     @options.body.after @el
+    this.$('.tracking-number').keyup()
 
   save: ->
     self = this

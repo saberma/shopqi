@@ -20,7 +20,6 @@ App.Views.Order.Show.Transaction.Index = Backbone.View.extend
     self = this
     attrs = transaction: { kind: this.$("input[name='transaction[kind]']").val() }
     $.post "/admin/orders/#{App.order.id}/transactions", attrs, (data) ->
-      log data
       App.order.get('transactions').push data.order_transaction
       self.render()
     false

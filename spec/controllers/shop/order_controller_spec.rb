@@ -50,6 +50,11 @@ describe Shop::OrderController do
       response.should be_success
     end
 
+    it 'should update financial_status' do
+      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', gateway: '1' }
+      order.reload.financial_status.should eql 'pending'
+    end
+
     it 'should show product line_items' do
       order
       expect do

@@ -54,12 +54,13 @@ Shopqi::Application.routes.draw do
       resources :emails
     end
 
-    resources :orders, only: [:index, :update, :show] do
+    resources :orders, only: [:index, :update, :show, :destroy] do
       collection do
         post :set
       end
       member do
         post :close  #关闭
+        post :open   #重新打开
         post :cancel #取消
         post :previous #上一订单
         post :next     #下一订单

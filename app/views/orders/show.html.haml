@@ -11,10 +11,19 @@
     -#%li.csv=link_to '导出', '#'
     %li#print
       %a(href="#" onclick="window.print();; return false;") 打印
-    %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
-    %li#cancel-order=link_to "取消此订单", cancel_order_path(order), method: :post
+    -if order.closed_at
+      %li#locko=link_to "重新打开此订单", open_order_path(order), method: :post
+      %li.no-icon= link_to image_tag('admin/icons/trash.gif'), order_path(order), method: :delete, confirm: '您确定要删除?'
+    -else
+      %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
+      -unless order.financial_status == 'abandoned'
+        %li#cancel-order=link_to "取消此订单", '#'
 =render "shared/noscript"
 =render "shared/upgrade_ie"
+-if order.closed_at
+  .sst.pgroup.c.warn
+    %p
+      %strong==此订单已于#{order.closed_at.to_s(:full)}关闭.
 #previous
   .tools.hide
     =link_to previous_order_path(order), class: :message do
@@ -43,7 +52,7 @@
           %p(style="line-height:18px;")
             %a(href="mailto:mahb45@gmail.com") mahb45@gmail.com
             %br
-            13928452841
+            13928452888
       %tr
         %td.attribute 营销
         %td.value.image
@@ -54,6 +63,32 @@
         %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
     %h3 收货人地址
     #shipping-address.vcard
+      .tel
+        %span.value==电话: #{order.shipping_address.phone}
+      %address.adr
+        %span.type.hide 家庭
+        -#
+          %span.country-name=order.shipping_address.country
+          %br
+        %span.street-address=order.shipping_address.province_name
+        %br
+        %span.locality=order.shipping_address.city_name
+        %br
+        %span.locality=order.shipping_address.district_name
+        %br
+        %span=order.shipping_address.address1
+        %br
+        %span.postal-code=order.shipping_address.zip
+        %br
+        %span.fn=order.shipping_address.name
+        %br
+      %a.email.hide(href="mailto:mahb45@gmail.com")
+  #bill-addr.customer-col
+    .tools.hide
+      .map-link
+        %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
+    %h3 下单人地址
+    #billing-address.vcard
       .tel
         %span.value==电话: #{order.billing_address.phone}
       %address.adr
@@ -73,67 +108,50 @@
         %br
         %span.fn=order.billing_address.name
         %br
-      %a.email(href="mailto:mahb45@gmail.com" style="display: none")
-  #bill-addr.customer-col
-    .tools.hide
-      .map-link
-        %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
-    %h3 发单人地址
-    #billing-address.vcard
-      .tel
-        %span.value 电话: 13928452841
-      %address.adr
-        %span.type.hide 家庭
-        -#
-          %span.country-name=order.shipping_address.country
-          %br
-        %span.street-address=order.shipping_address.province_name
-        %br
-        %span.locality=order.shipping_address.city_name
-        %br
-        %span.locality=order.shipping_address.district_name
-        %br
-        %span=order.shipping_address.address1
-        %br
-        %span.postal-code=order.shipping_address.zip
-        %br
-        %span.fn=order.shipping_address.name
-        %br
 .col-8.last
   -#=render :payment_credit
   .box2.sst(style="padding-top: 0")
-    #order-status.order-action-line.separator.clearfix
-    #order-fulfillment.order-action-line
-      #unshipped-goods.fr.r
-      .sb.shipping-method
-        %h3 配送方式
-        %p 快递
-    %form#batch_fulfillment_form(action="#" onsubmit="return false")
-      #mark-shipped.hide
-        .sb.order-action-line
-          %h3 发货
-          %p 选择您已经发货的商品
-        %table.data(cellpadding="0" cellspacing="0")
-        #manual_shipping_options.sb.sst.fulfillment_service_shipping_options.group(style="margin: 20px 0")
-          #manual_tracking_number_container
-            %h4
-              快递单号
-              %span.hint 可以稍后加入
-            %p
-              %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text")
-              %span#manual_tracking_company_area.hide
-                通过
-                %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
-                  %option(value="USPS") EMS
-                  %option(value="Other") Other
-        .btns(style="background: none")
-          .sb
-            %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
-            %label.note(for="notify_customer") 发送邮件通知顾客
-          %div
-            %input#fulfill-items.btn(name="commit" type="submit" value="发货")
-            或者
-            %a.cancel(href="#") 取消
+    -if order.financial_status == 'abandoned'
+      %h3 此订单已经被放弃
+      %p.note.sb 放弃订单表示顾客选择商品后，没有完成购买操作
+      %p.note
+        如果您联系了顾客，并且知道对方需要继续完成购买操作，您可以将
+        = succeed "." do
+          %a(href="https://checkout.shopqi.com/orders/#{shop.id}/#{order.token}/pay") 此链接地址
+        发送给顾客
+    -else
+      #order-status.order-action-line.separator.clearfix
+      #order-fulfillment.order-action-line
+        #unshipped-goods.fr.r
+        .sb.shipping-method
+          %h3 配送方式
+          %p 快递
+      %form#batch_fulfillment_form(action="#" onsubmit="return false")
+        #mark-shipped.hide
+          .sb.order-action-line
+            %h3 发货
+            %p 选择您已经发货的商品
+          %table.data(cellpadding="0" cellspacing="0")
+          #manual_shipping_options.sb.sst.fulfillment_service_shipping_options.group(style="margin: 20px 0")
+            #manual_tracking_number_container
+              %h4
+                快递单号
+                %span.hint 可以稍后加入
+              %p
+                %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text")
+                %span#manual_tracking_company_area.hide
+                  通过
+                  %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
+                    %option(value="ems") EMS
+                    %option(value="other") Other
+          .btns(style="background: none")
+            .sb
+              %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
+              %label.note(for="notify_customer") 发送邮件通知顾客
+            %div
+              %input#fulfill-items.btn(name="commit" type="submit" value="发货")
+              或者
+              %a.cancel(href="#") 取消
   #order-note.message.pgroup.hide
     %h3 订单备注
     #note-body
@@ -199,7 +217,7 @@
   %input.btn(type="button" value="发货")
   %p.instruction
     您需要准备
-    %strong==#{order.line_items.size} 款商品
+    %strong {{{unshipped_line_items.length}}} 款商品
   {{/if}}
 %script(id="edit-fulfillment-item" type="text/x-jquery-tmpl")
   %td(style="width: 24px; vertical-align:middle")
@@ -250,6 +268,7 @@
   %tr#total.summary
     %td.totalnum.r(colspan="4") 总金额:
     %td.r.totalnum.total-col {{{total_price}}}
+%script#cancel-order-item(type="text/x-jquery-tmpl")=render 'cancel'
 
 :javascript
   App.init = function(){

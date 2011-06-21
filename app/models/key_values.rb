@@ -111,6 +111,16 @@ module KeyValues
       ]
     end
 
+    # 取消原因
+    class CancelReason < KeyValues::Base
+      self.data = [
+        {id: 1, name: '顾客改变/取消订单', code: 'customer'    },
+        {id: 2, name: '欺诈性订单'       , code: 'fraud'       },
+        {id: 3, name: '没有商品了'       , code: 'inventory'   },
+        {id: 4, name: '其他'             , code: 'other'       }
+      ]
+    end
+
   end
 
   module Link

@@ -183,7 +183,6 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.integer "product_variant_id",                    :null => false
     t.float   "price",                                 :null => false
     t.integer "quantity",                              :null => false
-    t.float   "total_price",                           :null => false
     t.boolean "fulfilled",          :default => false
   end
 
@@ -229,6 +228,9 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
     t.float    "total_line_items_price",               :null => false
     t.float    "total_price",                          :null => false
     t.string   "note"
+    t.datetime "closed_at"
+    t.string   "cancel_reason",          :limit => 16
+    t.datetime "cancelled_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

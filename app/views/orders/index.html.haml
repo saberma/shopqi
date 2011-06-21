@@ -99,7 +99,6 @@
                 %th.sortcol 配送状态
                 %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
             %tbody
-              %tr#row-66618532.order
 %div(style="width:100%")
   #pagination
 
@@ -112,9 +111,12 @@
     %span.note {{{date created_at}}}
   %td ma saberma
   %td
-    %span.o-authorized.oauth-warning(style="font-size: 11px")
+    %span(style="font-size: 11px" class="{{{financial_class}}}")
       {{{financial_status_name}}}
       -#%img(alt="Time-small" src="/images/admin/icons/time-small.png" title="此订单授权支付即将过期")
+    {{#if closed_at}}
+    =image_tag 'admin/icons/closed.gif', style: 'margin-top: 3px', title: '此订单已关闭'
+    {{/if}}
   %td
     %span(style="font-size: 11px")
       %span(class='{{{fulfill_class}}}') {{{fulfillment_status_name}}}
