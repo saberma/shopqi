@@ -103,7 +103,7 @@
     -if flash[:notice]
       :javascript
         window.onload = function(){
-          msg("#(flash[:notice])");
+          msg("#{flash[:notice]}");
         }
 /[if lte IE 6]
 <script type="text/javascript">
