@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609075449) do
+ActiveRecord::Schema.define(:version => 20110622024506) do
 
   create_table "articles", :force => true do |t|
     t.integer  "shop_id"
@@ -92,6 +92,44 @@ ActiveRecord::Schema.define(:version => 20110609075449) do
   end
 
   add_index "custom_collections", ["shop_id"], :name => "index_custom_collections_on_shop_id"
+
+  create_table "customer_addresses", :force => true do |t|
+    t.integer "customer_id",               :null => false
+    t.string  "name",                      :null => false
+    t.string  "company",     :limit => 64
+    t.string  "country",     :limit => 64
+    t.string  "province",    :limit => 64
+    t.string  "city",        :limit => 64
+    t.string  "district",    :limit => 64
+    t.string  "address1",                  :null => false
+    t.string  "address2"
+    t.string  "zip",         :limit => 12
+    t.string  "phone",       :limit => 64, :null => false
+  end
+
+  add_index "customer_addresses", ["customer_id"], :name => "index_customer_addresses_on_customer_id"
+
+  create_table "customer_groups", :force => true do |t|
+    t.integer  "shop_id",                  :null => false
+    t.string   "name",       :limit => 32, :null => false
+    t.string   "query",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_groups", ["shop_id"], :name => "index_customer_groups_on_shop_id"
+
+  create_table "customers", :force => true do |t|
+    t.integer  "shop_id",                                    :null => false
+    t.string   "name",        :limit => 16,                  :null => false
+    t.string   "email",       :limit => 32,                  :null => false
+    t.string   "note"
+    t.float    "total_spent",               :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customers", ["shop_id"], :name => "index_customers_on_shop_id"
 
   create_table "emails", :force => true do |t|
     t.integer  "shop_id"

@@ -11,15 +11,7 @@
         %a(href="#") 导出订单
 =render "shared/noscript"
 =render "shared/upgrade_ie"
--#
-  #export-orders.box2.ssb.sst(style="display: none")
-    %h3 导出您的订单
-    %p.sb
-      您的订单将导出为
-      %strong .csv 文件
-      (以逗号分隔).
-    %a.btn(href="/admin/orders.csv?limit=50") Export currently shown orders
-    %a.btn.sl(href="/admin/orders/export") Export Orders by Month or Quarter
+-#=render :export
 #order-filters.box2.sst
   %div(style="float: right; font-size: 12px")
     每页显示条数:

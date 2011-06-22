@@ -10,11 +10,13 @@ class Shop < ActiveRecord::Base
   has_many :custom_collections, dependent: :destroy
   has_many :tags              , dependent: :destroy
   has_many :orders            , dependent: :destroy
+  has_many :customers         , dependent: :destroy
+  has_many :customer_groups   , dependent: :destroy
   has_many :carts             , dependent: :destroy
-  has_one  :theme             , dependent: :destroy, class_name: 'ShopTheme'
+  has_one  :theme             , dependent: :destroy                      , class_name: 'ShopTheme'
 
-  has_many :types             , dependent: :destroy, class_name: 'ShopProductType'
-  has_many :vendors           , dependent: :destroy, class_name: 'ShopProductVendor'
+  has_many :types             , dependent: :destroy                      , class_name: 'ShopProductType'
+  has_many :vendors           , dependent: :destroy                      , class_name: 'ShopProductVendor'
   has_many :emails            , dependent: :destroy
 
   attr_readonly :orders_count
