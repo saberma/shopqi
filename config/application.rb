@@ -59,5 +59,7 @@ module Shopqi
       :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
       :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
     }
+
+    #config.middleware.use ::Rack::PerftoolsProfiler, :default_printer => 'gif', :bundler => true, :mode => :walltime
   end
 end
