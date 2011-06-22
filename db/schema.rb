@@ -120,11 +120,13 @@ ActiveRecord::Schema.define(:version => 20110622024506) do
   add_index "customer_groups", ["shop_id"], :name => "index_customer_groups_on_shop_id"
 
   create_table "customers", :force => true do |t|
-    t.integer  "shop_id",                                    :null => false
-    t.string   "name",        :limit => 16,                  :null => false
-    t.string   "email",       :limit => 32,                  :null => false
+    t.integer  "shop_id",                                           :null => false
+    t.string   "name",              :limit => 16,                   :null => false
+    t.string   "email",             :limit => 32,                   :null => false
     t.string   "note"
-    t.float    "total_spent",               :default => 0.0
+    t.float    "total_spent",                     :default => 0.0
+    t.integer  "orders_count",                    :default => 0
+    t.boolean  "accepts_marketing",               :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -253,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20110622024506) do
 
   create_table "orders", :force => true do |t|
     t.integer  "shop_id",                              :null => false
+    t.integer  "customer_id"
     t.string   "token",                  :limit => 32, :null => false
     t.string   "name",                   :limit => 32, :null => false
     t.integer  "number",                               :null => false
@@ -273,6 +276,7 @@ ActiveRecord::Schema.define(:version => 20110622024506) do
     t.datetime "updated_at"
   end
 
+  add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
   add_index "orders", ["shop_id"], :name => "index_orders_on_shop_id"
   add_index "orders", ["token"], :name => "index_orders_on_token", :unique => true
 

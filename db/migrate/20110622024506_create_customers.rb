@@ -3,11 +3,13 @@ class CreateCustomers < ActiveRecord::Migration
   def self.up
     #顾客
     create_table :customers do |t|
-      t.references :shop  , comment: "商品应从属于商店", null: false
-      t.string :name      , comment: "名称"            , null: false, limit: 16
-      t.string :email     , comment: "邮箱"            , null: false, limit: 32
-      t.string :note      , comment: "备注"
-      t.float :total_spent, comment: "消费总额"        , default: 0
+      t.references :shop          , comment: "商品应从属于商店", null: false
+      t.string :name              , comment: "名称"            , null: false  , limit: 16
+      t.string :email             , comment: "邮箱"            , null: false  , limit: 32
+      t.string :note              , comment: "备注"
+      t.float :total_spent        , comment: "消费总额"        , default: 0
+      t.integer :orders_count     , comment: "缓存订单数"      , default: 0
+      t.boolean :accepts_marketing, comment: "是否接收营销邮件", default: true
 
       t.timestamps
     end

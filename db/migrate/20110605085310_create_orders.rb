@@ -3,6 +3,7 @@ class CreateOrders < ActiveRecord::Migration
   def self.up
     create_table :orders do |t|
       t.references :shop             , comment: "所属商店"                  , null: false
+      t.references :customer         , comment: "所属顾客"
       t.string :token                , comment: '主键，防止id顺序访问'      , null: false, limit: 32
       t.string :name                 , comment: '订单名称(格式化后的订单号)', null: false, limit: 32
       t.integer :number              , comment: '订单顺序号'                , null: false
@@ -93,6 +94,7 @@ class CreateOrders < ActiveRecord::Migration
     end
 
     add_index :orders                             , :shop_id
+    add_index :orders                             , :customer_id
     add_index :orders                             , :token                , unique: true
     add_index :order_billing_addresses            , :order_id
     add_index :order_shipping_addresses           , :order_id
