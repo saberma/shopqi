@@ -84,8 +84,8 @@
           %td(style="text-align:right;vertical-align: middle")
             %span#customer-table_msg.note(style="margin-bottom: 5px") &nbsp;
     #customers.ssb
-      #customer-search_overlay
-        %p Customers are being updated&hellip;
+      #customer-search_overlay.hide
+        %p 顾客信息正在更新&hellip;
       %table#customer-table.data.row-space.select-table(cellspacing="0" cellpadding="0")
         %thead
           %tr#customer-search_customer
@@ -140,30 +140,31 @@
       %input#save_group_button.btn(type="submit" value="保存")
 
 %script(id="show-customer-item" type="text/x-jquery-tmpl")
-  %tr#customer-45648822.visible.row.odd
-    %td(style="padding-top: 5px")
-      %input.selector(autocomplete="off" style="margin: 3px 0" type="checkbox")
-    %td.customer-name
-      %a.customer-link(href="/admin/customers/{{{id}}}") {{{name}}}
-      .display_message.clearfix(id="customer-display-{{{id}}}" style="display:none;")
-        .customer-details
-          %span.name
-            %a(href="/admin/customers/{{{id}}}") {{{name}}}
-          %span.marketing 接受营销邮件
-          %span.phone-number {{{phone}}}
-          %span.info
-            %a.skype(href="skype://{{{phone}}}") 通过Skype拨打电话
-            %a.email(href="mailto:{{{email}}}") {{{email}}}
-    %td
-      %a.customer-display-link(href="#" onclick="return false;")
-        %span.contact-details.customer-display-link(data-popup-id="customer-display-{{{id}}}") i
-    %td shenzhen CN
-    %td.r {{{total_spent}}}
-    %td.c {{{orders.length}}}
-    %td
-      %span.note
-        %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
-        {{{date order.created_at}}}
+  %td(style="padding-top: 5px")
+    %input.selector(autocomplete="off" style="margin: 3px 0" type="checkbox")
+  %td.customer-name
+    %a.customer-link(href="/admin/customers/{{{id}}}") {{{name}}}
+    .display_message.clearfix(id="customer-display-{{{id}}}" style="display:none;")
+      .customer-details
+        %span.name
+          %a(href="/admin/customers/{{{id}}}") {{{name}}}
+        %span.marketing 接受营销邮件
+        %span.phone-number {{{phone}}}
+        %span.info
+          %a.skype(href="skype://{{{phone}}}") 通过Skype拨打电话
+          %a.email(href="mailto:{{{email}}}") {{{email}}}
+  %td
+    %a.customer-display-link(href="#" onclick="return false;")
+      %span.contact-details.customer-display-link(data-popup-id="customer-display-{{{id}}}") i
+  %td shenzhen CN
+  %td.r {{{total_spent}}}
+  %td.c {{{orders.length}}}
+  %td
+    {{#if order}}
+    %span.note
+      %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
+      {{{date order.created_at}}}
+    {{/if}}
 
 :javascript
   App.init = function(){

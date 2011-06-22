@@ -11,6 +11,7 @@ class CustomersController < ApplicationController
   expose(:customer)
   expose(:customers_json) do
     customers.to_json({
+      include: :orders,
       except: [ :created_at, :updated_at ]
     })
   end
@@ -23,4 +24,8 @@ class CustomersController < ApplicationController
     })
   end
   expose(:page_sizes) { KeyValues::PageSize.hash }
+
+  def search
+    render json: customers_json
+  end
 end

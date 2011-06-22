@@ -77,7 +77,11 @@ Shopqi::Application.routes.draw do
       resources :transactions
     end
 
-    resources :customers
+    resources :customers, except: :edit do
+      collection do
+        get :search
+      end
+    end
 
     resources :products, except: :edit do
       collection do
