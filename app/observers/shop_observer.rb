@@ -54,8 +54,8 @@ class ShopObserver < ActiveRecord::Observer
     # 创建各个邮件样板
     KeyValues::Mail::Type.all.each do |type|
       code = type.code.to_sym
-      title = Setting.templates.email.send(code).title.gsub("\\r\\n","\r\n")
-      body  = Setting.templates.email.send(code).body.gsub("\\r\\n","\r\n")
+      title = Setting.templates.email.send(code).title
+      body  = Setting.templates.email.send(code).body
       shop.emails.create title: title,mail_type: code , body: body
     end
   end
