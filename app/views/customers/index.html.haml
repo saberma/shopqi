@@ -1,7 +1,7 @@
 %h2#title 顾客管理
 #action-links
   %ul
-    %li#customer=link_to "新增顾客信息" new_customer_path
+    %li#customer=link_to "新增顾客信息", new_customer_path
     -#
       %li.csv
         %a#show_export_customers(href="#") 导出顾客信息
@@ -18,64 +18,31 @@
         %li#customergroup-all.customer-group.active.clearfix
           .group-details
             %h3 所有顾客
-        %li#customergroup-current.customer-group.current-search.clearfix.hide
+        %li#customergroup-current.customer-group.current-search.clearfix(style='display: none')
           .group-details
             %h3 当前查询
             %ul.filters
             %a#save_customer_group_link.btn.closure-lightbox(href="#save_customer_group" onclick="return false;" title="Save Customer Group") 保存为顾客分组
-        %li#customergroup-3477172.customer-group.clearfix("data-filter" => "{&quot;f&quot;:[&quot;accepts_marketing:1&quot;]}")
-          %a.delete(href="/admin/customer_groups/3477172" "data-confirm" => "Are you sure you want to delete this customer group?")
-            %img(alt="Trash" src="https://cdn.shopify.com/s/images/admin/icons/trash.gif?722202b9ceb147c223fefca190e0c2f33a452193")
-          %h3
-            Accepts Marketing
+        %li#customergroup-3477172.customer-group.clearfix(data-filter="{&quot;f&quot;:[&quot;accepts_marketing:1&quot;]}")
+          %a.delete(href="/admin/customer_groups/3477172" data-confirm="您确定要删除吗?")=image_tag('admin/icons/trash.gif')
+          %h3 接受营销
           %ul.filters
-            %li(style="display:none" "data-filterset" => "accepts_marketing:1")
-          %a#update-group-3477172.update.btn(href="/admin/customer_groups/3477172" style="display:none")
-            Update
-        %li#customergroup-3477202.customer-group.clearfix("data-filter" => "{&quot;f&quot;:[&quot;country:&amp;#39;United States&amp;#39;&quot;]}")
-          %a.delete(href="/admin/customer_groups/3477202" "data-confirm" => "Are you sure you want to delete this customer group?")
-            %img(alt="Trash" src="https://cdn.shopify.com/s/images/admin/icons/trash.gif?722202b9ceb147c223fefca190e0c2f33a452193")
-          %h3
-            From United States
-          %ul.filters
-            %li(style="display:none" "data-filterset" => "country:'United States'")
-          %a#update-group-3477202.update.btn(href="/admin/customer_groups/3477202" style="display:none")
-            Update
-        %li#customergroup-3477192.customer-group.clearfix("data-filter" => "{&quot;f&quot;:[&quot;last_abandoned_order_date:last_month&quot;]}")
-          %a.delete(href="/admin/customer_groups/3477192" "data-confirm" => "Are you sure you want to delete this customer group?")
-            %img(alt="Trash" src="https://cdn.shopify.com/s/images/admin/icons/trash.gif?722202b9ceb147c223fefca190e0c2f33a452193")
-          %h3
-            Prospects
-          %ul.filters
-            %li(style="display:none" "data-filterset" => "last_abandoned_order_date:last_month")
-          %a#update-group-3477192.update.btn(href="/admin/customer_groups/3477192" style="display:none")
-            Update
-        %li#customergroup-3477182.customer-group.clearfix("data-filter" => "{&quot;f&quot;:[&quot;orders_count:\\u003E1&quot;]}")
-          %a.delete(href="/admin/customer_groups/3477182" "data-confirm" => "Are you sure you want to delete this customer group?")
-            %img(alt="Trash" src="https://cdn.shopify.com/s/images/admin/icons/trash.gif?722202b9ceb147c223fefca190e0c2f33a452193")
-          %h3
-            Repeat Customers
-          %ul.filters
-            %li(style="display:none" "data-filterset" => "orders_count:&gt;1")
-          %a#update-group-3477182.update.btn(href="/admin/customer_groups/3477182" style="display:none")
-            Update
+            %li(style="display:none" data-filterset="accepts_marketing:1")
+          %a#update-group-3477172.update.btn(href="/admin/customer_groups/3477172" style="display:none") 更新
   .col-8.last(style="width:648px;")
     #order-filters
-      %form#customer-search("accept-charset" => "UTF-8" action="/admin/customers" method="get" onsubmit="return false")
-        %div(style="margin:0;padding:0;display:inline")
-          %input(name="utf8" type="hidden" value="&#x2713;")
+      %form#customer-search(action="/admin/customers" method="get" onsubmit="return false")
         #customer-filters.box2.clearfix
           .clearfix
-            %input#customer-search_field.filter-text(autocomplete="off" "data-hint" => "Start typing to filter customers..." name="q" onsubmit="return false" type="text")
+            %input#customer-search_field.filter-text(autocomplete="off" data-hint="输入查询内容过滤信息..." name="q" onsubmit="return false" type="text")
             .filter-info(onclick="$('customer-search_field').focus();")
               #search-filter_summary.summary(style="display:none;")
             #customer-search_msg
           #customer-search_filters
       #customer-search_add_filters.toggle-drop.box2(style="display:none;")
         %h3
-          Add filters
-          %span.hint
-            filter customers by orders placed total amount spent etc
+          增加过滤器
+          %span.hint 通过订单总额等条件过滤顾客信息
         .clearfix
           %form#search-filter(onsubmit="return false")
             %select#search-filter_primary(name="primary-value")
@@ -105,54 +72,42 @@
             #search-filter_value_div
               %input#search-filter_value.condition.filter_text_value(name="filter-value" style="width:120px" type="text")
             .apply_filter
-              %input#search-filter_apply.btn.apply-filter(name="commit" onclick="return false;" type="submit" value="Add Filter")
+              %input#search-filter_apply.btn.apply-filter(name="commit" onclick="return false;" type="submit" value="新增过滤器")
     .sst(style="height: 32px;")
       %table#customer-table_status(cellpadding="0" cellspacing="0" style="display:none")
         %tr
           %td(style="text-align:left;vertical-align: middle")
             %select#customer-table_actions(name="operation")
           %td(style="text-align:right;vertical-align: middle")
-            %span#customer-table_msg.note(style="margin-bottom: 5px")
-              \&nbsp;
+            %span#customer-table_msg.note(style="margin-bottom: 5px") &nbsp;
     #customers.ssb
       #customer-search_overlay
-        %p
-          Customers are being updated&hellip;
+        %p Customers are being updated&hellip;
       %table#customer-table.data.row-space.select-table(cellspacing="0" cellpadding="0")
         %thead
           %tr#customer-search_order
             %th.nosort(style="width: 16px")
               %input#customer-table_selectall(type="checkbox" autocomplete="off")
-            %th.sortcol("data-value" => "last_name_sortable")
-              Name (Last First)
-            %th
-              \&nbsp;
-            %th.sortcol("data-value" => "location")
-              Location
-            %th.sortcol("data-value" => "total_spent" style="text-align: right; padding-right: 4px ! important; background-position: 5% center ! important;")
-              Money Spent
-            %th.sortcol("data-value" => "orders_count")
-              Orders
-            %th.sortcol("data-value" => "last_order_date")
-              Last Order
+            %th.sortcol(data-value="last_name_sortable") 姓名
+            %th &nbsp;
+            %th.sortcol(data-value="location") 地址
+            %th.sortcol(data-value="total_spent" style="text-align: right; padding-right: 4px ! important; background-position: 5% center ! important;") 消费金额
+            %th.sortcol(data-value="orders_count") 订单数
+            %th.sortcol(data-value="last_order_date") 最近订单
         %tbody#customer-table_list.ssb
-      #customer-search_empty.c(style="display:none;")
-        No customers match your search criteria.
+      #customer-search_empty.c(style="display:none;") 没有顾客信息符合查询条件.
     #customer-search_pagination
 .box2.clearfix
   .fl
     %p
-      Customer Accounts are
-      %strong
-        enabled
-      and
-      %strong
-        optional
+      顾客帐号被
+      %strong 启用
+      并且
+      %strong 可选
       \.
-      %a(href="https://medhurst-shields-and-kunde7896.myshopify.com/admin/payments#customer-accounts")
-        Configure these settings
+      %a(href="/admin/payments#customer-accounts") 修改这些配置
   .fr
-    customers per page:
+    每页显示条数:
     %select#customer-search_limit(style="width:60px")
       %option(value="25")
         25
@@ -164,8 +119,7 @@
         250
 #display_message.display_message(style="display:none;")
 #hidden-content(style="display:none;")
-  %a#hidden-closure-link.closure-lightbox(href="/admin/customers/tag_form" title="Tag Customers")
-    add tag
+  %a#hidden-closure-link.closure-lightbox(href="/admin/customers/tag_form" title="Tag Customers") 新增标记
   #add-note
     #customer-note.message
       #customer-note_body
@@ -174,12 +128,10 @@
         %input#customer-note_customer_id(type="text" name="customer-note_customer_id")
         %p
           %input#customer-note_submit.btn(name="commit" type="submit" value="Save note")
-          or
-          %a(href="#" onclick="customernote.toggleForm(); return false;")
-            Cancel
+          或者
+          %a(href="#" onclick="customernote.toggleForm(); return false;") 取消
   #save_customer_group
     %form#create_customer_group.clearfix
-      %p(style="font-size:12px; margin-bottom:10px; color:#777;")
-        Enter a name for your new customer group
+      %p(style="font-size:12px; margin-bottom:10px; color:#777;") 输入顾客分组的名称
       %input#new_group_name.name(name="customer_group[name]")
-      %input#save_group_button.btn(type="submit" value="Save")
+      %input#save_group_button.btn(type="submit" value="保存")

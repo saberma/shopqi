@@ -22,7 +22,7 @@ module ApplicationHelper
   def menus
     @menus ||= [
       { label: orders_menu_label, url: '/admin/orders' },
-      { label: '会员', url: '/admin/customers' },
+      { label: '顾客', url: '/admin/customers' },
       { label: '商品', url: products_path },
       { label: '集合', url: custom_collections_path },
       { label: '博客 & 页面', url: pages_path },
