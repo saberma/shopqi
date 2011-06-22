@@ -4,9 +4,11 @@ class AddressDrop < Liquid::Drop
     @address = address
   end
 
-  [:name,:company,:country,:province,:city,:district,:address1,:address2,:zip,:phone].each do |k|
+  delegate :name,:company,:country,:address1,:address2, :zip, :phone, to:  :@address
+
+  [:province,:city,:district].each do |k|
     define_method k do
-      @address.send k
+      District.get @address.send(k)
     end
   end
 

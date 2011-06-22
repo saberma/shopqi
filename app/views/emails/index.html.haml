@@ -10,7 +10,7 @@
   %ul#email-templates.clearfix
     -KeyValues::Mail::Type.all.each do |type|
       %li
-        %a{:href => edit_email_path(emails.first)}
+        %a{:href => edit_email_path(emails.find_by_mail_type(type.code))}
           %strong=type.name
           %em=type.des
 / pgroup
