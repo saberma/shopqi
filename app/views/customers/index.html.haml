@@ -1,3 +1,6 @@
+=content_for :javascripts do
+  =javascript_include_tag 'models/customer', 'collections/customers', 'views/customers/index/index', 'views/customers/index/show', 'controllers/customers/index'
+
 %h2#title 顾客管理
 #action-links
   %ul
@@ -30,7 +33,7 @@
             %li(style="display:none" data-filterset="accepts_marketing:1")
           %a#update-group-3477172.update.btn(href="/admin/customer_groups/3477172" style="display:none") 更新
   .col-8.last(style="width:648px;")
-    #order-filters
+    #customer-filters
       %form#customer-search(action="/admin/customers" method="get" onsubmit="return false")
         #customer-filters.box2.clearfix
           .clearfix
@@ -48,16 +51,16 @@
             %select#search-filter_primary(name="primary-value")
               %option(value="total_spent")
                 Money spent
-              %option(value="orders_count")
-                Orders placed
-              %option(value="last_order_date")
-                Placed an order
+              %option(value="customers_count")
+                Customers placed
+              %option(value="last_customer_date")
+                Placed an customer
               %option(value="country")
                 Located in
               %option(value="accepts_marketing")
                 Accepts marketing
-              %option(value="last_abandoned_order_date")
-                Abandoned an order
+              %option(value="last_abandoned_customer_date")
+                Abandoned an customer
               %option(value="tag")
                 Tagged with
               %option(value="status")
@@ -85,15 +88,15 @@
         %p Customers are being updated&hellip;
       %table#customer-table.data.row-space.select-table(cellspacing="0" cellpadding="0")
         %thead
-          %tr#customer-search_order
+          %tr#customer-search_customer
             %th.nosort(style="width: 16px")
               %input#customer-table_selectall(type="checkbox" autocomplete="off")
             %th.sortcol(data-value="last_name_sortable") 姓名
             %th &nbsp;
             %th.sortcol(data-value="location") 地址
             %th.sortcol(data-value="total_spent" style="text-align: right; padding-right: 4px ! important; background-position: 5% center ! important;") 消费金额
-            %th.sortcol(data-value="orders_count") 订单数
-            %th.sortcol(data-value="last_order_date") 最近订单
+            %th.sortcol(data-value="customers_count") 订单数
+            %th.sortcol(data-value="last_customer_date") 最近订单
         %tbody#customer-table_list.ssb
       #customer-search_empty.c(style="display:none;") 没有顾客信息符合查询条件.
     #customer-search_pagination
@@ -135,3 +138,39 @@
       %p(style="font-size:12px; margin-bottom:10px; color:#777;") 输入顾客分组的名称
       %input#new_group_name.name(name="customer_group[name]")
       %input#save_group_button.btn(type="submit" value="保存")
+
+%script(id="show-customer-item" type="text/x-jquery-tmpl")
+  %tr#customer-45648822.visible.row.odd
+    %td(style="padding-top: 5px")
+      %input.selector(autocomplete="off" style="margin: 3px 0" type="checkbox")
+    %td.customer-name
+      %a.customer-link(href="/admin/customers/{{{id}}}") {{{name}}}
+      .display_message.clearfix(id="customer-display-{{{id}}}" style="display:none;")
+        .customer-details
+          %span.name
+            %a(href="/admin/customers/{{{id}}}") {{{name}}}
+          %span.marketing 接受营销邮件
+          %span.phone-number {{{phone}}}
+          %span.info
+            %a.skype(href="skype://{{{phone}}}") 通过Skype拨打电话
+            %a.email(href="mailto:{{{email}}}") {{{email}}}
+    %td
+      %a.customer-display-link(href="#" onclick="return false;")
+        %span.contact-details.customer-display-link(data-popup-id="customer-display-{{{id}}}") i
+    %td shenzhen CN
+    %td.r {{{total_spent}}}
+    %td.c {{{orders.length}}}
+    %td
+      %span.note
+        %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
+        {{{date order.created_at}}}
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Customers.Index();
+    Backbone.history.start();
+  }
+
+  App.customers = new App.Collections.Customers();
+  App.customers.refresh(#{customers_json});
+  new App.Views.Customer.Index.Index({collection: App.customers})

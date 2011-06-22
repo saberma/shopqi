@@ -11,6 +11,9 @@ App =
         Fulfillment: {}
         LineItem: {}
         History: {}
+    Customer:
+      Index: {}
+      Show: {}
     Product:
       Show:
         Variant: {}
@@ -18,6 +21,7 @@ App =
     ProductOption: {}
   Controllers:
     Orders: {}
+    Customers: {}
   Collections: {}
   init: ->
 
@@ -97,7 +101,6 @@ UpdateableSelectBox = (select_box, create_label) ->
 
 $(document).ready ->
   App.init()
-
 
   $('#indicator').ajaxStart ->
     $(this).show()

@@ -51,6 +51,18 @@ class ShopObserver < ActiveRecord::Observer
 
     # 博客(最新动态)
     shop.blogs.create title: '最新动态', handle: 'latest-news'
+
+    # 默认顾客
+    shop.customers.create [
+      {
+        name: '马海波', email: 'mahb45@gmail.com', note: '默认顾客',
+        addresses_attributes: [{ name: '马海波', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13928452888' }]
+      }, {
+        name: '李卫辉', email: 'liwh87@gmail.com', note: '默认顾客',
+        addresses_attributes: [{ name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13751042627' }]
+      }
+    ]
+
     # 创建各个邮件样板
     KeyValues::Mail::Type.all.each do |type|
       code = type.code.to_sym

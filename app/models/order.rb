@@ -1,6 +1,7 @@
 #encoding: utf-8
 class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
+  belongs_to :customer     , counter_cache: true
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress'
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress'
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'
