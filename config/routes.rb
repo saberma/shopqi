@@ -83,6 +83,8 @@ Shopqi::Application.routes.draw do
       end
     end
 
+    resources :customer_groups, only: [ :create, :update, :destroy ]
+
     resources :products, except: :edit do
       collection do
         get :inventory

@@ -29,21 +29,11 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :phone       , comment: '电话'    , limit: 64  , null: false
     end
 
-    #顾客分组
-    create_table :customer_groups do |t|
-      t.references :shop, comment: "商品应从属于商店", null: false
-      t.string :name    , comment: "名称"            , null: false, limit: 32
-      t.string :query   , comment: "查询"            , null: false
-      t.timestamps
-    end
-
     add_index :customers         , :shop_id
-    add_index :customer_groups   , :shop_id
     add_index :customer_addresses, :customer_id
   end
 
   def self.down
-    drop_table :customer_groups
     drop_table :customer_addresses
     drop_table :customers
   end

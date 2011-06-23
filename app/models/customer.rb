@@ -10,7 +10,3 @@ end
 class CustomerAddress < ActiveRecord::Base
   belongs_to :customer
 end
-
-class CustomerGroup < ActiveRecord::Base
-  belongs_to :shop
-end

@@ -1,0 +1,2 @@
+module CustomerGroupsHelper
+end
