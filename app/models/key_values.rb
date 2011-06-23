@@ -20,7 +20,7 @@ module KeyValues
     ]
   end
 
-  # 是否发布
+  # 每页条数
   class PageSize < KeyValues::Base
     self.data = [
       {id: 1, name: '25' , code: '25' },
@@ -76,6 +76,63 @@ module KeyValues
         {id: 4, name: '材料', code: 'material' },
         {id: 5, name: '风格', code: 'style'    }
       ]
+    end
+
+  end
+
+  # 顾客
+  module Customer
+
+    # 过滤器
+    class PrimaryFilter < KeyValues::Base
+      self.data = [
+        {id: 1, name: '消费金额'    , code: 'total_spent'              , clazz: 'integer'},
+        {id: 2, name: '订单数'      , code: 'orders_count'             , clazz: 'integer'},
+        {id: 3, name: '下单时间'    , code: 'last_order_date'          , clazz: 'date'   },
+        #{id: 4, name: '所在城市'    , code: 'country'                  , clazz: 'city'   },
+        {id: 5, name: '接收营销邮件', code: 'accepts_marketing'        , clazz: 'boolean'},
+        {id: 6, name: '放弃订单时间', code: 'last_abandoned_order_date', clazz: 'date'   },
+        #{id: 7, name: '订单标签'    , code: 'tag'                      , clazz: 'tag'    },
+        {id: 8, name: '帐号状态'    , code: 'status'                   , clazz: 'status' }
+      ]
+    end
+
+    # 过滤器条件
+    module SecondaryFilter
+
+      class Integer < KeyValues::Base
+        self.data = [
+          {id: 1, name: '大于', code: '>'},
+          {id: 2, name: '小于', code: '<'},
+          {id: 3, name: '等于', code: '' }
+        ]
+      end
+
+      class Date < KeyValues::Base
+        self.data = [
+          {id: 1, name: '在最近一周'  , code: 'last_week'    },
+          {id: 2, name: '在最近一个月', code: 'last_month'   },
+          {id: 3, name: '在最近三个月', code: 'last_3_months'},
+          {id: 4, name: '在最近一年'  , code: 'last_year'    },
+        ]
+      end
+
+      class Boolean < KeyValues::Base
+        self.data = [
+          {id: 1, name: '是', code: 'yes'},
+          {id: 2, name: '否', code: 'no' },
+        ]
+      end
+
+      class State < KeyValues::Base
+        self.data = [
+          {id: 1, name: '已启用', code: 'enabled' },
+          {id: 2, name: '已禁用', code: 'disabled'},
+          {id: 3, name: '已邀请', code: 'invited' },
+          {id: 4, name: '被拒绝', code: 'declined'}, #发送邀请邮件后顾客拒绝注册
+        ]
+      end
+
     end
 
   end

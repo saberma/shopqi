@@ -7,6 +7,8 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     "change .selector": 'changeCustomerCheckbox'
     "change #customer-select": 'changeCustomerSelect'
     "click #select-all": 'selectAll'
+    "click #customer-search_field": 'showFilter' #显示过滤器
+    "change #search-filter_primary": 'selectPrimary' # 选择主过滤器
 
   initialize: ->
     self = this
@@ -23,6 +25,9 @@ App.Views.Customer.Index.Index = Backbone.View.extend
       $(this).val(hint).css(color: '#888') unless $(this).val()
     .blur()
 
+    # 初始化过滤器
+    $('#search-filter_primary').change()
+
     @q = '' #避免重复查询相同内容
 
   render: ->
@@ -30,6 +35,9 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     $('#customer-table_list').html('')
     _(@collection.models).each (model) ->
       new App.Views.Customer.Index.Show model: model
+
+  showFilter: ->
+    $('#customer-search_add_filters').show()
 
   returnToSearch: (e) ->
     if e.keyCode == 13
@@ -42,9 +50,19 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     hint = self.attr('data-hint')
     if value != hint and @q != value
       @q = value
-      $('#customer-search_msg').show().css('background-image', 'url(/images/spinner.gif)')
+      $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
       $.get '/admin/customers/search', q: value, (data) ->
         App.customers.refresh(data)
+
+  selectPrimary: ->
+    clazz = $('#search-filter_primary').children(':selected').attr('clazz')
+    filter_html = switch clazz
+		    when 'tag'
+		      $('#secondary-filters-price-item').html()
+		    else
+		      $("#secondary-filters-#{clazz}-item").html()
+    $('#search-filter_secondary').html filter_html
+    $('#search-filter_value').val('').toggle(clazz is 'integer') #只有数值过滤器才需要额外输入框
 
   # 商品复选框全选操作
   selectAll: ->

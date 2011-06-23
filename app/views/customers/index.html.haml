@@ -33,45 +33,24 @@
             %li(style="display:none" data-filterset="accepts_marketing:1")
           %a#update-group-3477172.update.btn(href="/admin/customer_groups/3477172" style="display:none") 更新
   .col-8.last(style="width:648px;")
-    #customer-filters
+    #order-filters
       %form#customer-search(action="/admin/customers" method="get" onsubmit="return false")
         #customer-filters.box2.clearfix
           .clearfix
             %input#customer-search_field.filter-text(autocomplete="off" data-hint="输入查询内容过滤信息..." name="q" onsubmit="return false" type="text")
             .filter-info(onclick="$('customer-search_field').focus();")
               #search-filter_summary.summary(style="display:none;")
-            #customer-search_msg(style='padding-left: 10px; background-image: none;') 找到 4位 顾客
+            #customer-search_msg(style='padding-left: 10px; background-image: none; background-color: transparent;') 找到 0位 顾客
           #customer-search_filters
       #customer-search_add_filters.toggle-drop.box2(style="display:none;")
         %h3
-          增加过滤器
-          %span.hint 通过订单总额等条件过滤顾客信息
+          %span.hint 增加过滤器 通过订单总额等条件过滤顾客信息
         .clearfix
           %form#search-filter(onsubmit="return false")
             %select#search-filter_primary(name="primary-value")
-              %option(value="total_spent")
-                Money spent
-              %option(value="customers_count")
-                Customers placed
-              %option(value="last_customer_date")
-                Placed an customer
-              %option(value="country")
-                Located in
-              %option(value="accepts_marketing")
-                Accepts marketing
-              %option(value="last_abandoned_customer_date")
-                Abandoned an customer
-              %option(value="tag")
-                Tagged with
-              %option(value="status")
-                Account status
+              -primary_filters.each do |filter|
+                %option{value:filter.code, clazz:filter.clazz}=filter.name
             %select#search-filter_secondary(name="secondary-value")
-              %option(value=">")
-                is greater than
-              %option(value="<")
-                is less than
-              %option(value="")
-                is equal to
             #search-filter_value_div
               %input#search-filter_value.condition.filter_text_value(name="filter-value" style="width:120px" type="text")
             .apply_filter
@@ -165,6 +144,10 @@
       %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
       {{{date order.created_at}}}
     {{/if}}
+%script(id="secondary-filters-integer-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_integer
+%script(id="secondary-filters-date-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_date
+%script(id="secondary-filters-boolean-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_boolean
+%script(id="secondary-filters-status-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_status
 
 :javascript
   App.init = function(){
