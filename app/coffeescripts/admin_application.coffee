@@ -14,6 +14,8 @@ App =
     Customer:
       Index: {}
       Show: {}
+    CustomerGroup:
+      Index: {}
     Product:
       Show:
         Variant: {}

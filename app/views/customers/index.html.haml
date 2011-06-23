@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/customer', 'collections/customers', 'views/customers/index/index', 'views/customers/index/search', 'views/customers/index/show', 'controllers/customers/index'
+  =javascript_include_tag 'models/customer', 'models/customer_group', 'collections/customers', 'collections/customer_groups', 'views/customers/index/index', 'views/customers/index/search', 'views/customers/index/show', 'views/customer_groups/index/index', 'views/customer_groups/index/show', 'controllers/customers/index'
 
 %h2#title 顾客管理
 #action-links
@@ -26,12 +26,6 @@
             %h3 当前查询
             %ul.filters
             %a#save_customer_group_link.btn.closure-lightbox(href="#save_customer_group" onclick="return false;" title="Save Customer Group") 保存为顾客分组
-        %li#customergroup-3477172.customer-group.clearfix(data-filter="{&quot;f&quot;:[&quot;accepts_marketing:1&quot;]}")
-          %a.delete(href="/admin/customer_groups/3477172" data-confirm="您确定要删除吗?")=image_tag('admin/icons/trash.gif')
-          %h3 接受营销
-          %ul.filters
-            %li(style="display:none" data-filterset="accepts_marketing:1")
-          %a#update-group-3477172.update.btn(href="/admin/customer_groups/3477172" style="display:none") 更新
   .col-8.last(style="width:648px;")
     #order-filters
       %form#customer-search(action="/admin/customers" method="get" onsubmit="return false")
@@ -148,6 +142,12 @@
 %script(id="secondary-filters-date-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_date
 %script(id="secondary-filters-boolean-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_boolean
 %script(id="secondary-filters-status-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_status
+%script(id="customer-group-item" type="text/x-jquery-tmpl")
+  %a.delete(href="/admin/customer_groups/{{{id}}}" data-confirm="您确定要删除吗?")=image_tag('admin/icons/trash.gif')
+  %h3 {{{name}}}
+  %ul.filters
+    %li(style="display:none" data-filterset="accepts_marketing:1")
+  %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新
 
 :javascript
   App.init = function(){
@@ -156,5 +156,8 @@
   }
 
   App.customers = new App.Collections.Customers();
+  App.customer_groups = new App.Collections.CustomerGroups();
   App.customers.refresh(#{customers_json});
+  App.customer_groups.refresh(#{customer_groups_json});
   new App.Views.Customer.Index.Index({collection: App.customers})
+  new App.Views.CustomerGroup.Index.Index({collection: App.customer_groups})

@@ -6,6 +6,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     "blur #customer-search_field": 'search'
     "click #customer-search_field": 'showFilter' #显示过滤器
     "change #search-filter_primary": 'selectPrimary' # 选择主过滤器
+    "click #search-filter_apply": 'addFilter' # 选择主过滤器
 
   initialize: ->
     self = this
@@ -34,16 +35,21 @@ App.Views.Customer.Index.Search = Backbone.View.extend
   returnToSearch: (e) ->
     this.search() if e.keyCode == 13
 
+  # 执行查询(不检查重复情况)
+  performSearch: ->
+    value = $('#customer-search_field').val()
+    $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
+    $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
+
   # 查询
   search: ->
-    self = $('#customer-search_field')
-    value = self.val()
-    hint = self.attr('data-hint')
+    value = $('#customer-search_field').val()
+    hint = $('#customer-search_field').attr('data-hint')
     if value != hint and @q != value
       @q = value
-      $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
-      $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
+      this.performSearch()
 
+  # 选择主过滤器
   selectPrimary: ->
     clazz = $('#search-filter_primary').children(':selected').attr('clazz')
     filter_html = switch clazz
@@ -53,3 +59,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
 		      $("#secondary-filters-#{clazz}-item").html()
     $('#search-filter_secondary').html filter_html
     $('#search-filter_value').val('').toggle(clazz is 'integer') #只有数值过滤器才需要额外输入框
+
+  # 新增过滤器
+  addFilter: ->
+    this.performSearch()

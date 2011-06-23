@@ -12,10 +12,16 @@ class CustomersController < ApplicationController
       shop.customers.limit(page_size).all
     end
   end
+  expose(:customer_groups) { shop.customer_groups }
   expose(:customer)
   expose(:customers_json) do
     customers.to_json({
       include: :orders,
+      except: [ :created_at, :updated_at ]
+    })
+  end
+  expose(:customer_groups_json) do
+    customer_groups.to_json({
       except: [ :created_at, :updated_at ]
     })
   end
