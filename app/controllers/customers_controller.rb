@@ -6,7 +6,11 @@ class CustomersController < ApplicationController
   expose(:shop) { current_user.shop }
   expose(:customers) do
     page_size = 25
-    shop.customers.limit(page_size).all
+    if params[:q]
+      shop.customers.limit(page_size).metasearch(name_contains: params[:q]).all
+    else
+      shop.customers.limit(page_size).all
+    end
   end
   expose(:customer)
   expose(:customers_json) do

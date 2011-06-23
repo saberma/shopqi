@@ -2,15 +2,16 @@ App.Views.Customer.Index.Index = Backbone.View.extend
   el: '#main'
 
   events:
+    "keyup #customer-search_field": 'search'
     "change .selector": 'changeCustomerCheckbox'
     "change #customer-select": 'changeCustomerSelect'
     "click #select-all": 'selectAll'
 
   initialize: ->
     self = this
-    @collection.view = this
     _.bindAll this, 'render'
     this.render()
+    @collection.bind 'refresh', -> self.render()
 
     $("input[data-hint]").focus ->
       hint = $(this).attr('data-hint')
@@ -22,8 +23,17 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     .blur()
 
   render: ->
+    $('#customer-table_list').html('')
     _(@collection.models).each (model) ->
       new App.Views.Customer.Index.Show model: model
+
+  # 查询
+  search: ->
+    self = $('#customer-search_field')
+    value = self.val()
+    if @q != value
+      @q = value
+      $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
 
   # 商品复选框全选操作
   selectAll: ->
