@@ -12,6 +12,15 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     _.bindAll this, 'render'
     this.render()
 
+    $("input[data-hint]").focus ->
+      hint = $(this).attr('data-hint')
+      $(this).css color: ''
+      $(this).val('') if $(this).val() == hint
+    .blur ->
+      hint = $(this).attr('data-hint')
+      $(this).val(hint).css(color: '#888') unless $(this).val()
+    .blur()
+
   render: ->
     _(@collection.models).each (model) ->
       new App.Views.Customer.Index.Show model: model
