@@ -1,4 +1,4 @@
 CustomerGroup = Backbone.Model.extend
-  name: 'customer'
+  name: 'customer_group'
   url: ->
     "/admin/customer_groups/#{this.id}"

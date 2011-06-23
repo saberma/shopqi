@@ -63,6 +63,13 @@ class ShopObserver < ActiveRecord::Observer
       }
     ]
 
+    # 默认顾客分组
+    shop.customer_groups.create [
+      { name: '接收营销邮件', query: '' },
+      { name: '潜在顾客'    , query: '' },
+      { name: '多次消费'    , query: '' },
+    ]
+
     # 创建各个邮件样板
     KeyValues::Mail::Type.all.each do |type|
       code = type.code.to_sym
