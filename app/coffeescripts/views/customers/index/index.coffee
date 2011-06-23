@@ -26,6 +26,7 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     @q = '' #避免重复查询相同内容
 
   render: ->
+    $('#customer-search_msg').html("找到 #{App.customers.length}位 顾客").css('background-image', 'none')
     $('#customer-table_list').html('')
     _(@collection.models).each (model) ->
       new App.Views.Customer.Index.Show model: model
@@ -43,7 +44,6 @@ App.Views.Customer.Index.Index = Backbone.View.extend
       @q = value
       $('#customer-search_msg').show().css('background-image', 'url(/images/spinner.gif)')
       $.get '/admin/customers/search', q: value, (data) ->
-        $('#customer-search_msg').css('background-image', 'none')
         App.customers.refresh(data)
 
   # 商品复选框全选操作
