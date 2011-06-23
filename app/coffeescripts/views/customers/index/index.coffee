@@ -2,7 +2,8 @@ App.Views.Customer.Index.Index = Backbone.View.extend
   el: '#main'
 
   events:
-    "keyup #customer-search_field": 'search'
+    "keydown #customer-search_field": 'returnToSearch'
+    "blur #customer-search_field": 'search'
     "change .selector": 'changeCustomerCheckbox'
     "change #customer-select": 'changeCustomerSelect'
     "click #select-all": 'selectAll'
@@ -22,18 +23,28 @@ App.Views.Customer.Index.Index = Backbone.View.extend
       $(this).val(hint).css(color: '#888') unless $(this).val()
     .blur()
 
+    @q = '' #避免重复查询相同内容
+
   render: ->
     $('#customer-table_list').html('')
     _(@collection.models).each (model) ->
       new App.Views.Customer.Index.Show model: model
 
+  returnToSearch: (e) ->
+    if e.keyCode == 13
+      this.search()
+
   # 查询
   search: ->
     self = $('#customer-search_field')
     value = self.val()
-    if @q != value
+    hint = self.attr('data-hint')
+    if value != hint and @q != value
       @q = value
-      $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
+      $('#customer-search_msg').show().css('background-image', 'url(/images/spinner.gif)')
+      $.get '/admin/customers/search', q: value, (data) ->
+        $('#customer-search_msg').css('background-image', 'none')
+        App.customers.refresh(data)
 
   # 商品复选框全选操作
   selectAll: ->

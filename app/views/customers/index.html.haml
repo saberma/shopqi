@@ -40,7 +40,7 @@
             %input#customer-search_field.filter-text(autocomplete="off" data-hint="输入查询内容过滤信息..." name="q" onsubmit="return false" type="text")
             .filter-info(onclick="$('customer-search_field').focus();")
               #search-filter_summary.summary(style="display:none;")
-            #customer-search_msg
+            #customer-search_msg(style='padding-left: 10px; background-image: none;') 找到 4位 顾客
           #customer-search_filters
       #customer-search_add_filters.toggle-drop.box2(style="display:none;")
         %h3
