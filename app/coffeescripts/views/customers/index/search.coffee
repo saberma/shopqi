@@ -42,8 +42,10 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     hint = $('#customer-search_field').attr('data-hint')
     value = $('#customer-search_field').val()
     value = '' if value is hint
+    @filters = this.getFilters @query
+    params = q: value, f: _(@filters).map (filter) -> "#{filter.condition}:#{filter.value}"
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
-    $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
+    $.get '/admin/customers/search', params, (data) -> App.customers.refresh(data)
 
   # 查询
   search: ->

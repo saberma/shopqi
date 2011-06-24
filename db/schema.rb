@@ -110,9 +110,9 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
   add_index "customer_addresses", ["customer_id"], :name => "index_customer_addresses_on_customer_id"
 
   create_table "customer_groups", :force => true do |t|
-    t.integer  "shop_id",                  :null => false
-    t.string   "name",       :limit => 32, :null => false
-    t.string   "query",                    :null => false
+    t.integer  "shop_id",                   :null => false
+    t.string   "name",       :limit => 32,  :null => false
+    t.string   "query",      :limit => 512, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
 
   create_table "customers", :force => true do |t|
     t.integer  "shop_id",                                           :null => false
+    t.string   "status",            :limit => 8,                    :null => false
     t.string   "name",              :limit => 16,                   :null => false
     t.string   "email",             :limit => 32,                   :null => false
     t.string   "note"

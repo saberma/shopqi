@@ -89,10 +89,10 @@ module KeyValues
         {id: 1, name: '消费金额'    , code: 'total_spent'              , clazz: 'integer'},
         {id: 2, name: '订单数'      , code: 'orders_count'             , clazz: 'integer'},
         {id: 3, name: '下单时间'    , code: 'last_order_date'          , clazz: 'date'   },
-        #{id: 4, name: '所在城市'    , code: 'country'                  , clazz: 'city'   },
+        #{id: 4, name: '所在城市'   , code: 'country'                  , clazz: 'city'   },
         {id: 5, name: '接收营销邮件', code: 'accepts_marketing'        , clazz: 'boolean'},
         {id: 6, name: '放弃订单时间', code: 'last_abandoned_order_date', clazz: 'date'   },
-        #{id: 7, name: '订单标签'    , code: 'tag'                      , clazz: 'tag'    },
+        #{id: 7, name: '订单标签'   , code: 'tag'                      , clazz: 'tag'    },
         {id: 8, name: '帐号状态'    , code: 'status'                   , clazz: 'status' }
       ]
     end
@@ -102,9 +102,9 @@ module KeyValues
 
       class Integer < KeyValues::Base
         self.data = [
-          {id: 1, name: '大于', code: '>'},
-          {id: 2, name: '小于', code: '<'},
-          {id: 3, name: '等于', code: '' }
+          {id: 1, name: '大于', code: 'gt'},
+          {id: 2, name: '小于', code: 'lt'},
+          {id: 3, name: '等于', code: 'eq' }
         ]
       end
 

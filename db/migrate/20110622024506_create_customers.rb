@@ -4,6 +4,7 @@ class CreateCustomers < ActiveRecord::Migration
     #顾客
     create_table :customers do |t|
       t.references :shop          , comment: "商品应从属于商店", null: false
+      t.string :status            , comment: "状态"            , null: false  , limit: 8
       t.string :name              , comment: "名称"            , null: false  , limit: 16
       t.string :email             , comment: "邮箱"            , null: false  , limit: 32
       t.string :note              , comment: "备注"

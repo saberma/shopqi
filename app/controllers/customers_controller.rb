@@ -5,11 +5,41 @@ class CustomersController < ApplicationController
 
   expose(:shop) { current_user.shop }
   expose(:customers) do
-    page_size = 25
-    if params[:q]
-      shop.customers.limit(page_size).metasearch(name_contains: params[:q]).all
+    if params[:q] or params[:f]
+      page_size = 25
+      conditions = {}
+      unless params[:f].blank?
+        params[:f].each do |filter|
+          condition, value = filter.split ':'
+          value = case value.to_sym
+            # 日期
+            when :last_week then 1.week.ago
+            when :last_month then 1.month.ago
+            when :last_3_months then 3.month.ago
+            when :last_year then 3.month.ago
+            # 是否
+            when :yes then true
+            when :no then false
+            else
+              value
+          end
+          case condition.to_sym
+            when :last_order_date
+              conditions[:orders_created_at_gt] = value
+            when :last_abandoned_order_date
+              conditions[:orders_status_eq] = :abandoned
+              conditions[:orders_created_at_gt] = value
+            when :accepts_marketing, :status
+              conditions["#{condition}_eq"] = value
+            else
+              conditions[condition] = value
+          end
+        end
+      end
+      conditions.merge! name_contains: params[:q] unless params[:q].blank?
+      shop.customers.limit(page_size).metasearch(conditions).all
     else
-      shop.customers.limit(page_size).all
+      shop.customers
     end
   end
   expose(:customer_groups) { shop.customer_groups }

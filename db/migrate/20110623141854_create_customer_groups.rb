@@ -5,7 +5,7 @@ class CreateCustomerGroups < ActiveRecord::Migration
     create_table :customer_groups do |t|
       t.references :shop, comment: "商品应从属于商店", null: false
       t.string :name    , comment: "名称"            , null: false, limit: 32
-      t.string :query   , comment: "查询"            , null: false
+      t.string :query   , comment: "查询"            , null: false, limit: 512
       t.timestamps
     end
 

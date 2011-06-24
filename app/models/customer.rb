@@ -5,6 +5,8 @@ class Customer < ActiveRecord::Base
   has_many :addresses, dependent: :destroy, class_name: 'CustomerAddress'
 
   accepts_nested_attributes_for :addresses
+
+  default_value_for :status, 'enabled'
 end
 
 class CustomerAddress < ActiveRecord::Base
