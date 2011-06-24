@@ -118,6 +118,8 @@ GEM
     httparty (0.7.4)
       crack (= 0.1.8)
     i18n (0.5.0)
+    interactive_editor (0.0.8)
+      spoon (>= 0.0.1)
     jquery-rails (0.2.7)
       rails (~> 3.0)
       thor (~> 0.14.4)
@@ -223,6 +225,7 @@ GEM
     sinatra (1.2.3)
       rack (~> 1.1)
       tilt (< 2.0, >= 1.2.2)
+    spoon (0.0.1)
     spork (0.8.4)
     subexec (0.0.4)
     therubyracer (0.9.0beta3)
@@ -274,6 +277,7 @@ DEPENDENCIES
   haml
   haml-rails
   httparty
+  interactive_editor
   jquery-rails
   kaminari
   liquid
