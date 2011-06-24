@@ -60,16 +60,31 @@ App.Views.Customer.Index.Search = Backbone.View.extend
 
   # 新增过滤器
   addFilter: ->
-    primary = $('#search-filter_primary').children(':selected').val()
-    secondary = $('#search-filter_secondary').children(':selected').val()
-    query_name = "#{$('#search-filter_primary').children(':selected').text()} #{$('#search-filter_secondary').children(':selected').text()}"
-    filter = name: '', query: "{#{primary}:#{secondary}}", query_name: query_name
-    App.customer_groups.add filter
+    @query = '' unless @query? #TODO 与分组关联
+    primary = $('#search-filter_primary').children(':selected')
+    secondary = $('#search-filter_secondary').children(':selected')
+    [condition, value] = [primary.val(), secondary.val()]
+    [condition_name, value_name] = [primary.text(), secondary.text()]
+    new_filter = condition: condition, value: value, condition_name: condition_name, value_name: value_name
+    @filters = _(@query.split(';')).compact().map (filter_query) ->
+      [ condition, value, condition_name, value_name ] = filter_query.split ':'
+      condition: condition, value: value, condition_name: condition_name, value_name: value_name
+    exist_filter = _(@filters).detect (filter) -> new_filter.condition is filter.condition
+    if exist_filter # 避免重复
+      exist_filter.value = new_filter.value
+      exist_filter.value_name = new_filter.value_name
+    else
+      @filters.push new_filter
+    @query = _(@filters).map (filter) ->
+      "#{filter.condition}:#{filter.value}:#{filter.condition_name}:#{filter.value_name}"
+    .join(';')
+    #App.customer_groups.add filter
     # 显示新增的过滤器
-    $('#search-filter_summary .filter-message').text "已有1个过滤器"
+    $('#search-filter_summary .filter-message').text "已有#{@filters.length}个过滤器"
     $('#search-filter_summary').show()
     template = Handlebars.compile $('#customer-search_filters-item').html()
-    $('#customer-search_filters').css('margin-top', '10px').append template filter
+    $('#customer-search_filters').html('').css('margin-top', '10px')
+    _(@filters).each (filter) -> $('#customer-search_filters').append template filter
     # 左右分组
     $('.customer-group.active').removeClass('active')
     $('#customergroup-current').show().addClass('active')

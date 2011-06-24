@@ -149,8 +149,8 @@
     %li(style="display:none" data-filterset="accepts_marketing:1")
   %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新
 %script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
-  .filter-tag.last_order_date(data-filter="{{{query}}}")
-    %span.label-text {{{query_name}}}
+  .filter-tag.last_order_date
+    %span.label-text {{{condition_name}}} {{{value_name}}}
     %a.close-filter-tag(href="#") x
 
 :javascript
