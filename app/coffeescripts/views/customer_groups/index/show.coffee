@@ -1,4 +1,5 @@
 App.Views.CustomerGroup.Index.Show = Backbone.View.extend
+  tagName: 'li'
   className: 'customer-group clearfix' #data-filter
 
   initialize: ->
@@ -8,4 +9,4 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
   render: ->
     template = Handlebars.compile $('#customer-group-item').html()
     $(@el).html template @model.attributes
-    $('#customergroup-all').after @el
+    $('#customergroup-current').after @el

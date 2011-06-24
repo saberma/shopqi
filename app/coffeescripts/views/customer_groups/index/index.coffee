@@ -7,5 +7,5 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     this.render()
 
   render: ->
-    _(@collection.models).each (model) ->
+    @collection.each (model) ->
       new App.Views.CustomerGroup.Index.Show model: model

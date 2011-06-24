@@ -37,7 +37,9 @@ App.Views.Customer.Index.Search = Backbone.View.extend
 
   # 执行查询(不检查重复情况)
   performSearch: ->
+    hint = $('#customer-search_field').attr('data-hint')
     value = $('#customer-search_field').val()
+    value = '' if value is hint
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
     $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
 
@@ -52,14 +54,23 @@ App.Views.Customer.Index.Search = Backbone.View.extend
   # 选择主过滤器
   selectPrimary: ->
     clazz = $('#search-filter_primary').children(':selected').attr('clazz')
-    filter_html = switch clazz
-		    when 'tag'
-		      $('#secondary-filters-price-item').html()
-		    else
-		      $("#secondary-filters-#{clazz}-item").html()
-    $('#search-filter_secondary').html filter_html
+    filter_html = _(secondary_filters[clazz]).map (text, value) -> "<option value='#{value}'>#{text}</option>"
+    $('#search-filter_secondary').html(filter_html.join(''))
     $('#search-filter_value').val('').toggle(clazz is 'integer') #只有数值过滤器才需要额外输入框
 
   # 新增过滤器
   addFilter: ->
+    primary = $('#search-filter_primary').children(':selected').val()
+    secondary = $('#search-filter_secondary').children(':selected').val()
+    query_name = "#{$('#search-filter_primary').children(':selected').text()} #{$('#search-filter_secondary').children(':selected').text()}"
+    filter = name: '', query: "{#{primary}:#{secondary}}", query_name: query_name
+    App.customer_groups.add filter
+    # 显示新增的过滤器
+    $('#search-filter_summary .filter-message').text "已有1个过滤器"
+    $('#search-filter_summary').show()
+    template = Handlebars.compile $('#customer-search_filters-item').html()
+    $('#customer-search_filters').css('margin-top', '10px').append template filter
+    # 左右分组
+    $('.customer-group.active').removeClass('active')
+    $('#customergroup-current').show().addClass('active')
     this.performSearch()

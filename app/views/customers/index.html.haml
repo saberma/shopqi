@@ -32,8 +32,11 @@
         #customer-filters.box2.clearfix
           .clearfix
             %input#customer-search_field.filter-text(autocomplete="off" data-hint="输入查询内容过滤信息..." name="q" onsubmit="return false" type="text")
-            .filter-info(onclick="$('customer-search_field').focus();")
+            .filter-info
               #search-filter_summary.summary(style="display:none;")
+                %span.filter-message 1 active filter
+                %span.remove
+                  %a(href="#") x
             #customer-search_msg(style='padding-left: 10px; background-image: none; background-color: transparent;') 找到 0位 顾客
           #customer-search_filters
       #customer-search_add_filters.toggle-drop.box2(style="display:none;")
@@ -138,21 +141,29 @@
       %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
       {{{date order.created_at}}}
     {{/if}}
-%script(id="secondary-filters-integer-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_integer
-%script(id="secondary-filters-date-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_date
-%script(id="secondary-filters-boolean-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_boolean
-%script(id="secondary-filters-status-item" type="text/x-jquery-tmpl")=options_for_select secondary_filters_status
+
 %script(id="customer-group-item" type="text/x-jquery-tmpl")
   %a.delete(href="/admin/customer_groups/{{{id}}}" data-confirm="您确定要删除吗?")=image_tag('admin/icons/trash.gif')
   %h3 {{{name}}}
   %ul.filters
     %li(style="display:none" data-filterset="accepts_marketing:1")
   %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新
+%script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
+  .filter-tag.last_order_date(data-filter="{{{query}}}")
+    %span.label-text {{{query_name}}}
+    %a.close-filter-tag(href="#") x
 
 :javascript
   App.init = function(){
     new App.Controllers.Customers.Index();
     Backbone.history.start();
+  }
+
+  secondary_filters = {
+    integer: #{secondary_filters_integer.to_json},
+    date: #{secondary_filters_date.to_json},
+    boolean: #{secondary_filters_boolean.to_json},
+    status: #{secondary_filters_status.to_json}
   }
 
   App.customers = new App.Collections.Customers();

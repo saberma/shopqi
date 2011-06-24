@@ -35,10 +35,10 @@ class CustomersController < ApplicationController
   end
   expose(:page_sizes) { KeyValues::PageSize.hash }
   expose(:primary_filters) { KeyValues::Customer::PrimaryFilter.all }
-  expose(:secondary_filters_integer) { KeyValues::Customer::SecondaryFilter::Integer.options }
-  expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.options }
-  expose(:secondary_filters_boolean) { KeyValues::Customer::SecondaryFilter::Boolean.options }
-  expose(:secondary_filters_status) { KeyValues::Customer::SecondaryFilter::State.options }
+  expose(:secondary_filters_integer) { KeyValues::Customer::SecondaryFilter::Integer.hash }
+  expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
+  expose(:secondary_filters_boolean) { KeyValues::Customer::SecondaryFilter::Boolean.hash }
+  expose(:secondary_filters_status) { KeyValues::Customer::SecondaryFilter::State.hash }
 
   def search
     render json: customers_json
