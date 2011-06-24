@@ -64,8 +64,15 @@ App.Views.Customer.Index.Search = Backbone.View.extend
   addFilter: ->
     primary = $('#search-filter_primary').children(':selected')
     secondary = $('#search-filter_secondary').children(':selected')
-    [condition, value] = [primary.val(), secondary.val()]
-    [condition_name, value_name] = [primary.text(), secondary.text()]
+    text = $('#search-filter_value').val()
+    is_integer = primary.attr('clazz') is 'integer'
+    return false if is_integer and !text
+    if is_integer
+      [condition, value] = ["#{primary.val()}_#{secondary.val()}", text]
+      [condition_name, value_name] = ["#{primary.text()} #{secondary.text()}", text]
+    else
+      [condition, value] = [primary.val(), secondary.val()]
+      [condition_name, value_name] = [primary.text(), secondary.text()]
     new_filter = condition: condition, value: value, condition_name: condition_name, value_name: value_name
     @filters = this.getFilters @query
     exist_filter = _(@filters).detect (filter) -> filter.condition is new_filter.condition
