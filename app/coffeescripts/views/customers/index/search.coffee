@@ -7,6 +7,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     "click #customer-search_field": 'showFilter' #显示过滤器
     "change #search-filter_primary": 'selectPrimary' # 选择主过滤器
     "click #search-filter_apply": 'addFilter' # 选择主过滤器
+    "click .close-filter-tag": 'removeFilter' # 删除主过滤器
 
   initialize: ->
     self = this
@@ -60,32 +61,52 @@ App.Views.Customer.Index.Search = Backbone.View.extend
 
   # 新增过滤器
   addFilter: ->
-    @query = '' unless @query? #TODO 与分组关联
     primary = $('#search-filter_primary').children(':selected')
     secondary = $('#search-filter_secondary').children(':selected')
     [condition, value] = [primary.val(), secondary.val()]
     [condition_name, value_name] = [primary.text(), secondary.text()]
     new_filter = condition: condition, value: value, condition_name: condition_name, value_name: value_name
-    @filters = _(@query.split(';')).compact().map (filter_query) ->
-      [ condition, value, condition_name, value_name ] = filter_query.split ':'
-      condition: condition, value: value, condition_name: condition_name, value_name: value_name
-    exist_filter = _(@filters).detect (filter) -> new_filter.condition is filter.condition
+    @filters = this.getFilters @query
+    exist_filter = _(@filters).detect (filter) -> filter.condition is new_filter.condition
     if exist_filter # 避免重复
-      exist_filter.value = new_filter.value
-      exist_filter.value_name = new_filter.value_name
+      [exist_filter.value, exist_filter.value_name] = [new_filter.value, new_filter.value_name]
     else
       @filters.push new_filter
-    @query = _(@filters).map (filter) ->
-      "#{filter.condition}:#{filter.value}:#{filter.condition_name}:#{filter.value_name}"
-    .join(';')
+    @query = this.getQuery @filters
+    this.showFilters()
     #App.customer_groups.add filter
-    # 显示新增的过滤器
-    $('#search-filter_summary .filter-message').text "已有#{@filters.length}个过滤器"
-    $('#search-filter_summary').show()
-    template = Handlebars.compile $('#customer-search_filters-item').html()
-    $('#customer-search_filters').html('').css('margin-top', '10px')
-    _(@filters).each (filter) -> $('#customer-search_filters').append template filter
     # 左右分组
     $('.customer-group.active').removeClass('active')
     $('#customergroup-current').show().addClass('active')
     this.performSearch()
+
+  # 删除过滤器
+  removeFilter: (e) ->
+    remove_condition = $(e.target).parent('.filter-tag').attr('data-filter')
+    @filters = this.getFilters @query
+    @filters = _(@filters).reject (filter) -> filter.condition is remove_condition
+    @query = this.getQuery @filters
+    this.showFilters()
+    this.performSearch()
+    false
+
+  #### private ####
+  getFilters: (query) ->
+    query = '' unless query? #TODO 与分组关联
+    _(query.split(';')).compact().map (filter_query) ->
+      [ condition, value, condition_name, value_name ] = filter_query.split ':'
+      condition: condition, value: value, condition_name: condition_name, value_name: value_name
+
+  getQuery: (filters) ->
+    _(filters).map (filter) ->
+      "#{filter.condition}:#{filter.value}:#{filter.condition_name}:#{filter.value_name}"
+    .join(';')
+
+  # 显示过滤器列表
+  showFilters: ->
+    $('#search-filter_summary .filter-message').text "已有#{@filters.length}个过滤器"
+    $('#search-filter_summary').toggle(@filters.length > 0)
+    template = Handlebars.compile $('#customer-search_filters-item').html()
+    margin_top = if @filters.length > 0 then '10' else '0'
+    $('#customer-search_filters').html('').css('margin-top', "#{margin_top}px")
+    _(@filters).each (filter) -> $('#customer-search_filters').append template filter

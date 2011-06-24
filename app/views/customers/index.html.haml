@@ -149,7 +149,7 @@
     %li(style="display:none" data-filterset="accepts_marketing:1")
   %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新
 %script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
-  .filter-tag.last_order_date
+  .filter-tag(data-filter="{{{condition}}}")
     %span.label-text {{{condition_name}}} {{{value_name}}}
     %a.close-filter-tag(href="#") x
 
