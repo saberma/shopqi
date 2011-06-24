@@ -8,6 +8,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     "change #search-filter_primary": 'selectPrimary' # 选择主过滤器
     "click #search-filter_apply": 'addFilter' # 选择主过滤器
     "click .close-filter-tag": 'removeFilter' # 删除主过滤器
+    "click #search-filter_summary .remove": 'removeFilters' # 删除所有过滤器
 
   initialize: ->
     self = this
@@ -79,6 +80,15 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     $('.customer-group.active').removeClass('active')
     $('#customergroup-current').show().addClass('active')
     this.performSearch()
+
+  # 删除所有过滤器
+  removeFilters: (e) ->
+    @filters = []
+    @query = ''
+    this.showFilters()
+    this.performSearch()
+    false
+
 
   # 删除过滤器
   removeFilter: (e) ->
