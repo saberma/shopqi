@@ -27,13 +27,12 @@ App.Views.Customer.Index.Index = Backbone.View.extend
   changeCustomerCheckbox: ->
     checked = this.$('.selector:checked')
     all_checked = (checked.size() == this.$('.selector').size())
-    this.$('#select-all').attr 'checked', all_checked
+    $('#select-all').attr 'checked', all_checked
     if checked[0]
-      #已选中款式总数
-      this.$('#customer-count').text "已选中 #{checked.size()} 个订单"
-      $('#customer-controls').show()
+      this.$('#customer-count').text "已选中 #{checked.size()} 个顾客"
+      $('#customer-table_status').show()
     else
-      $('#customer-controls').hide()
+      $('#customer-table_status').hide()
 
   # 操作面板修改
   changeCustomerSelect: ->

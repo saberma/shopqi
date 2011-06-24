@@ -57,8 +57,11 @@
         %tr
           %td(style="text-align:left;vertical-align: middle")
             %select#customer-table_actions(name="operation")
+              %option(selected="selected" style="color:#888" value="") 选择操作...
+              %option.indent(value="add_tag") 标记顾客
+              %option.indent(value="remove_tag") 删除标记
           %td(style="text-align:right;vertical-align: middle")
-            %span#customer-table_msg.note(style="margin-bottom: 5px") &nbsp;
+            %span#customer-count.note(style="margin-bottom: 5px") &nbsp;
     #customers.ssb
       #customer-search_overlay.hide
         %p 顾客信息正在更新&hellip;
@@ -66,7 +69,7 @@
         %thead
           %tr#customer-search_customer
             %th.nosort(style="width: 16px")
-              %input#customer-table_selectall(type="checkbox" autocomplete="off")
+              %input#select-all(type="checkbox" autocomplete="off")
             %th.sortcol(data-value="last_name_sortable") 姓名
             %th &nbsp;
             %th.sortcol(data-value="location") 地址
@@ -117,7 +120,7 @@
 
 %script(id="show-customer-item" type="text/x-jquery-tmpl")
   %td(style="padding-top: 5px")
-    %input.selector(autocomplete="off" style="margin: 3px 0" type="checkbox")
+    %input.selector(style="margin: 3px 0" type="checkbox")
   %td.customer-name
     %a.customer-link(href="/admin/customers/{{{id}}}") {{{name}}}
     .display_message.clearfix(id="customer-display-{{{id}}}" style="display:none;")
