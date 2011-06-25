@@ -14,8 +14,9 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     self = this
     @q = '' #避免重复查询相同内容
     @model = App.customer_group
-    @model.bind 'change', -> self.performSearch()
+    @model.bind 'change:term', -> self.showTerm()
     @model.bind 'change:query', -> self.showFilters()
+    @model.bind 'change', -> self.performSearch()
     # 未输入内容时显示提示
     $("input[data-hint]").focus ->
       hint = $(this).attr('data-hint')
@@ -42,6 +43,11 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     params = q: value, f: _(@model.filters()).map (filter) -> "#{filter.condition}:#{filter.value}"
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
     $.get '/admin/customers/search', params, (data) -> App.customers.refresh(data)
+    # 左边分组
+    unless @model.id
+      empty_condition = !value and _.isEmpty(@model.filters()) # 所有顾客 且 没有查询关键字和过滤条件
+      $('#customergroup-all').toggleClass('active', empty_condition)
+      $('#customergroup-current').toggle(!empty_condition).toggleClass('active', !empty_condition)
 
   # 查询
   search: ->
@@ -66,21 +72,21 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     is_integer = primary.attr('clazz') is 'integer'
     return false if is_integer and !text
     @model.addFilter {value: primary.val(), text: primary.text()}, {value: secondary.val(), text: secondary.text()}, text, is_integer
-    # 左右分组
-    $('.customer-group.active').removeClass('active')
-    $('#customergroup-current').show().addClass('active')
 
   # 删除所有过滤器
   removeFilters: (e) ->
     @model.setQuery []
     false
 
-
   # 删除过滤器
   removeFilter: (e) ->
     remove_condition = $(e.target).parent('.filter-tag').attr('data-filter')
     @model.removeFilter remove_condition
     false
+
+  # 更新关键字
+  showTerm: ->
+    $('#customer-search_field').val @model.get('term')
 
   # 显示过滤器列表
   showFilters: ->
