@@ -12,9 +12,11 @@ App.Views.Customer.Index.Filter.Index = Backbone.View.extend
     @collection = new App.Collections.CustomerGroupFilters @model.filters()
     @collection.bind 'all', (collection) -> self.update()
     this.render()
+    $('#search-filter_primary').change()
 
   render: ->
     self = this
+    this.showFilter() if @collection.length > 0
     $('#search-filter_summary .filter-message').text "已有#{@collection.length}个过滤器"
     $('#search-filter_summary').toggle(@collection.length > 0)
     margin_top = if @collection.length > 0 then '10' else '0'
