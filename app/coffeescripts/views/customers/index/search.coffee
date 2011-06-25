@@ -1,22 +1,14 @@
 App.Views.Customer.Index.Search = Backbone.View.extend
-  el: '#order-filters'
+  el: '#customer-filters'
 
   events:
     "keydown #customer-search_field": 'returnToSearch'
-    "blur #customer-search_field": 'search'
-    "click #customer-search_field": 'showFilter' #显示过滤器
-    "change #search-filter_primary": 'selectPrimary' # 选择主过滤器
-    "click #search-filter_apply": 'addFilter' # 选择主过滤器
-    "click .close-filter-tag": 'removeFilter' # 删除主过滤器
-    "click #search-filter_summary .remove": 'removeFilters' # 删除所有过滤器
+    "blur #customer-search_field": 'blurToSearch'
 
   initialize: ->
     self = this
-    @q = '' #避免重复查询相同内容
     @model = App.customer_group
-    @model.bind 'change:term', -> self.showTerm()
-    @model.bind 'change:query', -> self.showFilters()
-    @model.bind 'change', -> self.performSearch()
+    @model.bind 'change', -> self.render()
     # 未输入内容时显示提示
     $("input[data-hint]").focus ->
       hint = $(this).attr('data-hint')
@@ -29,71 +21,27 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     # 初始化过滤器
     $('#search-filter_primary').change()
 
-  showFilter: ->
-    $('#customer-search_add_filters').show()
+  # 显示过滤器列表
+  render: ->
+    $('#customer-search_field').val @model.get('term')
+    new App.Views.Customer.Index.Filter.Index model: @model
+    this.search()
 
   returnToSearch: (e) ->
-    this.search() if e.keyCode == 13
+    @model.set term: $(e.target).val() if e.keyCode == 13 # 回车
 
-  # 执行查询(不检查重复情况)
-  performSearch: ->
-    hint = $('#customer-search_field').attr('data-hint')
-    value = $('#customer-search_field').val()
-    value = '' if value is hint
-    params = q: value, f: _(@model.filters()).map (filter) -> "#{filter.condition}:#{filter.value}"
+  blurToSearch: ->
+    @model.set term: $('#customer-search_field').val()
+
+  # 查询
+  search: ->
+    [value, filters] = [@model.get('term'), @model.filters()]
+    value = '' unless value
+    params = q: value, f: _(filters).map (filter) -> "#{filter.condition}:#{filter.value}"
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
     $.get '/admin/customers/search', params, (data) -> App.customers.refresh(data)
     # 左边分组
     unless @model.id
-      empty_condition = !value and _.isEmpty(@model.filters()) # 所有顾客 且 没有查询关键字和过滤条件
+      empty_condition = !value and _.isEmpty(filters) # 所有顾客 且 没有查询关键字和过滤条件
       $('#customergroup-all').toggleClass('active', empty_condition)
       $('#customergroup-current').toggle(!empty_condition).toggleClass('active', !empty_condition)
-
-  # 查询
-  search: ->
-    value = $('#customer-search_field').val()
-    hint = $('#customer-search_field').attr('data-hint')
-    if value != hint and @q != value
-      @q = value
-      this.performSearch()
-
-  # 选择主过滤器
-  selectPrimary: ->
-    clazz = $('#search-filter_primary').children(':selected').attr('clazz')
-    filter_html = _(secondary_filters[clazz]).map (text, value) -> "<option value='#{value}'>#{text}</option>"
-    $('#search-filter_secondary').html(filter_html.join(''))
-    $('#search-filter_value').val('').toggle(clazz is 'integer') #只有数值过滤器才需要额外输入框
-
-  # 新增过滤器
-  addFilter: ->
-    primary = $('#search-filter_primary').children(':selected')
-    secondary = $('#search-filter_secondary').children(':selected')
-    text = $('#search-filter_value').val()
-    is_integer = primary.attr('clazz') is 'integer'
-    return false if is_integer and !text
-    @model.addFilter {value: primary.val(), text: primary.text()}, {value: secondary.val(), text: secondary.text()}, text, is_integer
-
-  # 删除所有过滤器
-  removeFilters: (e) ->
-    @model.setQuery []
-    false
-
-  # 删除过滤器
-  removeFilter: (e) ->
-    remove_condition = $(e.target).parent('.filter-tag').attr('data-filter')
-    @model.removeFilter remove_condition
-    false
-
-  # 更新关键字
-  showTerm: ->
-    $('#customer-search_field').val @model.get('term')
-
-  # 显示过滤器列表
-  showFilters: ->
-    filters = @model.filters()
-    $('#search-filter_summary .filter-message').text "已有#{filters.length}个过滤器"
-    $('#search-filter_summary').toggle(filters.length > 0)
-    template = Handlebars.compile $('#customer-search_filters-item').html()
-    margin_top = if filters.length > 0 then '10' else '0'
-    $('#customer-search_filters').html('').css('margin-top', "#{margin_top}px")
-    _(filters).each (filter) -> $('#customer-search_filters').append template filter

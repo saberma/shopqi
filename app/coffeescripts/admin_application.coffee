@@ -12,7 +12,8 @@ App =
         LineItem: {}
         History: {}
     Customer:
-      Index: {}
+      Index:
+        Filter: {}
       Show: {}
     CustomerGroup:
       Index: {}
