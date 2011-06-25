@@ -7,7 +7,7 @@ CustomerGroup = Backbone.Model.extend
   filters: ->
     query = this.get('query')
     query = '' unless query?
-    @cache_filters ?= _(query.split(';')).compact().map (filter_query) ->
+    _(query.split(';')).compact().map (filter_query) ->
       [ condition, value, condition_name, value_name ] = filter_query.split ':'
       condition: condition, value: value, condition_name: condition_name, value_name: value_name
 
@@ -35,7 +35,6 @@ CustomerGroup = Backbone.Model.extend
 
   # 将新的filter hash数组写入query
   setQuery: (filters) ->
-    @cache_filters = filters
     query = _(filters).map (filter) ->
       "#{filter.condition}:#{filter.value}:#{filter.condition_name}:#{filter.value_name}"
     .join(';')

@@ -18,5 +18,8 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     group = $(e.target).closest('.customer-group')
     group_id = parseInt group.attr('id').substr('customer_group_'.length)
     group.addClass('active')
-    customer_group =@collection.get(group_id)
-    App.customer_group.set term: customer_group.get('term'), query: customer_group.get('query') #设置当前查询对象
+    if group_id
+      customer_group = @collection.get(group_id)
+      App.customer_group.set term: customer_group.get('term'), query: customer_group.get('query') #设置当前查询对象
+    else
+      App.customer_group.set term: '', query: '' #所有顾客

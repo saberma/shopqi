@@ -11,11 +11,11 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     "click #search-filter_summary .remove": 'removeFilters' # 删除所有过滤器
 
   initialize: ->
-    @model = App.customer_group
     self = this
     @q = '' #避免重复查询相同内容
-    App.customer_group.bind 'change', -> self.performSearch()
-    App.customer_group.bind 'change:query', -> self.showFilters()
+    @model = App.customer_group
+    @model.bind 'change', -> self.performSearch()
+    @model.bind 'change:query', -> self.showFilters()
     # 未输入内容时显示提示
     $("input[data-hint]").focus ->
       hint = $(this).attr('data-hint')
