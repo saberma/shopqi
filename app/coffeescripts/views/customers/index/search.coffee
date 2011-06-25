@@ -23,15 +23,21 @@ App.Views.Customer.Index.Search = Backbone.View.extend
 
   # 显示过滤器列表
   render: ->
-    $('#customer-search_field').val @model.get('term')
+    hint = $('#customer-search_field').attr('data-hint')
+    value = $('#customer-search_field').val()
+    unless !@model.get('term') and value is hint
+      $('#customer-search_field').val @model.get('term')
     new App.Views.Customer.Index.Filter.Index model: @model
     this.search()
 
   returnToSearch: (e) ->
-    @model.set term: $(e.target).val() if e.keyCode == 13 # 回车
+    this.blurToSearch() if e.keyCode == 13 # 回车
 
   blurToSearch: ->
-    @model.set term: $('#customer-search_field').val()
+    hint = $('#customer-search_field').attr('data-hint')
+    value = $('#customer-search_field').val()
+    if value and value isnt hint
+      @model.set term: value
 
   # 查询
   search: ->
