@@ -149,7 +149,13 @@
   %a.delete(href="/admin/customer_groups/{{{id}}}" data-confirm="您确定要删除吗?")=image_tag('admin/icons/trash.gif')
   %h3 {{{name}}}
   %ul.filters
-    %li(style="display:none" data-filterset="accepts_marketing:1")
+    {{#if term}}
+    %li 关键字:{{{term}}}
+    {{/if}}
+    {{#each filters}}
+    %li
+      %span(class="label-text") {{{condition_name}}} {{{value_name}}}
+    {{/each}}
   %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新
 %script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
   .filter-tag(data-filter="{{{condition}}}")

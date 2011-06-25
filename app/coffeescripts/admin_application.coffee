@@ -104,10 +104,11 @@ UpdateableSelectBox = (select_box, create_label) ->
 $(document).ready ->
   App.init()
 
+  moveIndicator = (e) -> $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
+  $(document).click moveIndicator
   $('#indicator').ajaxStart ->
     $(this).show()
-    $(document).mousemove (e) ->
-      $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
+    $(document).mousemove moveIndicator
   $('#indicator').ajaxStop ->
     $(this).hide()
     $(document).unbind 'mousemove'

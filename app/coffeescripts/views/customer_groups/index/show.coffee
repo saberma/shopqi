@@ -9,5 +9,7 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
 
   render: ->
     template = Handlebars.compile $('#customer-group-item').html()
-    $(@el).html template @model.attributes
+    attrs = _.clone @model.attributes
+    attrs['filters'] = @model.filters()
+    $(@el).html template attrs
     $('#customergroup-current').after @el
