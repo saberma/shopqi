@@ -65,9 +65,9 @@ class ShopObserver < ActiveRecord::Observer
 
     # 默认顾客分组
     shop.customer_groups.create [
-      { name: '接收营销邮件', query: '' },
-      { name: '潜在顾客'    , query: '' },
-      { name: '多次消费'    , query: '' },
+      { name: '接收营销邮件', query: 'accepts_marketing:yes:接收营销邮件:是' }                         ,
+      { name: '潜在顾客'    , query: 'last_abandoned_order_date:last_month:放弃订单时间:在最近一个月' },
+      { name: '多次消费'    , query: 'orders_count_gt:1:订单数 大于:1' }                               ,
     ]
 
     # 创建各个邮件样板

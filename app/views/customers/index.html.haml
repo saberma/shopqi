@@ -171,6 +171,7 @@
 
   App.customers = new App.Collections.Customers();
   App.customer_groups = new App.Collections.CustomerGroups();
+  App.customer_group = new CustomerGroup(); //用于分组与查询的中介
   App.customers.refresh(#{customers_json});
   App.customer_groups.refresh(#{customer_groups_json});
   new App.Views.Customer.Index.Index({collection: App.customers})

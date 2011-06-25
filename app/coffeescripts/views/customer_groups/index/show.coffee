@@ -5,6 +5,7 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
   initialize: ->
     self = this
     this.render()
+    $(this.el).attr 'id', "customer_group_#{@model.id}"
 
   render: ->
     template = Handlebars.compile $('#customer-group-item').html()

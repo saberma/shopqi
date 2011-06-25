@@ -112,7 +112,8 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
   create_table "customer_groups", :force => true do |t|
     t.integer  "shop_id",                   :null => false
     t.string   "name",       :limit => 32,  :null => false
-    t.string   "query",      :limit => 512, :null => false
+    t.string   "term",       :limit => 32
+    t.string   "query",      :limit => 512
     t.datetime "created_at"
     t.datetime "updated_at"
   end
