@@ -18,8 +18,8 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
   render: ->
     # 默认分组:所有顾客、当前查询
     @collection.add [
-      { id: -1, name: '所有顾客' },
-      { id: 0 , name: '当前查询' }
+      { id: -1, name: '所有顾客', term: '', query: '' },
+      { id: 0 , name: '当前查询', term: '', query: '' }
     ]
     @collection.comparator = (model) -> model.id
     @collection.sort()

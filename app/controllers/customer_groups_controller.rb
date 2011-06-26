@@ -11,14 +11,24 @@ class CustomerGroupsController < ApplicationController
       except: [ :created_at, :updated_at ]
     })
   end
+  expose(:customer_group_json) do
+    customer_group.to_json({
+      except: [ :created_at, :updated_at ]
+    })
+  end
 
   def create
     customer_group.save
-    render json: customer_group.to_json
+    render json: customer_group_json
+  end
+
+  def update
+    customer_group.save
+    render json: customer_group_json
   end
 
   def destroy
     customer_group.destroy
-    render json: customer_group.to_json
+    render json: customer_group_json
   end
 end

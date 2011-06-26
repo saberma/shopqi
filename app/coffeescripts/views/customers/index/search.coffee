@@ -39,7 +39,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
   blurToSearch: ->
     hint = $('#customer-search_field').attr('data-hint')
     value = $('#customer-search_field').val()
-    if value and value isnt hint
+    if value isnt hint
       @model.set term: value
 
   # 查询
