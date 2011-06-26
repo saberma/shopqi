@@ -23,10 +23,13 @@ App.Views.Customer.Index.Search = Backbone.View.extend
 
   # 显示过滤器列表
   render: ->
-    hint = $('#customer-search_field').attr('data-hint')
-    value = $('#customer-search_field').val()
+    term_field = $('#customer-search_field')
+    hint = term_field.attr('data-hint')
+    value = term_field.val()
     unless !@model.get('term') and value is hint
-      $('#customer-search_field').val @model.get('term')
+      term_field.val @model.get('term')
+      value = term_field.val()
+      term_field.val(hint).css(color: '#888') unless value
     new App.Views.Customer.Index.Filter.Index model: @model
     this.search()
 
@@ -49,9 +52,12 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     $.get '/admin/customers/search', params, (data) ->
       App.customers.refresh(data)
       $('#customer-search_overlay').hide()
+    model_id = @model.id
     # 左边分组 (查询条件为空时要重新激活所有顾客分组、在所有顾客分组中查询要激活当前查询)
     if @model.id == -1 and (value or !_.isEmpty(filters)) # 所有顾客 且 没有查询关键字和过滤条件
-      @model.set id: 0
+      model_id = 0
     # 更新分组条件
-    customer_group = App.customer_groups.get(@model.id)
+    customer_group = App.customer_groups.get model_id
     customer_group.set term: value, query: @model.get('query')
+    if model_id isnt @model.id # id变化会触发左边分组切换
+      @model.set id: model_id
