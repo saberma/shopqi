@@ -4,16 +4,16 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
 
   initialize: ->
     self = this
+    @model.bind 'change', -> self.render()
     this.render()
-    $(this.el).attr 'id', "customer_group_#{@model.id}"
+    $(@el).attr 'id', "customer_group_#{@model.id}"
+    $(@el).hide() if @model.id == 0
+    $('#customer-groups').append @el
 
   render: ->
     template = Handlebars.compile $('#customer-group-item').html()
-    is_current_search = @model.id == 0
     attrs = _.clone @model.attributes
     attrs['filters'] = @model.filters()
-    attrs['is_current_search'] = is_current_search
+    attrs['is_current_search'] = @model.id == 0
     attrs['is_group'] = @model.id > 0
     $(@el).html template attrs
-    $(@el).hide() if is_current_search
-    $('#customer-groups').append @el

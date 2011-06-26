@@ -47,9 +47,8 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
     $.get '/admin/customers/search', params, (data) -> App.customers.refresh(data)
     # 左边分组 (查询条件为空时要重新激活所有顾客分组、在所有顾客分组中查询要激活当前查询)
-    if @model.id == -1 # 只有在所有顾客分组查询的时候才能显示当前查询
-      empty_condition = !value and _.isEmpty(filters) # 所有顾客 且 没有查询关键字和过滤条件
-      $('#customer_group_-1').toggleClass('active', empty_condition)
-      $('#customer_group_0').toggle(!empty_condition).toggleClass('active', !empty_condition)
-    else if @model.id > 0
-      $('#customer_group_0').hide()
+    if @model.id == -1 and (value or !_.isEmpty(filters)) # 所有顾客 且 没有查询关键字和过滤条件
+      @model.set id: 0
+    # 更新分组条件
+    customer_group = App.customer_groups.get(@model.id)
+    customer_group.set term: value, query: @model.get('query')

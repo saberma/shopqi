@@ -5,8 +5,11 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     "click .customer-group": 'active'
 
   initialize: ->
+    @model = App.customer_group # 与查询面板交互的桥梁
     self = this
     this.render()
+    @model.bind 'change:id', -> self.switch()
+    @model.set id: -1
 
   render: ->
     # 默认分组:所有顾客、当前查询
@@ -17,13 +20,15 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     @collection.comparator = (model) -> model.id
     @collection.sort()
     @collection.each (model) -> new App.Views.CustomerGroup.Index.Show model: model
-    this.$('.customer-group:first').addClass('active')
 
   active: (e) ->
     group = $(e.target).closest('.customer-group')
-    return false if group.hasClass 'active' # 已激活
-    this.$('.customer-group.active').removeClass('active')
     group_id = parseInt group.attr('id').substr('customer_group_'.length)
-    group.addClass('active')
-    customer_group = @collection.get(group_id)
-    App.customer_group.set id: group_id, term: customer_group.get('term'), query: customer_group.get('query') #设置当前查询对象
+    @model.set id: group_id
+
+  switch: ->
+    this.$('.customer-group.active').removeClass('active')
+    $("#customer_group_#{@model.id}").show().addClass('active')
+    customer_group = @collection.get(@model.id)
+    $('#customer_group_0').hide() if @model.id isnt 0 #点击已保存分组则隐藏当前查询
+    @model.set term: customer_group.get('term'), query: customer_group.get('query') #设置当前查询对象
