@@ -45,7 +45,10 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     value = '' unless value
     params = q: value, f: _(filters).map (filter) -> "#{filter.condition}:#{filter.value}"
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
-    $.get '/admin/customers/search', params, (data) -> App.customers.refresh(data)
+    $('#customer-search_overlay').show()
+    $.get '/admin/customers/search', params, (data) ->
+      App.customers.refresh(data)
+      $('#customer-search_overlay').hide()
     # 左边分组 (查询条件为空时要重新激活所有顾客分组、在所有顾客分组中查询要激活当前查询)
     if @model.id == -1 and (value or !_.isEmpty(filters)) # 所有顾客 且 没有查询关键字和过滤条件
       @model.set id: 0

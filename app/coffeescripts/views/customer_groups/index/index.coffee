@@ -10,7 +10,10 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     this.render()
     @model.bind 'change:id', -> self.switch()
     @model.set id: -1
-    $('#save_group_button').live 'click', -> self.save()
+    $('#save_group_button').live 'click', -> self.save() # 弹出的保存窗口
+    @collection.bind 'add', (model, collection) ->
+      new App.Views.CustomerGroup.Index.Show model: model # 回显新增分组
+      self.model.set id: model.id
 
   render: ->
     # 默认分组:所有顾客、当前查询
