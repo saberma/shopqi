@@ -18,14 +18,6 @@
     #customer-group-container.box2.preview-box
       .preview 顾客分组
       %ul#customer-groups
-        %li#customergroup-all.customer-group.active.clearfix
-          .group-details
-            %h3 所有顾客
-        %li#customergroup-current.customer-group.current-search.clearfix(style='display: none')
-          .group-details
-            %h3 当前查询
-            %ul.filters
-            %a#save_customer_group_link.btn.closure-lightbox(href="#save_customer_group" onclick="return false;" title="Save Customer Group") 保存为顾客分组
   .col-8.last(style="width:648px;")
     #order-filters
       %form#customer-search(action="/admin/customers" method="get" onsubmit="return false")
@@ -146,7 +138,9 @@
     {{/if}}
 
 %script(id="customer-group-item" type="text/x-jquery-tmpl")
+  {{#if is_group}}
   %a.delete(href="/admin/customer_groups/{{{id}}}" data-confirm="您确定要删除吗?")=image_tag('admin/icons/trash.gif')
+  {{/if}}
   %h3 {{{name}}}
   %ul.filters
     {{#if term}}
@@ -156,7 +150,12 @@
     %li
       %span(class="label-text") {{{condition_name}}} {{{value_name}}}
     {{/each}}
+  {{#if is_current_search}}
+  %a#save_customer_group_link.btn.closure-lightbox 保存为顾客分组
+  {{/if}}
+  {{#if is_group}}
   %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新
+  {{/if}}
 %script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
   %span.label-text {{{condition_name}}} {{{value_name}}}
   %a.close-filter-tag(href="#") x
