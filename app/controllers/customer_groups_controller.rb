@@ -16,4 +16,9 @@ class CustomerGroupsController < ApplicationController
     customer_group.save
     render json: customer_group.to_json
   end
+
+  def destroy
+    customer_group.destroy
+    render json: customer_group.to_json
+  end
 end

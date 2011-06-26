@@ -38,9 +38,13 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     @model.set term: customer_group.get('term'), query: customer_group.get('query') #设置当前查询对象
 
   save: ->
+    name = $('#new_group_name').val()
+    if !name
+      error_msg '名称不能为空'
+      return false
     self = this
     group = App.customer_groups.get(0)
-    attrs = customer_group: { name: $('#new_group_name').val(), term: group.get('term'), query: group.get('query') }
+    attrs = customer_group: { name: name, term: group.get('term'), query: group.get('query') }
     $.post '/admin/customer_groups', attrs, (data) ->
       self.collection.add data
       $.unblockUI()

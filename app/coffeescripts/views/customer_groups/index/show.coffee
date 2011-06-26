@@ -4,6 +4,7 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
 
   events:
     "click #save_customer_group_link": 'show' # 显示保存表单
+    "click .delete": 'destroy'
 
   initialize: ->
     self = this
@@ -25,4 +26,14 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
     template = Handlebars.compile $('#new-customer-group-item').html()
     $.blockUI message: template(), css: { width: '339px' }
     $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').attr('title','单击关闭').click($.unblockUI)
+    false
+
+  destroy: ->
+    return false unless confirm '您确定要删除吗?'
+    self = this
+    collection = @model.collection
+    @model.destroy
+      success: (model, response) ->
+        collection.remove self.model
+        self.remove()
     false
