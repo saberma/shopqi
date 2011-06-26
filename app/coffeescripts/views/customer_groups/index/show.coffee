@@ -1,6 +1,9 @@
 App.Views.CustomerGroup.Index.Show = Backbone.View.extend
   tagName: 'li'
-  className: 'customer-group clearfix' #data-filter
+  className: 'customer-group clearfix'
+
+  events:
+    "click #save_customer_group_link": 'show' # 显示保存表单
 
   initialize: ->
     self = this
@@ -17,3 +20,9 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
     attrs['is_current_search'] = @model.id == 0
     attrs['is_group'] = @model.id > 0
     $(@el).html template attrs
+
+  show: ->
+    template = Handlebars.compile $('#new-customer-group-item').html()
+    $.blockUI message: template(), css: { width: '339px' }
+    $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').attr('title','单击关闭').click($.unblockUI)
+    false

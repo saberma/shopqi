@@ -5,9 +5,15 @@ class CustomerGroupsController < ApplicationController
 
   expose(:shop) { current_user.shop }
   expose(:customer_groups) { shop.customer_groups }
+  expose(:customer_group)
   expose(:customer_groups_json) do
     customer_groups.to_json({
       except: [ :created_at, :updated_at ]
     })
+  end
+
+  def create
+    customer_group.save
+    render json: customer_group.to_json
   end
 end

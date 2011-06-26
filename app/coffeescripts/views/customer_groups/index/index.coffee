@@ -10,6 +10,7 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     this.render()
     @model.bind 'change:id', -> self.switch()
     @model.set id: -1
+    $('#save_group_button').live 'click', -> self.save()
 
   render: ->
     # 默认分组:所有顾客、当前查询
@@ -32,3 +33,11 @@ App.Views.CustomerGroup.Index.Index = Backbone.View.extend
     customer_group = @collection.get(@model.id)
     $('#customer_group_0').hide() if @model.id isnt 0 #点击已保存分组则隐藏当前查询
     @model.set term: customer_group.get('term'), query: customer_group.get('query') #设置当前查询对象
+
+  save: ->
+    self = this
+    group = App.customer_groups.get(0)
+    attrs = customer_group: { name: $('#new_group_name').val(), term: group.get('term'), query: group.get('query') }
+    $.post '/admin/customer_groups', attrs, (data) ->
+      self.collection.add data
+      $.unblockUI()

@@ -104,11 +104,6 @@
           %input#customer-note_submit.btn(name="commit" type="submit" value="Save note")
           或者
           %a(href="#" onclick="customernote.toggleForm(); return false;") 取消
-  #save_customer_group
-    %form#create_customer_group.clearfix
-      %p(style="font-size:12px; margin-bottom:10px; color:#777;") 输入顾客分组的名称
-      %input#new_group_name.name(name="customer_group[name]")
-      %input#save_group_button.btn(type="submit" value="保存")
 
 %script(id="show-customer-item" type="text/x-jquery-tmpl")
   %td(style="padding-top: 5px")
@@ -159,6 +154,7 @@
 %script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
   %span.label-text {{{condition_name}}} {{{value_name}}}
   %a.close-filter-tag(href="#") x
+%script(id="new-customer-group-item" type="text/x-jquery-tmpl")=render 'customer_groups/new'
 
 :javascript
   App.init = function(){
