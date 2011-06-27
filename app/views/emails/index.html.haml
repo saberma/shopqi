@@ -23,7 +23,7 @@
     %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
       %tr
         %th{:colspan => "4", :style => "padding-left: 10px"} 当有顾客下单时：
-      %tr#subscription-919172.order-subscription
+      %tr#subscription.order-subscription
         %td{:colspan => "2"}
           %span.note 发送邮件给:
           %strong &quot;development shop&quot; &lt;mahb45@gmail.com&gt;
@@ -40,6 +40,8 @@
             %a{:style => "display:inline"} 新增邮件提醒
       / end add-subscription
   / end order-notification-list
+  %p#add-subscription-btn(style='display:none')
+    %input.btn(onclick="$('#add-subscription-details').toggle(); $('#add-subscription-btn').toggle();$('#email-detail').show();" type="button" value="增加新的订单提醒")
   #add-subscription-details{:style => "display:none"}
     %form{"accept-charset" => "UTF-8", :action => "/admin/notifications/subscribe", "data-remote" => "true", :method => "post"}
       %dl
@@ -66,7 +68,7 @@
         %dd.sst.btn-divider.cl
           %input.btn{:name => "commit", :type => "submit", :value =>"保存" }
           or
-          %a{:href => "#", :onclick => "Element.hide('add-subscription-details'); if($('order-notification-list').visible()){ Element.show('add-subscription'); } else { Element.show('add-subscription-btn')}; return false;"} Close
+          %a#cancel{:href => "#", :onclick => "Element.hide('add-subscription-details'); if($('order-notification-list').visible()){ Element.show('add-subscription'); } else { Element.show('add-subscription-btn')}; return false;"} 关闭
 
 :javascript
   new App.Controllers.Emails()
