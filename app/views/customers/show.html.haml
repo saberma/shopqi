@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'models/order', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
+  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'views/customers/show/edit', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
 
 %h2#title
 #action-links
@@ -33,92 +33,6 @@
     %div(style="width:100%")
       #pagination
   #edit-customer-screen(style="display:none")
-    %form#edit_customer_45648822.edit_customer
-      %div(style="margin:0;padding:0;display:inline")
-        %input(name="utf8" type="hidden" value="&#x2713;")/
-        %input(name="_method" type="hidden" value="put")/
-        %input(name="authenticity_token" type="hidden" value="b5vNm2QvmfkgmSgBz23opVQwL3+jIUnORnEEiZmx3hY=")/
-      .section-header(style="margin-top:0;") Customer Information
-      .customer-group.white.clearfix
-        .required.fl
-          .pb.clearfix
-            .fl
-              %label(for="customer_first_name") First Name
-              %input#customer_first_name.first_name(name="customer[first_name]" size="30" type="text" value="saberma")/
-            .fl
-              %label(for="customer_last_name") Last Name
-              %input#customer_last_name.last_name(name="customer[last_name]" size="30" type="text" value="ma")/
-          .pb.clearfix
-            %label(for="customer_email") Email
-            %span(style="font-size:14px; padding-left:3px;") mahb45@gmail.com
-      .customer-addresses
-        .section-header Address Information
-        #customeraddress-63012552.address
-          .customer-group.white
-            .pb.clearfix
-              .fl
-                %input#customer_addresses_attributes_0_customer_id(name="customer[addresses_attributes][0][customer_id]" type="hidden" value="45648822")/
-                %label(for="customer_addresses_attributes_0_first_name") First name
-                %input#customer_first_name-63012552.first_name(name="customer[addresses_attributes][0][first_name]" size="30" type="text" value="saberma")/
-              .fl
-                %label(for="customer_addresses_attributes_0_last_name") Last name
-                %input#customer_last_name-63012552.last_name(name="customer[addresses_attributes][0][last_name]" size="30" type="text" value="ma")/
-            .pb.clearfix
-              .fl
-                %label(for="customer_addresses_attributes_0_company") Company
-                %input#customer_company-63012552.company(name="customer[addresses_attributes][0][company]" size="30" title="Company" type="text" value="nanshan 311")/
-              .fl
-                %label(for="customer_addresses_attributes_0_phone") Phone
-                %input#customer_phone-63012552.phone(name="customer[addresses_attributes][0][phone]" size="30" title="Phone" type="text" value="13928452841")/
-            .pb.clearfix
-              %label(for="customer_addresses_attributes_0_address1") Address
-              %input#customer_address1-63012552(name="customer[addresses_attributes][0][address1]" size="30" title="Address" type="text" value="china111111111")/
-            .pb.clearfix
-              %label(for="customer_addresses_attributes_0_address2") Address2
-              %input#customer_address2-63012552(name="customer[addresses_attributes][0][address2]" size="30" title="Address2" type="text" value="")/
-            .pb.clearfix
-              .fl
-                %label(for="customer_addresses_attributes_0_city") City
-                %input#customer_city-63012552.city(name="customer[addresses_attributes][0][city]" size="30" title="City" type="text" value="shenzhen")/
-              .fl
-                %label(for="customer_addresses_attributes_0_zip") Postal / ZIP Code
-                %input#customer_zip-63012552.postal(name="customer[addresses_attributes][0][zip]" size="30" title="Postal / ZIP Code" type="text" value="518057")/
-            .pb.clearfix
-              .fl(style="margin-right:10px")
-                %label(for="customer_addresses_attributes_0_country") Country
-                %select#customer_country-63012552.country(name="customer[addresses_attributes][0][country]")
-                  %option(value="") - Please Select -
-                  %option(value="Canada") Canada
-              .fl
-                %label(for="customer_addresses_attributes_0_province")
-                  %span#customer_province-63012552_label
-                %input#customer_province-63012552.province(name="customer[addresses_attributes][0][province]" size="30" style="display:none" type="text" value="")/
-                %select#customer_province-63012552_select(style="display:none")
-                  %option(value="") Please Select
-                %em#customer_province-63012552_message
-        %input#customer_addresses_attributes_0_id(name="customer[addresses_attributes][0][id]" type="hidden" value="63012552")/
-        .customer-group.white
-          .pb.clearfix
-            .fl
-              %input(name="customer[accepts_marketing]" type="hidden" value="0")/
-              %input#customer_accepts_marketing(checked="checked" name="customer[accepts_marketing]" type="checkbox" value="1")/
-            .fl
-              %label(for="customer_accepts_marketing") Accepts Marketing
-      %div
-        .section-header Notes
-        .customer-group.white
-          %textarea#customer_note.notes(cols="40" name="customer[note]" rows="20")
-      %div
-        .section-header Tags
-        .customer-group.white
-          %p.note.sb Add multiple tags separated by a comma.
-          %input#customer_tags.sb(name="customer[tag_string]" size="30" type="text" value="")/
-          %p.note Example: Premiere Canadian Marketing
-          %ul#tag-list.clearfix.nobull.st
-      .group-actions
-        %input#update-options.btn(name="commit" type="submit" value="Update Customer")/
-        or
-        %a#cancel-customer-link(href="#") Cancel
 %div(style="display:none;")
   #reset-password
     .account-action
@@ -209,6 +123,68 @@
     %span(style="font-size: 11px")
       %span(class='{{{fulfill_class}}}') {{{fulfillment_status_name}}}
   %td(style="text-align: right") ¥{{{total_price}}}
+%script(id="edit-customer-screen-item" type="text/x-jquery-tmpl")
+  %form.edit_customer(onsubmit='return false')
+    .section-header(style="margin-top:0;") 顾客信息
+    .customer-group.white.clearfix
+      .required.fl
+        .pb.clearfix
+          .fl
+            %label(for="customer_name") 姓名
+            %input#customer_name.name(name="customer[name]" size="30" type="text" value="{{{name}}}")
+        .pb.clearfix
+          %label(for="customer_email") 邮箱
+          %span(style="font-size:14px; padding-left:3px;") {{{email}}}
+    .customer-addresses
+      .section-header 地址信息
+      .address
+        .customer-group.white
+          .pb.clearfix
+            .fl
+              %input#id(name="id" type="hidden" value="45648822")/
+              %label(for="name") 姓名
+              %input#name.name(name="name" size="30" type="text" value="saberma")
+          .pb.clearfix
+            .fl
+              %label(for="company") 公司
+              %input#company.company(name="company" size="30" type="text" value="nanshan 311")/
+            .fl
+              %label(for="phone") 电话
+              %input#phone.phone(name="phone" size="30" type="text" value="13928452841")/
+          .pb.clearfix
+            .fl(style="margin-right:10px")
+              %label(for="country") 地区
+              =select_tag :province, options_for_select(District.list), {include_blank: '--省份--', style: 'width: 106px'}
+              =select_tag :city, nil, {include_blank: '--城市--', style: 'width: 106px'}
+              =select_tag :district, nil, {include_blank: '--地区--', style: 'width: 106px'}
+          .pb.clearfix
+            .fl
+              %label(for="address1") 地址
+              %input.city(name="address1" size="30" type="text" value="china111111111")
+            .fl
+              %label(for="zip") 邮编
+              %input#zip.postal(name="zip" size="30" type="text" value="518057")
+      .customer-group.white
+        .pb.clearfix
+          .fl
+            %input#accepts_marketing(name="customer[accepts_marketing]" type="checkbox" value="1")
+          .fl
+            %label(for="accepts_marketing") 接收营销邮件
+    %div
+      .section-header 备注
+      .customer-group.white
+        %textarea#note.notes(cols="40" name="customer[note]" rows="20")
+    %div
+      .section-header 标记
+      .customer-group.white
+        %p.note.sb 多个关键词之间用逗号(,)隔开。
+        %input#tags.sb(name="customer[tag_string]" size="30" type="text" value="")
+        %p.note 例如: VIP
+        %ul#tag-list.clearfix.nobull.st
+    .group-actions
+      %input#update-options.btn(name="commit" type="submit" value="保存")/
+      或者
+      %a#cancel-customer-link(href="#") 取消
 
 :javascript
   App.customer = new Customer(#{customer_json});
