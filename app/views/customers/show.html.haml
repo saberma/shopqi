@@ -1,0 +1,193 @@
+%h2#title saberma ma
+#action-links
+  %ul
+    %li.no-icon
+      %a#edit-customer-link(href="#") 编辑
+    %li#reorder=link_to '重置密码', '#', class: 'closure-lightbox'
+    %li#lock=link_to '禁用帐号', '#', class: 'closure-lightbox'
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+.col-4
+  #customer-box.box2(style="margin:20px 0 0 0; padding:10px; width:240px;")
+    %table#customer-summary(cellpadding="0" cellspacing="0")
+      %tr.first
+        %td.attribute=image_tag 'admin/icons/customer.gif', id: :gravatar
+        %td.value
+          %h3 saberma ma
+          %p(style="line-height:18px;")
+            %a(href="mailto:mahb45@gmail.com") mahb45@gmail.com
+            %br/
+            13928452841
+      %tr
+        %td.attribute 帐号
+        %td.value
+          %span.o-authorized enabled
+      %tr
+        %td.attribute 营销
+        %td.value.image
+          %span.o-authorized accepts marketing
+      %tr
+        %td.attribute 默认地址
+        %td.value
+          saberma ma
+          %br/
+          china111111111
+          %br/
+          shenzhen  518057
+          %br/
+          China
+      %tbody#more-customer-addresses(style="display:none;")
+        %tr
+          %td.attribute address
+          %td.value
+            ma
+            %br/
+            china
+            %br/
+            shenzhen  518057
+            %br/
+            China
+      %tr
+        %td.attribute &nbsp;
+        %td.value
+          %a#show-customer-addresses(href="#") 另外 5 个地址&hellip;
+  #customer-note.message.customer-col(style="margin-top:20px;")
+    %h3.clearfix 顾客备注
+    #customer-note_body.notes 暂时没有加入备注.
+  #customer-tags(style="margin:20px 0; width:240px;")
+    %h3.clearfix 顾客标记
+    暂时没有加入标记.
+.customer.col-8.last
+  #show-customer-screen
+    #customer-facts.box2(style="margin-top:20px;")
+      %ul
+        %li.first
+          %p.big ¥95.00
+          %span 消费金额
+        %li
+          %p.big 2
+          %span 订单数
+        %li.last
+          %p.big Jun 05
+          %span 首次下单
+    #orders
+      %table#order-table.ssb.data(cellpadding="0" cellspacing="0")
+        %tr
+          %th.sortcol 订单
+          %th.sortcol.sortasc(style="width: 80px !important") 日期 
+          %th.sortcol 支付状态
+          %th.sortcol 发货状态
+          %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
+        %tr#row-67967832.order
+          %td
+            %a.abandoned(href="https://myshopqi.com/admin/orders/67967832") #1001
+          %td
+            %span.note Jun 13
+          %td
+            %span.o-abandoned(style="font-size: 11px") abandoned
+          %td
+            %span(style="font-size: 11px")
+              %span.o-not-fulfilled not fulfilled
+          %td(style="text-align: right") ¥67.00
+    %div(style="width:100%")
+      #pagination
+  #edit-customer-screen(style="display:none")
+    %form#edit_customer_45648822.edit_customer
+      %div(style="margin:0;padding:0;display:inline")
+        %input(name="utf8" type="hidden" value="&#x2713;")/
+        %input(name="_method" type="hidden" value="put")/
+        %input(name="authenticity_token" type="hidden" value="b5vNm2QvmfkgmSgBz23opVQwL3+jIUnORnEEiZmx3hY=")/
+      .section-header(style="margin-top:0;") Customer Information
+      .customer-group.white.clearfix
+        .required.fl
+          .pb.clearfix
+            .fl
+              %label(for="customer_first_name") First Name
+              %input#customer_first_name.first_name(name="customer[first_name]" size="30" type="text" value="saberma")/
+            .fl
+              %label(for="customer_last_name") Last Name
+              %input#customer_last_name.last_name(name="customer[last_name]" size="30" type="text" value="ma")/
+          .pb.clearfix
+            %label(for="customer_email") Email
+            %span(style="font-size:14px; padding-left:3px;") mahb45@gmail.com
+      .customer-addresses
+        .section-header Address Information
+        #customeraddress-63012552.address
+          .customer-group.white
+            .pb.clearfix
+              .fl
+                %input#customer_addresses_attributes_0_customer_id(name="customer[addresses_attributes][0][customer_id]" type="hidden" value="45648822")/
+                %label(for="customer_addresses_attributes_0_first_name") First name
+                %input#customer_first_name-63012552.first_name(name="customer[addresses_attributes][0][first_name]" size="30" type="text" value="saberma")/
+              .fl
+                %label(for="customer_addresses_attributes_0_last_name") Last name
+                %input#customer_last_name-63012552.last_name(name="customer[addresses_attributes][0][last_name]" size="30" type="text" value="ma")/
+            .pb.clearfix
+              .fl
+                %label(for="customer_addresses_attributes_0_company") Company
+                %input#customer_company-63012552.company(name="customer[addresses_attributes][0][company]" size="30" title="Company" type="text" value="nanshan 311")/
+              .fl
+                %label(for="customer_addresses_attributes_0_phone") Phone
+                %input#customer_phone-63012552.phone(name="customer[addresses_attributes][0][phone]" size="30" title="Phone" type="text" value="13928452841")/
+            .pb.clearfix
+              %label(for="customer_addresses_attributes_0_address1") Address
+              %input#customer_address1-63012552(name="customer[addresses_attributes][0][address1]" size="30" title="Address" type="text" value="china111111111")/
+            .pb.clearfix
+              %label(for="customer_addresses_attributes_0_address2") Address2
+              %input#customer_address2-63012552(name="customer[addresses_attributes][0][address2]" size="30" title="Address2" type="text" value="")/
+            .pb.clearfix
+              .fl
+                %label(for="customer_addresses_attributes_0_city") City
+                %input#customer_city-63012552.city(name="customer[addresses_attributes][0][city]" size="30" title="City" type="text" value="shenzhen")/
+              .fl
+                %label(for="customer_addresses_attributes_0_zip") Postal / ZIP Code
+                %input#customer_zip-63012552.postal(name="customer[addresses_attributes][0][zip]" size="30" title="Postal / ZIP Code" type="text" value="518057")/
+            .pb.clearfix
+              .fl(style="margin-right:10px")
+                %label(for="customer_addresses_attributes_0_country") Country
+                %select#customer_country-63012552.country(name="customer[addresses_attributes][0][country]")
+                  %option(value="") - Please Select -
+                  %option(value="Canada") Canada
+              .fl
+                %label(for="customer_addresses_attributes_0_province")
+                  %span#customer_province-63012552_label
+                %input#customer_province-63012552.province(name="customer[addresses_attributes][0][province]" size="30" style="display:none" type="text" value="")/
+                %select#customer_province-63012552_select(style="display:none")
+                  %option(value="") Please Select
+                %em#customer_province-63012552_message
+        %input#customer_addresses_attributes_0_id(name="customer[addresses_attributes][0][id]" type="hidden" value="63012552")/
+        .customer-group.white
+          .pb.clearfix
+            .fl
+              %input(name="customer[accepts_marketing]" type="hidden" value="0")/
+              %input#customer_accepts_marketing(checked="checked" name="customer[accepts_marketing]" type="checkbox" value="1")/
+            .fl
+              %label(for="customer_accepts_marketing") Accepts Marketing
+      %div
+        .section-header Notes
+        .customer-group.white
+          %textarea#customer_note.notes(cols="40" name="customer[note]" rows="20")
+      %div
+        .section-header Tags
+        .customer-group.white
+          %p.note.sb Add multiple tags separated by a comma.
+          %input#customer_tags.sb(name="customer[tag_string]" size="30" type="text" value="")/
+          %p.note Example: Premiere Canadian Marketing
+          %ul#tag-list.clearfix.nobull.st
+      .group-actions
+        %input#update-options.btn(name="commit" type="submit" value="Update Customer")/
+        or
+        %a#cancel-customer-link(href="#") Cancel
+%div(style="display:none;")
+  #reset-password
+    .account-action
+      %p.ssb Are you sure you want to reset the password for this customer? The customer will be sent an email with instructions to reset their password.
+      %a.btn(data-method="post" href="/admin/customers/45648822/reset" rel="nofollow") Reset Password
+      or
+      %a.close-lightbox(href="#") Cancel
+  #disable-account
+    .account-action
+      %p.ssb Are you sure you want to disable the account for this customer?
+      %a.btn(data-method="post" href="/admin/customers/45648822/disable" rel="nofollow") Disable Account
+      or
+      %a.close-lightbox(href="#") Cancel

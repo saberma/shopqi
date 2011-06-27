@@ -70,6 +70,9 @@ class CustomersController < ApplicationController
   expose(:secondary_filters_boolean) { KeyValues::Customer::SecondaryFilter::Boolean.hash }
   expose(:secondary_filters_status) { KeyValues::Customer::SecondaryFilter::State.hash }
 
+  def show
+  end
+
   def search
     render json: customers_json
   end
