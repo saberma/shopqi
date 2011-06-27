@@ -47,8 +47,8 @@
         %dd.sb
           %label{:for => "subscription-type"} 提  醒
           %select#subscription-type{:name => "subscribe"}
-            %optgroup{:label => "Notification method..."}
-              %option{:value => "email"} Email address&hellip;
+            %optgroup{:label => "提醒方式..."}
+              %option{:value => "email"} 邮件地址&hellip;
             %optgroup{:label => "或者发送邮件给本店用户"}
               =options_for_select users.map{|u|[u.name,u.id]}
         %dd#email-detail.details.st.sb{:style => "display:none"}
