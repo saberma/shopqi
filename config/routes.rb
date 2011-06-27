@@ -45,6 +45,7 @@ Shopqi::Application.routes.draw do
   match "/admin" => "home#dashboard"
   match "/admin/general_preferences" => "shops#edit"
   match "/admin/notifications" => "emails#index"
+  match "/admin/notifications/subscribe" => "emails#subscribe"
 
   scope "/admin" do
 

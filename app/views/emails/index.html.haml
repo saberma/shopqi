@@ -1,3 +1,4 @@
+-use_javascripts 'controllers/emails'
 %h2#title 邮件 &amp; 提醒
 #action-links
   %ul
@@ -15,84 +16,57 @@
           %em=type.des
 / pgroup
 .pgroup
-  %h3 Order Notifications
+  %h3 订单提醒
   %p.note.sb
-    When a new order is placed, you can notify other email addresses and cell phones of incoming orders. You can also
-    = succeed "." do
-      %a.feed{:href => "/admin/feed"} subscribe to your orders RSS feed
+    当有顾客下了新的订单时，您可以设置提醒的邮件地址。
   #order-notification-list
     %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
       %tr
-        %th{:colspan => "4", :style => "padding-left: 10px"} When a new order is placed:
+        %th{:colspan => "4", :style => "padding-left: 10px"} 当有顾客下单时：
       %tr#subscription-919172.order-subscription
         %td{:colspan => "2"}
-          %span.note send email to
+          %span.note 发送邮件给:
           %strong &quot;development shop&quot; &lt;mahb45@gmail.com&gt;
         %td.r
-          %a{:href => "#", :onclick => "new Ajax.Request('/admin/notifications/test_subscription/919172?kind=OrderUserSubscription', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('hbyZAEcXGhR0mx6BEXWYj/nz4kFVZpIAw3dEsMp1SWE=')}); return false;"} send test notification
+          %a
+            send test notification
         %td.r{:style => "width:25px"}
           %a{"data-method" => "delete", "data-remote" => "true", :href => "/admin/notifications/919172/unsubscribe?kind=OrderUserSubscription", :rel => "nofollow"}
             %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?276001be6df6889f02aac5e423769ef9a8d5ed26"}/
-      %tr#subscription-1013982.order-subscription
-        %td{:colspan => "2"}
-          %span.note send email to
-          %strong liwh87@gmail.com
-        %td.r
-          %a{:href => "#", :onclick => "new Ajax.Request('/admin/notifications/test_subscription/1013982?kind=OrderEmailSubscription', {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('hbyZAEcXGhR0mx6BEXWYj/nz4kFVZpIAw3dEsMp1SWE=')}); return false;"} send test notification
-        %td.r{:style => "width:25px"}
-          %a{"data-method" => "delete", "data-remote" => "true", :href => "/admin/notifications/1013982/unsubscribe?kind=OrderEmailSubscription", :rel => "nofollow"}
-            %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?276001be6df6889f02aac5e423769ef9a8d5ed26"}/
       %tr#add-subscription
         %td.action-link{:colspan => "4"}
-          %p{:onclick => "Element.toggle('add-subscription'); Element.toggle('add-subscription-details'); return false;"}
+          %p#add-notify
             %span.plus +
-            %a{:style => "display:inline"} Add a new email or SMS notification
+            %a{:style => "display:inline"} 新增邮件提醒
       / end add-subscription
   / end order-notification-list
-  %p#add-subscription-btn
-    %input.btn{:onclick => "Element.toggle('add-subscription-details'); Element.toggle('add-subscription-btn');;", :type => "button", :value => "Add a new order notification"}/
   #add-subscription-details{:style => "display:none"}
     %form{"accept-charset" => "UTF-8", :action => "/admin/notifications/subscribe", "data-remote" => "true", :method => "post"}
-      %div{:style => "margin:0;padding:0;display:inline"}
-        %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-        %input{:name => "authenticity_token", :type => "hidden", :value => "hbyZAEcXGhR0mx6BEXWYj/nz4kFVZpIAw3dEsMp1SWE="}/
       %dl
-        %dt Add a new order notification
+        %dt 增加一个新的订单提醒
         %dd.sb
-          %label{:for => "subscription-type"} Notify
-          %select#subscription-type{:name => "subscribe", :onchange => "$$('dd.details').invoke('hide');  if($(this.value + '-detail')) { $(this.value + '-detail').show(); }"}
+          %label{:for => "subscription-type"} 提  醒
+          %select#subscription-type{:name => "subscribe"}
             %optgroup{:label => "Notification method..."}
               %option{:value => "email"} Email address&hellip;
-              %option{:value => "cellphone"} Cell phone&hellip;
-            %optgroup{:label => "or email a staff member"}
-              %option{:value => "1093382"} ee ee
-              %option{:value => "1019492"} development shop
+            %optgroup{:label => "或者发送邮件给本店用户"}
+              =options_for_select users.map{|u|[u.name,u.id]}
         %dd#email-detail.details.st.sb{:style => "display:none"}
-          %label{:for => "address"} Email address
+          %label{:for => "address"} 邮件地址
           %input#address{:name => "address", :size => "30", :type => "text", :value => ""}/
         %dd#cellphone-detail.details.sb{:style => "display:none"}
           %p.sb
-            %label{:for => "number"} Cell phone number
+            %label{:for => "number"} 电话号码
             %input#number{:name => "number", :size => "15", :type => "text", :value => ""}/
-          %p.cl
-            %label{:for => "provider"} cellphone provider
-            %select{:name => "provider"}
-              %option{:value => ""} Select a provider...
-              %optgroup{:label => "USA/Canada"}
-                %option{:value => "vmobl.com"} Virgin Mobile USA
-              %optgroup{:label => "Elsewhere"}
-                %option{:value => "orange.net"} Orange
-                %option{:value => "t.vodafone.ne.jp"} Vodafone Japan T
           %p.note.st.sb
             The digit
             %strong 1
             is not required before your area code.
             %strong Your cell phone provider may charge you for incoming text messages, please check with your provider.
         %dd.sst.btn-divider.cl
-          %input.btn{:name => "commit", :type => "submit", :value => "Subscribe"}/
+          %input.btn{:name => "commit", :type => "submit", :value =>"保存" }
           or
           %a{:href => "#", :onclick => "Element.hide('add-subscription-details'); if($('order-notification-list').visible()){ Element.show('add-subscription'); } else { Element.show('add-subscription-btn')}; return false;"} Close
-    %script{:charset => "utf-8", :type => "text/javascript"} $('subscription-type').onchange();
-    %pre#testing-log.sst{:style => "display:none; border: 1px dashed #aaa; background: #efefef; padding: 5px; overflow: auto"}
-      :preserve
 
+:javascript
+  new App.Controllers.Emails()
