@@ -22,6 +22,15 @@ class Customer < ActiveRecord::Base
   def status_name
     KeyValues::Customer::State.find_by_code(status).name
   end
+
+  # 加入地址(不能重复)
+  def add_address(a) #a可以是billing_address或者shipping_address
+    attrs = { name: a.name, company: a.company, country: a.country, province: a.province, city: a.city,
+              district: a.district, address1: a.address1, address2: a.address2, zip: a.zip, phone: a.phone }
+    unless self.addresses.exists?(attrs)
+      self.addresses.create attrs
+    end
+  end
 end
 
 class CustomerAddress < ActiveRecord::Base

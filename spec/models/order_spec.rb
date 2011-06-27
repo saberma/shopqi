@@ -10,10 +10,24 @@ describe Order do
   let(:variant) { iphone4.variants.first }
 
   let(:order) do
-    o = Factory.build(:order, shop: shop)
+    o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com')
     o.line_items.build product_variant: variant, price: 10, quantity: 2
     o.save
     o
+  end
+
+  describe Customer do
+
+    it 'should be add' do
+      shop
+      expect do
+        expect do
+          order
+        end.should change(Customer, :count).by(1)
+      end.should change(CustomerAddress, :count).by(1)
+      order.customer.should_not be_nil
+    end
+
   end
 
   describe OrderTransaction do
