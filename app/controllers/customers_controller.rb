@@ -18,8 +18,8 @@ class CustomersController < ApplicationController
             when :last_3_months then 3.month.ago
             when :last_year then 3.month.ago
             # 是否
-            when :yes then true
-            when :no then false
+            when :true then true
+            when :false then false
             else
               value
           end
@@ -58,8 +58,9 @@ class CustomersController < ApplicationController
   expose(:customer_json) do
     customer.to_json({
       include: {
-        addresses: {}
+        addresses: { methods: [:province_name, :city_name, :district_name] }
       },
+      methods: [ :address, :status_name ],
       except: [ :created_at, :updated_at ]
     })
   end
@@ -67,8 +68,8 @@ class CustomersController < ApplicationController
   expose(:primary_filters) { KeyValues::Customer::PrimaryFilter.all }
   expose(:secondary_filters_integer) { KeyValues::Customer::SecondaryFilter::Integer.hash }
   expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
-  expose(:secondary_filters_boolean) { KeyValues::Customer::SecondaryFilter::Boolean.hash }
-  expose(:secondary_filters_status) { KeyValues::Customer::SecondaryFilter::State.hash }
+  expose(:boolean) { KeyValues::Customer::Boolean.hash }
+  expose(:status) { KeyValues::Customer::State.hash }
 
   def show
   end

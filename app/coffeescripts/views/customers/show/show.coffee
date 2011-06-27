@@ -1,28 +1,23 @@
-App.Views.Order.Show.Show = Backbone.View.extend
-  el: '#main' #注意:其他子视图不能再绑定#main，否则events会被覆盖而不生效
-
-  events:
-    'click #note': 'showNote'
-    'click #cancel-order': 'showCancel'
+App.Views.Customer.Show.Show = Backbone.View.extend
+  el: '#customer-summary'
 
   initialize: ->
+    self = this
+    @more_addresses = _(@model.get('addresses')).reject (address) -> address.id is self.model.get('address').id
     this.render()
+    this.moreOrLess()
 
   render: ->
-    new App.Views.Order.Show.Transaction.Index
-    new App.Views.Order.Show.Fulfillment.Panel
-    new App.Views.Order.Show.Fulfillment.Index
-    new App.Views.Order.Show.LineItem.Index
-    new App.Views.Order.Show.History.Index
-    new App.Views.Order.Show.Note
+    $('#title').text @model.get('name')
+    template = Handlebars.compile $('#customer-summary-item').html()
+    attrs = _.clone @model.attributes
+    attrs['more_addresses'] = @more_addresses
+    $(@el).html template attrs
 
-  showNote: ->
-    $('#order-note').hide()
-    $('#note-form').show()
-    false
-
-  showCancel: ->
-    template = Handlebars.compile $('#cancel-order-item').html()
-    $.blockUI message: template(), css: { width: '630px' }
-    $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').attr('title','单击关闭').click($.unblockUI)
-    false
+  moreOrLess: ->
+    $('#show-customer-addresses').toggle ->
+      $('#more-customer-addresses').toggle()
+      $(this).html '隐藏地址&hellip;'
+    , ->
+      $('#more-customer-addresses').toggle()
+      $(this).html "另外 #{self.more_addresses.length} 个地址&hellip;"

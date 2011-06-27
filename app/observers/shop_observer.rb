@@ -56,10 +56,10 @@ class ShopObserver < ActiveRecord::Observer
     shop.customers.create [
       {
         name: '李卫辉', email: 'liwh87@gmail.com', note: '默认顾客',
-        addresses_attributes: [{ name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '南山区科技园', phone: '13751042627' }]
+        addresses_attributes: [{ name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '科技园南区311', phone: '13751042627', zip: '517058' }]
       }, {
         name: '马海波', email: 'mahb45@gmail.com', note: '默认顾客',
-        addresses_attributes: [{ name: '马海波', province: '440000', city: '440300', district: '440305', address1: '南山区科技园', phone: '13928452888' }]
+        addresses_attributes: [{ name: '马海波', province: '440000', city: '440300', district: '440305', address1: '科技园南区311', phone: '13928452888', zip: '517058' }]
       }
     ]
 

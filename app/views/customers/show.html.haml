@@ -1,4 +1,7 @@
-%h2#title saberma ma
+=content_for :javascripts do
+  =javascript_include_tag 'models/customer', 'views/customers/show/index', 'views/customers/show/show'
+
+%h2#title
 #action-links
   %ul
     %li.no-icon
@@ -10,47 +13,6 @@
 .col-4
   #customer-box.box2(style="margin:20px 0 0 0; padding:10px; width:240px;")
     %table#customer-summary(cellpadding="0" cellspacing="0")
-      %tr.first
-        %td.attribute=image_tag 'admin/icons/customer.gif', id: :gravatar
-        %td.value
-          %h3 saberma ma
-          %p(style="line-height:18px;")
-            %a(href="mailto:mahb45@gmail.com") mahb45@gmail.com
-            %br/
-            13928452841
-      %tr
-        %td.attribute 帐号
-        %td.value
-          %span.o-authorized enabled
-      %tr
-        %td.attribute 营销
-        %td.value.image
-          %span.o-authorized accepts marketing
-      %tr
-        %td.attribute 默认地址
-        %td.value
-          saberma ma
-          %br/
-          china111111111
-          %br/
-          shenzhen  518057
-          %br/
-          China
-      %tbody#more-customer-addresses(style="display:none;")
-        %tr
-          %td.attribute address
-          %td.value
-            ma
-            %br/
-            china
-            %br/
-            shenzhen  518057
-            %br/
-            China
-      %tr
-        %td.attribute &nbsp;
-        %td.value
-          %a#show-customer-addresses(href="#") 另外 5 个地址&hellip;
   #customer-note.message.customer-col(style="margin-top:20px;")
     %h3.clearfix 顾客备注
     #customer-note_body.notes 暂时没有加入备注.
@@ -191,3 +153,62 @@
       %a.btn(data-method="post" href="/admin/customers/45648822/disable" rel="nofollow") Disable Account
       or
       %a.close-lightbox(href="#") Cancel
+
+%script(id="customer-summary-item" type="text/x-jquery-tmpl")
+  %tbody
+    %tr.first
+      %td.attribute=image_tag 'admin/icons/customer.gif', id: :gravatar
+      %td.value
+        %h3 {{{name}}}
+        %p(style="line-height:18px;")
+          %a(href="mailto:{{{email}}}") {{{email}}}
+          %br/
+          {{{address.phone}}}
+    %tr
+      %td.attribute 帐号
+      %td.value
+        %span.o-authorized {{{status_name}}}
+    %tr
+      %td.attribute 营销
+      %td.value.image
+        %span.o-authorized {{#unless accepts_marketing}}不愿意{{/unless}}接收营销邮件
+    %tr
+      %td.attribute 默认地址
+      %td.value
+        {{#with address}}
+        {{{name}}}
+        %br/
+        {{{province_name}}}
+        %br/
+        {{{city_name}}}
+        %br/
+        {{{district_name}}}
+        %br/
+        {{{address1}}} {{{zip}}}
+        {{/with}}
+  %tbody#more-customer-addresses(style="display:none;")
+    {{#each more_addresses}}
+    %tr
+      %td.attribute 地址
+      %td.value
+        {{{name}}}
+        %br/
+        {{{province_name}}}
+        %br/
+        {{{city_name}}}
+        %br/
+        {{{district_name}}}
+        %br/
+        {{{address1}}} {{{zip}}}
+    {{/each}}
+  {{#if more_addresses.length}}
+  %tbody
+    %tr
+      %td.attribute &nbsp;
+      %td.value
+        %a#show-customer-addresses(href="#") 另外 {{{more_addresses.length}}} 个地址&hellip;
+  {{/if}}
+
+:javascript
+  App.customer = new Customer(#{customer_json});
+  new App.Views.Customer.Show.Index({model: App.customer});
