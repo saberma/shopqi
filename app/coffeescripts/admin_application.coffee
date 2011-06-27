@@ -35,6 +35,10 @@ DateUtils =
     date = new Date(date)
     "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
 
+  formatDate: (date) ->
+    date = new Date(date)
+    "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()}"
+
 #字符串
 StringUtils =
   #转化为数组
