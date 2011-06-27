@@ -30,17 +30,6 @@
           %th.sortcol 支付状态
           %th.sortcol 发货状态
           %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
-        %tr#row-67967832.order
-          %td
-            %a.abandoned(href="https://myshopqi.com/admin/orders/67967832") #1001
-          %td
-            %span.note Jun 13
-          %td
-            %span.o-abandoned(style="font-size: 11px") abandoned
-          %td
-            %span(style="font-size: 11px")
-              %span.o-not-fulfilled not fulfilled
-          %td(style="text-align: right") ¥67.00
     %div(style="width:100%")
       #pagination
   #edit-customer-screen(style="display:none")
@@ -144,17 +133,6 @@
       or
       %a.close-lightbox(href="#") Cancel
 
-%script(id="customer-facts-item" type="text/x-jquery-tmpl")
-  %ul
-    %li.first
-      %p.big {{{total_spent}}}
-      %span 消费金额
-    %li
-      %p.big {{{orders_count}}}
-      %span 订单数
-    %li.last
-      %p.big Jun 05
-      %span 首次下单
 %script(id="customer-summary-item" type="text/x-jquery-tmpl")
   %tbody
     %tr.first
@@ -209,6 +187,28 @@
       %td.value
         %a#show-customer-addresses(href="#") 另外 {{{more_addresses.length}}} 个地址&hellip;
   {{/if}}
+%script(id="customer-facts-item" type="text/x-jquery-tmpl")
+  %ul
+    %li.first
+      %p.big ¥{{{total_spent}}}
+      %span 消费金额
+    %li
+      %p.big {{{orders_count}}}
+      %span 订单数
+    %li.last
+      %p.big {{{first_order_date}}}
+      %span 首次下单
+%script(id="order-item" type="text/x-jquery-tmpl")
+  %td
+    %a(class="{{{abandoned_class}}}" href="/admin/orders/{{{id}}}") {{{name}}}
+  %td
+    %span.note {{{date created_at}}}
+  %td
+    %span(style="font-size: 11px" class="{{{financial_class}}}") {{{financial_status_name}}}
+  %td
+    %span(style="font-size: 11px")
+      %span(class='{{{fulfill_class}}}') {{{fulfillment_status_name}}}
+  %td(style="text-align: right") ¥{{{total_price}}}
 
 :javascript
   App.customer = new Customer(#{customer_json});

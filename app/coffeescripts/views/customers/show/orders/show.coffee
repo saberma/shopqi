@@ -1,21 +1,19 @@
-App.Views.Customer.Index.Filter.Show = Backbone.View.extend
-  className: 'filter-tag'
-
-  events:
-    "click .close-filter-tag": 'destroy' # 删除主过滤器
+App.Views.Customer.Show.Order.Show = Backbone.View.extend
+  tagName: 'tr'
+  className: 'order'
 
   initialize: ->
     self = this
-    _.bindAll this, 'render'
     this.render()
 
-  # 删除过滤器
-  destroy: ->
-    @model.collection.remove @model
-    this.remove()
-    false
-
   render: ->
-    template = Handlebars.compile $('#customer-search_filters-item').html()
-    $(@el).html template @model.attributes
-    $('#customer-search_filters').append @el
+    template = Handlebars.compile $('#order-item').html()
+    attrs = @model.attributes
+    attrs['financial_class'] = @model.financial_class()
+    attrs['fulfill_class'] = @model.fulfill_class()
+    attrs['abandoned_class'] = @model.get('status') is 'abandoned'
+    $(@el).html template attrs
+    position = _.indexOf @model.collection.models, @model
+    cycle = if position % 2 == 0 then 'odd' else 'even'
+    $(@el).addClass "row#{cycle}"
+    $('#order-table').append @el

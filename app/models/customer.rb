@@ -8,6 +8,10 @@ class Customer < ActiveRecord::Base
 
   default_value_for :status, 'enabled'
 
+  def available_orders # 有效订单
+    self.orders.where(financial_status: [:paid, :pending, :authorized])
+  end
+
   # 默认地址
   def address
     json = addresses.first.as_json(methods: [:province_name, :city_name, :district_name])
@@ -16,7 +20,7 @@ class Customer < ActiveRecord::Base
 
   # 首次下单
   def order
-    self.orders.where(status: [:paid, :pending, :authorized]).first.as_json['order']
+    self.available_orders.first.as_json['order']
   end
 
   def status_name

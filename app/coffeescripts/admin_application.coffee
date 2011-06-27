@@ -29,11 +29,11 @@ App =
   Collections: {}
   init: ->
 
-##### 注册handlebars helpers #####
-#日期，用于订单列表创建日期的格式化
-Handlebars.registerHelper 'date', (date) ->
-  date = new Date(date)
-  "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
+#日期
+DateUtils =
+  format: (date) ->
+    date = new Date(date)
+    "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
 
 #字符串
 StringUtils =
@@ -102,6 +102,9 @@ UpdateableSelectBox = (select_box, create_label) ->
   else if select_box.val() isnt 'create_new'
     input_field.val(select_box.val())
 
+##### 注册handlebars helpers #####
+#日期，用于订单列表创建日期的格式化
+Handlebars.registerHelper 'date', DateUtils.format
 
 $(document).ready ->
   App.init()
