@@ -12,6 +12,7 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     new App.Views.Customer.Index.Search collection: @collection
     this.render()
     @collection.bind 'refresh', -> self.render()
+    $(document).click -> $('.display_message').fadeOut('slow') # 弹出的顾客tip
 
   render: ->
     $('#customer-search_msg').html("找到 #{@collection.length}位 顾客").css('background-image', 'none')
