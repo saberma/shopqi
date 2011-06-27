@@ -14,6 +14,11 @@ class Customer < ActiveRecord::Base
     json['customer_address']
   end
 
+  # 首次下单
+  def order
+    self.orders.where(status: [:paid, :pending, :authorized]).first.as_json['order']
+  end
+
   def status_name
     KeyValues::Customer::State.find_by_code(status).name
   end

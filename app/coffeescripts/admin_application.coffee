@@ -14,7 +14,8 @@ App =
     Customer:
       Index:
         Filter: {}
-      Show: {}
+      Show:
+        Order: {}
     CustomerGroup:
       Index: {}
     Product:

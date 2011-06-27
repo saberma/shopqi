@@ -58,9 +58,10 @@ class CustomersController < ApplicationController
   expose(:customer_json) do
     customer.to_json({
       include: {
-        addresses: { methods: [:province_name, :city_name, :district_name] }
+        addresses: { methods: [:province_name, :city_name, :district_name] },
+        orders: {}
       },
-      methods: [ :address, :status_name ],
+      methods: [ :address, :order, :status_name ],
       except: [ :created_at, :updated_at ]
     })
   end

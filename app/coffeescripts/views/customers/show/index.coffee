@@ -6,3 +6,4 @@ App.Views.Customer.Show.Index = Backbone.View.extend
 
   render: ->
     new App.Views.Customer.Show.Show model: @model
+    new App.Views.Customer.Show.Order.Index model: @model
