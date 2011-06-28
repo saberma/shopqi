@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'views/customers/show/note', 'views/customers/show/edit', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
+  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'views/customers/show/note', 'views/customers/show/tags', 'views/customers/show/edit', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
 
 %h2#title
 #action-links
@@ -15,8 +15,6 @@
     %table#customer-summary(cellpadding="0" cellspacing="0")
   #customer-note.message.customer-col(style="margin-top:20px;")
   #customer-tags(style="margin:20px 0; width:240px;")
-    %h3.clearfix 顾客标记
-    暂时没有加入标记.
 .customer.col-8.last
   #show-customer-screen
     #customer-facts.box2(style="margin-top:20px;")
@@ -48,6 +46,9 @@
 %script(id="customer-note-item" type="text/x-jquery-tmpl")
   %h3.clearfix 顾客备注
   .notes {{#if note}} {{note}} {{else}} 暂时没有加入备注. {{/if}}
+%script(id="customer-tags-item" type="text/x-jquery-tmpl")
+  %h3.clearfix 顾客标记
+  %p {{#if tags_text}} {{tags_text}} {{else}} 暂时没有加入标记. {{/if}}
 %script(id="customer-summary-item" type="text/x-jquery-tmpl")
   %tbody
     %tr.first
