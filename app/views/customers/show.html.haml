@@ -139,19 +139,19 @@
       .section-header 地址信息
       .address
         .customer-group.white
+          {{#with address}}
           .pb.clearfix
             .fl
-              %input#id(name="id" type="hidden" value="45648822")/
               %label(for="name") 姓名
-              %input#name.name(name="name" size="30" type="text" value="saberma")
+              %input#name.name(name="name" size="30" type="text" value="{{{name}}}")
           .pb.clearfix
             .fl
               %label(for="company") 公司
-              %input#company.company(name="company" size="30" type="text" value="nanshan 311")/
+              %input#company.company(name="company" size="30" type="text" value="{{{company}}}")/
             .fl
               %label(for="phone") 电话
-              %input#phone.phone(name="phone" size="30" type="text" value="13928452841")/
-          .pb.clearfix
+              %input#phone.phone(name="phone" size="30" type="text" value="{{{phone}}}")/
+          .pb.clearfix.region
             .fl(style="margin-right:10px")
               %label(for="country") 地区
               =select_tag :province, options_for_select(District.list), {include_blank: '--省份--', style: 'width: 106px'}
@@ -160,14 +160,19 @@
           .pb.clearfix
             .fl
               %label(for="address1") 地址
-              %input.city(name="address1" size="30" type="text" value="china111111111")
+              %input.city(name="address1" size="30" type="text" value="{{{address1}}}")
             .fl
               %label(for="zip") 邮编
-              %input#zip.postal(name="zip" size="30" type="text" value="518057")
+              %input#zip.postal(name="zip" size="30" type="text" value="{{{zip}}}")
+          {{/with}}
       .customer-group.white
         .pb.clearfix
           .fl
+            {{#if accepts_marketing}}
+            %input#accepts_marketing(checked="checked" name="customer[accepts_marketing]" type="checkbox" value="1")
+            {{else}}
             %input#accepts_marketing(name="customer[accepts_marketing]" type="checkbox" value="1")
+            {{/if}}
           .fl
             %label(for="accepts_marketing") 接收营销邮件
     %div
