@@ -12,6 +12,7 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
   render: ->
     template = Handlebars.compile $('#edit-customer-screen-item').html()
     attrs = _.clone @model.attributes
+    #attrs['tags'] = StringUtils.to_a attrs.tags_text
     $(@el).html template attrs
 
     address = @model.get('address')
@@ -40,6 +41,7 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
         name: this.$("input[name='customer[name]']").val(),
         accepts_marketing: this.$("input[name='customer[accepts_marketing]']").attr('checked'),
         note: this.$("textarea[name='customer[note]']").val(),
+        tags_text: this.$("input[name='customer[tags_text]']").val(),
         addresses_attributes: [
           id: @model.get('address').id,
           name: this.$("input[name='name']").val(),

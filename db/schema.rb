@@ -120,6 +120,23 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
 
   add_index "customer_groups", ["shop_id"], :name => "index_customer_groups_on_shop_id"
 
+  create_table "customer_tags", :force => true do |t|
+    t.integer  "shop_id",    :null => false
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_tags", ["shop_id"], :name => "index_customer_tags_on_shop_id"
+
+  create_table "customer_tags_customers", :id => false, :force => true do |t|
+    t.integer "customer_id",     :null => false
+    t.integer "customer_tag_id", :null => false
+  end
+
+  add_index "customer_tags_customers", ["customer_id"], :name => "index_customer_tags_customers_on_customer_id"
+  add_index "customer_tags_customers", ["customer_tag_id"], :name => "index_customer_tags_customers_on_customer_tag_id"
+
   create_table "customers", :force => true do |t|
     t.integer  "shop_id",                                           :null => false
     t.string   "status",            :limit => 8,                    :null => false

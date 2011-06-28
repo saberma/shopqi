@@ -61,7 +61,7 @@ class CustomersController < ApplicationController
         addresses: { methods: [:province_name, :city_name, :district_name] },
         orders: { methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :created_at] }
       },
-      methods: [ :address, :order, :status_name ],
+      methods: [ :address, :order, :status_name, :tags_text ],
       except: [ :created_at, :updated_at ]
     })
   end
@@ -71,6 +71,7 @@ class CustomersController < ApplicationController
   expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
   expose(:boolean) { KeyValues::Customer::Boolean.hash }
   expose(:status) { KeyValues::Customer::State.hash }
+  expose(:tags) { shop.customer_tags.previou_used }
 
   def update
     customer.save

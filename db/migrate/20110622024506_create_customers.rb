@@ -30,11 +30,28 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :phone       , comment: '电话'    , limit: 64  , null: false
     end
 
+    #标记
+    create_table :customer_tags do |t|
+      t.references :shop, comment: '所属商店', null: false
+      t.string :name    , comment: '姓名'    , null: false
+      t.timestamps
+    end
+
+    create_table :customer_tags_customers, id: false do |t|
+      t.references :customer    , comment: '所属顾客', null: false
+      t.references :customer_tag, comment: '所属标签', null: false
+    end
+
     add_index :customers         , :shop_id
     add_index :customer_addresses, :customer_id
+    add_index :customer_tags, :shop_id
+    add_index :customer_tags_customers, :customer_id
+    add_index :customer_tags_customers, :customer_tag_id
   end
 
   def self.down
+    drop_table :customer_tags_customers
+    drop_table :customer_tags
     drop_table :customer_addresses
     drop_table :customers
   end

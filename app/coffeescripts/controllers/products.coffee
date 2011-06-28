@@ -41,26 +41,8 @@ App.Controllers.Products = Backbone.Controller.extend
         inventory_management_relate.show()
     $("select.inventory_management").change()
 
-
     #标签
-    $('#tag-list a').click ->
-      $(this).toggleClass('active')
-      tags = StringUtils.to_a($('#product_tags_text').val())
-      tag = $(this).text()
-      if tag not in tags
-        tags.push tag
-      else
-        tags = _.without tags, tag
-      $('#product_tags_text').val(tags.join(', '))
-      false
-    $('#product_tags_text').keyup ->
-      tags = StringUtils.to_a($('#product_tags_text').val())
-      $('#tag-list a').each ->
-        if $(this).text() in tags
-          $(this).addClass('active')
-        else
-          $(this).removeClass('active')
-    .keyup()
+    TagUtils.init 'product_tags_text'
 
     #显示上传图片的form
     $('.show-upload-link').click ->

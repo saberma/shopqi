@@ -61,6 +61,30 @@ FormUtils =
       inputs[field] = $(this).val()
     inputs
 
+#标签
+TagUtils =
+  init: (tags_text_id = 'tags_text', tag_list_id = 'tag-list')->
+    tag_items = $("##{tag_list_id} a")
+    text_field = $("##{tags_text_id}")
+    tag_items.click ->
+      $(this).toggleClass('active')
+      tags = StringUtils.to_a(text_field.val())
+      tag = $(this).text()
+      if tag not in tags
+        tags.push tag
+      else
+        tags = _.without tags, tag
+      text_field.val(tags.join(', '))
+      false
+    text_field.keyup ->
+      tags = StringUtils.to_a(text_field.val())
+      tag_items.each ->
+        if $(this).text() in tags
+          $(this).addClass('active')
+        else
+          $(this).removeClass('active')
+    .keyup()
+
 #特效
 Effect =
   scrollTo: (id) ->
