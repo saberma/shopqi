@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'views/customers/show/edit', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
+  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'views/customers/show/note', 'views/customers/show/edit', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
 
 %h2#title
 #action-links
@@ -14,8 +14,6 @@
   #customer-box.box2(style="margin:20px 0 0 0; padding:10px; width:240px;")
     %table#customer-summary(cellpadding="0" cellspacing="0")
   #customer-note.message.customer-col(style="margin-top:20px;")
-    %h3.clearfix 顾客备注
-    #customer-note_body.notes 暂时没有加入备注.
   #customer-tags(style="margin:20px 0; width:240px;")
     %h3.clearfix 顾客标记
     暂时没有加入标记.
@@ -47,6 +45,9 @@
       or
       %a.close-lightbox(href="#") Cancel
 
+%script(id="customer-note-item" type="text/x-jquery-tmpl")
+  %h3.clearfix 顾客备注
+  .notes {{#if note}} {{note}} {{else}} 暂时没有加入备注. {{/if}}
 %script(id="customer-summary-item" type="text/x-jquery-tmpl")
   %tbody
     %tr.first
@@ -178,7 +179,7 @@
     %div
       .section-header 备注
       .customer-group.white
-        %textarea#note.notes(cols="40" name="customer[note]" rows="20")
+        %textarea#note.notes(cols="40" name="customer[note]" rows="20") {{{note}}}
     %div
       .section-header 标记
       .customer-group.white
