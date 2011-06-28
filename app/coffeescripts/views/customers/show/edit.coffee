@@ -12,8 +12,10 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
   render: ->
     template = Handlebars.compile $('#edit-customer-screen-item').html()
     attrs = _.clone @model.attributes
-    #attrs['tags'] = StringUtils.to_a attrs.tags_text
+    attrs['tags'] = App.tags
     $(@el).html template attrs
+
+    TagUtils.init()
 
     address = @model.get('address')
     region = [address.province, address.city, address.district]

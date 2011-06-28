@@ -44,6 +44,7 @@ class CustomersController < ApplicationController
   end
   expose(:customer_groups) { shop.customer_groups }
   expose(:customer)
+  expose(:tags) { shop.customer_tags.previou_used }
   expose(:customers_json) do
     customers.to_json({
       include: :orders,
@@ -65,13 +66,13 @@ class CustomersController < ApplicationController
       except: [ :created_at, :updated_at ]
     })
   end
+  expose(:tags_json) { tags.to_json }
   expose(:page_sizes) { KeyValues::PageSize.hash }
   expose(:primary_filters) { KeyValues::Customer::PrimaryFilter.all }
   expose(:secondary_filters_integer) { KeyValues::Customer::SecondaryFilter::Integer.hash }
   expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
   expose(:boolean) { KeyValues::Customer::Boolean.hash }
   expose(:status) { KeyValues::Customer::State.hash }
-  expose(:tags) { shop.customer_tags.previou_used }
 
   def update
     customer.save

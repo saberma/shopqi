@@ -184,7 +184,7 @@
       .section-header 标记
       .customer-group.white
         %p.note.sb 多个关键词之间用逗号(,)隔开。
-        %input#tags_text.sb(name="customer[tags_text]" size="30" type="text" value="")
+        %input#tags_text.sb(name="customer[tags_text]" size="30" type="text" value="{{{tags_text}}}")
         {{#if tags.length}}
         {{else}}
         %p.note 例如: VIP
@@ -192,7 +192,7 @@
         %ul#tag-list.clearfix.nobull.st
           {{#each tags}}
           %li
-            %a(href="#") 中国
+            %a(href="#") {{{name}}}
           {{/each}}
     .group-actions
       %input#update-options.btn(name="commit" type="submit" value="保存")/
@@ -201,4 +201,5 @@
 
 :javascript
   App.customer = new Customer(#{customer_json});
+  App.tags = #{tags_json};
   new App.Views.Customer.Show.Index({model: App.customer});

@@ -92,4 +92,8 @@ class CustomerTag < ActiveRecord::Base
   def self.split(text)
     text ? text.split(/[,，]\s*/).uniq : []
   end
+
+  def as_json(options = nil)
+    super(only: :name)['customer_tag']
+  end
 end
