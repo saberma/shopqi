@@ -5,7 +5,6 @@ App.Views.Customer.Show.Show = Backbone.View.extend
     self = this
     @more_addresses = _(@model.get('addresses')).reject (address) -> address.id is self.model.get('address').id
     this.render()
-    this.moreOrLess()
     @model.bind 'change', -> self.render()
 
   render: ->
@@ -14,8 +13,10 @@ App.Views.Customer.Show.Show = Backbone.View.extend
     attrs = _.clone @model.attributes
     attrs['more_addresses'] = @more_addresses
     $(@el).html template attrs
+    this.moreOrLess()
 
   moreOrLess: ->
+    self = this
     $('#show-customer-addresses').toggle ->
       $('#more-customer-addresses').toggle()
       $(this).html '隐藏地址&hellip;'
