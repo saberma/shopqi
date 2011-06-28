@@ -74,6 +74,10 @@ class CustomersController < ApplicationController
   expose(:boolean) { KeyValues::Customer::Boolean.hash }
   expose(:status) { KeyValues::Customer::State.hash }
 
+  def new
+    customer.addresses.build if customer.addresses.empty?
+  end
+
   def update
     customer.save
     render nothing: true

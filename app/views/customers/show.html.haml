@@ -6,7 +6,7 @@
   %ul
     %li.no-icon
       %a#edit-customer-link(href="#") 编辑
-    %li#reorder=link_to '重置密码', '#', class: 'closure-lightbox'
+    -#%li#reorder=link_to '重置密码', '#', class: 'closure-lightbox'
     %li#lock=link_to '禁用帐号', '#', class: 'closure-lightbox'
 =render "shared/noscript"
 =render "shared/upgrade_ie"
@@ -47,8 +47,8 @@
   %h3.clearfix 顾客备注
   .notes {{#if note}} {{note}} {{else}} 暂时没有加入备注. {{/if}}
 %script(id="customer-tags-item" type="text/x-jquery-tmpl")
-  %h3.clearfix 顾客标记
-  %p {{#if tags_text}} {{tags_text}} {{else}} 暂时没有加入标记. {{/if}}
+  %h3.clearfix 顾客标签
+  %p {{#if tags_text}} {{tags_text}} {{else}} 暂时没有加入标签. {{/if}}
 %script(id="customer-summary-item" type="text/x-jquery-tmpl")
   %tbody
     %tr.first
@@ -155,7 +155,7 @@
               %input#phone.phone(name="phone" size="30" type="text" value="{{{phone}}}")/
           .pb.clearfix.region
             .fl(style="margin-right:10px")
-              %label(for="country") 地区
+              %label(for="province") 地区
               =select_tag :province, options_for_select(District.list), {include_blank: '--省份--', style: 'width: 106px'}
               =select_tag :city, nil, {include_blank: '--城市--', style: 'width: 106px'}
               =select_tag :district, nil, {include_blank: '--地区--', style: 'width: 106px'}
@@ -182,11 +182,12 @@
       .customer-group.white
         %textarea#note.notes(cols="40" name="customer[note]" rows="20") {{{note}}}
     %div
-      .section-header 标记
+      .section-header 标签
       .customer-group.white
         %p.note.sb 多个关键词之间用逗号(,)隔开。
         %input#tags_text.sb(name="customer[tags_text]" size="30" type="text" value="{{{tags_text}}}")
         {{#if tags.length}}
+        %p.note(style="clear: both") 最近使用过的标签，单击增加。
         {{else}}
         %p.note 例如: VIP
         {{/if}}

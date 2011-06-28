@@ -93,6 +93,15 @@ cn:
         address2: 地址 续
         zip: 邮编
         phone: 电话
+      customer:
+        name: 姓名
+        email: 邮箱
+        accepts_marketing: 接收营销邮件
+      customer_address:
+        company: 公司
+        phone: 电话
+        address1: 地址
+        zip: 邮编
     errors:
       template:
         header: ""
