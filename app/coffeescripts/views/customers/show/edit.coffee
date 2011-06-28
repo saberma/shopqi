@@ -1,6 +1,9 @@
 App.Views.Customer.Show.Edit = Backbone.View.extend
   el: '#edit-customer-screen'
 
+  events:
+    "click #update-options": "save"
+
   initialize: ->
     self = this
     this.render()
@@ -28,3 +31,17 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
             select.val(value).change() if value # 级联回显
 
     $('#province').val(address.province).change()
+
+  save: ->
+    self = this
+    attrs =
+      customer:
+        name: this.$("input[name='customer[name]']").val(),
+        accepts_marketing: this.$("input[name='customer[accepts_marketing]']").attr('checked'),
+        note: this.$("textarea[name='customer[note]']").val(),
+      _method: 'put'
+    $.post "/admin/customers/#{@model.id}", attrs, (data) ->
+      self.model.set attrs.customer
+      $('#edit-customer-link').click()
+      msg '修改成功!'
+    false

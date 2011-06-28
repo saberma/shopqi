@@ -72,6 +72,11 @@ class CustomersController < ApplicationController
   expose(:boolean) { KeyValues::Customer::Boolean.hash }
   expose(:status) { KeyValues::Customer::State.hash }
 
+  def update
+    customer.save
+    render nothing: true
+  end
+
   def show
   end
 

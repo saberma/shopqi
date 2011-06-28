@@ -6,6 +6,7 @@ App.Views.Customer.Show.Show = Backbone.View.extend
     @more_addresses = _(@model.get('addresses')).reject (address) -> address.id is self.model.get('address').id
     this.render()
     this.moreOrLess()
+    @model.bind 'change', -> self.render()
 
   render: ->
     $('#title').text @model.get('name')
