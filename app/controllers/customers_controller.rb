@@ -78,6 +78,14 @@ class CustomersController < ApplicationController
     customer.addresses.build if customer.addresses.empty?
   end
 
+  def create
+    if customer.save
+      redirect_to customer_path(customer)
+    else
+      render action: :new
+    end
+  end
+
   def update
     customer.save
     render nothing: true

@@ -6,6 +6,10 @@ class Customer < ActiveRecord::Base
   has_and_belongs_to_many :tags, class_name: 'CustomerTag'
 
   accepts_nested_attributes_for :addresses
+  attr_accessible :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes
+
+  validates_presence_of :name, :email
+  validates_uniqueness_of :email, scope: :shop_id
 
   # 标签
   attr_accessor :tags_text
@@ -68,6 +72,10 @@ end
 
 class CustomerAddress < ActiveRecord::Base
   belongs_to :customer
+
+  before_create do
+    self.name = self.customer.name if self.name.blank?
+  end
 
   def province_name
     District.get(self.province)
