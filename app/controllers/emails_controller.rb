@@ -29,5 +29,6 @@ class EmailsController < ApplicationController
   end
 
   def unfollow
+    subscribe.destroy
   end
 end

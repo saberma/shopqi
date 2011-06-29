@@ -15,7 +15,7 @@ App.Controllers.Emails = Backbone.Controller.extend
 
     $('#cancel').click ->
       $('#add-subscription-details').toggle()
-      if $('#order-notification-list')
+      if $('#order-notification-list').size() > 0
         $('#add-subscription').show()
       else
         $('#add-subscription-btn').show()
