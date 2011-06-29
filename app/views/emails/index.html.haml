@@ -19,20 +19,19 @@
   %h3 订单提醒
   %p.note.sb
     当有顾客下了新的订单时，您可以设置提醒的邮件地址。
-  -if subscribes.size > 0
-    #order-notification-list
-      %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
-        %tr
-          %th{:colspan => "4", :style => "padding-left: 10px"} 当有顾客下单时：
-        -subscribes.each do |s|
-          =render partial: 'subscription',locals: {s: s}
-        %tr#add-subscription
-          %td.action-link{:colspan => "4"}
-            %p#add-notify
-              %span.plus +
-              %a{:style => "display:inline"} 新增邮件提醒
-        / end add-subscription
-    / end order-notification-list
+  #order-notification-list
+    %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
+      %tr
+        %th{:colspan => "4", :style => "padding-left: 10px"} 当有顾客下单时：
+      -subscribes.each do |s|
+        =render partial: 'subscription',locals: {s: s}
+      %tr#add-subscription
+        %td.action-link{:colspan => "4"}
+          %p#add-notify
+            %span.plus +
+            %a{:style => "display:inline"} 新增邮件提醒
+      / end add-subscription
+  / end order-notification-list
   %p#add-subscription-btn(style='display:none')
     %input.btn(onclick="$('#add-subscription-details').toggle(); $('#add-subscription-btn').toggle();$('#email-detail').show();" type="button" value="增加新的订单提醒")
   #add-subscription-details{:style => "display:none"}
