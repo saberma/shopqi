@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: git://github.com/thedarkone/rails-dev-boost.git
-  revision: e2716ad0bceefbd840528cc5de329de075b602e1
+  revision: 8ea07ebee74d9f2879f074c307890997b1f34f03
   specs:
     rails-dev-boost (0.1.1)
 

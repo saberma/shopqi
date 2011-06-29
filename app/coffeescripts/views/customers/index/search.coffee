@@ -1,19 +1,14 @@
 App.Views.Customer.Index.Search = Backbone.View.extend
-  el: '#order-filters'
+  el: '#customer-filters'
 
   events:
     "keydown #customer-search_field": 'returnToSearch'
-    "blur #customer-search_field": 'search'
-    "click #customer-search_field": 'showFilter' #显示过滤器
-    "change #search-filter_primary": 'selectPrimary' # 选择主过滤器
-    "click #search-filter_apply": 'addFilter' # 选择主过滤器
+    "blur #customer-search_field": 'blurToSearch'
 
   initialize: ->
     self = this
-    _.bindAll this, 'render'
-    this.render()
-    @q = '' #避免重复查询相同内容
-    @collection.bind 'refresh', -> self.render()
+    @model = App.customer_group
+    @model.bind 'change', -> self.render()
     # 未输入内容时显示提示
     $("input[data-hint]").focus ->
       hint = $(this).attr('data-hint')
@@ -26,66 +21,43 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     # 初始化过滤器
     $('#search-filter_primary').change()
 
+  # 显示过滤器列表
   render: ->
-    $('#customer-search_msg').html("找到 #{@collection.length}位 顾客").css('background-image', 'none')
-
-  showFilter: ->
-    $('#customer-search_add_filters').show()
+    term_field = $('#customer-search_field')
+    hint = term_field.attr('data-hint')
+    value = term_field.val()
+    unless !@model.get('term') and value is hint
+      term_field.val @model.get('term')
+      value = term_field.val()
+      term_field.val(hint).css(color: '#888') unless value
+    new App.Views.Customer.Index.Filter.Index model: @model
+    this.search()
 
   returnToSearch: (e) ->
-    this.search() if e.keyCode == 13
+    this.blurToSearch() if e.keyCode == 13 # 回车
 
-  # 执行查询(不检查重复情况)
-  performSearch: ->
+  blurToSearch: ->
     hint = $('#customer-search_field').attr('data-hint')
     value = $('#customer-search_field').val()
-    value = '' if value is hint
-    $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
-    $.get '/admin/customers/search', q: value, (data) -> App.customers.refresh(data)
+    if value isnt hint
+      @model.set term: value
 
   # 查询
   search: ->
-    value = $('#customer-search_field').val()
-    hint = $('#customer-search_field').attr('data-hint')
-    if value != hint and @q != value
-      @q = value
-      this.performSearch()
-
-  # 选择主过滤器
-  selectPrimary: ->
-    clazz = $('#search-filter_primary').children(':selected').attr('clazz')
-    filter_html = _(secondary_filters[clazz]).map (text, value) -> "<option value='#{value}'>#{text}</option>"
-    $('#search-filter_secondary').html(filter_html.join(''))
-    $('#search-filter_value').val('').toggle(clazz is 'integer') #只有数值过滤器才需要额外输入框
-
-  # 新增过滤器
-  addFilter: ->
-    @query = '' unless @query? #TODO 与分组关联
-    primary = $('#search-filter_primary').children(':selected')
-    secondary = $('#search-filter_secondary').children(':selected')
-    [condition, value] = [primary.val(), secondary.val()]
-    [condition_name, value_name] = [primary.text(), secondary.text()]
-    new_filter = condition: condition, value: value, condition_name: condition_name, value_name: value_name
-    @filters = _(@query.split(';')).compact().map (filter_query) ->
-      [ condition, value, condition_name, value_name ] = filter_query.split ':'
-      condition: condition, value: value, condition_name: condition_name, value_name: value_name
-    exist_filter = _(@filters).detect (filter) -> new_filter.condition is filter.condition
-    if exist_filter # 避免重复
-      exist_filter.value = new_filter.value
-      exist_filter.value_name = new_filter.value_name
-    else
-      @filters.push new_filter
-    @query = _(@filters).map (filter) ->
-      "#{filter.condition}:#{filter.value}:#{filter.condition_name}:#{filter.value_name}"
-    .join(';')
-    #App.customer_groups.add filter
-    # 显示新增的过滤器
-    $('#search-filter_summary .filter-message').text "已有#{@filters.length}个过滤器"
-    $('#search-filter_summary').show()
-    template = Handlebars.compile $('#customer-search_filters-item').html()
-    $('#customer-search_filters').html('').css('margin-top', '10px')
-    _(@filters).each (filter) -> $('#customer-search_filters').append template filter
-    # 左右分组
-    $('.customer-group.active').removeClass('active')
-    $('#customergroup-current').show().addClass('active')
-    this.performSearch()
+    [value, filters] = [@model.get('term'), @model.filters()]
+    value = '' unless value
+    params = q: value, f: _(filters).map (filter) -> "#{filter.condition}:#{filter.value}"
+    $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
+    $('#customer-search_overlay').show()
+    $.get '/admin/customers/search', params, (data) ->
+      App.customers.refresh(data)
+      $('#customer-search_overlay').hide()
+    model_id = @model.id
+    # 左边分组 (查询条件为空时要重新激活所有顾客分组、在所有顾客分组中查询要激活当前查询)
+    if @model.id == -1 and (value or !_.isEmpty(filters)) # 所有顾客 且 没有查询关键字和过滤条件
+      model_id = 0
+    # 更新分组条件
+    customer_group = App.customer_groups.get model_id
+    customer_group.set term: value, query: @model.get('query')
+    if model_id isnt @model.id # id变化会触发左边分组切换
+      @model.set id: model_id

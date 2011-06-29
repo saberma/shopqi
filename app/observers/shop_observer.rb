@@ -55,19 +55,19 @@ class ShopObserver < ActiveRecord::Observer
     # 默认顾客
     shop.customers.create [
       {
-        name: '马海波', email: 'mahb45@gmail.com', note: '默认顾客',
-        addresses_attributes: [{ name: '马海波', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13928452888' }]
-      }, {
         name: '李卫辉', email: 'liwh87@gmail.com', note: '默认顾客',
-        addresses_attributes: [{ name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13751042627' }]
+        addresses_attributes: [{ name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '科技园南区311', phone: '13751042627', zip: '517058' }]
+      }, {
+        name: '马海波', email: 'mahb45@gmail.com', note: '默认顾客',
+        addresses_attributes: [{ name: '马海波', province: '440000', city: '440300', district: '440305', address1: '科技园南区311', phone: '13928452888', zip: '517058' }]
       }
     ]
 
     # 默认顾客分组
     shop.customer_groups.create [
-      { name: '接收营销邮件', query: '' },
-      { name: '潜在顾客'    , query: '' },
-      { name: '多次消费'    , query: '' },
+      { name: '接收营销邮件', query: 'accepts_marketing:yes:接收营销邮件:是' }                         ,
+      { name: '潜在顾客'    , query: 'last_abandoned_order_date:last_month:放弃订单时间:在最近一个月' },
+      { name: '多次消费'    , query: 'orders_count_gt:1:订单数 大于:1' }                               ,
     ]
 
     # 创建各个邮件样板

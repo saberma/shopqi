@@ -95,32 +95,51 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
 
   create_table "customer_addresses", :force => true do |t|
     t.integer "customer_id",               :null => false
-    t.string  "name",                      :null => false
+    t.string  "name"
     t.string  "company",     :limit => 64
     t.string  "country",     :limit => 64
     t.string  "province",    :limit => 64
     t.string  "city",        :limit => 64
     t.string  "district",    :limit => 64
-    t.string  "address1",                  :null => false
+    t.string  "address1"
     t.string  "address2"
     t.string  "zip",         :limit => 12
-    t.string  "phone",       :limit => 64, :null => false
+    t.string  "phone",       :limit => 64
   end
 
   add_index "customer_addresses", ["customer_id"], :name => "index_customer_addresses_on_customer_id"
 
   create_table "customer_groups", :force => true do |t|
-    t.integer  "shop_id",                  :null => false
-    t.string   "name",       :limit => 32, :null => false
-    t.string   "query",                    :null => false
+    t.integer  "shop_id",                   :null => false
+    t.string   "name",       :limit => 32,  :null => false
+    t.string   "term",       :limit => 32
+    t.string   "query",      :limit => 512
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "customer_groups", ["shop_id"], :name => "index_customer_groups_on_shop_id"
 
+  create_table "customer_tags", :force => true do |t|
+    t.integer  "shop_id",    :null => false
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_tags", ["shop_id"], :name => "index_customer_tags_on_shop_id"
+
+  create_table "customer_tags_customers", :id => false, :force => true do |t|
+    t.integer "customer_id",     :null => false
+    t.integer "customer_tag_id", :null => false
+  end
+
+  add_index "customer_tags_customers", ["customer_id"], :name => "index_customer_tags_customers_on_customer_id"
+  add_index "customer_tags_customers", ["customer_tag_id"], :name => "index_customer_tags_customers_on_customer_tag_id"
+
   create_table "customers", :force => true do |t|
     t.integer  "shop_id",                                           :null => false
+    t.string   "status",            :limit => 8,                    :null => false
     t.string   "name",              :limit => 16,                   :null => false
     t.string   "email",             :limit => 32,                   :null => false
     t.string   "note"

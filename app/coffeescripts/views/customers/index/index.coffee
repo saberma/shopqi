@@ -12,11 +12,12 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     new App.Views.Customer.Index.Search collection: @collection
     this.render()
     @collection.bind 'refresh', -> self.render()
+    $(document).click -> $('.display_message').fadeOut('slow') # 弹出的顾客tip
 
   render: ->
+    $('#customer-search_msg').html("找到 #{@collection.length}位 顾客").css('background-image', 'none')
     $('#customer-table_list').html('')
-    _(@collection.models).each (model) ->
-      new App.Views.Customer.Index.Show model: model
+    _(@collection.models).each (model) -> new App.Views.Customer.Index.Show model: model
 
   # 商品复选框全选操作
   selectAll: ->
@@ -27,13 +28,12 @@ App.Views.Customer.Index.Index = Backbone.View.extend
   changeCustomerCheckbox: ->
     checked = this.$('.selector:checked')
     all_checked = (checked.size() == this.$('.selector').size())
-    this.$('#select-all').attr 'checked', all_checked
+    $('#select-all').attr 'checked', all_checked
     if checked[0]
-      #已选中款式总数
-      this.$('#customer-count').text "已选中 #{checked.size()} 个订单"
-      $('#customer-controls').show()
+      this.$('#customer-count').text "已选中 #{checked.size()} 个顾客"
+      $('#customer-table_status').show()
     else
-      $('#customer-controls').hide()
+      $('#customer-table_status').hide()
 
   # 操作面板修改
   changeCustomerSelect: ->

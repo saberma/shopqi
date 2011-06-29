@@ -3,6 +3,8 @@ App.Views.Customer.Index.Show = Backbone.View.extend
 
   events:
     "click .selector": 'select'
+    "click .contact-details": 'message'
+    "click .display_message": 'nop'
 
   initialize: ->
     self = this
@@ -19,3 +21,10 @@ App.Views.Customer.Index.Show = Backbone.View.extend
 
   select: ->
     $(@el).toggleClass 'active', this.$('.selector').attr('checked')
+
+  message: ->
+    this.$('.display_message').fadeIn('slow')
+    false
+
+  nop: -> #不向下传递事件
+    false

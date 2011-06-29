@@ -20,6 +20,7 @@ class District
   end
 
   def self.get(id)
+    return '' if id.blank?
     children = self.data
     return children[id][:text] if children.has_key?(id)
     id_match = id.match(/(\d{2})(\d{2})(\d{2})/)

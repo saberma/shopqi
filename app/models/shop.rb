@@ -12,6 +12,7 @@ class Shop < ActiveRecord::Base
   has_many :orders            , dependent: :destroy
   has_many :customers         , dependent: :destroy
   has_many :customer_groups   , dependent: :destroy
+  has_many :customer_tags     , dependent: :destroy
   has_many :carts             , dependent: :destroy
   has_many :subscribes        , dependent: :destroy
   has_one  :theme             , dependent: :destroy                      , class_name: 'ShopTheme'

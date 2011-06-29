@@ -12,8 +12,11 @@ App =
         LineItem: {}
         History: {}
     Customer:
-      Index: {}
-      Show: {}
+      Index:
+        Filter: {}
+      Show:
+        Order: {}
+      New: {}
     CustomerGroup:
       Index: {}
     Product:
@@ -27,11 +30,15 @@ App =
   Collections: {}
   init: ->
 
-##### 注册handlebars helpers #####
-#日期，用于订单列表创建日期的格式化
-Handlebars.registerHelper 'date', (date) ->
-  date = new Date(date)
-  "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
+#日期
+DateUtils =
+  format: (date) ->
+    date = new Date(date)
+    "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
+
+  formatDate: (date) ->
+    date = new Date(date)
+    "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()}"
 
 #字符串
 StringUtils =
@@ -54,6 +61,48 @@ FormUtils =
       field = match[1]
       inputs[field] = $(this).val()
     inputs
+
+#标签
+TagUtils =
+  init: (tags_text_id = 'tags_text', tag_list_id = 'tag-list')->
+    tag_items = $("##{tag_list_id} a")
+    text_field = $("##{tags_text_id}")
+    tag_items.click ->
+      $(this).toggleClass('active')
+      tags = StringUtils.to_a(text_field.val())
+      tag = $(this).text()
+      if tag not in tags
+        tags.push tag
+      else
+        tags = _.without tags, tag
+      text_field.val(tags.join(', '))
+      false
+    text_field.keyup ->
+      tags = StringUtils.to_a(text_field.val())
+      tag_items.each ->
+        if $(this).text() in tags
+          $(this).addClass('active')
+        else
+          $(this).removeClass('active')
+    .keyup()
+
+#地区
+RegionUtils =
+  init: (seed = [], region = '.region') ->
+    $(region).each ->
+      selects = $('select', this)
+      selects.change ->
+        $this = this
+        select_index = selects.index($this) + 1
+        select = selects.eq(select_index)
+        if $(this).val() and select[0]
+          $.get "/district/" + $(this).val(), (data) ->
+            result = eval(data)
+            options = select.attr("options")
+            $("option:gt(0)", select).remove()
+            $.each result, (i, item) -> options[options.length] = new Option(item[0], item[1])
+            value = seed[select_index]
+            select.val(value).change() if value # 级联回显
 
 #特效
 Effect =
@@ -100,14 +149,18 @@ UpdateableSelectBox = (select_box, create_label) ->
   else if select_box.val() isnt 'create_new'
     input_field.val(select_box.val())
 
+##### 注册handlebars helpers #####
+#日期，用于订单列表创建日期的格式化
+Handlebars.registerHelper 'date', DateUtils.format
 
 $(document).ready ->
   App.init()
 
+  moveIndicator = (e) -> $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
+  $(document).click moveIndicator
   $('#indicator').ajaxStart ->
     $(this).show()
-    $(document).mousemove (e) ->
-      $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
+    $(document).mousemove moveIndicator
   $('#indicator').ajaxStop ->
     $(this).hide()
     $(document).unbind 'mousemove'
