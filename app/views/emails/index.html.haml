@@ -19,31 +19,24 @@
   %h3 订单提醒
   %p.note.sb
     当有顾客下了新的订单时，您可以设置提醒的邮件地址。
-  #order-notification-list
-    %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
-      %tr
-        %th{:colspan => "4", :style => "padding-left: 10px"} 当有顾客下单时：
-      %tr#subscription.order-subscription
-        %td{:colspan => "2"}
-          %span.note 发送邮件给:
-          %strong &quot;development shop&quot; &lt;mahb45@gmail.com&gt;
-        %td.r
-          %a
-            send test notification
-        %td.r{:style => "width:25px"}
-          %a{"data-method" => "delete", "data-remote" => "true", :href => "/admin/notifications/919172/unsubscribe?kind=OrderUserSubscription", :rel => "nofollow"}
-            %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?276001be6df6889f02aac5e423769ef9a8d5ed26"}/
-      %tr#add-subscription
-        %td.action-link{:colspan => "4"}
-          %p#add-notify
-            %span.plus +
-            %a{:style => "display:inline"} 新增邮件提醒
-      / end add-subscription
-  / end order-notification-list
+  -if subscribes.size > 0
+    #order-notification-list
+      %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %th{:colspan => "4", :style => "padding-left: 10px"} 当有顾客下单时：
+        -subscribes.each do |s|
+          =render partial: 'subscription',locals: {s: s}
+        %tr#add-subscription
+          %td.action-link{:colspan => "4"}
+            %p#add-notify
+              %span.plus +
+              %a{:style => "display:inline"} 新增邮件提醒
+        / end add-subscription
+    / end order-notification-list
   %p#add-subscription-btn(style='display:none')
     %input.btn(onclick="$('#add-subscription-details').toggle(); $('#add-subscription-btn').toggle();$('#email-detail').show();" type="button" value="增加新的订单提醒")
   #add-subscription-details{:style => "display:none"}
-    %form{"accept-charset" => "UTF-8", :action => "/admin/notifications/subscribe", "data-remote" => "true", :method => "post"}
+    =form_for :subscribe, url: admin_notifications_subscribe_path, remote: true do |f|
       %dl
         %dt 增加一个新的订单提醒
         %dd.sb
@@ -61,14 +54,10 @@
             %label{:for => "number"} 电话号码
             %input#number{:name => "number", :size => "15", :type => "text", :value => ""}/
           %p.note.st.sb
-            The digit
-            %strong 1
-            is not required before your area code.
-            %strong Your cell phone provider may charge you for incoming text messages, please check with your provider.
         %dd.sst.btn-divider.cl
           %input.btn{:name => "commit", :type => "submit", :value =>"保存" }
-          or
-          %a#cancel{:href => "#", :onclick => "Element.hide('add-subscription-details'); if($('order-notification-list').visible()){ Element.show('add-subscription'); } else { Element.show('add-subscription-btn')}; return false;"} 关闭
+          =w('or')
+          %a#cancel(href="#")=w('cancel')
 
 :javascript
   new App.Controllers.Emails()

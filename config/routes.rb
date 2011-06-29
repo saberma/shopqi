@@ -45,14 +45,15 @@ Shopqi::Application.routes.draw do
   match "/admin" => "home#dashboard"
   match "/admin/general_preferences" => "shops#edit"
   match "/admin/notifications" => "emails#index"
-  match "/admin/notifications/subscribe" => "emails#subscribe"
+  match "/admin/notifications/subscribe" => "emails#follow"
+  match "/admin/notifications/unsubscribe" => "emails#unfollow"
 
   scope "/admin" do
 
     resources :shops, only: [:edit,:update]
 
     scope "notifications" do
-      resources :emails
+      resources :emails, only:[:index,:edit,:update]
     end
 
     resources :orders, only: [:index, :update, :show, :destroy] do
