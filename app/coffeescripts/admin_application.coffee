@@ -32,13 +32,20 @@ App =
 
 #日期
 DateUtils =
-  format: (date) ->
+  to_s: (date, format='yyyy-mm-dd hh:MM:ss') ->
     date = new Date(date)
-    "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()} #{date.getHours()}:#{date.getSeconds()}"
+    text = format.replace /yyyy/, date.getFullYear()
+    text = text.replace /mm/, this.prefix(date.getMonth() + 1)
+    text = text.replace /dd/, this.prefix(date.getDate())
+    text = text.replace /hh/, this.prefix(date.getHours())
+    text = text.replace /MM/, this.prefix(date.getMinutes())
+    text.replace /ss/, this.prefix(date.getSeconds())
 
   formatDate: (date) ->
-    date = new Date(date)
-    "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()}"
+    this.to_s date, 'yyyy-mm-dd'
+
+  prefix: (text) ->
+    if "#{text}".length == 1 then "0#{text}" else text
 
 #字符串
 StringUtils =
@@ -151,7 +158,7 @@ UpdateableSelectBox = (select_box, create_label) ->
 
 ##### 注册handlebars helpers #####
 #日期，用于订单列表创建日期的格式化
-Handlebars.registerHelper 'date', DateUtils.format
+Handlebars.registerHelper 'date', (date, format)-> DateUtils.to_s date, format
 
 $(document).ready ->
   App.init()
