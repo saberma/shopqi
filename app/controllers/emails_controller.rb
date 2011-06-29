@@ -21,7 +21,10 @@ class EmailsController < ApplicationController
     address = params[:address]
     if sub == 'email'
       subscribe.address = address
-      subscribe.save
+      unless subscribe.save
+        flash[:error] = subscribe.errors.full_messages[0]
+        render template: "shared/error_msg"
+      end
     else
       subscribe.user_id = sub
       subscribe.save

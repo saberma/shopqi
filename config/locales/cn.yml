@@ -10,6 +10,7 @@ cn:
       custom_collection: 集合
       blog: 博客
       article: 文章
+      subscribe: 订阅信息
     attributes:
       user:
         name: 姓名
@@ -59,6 +60,8 @@ cn:
         email: 邮箱
         address: 详细地址
         order_number_format: 订单号格式
+      subscribe:
+        address: 邮件地址
       blog:
         title: 标题
       article:
