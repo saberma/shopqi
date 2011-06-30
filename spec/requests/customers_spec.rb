@@ -22,12 +22,123 @@ describe "Customers", js: true do
     o
   end
 
+  let(:customer) { shop.customers.where(name: '马海波').first }
+
+  before :each do
+    order
+  end
+
+  ##### 查看 #####
+  describe "GET /customers/id" do
+
+    before(:each) { visit customer_path(customer) }
+
+    describe "Show" do
+
+      # 基本信息
+      it "should show info" do
+        within '#customer-summary .first' do
+          has_content?('马海波').should be_true
+          has_content?('mahb45@gmail.com').should be_true
+          has_content?('13928452888').should be_true
+        end
+        within '#customer-summary' do
+          has_content?('广东省').should be_true
+          has_content?('深圳市').should be_true
+          has_content?('南山区').should be_true
+        end
+      end
+
+      # 更多地址
+      it "should show more address" do
+        visit customer_path(customer)
+        click_on '另外 1 个地址…'
+        within '#more-customer-addresses' do
+          has_content?('马海波').should be_true
+          has_content?('广东省').should be_true
+          has_content?('深圳市').should be_true
+          has_content?('南山区').should be_true
+        end
+        click_on '隐藏地址…'
+        find('#more-customer-addresses').visible?.should be_false
+        find('#customer-note .notes').text.should eql '默认顾客'
+      end
+
+      # 统计
+      it "should show statics" do
+        within '#customer-facts' do
+          find(:xpath, './/li[1]').find('.big').text.should eql '¥20'
+          find(:xpath, './/li[2]').find('.big').text.should eql '1'
+          find(:xpath, './/li[3]').find('.big').text.should eql Date.today.to_s(:db)
+        end
+      end
+
+      # 订单列表
+      it "should list orders" do
+        within '#order-table tbody' do
+          within :xpath, './/tr[1]' do
+           find(:xpath, './td[1]').text.should eql order.name
+           find(:xpath, './td[2]').text.should eql Date.today.to_s(:month_and_day)
+           find(:xpath, './td[3]').text.should eql '待支付'
+           find(:xpath, './td[4]').text.should eql '未发货'
+           find(:xpath, './td[5]').text.should eql '¥20'
+          end
+        end
+      end
+
+    end
+
+    describe "Edit" do
+
+      it "should be save" do
+        click_on '编辑'
+        within '#edit-customer-screen' do
+          has_content?('mahb45@gmail.com').should be_true
+          fill_in 'customer[name]', with: '马波'
+          fill_in 'name', with: '李卫辉'
+          fill_in '公司', with: '索奇'
+          fill_in '电话', with: '13751042627'
+          select '北京市'
+          select '市辖区'
+          select '东城区'
+          fill_in '地址', with: '中关村311'
+          fill_in '邮编', with: '517058'
+          uncheck 'customer[accepts_marketing]'
+          fill_in 'customer[note]', with: '开发者'
+          fill_in 'customer[tags_text]', with: '无效用户'
+        end
+        click_on '保存'
+        within '#customer-summary' do
+          has_content?('李卫辉').should be_true
+          has_content?('13751042627').should be_true
+          has_content?('马波').should be_true
+          has_content?('北京市').should be_true
+          has_content?('市辖区').should be_true
+          has_content?('东城区').should be_true
+          has_content?('中关村311').should be_true
+        end
+        find('#customer-note .notes').text.should eql '开发者'
+        find('#customer-tags p').text.should eql '无效用户'
+        visit customer_path(customer)
+        within '#customer-summary' do
+          has_content?('李卫辉').should be_true
+          has_content?('13751042627').should be_true
+          has_content?('马波').should be_true
+          has_content?('北京市').should be_true
+          has_content?('市辖区').should be_true
+          has_content?('东城区').should be_true
+          has_content?('中关村311').should be_true
+        end
+        find('#customer-note .notes').text.should eql '开发者'
+        find('#customer-tags p').text.should eql '无效用户'
+      end
+
+    end
+
+  end
+
   ##### 列表 #####
   describe "GET /customers" do
-
-    before :each do
-      order
-    end
 
     describe 'Group' do
 

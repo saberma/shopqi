@@ -158,7 +158,9 @@ UpdateableSelectBox = (select_box, create_label) ->
 
 ##### 注册handlebars helpers #####
 #日期，用于订单列表创建日期的格式化
-Handlebars.registerHelper 'date', (date, format)-> DateUtils.to_s date, format
+Handlebars.registerHelper 'date', (date, format)->
+  format = null if format.hash
+  DateUtils.to_s date, format
 
 $(document).ready ->
   App.init()
