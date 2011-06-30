@@ -22,8 +22,8 @@ public/system/dragonfly/**
 #不上传包含重要信息的文件
 config/initializers/payment.rb
 
-#不上传开发模式的sphinx conf文件
-config/development.sphinx.conf
+#不上传sphinx conf文件
+config/*.sphinx.conf
 
 #vagrant
 .vagrant
