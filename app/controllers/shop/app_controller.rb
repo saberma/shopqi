@@ -4,15 +4,6 @@ class Shop::AppController < ActionController::Base
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
-  # 顾客创建订单时的页面显示的错误提示
-  ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-    unless html_tag =~ /^<label/
-      %{<div class="field-with-errors"><span class="error-message">#{instance.error_message.first}</span><br/>#{html_tag}</div>}.html_safe
-    else
-      html_tag.html_safe
-    end
-  end
-
   protected
   begin 'liquid'
 
