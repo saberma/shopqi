@@ -28,6 +28,56 @@ describe "Customers", js: true do
     order
   end
 
+  ##### 新增 #####
+  describe "GET /customers/new" do
+
+    before(:each) { visit new_customer_path }
+
+    it "should be validate" do
+      shop
+      click_on '保存'
+      within '#message_block' do
+        has_content?('姓名 不能为空').should be_true
+        has_content?('邮箱 不能为空').should be_true
+      end
+      fill_in '姓名', with: '马海波'
+      fill_in '邮箱', with: 'mahb45@gmail.com'
+      click_on '保存'
+      within '#message_block' do
+        has_content?('邮箱 已经存在').should be_true
+      end
+    end
+
+    # 保存
+    it "should be save" do
+      within '#new-customer-screen' do
+        fill_in '姓名', with: '马海波'
+        fill_in '邮箱', with: 'saberma@shopqi.com'
+        fill_in '公司', with: '索奇'
+        fill_in '电话', with: '13928452888'
+        select '北京市'
+        select '市辖区'
+        select '东城区'
+        fill_in '地址', with: '中关村311'
+        fill_in '邮编', with: '517058'
+        uncheck 'customer[accepts_marketing]'
+        fill_in 'customer[note]', with: '开发者'
+        fill_in 'customer[tags_text]', with: '无效用户'
+      end
+      click_on '保存'
+      has_no_css?('#new-customer-screen').should be_true
+      within '#customer-summary' do
+        has_content?('马海波').should be_true
+        has_content?('13928452888').should be_true
+        has_content?('北京市').should be_true
+        has_content?('市辖区').should be_true
+        has_content?('东城区').should be_true
+        has_content?('中关村311').should be_true
+      end
+    end
+
+  end
+
   ##### 查看 #####
   describe "GET /customers/id" do
 
