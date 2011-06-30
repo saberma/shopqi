@@ -21,7 +21,15 @@ App.Controllers.Emails = Backbone.Controller.extend
         $('#add-subscription-btn').show()
       false
 
+    $('#email_include_html').change ->
+      $('#html_form').toggle()
+      false
+
     $(document).ready ->
+
+      if $('#email_include_html').attr('checked')
+        $('#html_form').show()
+
       if $('.order-subscription').size() == 0
         $('#order-notification-list').hide()
         $('#add-subscription-btn').show()

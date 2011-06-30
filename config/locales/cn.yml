@@ -295,6 +295,7 @@ cn:
   web:
     save: 保存
     cancel: 取消
+    back: 返回
     list: 列表
     edit: 编辑
     new: 新增
