@@ -11,7 +11,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
 
   render: ->
     $(this.el).html $('#edit-product-item').tmpl this.model.attributes
-    Tag.init()
+    TagUtils.init()
 
   save: ->
     self = this

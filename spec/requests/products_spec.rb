@@ -318,8 +318,8 @@ describe "Products", js: true do
     context "(with two products)" do
 
       before :each do
-        iphone4
         psp
+        iphone4
       end
 
       # 查询
