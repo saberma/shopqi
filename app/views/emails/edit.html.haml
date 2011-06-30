@@ -1,4 +1,5 @@
-%h2#title Editing template Order Confirmation
+-use_javascripts 'controllers/emails'
+%h2#title==编辑#{KeyValues::Mail::Type.find_by_code(email.mail_type).name}模板
 #action-links
   %ul
 =render partial:"shared/noscript"
@@ -6,17 +7,17 @@
 #action-links{:style => "margin-bottom: 10px"}
   %ul
     %li.no-icon
-      %a{:href => "/admin/notifications"} Go back
+      %a{:href => "/admin/notifications"}=w('back')
 %br/
 %h3==#{KeyValues::Mail::Type.find_by_code(email.mail_type).name}模板
 %p=KeyValues::Mail::Type.find_by_code(email.mail_type).des
 .form-group
   .form-group-content
-    %h3 Plain text email template
+    %h3 纯文本模板
     %p
-      In the template below you can only use text and
+      在下面的模板中，只允许使用纯文本格式,
       = succeed "." do
-        %a{:href => "http://wiki.shopify.com/Email_Variable_Reference", :target => "wiki", :title => "Open Wiki in a new window"} email variables
+        %a{:href => "http://wiki.shopify.com/Email_Variable_Reference", :target => "wiki", :title => "Open Wiki in a new window"} 可用于邮件模板中的参数
     =form_for email do |f|
       %dl
         %dt=f.label :title
@@ -27,29 +28,34 @@
             %li#status-message
             %li#status-errorlist{:style => "font-weight: bold"}
           =f.text_area :body,rows:30,cols:90,class:'compile-ok',id:'source'
-          .preview
-            %a{:href => "#", :onclick => "previewEmailTemplate(); return false;"} Preview plain text email
-          / .preview
-      %h3 Enable HTML template
+          -#
+            .preview
+              %a{:href => "#", :onclick => "previewEmailTemplate(); return false;"} Preview plain text email
+      %h3 启用HTML模板
       %p
-        HTML emails give you more formatting options in your templates, but you have to know HTML. Shopify emails both the plain text and HTML email templates and the recipient's mail client will select which one to render.
+        HTML 邮件模板给你提供更多的格式选择，但是，你需要了解HTML的一些知识。您可以选择通过哪一种方式来渲染邮件。
         %br/
-        %input{:name => "email[include_html]", :type => "hidden", :value => "0"}/
-        %input#email_include_html{:name => "email[include_html]", :type => "checkbox", :value => "1"}/
-        %label{:for => "email_include_html"} Enable HTML template
+        =f.check_box :include_html
+        %label{:for => "email_include_html"} 使用HTML 模板
       #html_form{:style => "display:none"}
         %dl
           %dt
-            %label{:for => "email_body"} Modify your HTML email template
+            %label{:for => "email_body"} 修改您的HTML邮件模板
           %dd
             %ul#status-log.nobull.field-with-errors{:style => "display:none; margin: 3px 3px 10px 3px;"}
               %li#status-message
               %li#status-errorlist{:style => "font-weight: bold"}
             %textarea#source.compile-ok{:cols => "90", :name => "email[body_html]", :rows => "30"}
-            .preview
-              %a{:href => "#", :onclick => "previewHtmlEmailTemplate(); return false;"} Preview HTML email
-            / .preview
+            -#
+              .preview
+                %a{:href => "#", :onclick => "previewHtmlEmailTemplate(); return false;"} Preview HTML email
       %p.btns
-        =f.submit w('save')
-        or
-        %a{:href => "#", :onclick => "new Ajax.Request('/admin/notifications/deliver_copy', { parameters: $H(Form.serialize('edit-form', true)).merge({_method: 'post'}) }); return false;"} Send test email to liwh87@gmail.com
+        =f.submit w('save'),class: 'btn'
+        =w('or')
+        %a{:href => "/admin/notifications"}=w('back')
+        -#
+          or
+          %a{:href => "#", :onclick => "new Ajax.Request('/admin/notifications/deliver_copy', { parameters: $H(Form.serialize('edit-form', true)).merge({_method: 'post'}) }); return false;"} Send test email to liwh87@gmail.com
+
+:javascript
+  new App.Controllers.Emails()
