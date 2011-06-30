@@ -1,0 +1,186 @@
+%h2#title 模板编辑器
+#action-links
+  %ul
+    %li.settings= link_to "主题设置", settings_themes_path
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+-#
+  .clearfix(style="margin: 20px 0 30px")
+    .col-6
+      .box2
+        .fl.st(style="margin-right: 15px")
+          %a(href="#")=image_tag 'admin/icons/arrow-up-large.gif'
+        %h3 导入
+        %p.note 使用您自有的主题或者自定义一个已有的主题.
+        %a(href="#") 上传一个主题
+        #upload-theme(style="display:none;")
+          %p.sst
+            主题上传后将应用至您的商店。如果您之前有修改过模板文件，则它们
+            = succeed "." do
+              %strong 将被覆盖
+          %form(action="/admin/themes/upload" enctype="multipart/form-data" method="post")
+            %dl
+              %dd
+                %input(name="theme[upload]" size="25" type="file" value="")
+            .group-actions
+              %input#commit.btn(name="commit" onclick="return confirm('您确定要覆盖当前的主题和之前所做的修改?');" type="submit" value="上传 &amp; 应用 主题")/
+              或者
+              %a(href="#") 取消
+    .col-6.last
+      .box2
+        .fl.st(style="margin-right: 15px")
+          %a(href="/admin/themes/current.zip")=image_tag 'admin/icons/arrow-down-large.gif'
+        %h3 导出
+        %p.note 导出您当前的主题为一个zip文件，用于离线编辑.
+        %a(href="/admin/themes/current.zip") 下载您的主题
+#theme-edit-announcement.announcement.box2.c
+  %p 您对主题所做的修改将直接生效. 商店访问者将立即看到修改后的内容.
+#theme-editor.container
+  #theme-editor-sidebar.col-3
+    #theme-editor-sidebar-top
+      .section.cl
+        %h3.section-header 布局
+        .section-content
+          %ul#theme-layouts.nobull.clearfix
+        #new_layout_reveal_link.new-asset-link.note
+          %a(href="#") 新增布局
+        #new-layout.cl.section-new(style="display:none")
+          %p
+            %strong 新增一个布局
+            用于
+            %select#new-layout-selectbox.st(name="asset[basename_without_ext]")
+            %span#new-layout-called
+              called
+              %input#new_layout_basename_without_ext.st(name="asset[basename_without_ext]" type="text")
+          %input.sst(type="button" value="新增布局")/
+          或者
+          %a(href="#") 取消
+      .section.cl
+        %h3.section-header 模板
+        .section-content
+          %ul#theme-templates.nobull.clearfix
+        #new_template_reveal_link.new-asset-link.note
+          %a(href="#") 新增模板
+        #new-template.cl.section-new(style="display:none")
+          %p
+            %strong 新增一个模板
+            用于
+            %select#new-template-selectbox.st(name="asset[basename_without_ext]")
+              %option(value="article") article
+              %option(value="blog") blog
+              %option(value="cart") cart
+              %option(value="collection") collection
+              %option(value="index") index
+              %option(value="page") page
+              %option(value="product") product
+              %option(value="search") search
+              %option(value="404") 404
+              %option(value="customers/account") customers/account
+              %option(value="customers/addresses") customers/addresses
+              %option(value="customers/login") customers/login
+              %option(value="customers/order") customers/order
+              %option(value="customers/password") customers/password
+            %span#new-template-called
+              取消
+              %input#new_template_basename_without_ext.st(name="asset[basename_without_ext]" type="text" value="alternate")/
+          %input.sst(type="button" value="新增模板")
+          或者
+          %a(href="#") 取消
+      .section.cl
+        %h3.section-header 片段
+        .section-content
+          %ul#theme-snippets.nobull.clearfix
+        #new_snippet_reveal_link.new-asset-link.note
+          %a(href="#") 新增一个片段
+        #new-snippet.cl.section-new(style="display:none")
+          %p
+            %strong 新增片段
+            called
+            %input#new_snippet_basename_without_ext.st(name="asset[basename_without_ext]" type="text")/
+          %input.sst(type="button" value="新增片段")
+          或者
+          %a(href="#") 取消
+      .section.cl
+        %h3.section-header 附件
+        .section-content
+          %ul#theme-assets.nobull.clearfix
+        #new_asset_reveal_link.new-asset-link.note
+          %a(href="#") 新增一个附件
+        #new-asset.cl.section-new(style="display:none")
+          %p 上传一个新的主题附件
+          %iframe#iframe(frameborder="0" src="/admin/themes/id/assets/new")
+          %a(href="#") 取消
+    .section.cl
+      %h3.section-header 设置
+      <div class-"section-content">
+      .section-info
+        修改
+        %code settings.html
+        的内容将显示在主题配置表单中.
+      %ul#theme-config.nobull.clearfix
+.col-9.last
+  #current-asset
+    #asset-details
+      %ul#status-log.nobull.field-with-errors(style="display:none; margin: 3px 3px 10px 3px;")
+        %li#status-message
+        %li#status-errorlist(style="font-weight: bold")
+      #asset-buttons(style="display:none")
+        %input#save-button.btn(onclick="TemplateEditor.save_file();" type="button" value="save")/
+        %input.btn.sr(onclick="TemplateEditor.open_in_new_window();" type="button" value="open in new window")/
+      %h3#asset-title 没有选择文件
+      %span#asset-info(style="display: none")
+      %ul#asset-links.nobull.clearfix(style="visibility:hidden")
+        %li#asset-link-rollback
+          %a(href="#") 查看之前版本
+        %li#asset-rollback-form
+          %select#rollback-selectbox(name="rollback-selectbox")
+          或者
+          %a(href="#") 取消
+        / ><li id="asset-link-edit"><a href="#" title="Edit this image in Aviary">edit image</a></li>
+        %li#asset-link-rename
+          %a(href="#") 重命名
+        %li#asset-rename-form
+          %input#asset-basename-field(type="text")/
+          %a(href="#") 提交
+          或者
+          %a(href="#") 关闭
+        %li#asset-link-destroy
+          %a(href="#")=image_tag 'admin/icons/trash.gif'
+      %p#asset-hint.hint.sst.ssb
+        %span(style="font-size: 20px; color: #ccc; position: relative; top: 3px; ") &larr;
+        在左边选择一个文件开始修改它
+      %div(style="display:none")
+        %span#asset-hint-config
+          如何使用这些文件，请参考我们的
+          %a(href="http://wiki.shopqi.com/Theme%20Settings" target="wiki" title="在新的窗口打开百科") 主题配置帮助页面.
+        %span#asset-hint-liquid-settings
+          针对此Liquid文件有效的变量可以查看
+          = succeed "." do
+            %a(href="http://wiki.shopqi.com/Theme%20Settings%23Using%20the%20settings%20object%20in%20Liquid" target="wiki" title="Open Wiki in a new window") 设置对象
+          您可能会使用任何Liquid
+          %a(href="http://wiki.shopqi.com/Liquid%23Tags" target="wiki" title="Open Wiki in a new window") 标签
+          和
+          = succeed "." do
+            %a(href="http://wiki.shopqi.com/FilterReference" target="wiki" title="Open Wiki in a new window") 过滤器
+        %span#asset-hint-liquid
+          请参考
+          %a(href="http://wiki.shopqi.com/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
+          学习如何在您的模板中使用动态信息.
+    #preview-image.preview-image(style="display:none;")
+      %a(target="_blank")
+        %img#preview-image-asset/
+      %p.note.st
+    #template-editor
+-#
+  .box2.sst
+    %a(href="http://wiki.shopqi.com/Textmate_Bundle" style="width: 55px;float:left; margin-right: 10px")
+      =image_tag 'admin/textmate-logo.gif'
+    %h3 Textmate Bundle
+    %p
+      如果您的用来修改的编辑器是
+      = succeed "," do
+        %a(href="http://macromates.com/") Textmate
+      那么你可以参考
+      %a(href="http://wiki.shopqi.com/Textmate_Bundle") 我们的帮助文档
+      说明了如何一步步安装此插件.
+      安装后您将可以看到所有的主题文件，并且修改后会自动同步.
