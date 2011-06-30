@@ -24,6 +24,7 @@ class EmailsController < ApplicationController
       unless subscribe.save
         flash[:error] = subscribe.errors.full_messages[0]
         render template: "shared/error_msg"
+        return
       end
     else
       subscribe.user_id = sub
