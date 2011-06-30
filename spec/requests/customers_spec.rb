@@ -17,8 +17,8 @@ describe "Customers", js: true do
     o.line_items.build [
       {product_variant: iphone4_variant, price: 10, quantity: 2},
     ]
-    o.financial_status = :pending
     o.save
+    o.update_attribute :financial_status, :pending # 修改为pending会增加消费金额
     o
   end
 

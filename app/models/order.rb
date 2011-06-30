@@ -47,8 +47,8 @@ class Order < ActiveRecord::Base
         self.histories.create body: '订单被取消.原因:#{cancel_reason_name}'
       end
     end
-    if status_changed? and status.to_sym == :pending # 一旦进入此待支付状态则需要更新顾客消费总金额
-      self.customer.increment :total_spent, self.total_price
+    if financial_status_changed? and financial_status.to_sym == :pending # 一旦进入此待支付状态则需要更新顾客消费总金额
+      self.customer.increment! :total_spent, self.total_price
     end
   end
 
