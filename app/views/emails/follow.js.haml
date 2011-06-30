@@ -1,0 +1,6 @@
+$("#order-notification-list").show();
+$('#add-subscription').before('#{escape_javascript( render(partial: "subscription", locals:{s: subscribe}))}')
+$("#add-subscription").hide();
+msg("为 #{subscribe.email_address} 增加提醒成功！");
+$("#address").val(null);
+$("#number").val(null);

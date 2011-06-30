@@ -49,6 +49,7 @@ gem 'settingslogic' #用于解析一些配置信息
 
 group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
+  gem "interactive_editor"
 end
 
 group :development do

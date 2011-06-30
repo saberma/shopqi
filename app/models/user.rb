@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
   def is_admin?
     admin
   end
+
+  after_create do
+    Subscribe.create shop: shop, user: self
+  end
+
 end
 
 Blog

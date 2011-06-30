@@ -12,9 +12,22 @@ class CreateEmails < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    #预定信息
+    create_table :subscribes do |t|
+      t.references :shop
+      t.references :user
+      t.string :kind,  comment: "预定信息类型：如用户下单时的提醒"
+      t.string :address, comment: "预定信息的邮件地址"
+      t.string :number,  comment: "预定号码"
+
+      t.timestamps
+    end
+
   end
 
   def self.down
+    drop_table :subscribes
     drop_table :emails
   end
 end

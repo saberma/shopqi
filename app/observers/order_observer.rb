@@ -1,5 +1,6 @@
 # encoding: utf-8
 class OrderObserver < ActiveRecord::Observer
+
   def before_save(order)
     # 保存顾客信息
     shop = order.shop

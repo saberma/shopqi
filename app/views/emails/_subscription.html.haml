@@ -1,0 +1,9 @@
+%tr{id: "subscription-#{s.id}",class: 'order-subscription'}
+  %td{colspan: 2}
+    %span.note 发送邮件给:
+    %strong=subscribtion_title(s)
+  %td.r
+    %a
+      send test notification
+  %td.r{:style => "width:25px"}
+    =link_to image_tag('admin/icons/trash.gif'), unfollow_path(s), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
