@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
     t.datetime "updated_at"
   end
 
+  add_index "customers", ["shop_id", "email"], :name => "index_customers_on_shop_id_and_email", :unique => true
   add_index "customers", ["shop_id"], :name => "index_customers_on_shop_id"
 
   create_table "emails", :force => true do |t|

@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
-  belongs_to :customer     , counter_cache: true, conditions: "statues != 'abandoned'"    #顾客信息
+  belongs_to :customer     , counter_cache: true, conditions: "status != 'abandoned'"    #顾客信息
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress' #下单人信息
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress' #收货人信息
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem' #订单商品
@@ -46,6 +46,9 @@ class Order < ActiveRecord::Base
         self.cancelled_at = Time.now
         self.histories.create body: '订单被取消.原因:#{cancel_reason_name}'
       end
+    end
+    if status_changed? and status.to_sym == :pending # 一旦进入此待支付状态则需要更新顾客消费总金额
+      self.customer.increment :total_spent, self.total_price
     end
   end
 

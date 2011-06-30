@@ -30,11 +30,6 @@ class Customer < ActiveRecord::Base
     json['customer_address']
   end
 
-  # 消费金额
-  def total_spent
-    self.available_orders.map(&:total_price).sum
-  end
-
   # 首次下单
   def order
     self.available_orders.first.as_json['order']
