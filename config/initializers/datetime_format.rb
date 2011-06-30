@@ -5,3 +5,7 @@ Time::DATE_FORMATS.merge!(
   :full => "%Y-%m-%d %H:%M:%S",
   :with_year => "%Y-%m-%d %H:%M"
 )
+
+Date::DATE_FORMATS.merge!(
+  :month_and_day => "%m-%d"
+)

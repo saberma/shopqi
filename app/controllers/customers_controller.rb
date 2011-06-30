@@ -37,9 +37,9 @@ class CustomersController < ApplicationController
         end
       end
       conditions.merge! name_contains: params[:q] unless params[:q].blank?
-      shop.customers.limit(page_size).metasearch(conditions).all
+      shop.customers.limit(page_size).order(:id.desc).metasearch(conditions).all
     else
-      shop.customers
+      shop.customers.order(:id.desc)
     end
   end
   expose(:customer_groups) { shop.customer_groups }
@@ -48,6 +48,7 @@ class CustomersController < ApplicationController
   expose(:customers_json) do
     customers.to_json({
       include: :orders,
+      methods: [ :address, :order, :total_spent ],
       except: [ :created_at, :updated_at ]
     })
   end
@@ -62,7 +63,7 @@ class CustomersController < ApplicationController
         addresses: { methods: [:province_name, :city_name, :district_name] },
         orders: { methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :created_at] }
       },
-      methods: [ :address, :order, :status_name, :tags_text ],
+      methods: [ :address, :order, :total_spent, :status_name, :tags_text ],
       except: [ :created_at, :updated_at ]
     })
   end

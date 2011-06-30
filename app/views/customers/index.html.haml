@@ -122,14 +122,17 @@
   %td
     %a.customer-display-link(href="#" onclick="return false;")
       %span.contact-details.customer-display-link(data-popup-id="customer-display-{{{id}}}") i
-  %td shenzhen CN
+  %td
+    {{#with address}}
+    {{{province_name}}}{{{city_name}}}{{{district_name}}}
+    {{/with}}
   %td.r {{{total_spent}}}
   %td.c {{{orders.length}}}
   %td
     {{#if order}}
     %span.note
       %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
-      {{{date order.created_at}}}
+      {{{date order.created_at "mm-dd"}}}
     {{/if}}
 
 %script(id="customer-group-item" type="text/x-jquery-tmpl")
@@ -146,7 +149,7 @@
       %span(class="label-text") {{{condition_name}}} {{{value_name}}}
     {{/each}}
   {{#if is_current_search}}
-  %a#save_customer_group_link.btn.closure-lightbox 保存为顾客分组
+  %a#save_customer_group_link.btn.closure-lightbox(href='#') 保存为顾客分组
   {{/if}}
   {{#if is_group}}
   %a.update.btn(href="/admin/customer_groups/{{{id}}}" style="display:none") 更新

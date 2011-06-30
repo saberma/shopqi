@@ -7,7 +7,7 @@
     %li.no-icon
       %a#edit-customer-link(href="#") 编辑
     -#%li#reorder=link_to '重置密码', '#', class: 'closure-lightbox'
-    %li#lock=link_to '禁用帐号', '#', class: 'closure-lightbox'
+    -#%li#lock=link_to '禁用帐号', '#', class: 'closure-lightbox'
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 .col-4
@@ -20,28 +20,30 @@
     #customer-facts.box2(style="margin-top:20px;")
     #orders
       %table#order-table.ssb.data(cellpadding="0" cellspacing="0")
-        %tr
-          %th.sortcol 订单
-          %th.sortcol.sortasc(style="width: 80px !important") 日期 
-          %th.sortcol 支付状态
-          %th.sortcol 发货状态
-          %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
+        %thead
+          %tr
+            %th.sortcol 订单
+            %th.sortcol.sortasc(style="width: 80px !important") 日期
+            %th.sortcol 支付状态
+            %th.sortcol 发货状态
+            %th.sortcol(style="text-align: right;padding-right: 4px !important;background-position: 5% center !important;") 总金额
+        %tbody
     %div(style="width:100%")
       #pagination
   #edit-customer-screen(style="display:none")
 %div(style="display:none;")
   #reset-password
     .account-action
-      %p.ssb Are you sure you want to reset the password for this customer? The customer will be sent an email with instructions to reset their password.
-      %a.btn(data-method="post" href="/admin/customers/45648822/reset" rel="nofollow") Reset Password
-      or
-      %a.close-lightbox(href="#") Cancel
+      %p.ssb 您确定要重置此顾客的密码吗? 此顾客会收到邮件，指引他重置密码.
+      %a.btn(data-method="post" href="/admin/customers/id/reset" rel="nofollow") 重置密码
+      或者
+      %a.close-lightbox(href="#") 取消
   #disable-account
     .account-action
-      %p.ssb Are you sure you want to disable the account for this customer?
-      %a.btn(data-method="post" href="/admin/customers/45648822/disable" rel="nofollow") Disable Account
-      or
-      %a.close-lightbox(href="#") Cancel
+      %p.ssb 您确定要禁用此顾客的帐号吗?
+      %a.btn(data-method="post" href="/admin/customers/id/disable" rel="nofollow") 禁用帐号
+      或者
+      %a.close-lightbox(href="#") 取消
 
 %script(id="customer-note-item" type="text/x-jquery-tmpl")
   %h3.clearfix 顾客备注
@@ -118,7 +120,7 @@
   %td
     %a(class="{{{abandoned_class}}}" href="/admin/orders/{{{id}}}") {{{name}}}
   %td
-    %span.note {{{date created_at}}}
+    %span.note {{{date created_at "mm-dd"}}}
   %td
     %span(style="font-size: 11px" class="{{{financial_class}}}") {{{financial_status_name}}}
   %td
@@ -162,7 +164,7 @@
           .pb.clearfix
             .fl
               %label(for="address1") 地址
-              %input.city(name="address1" size="30" type="text" value="{{{address1}}}")
+              %input#address1.city(name="address1" size="30" type="text" value="{{{address1}}}")
             .fl
               %label(for="zip") 邮编
               %input#zip.postal(name="zip" size="30" type="text" value="{{{zip}}}")

@@ -2,14 +2,14 @@
 class Customer < ActiveRecord::Base
   belongs_to :shop
   has_many :orders
-  has_many :addresses, dependent: :destroy, class_name: 'CustomerAddress'
+  has_many :addresses, dependent: :destroy, class_name: 'CustomerAddress', order: :id.asc
   has_and_belongs_to_many :tags, class_name: 'CustomerTag'
 
   accepts_nested_attributes_for :addresses
   attr_accessible :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes
 
   validates_presence_of :name, :email
-  validates_uniqueness_of :email, scope: :shop_id
+  validates_uniqueness_of :email, scope: :shop_id, allow_blank: true
 
   # 标签
   attr_accessor :tags_text
@@ -28,6 +28,11 @@ class Customer < ActiveRecord::Base
   def address
     json = addresses.first.as_json(methods: [:province_name, :city_name, :district_name])
     json['customer_address']
+  end
+
+  # 消费金额
+  def total_spent
+    self.available_orders.map(&:total_price).sum
   end
 
   # 首次下单
