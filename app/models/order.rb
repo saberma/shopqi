@@ -144,10 +144,7 @@ end
 class OrderBillingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-
-  before_create do
-    self.country = 'china'
-  end
+  default_value_for :country, :china
 
   def province_name
     District.get(self.province)
@@ -166,10 +163,7 @@ end
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-
-  before_create do
-    self.country = 'china'
-  end
+  default_value_for :country, :china
 
   def province_name
     District.get(self.province)
