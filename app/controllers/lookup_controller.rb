@@ -8,7 +8,7 @@ class LookupController < ApplicationController
     if params[:q].blank?
       nil
     else
-      ThinkingSphinx.search params[:q], classes: [Product, Article, Page], with: { shop_id: shop.id }
+      ThinkingSphinx.search params[:q], classes: [Product, Article, Page,Blog], with: { shop_id: shop.id }
     end
   end
 
