@@ -158,7 +158,12 @@ Shopqi::Application.routes.draw do
       end
     end
 
-    resources :themes
+    resources :themes, only: [] do
+      collection do
+        get :current
+        get :settings
+      end
+    end
 
   end
 

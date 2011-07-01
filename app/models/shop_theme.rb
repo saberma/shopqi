@@ -13,12 +13,28 @@ class ShopTheme < ActiveRecord::Base
   end
 
   after_save do
-    FileUtils.mkdir_p public_path
+    repo = Grit::Repo.init public_path # 初始化为git repo
     FileUtils.cp_r "#{app_path}/.", public_path
+    Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
+      repo.add '.'
+      repo.commit_all '初始版本'
+    end
     config_settings['presets'].each_pair do |preset, values|
       values.each_pair do |name, value|
         self.settings.create name: name, value: value
       end
+    end
+  end
+
+  # 返回文件列表
+  def list
+    repo = Grit::Repo.new public_path
+    repo.tree.trees.inject({}) do |result, dir|
+      result[dir.name] = []
+      dir.blobs.each do |file|
+        result[dir.name].push(asset: {name: file.name})
+      end
+      result
     end
   end
 
