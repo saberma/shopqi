@@ -7,5 +7,6 @@ class ThemesController < ApplicationController
   expose(:theme) { shop.theme }
 
   def current
+    @assets_json = theme.list.to_json
   end
 end

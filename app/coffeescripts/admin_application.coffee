@@ -19,6 +19,8 @@ App =
       New: {}
     CustomerGroup:
       Index: {}
+    Asset:
+      Index: {}
     Product:
       Show:
         Variant: {}

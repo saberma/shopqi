@@ -1,3 +1,6 @@
+=content_for :javascripts do
+  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/index'
+
 %h2#title 模板编辑器
 #action-links
   %ul
@@ -41,7 +44,7 @@
       .section.cl
         %h3.section-header 布局
         .section-content
-          %ul#theme-layouts.nobull.clearfix
+          %ul#theme-layout.nobull.clearfix
         #new_layout_reveal_link.new-asset-link.note
           %a(href="#") 新增布局
         #new-layout.cl.section-new(style="display:none")
@@ -184,3 +187,10 @@
       %a(href="http://wiki.shopqi.com/Textmate_Bundle") 我们的帮助文档
       说明了如何一步步安装此插件.
       安装后您将可以看到所有的主题文件，并且修改后会自动同步.
+
+%script(id="theme-item" type="text/x-jquery-tmpl")
+  %a(class="asset-{{{type}}}" href="#") {{{name}}}
+
+:javascript
+  var assets_json = #{@assets_json};
+  new App.Views.Asset.Index.Index({data: assets_json});

@@ -32,7 +32,7 @@ class ShopTheme < ActiveRecord::Base
     repo.tree.trees.inject({}) do |result, dir|
       result[dir.name] = []
       dir.blobs.each do |file|
-        result[dir.name].push({key: file.name})
+        result[dir.name].push(asset: {name: file.name})
       end
       result
     end
