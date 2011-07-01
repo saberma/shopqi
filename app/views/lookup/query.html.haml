@@ -12,7 +12,7 @@
   -results_by_group = results.group_by(&:class)
   .sgroup.sst
     %p
-      ==有 #{results.size} 匹配您的查询
+      ==有 #{results.size} 条记录匹配您的查询
       %span.highlight==#{params[:q]}
   .sgroup.sst{:style => "margin: 0 5em 2em 5em"}
     -[Product,Page,Blog,Article].each do |clazz|
