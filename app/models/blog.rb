@@ -4,8 +4,14 @@ class Blog < ActiveRecord::Base
   belongs_to :shop
   validates_presence_of :title
 
-  before_save do 
+  before_save do
     self.handle = Pinyin.t(self.title, '-') if self.handle.blank? # 新增时初始化handle
+  end
+
+  define_index do
+    has :shop_id
+    indexes :title
+    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
   end
 end
 
@@ -31,11 +37,11 @@ class Article < ActiveRecord::Base
 
   # 标签
   attr_accessor :tags_text
-  
+
   def tags_text
     @tags_text ||= tags.map(&:name).join(',')
-  end 
-  
+  end
+
   before_create do
     self.shop_id = blog.shop_id #冗余商店ID，方便全文检索过滤
   end
