@@ -1,0 +1,38 @@
+%h2#title 查 询 结 果
+#action-links
+  %ul
+-if results.blank?
+  .sgroup.sst
+    %p
+      非常抱歉，没有能够找到任何匹配
+      %span.highlight==#{params[:q]}
+      的结果，请尝试缩小或更换关键字。
+
+-else
+  -results_by_group = results.group_by(&:class)
+  .sgroup.sst
+    %p
+      ==有 #{results.size} 匹配您的查询
+      %span.highlight==#{params[:q]}
+  .sgroup.sst{:style => "margin: 0 5em 2em 5em"}
+    -[Product,Page,Blog,Article].each do |clazz|
+      -unless results_by_group[clazz].blank?
+        %h4==#{t("activerecord.models.#{clazz.to_s.underscore}")}:
+        %ul{:style => "padding-left: 30px; list-style:square;margin: 0.5em 0 2em 0"}
+          -results_by_group[clazz].each do |p|
+            %li=link_to highlight(p.title,params[:q]),url_for_lookup(clazz,p)
+    -unless results_by_group[Order].blank?
+      %h4 订单:
+      %ul{:style => "padding-left: 30px; list-style:square;margin: 0.5em 0 2em 0"}
+        -results_by_group[Order].each do |o|
+          %li
+            =link_to highlight(o.name,params[:q]),order_path(o)
+#btm-nav.act-screen.ssb
+  #pagination
+.box2
+  %h3 Have questions about Shopify?
+  Visit our
+  %a{:href => "/admin/support"} support area
+  where you will find many answers and friendly people to help you out.
+/ end div.main
+/ end div.container

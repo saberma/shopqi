@@ -47,6 +47,8 @@ Shopqi::Application.routes.draw do
   match "/admin/notifications" => "emails#index"
   match "/admin/notifications/subscribe" => "emails#follow"
   match "/admin/notifications/:id/unsubscribe" => "emails#unfollow", as: 'unfollow'
+  match '/admin/lookup/query' => 'lookup#query', via: :get
+
 
   scope "/admin" do
 

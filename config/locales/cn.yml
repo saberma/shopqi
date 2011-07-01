@@ -10,6 +10,7 @@ cn:
       custom_collection: 集合
       blog: 博客
       article: 文章
+      page: 页面
       subscribe: 订阅信息
     attributes:
       user:
