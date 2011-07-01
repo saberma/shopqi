@@ -46,6 +46,7 @@ gem "nokogiri" # 解释模板config/settings.html
 gem "uuid" # 生成36位(或32位)唯一序列号
 gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
+gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
 
 group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
