@@ -30,8 +30,16 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-link-destroy').hide()
     unless $('#template-editor').hasClass('ace_editor')
       editor = ace.edit("template-editor")
+      HtmlMode = require("ace/mode/html").Mode
+      CssMode = require("ace/mode/css").Mode
+      JavaScriptMode = require("ace/mode/javascript").Mode
+      editor.getSession().setMode(new HtmlMode())
+      editor.getSession().setMode(new CssMode())
+      editor.getSession().setMode(new JavaScriptMode())
       $('#template-editor').data 'editor', editor
     $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
       editor = $('#template-editor').data 'editor'
       editor.getSession().setValue data
+      editor.getSession().setUseSoftTabs(true)
+      editor.moveCursorTo(0,0)
     false
