@@ -218,7 +218,7 @@ GEM
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.4)
-    selenium-webdriver (0.2.0)
+    selenium-webdriver (0.2.2)
       childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
       json_pure

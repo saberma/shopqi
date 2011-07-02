@@ -33,9 +33,9 @@
           %li(style="padding-top: 2px")
             #search
               %form#admin-lookup-form(action="/admin/lookup/query" method="get")
-                %input#q(type="text" name="q" value="查询商品..." tabindex="1")
+                %input#q(type="text" name="q" placeholder="查询商品..." tabindex="1")
                 %div
-                %input(type="hidden" name="bias" value="links")
+                -#%input(type="hidden" name="bias" value="links")
       #nav.col-12.last
         %ul#navlist
           %li=link_to image_tag('admin/icons/home.gif'), admin_path
