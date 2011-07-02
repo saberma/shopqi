@@ -29,17 +29,31 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-link-rename').hide()
     $('#asset-rename-form').hide()
     $('#asset-link-destroy').hide()
-    unless TemplateEditor.editor?
-      editor = ace.edit("template-editor")
-      editor.setTheme 'ace/theme/clouds'
-      TemplateEditor.editor = editor
-    $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
-      editor = TemplateEditor.editor
-      session = editor.getSession()
-      extension = self.model.extension()
-      mode = if extension in ['css', 'js'] then "#{extension}_mode" else 'html_mode'
-      session.setMode new TemplateEditor[mode]
-      session.setValue data
-      session.setUseSoftTabs true
-      editor.moveCursorTo(0,0)
+    if this.is_text_asset()
+      unless TemplateEditor.editor?
+        editor = ace.edit("template-editor")
+        editor.setTheme 'ace/theme/clouds'
+        TemplateEditor.editor = editor
+      $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
+        editor = TemplateEditor.editor
+        session = editor.getSession()
+        extension = self.model.extension()
+        mode = if extension in ['css', 'js'] then "#{extension}_mode" else 'html_mode'
+        session.setMode new TemplateEditor[mode]
+        session.setValue data
+        session.setUseSoftTabs true
+        editor.moveCursorTo(0,0)
+    else
+      $('#template-editor').hide()
+      if this.is_image_asset()
+        $("#preview-image").show()
+        url = @model.get('url')
+        $("#preview-image-asset").attr 'src', url
+        $("#preview-image-asset").parent('a').attr('href', url) if url?
     false
+
+  is_text_asset: ->
+    @model.extension() in TemplateEditor.text_extensions
+
+  is_image_asset: ->
+    @model.extension() in TemplateEditor.image_extensions

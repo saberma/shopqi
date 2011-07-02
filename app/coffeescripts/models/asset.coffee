@@ -4,4 +4,5 @@ Asset = Backbone.Model.extend
     "/admin/assets/#{this.id}"
 
   extension: ->
-    this.get('name').split('.')[1]
+    postfix = this.get('name').split('.')[1]
+    postfix.toLowerCase() if postfix?

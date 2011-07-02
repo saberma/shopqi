@@ -32,7 +32,12 @@ class ShopTheme < ActiveRecord::Base
     repo.tree.trees.inject({}) do |result, dir|
       result[dir.name] = []
       dir.blobs.each do |blob|
-        result[dir.name].push(asset: {name: blob.name, id: blob.id})
+        asset = {name: blob.name, id: blob.id}
+        extensions = blob.name.split('.')[1]
+        if !extensions.blank? and %w(jpg gif png jpeg).include? extensions
+          asset['url'] = "/#{asset_relative_path(blob.name)}"
+        end
+        result[dir.name].push(asset: asset)
       end
       result
     end
@@ -48,21 +53,23 @@ class ShopTheme < ActiveRecord::Base
     self.update_attribute :theme, new_theme
   end
 
-  def app_path
-    File.join Rails.root, 'app', 'themes', self.theme.name.downcase
-  end
-
+  ##### 相对路径 #####
   def files_relative_path
     test = %w(test travis).include?(Rails.env) ? Rails.env : '' #测试目录与其他环境分开,不干扰
     File.join 's', 'files', test, self.id.to_s, 'theme'
   end
 
-  def public_path
-    File.join Rails.root, 'public', files_relative_path
-  end
-
   def asset_relative_path(asset)
     File.join files_relative_path, 'assets', asset
+  end
+
+  ##### 本地PATH #####
+  def app_path
+    File.join Rails.root, 'app', 'themes', self.theme.name.downcase
+  end
+
+  def public_path
+    File.join Rails.root, 'public', files_relative_path
   end
 
   def asset_path(asset)
