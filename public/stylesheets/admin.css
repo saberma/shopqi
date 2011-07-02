@@ -3216,3 +3216,13 @@ table.selected-image td { border:none; padding: 3px; background: #ECF2F5; vertic
 
 /* popup for edit-link-overlay */
 #edit-link-overlay { z-index: 2;}
+
+/* placeholder css */
+input.placeholder_text,
+textarea.placeholder_text {
+color: #FFFFFF;
+}
+
+::-webkit-input-placeholder {
+color: #FFFFFF;
+}
