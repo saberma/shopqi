@@ -30,7 +30,9 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-rename-form').hide()
     $('#asset-link-destroy').hide()
     unless TemplateEditor.editor?
-      TemplateEditor.editor = ace.edit("template-editor")
+      editor = ace.edit("template-editor")
+      editor.setTheme 'ace/theme/clouds'
+      TemplateEditor.editor = editor
     $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
       editor = TemplateEditor.editor
       session = editor.getSession()
