@@ -7,6 +7,11 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   initialize: ->
     self = this
     this.render()
+    window.TemplateEditor =
+      editor: null
+      html_mode: require("ace/mode/html").Mode
+      css_mode: require("ace/mode/css").Mode
+      js_mode: require("ace/mode/javascript").Mode
 
   render: ->
     _(@options.data).each (assets, name) ->

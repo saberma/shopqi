@@ -12,11 +12,12 @@ App.Views.Asset.Index.Show = Backbone.View.extend
   render: ->
     template = Handlebars.compile $("#theme-item").html()
     attrs = @model.attributes
-    attrs['type'] = @model.get('name').split('.')[1]
+    attrs['type'] = @model.extension()
     $(@el).html template attrs
     $("#theme-#{@options.name}").append @el
 
   show: ->
+    self = this
     $('#theme-editor-sidebar-top .current-file').removeClass('current-file')
     $(@el).addClass('current-file')
     $('#asset-buttons').show()
@@ -28,18 +29,15 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-link-rename').hide()
     $('#asset-rename-form').hide()
     $('#asset-link-destroy').hide()
-    unless $('#template-editor').hasClass('ace_editor')
-      editor = ace.edit("template-editor")
-      HtmlMode = require("ace/mode/html").Mode
-      CssMode = require("ace/mode/css").Mode
-      JavaScriptMode = require("ace/mode/javascript").Mode
-      editor.getSession().setMode(new HtmlMode())
-      editor.getSession().setMode(new CssMode())
-      editor.getSession().setMode(new JavaScriptMode())
-      $('#template-editor').data 'editor', editor
+    unless TemplateEditor.editor?
+      TemplateEditor.editor = ace.edit("template-editor")
     $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
-      editor = $('#template-editor').data 'editor'
-      editor.getSession().setValue data
-      editor.getSession().setUseSoftTabs(true)
+      editor = TemplateEditor.editor
+      session = editor.getSession()
+      extension = self.model.extension()
+      mode = if extension in ['css', 'js'] then "#{extension}_mode" else 'html_mode'
+      session.setMode new TemplateEditor[mode]
+      session.setValue data
+      session.setUseSoftTabs true
       editor.moveCursorTo(0,0)
     false
