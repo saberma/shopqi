@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/index', 'ace'
+  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/index', 'ace/ace', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript'
 
 %h2#title 模板编辑器
 #action-links
@@ -115,65 +115,65 @@
           %a(href="#") 取消
     .section.cl
       %h3.section-header 设置
-      <div class-"section-content">
-      .section-info
-        修改
-        %code settings.html
-        的内容将显示在主题配置表单中.
-      %ul#theme-config.nobull.clearfix
-.col-9.last
-  #current-asset
-    #asset-details
-      %ul#status-log.nobull.field-with-errors(style="display:none; margin: 3px 3px 10px 3px;")
-        %li#status-message
-        %li#status-errorlist(style="font-weight: bold")
-      #asset-buttons(style="display:none")
-        %input#save-button.btn(onclick="TemplateEditor.save_file();" type="button" value="save")/
-        %input.btn.sr(onclick="TemplateEditor.open_in_new_window();" type="button" value="open in new window")/
-      %h3#asset-title 没有选择文件
-      %span#asset-info(style="display: none")
-      %ul#asset-links.nobull.clearfix(style="visibility:hidden")
-        %li#asset-link-rollback
-          %a(href="#") 查看之前版本
-        %li#asset-rollback-form
-          %select#rollback-selectbox(name="rollback-selectbox")
-          或者
-          %a(href="#") 取消
-        / ><li id="asset-link-edit"><a href="#" title="Edit this image in Aviary">edit image</a></li>
-        %li#asset-link-rename
-          %a(href="#") 重命名
-        %li#asset-rename-form
-          %input#asset-basename-field(type="text")/
-          %a(href="#") 提交
-          或者
-          %a(href="#") 关闭
-        %li#asset-link-destroy
-          %a(href="#")=image_tag 'admin/icons/trash.gif'
-      %p#asset-hint.hint.sst.ssb
-        %span(style="font-size: 20px; color: #ccc; position: relative; top: 3px; ") &larr;
-        在左边选择一个文件开始修改它
-      %div(style="display:none")
-        %span#asset-hint-config
-          如何使用这些文件，请参考我们的
-          %a(href="http://wiki.shopqi.com/Theme%20Settings" target="wiki" title="在新的窗口打开百科") 主题配置帮助页面.
-        %span#asset-hint-liquid-settings
-          针对此Liquid文件有效的变量可以查看
-          = succeed "." do
-            %a(href="http://wiki.shopqi.com/Theme%20Settings%23Using%20the%20settings%20object%20in%20Liquid" target="wiki" title="Open Wiki in a new window") 设置对象
-          您可能会使用任何Liquid
-          %a(href="http://wiki.shopqi.com/Liquid%23Tags" target="wiki" title="Open Wiki in a new window") 标签
-          和
-          = succeed "." do
-            %a(href="http://wiki.shopqi.com/FilterReference" target="wiki" title="Open Wiki in a new window") 过滤器
-        %span#asset-hint-liquid
-          请参考
-          %a(href="http://wiki.shopqi.com/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
-          学习如何在您的模板中使用动态信息.
-    #preview-image.preview-image(style="display:none;")
-      %a(target="_blank")
-        %img#preview-image-asset/
-      %p.note.st
-    #template-editor
+      %div(class="section-content")
+        .section-info
+          修改
+          %code settings.html
+          的内容将显示在主题配置表单中.
+        %ul#theme-config.nobull.clearfix
+  .col-9.last
+    #current-asset
+      #asset-details
+        %ul#status-log.nobull.field-with-errors(style="display:none; margin: 3px 3px 10px 3px;")
+          %li#status-message
+          %li#status-errorlist(style="font-weight: bold")
+        #asset-buttons(style="display:none")
+          %input#save-button.btn(onclick="TemplateEditor.save_file();" type="button" value="save")/
+          %input.btn.sr(onclick="TemplateEditor.open_in_new_window();" type="button" value="open in new window")/
+        %h3#asset-title 没有选择文件
+        %span#asset-info(style="display: none")
+        %ul#asset-links.nobull.clearfix(style="visibility:hidden")
+          %li#asset-link-rollback
+            %a(href="#") 查看之前版本
+          %li#asset-rollback-form
+            %select#rollback-selectbox(name="rollback-selectbox")
+            或者
+            %a(href="#") 取消
+          / ><li id="asset-link-edit"><a href="#" title="Edit this image in Aviary">edit image</a></li>
+          %li#asset-link-rename
+            %a(href="#") 重命名
+          %li#asset-rename-form
+            %input#asset-basename-field(type="text")/
+            %a(href="#") 提交
+            或者
+            %a(href="#") 关闭
+          %li#asset-link-destroy
+            %a(href="#")=image_tag 'admin/icons/trash.gif'
+        %p#asset-hint.hint.sst.ssb
+          %span(style="font-size: 20px; color: #ccc; position: relative; top: 3px; ") &larr;
+          在左边选择一个文件开始修改它
+        %div(style="display:none")
+          %span#asset-hint-config
+            如何使用这些文件，请参考我们的
+            %a(href="http://wiki.shopqi.com/Theme%20Settings" target="wiki" title="在新的窗口打开百科") 主题配置帮助页面.
+          %span#asset-hint-liquid-settings
+            针对此Liquid文件有效的变量可以查看
+            = succeed "." do
+              %a(href="http://wiki.shopqi.com/Theme%20Settings%23Using%20the%20settings%20object%20in%20Liquid" target="wiki" title="Open Wiki in a new window") 设置对象
+            您可能会使用任何Liquid
+            %a(href="http://wiki.shopqi.com/Liquid%23Tags" target="wiki" title="Open Wiki in a new window") 标签
+            和
+            = succeed "." do
+              %a(href="http://wiki.shopqi.com/FilterReference" target="wiki" title="Open Wiki in a new window") 过滤器
+          %span#asset-hint-liquid
+            请参考
+            %a(href="http://wiki.shopqi.com/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
+            学习如何在您的模板中使用动态信息.
+      #preview-image.preview-image(style="display:none;")
+        %a(target="_blank")
+          %img#preview-image-asset/
+        %p.note.st
+      #template-editor
 -#
   .box2.sst
     %a(href="http://wiki.shopqi.com/Textmate_Bundle" style="width: 55px;float:left; margin-right: 10px")

@@ -9,4 +9,8 @@ class ThemesController < ApplicationController
   def current
     @assets_json = theme.list.to_json
   end
+
+  def asset
+    render text: theme.value(params[:id])
+  end
 end

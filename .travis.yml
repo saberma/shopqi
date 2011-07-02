@@ -13,3 +13,6 @@ env: "LANG='en_US.UTF-8' RAILS_ENV='travis'"
 #  recipients:
 #    - mahb45@gmail.com
 #    - liwh87@gmail.com
+
+timeouts:
+  bundle: 600

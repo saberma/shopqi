@@ -159,11 +159,10 @@ Shopqi::Application.routes.draw do
       end
     end
 
-    resources :themes, only: [] do
-      collection do
-        get :current
-        get :settings
-      end
+    begin :themes
+      match 'themes/asset/:id' => 'themes#asset'
+      match 'themes/settings' => 'themes#settings', as: :settings_themes
+      match 'themes/current' => 'themes#current', as: :current_themes
     end
 
   end
