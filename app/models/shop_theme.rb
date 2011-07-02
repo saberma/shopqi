@@ -31,11 +31,17 @@ class ShopTheme < ActiveRecord::Base
     repo = Grit::Repo.new public_path
     repo.tree.trees.inject({}) do |result, dir|
       result[dir.name] = []
-      dir.blobs.each do |file|
-        result[dir.name].push(asset: {name: file.name})
+      dir.blobs.each do |blob|
+        result[dir.name].push(asset: {name: blob.name, id: blob.id})
       end
       result
     end
+  end
+
+  # 返回文件内容
+  def value(id)
+    repo = Grit::Repo.new public_path
+    repo.blob(id).data
   end
 
   def switch(new_theme)

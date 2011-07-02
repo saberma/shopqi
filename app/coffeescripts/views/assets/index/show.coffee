@@ -19,8 +19,6 @@ App.Views.Asset.Index.Show = Backbone.View.extend
   show: ->
     $('#theme-editor-sidebar-top .current-file').removeClass('current-file')
     $(@el).addClass('current-file')
-    unless $('#template-editor').hasClass('ace_editor')
-      ace.edit("template-editor")
     $('#asset-buttons').show()
     $('#asset-title').text(@model.get('name')).show()
     $('#asset-info').show()
@@ -30,4 +28,10 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-link-rename').hide()
     $('#asset-rename-form').hide()
     $('#asset-link-destroy').hide()
+    unless $('#template-editor').hasClass('ace_editor')
+      editor = ace.edit("template-editor")
+      $('#template-editor').data 'editor', editor
+    $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
+      editor = $('#template-editor').data 'editor'
+      editor.getSession().setValue data
     false
