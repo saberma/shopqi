@@ -1,0 +1,453 @@
+%h2#title 地区 &amp; 税率
+#action-links
+  %ul
+    %li#add-region
+      =link_to '新增目的地', new_countries_path
+    \/ul>
+.box2.ssb
+  %form#shop-update.shop_edit{"accept-charset" => "UTF-8", :action => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/shop", "data-remote" => "true", :method => "post"}
+    %h3 税 率 设 置
+    %p
+      Taxation requirements differ around the world. For example, there are different systems of taxation in
+      North America (Sales Tax) and Europe (Value Added Tax). VAT means that all taxes are included in the prices.
+      Sales Tax means that the taxes are not included and are added to the subtotal during the checkout. Similarly,
+      some areas require you to charge taxes on Shipping &amp; Handling, and some do not. Choose the options applicable
+      to your region here.
+    %p.st
+      %input{:name => "shop[taxes_included]", :type => "hidden", :value => "0"}/
+      %input#shop_taxes_included{:checked => "checked", :name => "shop[taxes_included]", :onclick => "$(&quot;shop-update&quot;).simulate(&quot;submit&quot;);", :type => "checkbox", :value => "1"}/
+      %label{:for => "shop_taxes_included"} All taxes are included in my product prices.
+    %p.st
+      %input{:name => "shop[tax_shipping]", :type => "hidden", :value => "0"}/
+      %input#shop_tax_shipping{:name => "shop[tax_shipping]", :onclick => "$(&quot;shop-update&quot;).simulate(&quot;submit&quot;);", :type => "checkbox", :value => "1"}/
+      %label{:for => "shop_tax_shipping"} Charge taxes on shipping rates.
+.pgroup{:style => "margin-top:0"}
+  %table#countries.data{:cellpadding => "0", :cellspacing => "0"}
+    %tr
+      %th{:colspan => "2"} 目的地
+      %th Taxes to charge
+      %th Sub-Regions
+      %th &nbsp;
+    %tr#country_2621542.odd
+      %td
+        %img{:alt => "Lu", :src => "https://cdn.shopify.com/s/images/admin/countries/lu.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Luxembourg"}/
+      %td
+        %p Luxembourg
+      %td
+        %p#tax_label_country_2621542
+          %span#tax_rate_country_2621542 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621542','tax_input_country_2621542'); return false;"}> change
+            )
+        #tax_input_country_2621542.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621542.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621542", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621542', 'tax_input_country_2621542'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Luxembourg and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621542", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2619022.even
+      %td
+        %img{:alt => "Mx", :src => "https://cdn.shopify.com/s/images/admin/countries/mx.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Mexico"}/
+      %td
+        %p Mexico
+      %td
+        %p#tax_label_country_2619022
+          %span#tax_rate_country_2619022 11.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2619022','tax_input_country_2619022'); return false;"}> change
+            )
+        #tax_input_country_2619022.tax_input_country{:style => "display:none"}
+          %form#edit_country_2619022.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2619022", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "11.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2619022', 'tax_input_country_2619022'); return false;"} Cancel
+      %td
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/countries/2619022/provinces"} 32 States
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Mexico and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2619022", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621552.odd
+      %td
+        %img{:alt => "Mc", :src => "https://cdn.shopify.com/s/images/admin/countries/mc.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Monaco"}/
+      %td
+        %p Monaco
+      %td
+        %p#tax_label_country_2621552
+          %span#tax_rate_country_2621552 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621552','tax_input_country_2621552'); return false;"}> change
+            )
+        #tax_input_country_2621552.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621552.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621552", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621552', 'tax_input_country_2621552'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Monaco and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621552", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621562.even
+      %td
+        %img{:alt => "Nl", :src => "https://cdn.shopify.com/s/images/admin/countries/nl.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Netherlands"}/
+      %td
+        %p Netherlands
+      %td
+        %p#tax_label_country_2621562
+          %span#tax_rate_country_2621562 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621562','tax_input_country_2621562'); return false;"}> change
+            )
+        #tax_input_country_2621562.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621562.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621562", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621562', 'tax_input_country_2621562'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Netherlands and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621562", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621572.odd
+      %td
+        %img{:alt => "No", :src => "https://cdn.shopify.com/s/images/admin/countries/no.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Norway"}/
+      %td
+        %p Norway
+      %td
+        %p#tax_label_country_2621572
+          %span#tax_rate_country_2621572 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621572','tax_input_country_2621572'); return false;"}> change
+            )
+        #tax_input_country_2621572.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621572.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621572", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621572', 'tax_input_country_2621572'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Norway and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621572", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621582.even
+      %td
+        %img{:alt => "Pl", :src => "https://cdn.shopify.com/s/images/admin/countries/pl.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Poland"}/
+      %td
+        %p Poland
+      %td
+        %p#tax_label_country_2621582
+          %span#tax_rate_country_2621582 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621582','tax_input_country_2621582'); return false;"}> change
+            )
+        #tax_input_country_2621582.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621582.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621582", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621582', 'tax_input_country_2621582'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Poland and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621582", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621592.odd
+      %td
+        %img{:alt => "Pt", :src => "https://cdn.shopify.com/s/images/admin/countries/pt.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Portugal"}/
+      %td
+        %p Portugal
+      %td
+        %p#tax_label_country_2621592
+          %span#tax_rate_country_2621592 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621592','tax_input_country_2621592'); return false;"}> change
+            )
+        #tax_input_country_2621592.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621592.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621592", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621592', 'tax_input_country_2621592'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Portugal and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621592", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2164982.even
+      %td
+        %img{:alt => "Unknown", :src => "https://cdn.shopify.com/s/images/admin/countries/unknown.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Rest of World"}/
+      %td
+        %p Rest of World
+      %td
+        %p#tax_label_country_2164982
+          %span#tax_rate_country_2164982 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2164982','tax_input_country_2164982'); return false;"}> change
+            )
+        #tax_input_country_2164982.tax_input_country{:style => "display:none"}
+          %form#edit_country_2164982.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2164982", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2164982', 'tax_input_country_2164982'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Rest of World and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2164982", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621602.odd
+      %td
+        %img{:alt => "Ro", :src => "https://cdn.shopify.com/s/images/admin/countries/ro.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Romania"}/
+      %td
+        %p Romania
+      %td
+        %p#tax_label_country_2621602
+          %span#tax_rate_country_2621602 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621602','tax_input_country_2621602'); return false;"}> change
+            )
+        #tax_input_country_2621602.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621602.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621602", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621602', 'tax_input_country_2621602'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Romania and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621602", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621612.even
+      %td
+        %img{:alt => "Sk", :src => "https://cdn.shopify.com/s/images/admin/countries/sk.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Slovakia"}/
+      %td
+        %p Slovakia
+      %td
+        %p#tax_label_country_2621612
+          %span#tax_rate_country_2621612 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621612','tax_input_country_2621612'); return false;"}> change
+            )
+        #tax_input_country_2621612.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621612.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621612", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621612', 'tax_input_country_2621612'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Slovakia and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621612", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621622.odd
+      %td
+        %img{:alt => "Es", :src => "https://cdn.shopify.com/s/images/admin/countries/es.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Spain"}/
+      %td
+        %p Spain
+      %td
+        %p#tax_label_country_2621622
+          %span#tax_rate_country_2621622 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621622','tax_input_country_2621622'); return false;"}> change
+            )
+        #tax_input_country_2621622.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621622.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621622", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621622', 'tax_input_country_2621622'); return false;"} Cancel
+      %td
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/countries/2621622/provinces"} 52 Provinces
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Spain and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621622", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621632.even
+      %td
+        %img{:alt => "Se", :src => "https://cdn.shopify.com/s/images/admin/countries/se.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Sweden"}/
+      %td
+        %p Sweden
+      %td
+        %p#tax_label_country_2621632
+          %span#tax_rate_country_2621632 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621632','tax_input_country_2621632'); return false;"}> change
+            )
+        #tax_input_country_2621632.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621632.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621632", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621632', 'tax_input_country_2621632'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Sweden and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621632", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621642.odd
+      %td
+        %img{:alt => "Ch", :src => "https://cdn.shopify.com/s/images/admin/countries/ch.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Switzerland"}/
+      %td
+        %p Switzerland
+      %td
+        %p#tax_label_country_2621642
+          %span#tax_rate_country_2621642 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621642','tax_input_country_2621642'); return false;"}> change
+            )
+        #tax_input_country_2621642.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621642.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621642", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621642', 'tax_input_country_2621642'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Switzerland and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621642", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2621652.even
+      %td
+        %img{:alt => "Ua", :src => "https://cdn.shopify.com/s/images/admin/countries/ua.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "Ukraine"}/
+      %td
+        %p Ukraine
+      %td
+        %p#tax_label_country_2621652
+          %span#tax_rate_country_2621652 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621652','tax_input_country_2621652'); return false;"}> change
+            )
+        #tax_input_country_2621652.tax_input_country{:style => "display:none"}
+          %form#edit_country_2621652.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621652", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621652', 'tax_input_country_2621652'); return false;"} Cancel
+      %td
+        \&mdash;
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country Ukraine and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2621652", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+    %tr#country_2164972.odd
+      %td
+        %img{:alt => "Us", :src => "https://cdn.shopify.com/s/images/admin/countries/us.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422", :title => "United States"}/
+      %td
+        %p United States
+      %td
+        %p#tax_label_country_2164972
+          %span#tax_rate_country_2164972 0.0
+          \%
+          %span.action
+            (
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2164972','tax_input_country_2164972'); return false;"}> change
+            )
+        #tax_input_country_2164972.tax_input_country{:style => "display:none"}
+          %form#edit_country_2164972.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2164972", "data-remote" => "true", :method => "post"}
+            %div{:style => "margin:0;padding:0;display:inline"}
+              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+              %input{:name => "_method", :type => "hidden", :value => "put"}/
+              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
+            %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+            %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+            or
+            %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2164972', 'tax_input_country_2164972'); return false;"} Cancel
+      %td
+        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/countries/2164972/provinces"} 62 States
+      %td.r
+        %a.del{"data-confirm" => "This will delete the country United States and all its shipping rates. Are you sure?", "data-method" => "delete", :href => "/admin/countries/2164972", :rel => "nofollow", :title => "Delete this"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?c8ebaf7fae913a2145fac8485b70f7f412e98422"}/
+\/div>
+/ end div.main
+/ end div.container

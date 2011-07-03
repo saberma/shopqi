@@ -69,8 +69,7 @@
             %h3 您的商店设置
             %ul
               %li#settings=link_to '一般设置', admin_general_preferences_path
-              %li#regions
-                %a(href="https://github.shopqi.com/admin/countries") 区域 &amp; 税收
+              %li#regions=link_to '区域&税收',countries_path
               %li#payment
                 %a(href="https://github.shopqi.com/admin/payments") 支付
               %li#shipping
