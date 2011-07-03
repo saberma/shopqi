@@ -150,8 +150,13 @@
           %li#asset-link-destroy
             %a(href="#")=image_tag 'admin/icons/trash.gif'
         %p#asset-hint.hint.sst.ssb
-          %span(style="font-size: 20px; color: #ccc; position: relative; top: 3px; ") &larr;
-          在左边选择一个文件开始修改它
+          %span#asset-hint-noselect
+            %span(style="font-size: 20px; color: #ccc; position: relative; top: 3px; ") &larr;
+            在左边选择一个文件开始修改它
+          %span#asset-hint-liquid.hide
+            请参考
+            %a(href="http://wiki.shopqi.com/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
+            学习如何在您的模板中使用动态信息.
         %div(style="display:none")
           %span#asset-hint-config
             如何使用这些文件，请参考我们的
@@ -165,10 +170,6 @@
             和
             = succeed "." do
               %a(href="http://wiki.shopqi.com/FilterReference" target="wiki" title="Open Wiki in a new window") 过滤器
-          %span#asset-hint-liquid
-            请参考
-            %a(href="http://wiki.shopqi.com/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
-            学习如何在您的模板中使用动态信息.
       #preview-image.preview-image(style="display:none;")
         %a(target="_blank")
           %img#preview-image-asset/

@@ -24,12 +24,16 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-title').text(@model.get('name')).show()
     $('#asset-info').show()
     $('#asset-links').css('visibility', 'visible')
-    $('#asset-hint').hide()
+    $('#asset-hint-liquid').toggle(this.is_liquid_asset())
+    $('#asset-hint').toggle(this.is_liquid_asset())
     $('#asset-rollback-form').hide()
     $('#asset-link-rename').hide()
     $('#asset-rename-form').hide()
     $('#asset-link-destroy').hide()
+    $('#asset-hint-noselect').hide()
     if this.is_text_asset()
+      $('#template-editor').show()
+      $("#preview-image").hide()
       unless TemplateEditor.editor?
         editor = ace.edit("template-editor")
         editor.setTheme 'ace/theme/clouds'
@@ -57,3 +61,8 @@ App.Views.Asset.Index.Show = Backbone.View.extend
 
   is_image_asset: ->
     @model.extension() in TemplateEditor.image_extensions
+
+  is_liquid_asset: ->
+    ends = '.liquid'
+    str = @model.get('name')
+    str.substring(str.length - ends.length) is ends
