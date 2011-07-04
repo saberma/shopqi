@@ -17,7 +17,10 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   save: ->
     model = TemplateEditor.current
     value = TemplateEditor.editor.getSession().getValue()
-    $.post '/admin/themes/assets', key: model.get('key'), value: value, -> model.view.setModified false
+    $('#asset-info').html("正在保存 #{model.get('name')} &hellip;").show()
+    $.post '/admin/themes/assets', key: model.get('key'), value: value, ->
+      $('#asset-info').html("您的文件已经保存.").fadeOut(5000)
+      model.view.setModified false
 
   templateEditor: ->
     window.TemplateEditor =
