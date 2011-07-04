@@ -30,9 +30,6 @@ gem "mini_magick" # 调用参数说明:http://www.imagemagick.org/Usage/
 
 ##### 视图相关 #####
 gem 'haml'
-# 编译coffee-script
-gem 'therubyracer', require: nil
-gem 'barista'
 gem 'message_block' #用于显示错误信息
 gem 'client_side_validations' #客户端校验
 
@@ -51,6 +48,11 @@ gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
 group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
   gem "interactive_editor"
+  # 编译coffee-script
+  gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
+  #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
+  gem 'execjs'
+  gem 'barista'
 end
 
 group :development do
