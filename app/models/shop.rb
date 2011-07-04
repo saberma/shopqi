@@ -43,6 +43,7 @@ class Shop < ActiveRecord::Base
   def available?
     !self.deadline.past?
   end
+
 end
 
 #商品类型

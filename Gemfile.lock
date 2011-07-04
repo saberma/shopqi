@@ -64,6 +64,7 @@ GEM
     braintree (2.9.1)
       builder
     builder (2.1.2)
+    carmen (0.2.8)
     carrierwave (0.5.3)
       activesupport (~> 3.0)
     childprocess (0.1.8)
@@ -267,6 +268,7 @@ DEPENDENCIES
   awesome_print
   barista
   capybara!
+  carmen
   carrierwave
   chinese_pinyin
   client_side_validations

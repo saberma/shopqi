@@ -6,17 +6,11 @@
     .group-fields
       %p 请选择您将要支持发货的国家或地区
       %dl.st.ssb
-        %dd
-          %select#country_code{:name => "country[code]"}
-            %option{:value => "NA*"} North American Countries
-            %option{:value => "EU*"} European Countries
-            %option{:value => ""} --------
-            %option{:value => "ZM"} Zambia
-            %option{:value => "ZW"} Zimbabwe
+        %dd=f.select :code,Carmen.countries - selected_countries
       %dl.sst.ssb
         %dt 发往这个地区的订单需要包含：
         %dd
-          %input#charge_federal_tax{:checked => "checked", :name => "charge_federal_tax", :onclick => "toggleTaxRate();", :type => "checkbox", :value => "1"}/
+          =check_box_tag 'charge_federal_tax',1,true
           %label{:for => "charge_federal_tax", :style => "font-weight: normal"} 联邦税
         %dd#tax-rate
           %p.st.ssl
@@ -47,3 +41,9 @@
       =f.submit w('save'), class: 'btn'
       =w('or')
       =link_to w('cancel'), countries_path
+:javascript
+  $(document).ready(function(){
+    $('#charge_federal_tax').change(function(){
+      $('#tax-rate').toggle();
+    });
+  });
