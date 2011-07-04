@@ -58,8 +58,8 @@ GEM
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
     awesome_print (0.3.2)
-    barista (1.0.0)
-      coffee-script (~> 2.1.1)
+    barista (1.2.1)
+      coffee-script (~> 2.2)
     bcrypt-ruby (2.1.4)
     braintree (2.9.1)
       builder
@@ -71,9 +71,10 @@ GEM
     chinese_pinyin (0.2.0)
     client_side_validations (3.0.4)
       activesupport (~> 3.0.0)
-    coffee-script (2.1.3)
+    coffee-script (2.2.0)
       coffee-script-source
-    coffee-script-source (1.0.1)
+      execjs
+    coffee-script-source (1.1.1)
     columnize (0.3.2)
     crack (0.1.8)
     database_cleaner (0.6.6)
@@ -92,6 +93,8 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
+    execjs (1.2.0)
+      multi_json (~> 1.0)
     factory_girl (1.3.3)
     factory_girl_rails (1.0.1)
       factory_girl (~> 1.3)
@@ -153,6 +156,8 @@ GEM
     mime-types (1.16)
     mini_magick (3.2)
       subexec (~> 0.0.4)
+    multi_json (1.0.3)
+    mustang (0.2.2)
     nokogiri (1.4.4)
     orm_adapter (0.0.4)
     pg (0.10.1)
@@ -231,7 +236,6 @@ GEM
     spoon (0.0.1)
     spork (0.8.4)
     subexec (0.0.4)
-    therubyracer (0.9.0beta3)
     thinking-sphinx (2.0.5)
       activerecord (>= 3.0.3)
       riddle (>= 1.3.3)
@@ -271,6 +275,7 @@ DEPENDENCIES
   default_value_for
   devise
   dragonfly
+  execjs
   factory_girl
   factory_girl_rails
   grit
@@ -289,6 +294,7 @@ DEPENDENCIES
   meta_search
   meta_where
   mini_magick
+  mustang
   nokogiri
   pg
   rack-cache
@@ -303,7 +309,6 @@ DEPENDENCIES
   sentient_user
   settingslogic
   spork
-  therubyracer
   thinking-sphinx (= 2.0.5)
   ts-resque-delta (= 1.0.0)
   uuid

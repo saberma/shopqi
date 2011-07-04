@@ -31,7 +31,9 @@ gem "mini_magick" # 调用参数说明:http://www.imagemagick.org/Usage/
 ##### 视图相关 #####
 gem 'haml'
 # 编译coffee-script
-gem 'therubyracer', require: nil
+#gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
+gem 'mustang'
+gem 'execjs'
 gem 'barista'
 gem 'message_block' #用于显示错误信息
 gem 'client_side_validations' #客户端校验
