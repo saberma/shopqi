@@ -1,6 +1,9 @@
 App.Views.Asset.Index.Index = Backbone.View.extend
   el: '#main'
 
+  events:
+    "click #save-button": 'save'
+
   initialize: ->
     self = this
     this.render()
@@ -11,9 +14,15 @@ App.Views.Asset.Index.Index = Backbone.View.extend
       collection = new App.Collections.Assets assets
       collection.each (asset) -> new App.Views.Asset.Index.Show model: asset, name: name
 
+  save: ->
+    model = TemplateEditor.current
+    value = TemplateEditor.editor.getSession().getValue()
+    $.post '/admin/themes/assets', key: model.get('key'), value: value, -> model.view.setModified false
+
   templateEditor: ->
     window.TemplateEditor =
       editor: null
+      current: null # 当前编辑的主题文件实体对象
       html_mode: require("ace/mode/html").Mode
       css_mode: require("ace/mode/css").Mode
       js_mode: require("ace/mode/javascript").Mode

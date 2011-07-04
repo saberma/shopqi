@@ -163,6 +163,7 @@ Shopqi::Application.routes.draw do
       match 'themes/asset/:id' => 'themes#asset'
       match 'themes/settings' => 'themes#settings', as: :settings_themes
       match 'themes/current' => 'themes#current', as: :current_themes
+      post 'themes/assets' => 'themes#update'
     end
 
   end

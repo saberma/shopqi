@@ -6,6 +6,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     "click a": 'show'
 
   initialize: ->
+    @model.view = this
     _.bindAll this, 'change'
     self = this
     this.render()
@@ -26,6 +27,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-links').css('visibility', 'visible')
     $('#asset-hint, #asset-hint-liquid').toggle(this.is_liquid_asset())
     $('#asset-rollback-form, #asset-link-rename, #asset-rename-form, #asset-link-destroy, #asset-hint-noselect').hide()
+    TemplateEditor.current = @model
     if this.is_text_asset() # 文本
       $('#template-editor').show()
       $("#preview-image").hide()
@@ -70,9 +72,13 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     str.substring(str.length - ends.length) is ends
 
   change: ->
-    log 'ca'
     self = this
     setTimeout ->
       session = TemplateEditor.editor.getSession()
-      $(self.el).toggleClass 'modified', !_.isEmpty(session.$undoManager.$undoStack)
+      self.setModified !_.isEmpty(session.$undoManager.$undoStack)
     , 0
+
+  setModified: (flag) ->
+    if !@modified? or @modified isnt flag
+      @modified = flag
+      $(@el).toggleClass 'modified', flag
