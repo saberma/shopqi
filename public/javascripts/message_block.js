@@ -1,6 +1,6 @@
 /**
  * Message Block JavaScript Interface
- * 
+ *
  * Allows for updating a message block with JSON errors
  **/
 
@@ -8,20 +8,20 @@ var MessageBlock = Class.create({
   initialize: function(message_block) {
     this.message_block = $(message_block ? message_block : "message_block");
   },
-  
+
   clear: function() {
     this.message_block.update("");
     new Effect.Fade(this.message_block);
   },
-  
+
   update: function(errors) {
     if (!errors || Object.keys(errors).size() == 0) {
       new Effect.Fade(this.message_block);
       return;
     }
-    
+
     this.message_block.update("");
-    
+
     for (error_type in errors) {
       $(this.message_block).appendChild(
         Builder.node('ul', { 'class': error_type },
@@ -31,7 +31,8 @@ var MessageBlock = Class.create({
         )
       );
     }
-    
+
     new Effect.Appear(this.message_block);
   }
 });
+

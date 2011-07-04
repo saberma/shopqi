@@ -113,6 +113,25 @@ RegionUtils =
             value = seed[select_index]
             select.val(value).change() if value # 级联回显
 
+#为IE添加placeholder属性
+setPlaceholderText = ->
+  PLACEHOLDER_SUPPORTED = "placeholder" of document.createElement("input")
+  return  if PLACEHOLDER_SUPPORTED or !$(":input[placeholder]").length
+  $(":input[placeholder]").each ->
+    add_placeholder = ->
+      el.val(text).addClass "placeholder_text"  if !el.val() or el.val() == text
+    el = $(this)
+    text = el.attr("placeholder")
+    add_placeholder()
+    el.focus(->
+      el.val("").removeClass "placeholder_text"  if el.val() == text
+    ).blur ->
+      el.val(text).addClass "placeholder_text"  unless el.val()
+
+    el.closest("form").submit(->
+      el.val ""  if el.val() == text
+    ).bind "reset", ->
+      setTimeout add_placeholder, 50
 #特效
 Effect =
   scrollTo: (id) ->
@@ -166,6 +185,7 @@ Handlebars.registerHelper 'date', (date, format)->
 
 $(document).ready ->
   App.init()
+  setPlaceholderText()
 
   moveIndicator = (e) -> $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
   $(document).click moveIndicator
