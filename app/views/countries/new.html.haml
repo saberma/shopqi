@@ -1,318 +1,49 @@
-%h2#title Add a new destination
+%h2#title 新 增 目 的 地
 #action-links
   %ul
-  %form#new_country.new_country{"accept-charset" => "UTF-8", :action => "/admin/countries", :method => "post"}
-    .group
-      .group-fields
-        %p Choose a country or region that you want to support shipping to
-        %dl.st.ssb
-          %dd
-            %select#country_code{:name => "country[code]"}
-              %option{:value => "AF"} Afghanistan
-              %option{:value => "AX"} Aland Islands
-              %option{:value => "AL"} Albania
-              %option{:value => "DZ"} Algeria
-              %option{:value => "AO"} Angola
-              %option{:value => "AI"} Anguilla
-              %option{:value => "AG"} Antigua And Barbuda
-              %option{:value => "AR"} Argentina
-              %option{:value => "AM"} Armenia
-              %option{:value => "AW"} Aruba
-              %option{:value => "AU"} Australia
-              %option{:value => "AZ"} Azerbaijan
-              %option{:value => "BS"} Bahamas
-              %option{:value => "BH"} Bahrain
-              %option{:value => "BD"} Bangladesh
-              %option{:value => "BB"} Barbados
-              %option{:value => "BY"} Belarus
-              %option{:value => "BZ"} Belize
-              %option{:value => "BJ"} Benin
-              %option{:value => "BM"} Bermuda
-              %option{:value => "BT"} Bhutan
-              %option{:value => "BO"} Bolivia
-              %option{:value => "BA"} Bosnia And Herzegovina
-              %option{:value => "BW"} Botswana
-              %option{:value => "BV"} Bouvet Island
-              %option{:value => "BR"} Brazil
-              %option{:value => "IO"} British Indian Ocean Territory
-              %option{:value => "BN"} Brunei
-              %option{:value => "BF"} Burkina Faso
-              %option{:value => "BI"} Burundi
-              %option{:value => "KH"} Cambodia
-              %option{:value => "CM"} Cameroon
-              %option{:value => "CV"} Cape Verde
-              %option{:value => "KY"} Cayman Islands
-              %option{:value => "CF"} Central African Republic
-              %option{:value => "TD"} Chad
-              %option{:value => "CL"} Chile
-              %option{:value => "CX"} Christmas Island
-              %option{:value => "CC"} Cocos (Keeling) Islands
-              %option{:value => "CO"} Colombia
-              %option{:value => "KM"} Comoros
-              %option{:value => "CG"} Congo
-              %option{:value => "CD"} Congo, The Democratic Republic Of The
-              %option{:value => "CK"} Cook Islands
-              %option{:value => "CR"} Costa Rica
-              %option{:value => "CU"} Cuba
-              %option{:value => "CY"} Cyprus
-              %option{:value => "CI"} CÔTe D'Ivoire
-              %option{:value => "DJ"} Djibouti
-              %option{:value => "DM"} Dominica
-              %option{:value => "DO"} Dominican Republic
-              %option{:value => "EC"} Ecuador
-              %option{:value => "EG"} Egypt
-              %option{:value => "SV"} El Salvador
-              %option{:value => "GQ"} Equatorial Guinea
-              %option{:value => "ER"} Eritrea
-              %option{:value => "EE"} Estonia
-              %option{:value => "ET"} Ethiopia
-              %option{:value => "FK"} Falkland Islands (Malvinas)
-              %option{:value => "FO"} Faroe Islands
-              %option{:value => "FJ"} Fiji
-              %option{:value => "GF"} French Guiana
-              %option{:value => "PF"} French Polynesia
-              %option{:value => "TF"} French Southern Territories
-              %option{:value => "GA"} Gabon
-              %option{:value => "GM"} Gambia
-              %option{:value => "GE"} Georgia
-              %option{:value => "GH"} Ghana
-              %option{:value => "GI"} Gibraltar
-              %option{:value => "GD"} Grenada
-              %option{:value => "GP"} Guadeloupe
-              %option{:value => "GT"} Guatemala
-              %option{:value => "GG"} Guernsey
-              %option{:value => "GN"} Guinea
-              %option{:value => "GW"} Guinea Bissau
-              %option{:value => "GY"} Guyana
-              %option{:value => "HT"} Haiti
-              %option{:value => "HM"} Heard Island And Mcdonald Islands
-              %option{:value => "VA"} Holy See (Vatican City State)
-              %option{:value => "HN"} Honduras
-              %option{:value => "HK"} Hong Kong
-              %option{:value => "IN"} India
-              %option{:value => "ID"} Indonesia
-              %option{:value => "IR"} Iran, Islamic Republic Of
-              %option{:value => "IQ"} Iraq
-              %option{:value => "IM"} Isle Of Man
-              %option{:value => "IL"} Israel
-              %option{:value => "JM"} Jamaica
-              %option{:value => "JP"} Japan
-              %option{:value => "JE"} Jersey
-              %option{:value => "JO"} Jordan
-              %option{:value => "KZ"} Kazakhstan
-              %option{:value => "KE"} Kenya
-              %option{:value => "KI"} Kiribati
-              %option{:value => "KP"} Korea, Democratic People's Republic Of
-              %option{:value => "KV"} Kosovo
-              %option{:value => "KW"} Kuwait
-              %option{:value => "KG"} Kyrgyzstan
-              %option{:value => "LA"} Lao People's Democratic Republic
-              %option{:value => "LV"} Latvia
-              %option{:value => "LB"} Lebanon
-              %option{:value => "LS"} Lesotho
-              %option{:value => "LR"} Liberia
-              %option{:value => "LY"} Libyan Arab Jamahiriya
-              %option{:value => "LI"} Liechtenstein
-              %option{:value => "LT"} Lithuania
-              %option{:value => "MO"} Macao
-              %option{:value => "MK"} Macedonia, The Former Yugoslav Republic Of
-              %option{:value => "MG"} Madagascar
-              %option{:value => "MW"} Malawi
-              %option{:value => "MY"} Malaysia
-              %option{:value => "MV"} Maldives
-              %option{:value => "ML"} Mali
-              %option{:value => "MT"} Malta
-              %option{:value => "MQ"} Martinique
-              %option{:value => "MR"} Mauritania
-              %option{:value => "MU"} Mauritius
-              %option{:value => "YT"} Mayotte
-              %option{:value => "MD"} Moldova, Republic Of
-              %option{:value => "MN"} Mongolia
-              %option{:value => "ME"} Montenegro
-              %option{:value => "MS"} Montserrat
-              %option{:value => "MA"} Morocco
-              %option{:value => "MZ"} Mozambique
-              %option{:value => "MM"} Myanmar
-              %option{:value => "NA"} Namibia
-              %option{:value => "NR"} Nauru
-              %option{:value => "NP"} Nepal
-              %option{:value => "AN"} Netherlands Antilles
-              %option{:value => "NC"} New Caledonia
-              %option{:value => "NZ"} New Zealand
-              %option{:value => "NI"} Nicaragua
-              %option{:value => "NE"} Niger
-              %option{:value => "NG"} Nigeria
-              %option{:value => "NU"} Niue
-              %option{:value => "NF"} Norfolk Island
-              %option{:value => "OM"} Oman
-              %option{:value => "PK"} Pakistan
-              %option{:value => "PS"} Palestinian Territory, Occupied
-              %option{:value => "PA"} Panama
-              %option{:value => "PG"} Papua New Guinea
-              %option{:value => "PY"} Paraguay
-              %option{:value => "PE"} Peru
-              %option{:value => "PH"} Philippines
-              %option{:value => "PN"} Pitcairn
-              %option{:value => "QA"} Qatar
-              %option{:value => "RE"} Reunion
-              %option{:value => "RU"} Russia
-              %option{:value => "RW"} Rwanda
-              %option{:value => "BL"} Saint BarthÉLemy
-              %option{:value => "SH"} Saint Helena
-              %option{:value => "KN"} Saint Kitts And Nevis
-              %option{:value => "LC"} Saint Lucia
-              %option{:value => "MF"} Saint Martin
-              %option{:value => "PM"} Saint Pierre And Miquelon
-              %option{:value => "WS"} Samoa
-              %option{:value => "SM"} San Marino
-              %option{:value => "ST"} Sao Tome And Principe
-              %option{:value => "SA"} Saudi Arabia
-              %option{:value => "SN"} Senegal
-              %option{:value => "RS"} Serbia
-              %option{:value => "SC"} Seychelles
-              %option{:value => "SL"} Sierra Leone
-              %option{:value => "SG"} Singapore
-              %option{:value => "SI"} Slovenia
-              %option{:value => "SB"} Solomon Islands
-              %option{:value => "SO"} Somalia
-              %option{:value => "ZA"} South Africa
-              %option{:value => "GS"} South Georgia And The South Sandwich Islands
-              %option{:value => "KR"} South Korea
-              %option{:value => "LK"} Sri Lanka
-              %option{:value => "VC"} St. Vincent
-              %option{:value => "SD"} Sudan
-              %option{:value => "SR"} Suriname
-              %option{:value => "SJ"} Svalbard And Jan Mayen
-              %option{:value => "SZ"} Swaziland
-              %option{:value => "SY"} Syria
-              %option{:value => "TW"} Taiwan
-              %option{:value => "TJ"} Tajikistan
-              %option{:value => "TZ"} Tanzania, United Republic Of
-              %option{:value => "TH"} Thailand
-              %option{:value => "TL"} Timor Leste
-              %option{:value => "TG"} Togo
-              %option{:value => "TK"} Tokelau
-              %option{:value => "TO"} Tonga
-              %option{:value => "TT"} Trinidad and Tobago
-              %option{:value => "TN"} Tunisia
-              %option{:value => "TR"} Turkey
-              %option{:value => "TM"} Turkmenistan
-              %option{:value => "TC"} Turks And Caicos Islands
-              %option{:value => "TV"} Tuvalu
-              %option{:value => "UG"} Uganda
-              %option{:value => "AE"} United Arab Emirates
-              %option{:value => "UM"} United States Minor Outlying Islands
-              %option{:value => "UY"} Uruguay
-              %option{:value => "UZ"} Uzbekistan
-              %option{:value => "VU"} Vanuatu
-              %option{:value => "VE"} Venezuela
-              %option{:value => "VN"} Viet Nam
-              %option{:value => "VG"} Virgin Islands, British
-              %option{:value => "WF"} Wallis And Futuna
-              %option{:value => "EH"} Western Sahara
-              %option{:value => "YE"} Yemen
-              %option{:value => "ZM"} Zambia
-              %option{:value => "ZW"} Zimbabwe
-        %dl.sst.ssb
-          %dt Orders from this country should include
-          %dd
-            %input#charge_federal_tax{:checked => "checked", :name => "charge_federal_tax", :onclick => "toggleTaxRate();", :type => "checkbox", :value => "1"}/
-            %label{:for => "charge_federal_tax", :style => "font-weight: normal"} Federal Tax
-          %dd#tax-rate
-            %p.st.ssl
-              %label{:for => "country_tax_percentage", :style => "font-weight: normal"} Rate
-              %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "5", :type => "text", :value => "0.0"}/
-              \%
-          %dd#provincial-taxes{:style => "display:none;"}
-            %input#charge_provincial_taxes{:name => "charge_provincial_taxes", :type => "checkbox", :value => "1"}/
-            %label{:for => "charge_provincial_taxes", :style => "font-weight: normal"}
-              State or Provincial taxes
-              %span.hint (United States, Canada)
-        %dl.sst.ssb
-          %dt Shipping
-          %dd
-            %input#create-default-shipping{:checked => "checked", :name => "shipping", :type => "checkbox", :value => "1"}/
-            %label{:for => "create-default-shipping", :style => "font-weight: normal"} Create a default shipping rate for this destination
-          %dd#shipping-details{:style => "display:none"}
-            %fieldset{:style => "font-size: 90%; padding: 10px"}
-              Charge
-              %input#rate_price{:name => "rate[price]", :size => "5", :type => "text", :value => "25.00"}/
-              CNY
-              for orders between
-              %input#rate_weight_low{:name => "rate[weight_low]", :size => "5", :type => "text", :value => "0.0"}/
-              and
-              %input#rate_weight_high{:name => "rate[weight_high]", :size => "5", :type => "text", :value => "100.0"}/
-              lbs
-      / .group-fields
-      .group-actions
-        %input.btn{:name => "commit", :type => "submit", :value => "Add this Destination"}/
-        or
-        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/countries"} Cancel
-      / .group-actions
-    / .group
-  %script{:charset => "utf-8", :type => "text/javascript"}
-    Event.observe(document, 'dom:loaded', toggleTaxRate);
-
-    function toggleTaxRate() {
-    if($('charge_federal_tax').checked) {
-    $('tax-rate').show();
-    } else {
-    $('tax-rate').hide();
-    }
-    }
-
-
-
-    var CountryForm = Class.create({
-
-    initialize: function(countriesWithTaxRates) {
-    this.taxRates = $H(countriesWithTaxRates);
-    this.countriesWithTaxRates = this.taxRates.keys();
-    this.countrySelect = $('country_code');
-    this.createShippingRate = $('shipping');
-
-    this.countrySelect.observe('change', this.onCountryChange.bind(this));
-    this.createShippingRate.observe('click', this.onCreateShippingRateClick.bind(this));
-    Event.observe(document, 'dom:loaded', this.onCountryChange.bind(this));
-    Event.observe(document, 'dom:loaded', this.onCreateShippingRateClick.bind(this));
-    },
-
-    value: function() {
-    return this.countrySelect.value;
-    },
-
-    taxRate: function() {
-    var rate = this.taxRates.get(this.value())
-    if (rate) {
-    return (rate * 100).toFixed(2);
-    } else {
-    return 0.0;
-    }
-    },
-
-    usOrCanada: function() {
-    return ['US', 'CA'].include(this.value());
-    },
-
-    onCountryChange: function(event) {
-    if (this.usOrCanada()) {
-    $('provincial-taxes').show();
-    } else {
-    $('provincial-taxes').hide();
-    }
-
-    $('country_tax_percentage').value = this.taxRate();
-    },
-
-    onCreateShippingRateClick: function(event) {
-    if (this.createShippingRate.checked) {
-    $('shipping-details').show();
-    } else {
-    $('shipping-details').hide();
-    }
-    }
-    });
-
-    new CountryForm({"VA":0.0,"CC":0.0,"GT":0.12,"JP":0.05,"SE":0.25,"TZ":0.2,"CD":0.0,"MM":0.0,"DZ":0.0,"MN":0.0,"PK":0.16,"SG":0.0,"VC":0.15,"CF":0.0,"GW":0.0,"MO":0.0,"PL":0.22,"SH":0.0,"CG":0.0,"PM":0.0,"SI":0.2,"VE":0.14,"ZW":0.0,"CH":0.076,"GY":0.0,"MQ":0.0,"PN":0.0,"SJ":0.0,"CI":0.0,"MR":0.0,"SK":0.19,"VG":0.0,"MS":0.0,"SL":0.0,"CK":0.0,"ID":0.1,"MT":0.18,"SM":0.0,"YE":0.0,"CL":0.19,"IE":0.21,"LA":0.0,"MU":0.0,"SN":0.0,"CM":0.0,"FI":0.22,"LB":0.0,"MV":0.0,"SO":0.0,"CN":0.17,"FJ":0.125,"LC":0.0,"MW":0.0,"PS":0.0,"CO":0.15,"FK":0.0,"MX":0.15,"PT":0.21,"MY":0.0,"SR":0.0,"VN":0.0,"MZ":0.0,"CR":0.13,"FO":0.25,"ST":0.0,"IL":0.165,"LI":0.0,"PY":0.0,"BA":0.0,"CU":0.0,"IM":0.0,"SV":0.0,"CV":0.0,"FR":0.196,"IN":0.125,"LK":0.15,"BB":0.0,"IO":0.0,"VU":0.0,"CX":0.0,"RE":0.0,"UA":0.2,"SY":0.0,"CY":0.15,"IQ":0.0,"SZ":0.0,"BD":0.0,"CZ":0.19,"IR":0.0,"YT":0.0,"BE":0.21,"IS":0.0,"BF":0.0,"EC":0.12,"IT":0.2,"OM":0.0,"BG":0.2,"BH":0.0,"LR":0.0,"UG":0.0,"BI":0.0,"EE":0.18,"LS":0.0,"BJ":0.0,"LT":0.18,"EG":0.0,"BL":0.0,"EH":0.0,"LU":0.15,"RO":0.19,"BM":0.0,"LV":0.18,"BN":0.0,"UM":0.0,"BO":0.0,"KE":0.16,"NA":0.0,"LY":0.0,"BR":0.17,"KG":0.0,"NC":0.0,"RS":0.18,"BS":0.0,"HK":0.0,"KH":0.0,"BT":0.0,"KI":0.0,"NE":0.0,"QA":0.0,"RU":0.18,"HM":0.0,"NF":0.0,"US":0.0,"BV":0.0,"ER":0.0,"HN":0.0,"NG":5.0,"RW":0.0,"BW":0.0,"ES":0.16,"ET":0.0,"NI":0.0,"AD":0.0,"BY":0.0,"KM":0.0,"AE":0.0,"BZ":0.0,"HR":0.22,"KN":0.0,"TC":0.0,"AF":0.0,"NL":0.19,"TD":0.0,"AG":0.0,"HT":0.0,"KP":0.0,"UY":0.23,"GA":0.0,"HU":0.2,"TF":0.0,"UZ":0.0,"AI":0.0,"DE":0.19,"GB":0.175,"KR":0.1,"TG":0.0,"NO":0.25,"TH":0.07,"GD":0.0,"NP":0.0,"ZA":0.14,"AL":0.0,"GE":0.0,"TJ":0.0,"WF":0.0,"AM":0.0,"GF":0.0,"KV":0.16,"NR":0.0,"TK":0.0,"AN":0.0,"DJ":0.0,"KW":0.0,"TL":0.0,"AO":0.0,"DK":0.25,"GG":0.0,"TM":0.0,"GH":0.0,"JE":0.0,"MA":0.0,"KY":0.0,"NU":0.0,"TN":0.0,"DM":0.0,"GI":0.0,"KZ":0.12,"TO":0.0,"MC":0.0,"AR":0.21,"MD":0.0,"DO":0.0,"ME":0.0,"PA":0.05,"TR":0.18,"AT":0.2,"GL":0.0,"MF":0.0,"NZ":0.15,"AU":0.1,"GM":0.0,"MG":0.0,"GN":0.0,"TT":0.15,"ZM":0.0,"AW":0.0,"PE":0.19,"SA":0.0,"AX":0.0,"GP":0.085,"JM":0.165,"GQ":0.0,"CA":0.05,"WS":0.0,"SB":0.0,"PF":0.0,"TV":0.0,"PG":0.0,"MK":0.0,"GR":0.19,"AZ":0.0,"TW":0.05,"SC":0.0,"PH":0.2,"ML":0.0,"JO":0.16,"GS":0.0,"SD":0.0});
-/ end div.main
-/ end div.container
+=form_for country do |f|
+  .group
+    .group-fields
+      %p 请选择您将要支持发货的国家或地区
+      %dl.st.ssb
+        %dd
+          %select#country_code{:name => "country[code]"}
+            %option{:value => "NA*"} North American Countries
+            %option{:value => "EU*"} European Countries
+            %option{:value => ""} --------
+            %option{:value => "ZM"} Zambia
+            %option{:value => "ZW"} Zimbabwe
+      %dl.sst.ssb
+        %dt 发往这个地区的订单需要包含：
+        %dd
+          %input#charge_federal_tax{:checked => "checked", :name => "charge_federal_tax", :onclick => "toggleTaxRate();", :type => "checkbox", :value => "1"}/
+          %label{:for => "charge_federal_tax", :style => "font-weight: normal"} 联邦税
+        %dd#tax-rate
+          %p.st.ssl
+            =f.text_field :tax_percentage, size: 5
+            \%
+        %dd#provincial-taxes{:style => "display:none;"}
+          %input#charge_provincial_taxes{:name => "charge_provincial_taxes", :type => "checkbox", :value => "1"}/
+          %label{:for => "charge_provincial_taxes", :style => "font-weight: normal"}
+            State or Provincial taxes
+            %span.hint (United States, Canada)
+      %dl.sst.ssb
+        %dt 运输
+        %dd
+          %input#create-default-shipping{:checked => "checked", :name => "shipping", :type => "checkbox", :value => "1"}/
+          %label{:for => "create-default-shipping", :style => "font-weight: normal"} 为这个地方创建默认的运费
+        %dd#shipping-details{:style => "display:none"}
+          %fieldset{:style => "font-size: 90%; padding: 10px"}
+            费用
+            %input#rate_price{:name => "rate[price]", :size => "5", :type => "text", :value => "25.00"}/
+            RMB
+            商品重量介于
+            %input#rate_weight_low{:name => "rate[weight_low]", :size => "5", :type => "text", :value => "0.0"}/
+            和
+            %input#rate_weight_high{:name => "rate[weight_high]", :size => "5", :type => "text", :value => "100.0"}/
+            kg 之间
+    / .group-fields
+    .group-actions
+      =f.submit w('save'), class: 'btn'
+      =w('or')
+      =link_to w('cancel'), countries_path

@@ -20,6 +20,7 @@ class Shop < ActiveRecord::Base
   has_many :types             , dependent: :destroy                      , class_name: 'ShopProductType'
   has_many :vendors           , dependent: :destroy                      , class_name: 'ShopProductVendor'
   has_many :emails            , dependent: :destroy
+  has_many :countries         , dependent: :destroy
 
   attr_readonly :orders_count
 

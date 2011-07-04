@@ -2,17 +2,14 @@
 #action-links
   %ul
     %li#add-region
-      =link_to '新增目的地', new_countries_path
-    \/ul>
+      =link_to '新增目的地', new_country_path(country)
 .box2.ssb
   %form#shop-update.shop_edit{"accept-charset" => "UTF-8", :action => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/shop", "data-remote" => "true", :method => "post"}
     %h3 税 率 设 置
     %p
-      Taxation requirements differ around the world. For example, there are different systems of taxation in
-      North America (Sales Tax) and Europe (Value Added Tax). VAT means that all taxes are included in the prices.
-      Sales Tax means that the taxes are not included and are added to the subtotal during the checkout. Similarly,
-      some areas require you to charge taxes on Shipping &amp; Handling, and some do not. Choose the options applicable
-      to your region here.
+      世界各地所征的税收基本上是不一样的。例如，在北美（销售税）和欧洲（增值税）就有不同的税收制度。
+      增值税是指所有的税收在价格中。营业税意味着不包括任何税项，并在结帐过程中添加的小计。
+      同样，一些地区需要收取运费和手续费税费，有的则不需要。您可以在这里为各个地区选择的合适的选项。
     %p.st
       %input{:name => "shop[taxes_included]", :type => "hidden", :value => "0"}/
       %input#shop_taxes_included{:checked => "checked", :name => "shop[taxes_included]", :onclick => "$(&quot;shop-update&quot;).simulate(&quot;submit&quot;);", :type => "checkbox", :value => "1"}/
@@ -43,10 +40,6 @@
             )
         #tax_input_country_2621542.tax_input_country{:style => "display:none"}
           %form#edit_country_2621542.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621542", "data-remote" => "true", :method => "post"}
-            %div{:style => "margin:0;padding:0;display:inline"}
-              %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-              %input{:name => "_method", :type => "hidden", :value => "put"}/
-              %input{:name => "authenticity_token", :type => "hidden", :value => "4JGFXyQXRN+cH3nkaz04vTgBN9pzF6CU1SZYwD7HXU0="}/
             %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
             %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
             or

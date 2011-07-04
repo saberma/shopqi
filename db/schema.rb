@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
 
   add_index "comments", ["article_id"], :name => "index_comments_on_article_id"
 
+  create_table "countries", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "code"
+    t.float    "tax_percentage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "countries", ["shop_id"], :name => "index_countries_on_shop_id"
+
   create_table "custom_collection_products", :force => true do |t|
     t.integer  "custom_collection_id"
     t.integer  "product_id"

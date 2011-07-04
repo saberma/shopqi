@@ -56,13 +56,23 @@ class CreateShops < ActiveRecord::Migration
       t.timestamps
     end
 
+    #可发往国家
+    create_table :countries do |t|
+      t.references :shop, comment: "所属商店"
+      t.string :code, comment: "国家编码"
+      t.float :tax_percentage, comment: "税率"
+      t.timestamps
+    end
+
     add_index :shop_product_types  , :shop_id
     add_index :shop_product_vendors, :shop_id
     add_index :shop_themes         , :shop_id
+    add_index :countries           , :shop_id
     add_index :shop_theme_settings , :shop_theme_id
   end
 
   def self.down
+    drop_table :countries
     drop_table :theme_settings
     drop_table :themes
     drop_table :shop_product_types
