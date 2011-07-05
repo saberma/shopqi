@@ -3,19 +3,19 @@
   %td
     %p=Carmen::country_name(country.code)
   %td
-    %p#tax_label_country
-      %span#tax_rate_country=country.tax_percentage
+    %p(id="tax_label_country_#{country.id}")
+      %span(id="tax_rate_country_#{country.id}")=country.tax_percentage
       \%
       %span.action
         (
-        %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621542','tax_input_country_2621542'); return false;"}> change
+        %a{:href => "#", :onclick => "TogglePair(['tax_label_country_#{country.id}','tax_input_country_#{country.id}']);return false;"}> 修改
         )
-    #tax_input_country_2621542.tax_input_country{:style => "display:none"}
-      %form#edit_country_2621542.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621542", "data-remote" => "true", :method => "post"}
-        %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
-        %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+    %div.tax_input_country(id="tax_input_country_#{country.id}" style= "display:none")
+      =form_for country,remote: true do |f|
+        =f.text_field :tax_percentage, size: 3
+        =f.submit w('save'), class: 'btn'
         or
-        %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621542', 'tax_input_country_2621542'); return false;"} Cancel
+        %a{:href => "#", :onclick => "TogglePair(['tax_label_country_#{country.id}','tax_input_country_#{country.id}']);return false;"}> 取消
   %td
     \&mdash;
   %td.r

@@ -17,4 +17,8 @@ class CountriesController < ApplicationController
     country.destroy
   end
 
+  def update
+    country.save
+  end
+
 end
