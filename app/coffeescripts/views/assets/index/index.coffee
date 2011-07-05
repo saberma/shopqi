@@ -49,10 +49,18 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   destroy: ->
     self = this
     model = TemplateEditor.current
-    attrs = key: model.get('key'), _method: 'delete'
-    $.post "/admin/themes/assets/0", attrs, (data) ->
-      msg "#{model.get('key')}已经删除"
-      model.view.remove()
+    if confirm("您确定要删除#{model.get('name')}吗?")
+      attrs = key: model.get('key'), _method: 'delete'
+      $.post "/admin/themes/assets/0", attrs, (data) ->
+        $('#asset-buttons, #asset-info').hide()
+        $('#asset-title').text('没有选择文件')
+        $('#asset-links').css('visibility', 'hidden').html ''
+        $('#asset-hint, #asset-hint-noselect').show()
+        $('#asset-hint-liquid').hide()
+        $('#template-editor').hide()
+        msg "#{model.get('key')} 已经删除"
+        model.view.remove()
+        TemplateEditor.current = null
     false
 
   cancelRollback: ->
