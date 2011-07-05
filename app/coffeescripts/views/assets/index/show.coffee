@@ -24,10 +24,10 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $(@el).addClass('current-file')
     $('#asset-title').text(@model.get('name'))
     $('#asset-buttons, #asset-info, #asset-title').show()
-    $('#asset-links').css('visibility', 'visible')
-    $('#asset-links').html $('#asset-link-rollback-item').html()
+    $('#asset-links').css('visibility', 'visible').html $('#asset-link-rollback-item').html()
+    $('#asset-links').append($('#asset-rename-destroy-item').html()) unless _(TemplateEditor.RequiredFiles).include @model.get('key')
     $('#asset-hint, #asset-hint-liquid').toggle(this.is_liquid_asset())
-    $('#asset-rollback-form, #asset-link-rename, #asset-rename-form, #asset-link-destroy, #asset-hint-noselect').hide()
+    $('#asset-hint-noselect').hide()
     TemplateEditor.current = @model
     if this.is_text_asset() # 文本
       $('#template-editor').show()
@@ -39,7 +39,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
       if @session
         TemplateEditor.editor.setSession @session
       else
-        $.get "/admin/themes/asset/#{@model.get('tree_id')}", key: @model.get('key'), (data) ->
+        $.get "/admin/themes/assets/#{@model.get('tree_id')}", key: @model.get('key'), (data) ->
           editor = TemplateEditor.editor
           session = new TemplateEditor.EditSession('')
           editor.setSession session

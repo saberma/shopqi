@@ -160,12 +160,14 @@ Shopqi::Application.routes.draw do
     end
 
     begin :themes
-      match 'themes/asset/:tree_id' => 'themes#asset'
       match 'themes/settings' => 'themes#settings', as: :settings_themes
-      match 'themes/current' => 'themes#current', as: :current_themes
-      get 'themes/versions' => 'themes#versions'
-      post 'themes/assets' => 'themes#update'
-      get 'assets/edit' => 'themes#edit'
+    end
+    scope 'themes' do
+      resources :assets do
+        collection do
+          get :versions
+        end
+      end
     end
 
   end

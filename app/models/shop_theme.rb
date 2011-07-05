@@ -23,44 +23,6 @@ class ShopTheme < ActiveRecord::Base
     end
   end
 
-  # 返回文件列表
-  def list
-    repo = Grit::Repo.new public_path
-    master = repo.tree
-    master.trees.inject({}) do |result, tree|
-      result[tree.name] = []
-      tree.blobs.each do |blob|
-        asset = {name: blob.name, id: blob.id, key: "#{tree.name}/#{blob.name}", tree_id: master.id}
-        extensions = blob.name.split('.')[1]
-        if !extensions.blank? and %w(jpg gif png jpeg).include? extensions
-          asset['url'] = "/#{asset_relative_path(blob.name)}"
-        end
-        result[tree.name].push(asset: asset)
-      end
-      result
-    end
-  end
-
-  def value(tree_id, key) # 返回文件内容
-    repo = Grit::Repo.new public_path
-    tree = repo.tree(tree_id)
-    blob = tree./ key
-    blob.data
-    #repo.blob(id).data
-  end
-
-  def save_file(key, content) # 保存文件内容
-    File.open(File.join(public_path, key), 'w') {|f| f.write content }
-    repo = Grit::Repo.new public_path
-    message = repo.log('master', key).size + 1
-    commit repo, message
-  end
-
-  def commits(key) # 返回文件版本
-    repo = Grit::Repo.new public_path
-    repo.log 'master', key
-  end
-
   def switch(new_theme) # 切换主题
     self.update_attribute :theme, new_theme
   end
@@ -114,7 +76,6 @@ class ShopTheme < ActiveRecord::Base
     JSON(File.read(config_settings_data_path))
   end
 
-  private
   def commit(repo, message) # 提交
     Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
       repo.add '.'
