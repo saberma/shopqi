@@ -22,8 +22,9 @@ gem "carrierwave"
 #查询
 gem 'meta_where'
 gem 'meta_search'
-#地区
-gem 'carmen'
+
+gem 'carmen'#地区
+gem 'on_the_spot' #及时编辑
 
 ##### 控制器相关 #####
 gem 'decent_exposure'

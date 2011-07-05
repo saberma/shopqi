@@ -159,6 +159,8 @@ GEM
       subexec (~> 0.0.4)
     multi_json (1.0.3)
     nokogiri (1.4.4)
+    on_the_spot (0.0.12)
+      json_pure (>= 1.4.6)
     orm_adapter (0.0.4)
     pg (0.10.1)
     polyglot (0.3.1)
@@ -297,6 +299,7 @@ DEPENDENCIES
   meta_where
   mini_magick
   nokogiri
+  on_the_spot
   pg
   rack-cache
   rails (= 3.0.6)
