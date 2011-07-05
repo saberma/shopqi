@@ -2,6 +2,7 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   el: '#main'
 
   events:
+    "click #open-button": 'open'
     "click #save-button": 'save'
     "click #asset-link-rollback a": 'versions'
     "click #asset-rollback-form a": 'cancelRollback'
@@ -16,6 +17,9 @@ App.Views.Asset.Index.Index = Backbone.View.extend
     _(@options.data).each (assets, name) ->
       collection = new App.Collections.Assets assets
       collection.each (asset) -> new App.Views.Asset.Index.Show model: asset, name: name
+
+  open: ->
+    window.open("/admin/assets/edit", "_blank", "menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=900,height=700")
 
   save: ->
     model = TemplateEditor.current

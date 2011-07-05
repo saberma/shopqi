@@ -1,7 +1,7 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
   prepend_before_filter :authenticate_user!
-  layout 'admin'
+  layout 'admin', except: :edit
 
   expose(:shop) { current_user.shop }
   expose(:theme) { shop.theme }
@@ -25,5 +25,9 @@ class ThemesController < ApplicationController
   def versions
     commit = theme.commits(params[:key]).as_json
     render json: commit.to_json(only: ['id', 'message', 'tree'])
+  end
+
+  # 弹出新窗口编辑
+  def edit
   end
 end

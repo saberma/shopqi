@@ -165,6 +165,7 @@ Shopqi::Application.routes.draw do
       match 'themes/current' => 'themes#current', as: :current_themes
       get 'themes/versions' => 'themes#versions'
       post 'themes/assets' => 'themes#update'
+      get 'assets/edit' => 'themes#edit'
     end
 
   end

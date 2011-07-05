@@ -116,7 +116,6 @@ class ShopTheme < ActiveRecord::Base
 
   private
   def commit(repo, message) # 提交
-    Grit.debug = true
     Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
       repo.add '.'
       repo.commit_all message
