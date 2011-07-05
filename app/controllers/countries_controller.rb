@@ -13,4 +13,8 @@ class CountriesController < ApplicationController
     redirect_to countries_path, notice: notice_msg
   end
 
+  def destroy
+    country.destroy
+  end
+
 end

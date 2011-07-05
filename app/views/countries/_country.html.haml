@@ -1,0 +1,22 @@
+%tr(id="country_#{country.id}" class="#{cycle(:odd,:even)}")
+  %td=image_tag("admin/countries/#{country.code.downcase}.gif",title: Carmen::country_name(country.code))
+  %td
+    %p=Carmen::country_name(country.code)
+  %td
+    %p#tax_label_country
+      %span#tax_rate_country=country.tax_percentage
+      \%
+      %span.action
+        (
+        %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621542','tax_input_country_2621542'); return false;"}> change
+        )
+    #tax_input_country_2621542.tax_input_country{:style => "display:none"}
+      %form#edit_country_2621542.edit_country{"accept-charset" => "UTF-8", :action => "/admin/countries/2621542", "data-remote" => "true", :method => "post"}
+        %input#country_tax_percentage{:name => "country[tax_percentage]", :size => "3", :type => "text", :value => "0.0"}/
+        %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+        or
+        %a{:href => "#", :onclick => "Element.togglePair('tax_label_country_2621542', 'tax_input_country_2621542'); return false;"} Cancel
+  %td
+    \&mdash;
+  %td.r
+    =link_to_delete country_path(country)

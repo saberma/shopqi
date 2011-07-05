@@ -59,7 +59,7 @@ Shopqi::Application.routes.draw do
       resources :emails, only:[:index,:edit,:update]
     end
 
-    resources :countries, only: [:create,:new,:index]
+    resources :countries, only: [:create,:new,:index,:destroy]
 
     resources :orders, only: [:index, :update, :show, :destroy] do
       collection do
