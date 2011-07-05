@@ -442,6 +442,8 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
     t.boolean  "public",              :default => true
     t.integer  "orders_count",        :default => 0
     t.string   "order_number_format", :default => "\#{{number}}"
+    t.boolean  "taxes_included",      :default => true
+    t.boolean  "tax_shipping",        :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

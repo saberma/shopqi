@@ -6,11 +6,14 @@ class ShopsController < ApplicationController
   expose(:shop) { current_user.shop }
 
   def update
-    unless params[:shop][:order_number_format].include?('{{number}}')
+    if params[:shop][:order_number_format] && !params[:shop][:order_number_format].include?('{{number}}')
       params[:shop][:order_number_format] = '#{{number}}'
     end
     shop.update_attributes(params[:shop])
-    redirect_to admin_general_preferences_path, notice: notice_msg
+    respond_to do |format|
+      format.html {redirect_to admin_general_preferences_path, notice: notice_msg}
+      format.js   {render nothing: true}
+    end
   end
 
 end

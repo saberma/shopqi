@@ -4,20 +4,18 @@
     %li#add-region
       =link_to '新增目的地', new_country_path(country)
 .box2.ssb
-  %form#shop-update.shop_edit{"accept-charset" => "UTF-8", :action => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/shop", "data-remote" => "true", :method => "post"}
+  =form_for shop, remote: true do |f|
     %h3 税 率 设 置
     %p
       世界各地所征的税收基本上是不一样的。例如，在北美（销售税）和欧洲（增值税）就有不同的税收制度。
       增值税是指所有的税收在价格中。营业税意味着不包括任何税项，并在结帐过程中添加的小计。
       同样，一些地区需要收取运费和手续费税费，有的则不需要。您可以在这里为各个地区选择的合适的选项。
     %p.st
-      %input{:name => "shop[taxes_included]", :type => "hidden", :value => "0"}/
-      %input#shop_taxes_included{:checked => "checked", :name => "shop[taxes_included]", :onclick => "$(&quot;shop-update&quot;).simulate(&quot;submit&quot;);", :type => "checkbox", :value => "1"}/
+      =f.check_box :taxes_included, onclick: "$(this).closest('form').submit()"
       %label{:for => "shop_taxes_included"} 所有税收已包含在商品价格中
     %p.st
-      %input{:name => "shop[tax_shipping]", :type => "hidden", :value => "0"}/
-      %input#shop_tax_shipping{:name => "shop[tax_shipping]", :onclick => "$(&quot;shop-update&quot;).simulate(&quot;submit&quot;);", :type => "checkbox", :value => "1"}/
-      %label{:for => "shop_tax_shipping"} Charge taxes on shipping rates.
+      =f.check_box :tax_shipping, onclick: "$(this).closest('form').submit()"
+      %label{:for => "shop_tax_shipping"} 关税
 .pgroup{:style => "margin-top:0"}
   %table#countries.data{:cellpadding => "0", :cellspacing => "0"}
     %tr
