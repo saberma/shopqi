@@ -3,6 +3,9 @@ App.Views.Asset.Index.Index = Backbone.View.extend
 
   events:
     "click #save-button": 'save'
+    "click #asset-link-rollback a": 'versions'
+    "click #asset-rollback-form a": 'cancelRollback'
+    "change #asset-rollback-form select": 'updateAsset'
 
   initialize: ->
     self = this
@@ -21,6 +24,26 @@ App.Views.Asset.Index.Index = Backbone.View.extend
     $.post '/admin/themes/assets', key: model.get('key'), value: value, ->
       $('#asset-info').html("您的文件已经保存.").fadeOut(5000)
       model.view.setModified false
+
+  versions: ->
+    model = TemplateEditor.current
+    $.get '/admin/themes/versions', key: model.get('key'), (data) ->
+      template = Handlebars.compile $('#rollback-selectbox-item').html()
+      $('#asset-links').html template commits: data
+    false
+
+  updateAsset: ->
+    model = TemplateEditor.current
+    tree_id = $('#asset-rollback-form select').children('option:selected').attr('tree_id')
+    $.get "/admin/themes/asset/#{tree_id}", key: model.get('key'), (data) ->
+      editor = TemplateEditor.editor
+      editor.getSession().setValue data
+      editor.moveCursorTo(0,0)
+    false
+
+  cancelRollback: ->
+    $('#asset-links').html $('#asset-link-rollback-item').html()
+    false
 
   templateEditor: ->
     window.TemplateEditor =

@@ -133,13 +133,6 @@
         %h3#asset-title 没有选择文件
         %span#asset-info(style="display: none")
         %ul#asset-links.nobull.clearfix(style="visibility:hidden")
-          %li#asset-link-rollback
-            %a(href="#") 查看之前版本
-          %li#asset-rollback-form
-            %select#rollback-selectbox(name="rollback-selectbox")
-            或者
-            %a(href="#") 取消
-          / ><li id="asset-link-edit"><a href="#" title="Edit this image in Aviary">edit image</a></li>
           %li#asset-link-rename
             %a(href="#") 重命名
           %li#asset-rename-form
@@ -191,6 +184,17 @@
 
 %script(id="theme-item" type="text/x-jquery-tmpl")
   %a(class="asset-{{{type}}}" href="#") {{{name}}}
+%script(id="rollback-selectbox-item" type="text/x-jquery-tmpl")
+  %li#asset-rollback-form
+    %select#rollback-selectbox(name="rollback-selectbox")
+      {{#each commits}}
+      %option(tree_id='{{{tree}}}') {{{message}}}
+      {{/each}}
+    或者
+    %a(href="#") 取消
+%script(id="asset-link-rollback-item" type="text/x-jquery-tmpl")
+  %li#asset-link-rollback
+    %a(href="#") 查看之前版本
 
 :javascript
   var assets_json = #{@assets_json};

@@ -12,12 +12,18 @@ class ThemesController < ApplicationController
 
   # 获取文件内容
   def asset
-    render text: theme.value(params[:id])
+    render text: theme.value(params[:tree_id], params[:key])
   end
 
   # 更新主题文件
   def update
     theme.save_file params[:key], params[:value]
     render nothing: true
+  end
+
+  # 版本信息
+  def versions
+    commit = theme.commits(params[:key]).as_json
+    render json: commit.to_json(only: ['id', 'message', 'tree'])
   end
 end

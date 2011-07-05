@@ -25,6 +25,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-title').text(@model.get('name'))
     $('#asset-buttons, #asset-info, #asset-title').show()
     $('#asset-links').css('visibility', 'visible')
+    $('#asset-links').html $('#asset-link-rollback-item').html()
     $('#asset-hint, #asset-hint-liquid').toggle(this.is_liquid_asset())
     $('#asset-rollback-form, #asset-link-rename, #asset-rename-form, #asset-link-destroy, #asset-hint-noselect').hide()
     TemplateEditor.current = @model
@@ -38,7 +39,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
       if @session
         TemplateEditor.editor.setSession @session
       else
-        $.get "/admin/themes/asset/#{@model.get('id')}", (data) ->
+        $.get "/admin/themes/asset/#{@model.get('tree_id')}", key: @model.get('key'), (data) ->
           editor = TemplateEditor.editor
           session = new TemplateEditor.EditSession('')
           editor.setSession session

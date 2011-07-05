@@ -15,7 +15,7 @@ class ShopTheme < ActiveRecord::Base
   after_save do
     FileUtils.cp_r "#{app_path}/.", public_path
     repo = Grit::Repo.init public_path # 初始化为git repo
-    commit repo, '初始版本'
+    commit repo, '1'
     config_settings['presets'].each_pair do |preset, values|
       values.each_pair do |name, value|
         self.settings.create name: name, value: value
@@ -26,28 +26,39 @@ class ShopTheme < ActiveRecord::Base
   # 返回文件列表
   def list
     repo = Grit::Repo.new public_path
-    repo.tree.trees.inject({}) do |result, dir|
-      result[dir.name] = []
-      dir.blobs.each do |blob|
-        asset = {name: blob.name, id: blob.id, key: "#{dir.name}/#{blob.name}"}
+    master = repo.tree
+    master.trees.inject({}) do |result, tree|
+      result[tree.name] = []
+      tree.blobs.each do |blob|
+        asset = {name: blob.name, id: blob.id, key: "#{tree.name}/#{blob.name}", tree_id: master.id}
         extensions = blob.name.split('.')[1]
         if !extensions.blank? and %w(jpg gif png jpeg).include? extensions
           asset['url'] = "/#{asset_relative_path(blob.name)}"
         end
-        result[dir.name].push(asset: asset)
+        result[tree.name].push(asset: asset)
       end
       result
     end
   end
 
-  def value(id) # 返回文件内容
+  def value(tree_id, key) # 返回文件内容
     repo = Grit::Repo.new public_path
-    repo.blob(id).data
+    tree = repo.tree(tree_id)
+    blob = tree./ key
+    blob.data
+    #repo.blob(id).data
   end
 
-  def save_file(name, content) # 保存文件内容
-    File.open(File.join(public_path, name), 'w') {|f| f.write content }
-    commit Grit::Repo.new(public_path), '1'
+  def save_file(key, content) # 保存文件内容
+    File.open(File.join(public_path, key), 'w') {|f| f.write content }
+    repo = Grit::Repo.new public_path
+    message = repo.log('master', key).size + 1
+    commit repo, message
+  end
+
+  def commits(key) # 返回文件版本
+    repo = Grit::Repo.new public_path
+    repo.log 'master', key
   end
 
   def switch(new_theme) # 切换主题
