@@ -13,8 +13,8 @@ class ShopTheme < ActiveRecord::Base
   end
 
   after_save do
-    FileUtils.cp_r "#{app_path}/.", public_path
     repo = Grit::Repo.init public_path # 初始化为git repo
+    FileUtils.cp_r "#{app_path}/.", public_path
     commit repo, '1'
     config_settings['presets'].each_pair do |preset, values|
       values.each_pair do |name, value|
