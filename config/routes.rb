@@ -162,9 +162,14 @@ Shopqi::Application.routes.draw do
     end
 
     begin :themes
-      match 'themes/asset/:id' => 'themes#asset'
       match 'themes/settings' => 'themes#settings', as: :settings_themes
-      match 'themes/current' => 'themes#current', as: :current_themes
+    end
+    scope 'themes' do
+      resources :assets do
+        collection do
+          get :versions
+        end
+      end
     end
 
   end

@@ -15,10 +15,7 @@ class ShopTheme < ActiveRecord::Base
   after_save do
     repo = Grit::Repo.init public_path # 初始化为git repo
     FileUtils.cp_r "#{app_path}/.", public_path
-    Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
-      repo.add '.'
-      repo.commit_all '初始版本'
-    end
+    commit repo, '1'
     config_settings['presets'].each_pair do |preset, values|
       values.each_pair do |name, value|
         self.settings.create name: name, value: value
@@ -26,30 +23,7 @@ class ShopTheme < ActiveRecord::Base
     end
   end
 
-  # 返回文件列表
-  def list
-    repo = Grit::Repo.new public_path
-    repo.tree.trees.inject({}) do |result, dir|
-      result[dir.name] = []
-      dir.blobs.each do |blob|
-        asset = {name: blob.name, id: blob.id}
-        extensions = blob.name.split('.')[1]
-        if !extensions.blank? and %w(jpg gif png jpeg).include? extensions
-          asset['url'] = "/#{asset_relative_path(blob.name)}"
-        end
-        result[dir.name].push(asset: asset)
-      end
-      result
-    end
-  end
-
-  # 返回文件内容
-  def value(id)
-    repo = Grit::Repo.new public_path
-    repo.blob(id).data
-  end
-
-  def switch(new_theme)
+  def switch(new_theme) # 切换主题
     self.update_attribute :theme, new_theme
   end
 
@@ -100,6 +74,13 @@ class ShopTheme < ActiveRecord::Base
 
   def config_settings
     JSON(File.read(config_settings_data_path))
+  end
+
+  def commit(repo, message) # 提交
+    Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
+      repo.add '.'
+      repo.commit_all message
+    end
   end
 end
 
