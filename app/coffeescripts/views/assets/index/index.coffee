@@ -1,16 +1,36 @@
 App.Views.Asset.Index.Index = Backbone.View.extend
   el: '#main'
 
+  events:
+    "click #new_layout_reveal_link a": 'addLayout'
+    "click #new-layout a": 'cancelLayout'
+
   initialize: ->
     self = this
     this.templateEditor()
     this.render()
 
   render: ->
+    self = this
+    @assets = {}
     _(@options.data).each (assets, name) ->
       collection = new App.Collections.Assets assets
+      self.assets[name] = collection
       collection.each (asset) -> new App.Views.Asset.Index.Show model: asset, name: name
     new App.Views.Asset.Index.Panel()
+
+  addLayout: ->
+    $('#new_layout_reveal_link').hide()
+    template = Handlebars.compile $('#new-layout-selectbox-item').html()
+    $('#new-layout-selectbox').html template layouts: @options.data.layout
+    $('#new-layout').show()
+    $('#new_layout_basename_without_ext').focus()
+    false
+
+  cancelLayout: ->
+    $('#new_layout_reveal_link').show()
+    $('#new-layout').hide()
+    false
 
   templateEditor: ->
     window.TemplateEditor =

@@ -49,11 +49,13 @@
           %a(href="#") 新增布局
         #new-layout.cl.section-new(style="display:none")
           %p
-            %strong 新增一个布局
-            用于
+            以
             %select#new-layout-selectbox.st(name="asset[basename_without_ext]")
+            为蓝本
+            %br/
+            %strong 新增一个布局
             %span#new-layout-called
-              called
+              并命名为
               %input#new_layout_basename_without_ext.st(name="asset[basename_without_ext]" type="text")
           %input.sst(type="button" value="新增布局")
           或者
@@ -175,6 +177,12 @@
 
 %script(id="theme-item" type="text/x-jquery-tmpl")
   %a(class="asset-{{{type}}}" href="#") {{{name}}}
+%script(id="new-layout-selectbox-item" type="text/x-jquery-tmpl")
+  {{#each layouts}}
+  {{#with asset}}
+  %option(value="{{{key}}}") {{{name}}}
+  {{/with}}
+  {{/each}}
 %script(id="rollback-selectbox-item" type="text/x-jquery-tmpl")
   %li#asset-rollback-form
     %select#rollback-selectbox(name="rollback-selectbox")

@@ -7,9 +7,9 @@ App.Views.Asset.Index.Panel = Backbone.View.extend
     "click #asset-link-rollback a": 'versions'
     "click #asset-rollback-form a": 'cancelRollback'
     "change #asset-rollback-form select": 'updateAsset'
-    "click #asset-link-rename a": 'rename'
-    "click #asset-rename-form a.update": 'update'
-    "click #asset-rename-form a.cancel": 'cancel'
+    "click #asset-link-rename a": 'showRename'
+    "click #asset-rename-form a.update": 'rename'
+    "click #asset-rename-form a.cancel": 'cancelRename'
     "click #asset-link-destroy a": 'destroy'
 
   initialize: ->
@@ -45,13 +45,13 @@ App.Views.Asset.Index.Panel = Backbone.View.extend
       editor.moveCursorTo(0,0)
     false
 
-  rename: -> # 显示重命名表单
+  showRename: -> # 显示重命名表单
     model = TemplateEditor.current
     $('#asset-link-rename').replaceWith $('#asset-rename-form-item').html()
     $('#asset-basename-field').val(model.get('name')).focus()
     false
 
-  update: -> # 重命名
+  rename: -> # 重命名
     self = this
     model = TemplateEditor.current
     basename = $('#asset-basename-field').val()
@@ -59,10 +59,10 @@ App.Views.Asset.Index.Panel = Backbone.View.extend
     attrs = key: model.get('key'), new_key: new_key, _method: 'put'
     $.post '/admin/themes/assets/0/rename', attrs, ->
       model.set key: new_key, name: basename
-      self.cancel()
+      self.cancelRename()
     false
 
-  cancel: ->
+  cancelRename: ->
     $('#asset-rename-form').replaceWith $('#asset-link-rename-item').html()
     false
 
