@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript'
+  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/panel', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript'
 
 %h2#title 模板编辑器
 #action-links
@@ -55,7 +55,7 @@
             %span#new-layout-called
               called
               %input#new_layout_basename_without_ext.st(name="asset[basename_without_ext]" type="text")
-          %input.sst(type="button" value="新增布局")/
+          %input.sst(type="button" value="新增布局")
           或者
           %a(href="#") 取消
       .section.cl
