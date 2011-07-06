@@ -53,7 +53,7 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   saveTemplate: ->
     self = this
     source = $('#new-template-selectbox').children('option:selected')
-    [key, name] = [source.val(), source.text()]
+    [key, name] = ["templates/#{source.val()}.liquid", "#{source.text()}.liquid"]
     name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
     $.post '/admin/themes/assets', key: key, (data) ->
       self.assets.templates.add key: key, name: name

@@ -20,12 +20,19 @@ class Asset
     end
   end
 
-  def self.create(theme, key, source_key) # 新增文件
-    Dir.chdir theme.public_path do
-      FileUtils.cp safe(source_key), safe(key)
-      repo = Grit::Repo.new theme.public_path
-      theme.commit repo, '1'
+  def self.create(theme, key, source_key = nil) # 新增文件
+    kind, name = key.split('/', 2) # 最多分成2个数组元素
+    source_path = case kind.to_sym
+    when :layout
+      File.join theme.public_path, safe(source_key)
+    when :templates
+      FileUtils.mkdir_p File.join(theme.public_path, 'templates', 'customers')
+      File.join theme.shopqi_theme_path, safe(key)
     end
+    path = File.join theme.public_path, safe(key)
+    FileUtils.cp source_path, path
+    repo = Grit::Repo.new theme.public_path
+    theme.commit repo, '1'
   end
 
   def self.update(theme, key, content) # 保存文件内容
