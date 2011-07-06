@@ -4,6 +4,7 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   events:
     "click #new_layout_reveal_link a": 'addLayout'
     "click #new-layout a": 'cancelLayout'
+    "click #new_layout_btn": 'save'
 
   initialize: ->
     self = this
@@ -17,7 +18,19 @@ App.Views.Asset.Index.Index = Backbone.View.extend
       collection = new App.Collections.Assets assets
       self.assets[name] = collection
       collection.each (asset) -> new App.Views.Asset.Index.Show model: asset, name: name
+      collection.bind 'add', (asset) -> new App.Views.Asset.Index.Show(model: asset, name: name).show()
     new App.Views.Asset.Index.Panel()
+
+  save: ->
+    self = this
+    source = $('#new-layout-selectbox').children('option:selected')
+    [source_key, source_name] = [source.val(), source.text()]
+    name = $('#new_layout_basename_without_ext').val()
+    key = source_key.replace source_name, name
+    attrs = key: key, source_key: source_key
+    $.post '/admin/themes/assets', attrs, (data) ->
+      self.assets.layout.add key: key, name: name
+      self.cancelLayout()
 
   addLayout: ->
     $('#new_layout_reveal_link').hide()
@@ -30,6 +43,7 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   cancelLayout: ->
     $('#new_layout_reveal_link').show()
     $('#new-layout').hide()
+    $('#new_layout_basename_without_ext').val ''
     false
 
   templateEditor: ->
