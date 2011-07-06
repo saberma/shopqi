@@ -71,24 +71,13 @@
             %strong 新增一个模板
             用于
             %select#new-template-selectbox.st(name="asset[basename_without_ext]")
-              %option(value="article") article
-              %option(value="blog") blog
-              %option(value="cart") cart
-              %option(value="collection") collection
-              %option(value="index") index
-              %option(value="page") page
-              %option(value="product") product
-              %option(value="search") search
-              %option(value="404") 404
               %option(value="customers/account") customers/account
               %option(value="customers/addresses") customers/addresses
               %option(value="customers/login") customers/login
               %option(value="customers/order") customers/order
               %option(value="customers/password") customers/password
             %span#new-template-called
-              取消
-              %input#new_template_basename_without_ext.st(name="asset[basename_without_ext]" type="text" value="alternate")/
-          %input.sst(type="button" value="新增模板")
+          %input#new_template_btn.sst(type="button" value="新增模板")
           或者
           %a(href="#") 取消
       .section.cl
