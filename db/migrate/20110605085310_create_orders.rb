@@ -20,6 +20,7 @@ class CreateOrders < ActiveRecord::Migration
       t.datetime :closed_at          , comment: '关闭时间'
       t.string :cancel_reason        , comment: '取消原因'                  , limit: 16
       t.datetime :cancelled_at       , comment: '取消时间'
+      t.boolean :delta    , comment: "ts全文检索增量更新标记"    , default: true, null: false
 
       t.timestamps
     end

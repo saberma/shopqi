@@ -15,18 +15,12 @@
       ==有 #{results.size} 条记录匹配您的查询
       %span.highlight==#{params[:q]}
   .sgroup.sst{:style => "margin: 0 5em 2em 5em"}
-    -[Product,Page,Blog,Article].each do |clazz|
+    -[Product,Page,Blog,Article,Order].each do |clazz|
       -unless results_by_group[clazz].blank?
         %h4==#{t("activerecord.models.#{clazz.to_s.underscore}")}:
         %ul{:style => "padding-left: 30px; list-style:square;margin: 0.5em 0 2em 0"}
           -results_by_group[clazz].each do |p|
             %li=link_to highlight(p.title,params[:q]),url_for_lookup(clazz,p)
-    -unless results_by_group[Order].blank?
-      %h4 订单:
-      %ul{:style => "padding-left: 30px; list-style:square;margin: 0.5em 0 2em 0"}
-        -results_by_group[Order].each do |o|
-          %li
-            =link_to highlight(o.name,params[:q]),order_path(o)
 #btm-nav.act-screen.ssb
   #pagination
 .box2

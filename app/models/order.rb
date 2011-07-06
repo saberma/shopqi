@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
-  belongs_to :customer     , counter_cache: true, conditions: "status != 'abandoned'"    #顾客信息
+  belongs_to :customer     , counter_cache: true, conditions: "customers.status != 'abandoned'"    #顾客信息
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress' #下单人信息
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress' #收货人信息
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem' #订单商品
@@ -56,6 +56,14 @@ class Order < ActiveRecord::Base
     self.histories.create body: '创建订单'
   end
 
+  define_index do
+    has :shop_id
+    indexes :name
+    indexes customer.name,  as: :customer_name
+    indexes customer.email,  as: :customer_email
+    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
+  end
+
   def status_name
     KeyValues::Order::Status.find_by_code(status).name
   end
@@ -70,6 +78,10 @@ class Order < ActiveRecord::Base
 
   def cancel_reason_name
     KeyValues::Order::CancelReason.find_by_code(cancel_reason).name
+  end
+
+  def title
+    "订单 #{name}"
   end
 
 end
