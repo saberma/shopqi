@@ -164,8 +164,9 @@ Shopqi::Application.routes.draw do
     end
     scope 'themes' do
       resources :assets do
-        collection do
+        member do
           get :versions
+          put :rename
         end
       end
     end

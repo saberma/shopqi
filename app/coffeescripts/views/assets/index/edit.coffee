@@ -1,3 +1,4 @@
+# 弹出窗口
 App.Views.Asset.Index.Edit = Backbone.View.extend
   el: '#asset-details'
 

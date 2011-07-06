@@ -23,8 +23,16 @@ class Asset
   def self.update(theme, key, content) # 保存文件内容
     File.open(File.join(theme.public_path, key), 'w') {|f| f.write content }
     repo = Grit::Repo.new theme.public_path
-    message = repo.log('master', key).size + 1
+    message = commits(theme, key).size + 1
     theme.commit repo, message
+  end
+
+  def self.rename(theme, key, new_key) # 重命名
+    Dir.chdir theme.public_path do
+      FileUtils.mv key, new_key
+      repo = Grit::Repo.new theme.public_path
+      theme.commit repo, '1'
+    end
   end
 
   def self.value(theme, tree_id, key) # 返回文件内容
@@ -43,6 +51,6 @@ class Asset
 
   def self.commits(theme, key) # 返回文件版本
     repo = Grit::Repo.new theme.public_path
-    repo.log 'master', key
+    repo.log('master', key)
   end
 end

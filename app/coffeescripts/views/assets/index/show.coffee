@@ -10,6 +10,11 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     _.bindAll this, 'change'
     self = this
     this.render()
+    @model.bind 'change:name', (model) ->
+      name = model.get('name')
+      $('#asset-title').text name
+      self.$('a').text name
+
 
   render: ->
     template = Handlebars.compile $("#theme-item").html()
@@ -25,7 +30,9 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     $('#asset-title').text(@model.get('name'))
     $('#asset-buttons, #asset-info, #asset-title').show()
     $('#asset-links').css('visibility', 'visible').html $('#asset-link-rollback-item').html()
-    $('#asset-links').append($('#asset-rename-destroy-item').html()) unless _(TemplateEditor.RequiredFiles).include @model.get('key')
+    unless _(TemplateEditor.RequiredFiles).include @model.get('key')
+      $('#asset-links').append($('#asset-link-rename-item').html())
+      $('#asset-links').append($('#asset-link-destroy-item').html())
     $('#asset-hint, #asset-hint-liquid').toggle(this.is_liquid_asset())
     $('#asset-hint-noselect').hide()
     TemplateEditor.current = @model

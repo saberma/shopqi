@@ -186,17 +186,18 @@
 %script(id="asset-link-rollback-item" type="text/x-jquery-tmpl")
   %li#asset-link-rollback
     %a(href="#") 查看之前版本
-%script(id="asset-rename-destroy-item" type="text/x-jquery-tmpl")
+%script(id="asset-link-rename-item" type="text/x-jquery-tmpl")
   %li#asset-link-rename
     %a(href="#") 重命名
+%script(id="asset-link-destroy-item" type="text/x-jquery-tmpl")
   %li#asset-link-destroy
     %a(href="#")=image_tag 'admin/icons/trash.gif'
 %script(id="asset-rename-form-item" type="text/x-jquery-tmpl")
   %li#asset-rename-form
     %input#asset-basename-field(type="text")/
-    %a(href="#") 提交
+    %a.update(href="#") 提交
     或者
-    %a(href="#") 关闭
+    %a.cancel(href="#") 关闭
 
 :javascript
   var assets_json = #{@assets_json};

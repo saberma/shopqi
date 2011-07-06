@@ -21,6 +21,12 @@ class AssetsController < ApplicationController
     render nothing: true
   end
 
+  # 重命名
+  def rename
+    Asset.rename theme, params[:key], params[:new_key]
+    render nothing: true
+  end
+
   # 删除主题文件
   def destroy
     Asset.destroy theme, params[:key]

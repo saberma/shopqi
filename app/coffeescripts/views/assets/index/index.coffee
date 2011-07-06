@@ -6,6 +6,9 @@ App.Views.Asset.Index.Index = Backbone.View.extend
     "click #save-button": 'save'
     "click #asset-link-rollback a": 'versions'
     "click #asset-rollback-form a": 'cancelRollback'
+    "click #asset-link-rename a": 'rename'
+    "click #asset-rename-form a.update": 'update'
+    "click #asset-rename-form a.cancel": 'cancel'
     "click #asset-link-destroy a": 'destroy'
     "change #asset-rollback-form select": 'updateAsset'
 
@@ -32,18 +35,39 @@ App.Views.Asset.Index.Index = Backbone.View.extend
 
   versions: ->
     model = TemplateEditor.current
-    $.get '/admin/themes/assets/versions', key: model.get('key'), (data) ->
+    $.get '/admin/themes/assets/0/versions', key: model.get('key'), (data) ->
       template = Handlebars.compile $('#rollback-selectbox-item').html()
-      $('#asset-links').html template commits: data
+      $('#asset-link-rollback').replaceWith template commits: data
     false
 
   updateAsset: ->
     model = TemplateEditor.current
     tree_id = $('#asset-rollback-form select').children('option:selected').attr('tree_id')
-    $.get "/admin/themes/asset/#{tree_id}", key: model.get('key'), (data) ->
+    $.get "/admin/themes/assets/#{tree_id}", key: model.get('key'), (data) ->
       editor = TemplateEditor.editor
       editor.getSession().setValue data
       editor.moveCursorTo(0,0)
+    false
+
+  rename: -> # 显示重命名表单
+    model = TemplateEditor.current
+    $('#asset-link-rename').replaceWith $('#asset-rename-form-item').html()
+    $('#asset-basename-field').val(model.get('name')).focus()
+    false
+
+  update: -> # 重命名
+    self = this
+    model = TemplateEditor.current
+    basename = $('#asset-basename-field').val()
+    new_key = model.get('key').replace model.get('name'), basename
+    attrs = key: model.get('key'), new_key: new_key, _method: 'put'
+    $.post '/admin/themes/assets/0/rename', attrs, ->
+      model.set key: new_key, name: basename
+      self.cancel()
+    false
+
+  cancel: ->
+    $('#asset-rename-form').replaceWith $('#asset-link-rename-item').html()
     false
 
   destroy: ->
@@ -64,7 +88,7 @@ App.Views.Asset.Index.Index = Backbone.View.extend
     false
 
   cancelRollback: ->
-    $('#asset-links').html $('#asset-link-rollback-item').html()
+    $('#asset-rollback-form').replaceWith $('#asset-link-rollback-item').html()
     false
 
   templateEditor: ->
