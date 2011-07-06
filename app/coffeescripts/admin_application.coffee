@@ -55,6 +55,9 @@ StringUtils =
   to_a: (text) ->
     _.uniq _.compact text.split(/[,\uFF0C]\s*/)
 
+  endsWith: (str, ends) ->
+    str.length >= ends.length and str.substring(str.length - ends.length) is ends
+
 #表单
 FormUtils =
   #表单输入项转化为hash: option1 => value

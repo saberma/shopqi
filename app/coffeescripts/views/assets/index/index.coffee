@@ -26,6 +26,7 @@ App.Views.Asset.Index.Index = Backbone.View.extend
     source = $('#new-layout-selectbox').children('option:selected')
     [source_key, source_name] = [source.val(), source.text()]
     name = $('#new_layout_basename_without_ext').val()
+    name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
     key = source_key.replace source_name, name
     attrs = key: key, source_key: source_key
     $.post '/admin/themes/assets', attrs, (data) ->
