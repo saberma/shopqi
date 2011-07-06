@@ -1,0 +1,22 @@
+%tr(id="country_#{country.id}" class="#{cycle(:odd,:even)}")
+  %td=image_tag("admin/countries/#{country.code.downcase}.gif",title: Carmen::country_name(country.code))
+  %td
+    %p=Carmen::country_name(country.code)
+  %td
+    %p(id="tax_label_country_#{country.id}")
+      %span(id="tax_rate_country_#{country.id}")=country.tax_percentage
+      \%
+      %span.action
+        (
+        %a{:href => "#", :onclick => "TogglePair(['tax_label_country_#{country.id}','tax_input_country_#{country.id}']);return false;"}> 修改
+        )
+    %div.tax_input_country(id="tax_input_country_#{country.id}" style= "display:none")
+      =form_for country,remote: true do |f|
+        =f.text_field :tax_percentage, size: 3
+        =f.submit w('save'), class: 'btn'
+        or
+        %a{:href => "#", :onclick => "TogglePair(['tax_label_country_#{country.id}','tax_input_country_#{country.id}']);return false;"}> 取消
+  %td
+    \&mdash;
+  %td.r
+    =link_to_delete country_path(country)

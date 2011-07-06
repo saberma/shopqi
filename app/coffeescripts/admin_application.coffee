@@ -151,6 +151,11 @@ NavigationDropdown = (navs) ->
     $('#secondary > li > a').removeClass 'current'
     $('#secondary > li > .nav-dropdown').hide()
 
+TogglePair = (ids) ->
+  _.each ids, (id) ->
+    $("##{id}").toggle()
+  false
+
 #可新增下拉框
 UpdateableSelectBox = (select_box, create_label) ->
   input_field = select_box.next()

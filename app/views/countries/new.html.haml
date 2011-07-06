@@ -1,0 +1,49 @@
+%h2#title 新 增 目 的 地
+#action-links
+  %ul
+=form_for country do |f|
+  .group
+    .group-fields
+      %p 请选择您将要支持发货的国家或地区
+      %dl.st.ssb
+        %dd=f.select :code,Carmen.countries - selected_countries
+      %dl.sst.ssb
+        %dt 发往这个地区的订单需要包含：
+        %dd
+          =check_box_tag 'charge_federal_tax',1,true
+          %label{:for => "charge_federal_tax", :style => "font-weight: normal"} 联邦税
+        %dd#tax-rate
+          %p.st.ssl
+            =f.text_field :tax_percentage, size: 5
+            \%
+        %dd#provincial-taxes{:style => "display:none;"}
+          %input#charge_provincial_taxes{:name => "charge_provincial_taxes", :type => "checkbox", :value => "1"}/
+          %label{:for => "charge_provincial_taxes", :style => "font-weight: normal"}
+            State or Provincial taxes
+            %span.hint (United States, Canada)
+      %dl.sst.ssb
+        %dt 运输
+        %dd
+          %input#create-default-shipping{:checked => "checked", :name => "shipping", :type => "checkbox", :value => "1"}/
+          %label{:for => "create-default-shipping", :style => "font-weight: normal"} 为这个地方创建默认的运费
+        %dd#shipping-details{:style => "display:none"}
+          %fieldset{:style => "font-size: 90%; padding: 10px"}
+            费用
+            %input#rate_price{:name => "rate[price]", :size => "5", :type => "text", :value => "25.00"}/
+            RMB
+            商品重量介于
+            %input#rate_weight_low{:name => "rate[weight_low]", :size => "5", :type => "text", :value => "0.0"}/
+            和
+            %input#rate_weight_high{:name => "rate[weight_high]", :size => "5", :type => "text", :value => "100.0"}/
+            kg 之间
+    / .group-fields
+    .group-actions
+      =f.submit w('save'), class: 'btn'
+      =w('or')
+      =link_to w('cancel'), countries_path
+:javascript
+  $(document).ready(function(){
+    $('#charge_federal_tax').change(function(){
+      $('#tax-rate').toggle();
+    });
+  });

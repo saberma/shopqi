@@ -23,6 +23,9 @@ gem "carrierwave"
 gem 'meta_where'
 gem 'meta_search'
 
+gem 'carmen'#地区
+gem 'on_the_spot' #及时编辑
+
 ##### 控制器相关 #####
 gem 'decent_exposure'
 gem 'sentient_user' # 将current_user设置至线程中

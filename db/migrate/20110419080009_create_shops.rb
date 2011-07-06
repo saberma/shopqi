@@ -22,6 +22,8 @@ class CreateShops < ActiveRecord::Migration
       t.boolean :public            , comment: "是否公开"                      , default: true
       t.integer :orders_count      , comment: "缓存订单数，用于生成订单顺序号", default: 0
       t.string :order_number_format, comment: "订单格式化规则"                , default: '#{{number}}'
+      t.boolean :taxes_included    , comment: "税收是否包含在商品中"          , default: true
+      t.boolean :tax_shipping      , comment: "是否要缴航运税"                , default: false
 
       t.timestamps
     end
@@ -56,13 +58,23 @@ class CreateShops < ActiveRecord::Migration
       t.timestamps
     end
 
+    #可发往国家
+    create_table :countries do |t|
+      t.references :shop, comment: "所属商店"
+      t.string :code, comment: "国家编码"
+      t.float :tax_percentage, comment: "税率"
+      t.timestamps
+    end
+
     add_index :shop_product_types  , :shop_id
     add_index :shop_product_vendors, :shop_id
     add_index :shop_themes         , :shop_id
+    add_index :countries           , :shop_id
     add_index :shop_theme_settings , :shop_theme_id
   end
 
   def self.down
+    drop_table :countries
     drop_table :theme_settings
     drop_table :themes
     drop_table :shop_product_types

@@ -3,17 +3,21 @@ module ApplicationHelper
 
   #用于获取当前用户请求的商店
   def shop
-    current_user ? current_user.shop : Shop.where(:permanent_domain => request.subdomain).first 
+    current_user ? current_user.shop : Shop.where(:permanent_domain => request.subdomain).first
+  end
+
+  def link_to_delete(path)
+    link_to image_tag('admin/icons/trash.gif'), path, remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
   end
 
   def use_kindeditor
-    content_for :kindeditor do 
+    content_for :kindeditor do
       javascript_include_tag("kindeditor/kindeditor-min","kindeditor/kindeditor_config")
     end
   end
 
   def use_javascripts(*args)
-    content_for :javascripts do 
+    content_for :javascripts do
       javascript_include_tag(*args)
     end
   end
