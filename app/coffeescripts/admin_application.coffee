@@ -212,7 +212,16 @@ $(document).ready ->
       val = '#1234'
     $('#order-number-format-example').html val
 
-
+  $('#q').autocomplete({
+    source: '/admin/lookup/query',
+    minLength: 2,
+    select: (event,ui) ->
+      window.location = ui.item.url
+  }).data("autocomplete")._renderItem = (ul,item) ->
+    $("<li></li>")
+    .data("item.autocomplete",item)
+    .append("<a>"+item.title+"<br>"+item.kind+"</a>")
+    .appendTo(ul)
 
   #外观、设置
   NavigationDropdown 'theme-link': '外观', 'preferences-link': '设置'
