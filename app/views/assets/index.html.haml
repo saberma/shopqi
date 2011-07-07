@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript'
+  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/panel', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript'
 
 %h2#title 模板编辑器
 #action-links
@@ -49,13 +49,15 @@
           %a(href="#") 新增布局
         #new-layout.cl.section-new(style="display:none")
           %p
-            %strong 新增一个布局
-            用于
+            以
             %select#new-layout-selectbox.st(name="asset[basename_without_ext]")
+            为蓝本
+            %br/
+            %strong 新增一个布局
             %span#new-layout-called
-              called
+              并命名为
               %input#new_layout_basename_without_ext.st(name="asset[basename_without_ext]" type="text")
-          %input.sst(type="button" value="新增布局")/
+          %input#new_layout_btn.sst(type="button" value="新增布局")
           或者
           %a(href="#") 取消
       .section.cl
@@ -69,24 +71,13 @@
             %strong 新增一个模板
             用于
             %select#new-template-selectbox.st(name="asset[basename_without_ext]")
-              %option(value="article") article
-              %option(value="blog") blog
-              %option(value="cart") cart
-              %option(value="collection") collection
-              %option(value="index") index
-              %option(value="page") page
-              %option(value="product") product
-              %option(value="search") search
-              %option(value="404") 404
               %option(value="customers/account") customers/account
               %option(value="customers/addresses") customers/addresses
               %option(value="customers/login") customers/login
               %option(value="customers/order") customers/order
               %option(value="customers/password") customers/password
             %span#new-template-called
-              取消
-              %input#new_template_basename_without_ext.st(name="asset[basename_without_ext]" type="text" value="alternate")/
-          %input.sst(type="button" value="新增模板")
+          %input#new_template_btn.sst(type="button" value="新增模板")
           或者
           %a(href="#") 取消
       .section.cl
@@ -175,6 +166,12 @@
 
 %script(id="theme-item" type="text/x-jquery-tmpl")
   %a(class="asset-{{{type}}}" href="#") {{{name}}}
+%script(id="new-layout-selectbox-item" type="text/x-jquery-tmpl")
+  {{#each layouts}}
+  {{#with asset}}
+  %option(value="{{{key}}}") {{{name}}}
+  {{/with}}
+  {{/each}}
 %script(id="rollback-selectbox-item" type="text/x-jquery-tmpl")
   %li#asset-rollback-form
     %select#rollback-selectbox(name="rollback-selectbox")

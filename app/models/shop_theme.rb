@@ -42,6 +42,10 @@ class ShopTheme < ActiveRecord::Base
     File.join Rails.root, 'app', 'themes', self.theme.name.downcase
   end
 
+  def shopqi_theme_path # 用于保存顾客登录等模板
+    File.join Rails.root, 'app', 'themes', 'shopqi'
+  end
+
   def public_path
     File.join Rails.root, 'public', files_relative_path
   end

@@ -10,36 +10,35 @@ class AssetsController < ApplicationController
     @assets_json = Asset.all(theme).to_json
   end
 
-  # 获取文件内容
-  def show
+  def show # 获取文件内容(id为tree_id)
     render text: Asset.value(theme, params[:id], params[:key])
   end
 
-  # 更新主题文件
-  def update
+  def create # 新增文件
+    asset = Asset.create theme, params[:key], params[:source_key]
+    render json: asset.to_json
+  end
+
+  def update # 更新主题文件
     Asset.update theme, params[:key], params[:value]
     render nothing: true
   end
 
-  # 重命名
-  def rename
+  def rename # 重命名
     Asset.rename theme, params[:key], params[:new_key]
     render nothing: true
   end
 
-  # 删除主题文件
-  def destroy
+  def destroy # 删除主题文件
     Asset.destroy theme, params[:key]
     render nothing: true
   end
 
-  # 版本信息
-  def versions
+  def versions # 版本信息
     commit = Asset.commits(theme, params[:key]).as_json
     render json: commit.to_json(only: ['id', 'message', 'tree'])
   end
 
-  # 弹出新窗口编辑
-  def edit
+  def edit # 弹出新窗口编辑
   end
 end

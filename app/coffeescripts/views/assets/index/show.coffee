@@ -46,7 +46,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
       if @session
         TemplateEditor.editor.setSession @session
       else
-        $.get "/admin/themes/assets/#{@model.get('tree_id')}", key: @model.get('key'), (data) ->
+        $.get "/admin/themes/assets/master", key: @model.get('key'), (data) ->
           editor = TemplateEditor.editor
           session = new TemplateEditor.EditSession('')
           editor.setSession session
@@ -75,9 +75,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
     @model.extension() in TemplateEditor.image_extensions
 
   is_liquid_asset: ->
-    ends = '.liquid'
-    str = @model.get('name')
-    str.substring(str.length - ends.length) is ends
+    StringUtils.endsWith @model.get('name'), '.liquid'
 
   change: ->
     self = this

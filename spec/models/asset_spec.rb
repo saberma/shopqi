@@ -18,4 +18,13 @@ describe Asset do
     end
   end
 
+  describe '#create' do
+
+    it 'should save template' do
+      Asset.create theme, 'templates/customers/login.liquid'
+      File.exists?(File.join(theme.public_path, 'templates/customers/login.liquid')).should be_true
+    end
+
+  end
+
 end
