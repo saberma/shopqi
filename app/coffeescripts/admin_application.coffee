@@ -21,6 +21,8 @@ App =
       Index: {}
     Asset:
       Index: {}
+    Theme:
+      Settings: {}
     Product:
       Show:
         Variant: {}

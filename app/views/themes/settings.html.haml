@@ -1,0 +1,53 @@
+=content_for :javascripts do
+  =javascript_include_tag 'views/themes/settings/index'
+
+%h2#title 主题外观配置
+#action-links
+  %ul
+    %li.template-editor=link_to "模板编辑器", assets_path
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+%form#theme_settings_form(action="#" enctype="multipart/form-data" method="post")
+  #theme-settings.clearfix(style="border-bottom: none !important")
+    .col-4.sst
+      %h3 Your current preset
+      %p.note.sb Switch to a predefined set of theme settings from the dropdown below. Adjust each section and apply the changes once you're done.
+      %select#theme_load_preset(name="theme[load_preset]")
+        %option(value="") Custom
+        %option(value="") ---
+        %option(selected="selected" value="original") original
+      %span.sl
+        %a#delete_theme_preset_link.action.note(href="#" onclick="if (confirm('Are you sure you want to delete the selected preset?')) ( new Ajax.Request('/admin/themes/1471712/settings/delete_preset' (asynchronous:true evalScripts:true method:'delete' parameters:ThemeSettings.instance().paramsToDeletePreset() + '&amp;authenticity_token=' + encodeURIComponent('NsbjdGc1z1TJwiLoSsD0FYx92bnQeoVeW6Wn2HuEZaU='))); ); return false;" style="") delete this preset
+    .col-8.sst.last
+      =render file: "#{theme.public_path}/config/settings.html"
+      %fieldset.required_setting
+        %legend Additional Layouts
+        %table
+          %tr
+            %th
+              %label(for="theme_settings_customer_layout") Customer Area Layout
+            %td
+              %select#theme_settings_customer_layout.layout(name="theme[settings][customer_layout]")
+                %option(value="customer_area") default
+                %option(value="") ---
+                %option(selected="selected" value="theme") theme
+      .r.st.sb
+        %input#save-current-setting(name="save-current-setting" onclick="$('save-preset').toggle(); this.stopObserving();" type="checkbox" value="")/
+        %label(for="save-current-setting") Save current settings as a preset
+      #save-preset.st.sb.r(style="display: none")
+        %label(for="theme_save_preset_existing") Save current theme settings as
+        %select#theme_save_preset_existing(name="theme[save_preset][existing]")
+          %option(value="") a new preset
+          %option(value="") ---
+          %option(value="original") original
+        %span#theme_save_preset_new_container
+          %label(for="theme_save_preset_new") called
+          %input#theme_save_preset_new(name="theme[save_preset][new]" type="text")
+  %p.r
+    %input(name="commit" type="submit" value="保存配置")
+
+%script(id="section-header-item" type="text/x-jquery-tmpl")
+  %h3(class="section-header") {{{title}}}
+
+:javascript
+  new App.Views.Theme.Settings.Index();
