@@ -195,7 +195,7 @@ $(document).ready ->
   App.init()
   setPlaceholderText()
 
-  moveIndicator = (e) -> $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
+  window.moveIndicator = (e) -> $('#indicator').css('top', "#{e.pageY + 5}px").css('left', "#{e.pageX + 8}px")
   $(document).click moveIndicator
   $('#indicator').ajaxStart ->
     $(this).show()

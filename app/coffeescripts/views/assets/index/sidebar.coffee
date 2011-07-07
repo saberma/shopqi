@@ -12,12 +12,34 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     "click #new_snippet_reveal_link a": 'addSnippet'
     "click #new-snippet a": 'cancelSnippet'
     "click #new_snippet_btn": 'saveSnippet'
+    "click #new_asset_reveal_link a": 'addAsset'
+    "click #new-asset a": 'cancelAsset'
+    "click #new_asset_btn": 'saveAsset'
 
   initialize: ->
     self = this
     this.render()
 
   render: ->
+    self = this
+    uploader = new qq.FileUploader
+      multiple: false
+      debug: true
+      element: $('#file-uploader')[0],
+      action: '/admin/themes/assets/0/upload'
+      onSubmit: (id, file_name) ->
+        $('#indicator').show()
+        $(document).mousemove window.moveIndicator
+        csrf_token = $('meta[name=csrf-token]').attr('content')
+        csrf_param = $('meta[name=csrf-param]').attr('content')
+        this.params = key: "assets/#{file_name}", name: file_name
+        this.params[csrf_param] = csrf_token
+      onComplete: (id, file_name, responseJSON)->
+        $('#indicator').hide()
+        $(document).unbind 'mousemove'
+        self.options.assets.assets.add responseJSON
+    $('.qq-upload-list').hide() # 不显示上传文件列表
+    $(".qq-upload-button").contents().first().replaceWith("选择文件")
 
   saveLayout: ->
     self = this
@@ -93,4 +115,26 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     $('#new_snippet_reveal_link').show()
     $('#new-snippet').hide()
     $('#new_snippet_basename_without_ext').val ''
+    false
+
+  saveAsset: ->
+    self = this
+    name = $('#new_asset_basename_without_ext').val()
+    name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
+    key = "assets/#{name}"
+    $.post '/admin/themes/assets', key: key, (data) ->
+      self.options.assets.assets.add key: key, name: name
+      self.cancelAsset()
+
+  addAsset: ->
+    self = this
+    $('#new_asset_reveal_link').hide()
+    $('#new-asset').show()
+    $('#new_asset_basename_without_ext').focus()
+    false
+
+  cancelAsset: ->
+    $('#new_asset_reveal_link').show()
+    $('#new-asset').hide()
+    $('#new_asset_basename_without_ext').val ''
     false

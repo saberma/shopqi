@@ -15,7 +15,12 @@ class AssetsController < ApplicationController
   end
 
   def create # 新增文件
-    asset = Asset.create theme, params[:key], params[:source_key]
+    Asset.create theme, params[:key], params[:source_key]
+    render nothing: true
+  end
+
+  def upload # 上传asset附件
+    asset = Asset.create theme, params[:key], nil, request.body.read
     render json: asset.to_json
   end
 

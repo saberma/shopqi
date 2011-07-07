@@ -1,5 +1,7 @@
+=content_for :stylesheets do
+  =stylesheet_link_tag 'fileuploader'
 =content_for :javascripts do
-  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/panel', 'views/assets/index/sidebar', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript'
+  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/panel', 'views/assets/index/sidebar', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript', 'fileuploader'
 
 %h2#title 模板编辑器
 #action-links
@@ -102,6 +104,7 @@
           %a(href="#") 新增一个附件
         #new-asset.cl.section-new(style="display:none")
           %p 上传一个新的主题附件
+          #file-uploader
           -#%iframe#iframe(frameborder="0" src="/admin/themes/id/assets/new")
           %a(href="#") 取消
     .section.cl

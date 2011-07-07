@@ -169,6 +169,7 @@ Shopqi::Application.routes.draw do
         member do
           get :versions
           put :rename
+          post :upload
         end
       end
     end
