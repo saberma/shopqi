@@ -53,6 +53,9 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   saveTemplate: ->
     self = this
     source = $('#new-template-selectbox').children('option:selected')
+    unless source[0]
+      error_msg '没有候选模板!'
+      return
     [key, name] = ["templates/#{source.val()}.liquid", "#{source.text()}.liquid"]
     name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
     $.post '/admin/themes/assets', key: key, (data) ->
@@ -62,9 +65,10 @@ App.Views.Asset.Index.Index = Backbone.View.extend
   addTemplate: ->
     self = this
     $('#new-template-selectbox').children('option').each ->
-      value = $(this).val()
+      value = "#{$(this).val()}.liquid"
       created = self.assets.templates.detect (model) -> model.get('name') is value
-      $(this).toggle !created
+      $(this).toggle(!created).attr('disabled', created)
+    $('#new-template-selectbox').val $('#new-template-selectbox').children('option:enabled:first').val()
     $('#new_template_reveal_link').hide()
     $('#new-template').show()
     false

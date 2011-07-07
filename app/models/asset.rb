@@ -16,6 +16,12 @@ class Asset
         end
         result[tree.name].push(asset: asset)
       end
+      tree.trees.each do |nested_tree| # 嵌套目录(customers)
+        nested_tree.blobs.each do |blob|
+          asset = {name: "#{nested_tree.name}/#{blob.name}", key: "#{tree.name}/#{nested_tree.name}/#{blob.name}"}
+          result[tree.name].push(asset: asset)
+        end
+      end
       result
     end
   end
