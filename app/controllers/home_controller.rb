@@ -31,7 +31,6 @@ class HomeController < ApplicationController
   end
 
   def query
-    p results_json
     respond_to do |format|
       format.html
       format.json { render json: results_json}
