@@ -11,6 +11,7 @@ cn:
       blog: 博客
       article: 文章
       page: 页面
+      order: 订单
       subscribe: 订阅信息
     attributes:
       user:

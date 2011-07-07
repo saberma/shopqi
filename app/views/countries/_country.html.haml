@@ -16,7 +16,5 @@
         =f.submit w('save'), class: 'btn'
         or
         %a{:href => "#", :onclick => "TogglePair(['tax_label_country_#{country.id}','tax_input_country_#{country.id}']);return false;"}> 取消
-  %td
-    \&mdash;
   %td.r
     =link_to_delete country_path(country)
