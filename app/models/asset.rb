@@ -36,7 +36,11 @@ class Asset
       File.join theme.shopqi_theme_path, safe(key)
     end
     path = File.join theme.public_path, safe(key)
-    FileUtils.cp source_path, path
+    if source_path
+      FileUtils.cp source_path, path
+    else # snippets没有蓝本
+      FileUtils.touch path
+    end
     repo = Grit::Repo.new theme.public_path
     theme.commit repo, '1'
   end
