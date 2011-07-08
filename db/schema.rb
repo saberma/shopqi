@@ -527,4 +527,16 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["shop_id"], :name => "index_users_on_shop_id"
 
+  create_table "weight_based_shipping_rates", :force => true do |t|
+    t.integer  "country_id"
+    t.float    "price"
+    t.float    "weight_low"
+    t.float    "weight_high"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "weight_based_shipping_rates", ["country_id"], :name => "index_weight_based_shipping_rates_on_country_id"
+
 end

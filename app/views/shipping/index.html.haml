@@ -1,0 +1,25 @@
+%h2#title 快    递
+#action-links
+  %ul
+-#
+  #carrier-rates-enable.announcement
+    %h4 Carrier calculated shipping rates
+    %p You now have the option of using UPS or USPS to automatically calculate shipping rates for your shop. Carrier calculated shipping rates provide real-time shipping rate prices to your customers from shipping carriers like UPS and USPS.
+    %p
+      Carrier calculated shipping rates are not available in your current plan. In order to use this feature you must
+      = succeed "." do
+        %a{:href => "/admin/account"} upgrade your plan
+#shipping-rates.cl
+  #custom-shipping
+    .pgroup{:style => "margin-top:0"}
+      -countries.each do |country|
+        =render partial: 'country', locals: {country: country}
+.pgroup.st
+%p.note
+如果，您不能找到您所要查看的国家或地区的话，可以在
+=link_to "地区&税率",countries_path
+中
+=link_to "增加",new_country_path(country)
+它们
+/ end div.main
+/ end div.container

@@ -1,0 +1,76 @@
+-country_id = country.id
+%table.shipping-rates-table.data.st.ssb(cellpadding=0 cellspacing=0 id="shipping-rates-table-#{country_id}")
+  %tr.countryrow
+    %th(id="country-#{country_id}")
+      =image_tag("admin/countries/#{country.code.downcase}.gif",title: Carmen::country_name(country.code))
+      =Carmen::country_name(country.code)
+    %th{:style => "width: 160px"} &nbsp;
+    %th{:style => "width: 110px"} &nbsp;
+    %th{:style => "width: 80px"} &nbsp;
+  =render partial: 'standard_rate', collection: weight_based_shipping_rates, as: :standard_rate
+  %tr
+    %td.new-rate-link.no-border.action-link{:colspan => "4"}
+      %p.add.icon
+        %span.action
+          %a{:href => "#", :onclick => "$('#new-promotional-rate-#{country_id}').hide();$('#new-promotional-rate-done-#{country_id}').hide();$('#new-standard-rate-#{country_id}').show();$('#new-standard-rate-done-#{country_id}').show();$('#standard-rate-name-new-#{country_id}').focus(); return false;", :style => "display: inline"} 新增基于重量的费用
+        |
+        %span.action
+          %a{:href => "#", :onclick => "$('#new-standard-rate-#{country_id}').hide();$('#new-standard-rate-done-#{country_id}').hide();$('#new-promotional-rate-#{country_id}').show();$('#new-promotional-rate-done-#{country_id}').show();$('#promotional-rate-name-new-#{country_id}').focus(); return false;", :style => "display: inline"} 新增基于价格的费用
+  %tr(style= "display:none" id="new-standard-rate-#{country_id}")
+    %td{:colspan => "4", :style => "padding:0"}
+      =form_for weight_based_shipping_rate ,url: set_weight_based_price_shipping_index_path, remote: true do |f|
+        %table.new-rate-table
+          %tr
+            %td.new-rate.rate-name{:style => "padding-left: 10px"}
+              %label{:for => "standard-rate-name-new"} 名称
+              =f.text_field :name,maxlength: 255, style: 'width:100%'
+            %td.new-rate.rate-weight
+              %label{:for => "rate-weight-low-new"} 重量
+              =f.text_field :weight_low,maxlength: 3, class: 'r'
+              = succeed "-" do
+                %strong kg
+              =f.text_field :weight_high,maxlength: 3,  class: 'r'
+              %strong kg
+            %td.new-rate.rate-price
+              =f.label :price
+              %strong ¥
+              =f.text_field :price, class: 'r',size: 5
+              %strong RMB
+          %tr.no-lines(style= "display:none" id="new-standard-rate-done-#{country_id}")
+            %td.new-rate-done{:colspan => "3"}
+              =f.submit w('save')
+              or
+              %span.action
+                %a{:href => "#", :onclick => "$('#new-standard-rate-#{country_id}').hide();$('#new-standard-rate-done-#{country_id}').hide(); return false;"} 取消
+  %tr#new-promotional-rate-2632382{:style => "display:none"}
+    %td{:colspan => "4", :style => "padding:0"}
+      %form{"accept-charset" => "UTF-8", :action => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/price_based_shipping_rates", "data-remote" => "true", :method => "post"}
+        %input{:name => "price_based_shipping_rate[country_id]", :type => "hidden", :value => "2632382"}/
+        %table.new-rate-table
+          %tr
+            %td.new-rate.rate-name{:style => "padding-left: 10px"}
+              %label{:for => "promotional-rate-name-new-2632382"} Name
+              %input#promotional-rate-name-new-2632382{:maxlength => "255", :name => "price_based_shipping_rate[name]", :style => "width: 100%", :type => "text", :value => ""}/
+            %td.new-rate.rate-min-order-subtotal{:style => "width:220px;"}
+              %label Purchase range
+              %strong ¥
+              %input#rate-min-order-subtotal-new-2632382.r{:name => "price_based_shipping_rate[min_order_subtotal]", :size => "5", :type => "text", :value => "50.00"}/
+              %strong CNY
+              %span#show-max-purchase-2632382{:style => ""}
+                %a{:href => "#", :onclick => "$('show-max-purchase-2632382').hide();$('edit-max-purchase-2632382').show();$('rate-max-order-subtotal-new-2632382').focus(); return false;"} and up
+              %span#edit-max-purchase-2632382{:style => "display:none"}
+                \&mdash;
+                %strong ¥
+                %input#rate-max-order-subtotal-new-2632382.r{:name => "price_based_shipping_rate[max_order_subtotal]", :onblur => "if (this.value == ''){$('edit-max-purchase-2632382').hide();$('show-max-purchase-2632382').show()}", :size => "5", :type => "text", :value => ""}/
+                %strong CNY
+            %td.new-rate.rate-price
+              %label{:for => "rate-cents-new-2632382"} Shipping price
+              %strong ¥
+              %input#rate-cents-new-2632382.r{:name => "price_based_shipping_rate[price]", :size => "5", :type => "text", :value => "0.00"}/
+              %strong CNY
+          %tr#new-promotional-rate-done-2632382.no-lines{:style => "display:none"}
+            %td.new-rate-done{:colspan => "3"}
+              %input{:name => "commit", :type => "submit", :value => "Add Shipping Rate"}/
+              or
+              %span.action
+                %a{:href => "#", :onclick => "$('new-promotional-rate-2632382').hide();$('new-promotional-rate-done-2632382').hide(); return false;"} Close
