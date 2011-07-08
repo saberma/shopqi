@@ -14,3 +14,4 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
       $(this).toggleClass 'collapsed'
       $(this).next().toggle()
     $('.section-header:first').click()
+    $('.color').miniColors()

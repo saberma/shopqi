@@ -1,5 +1,7 @@
+=content_for :stylesheets do
+  =stylesheet_link_tag 'jquery.miniColors'
 =content_for :javascripts do
-  =javascript_include_tag 'views/themes/settings/index'
+  =javascript_include_tag 'views/themes/settings/index', 'jquery.miniColors.min'
 
 %h2#title 主题外观配置
 #action-links
