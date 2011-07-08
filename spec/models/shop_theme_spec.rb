@@ -17,7 +17,11 @@ describe ShopTheme do
     describe 'settings.html' do
 
       it 'should be transform' do
-        theme.settings_transform.should include 'asset-image'
+        transform = theme.settings_transform
+        transform.should include 'asset-image'
+        transform.should include 'theme[settings]'
+        transform.should include 'hidden' # 复选框未选中时的值
+        transform.should include 'Monospace' # 字体选项
       end
 
     end

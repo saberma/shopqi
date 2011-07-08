@@ -83,8 +83,7 @@ class ShopTheme < ActiveRecord::Base
   def settings_transform
     #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
     doc = Nokogiri::HTML(File.open(config_settings_path))
-
-    doc.css("input[type='file']").each do |file|
+    doc.css("input[type='file']").each do |file| # 上传文件
       name = file['name']
       url = "/#{files_relative_path}/assets/#{name}"
       td = file.parent
@@ -92,28 +91,59 @@ class ShopTheme < ActiveRecord::Base
         table.widget(cellspacing: 0) {
           tr {
             td {
-              input(name: "theme[settings][#{name}]", type: :file)
-            }
-          }
+              input(name: name, type: :file) } }
           tr {
             td {
               div.asset {
                 div(class: 'asset-image') {
                   a(class: 'closure-lightbox', href: url) {
-                    img(src: '/images/admin/icons/mimes/png.gif')
-                  }
-                }
+                    img(src: '/images/admin/icons/mimes/png.gif') } }
                 span.note {
                   a(class: 'closure-lightbox', href: url) {
-                    text name
-                  }
-                }
-              }
-            }
-          }
-        }
+                    text name } } } } } }
       end
       td.inner_html = builder.doc.inner_html
+    end
+    doc.css("input[type='checkbox']").each do |element| # 复选框加false值隐藏域
+      hidden = Nokogiri::XML::Node.new 'input', doc
+      hidden['name'] = element['name']
+      hidden['type'] = 'hidden'
+      hidden['value'] = '0'
+      element.before hidden
+    end
+    doc.css("select.font").each do |element| # 字体
+      builder = Nokogiri::HTML::Builder.new do
+        div {
+          optgroup(label: "Sans-serif") {
+            option(value: "Helvetica, Arial, sans-serif") {
+              text 'Helvetica/Arial' }
+            option(value: "Impact, Charcoal, Helvetica, Arial, sans-serif") {
+              text 'Impact' }
+            option(value: "'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Lucida, Helvetica, Arial, sans-serif") {
+              text 'Lucida Grande' }
+            option(value: "Trebuchet MS, sans-serif") {
+              text 'Trebuchet MS'}
+            option(value: "Verdana, Helvetica, Arial, sans-serif") {
+              text 'Verdana' } }
+          optgroup(label: "Serif") {
+            option(value: "Garamond, Baskerville, Caslon, serif") {
+              text 'Garamond' }
+            option(value: "Georgia, Utopia, 'Times New Roman', Times, serif") {
+              text 'Georgia' }
+            option(value: "Palatino, 'Palatino Linotype', 'Book Antiqua', serif") {
+              text 'GPalatino' }
+            option(value: "'Times New Roman', Times, serif") {
+              text 'Times New Roman' } }
+          optgroup(label: "Monospace") {
+            option(value: "'Courier New', Courier, monospace") {
+              text 'Courier New' }
+            option(value: "Monaco, 'Lucida Console', 'DejaVu Sans Mono', monospace") {
+              text 'Monaco/Lucida Console' } } }
+      end
+      element.inner_html = builder.doc.at_css('div').inner_html
+    end
+    doc.css("input, select, textarea").each do |element| # 改名
+      element['name'] = "theme[settings][#{element['name']}]"
     end
     doc.inner_html
   end
