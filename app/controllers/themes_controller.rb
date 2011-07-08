@@ -8,4 +8,8 @@ class ThemesController < ApplicationController
 
   def settings
   end
+
+  def update # 更新主题配置
+    render nothing: true
+  end
 end

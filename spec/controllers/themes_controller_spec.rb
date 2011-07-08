@@ -13,7 +13,7 @@ describe ThemesController do
 
   it 'should be update' do
     put :update
-    response.should be_redirector
+    response.should be_success
   end
 
 end

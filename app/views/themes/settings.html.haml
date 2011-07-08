@@ -9,7 +9,7 @@
     %li.template-editor=link_to "模板编辑器", assets_path
 =render "shared/noscript"
 =render "shared/upgrade_ie"
-%form#theme_settings_form(action="#" enctype="multipart/form-data" method="post")
+%form#theme_settings_form(action="#" onsubmit="return false")
   #theme-settings.clearfix(style="border-bottom: none !important")
     .col-4.sst
       %h3 您当前的预设
