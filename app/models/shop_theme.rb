@@ -80,6 +80,44 @@ class ShopTheme < ActiveRecord::Base
     JSON(File.read(config_settings_data_path))
   end
 
+  def settings_transform
+    #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
+    doc = Nokogiri::HTML(File.open(config_settings_path))
+
+    doc.css("input[type='file']").each do |file|
+      name = file['name']
+      url = "/#{files_relative_path}/assets/#{name}"
+      td = file.parent
+      builder = Nokogiri::HTML::Builder.new do
+        table.widget(cellspacing: 0) {
+          tr {
+            td {
+              input(name: "theme[settings][#{name}]", type: :file)
+            }
+          }
+          tr {
+            td {
+              div.asset {
+                div(class: 'asset-image') {
+                  a(class: 'closure-lightbox', href: url) {
+                    img(src: '/images/admin/icons/mimes/png.gif')
+                  }
+                }
+                span.note {
+                  a(class: 'closure-lightbox', href: url) {
+                    text name
+                  }
+                }
+              }
+            }
+          }
+        }
+      end
+      td.inner_html = builder.doc.inner_html
+    end
+    doc.inner_html
+  end
+
   def commit(repo, message) # 提交
     Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
       repo.add '.'
