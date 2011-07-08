@@ -1,0 +1,2 @@
+class WeightBasedShippingRatesController < ApplicationController
+end
