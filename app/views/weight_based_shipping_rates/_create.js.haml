@@ -1,0 +1,2 @@
+msg('#{flash[:notice]}')
+$('#countryrow-#{country.id}').after('#{escape_javascript(render partial: 'weight_based_shipping_rates/weight_based_shipping_rate', collection: weight_based_shipping_rates)}')

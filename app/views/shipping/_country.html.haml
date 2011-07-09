@@ -1,14 +1,14 @@
 -country_id = country.id
 %table.shipping-rates-table.data.st.ssb(cellpadding=0 cellspacing=0 id="shipping-rates-table-#{country_id}")
-  %tr.countryrow
+  %tr(id="countryrow-#{country_id}")
     %th(id="country-#{country_id}")
       =image_tag("admin/countries/#{country.code.downcase}.gif",title: Carmen::country_name(country.code))
       =Carmen::country_name(country.code)
     %th{:style => "width: 160px"} &nbsp;
     %th{:style => "width: 110px"} &nbsp;
     %th{:style => "width: 80px"} &nbsp;
-  =render partial: 'standard_rate', collection: weight_based_shipping_rates, as: :standard_rate
-  %tr
+  =render partial: 'weight_based_shipping_rates/weight_based_shipping_rate', collection: country.weight_based_shipping_rates
+  %tr(id="handle-form-#{country_id}")
     %td.new-rate-link.no-border.action-link{:colspan => "4"}
       %p.add.icon
         %span.action
@@ -18,12 +18,13 @@
           %a{:href => "#", :onclick => "$('#new-standard-rate-#{country_id}').hide();$('#new-standard-rate-done-#{country_id}').hide();$('#new-promotional-rate-#{country_id}').show();$('#new-promotional-rate-done-#{country_id}').show();$('#promotional-rate-name-new-#{country_id}').focus(); return false;", :style => "display: inline"} 新增基于价格的费用
   %tr(style= "display:none" id="new-standard-rate-#{country_id}")
     %td{:colspan => "4", :style => "padding:0"}
-      =form_for weight_based_shipping_rate ,url: set_weight_based_price_shipping_index_path, remote: true do |f|
+      =form_for weight_based_shipping_rate , remote: true do |f|
+        =f.hidden_field :country_id, value: country_id
         %table.new-rate-table
           %tr
             %td.new-rate.rate-name{:style => "padding-left: 10px"}
               %label{:for => "standard-rate-name-new"} 名称
-              =f.text_field :name,maxlength: 255, style: 'width:100%'
+              =f.text_field :name,maxlength: 255, style: 'width:100%',id:"weight_based_shipping_rate_name_#{country_id}"
             %td.new-rate.rate-weight
               %label{:for => "rate-weight-low-new"} 重量
               =f.text_field :weight_low,maxlength: 3, class: 'r'

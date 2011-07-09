@@ -1,0 +1,56 @@
+%h2#title Shipping to Algeria
+#action-links
+  %ul
+    %li.no-icon
+      %a{:href => "#", :onclick => "Element.togglePair('shipping-summary', 'shipping-form'); return false;"} Edit
+    %li.no-icon
+      %a.del{"data-confirm" => "This will delete this shipping rate permanently. Are you sure?", "data-method" => "delete", :href => "/admin/weight_based_shipping_rates/5091502", :rel => "nofollow", :title => "Delete this"}
+        %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?1ebf2a493510fe03d53efe0ba098f820722935a2"}/
+#shipping-details.box2
+  %h3 Edit weight-based shipping rate
+  #shipping-summary
+    %dl
+      %dt
+        %label Name
+      %dd International Shipping
+      %dt
+        %label Weight
+      %dd From 0.0lbs to 100.0lbs
+      %dt
+        %label Price to ship
+      %dd ¥25.00 CNY
+  #shipping-form{:style => "display:none"}
+    %form{"accept-charset" => "UTF-8", :action => "/admin/weight_based_shipping_rates/5091502", :method => "post"}
+      %div{:style => "margin:0;padding:0;display:inline"}
+        %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+        %input{:name => "_method", :type => "hidden", :value => "put"}/
+        %input{:name => "authenticity_token", :type => "hidden", :value => "OOxKTDabHP2rKbTjaEBbOs6Dbdt7f7XuJmeQS9fM43Q="}/
+      %dl
+        %dt
+          %label{:for => "rate_name_new"} Name
+          %span.note e.g. US Postal Standard, Royal Mail Airmail
+        %dd
+          %input#rate_name_new{:maxlength => "255", :name => "weight_based_shipping_rate[name]", :size => "40", :style => "font-size: 150%;", :type => "text", :value => "International Shipping"}/
+        %dt
+          %label Weight
+          %span.note only applies to orders with a total weight within this range
+        %dd
+          From
+          %input#rate_weight_low_new.r{:name => "weight_based_shipping_rate[weight_low]", :size => "5", :type => "text", :value => "0.0"}/
+          %strong lbs
+          up to
+          %input#rate_weight_high_new.r{:name => "weight_based_shipping_rate[weight_high]", :size => "5", :type => "text", :value => "100.0"}/
+          %strong lbs
+        %dt
+          %label{:for => "rate_cents_new"} Price to ship
+        %dd
+          %input#rate_cents_new.r{:name => "weight_based_shipping_rate[price]", :size => "5", :type => "text", :value => "25.00"}/
+          %strong CNY
+      %p.btn-divider
+        %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
+        or
+        %a{:href => "#", :onclick => "Element.togglePair('shipping-form', 'shipping-summary');; return false;"} Cancel
+%script{:charset => "utf-8", :type => "text/javascript"}
+  \// ]]>
+/ end div.main
+/ end div.container

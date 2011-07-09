@@ -12,8 +12,7 @@
 #shipping-rates.cl
   #custom-shipping
     .pgroup{:style => "margin-top:0"}
-      -countries.each do |country|
-        =render partial: 'country', locals: {country: country}
+      =render partial: 'country', collection: countries
 .pgroup.st
 %p.note
 如果，您不能找到您所要查看的国家或地区的话，可以在

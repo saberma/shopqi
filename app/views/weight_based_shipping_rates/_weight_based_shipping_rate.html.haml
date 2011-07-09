@@ -1,0 +1,6 @@
+%tr(id="standard-rate-#{weight_based_shipping_rate.id}")
+  %td.weight-based
+    %span.rate-summary=link_to weight_based_shipping_rate.name, edit_weight_based_shipping_rate_path(weight_based_shipping_rate)
+  %td==#{weight_based_shipping_rate.weight_low}kg - #{weight_based_shipping_rate.weight_high}kg
+  %td==#{weight_based_shipping_rate.price}RMB
+  %td.r=link_to_delete weight_based_shipping_rate_path(weight_based_shipping_rate)
