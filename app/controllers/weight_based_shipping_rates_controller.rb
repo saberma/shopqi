@@ -8,4 +8,9 @@ class WeightBasedShippingRatesController < ApplicationController
     weight_based_shipping_rate.save
     flash[:notice] = notice_msg
   end
+
+  def destroy
+    weight_based_shipping_rate.destroy
+    flash[:notice] = notice_msg
+  end
 end

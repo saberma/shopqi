@@ -8,4 +8,9 @@ class PriceBasedShippingRatesController < ApplicationController
     price_based_shipping_rate.save
     flash[:notice] = notice_msg
   end
+
+  def destroy
+    price_based_shipping_rate.destroy
+    flash[:notice] = notice_msg
+  end
 end
