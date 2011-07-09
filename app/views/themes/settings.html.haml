@@ -17,7 +17,6 @@
       %select#theme_load_preset(name="theme[load_preset]")
         %option(value="") 定制
         %option(value="") ---
-        %option(selected="selected" value="original") original
       %span.sl
         %a#delete_theme_preset_link.action.note(href="#" onclick="if (confirm('Are you sure you want to delete the selected preset?')) ( new Ajax.Request('/admin/themes/1471712/settings/delete_preset' (asynchronous:true evalScripts:true method:'delete' parameters:ThemeSettings.instance().paramsToDeletePreset() + '&amp;authenticity_token=' + encodeURIComponent('NsbjdGc1z1TJwiLoSsD0FYx92bnQeoVeW6Wn2HuEZaU='))); ); return false;" style="") 删除此预设
     .col-8.sst.last
@@ -34,7 +33,7 @@
                 %option(value="") ---
                 %option(selected="selected" value="theme") theme
       .r.st.sb
-        %input#save-current-setting(name="save-current-setting" onclick="$('save-preset').toggle(); this.stopObserving();" type="checkbox" value="")/
+        %input#save-current-setting(name="save-current-setting" type="checkbox" value="")
         %label(for="save-current-setting") 将当前配置保存为预设
       #save-preset.st.sb.r(style="display: none")
         %label(for="theme_save_preset_existing") 保存当前主题配置为
@@ -50,6 +49,9 @@
 
 %script(id="section-header-item" type="text/x-jquery-tmpl")
   %h3(class="section-header") {{{title}}}
+%script(id="theme-load-preset-item" type="text/x-jquery-tmpl")
+  %option(value="{{{name}}}") {{{name}}}
 
 :javascript
+  settings = #{settings_json}
   new App.Views.Theme.Settings.Index();

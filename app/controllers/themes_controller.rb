@@ -5,7 +5,8 @@ class ThemesController < ApplicationController
 
   expose(:shop) { current_user.shop }
   expose(:theme) { shop.theme }
-  expose(:settings_html) { theme.settings.transform.html_safe }
+  expose(:settings_html) { theme.settings.transform }
+  expose(:settings_json) { theme.settings.as_json.to_json }
 
   def settings
   end
