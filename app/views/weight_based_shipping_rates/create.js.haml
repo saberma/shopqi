@@ -1,3 +1,4 @@
 msg('#{flash[:notice]}');
 $('#handle-form-#{country.id}').before('#{escape_javascript(render partial: 'weight_based_shipping_rates/weight_based_shipping_rate', object: weight_based_shipping_rate)}');
+$('#standard-rate-#{weight_based_shipping_rate.id}').effect('highlight',{},2000)
 $('#weight_based_shipping_rate_name_#{country.id}').val(null);

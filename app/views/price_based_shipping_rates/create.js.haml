@@ -1,3 +1,4 @@
 msg('#{flash[:notice]}');
 $('#handle-form-#{country.id}').before('#{escape_javascript(render partial: 'price_based_shipping_rates/price_based_shipping_rate', object: price_based_shipping_rate)}');
+$('#promotional-rate-#{price_based_shipping_rate.id}').effect('highlight',{},2000)
 $('#price_based_shipping_rate_name_#{country.id}').val(null);
