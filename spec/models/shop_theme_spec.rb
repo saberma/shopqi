@@ -34,6 +34,12 @@ describe ShopTheme do
           settings['current'].should eql 'newest'
         end
 
+        it 'should be save custom' do
+          theme.settings.save '', data
+          settings = theme.settings.as_json
+          settings['current'].class.should eql Hash
+        end
+
         it 'should be update' do
           theme.settings.save 'default', data
           settings = theme.settings.as_json

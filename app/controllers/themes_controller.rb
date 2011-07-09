@@ -12,7 +12,10 @@ class ThemesController < ApplicationController
   end
 
   def update # 更新主题配置
-    theme.settings.save params[:theme][:load_preset], params[:theme][:settings]
-    render nothing: true
+    preset = params[:theme][:save_preset][:existing]
+    preset = params[:theme][:save_preset][:new] if preset.blank?
+    preset = params[:theme][:load_preset] if preset.blank?
+    theme.settings.save preset, params[:theme][:settings]
+    render json: params[:theme][:settings]
   end
 end

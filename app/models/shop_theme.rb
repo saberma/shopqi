@@ -24,9 +24,13 @@ class ShopThemeSetting < ActiveRecord::Base
         name = element['name']
         data[name] = (data[name] == '1')
       end
-      settings['current'] = preset
-      #settings['presets'][preset] = data #NoMethodError (undefined method `merge' for #<JSON::Ext::Generator::State:)
-      settings['presets'][preset] = data.as_json
+      if preset.blank? # 定制的直接保存在current根节点
+        settings['current'] = data.as_json
+      else
+        settings['current'] = preset
+        #settings['presets'][preset] = data #NoMethodError (undefined method `merge' for #<JSON::Ext::Generator::State:)
+        settings['presets'][preset] = data.as_json
+      end
       Asset.update theme, 'config/settings_data.json', JSON.pretty_generate(settings)
     end
 

@@ -16,10 +16,10 @@
       %p.note.sb 选择下方的下拉框可以切换外观配置的预设集合。调整右边的配置项目并且保存修改。
       %select#theme_load_preset(name="theme[load_preset]")
         %option(value="") 定制
-        %option(value="") ---
+        %option(value="undefined" disabled='disabled') ---
       %span.sl
         %a#delete_theme_preset_link.action.note(href="#" onclick="if (confirm('Are you sure you want to delete the selected preset?')) ( new Ajax.Request('/admin/themes/1471712/settings/delete_preset' (asynchronous:true evalScripts:true method:'delete' parameters:ThemeSettings.instance().paramsToDeletePreset() + '&amp;authenticity_token=' + encodeURIComponent('NsbjdGc1z1TJwiLoSsD0FYx92bnQeoVeW6Wn2HuEZaU='))); ); return false;" style="") 删除此预设
-    .col-8.sst.last
+    #settings_panel.col-8.sst.last
       =render inline: settings_html
       %fieldset.required_setting
         %legend Additional Layouts
@@ -39,8 +39,7 @@
         %label(for="theme_save_preset_existing") 保存当前主题配置为
         %select#theme_save_preset_existing(name="theme[save_preset][existing]")
           %option(value="") 一个新的预设
-          %option(value="") ---
-          %option(value="original") original
+          %option(value="undefined" disabled='disabled') ---
         %span#theme_save_preset_new_container
           %label(for="theme_save_preset_new") 并命名为
           %input#theme_save_preset_new(name="theme[save_preset][new]" type="text")
