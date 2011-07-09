@@ -1,93 +1,46 @@
-/ begin div.main
-#main.clearfix.col-12.last.fullscreen
-  %h2#title Shipping to Algeria
-  #action-links
-    %ul
-      %li.no-icon
-        %a{:href => "#", :onclick => "Element.togglePair('shipping-summary', 'shipping-form'); return false;"} Edit
-      %li.no-icon
-        %a.del{"data-confirm" => "This will delete this shipping rate permanently. Are you sure?", "data-method" => "delete", :href => "/admin/price_based_shipping_rates/659522", :rel => "nofollow", :title => "Delete this"}
-          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?28ce8857b4e6d3b3b73b17e0ebbd41d3d3390c46"}/
-  %noscript
-    .announcement
-      %h4 Javascript disabled
-      %p
-        %strong
-          In order to use the Shopify admin interface you
-          %em must enable javascript
-          in your browser
-      %p
-        Find out
-        = succeed "." do
-          %a{:href => "http://www.enable-javascript.com/"} how to enable javascript
-  #upgrade-ie6.announcement{:style => "display:none;"}
-    %h4 Please upgrade your browser
-    %p
-      %strong
-        We are discontinuing support for
-        = succeed "." do
-          %em IE6
-        To get the most out of Shopify, please upgrade to a modern web browser
-    %p
-      We recommend
-      = succeed "," do
-        %a{:href => "http://www.google.com/chrome"} Google Chrome
-      %a{:href => "http://www.getfirefox.com"} Mozilla Firefox
-      or
-      = succeed "." do
-        %a{:href => "http://www.apple.com/safari/download/"} Safari
-  #shipping-details.box2
-    %h3 Edit price-based shipping rate
-    #shipping-summary
+%h2#title==发往 #{Carmen::country_name(country.code)}
+#action-links
+  %ul
+    %li.no-icon=link_to w('edit'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
+    %li.no-icon=link_to_delete price_based_shipping_rate_path(price_based_shipping_rate)
+#shipping-details.box2
+  %h3  编辑基于重量的运费
+  #shipping-summary
+    %dl
+      %dt
+        %label 名称
+      %dd=price_based_shipping_rate.name
+      %dt
+        %label 价格范围
+      %dd==¥#{price_based_shipping_rate.min_order_subtotal} #{price_max_order_subtotal_helper(price_based_shipping_rate)}
+      %dt
+        %label 运费
+      %dd== ¥#{price_based_shipping_rate.price} RMB
+  #shipping-form{:style => "display:none"}
+    =form_for price_based_shipping_rate do |f|
       %dl
         %dt
-          %label Name
-        %dd eeeeeeeeeeeeeee
+          =f.label :name
+          %span.note 例如：顺风，EMS 等等
+        %dd=f.text_field :name, maxlength: 255,size: 40, style: 'font-size: 150%'
         %dt
-          %label Order subtotal range
+          %label 价格范围
+          %span.note 仅当订单物品价格(折后和税后)在此范围之类才生效
         %dd
-          ¥50.00 CNY
-          and up
-        %dt
-          %label Price to ship
-        %dd ¥0.00 CNY
-    #shipping-form{:style => "display:none"}
-      %form{"accept-charset" => "UTF-8", :action => "/admin/price_based_shipping_rates/659522", :method => "post"}
-        %div{:style => "margin:0;padding:0;display:inline"}
-          %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-          %input{:name => "_method", :type => "hidden", :value => "put"}/
-          %input{:name => "authenticity_token", :type => "hidden", :value => "OOxKTDabHP2rKbTjaEBbOs6Dbdt7f7XuJmeQS9fM43Q="}/
-        %dl
-          %dt
-            %label{:for => "rate_name_new"} Name
-            %span.note e.g. US Postal Standard, Royal Mail Airmail
-          %dd
-            %input#rate_name_new{:maxlength => "255", :name => "price_based_shipping_rate[name]", :size => "40", :style => "font-size: 150%;", :type => "text", :value => "eeeeeeeeeeeeeee"}/
-          %dt
-            %label Purchase range
-            %span.note (after discounts and taxes are applied)
-          %dd
+          %strong ¥
+          =f.text_field :min_order_subtotal,size: 5,class: 'r'
+          %span#show-max-purchase(style= "#{attr_for_display(price_based_shipping_rate.max_order_subtotal)}")
+            %a{:href => "#", :onclick => "$('#show-max-purchase').hide();$('#edit-max-purchase').show();$('#rate_max_order_subtotal_new').focus(); return false;"} 以上
+          %span#edit-max-purchase(style= "#{attr_for_display(!price_based_shipping_rate.max_order_subtotal)}")
+            \&mdash;
             %strong ¥
-            %input#rate_min_order_subtotal_new.r{:name => "price_based_shipping_rate[min_order_subtotal]", :size => "5", :type => "text", :value => "50.00"}/
-            %strong CNY
-            %span#show-max-purchase{:style => ""}
-              %a{:href => "#", :onclick => "$('show-max-purchase').hide();$('edit-max-purchase').show();$('rate_max_order_subtotal_new').focus(); return false;"} and up
-            %span#edit-max-purchase{:style => "display:none"}
-              \&mdash;
-              %strong ¥
-              %input#rate_max_order_subtotal_new.r{:name => "price_based_shipping_rate[max_order_subtotal]", :onblur => "if (this.value == ''){$('edit-max-purchase').hide();$('show-max-purchase').show()}", :size => "5", :type => "text", :value => ""}/
-              %strong CNY
-          %dt
-            %label{:for => "rate_cents_new"} Price to ship
-          %dd
-            %strong ¥
-            %input#rate_cents_new.r{:name => "price_based_shipping_rate[price]", :size => "5", :type => "text", :value => "0.00"}/
-            %strong CNY
-        %p.btn-divider
-          %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
-          or
-          %a{:href => "#", :onclick => "Element.togglePair('shipping-form', 'shipping-summary');; return false;"} Cancel
-  %script{:charset => "utf-8", :type => "text/javascript"}
-    \// ]]>
-/ end div.main
-/ end div.container
+            =f.text_field :max_order_subtotal,size: 5,class: 'r',onblur: "if ($(this).val() == ''){$('#edit-max-purchase').hide();$('#show-max-purchase').show()}"
+        %dt=f.label :price
+        %dd
+          %strong ¥
+          =f.text_field :price ,size: 5, class: 'r'
+          %strong RMB
+      %p.btn-divider
+        =f.submit w('save'),class: 'btn'
+        =w('or')
+        =link_to w('cancel'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
