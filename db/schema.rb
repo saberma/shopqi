@@ -337,6 +337,16 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
 
   add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
 
+  create_table "price_based_shipping_rates", :force => true do |t|
+    t.integer  "country_id"
+    t.float    "price"
+    t.float    "min_order_subtotal"
+    t.float    "max_order_subtotal"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "product_options", :force => true do |t|
     t.integer "product_id", :null => false
     t.string  "name"

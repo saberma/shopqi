@@ -8,6 +8,7 @@
     %th{:style => "width: 110px"} &nbsp;
     %th{:style => "width: 80px"} &nbsp;
   =render partial: 'weight_based_shipping_rates/weight_based_shipping_rate', collection: country.weight_based_shipping_rates
+  =render partial: 'price_based_shipping_rates/price_based_shipping_rate', collection: country.price_based_shipping_rates
   %tr(id="handle-form-#{country_id}")
     %td.new-rate-link.no-border.action-link{:colspan => "4"}
       %p.add.icon
@@ -40,38 +41,38 @@
           %tr.no-lines(style= "display:none" id="new-standard-rate-done-#{country_id}")
             %td.new-rate-done{:colspan => "3"}
               =f.submit w('save')
-              or
+              =w('or')
               %span.action
                 %a{:href => "#", :onclick => "$('#new-standard-rate-#{country_id}').hide();$('#new-standard-rate-done-#{country_id}').hide(); return false;"} 取消
-  %tr#new-promotional-rate-2632382{:style => "display:none"}
+  %tr(style= "display:none" id="new-promotional-rate-#{country_id}")
     %td{:colspan => "4", :style => "padding:0"}
-      %form{"accept-charset" => "UTF-8", :action => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/price_based_shipping_rates", "data-remote" => "true", :method => "post"}
-        %input{:name => "price_based_shipping_rate[country_id]", :type => "hidden", :value => "2632382"}/
+      =form_for price_based_shipping_rate, remote: true do |f|
+        =f.hidden_field :country_id, value: country_id
         %table.new-rate-table
           %tr
             %td.new-rate.rate-name{:style => "padding-left: 10px"}
-              %label{:for => "promotional-rate-name-new-2632382"} Name
-              %input#promotional-rate-name-new-2632382{:maxlength => "255", :name => "price_based_shipping_rate[name]", :style => "width: 100%", :type => "text", :value => ""}/
+              =f.label :name
+              =f.text_field :name, maxlength: 255, style: 'width:100%',id:"price_based_shipping_rate_name_#{country_id}"
             %td.new-rate.rate-min-order-subtotal{:style => "width:220px;"}
-              %label Purchase range
+              %label 价格区间
               %strong ¥
-              %input#rate-min-order-subtotal-new-2632382.r{:name => "price_based_shipping_rate[min_order_subtotal]", :size => "5", :type => "text", :value => "50.00"}/
-              %strong CNY
-              %span#show-max-purchase-2632382{:style => ""}
-                %a{:href => "#", :onclick => "$('show-max-purchase-2632382').hide();$('edit-max-purchase-2632382').show();$('rate-max-order-subtotal-new-2632382').focus(); return false;"} and up
-              %span#edit-max-purchase-2632382{:style => "display:none"}
+              =f.text_field :min_order_subtotal, size: 5
+              %strong RMB
+              %span(style="" id="show-max-purchase-#{country_id}")
+                %a{:href => "#", :onclick => "$('#show-max-purchase-#{country_id}').hide();$('#edit-max-purchase-#{country_id}').show();$('#rate-max-order-subtotal-new-#{country_id}').focus();return false;"} 以上
+              %span(style = "display:none" id= "edit-max-purchase-#{country_id}")
                 \&mdash;
                 %strong ¥
-                %input#rate-max-order-subtotal-new-2632382.r{:name => "price_based_shipping_rate[max_order_subtotal]", :onblur => "if (this.value == ''){$('edit-max-purchase-2632382').hide();$('show-max-purchase-2632382').show()}", :size => "5", :type => "text", :value => ""}/
-                %strong CNY
+                =f.text_field :max_order_subtotal,class:'r',size: 5, onblur: "if($(this).val() == ''){ $('#edit-max-purchase-#{country_id}').hide();$('#show-max-purchase-#{country_id}').show()}"
+                %strong RMB
             %td.new-rate.rate-price
-              %label{:for => "rate-cents-new-2632382"} Shipping price
+              =f.label :price
               %strong ¥
-              %input#rate-cents-new-2632382.r{:name => "price_based_shipping_rate[price]", :size => "5", :type => "text", :value => "0.00"}/
-              %strong CNY
-          %tr#new-promotional-rate-done-2632382.no-lines{:style => "display:none"}
+              =f.text_field :price,size: 5,class: 'r'
+              %strong RMB
+          %tr.no-lines(style= "display:none" id="new-promotional-rate-done-#{country_id}")
             %td.new-rate-done{:colspan => "3"}
-              %input{:name => "commit", :type => "submit", :value => "Add Shipping Rate"}/
-              or
+              =f.submit w('save')
+              =w('or')
               %span.action
-                %a{:href => "#", :onclick => "$('new-promotional-rate-2632382').hide();$('new-promotional-rate-done-2632382').hide(); return false;"} Close
+                %a{:href => "#", :onclick => "$('#new-promotional-rate-#{country_id}').hide();$('#new-promotional-rate-done-#{country_id}').hide(); return false;"} 取消

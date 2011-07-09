@@ -6,4 +6,5 @@ class ShippingController < ApplicationController
   expose(:countries){ shop.countries }
   expose(:country)
   expose(:weight_based_shipping_rate)
+  expose(:price_based_shipping_rate)
 end

@@ -1,0 +1,6 @@
+%tr(id="promotional-rate-#{price_based_shipping_rate.id}")
+  %td.weight-based
+    %span.rate-summary=link_to price_based_shipping_rate.name, edit_price_based_shipping_rate_path(price_based_shipping_rate)
+  %td==¥#{price_based_shipping_rate.min_order_subtotal} - ¥#{price_based_shipping_rate.max_order_subtotal}
+  %td==¥#{price_based_shipping_rate.price}RMB
+  %td.r=link_to_delete price_based_shipping_rate_path(price_based_shipping_rate)

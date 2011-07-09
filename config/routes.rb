@@ -64,6 +64,7 @@ Shopqi::Application.routes.draw do
     resources :shipping, only: [:index]
 
     resources :weight_based_shipping_rates, only: [:edit,:update,:create,:destroy]
+    resources :price_based_shipping_rates, only: [:edit,:update,:create,:destroy]
 
     resources :orders, only: [:index, :update, :show, :destroy] do
       collection do
