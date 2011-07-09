@@ -1,56 +1,43 @@
-%h2#title Shipping to Algeria
+%h2#title==到达#{Carmen::country_name(country.code)}的运费
 #action-links
   %ul
-    %li.no-icon
-      %a{:href => "#", :onclick => "Element.togglePair('shipping-summary', 'shipping-form'); return false;"} Edit
-    %li.no-icon
-      %a.del{"data-confirm" => "This will delete this shipping rate permanently. Are you sure?", "data-method" => "delete", :href => "/admin/weight_based_shipping_rates/5091502", :rel => "nofollow", :title => "Delete this"}
-        %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?1ebf2a493510fe03d53efe0ba098f820722935a2"}/
+    %li.no-icon=link_to w('edit'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
+    %li.no-icon=link_to_delete weight_based_shipping_rate_path(weight_based_shipping_rate)
 #shipping-details.box2
-  %h3 Edit weight-based shipping rate
+  %h3  编辑基于重量的运费
   #shipping-summary
     %dl
       %dt
-        %label Name
-      %dd International Shipping
+        %label 名称
+      %dd=weight_based_shipping_rate.name
       %dt
-        %label Weight
-      %dd From 0.0lbs to 100.0lbs
+        %label 重量
+      %dd== 从 #{weight_based_shipping_rate.weight_low}kg 到 #{weight_based_shipping_rate.weight_high}kg
       %dt
-        %label Price to ship
-      %dd ¥25.00 CNY
+        %label 运费
+      %dd== ¥#{weight_based_shipping_rate.price} RMB
   #shipping-form{:style => "display:none"}
-    %form{"accept-charset" => "UTF-8", :action => "/admin/weight_based_shipping_rates/5091502", :method => "post"}
-      %div{:style => "margin:0;padding:0;display:inline"}
-        %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-        %input{:name => "_method", :type => "hidden", :value => "put"}/
-        %input{:name => "authenticity_token", :type => "hidden", :value => "OOxKTDabHP2rKbTjaEBbOs6Dbdt7f7XuJmeQS9fM43Q="}/
+    =form_for weight_based_shipping_rate do |f|
       %dl
         %dt
-          %label{:for => "rate_name_new"} Name
-          %span.note e.g. US Postal Standard, Royal Mail Airmail
-        %dd
-          %input#rate_name_new{:maxlength => "255", :name => "weight_based_shipping_rate[name]", :size => "40", :style => "font-size: 150%;", :type => "text", :value => "International Shipping"}/
+          =f.label :name
+          %span.note 例如：顺风，EMS 等等
+        %dd=f.text_field :name, maxlength: 255,size: 40, style: 'font-size: 150%'
         %dt
-          %label Weight
-          %span.note only applies to orders with a total weight within this range
+          %label 重量
+          %span.note 仅当订单物品重量在此范围之类才生效
         %dd
-          From
-          %input#rate_weight_low_new.r{:name => "weight_based_shipping_rate[weight_low]", :size => "5", :type => "text", :value => "0.0"}/
-          %strong lbs
-          up to
-          %input#rate_weight_high_new.r{:name => "weight_based_shipping_rate[weight_high]", :size => "5", :type => "text", :value => "100.0"}/
-          %strong lbs
-        %dt
-          %label{:for => "rate_cents_new"} Price to ship
+          从
+          =f.text_field :weight_low,size: 5,class: 'r'
+          %strong kg
+          到
+          =f.text_field :weight_high,size: 5,class: 'r'
+          %strong kg
+        %dt=f.label :price
         %dd
-          %input#rate_cents_new.r{:name => "weight_based_shipping_rate[price]", :size => "5", :type => "text", :value => "25.00"}/
-          %strong CNY
+          =f.text_field :price ,size: 5, class: 'r'
+          %strong RMB
       %p.btn-divider
-        %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
-        or
-        %a{:href => "#", :onclick => "Element.togglePair('shipping-form', 'shipping-summary');; return false;"} Cancel
-%script{:charset => "utf-8", :type => "text/javascript"}
-  \// ]]>
-/ end div.main
-/ end div.container
+        =f.submit w('save'),class: 'btn'
+        =w('or')
+        =link_to w('cancel'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"

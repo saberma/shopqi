@@ -13,4 +13,9 @@ class WeightBasedShippingRatesController < ApplicationController
     weight_based_shipping_rate.destroy
     flash.now[:notice] = notice_msg
   end
+
+  def update
+    weight_based_shipping_rate.save
+    redirect_to edit_weight_based_shipping_rate_path(weight_based_shipping_rate),notice: notice_msg
+  end
 end
