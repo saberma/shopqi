@@ -167,7 +167,8 @@ Shopqi::Application.routes.draw do
     end
 
     begin :themes
-      match 'themes/settings' => 'themes#settings', as: :settings_themes
+      get 'themes/settings' => 'themes#settings', as: :settings_themes
+      put 'themes/settings' => 'themes#update'
     end
     scope 'themes' do
       resources :assets do
