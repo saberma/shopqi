@@ -3,8 +3,8 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
 
   events:
     "submit form": 'save'
-    "change #settings_panel :input": 'customize'
-    "change #save-current-setting": 'select'
+    "change #settings_panel :input": 'customize' # 修改配置项左边选项切换至'定制'
+    "change #save-current-setting": 'select' # 点击复选框显示新增命名
     "change #theme_save_preset_existing": 'select_existing'
 
   initialize: ->
@@ -49,7 +49,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
   customize: (e) -> # 修改配置项，切换至定制预设
     $('#theme_load_preset').val '' if e.target.type not in ['submit', 'file']
 
-  select: -> # 命名预设
+  select: -> # 显示新增命名输入项
     checked = $('#save-current-setting').attr 'checked'
     $('#save-preset').toggle(checked)
     $('#theme_save_preset_existing').val('').change()

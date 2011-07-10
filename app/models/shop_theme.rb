@@ -34,6 +34,13 @@ class ShopThemeSetting < ActiveRecord::Base
       Asset.update theme, 'config/settings_data.json', JSON.pretty_generate(settings)
     end
 
+    def destroy_preset(preset)
+      settings = self.as_json
+      data = settings['presets'].delete preset
+      settings['current'] = data
+      Asset.update theme, 'config/settings_data.json', JSON.pretty_generate(settings)
+    end
+
     def transform # settings.html的内容要先经过处理: 上传、字体、改名
       doc = Nokogiri::HTML(File.open(html_path)) #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
       doc.css("input[type='file']").each do |file| # 上传文件

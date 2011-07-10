@@ -164,6 +164,7 @@ Shopqi::Application.routes.draw do
     begin :themes
       get 'themes/settings' => 'themes#settings', as: :settings_themes
       put 'themes/settings' => 'themes#update'
+      post 'themes/delete_preset' => 'themes#delete_preset'
     end
     scope 'themes' do
       resources :assets do

@@ -18,4 +18,9 @@ class ThemesController < ApplicationController
     theme.settings.save preset, params[:theme][:settings]
     render json: params[:theme][:settings]
   end
+
+  def delete_preset # 删除预设
+    theme.settings.destroy_preset params[:name]
+    render nothing: true
+  end
 end
