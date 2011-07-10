@@ -7,7 +7,6 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
   initialize: ->
     @collection = new App.Collections.Presets
     @collection.bind 'add', (model) -> new App.Views.Theme.Settings.Preset.Show model: model
-    self = this
     this.render()
 
   render: ->
@@ -19,8 +18,9 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
       this.loadSettings settings.current
 
   load: -> # 加载预设至右边配置项
-    preset = $('#theme_load_preset').children('option:selected').val()
-    this.loadSettings settings.presets[preset]
+    name = $('#theme_load_preset').children('option:selected').val()
+    preset = @collection.detect (model) -> model.get('name') is name
+    this.loadSettings preset.get('value')
 
   # private
   loadSettings: (settings_hash) -> # 加载配置项
