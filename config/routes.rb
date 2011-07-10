@@ -61,6 +61,11 @@ Shopqi::Application.routes.draw do
 
     resources :countries, only: [:create,:new,:edit,:index,:destroy,:update]
 
+    resources :shipping, only: [:index]
+
+    resources :weight_based_shipping_rates, only: [:edit,:update,:create,:destroy]
+    resources :price_based_shipping_rates, only: [:edit,:update,:create,:destroy]
+
     resources :orders, only: [:index, :update, :show, :destroy] do
       collection do
         post :set

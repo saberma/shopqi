@@ -1,0 +1,46 @@
+%h2#title==发往 #{Carmen::country_name(country.code)}
+#action-links
+  %ul
+    %li.no-icon=link_to w('edit'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
+    %li.no-icon=link_to_delete price_based_shipping_rate_path(price_based_shipping_rate)
+#shipping-details.box2
+  %h3  编辑基于重量的运费
+  #shipping-summary
+    %dl
+      %dt
+        %label 名称
+      %dd=price_based_shipping_rate.name
+      %dt
+        %label 价格范围
+      %dd==¥#{price_based_shipping_rate.min_order_subtotal} #{price_max_order_subtotal_helper(price_based_shipping_rate)}
+      %dt
+        %label 运费
+      %dd== ¥#{price_based_shipping_rate.price} RMB
+  #shipping-form{:style => "display:none"}
+    =form_for price_based_shipping_rate do |f|
+      %dl
+        %dt
+          =f.label :name
+          %span.note 例如：顺风，EMS 等等
+        %dd=f.text_field :name, maxlength: 255,size: 40, style: 'font-size: 150%'
+        %dt
+          %label 价格范围
+          %span.note 仅当订单物品价格(折后和税后)在此范围之类才生效
+        %dd
+          %strong ¥
+          =f.text_field :min_order_subtotal,size: 5,class: 'r'
+          %span#show-max-purchase(style= "#{attr_for_display(price_based_shipping_rate.max_order_subtotal)}")
+            %a{:href => "#", :onclick => "$('#show-max-purchase').hide();$('#edit-max-purchase').show();$('#rate_max_order_subtotal_new').focus(); return false;"} 以上
+          %span#edit-max-purchase(style= "#{attr_for_display(!price_based_shipping_rate.max_order_subtotal)}")
+            \&mdash;
+            %strong ¥
+            =f.text_field :max_order_subtotal,size: 5,class: 'r',onblur: "if ($(this).val() == ''){$('#edit-max-purchase').hide();$('#show-max-purchase').show()}"
+        %dt=f.label :price
+        %dd
+          %strong ¥
+          =f.text_field :price ,size: 5, class: 'r'
+          %strong RMB
+      %p.btn-divider
+        =f.submit w('save'),class: 'btn'
+        =w('or')
+        =link_to w('cancel'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"

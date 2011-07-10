@@ -70,8 +70,7 @@
               %li#regions=link_to '区域&税收',countries_path
               %li#payment
                 %a(href="https://github.shopqi.com/admin/payments") 支付
-              %li#shipping
-                %a(href="https://github.shopqi.com/admin/shipping/index") 快递
+              %li#shipping=link_to '快递',shipping_index_path
               -#
                 %li#fulfillment
                   %a(href="https://github.shopqi.com/admin/fulfillment_services") 其他服务

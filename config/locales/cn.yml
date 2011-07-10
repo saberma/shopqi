@@ -25,6 +25,12 @@ cn:
         shop:
           permanent_domain: 二级域名
           name: 网店名
+      weight_based_shipping_rate:
+        name: 名称
+        price: 运费
+      price_based_shipping_rate:
+        name: 名称
+        price: 运费
       product:
         title: 标题
         body_html: 描述

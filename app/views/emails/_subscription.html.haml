@@ -1,4 +1,4 @@
-%tr{id: "subscription-#{s.id}",class: 'order-subscription'}
+%tr(id= "subscription-#{s.id}" class='order-subscription')
   %td{colspan: 2}
     %span.note 发送邮件给:
     %strong=subscribtion_title(s)

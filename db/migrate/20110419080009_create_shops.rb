@@ -66,14 +66,39 @@ class CreateShops < ActiveRecord::Migration
       t.timestamps
     end
 
+    #根据重量计算邮费
+    create_table :weight_based_shipping_rates do |t|
+      t.references :country
+      t.float :price, comment: '价格'
+      t.float :weight_low, comment: '重要区间（低）'
+      t.float :weight_high, comment: '重要区间（高）'
+      t.string :name, comment: '快递名'
+
+      t.timestamps
+    end
+
+    #根据重量计算邮费
+    create_table :price_based_shipping_rates do |t|
+      t.references :country
+      t.float :price, comment: '价格'
+      t.float :min_order_subtotal, comment: '订单价格区间（低）'
+      t.float :max_order_subtotal, comment: '订单价格区间（高）'
+      t.string :name, comment: '快递名'
+
+      t.timestamps
+    end
+
     add_index :shop_product_types  , :shop_id
     add_index :shop_product_vendors, :shop_id
     add_index :shop_themes         , :shop_id
     add_index :countries           , :shop_id
+    add_index :weight_based_shipping_rates           , :country_id
     add_index :shop_theme_settings , :shop_theme_id
   end
 
   def self.down
+    drop_table :price_based_shipping_rates
+    drop_table :weight_based_shipping_rates
     drop_table :countries
     drop_table :theme_settings
     drop_table :themes
