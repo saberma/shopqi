@@ -1,7 +1,7 @@
 =content_for :stylesheets do
   =stylesheet_link_tag 'jquery.miniColors'
 =content_for :javascripts do
-  =javascript_include_tag 'views/themes/settings/index', 'jquery.miniColors.min'
+  =javascript_include_tag 'models/preset', 'collections/presets', 'views/themes/settings/index', 'views/themes/settings/presets/show', 'views/themes/settings/presets/index', 'jquery.miniColors.min'
 
 %h2#title 主题外观配置
 #action-links
@@ -11,7 +11,7 @@
 =render "shared/upgrade_ie"
 %form#theme_settings_form(action="#" onsubmit="return false")
   #theme-settings.clearfix(style="border-bottom: none !important")
-    .col-4.sst
+    #presets.col-4.sst
       %h3 您当前的预设
       %p.note.sb 选择下方的下拉框可以切换外观配置的预设集合。调整右边的配置项目并且保存修改。
       %select#theme_load_preset(name="theme[load_preset]")
