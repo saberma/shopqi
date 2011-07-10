@@ -12,6 +12,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
     this.render()
 
   render: ->
+    self = this
     template = Handlebars.compile $('#section-header-item').html()
     $('fieldset').each ->
       title = $('legend', this).text()
@@ -20,7 +21,8 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
       $(this).toggleClass 'collapsed'
       $(this).next().toggle()
     $('.section-header:first').click()
-    $('.color').miniColors change: -> $(this).change() # fixed: input change event fail.
+    $('.color').miniColors()
+    $('.miniColors').live 'mousedown', (e) -> self.customize(e) # fixed: 修改颜色要修改预设选项
     @presets_view = new App.Views.Theme.Settings.Preset.Index
 
   save: ->
