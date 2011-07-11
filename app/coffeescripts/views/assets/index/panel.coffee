@@ -78,6 +78,7 @@ App.Views.Asset.Index.Panel = Backbone.View.extend
         $('#asset-hint, #asset-hint-noselect').show()
         $('#asset-hint-liquid').hide()
         $('#template-editor').hide()
+        $('#preview-image').hide()
         msg "#{model.get('key')} 已经删除"
         model.view.remove()
         TemplateEditor.current = null
