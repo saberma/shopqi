@@ -24,6 +24,29 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
     $('.color').miniColors()
     $('.miniColors').live 'mousedown', (e) -> self.customize(e) # fixed: 修改颜色要修改预设选项
     @presets_view = new App.Views.Theme.Settings.Preset.Index
+    $(".file").each -> # 上传图片
+      new qq.FileUploader
+        multiple: false
+        element: $(this)[0],
+        action: '/admin/themes/assets/0/upload'
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
+        sizeLimit: 1048576 # 1M
+        messages:
+          typeError: "{file} 文件格式不正确. 只能上传 {extensions} 格式的图片.",
+        onSubmit: (id, file_name) ->
+          name = $(this.element).attr('name')
+          $('#indicator').show()
+          $(document).mousemove window.moveIndicator
+          csrf_token = $('meta[name=csrf-token]').attr('content')
+          csrf_param = $('meta[name=csrf-param]').attr('content')
+          this.params = key: "assets/#{name}", name: name
+          this.params[csrf_param] = csrf_token
+        onComplete: (id, file_name, responseJSON)->
+          $('#indicator').hide()
+          $(document).unbind 'mousemove'
+    $('.qq-upload-list').hide() # 不显示上传文件列表
+    $(".qq-upload-button").each ->
+      $(this).css('padding', '2px 0').width(70).contents().first().replaceWith("选择文件")
 
   save: ->
     self = this

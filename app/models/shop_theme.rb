@@ -51,7 +51,7 @@ class ShopThemeSetting < ActiveRecord::Base
           table.widget(cellspacing: 0) {
             tr {
               td {
-                input(name: name, type: :file) } }
+                div(name: name, class: :file) } }
             tr {
               td {
                 div.asset {
