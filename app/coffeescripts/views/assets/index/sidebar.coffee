@@ -24,7 +24,6 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     self = this
     uploader = new qq.FileUploader
       multiple: false
-      debug: true
       element: $('#file-uploader')[0],
       action: '/admin/themes/assets/0/upload'
       onSubmit: (id, file_name) ->

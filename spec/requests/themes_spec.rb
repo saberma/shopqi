@@ -8,6 +8,100 @@ describe "Themes", js: true do
 
   let(:shop) { user_admin.shop }
 
+  describe "GET /settings" do # theme = Threadify
+
+    before(:each) do
+      visit settings_themes_path
+    end
+
+    it "should be index" do
+      find('#use_logo_image').visible?.should be_true # 只显示第一个fieldset
+      find('#use_feature_image').visible?.should be_false # 只显示第一个fieldset
+    end
+
+    describe 'presets' do
+
+      describe 'show' do
+
+        it "should show current preset" do
+          find('#theme_load_preset').value.should eql 'original'
+        end
+
+        it "should set current settings" do # 配置项初始化为当前预设值
+          find('#use_logo_image')['checked'].should be_true
+        end
+
+        it "should switch preset" do # 配置项初始化为当前预设值
+          uncheck 'use_logo_image'
+          check '将当前配置保存为预设'
+          fill_in 'theme_save_preset_new', with: 'new_preset'
+          click_on '保存配置'
+          find('#save-preset').visible?.should be_false
+          select 'original', from: 'theme_load_preset'
+          find('#use_logo_image')['checked'].should be_true
+        end
+
+      end
+
+      describe 'save' do
+
+        it "should update exists preset" do # 更新预设
+          uncheck 'use_logo_image'
+          check '将当前配置保存为预设'
+          select 'original', from: 'theme_save_preset_existing'
+          find('#theme_save_preset_new_container').visible?.should be_false # 隐藏名称输入项
+          click_on '保存配置'
+          find('#theme_load_preset').value.should eql 'original'
+          visit settings_themes_path # 回显
+          find('#theme_load_preset').value.should eql 'original'
+          find('#use_logo_image')['checked'].should be_false
+        end
+
+        it "should add new preset" do # 保存新的预设
+          uncheck 'use_logo_image'
+          check '将当前配置保存为预设'
+          fill_in 'theme_save_preset_new', with: 'new_preset'
+          click_on '保存配置'
+          find('#save-preset').visible?.should be_false
+          find('#theme_load_preset').value.should eql 'new_preset'
+          visit settings_themes_path # 回显
+          find('#theme_load_preset').value.should eql 'new_preset'
+          find('#use_logo_image')['checked'].should be_false
+        end
+
+        it "should switch to customize" do # 切换至定制预设
+          find('#theme_load_preset').value.should eql 'original'
+          uncheck 'use_logo_image'
+          find('#theme_load_preset').value.should be_blank
+        end
+
+      end
+
+    end
+
+    describe 'tranform' do
+
+      it "should change name" do
+        find('#use_logo_image')['name'].should eql 'theme[settings][use_logo_image]'
+      end
+
+      it "should add image widget" do
+        has_css?(".asset-image").should be_true
+      end
+
+      it "should add hidden checkbox" do
+        has_css?("input[name='theme[settings][use_logo_image]']", visible: false).should be_true
+      end
+
+      it "should add fonts" do
+        find('.section-header', text: 'Fonts').click
+        find('#header_font').all('optgroup').size.should eql 3
+      end
+
+    end
+
+  end
+
   describe "GET /assets" do
 
     before(:each) do
