@@ -81,10 +81,12 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
 
   addTemplate: ->
     self = this
-    $('#new-template-selectbox').children('option').each ->
-      value = "#{$(this).val()}.liquid"
+    options = $('#new-template-selectbox').children('option').map -> $(this).text() # 迭代的同时不能修改Option节点，得分两步
+    _(options).each (name) ->
+      value = "#{name}.liquid"
       created = self.options.assets.templates.detect (model) -> model.get('name') is value
-      $(this).toggle(!created).attr('disabled', created)
+      option = $('#new-template-selectbox').children("option[value='#{name}']")
+      option.toggle(!created).attr('disabled', created)
     $('#new-template-selectbox').val $('#new-template-selectbox').children('option:enabled:first').val()
     $('#new_template_reveal_link').hide()
     $('#new-template').show()
