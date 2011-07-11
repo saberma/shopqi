@@ -10,9 +10,145 @@ describe "Themes", js: true do
 
   describe "GET /assets" do
 
-    before(:each) { visit assets_path }
+    before(:each) do
+      visit assets_path
+    end
+
+    after(:each) do
+      shop.destroy # DatabaseCleaner会将所有数据删除，但不会触发实体的callback，这里需要同时删除相关目录
+    end
 
     describe 'save' do
+
+      describe 'assets' do
+
+        it "should be save" do
+          within '#theme-assets' do # 附件
+            has_content?('robots.txt').should be_false
+          end
+          click_on '新增附件'
+          click_on '取消'
+          click_on '新增附件'
+          attach_file 'file', File.join(Rails.root, 'public', 'robots.txt')
+          within '#theme-assets' do # 附件
+            has_content?('robots.txt').should be_true
+          end
+        end
+
+        it "should be show" do
+          click_on '新增附件'
+          attach_file 'file', File.join(Rails.root, 'public', 'images', 'spinner.gif')
+          within '#current-asset' do
+            find('#asset-title').has_content?('spinner.gif').should be_true
+            find('#asset-link-rollback').visible?.should be_true # 版本
+            find('#asset-link-rename').visible?.should be_true # 重命名
+            find('#asset-link-destroy').visible?.should be_true # 删除
+            find('#template-editor').visible?.should be_false
+            find('#preview-image').visible?.should be_true
+          end
+        end
+
+      end
+
+      describe 'snippets' do
+
+        it "should be save" do
+          within '#theme-snippets' do # 片段
+            has_content?('hot-products.liquid').should be_false
+          end
+          click_on '新增片段'
+          click_on '取消'
+          click_on '新增片段'
+          fill_in 'new_snippet_basename_without_ext', with: 'hot-products'
+          click_on '新增片段'
+          within '#theme-snippets' do # 片段
+            has_content?('hot-products.liquid').should be_true
+          end
+        end
+
+        it "should be show" do
+          click_on '新增片段'
+          fill_in 'new_snippet_basename_without_ext', with: 'hot-products'
+          click_on '新增片段'
+          within '#current-asset' do
+            find('#asset-title').has_content?('hot-products.liquid').should be_true
+            find('#asset-link-rollback').visible?.should be_true # 版本
+            find('#asset-link-rename').visible?.should be_true # 重命名
+            find('#asset-link-destroy').visible?.should be_true # 删除
+            text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
+            text.should be_blank
+          end
+        end
+
+      end
+
+      describe 'templates' do
+
+        it "should be save" do
+          within '#theme-templates' do # 模板
+            has_content?('customers/login.liquid').should be_false
+          end
+          click_on '新增模板'
+          click_on '取消'
+          click_on '新增模板'
+          select 'customers/login', from: 'new-template-selectbox'
+          click_on '新增模板'
+          within '#theme-templates' do # 模板
+            has_content?('customers/login.liquid').should be_true
+          end
+        end
+
+        it "should be show" do
+          click_on '新增模板'
+          select 'customers/password', from: 'new-template-selectbox'
+          click_on '新增模板'
+          within '#current-asset' do
+            find('#asset-title').has_content?('customers/password.liquid').should be_true
+            find('#asset-link-rollback').visible?.should be_true # 版本
+            find('#asset-link-rename').visible?.should be_true # 重命名
+            find('#asset-link-destroy').visible?.should be_true # 删除
+            text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
+            text.should_not be_blank
+          end
+        end
+
+      end
+
+      describe 'layout' do
+
+        it "should be save" do
+          within '#theme-layout' do # 布局
+            has_content?('new_theme.liquid').should be_false
+          end
+          click_on '新增布局'
+          click_on '取消'
+          click_on '新增布局'
+          select 'theme.liquid', from: 'new-layout-selectbox'
+          fill_in 'new_layout_basename_without_ext', with: 'new_theme'
+          click_on '新增布局'
+          within '#theme-layout' do # 布局
+            has_content?('new_theme.liquid').should be_true
+          end
+        end
+
+        it "should be show" do
+          click_on 'theme.liquid'
+          theme_text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
+          click_on '新增布局'
+          fill_in 'new_layout_basename_without_ext', with: 'foo_theme'
+          click_on '新增布局'
+          within '#current-asset' do
+            find('#asset-title').has_content?('foo_theme.liquid').should be_true
+            find('#asset-link-rollback').visible?.should be_true # 版本
+            find('#asset-link-rename').visible?.should be_true # 重命名
+            find('#asset-link-destroy').visible?.should be_true # 删除
+            text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
+            text.should eql theme_text
+          end
+        end
+
+      end
+
     end
 
     describe 'show' do
@@ -86,7 +222,6 @@ describe "Themes", js: true do
         end
       end
 
-=begin
       it "should be update" do
         text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
         content = 'to be or not to be'
@@ -113,7 +248,7 @@ describe "Themes", js: true do
           find('#rollback-selectbox option').text.should eql '1'
           click_on '取消'
           has_css?('#asset-link-rollback').should be_true
-          has_css?('#rollback-selectbox option').should eql be_false
+          has_css?('#rollback-selectbox').should be_false
         end
       end
 
@@ -125,11 +260,9 @@ describe "Themes", js: true do
           text.should include 'html'
         end
       end
-=end
 
     end
 
-=begin
     it "should be index" do
       within '#theme-layout' do # 布局
         find(:xpath, './/li[1]').find('a').text.should eql 'theme.liquid'
@@ -147,7 +280,6 @@ describe "Themes", js: true do
         find(:xpath, './/li[1]').find('a').text.should eql 'settings.html'
       end
     end
-=end
 
   end
 

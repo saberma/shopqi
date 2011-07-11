@@ -87,7 +87,7 @@
         .section-content
           %ul#theme-snippets.nobull.clearfix
         #new_snippet_reveal_link.new-asset-link.note
-          %a(href="#") 新增一个片段
+          %a(href="#") 新增片段
         #new-snippet.cl.section-new(style="display:none")
           %p
             %strong 新增片段
@@ -101,7 +101,7 @@
         .section-content
           %ul#theme-assets.nobull.clearfix
         #new_asset_reveal_link.new-asset-link.note
-          %a(href="#") 新增一个附件
+          %a(href="#") 新增附件
         #new-asset.cl.section-new(style="display:none")
           %p 上传一个新的主题附件
           #file-uploader
@@ -171,9 +171,7 @@
   %a(class="asset-{{{type}}}" href="#") {{{name}}}
 %script(id="new-layout-selectbox-item" type="text/x-jquery-tmpl")
   {{#each layouts}}
-  {{#with asset}}
   %option(value="{{{key}}}") {{{name}}}
-  {{/with}}
   {{/each}}
 %script(id="rollback-selectbox-item" type="text/x-jquery-tmpl")
   %li#asset-rollback-form
