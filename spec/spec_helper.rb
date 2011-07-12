@@ -53,11 +53,11 @@ Spork.each_run do
     config.before(:suite) do
       DatabaseCleaner.strategy = :truncation, {:except => %w[themes]} #theme包含初始化数据，不清掉
       DatabaseCleaner.clean_with(:truncation, {:except => %w[themes]})
-      FileUtils.mkdir_p(File.join(Rails.root, 'public', 'files', 'test'))
+      FileUtils.mkdir_p(File.join(Rails.root, 'public', 's', 'files', Rails.env))
     end
 
     config.after(:suite) do
-      FileUtils.rm_rf(File.join(Rails.root, 'public', 'files', 'test'))
+      FileUtils.rm_rf(File.join(Rails.root, 'public', 's', 'files', Rails.env))
     end
 
     config.before(:each) do

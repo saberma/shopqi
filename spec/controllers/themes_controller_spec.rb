@@ -12,7 +12,7 @@ describe ThemesController do
   end
 
   it 'should be update' do
-    put :update, theme: { save_preset: 'origin', settings: {}}
+    put :update, theme: { load_preset: 'origin', save_preset: {}, settings: {}}
     response.should be_success
   end
 

@@ -3,7 +3,6 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
 
   events:
     "change #theme_load_preset": 'load'
-    "change #theme_load_preset": 'showDelete' # 显示删除按钮
     "click #delete_theme_preset_link": 'destroy' # 删除
 
   initialize: ->
@@ -25,6 +24,7 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
     name = $('#theme_load_preset').children('option:selected').val()
     preset = @collection.detect (model) -> model.get('name') is name
     this.loadSettings preset.get('value')
+    this.showDelete() # 显示删除按钮
 
   # private
   loadSettings: (settings_hash) -> # 加载配置项
