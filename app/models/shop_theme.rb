@@ -51,7 +51,7 @@ class ShopThemeSetting < ActiveRecord::Base
           table.widget(cellspacing: 0) {
             tr {
               td {
-                div(name: name, class: :file) } }
+                div(name: name, class: :file) } } # 使用ajax后台上传
             tr {
               td {
                 div.asset {

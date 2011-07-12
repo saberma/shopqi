@@ -6,6 +6,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
     "change #settings_panel :input": 'customize' # 修改配置项左边选项切换至'定制'
     "change #save-current-setting": 'select' # 点击复选框显示新增命名
     "change #theme_save_preset_existing": 'select_existing'
+    "click .closure-lightbox": 'show' # 显示图片
 
   initialize: ->
     self = this
@@ -81,3 +82,10 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
     existing =  $('#theme_save_preset_existing').val() is ''
     $('#theme_save_preset_new_container').toggle(existing)
     $('#theme_save_preset_new').val ''
+
+  show: (e) ->
+    template = Handlebars.compile $('#asset-image-item').html()
+    url = $(e.target).attr('href') # /s/files/2/theme/assets/bg-logo.png
+    title = url.substr(url.lastIndexOf('/')+1) #bg-logo.png
+    $.blockUI message: template(title: title, url: url)
+    false

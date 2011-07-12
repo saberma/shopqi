@@ -194,6 +194,14 @@ Handlebars.registerHelper 'date', (date, format)->
   format = null if format.hash
   DateUtils.to_s date, format
 
+$.fn.center = -> # 弹出窗口居中处理
+  this.css("position","absolute")
+  this.css("top", ( $(window).height() - this.height() ) / 2+$(window).scrollTop() + "px")
+  this.css("left", ( $(window).width() - this.width() ) / 2+$(window).scrollLeft() + "px")
+  this
+$.blockUI.defaults.css.width = 'auto'
+$.blockUI.defaults.onBlock = -> $('.blockUI.blockMsg').center()
+
 $(document).ready ->
   App.init()
   setPlaceholderText()
@@ -235,3 +243,5 @@ $(document).ready ->
   #下拉框
   UpdateableSelectBox $('#product-type-select'), '新增类型'
   UpdateableSelectBox $('#product-vendor-select'), '新增厂商'
+
+  $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').live 'click', -> $.unblockUI() # 关闭弹出窗口

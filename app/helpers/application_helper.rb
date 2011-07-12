@@ -22,6 +22,10 @@ module ApplicationHelper
     end
   end
 
+  def dialog(title, &block) # 弹出窗口
+    render 'shared/block', title: title, body: capture(&block)
+  end
+
   #后台管理顶端菜单
   def menus
     @menus ||= [
