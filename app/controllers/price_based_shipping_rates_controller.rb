@@ -5,8 +5,12 @@ class PriceBasedShippingRatesController < ApplicationController
   expose(:country){ price_based_shipping_rate.country }
 
   def create
-    price_based_shipping_rate.save
-    flash.now[:notice] = notice_msg
+    if price_based_shipping_rate.save
+      flash.now[:notice] = notice_msg
+    else
+      flash[:error] = price_based_shipping_rate.errors.full_messages[0]
+      render template: "shared/error_msg"
+    end
   end
 
   def destroy
@@ -15,7 +19,10 @@ class PriceBasedShippingRatesController < ApplicationController
   end
 
   def update
-    price_based_shipping_rate.save
-    redirect_to edit_price_based_shipping_rate_path(price_based_shipping_rate),notice: notice_msg
+    if price_based_shipping_rate.save
+      redirect_to edit_price_based_shipping_rate_path(price_based_shipping_rate),notice: notice_msg
+    else
+      render action: 'edit'
+    end
   end
 end

@@ -5,8 +5,12 @@ class WeightBasedShippingRatesController < ApplicationController
   expose(:country){ weight_based_shipping_rate.country }
 
   def create
-    weight_based_shipping_rate.save
-    flash.now[:notice] = notice_msg
+    if weight_based_shipping_rate.save
+      flash.now[:notice] = notice_msg
+    else
+      flash[:error] = weight_based_shipping_rate.errors.full_messages[0]
+      render template: "shared/error_msg"
+    end
   end
 
   def destroy
@@ -15,7 +19,10 @@ class WeightBasedShippingRatesController < ApplicationController
   end
 
   def update
-    weight_based_shipping_rate.save
-    redirect_to edit_weight_based_shipping_rate_path(weight_based_shipping_rate),notice: notice_msg
+    if weight_based_shipping_rate.save
+      redirect_to edit_weight_based_shipping_rate_path(weight_based_shipping_rate),notice: notice_msg
+    else
+      render action: 'edit'
+    end
   end
 end

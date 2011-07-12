@@ -18,6 +18,7 @@
       %dd== ¥#{weight_based_shipping_rate.price} RMB
   #shipping-form{:style => "display:none"}
     =form_for weight_based_shipping_rate do |f|
+      =message_block on: [weight_based_shipping_rate]
       %dl
         %dt
           =f.label :name
@@ -41,3 +42,10 @@
         =f.submit w('save'),class: 'btn'
         =w('or')
         =link_to w('cancel'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
+:javascript
+  $(document).ready(function(){
+    if ($('.error').size() > 0){
+      TogglePair(['shipping-summary', 'shipping-form']);
+      return false;
+    }
+  })
