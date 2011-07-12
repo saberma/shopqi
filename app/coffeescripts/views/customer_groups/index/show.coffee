@@ -32,8 +32,7 @@ App.Views.CustomerGroup.Index.Show = Backbone.View.extend
 
   show: ->
     template = Handlebars.compile $('#new-customer-group-item').html()
-    $.blockUI message: template(), css: { width: '339px' }
-    $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').attr('title','单击关闭').click($.unblockUI)
+    $.blockUI message: template()
     false
 
   destroy: ->

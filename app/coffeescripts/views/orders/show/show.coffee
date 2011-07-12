@@ -23,6 +23,5 @@ App.Views.Order.Show.Show = Backbone.View.extend
 
   showCancel: ->
     template = Handlebars.compile $('#cancel-order-item').html()
-    $.blockUI message: template(), css: { width: '630px' }
-    $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').attr('title','单击关闭').click($.unblockUI)
+    $.blockUI message: template()
     false

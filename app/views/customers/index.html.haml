@@ -157,7 +157,12 @@
 %script(id="customer-search_filters-item" type="text/x-jquery-tmpl")
   %span.label-text {{{condition_name}}} {{{value_name}}}
   %a.close-filter-tag(href="#") x
-%script(id="new-customer-group-item" type="text/x-jquery-tmpl")=render 'customer_groups/new'
+%script(id="new-customer-group-item" type="text/x-jquery-tmpl")
+  =dialog '保存顾客分组' do
+    %form#create_customer_group.clearfix(onsubmit='return false')
+      %p(style="font-size:12px; margin-bottom:10px; color:#777;") 请输入新的分组名称
+      %input#new_group_name.name(name="customer_group[name]")
+      %input#save_group_button.btn(type="submit" value="保存")
 
 :javascript
   App.init = function(){
