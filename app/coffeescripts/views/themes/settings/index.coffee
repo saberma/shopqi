@@ -85,7 +85,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
 
   show: (e) ->
     template = Handlebars.compile $('#asset-image-item').html()
-    url = $(e.target).attr('href') # /s/files/2/theme/assets/bg-logo.png
+    url = $(e.target).closest('a').attr('href') # /s/files/2/theme/assets/bg-logo.png
     title = url.substr(url.lastIndexOf('/')+1) #bg-logo.png
     $.blockUI message: template(title: title, url: url)
     false

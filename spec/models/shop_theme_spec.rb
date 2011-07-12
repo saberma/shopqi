@@ -6,12 +6,6 @@ describe ShopTheme do
 
   let(:theme) { shop.theme }
 
-  let(:settings) { theme.config_settings['presets']['default'] }
-
-  before :each do
-    theme.switch Theme.find_by_name('Prettify')
-  end
-
   describe ShopThemeSetting do
 
     describe 'settings.html' do
@@ -32,12 +26,14 @@ describe ShopTheme do
           settings['presets']['newest'].should_not be_nil
           settings['presets']['newest']['use_logo_image'].should be_false
           settings['current'].should eql 'newest'
+          theme.settings.where(name: :use_logo_image).first.value.should eql 'f'
         end
 
         it 'should be destroy' do
-          theme.settings.destroy_preset 'default'
+          theme.settings.destroy_preset 'original'
           settings = theme.settings.as_json
           settings['current'].class.should eql Hash
+          theme.settings.where(name: :use_logo_image).first.value.should eql 't'
         end
 
         it 'should be save custom' do
@@ -59,11 +55,14 @@ describe ShopTheme do
     end
 
     it 'should parse select element' do
+      theme.switch Theme.find_by_name('Prettify')
+      settings = theme.config_settings['presets']['default']
       settings['bg_image_y_position'].should eql 'top'
     end
 
     it 'should parse checkbox element' do
-      settings['use_bg_image'].should eql 'false'
+      settings = theme.config_settings['presets']['original']
+      settings['use_logo_image'].should eql true
     end
 
   end

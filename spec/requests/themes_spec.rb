@@ -19,6 +19,12 @@ describe "Themes", js: true do
       find('#use_feature_image').visible?.should be_false # 只显示第一个fieldset
     end
 
+    it "should show image" do
+      find('.closure-lightbox').click
+      find('.shopqi-dialog').visible?.should be_true
+      has_content?('logo.png').should be_true
+    end
+
     describe 'presets' do
 
       describe 'show' do

@@ -3,6 +3,7 @@
 class ShopThemeSetting < ActiveRecord::Base
   belongs_to :theme, class_name: 'ShopTheme'
 
+  # 修改此模块内方法要记得重启服务
   module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
     def html_path  # public/s/files/1/theme/config/settings.html
       File.join theme.public_path, 'config', 'settings.html'
@@ -18,19 +19,21 @@ class ShopThemeSetting < ActiveRecord::Base
     end
 
     def save(preset, data)
+      data = data.as_json.symbolize_keys
       settings = self.as_json
       doc = Nokogiri::HTML(File.read(html_path))
       doc.css("input[type='checkbox']").each do |element| # 转化为boolean值
-        name = element['name']
+        name = element['name'].to_sym
         data[name] = (data[name] == '1')
       end
       if preset.blank? # 定制的直接保存在current根节点
-        settings['current'] = data.as_json
+        settings['current'] = data
       else
         settings['current'] = preset
         #settings['presets'][preset] = data #NoMethodError (undefined method `merge' for #<JSON::Ext::Generator::State:)
-        settings['presets'][preset] = data.as_json
+        settings['presets'][preset] = data
       end
+      save_settings data
       Asset.update theme, 'config/settings_data.json', JSON.pretty_generate(settings)
     end
 
@@ -38,6 +41,7 @@ class ShopThemeSetting < ActiveRecord::Base
       settings = self.as_json
       data = settings['presets'].delete preset
       settings['current'] = data
+      save_settings data
       Asset.update theme, 'config/settings_data.json', JSON.pretty_generate(settings)
     end
 
@@ -94,6 +98,14 @@ class ShopThemeSetting < ActiveRecord::Base
         element['name'] = "theme[settings][#{element['name']}]"
       end
       doc.inner_html
+    end
+
+    def save_settings(data) # 保存settings记录，方便liquid获取(比如settings.use_logo_image)
+      theme.settings.clear
+      data = data.map do |name, value|
+        {name: name, value: value}
+      end
+      theme.settings.create data
     end
 
     def theme

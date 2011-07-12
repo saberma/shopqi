@@ -140,7 +140,7 @@ body.homepage { background: #4f9a0e url('/images/background/bg-homepagegreennois
 #masthead { height:54px;  background: #212121 url('/images/background/bg-masthead.gif?1271811441') top left repeat-x; }  
 
 /* this is old code and should be removed, ask Mark - March 8 '10 */
-#masthead img.shopqi-logo  { display:block; float:left; position: relative; bottom: 5px; }        
+#masthead img.shopqi-logo  { display:block; float:left; position: relative; bottom: 5px; }
                                                             
 
 /* Rename the old logo and apply a the new html */ 
