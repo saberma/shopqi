@@ -244,4 +244,4 @@ $(document).ready ->
   UpdateableSelectBox $('#product-type-select'), '新增类型'
   UpdateableSelectBox $('#product-vendor-select'), '新增厂商'
 
-  $('.blockOverlay,.shopify-dialog-title-close,.close-lightbox').live 'click', -> $.unblockUI() # 关闭弹出窗口
+  $('.blockOverlay,.shopqi-dialog-title-close,.close-lightbox').live 'click', -> $.unblockUI() # 关闭弹出窗口

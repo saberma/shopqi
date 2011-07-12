@@ -281,17 +281,17 @@ th.sku {width: 30px;}
 a.bottab { background: #fff; border: 1px solid #eee; border-top: 0; padding: 4px 10px 4px 25px; }
 
 /* closure dialog */
-.shopify-dialog-bg {position: fixed; background-color: #666; opacity:0.3; top: 0; left: 0; z-index:5000;}
-.shopify-dialog {position: absolute; background-color: #fff; border:1px solid #AAAAAA; width:auto !important; padding:1px; outline:none; z-index:9999; box-shadow:0 0 15px rgba(0,0,0,0.1); -moz-box-shadow:0 0 15px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(0,0,0,0.1);}
-.shopify-dialog-title {position: relative; background:url("/images/editor/toolbar-bg.png") repeat-x scroll left bottom #FAFAFA; border-bottom:1px solid #bbb; color:#333; cursor:move; font-size:16px; font-weight:700; padding:10px 15px; vertical-align:middle;}
-.shopify-dialog-title.no-title {background:none; padding:0; border:none;}
+.shopqi-dialog-bg {position: fixed; background-color: #666; opacity:0.3; top: 0; left: 0; z-index:5000;}
+.shopqi-dialog {position: absolute; background-color: #fff; border:1px solid #AAAAAA; width:auto !important; padding:1px; outline:none; z-index:9999; box-shadow:0 0 15px rgba(0,0,0,0.1); -moz-box-shadow:0 0 15px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(0,0,0,0.1);}
+.shopqi-dialog-title {position: relative; background:url("/images/editor/toolbar-bg.png") repeat-x scroll left bottom #FAFAFA; border-bottom:1px solid #bbb; color:#333; cursor:move; font-size:16px; font-weight:700; padding:10px 15px; vertical-align:middle;}
+.shopqi-dialog-title.no-title {background:none; padding:0; border:none;}
 
-.shopify-dialog-content {padding:15px; overflow:auto; max-height:500px;}
-.shopify-dialog-title-close {display:block; float:left; text-indent:-9999px; background:url(/images/admin/icons/close.png) no-repeat 0px 0px; height:24px; width:24px; position:absolute; margin-left:-32px; left:100%; top:8px; cursor:pointer;}
-.shopify-dialog-title-close:hover {background:url(/images/admin/icons/close.png) no-repeat 0px -23px;}
-.shopify-dialog-title-close:active {background:url(/images/admin/icons/close.png) no-repeat 0px -46px;}
+.shopqi-dialog-content {padding:15px; overflow:auto; max-height:500px;}
+.shopqi-dialog-title-close {display:block; float:left; text-indent:-9999px; background:url(/images/admin/icons/close.png) no-repeat 0px 0px; height:24px; width:24px; position:absolute; margin-left:-32px; left:100%; top:8px; cursor:pointer;}
+.shopqi-dialog-title-close:hover {background:url(/images/admin/icons/close.png) no-repeat 0px -23px;}
+.shopqi-dialog-title-close:active {background:url(/images/admin/icons/close.png) no-repeat 0px -46px;}
 .closure-lightbox-placeholder {text-align:center; height:50px; width:50px; padding:30px 130px; background:url(/images/spinner_big.gif) no-repeat center center;}
-.shopify-dialog-content .dialog-actions {padding:5px 0 0 0;}
+.shopqi-dialog-content .dialog-actions {padding:5px 0 0 0;}
 
 div.not-found {padding:40px;}
 .not-found p {font-size:18px;}
@@ -796,7 +796,7 @@ div.tel {color:#aaa; font-size:11px; margin-bottom:8px; margin-top:-3px;}
 .orders tr:hover td { background: #E6F0F5; border-bottom-color: #CFDCE4; }
 .orders th { padding: 4px 4px 1px 4px; }
 
-#shipping-to-shopify-hq{ width: 129px; height: 35px; margin: 0 0 0 -5px; padding: 8px 0 0 47px; color: #53a60e; background: url(/images/admin/shipping-to-shopify-hq.png) 0 0 no-repeat; }
+#shipping-to-shopqi-hq{ width: 129px; height: 35px; margin: 0 0 0 -5px; padding: 8px 0 0 47px; color: #53a60e; background: url(/images/admin/shipping-to-shopqi-hq.png) 0 0 no-repeat; }
 
 div.incomplete { font-size: 95%; font-weight: bold; }
 div.complete { background: #dfc; padding: 10px; border: 1px solid #ACE97C; color: #060; }
@@ -1254,7 +1254,7 @@ tr.hidden td { color: #888; }
 .waiting-actions ul {width:445px; margin:0 auto; padding:20px 0;}
 .waiting-actions ul li {padding:0 0 20px 80px;}
 .waiting-actions ul li.manage-orders {background:#fff url(/images/admin/theme-import-icons.jpg) 0 18px no-repeat;}
-.waiting-actions ul li.shopify-tips {background:#fff url(/images/admin/theme-import-icons.jpg) 0 -77px no-repeat;}
+.waiting-actions ul li.shopqi-tips {background:#fff url(/images/admin/theme-import-icons.jpg) 0 -77px no-repeat;}
 .waiting-actions ul li.app-store {background:#fff url(/images/admin/theme-import-icons.jpg) 0 -172px no-repeat;}
 .waiting-actions ul li.iphone-app {background:#fff url(/images/admin/theme-import-icons.jpg) 0 -267px no-repeat;}
 .waiting-actions ul li h3 {margin-bottom:0px;}
@@ -2177,7 +2177,7 @@ ol#instructions li { margin:10px 0; color:#777;}
 .store-contest-2011 p { padding-top:54px; float:right; width:693px;}
 
 /* if the user is in dev, staging or devolopement */
-.shopify-location {color:#ddd; font-size:10px; padding:3px 8px; box-shadow:0 1px 0 #555; margin-left:5px; margin-right:5px;
+.shopqi-location {color:#ddd; font-size:10px; padding:3px 8px; box-shadow:0 1px 0 #555; margin-left:5px; margin-right:5px;
 background: #010101;
 border-radius:5px;
 background: -moz-linear-gradient(top, #010101 0%, #2b2b2b 100%);

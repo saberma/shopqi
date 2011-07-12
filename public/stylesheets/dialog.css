@@ -88,9 +88,9 @@ textarea.lform {border:1px solid #e8e8e8; font-size:12px; color:#666; margin:10p
 #app-install h1 {font-size:24px;}
 #app-install h3 {color:#999; font-weight:400;}
 #app-install p.app_status {color:#666; font-size:12px;}
-.app-icon, .shopify-icon, .connect {float:left;}
+.app-icon, .shopqi-icon, .connect {float:left;}
 .app-icon {padding-left:65px;}
-.app-icon p, .shopify-icon p {width:112px; font-size:11px; color:#999; padding:4px 0; line-height:13px; word-wrap: break-word;}
+.app-icon p, .shopqi-icon p {width:112px; font-size:11px; color:#999; padding:4px 0; line-height:13px; word-wrap: break-word;}
 #app-install div.connect {width:200px; padding:24px 10px; height:66px; }
 #app-install div.connect.read {display:inline-block; padding:41px 10px; height:30px;}
 #visual-install-details img, img.border {border:1px solid #dedede; padding:5px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}       

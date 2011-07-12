@@ -79,17 +79,17 @@ th.sku {width: 30px;}
 a.bottab { background: #fff; border: 1px solid #eee; border-top: 0; padding: 4px 10px 4px 25px; }
 
 /* closure dialog */
-.shopify-dialog-bg {position: fixed; background-color: #666; opacity:0.3; top: 0; left: 0; z-index:5000;}
-.shopify-dialog {position: absolute; background-color: #fff; border:1px solid #AAAAAA; width:auto !important; padding:1px; outline:none; z-index:9999; box-shadow:0 0 15px rgba(0,0,0,0.1); -moz-box-shadow:0 0 15px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(0,0,0,0.1);}
-.shopify-dialog-title {position: relative; background:url("../images/editor/toolbar-bg.png") repeat-x scroll left bottom #FAFAFA; border-bottom:1px solid #bbb; color:#333; cursor:move; font-size:16px; font-weight:700; padding:10px 15px; vertical-align:middle;}
-.shopify-dialog-title.no-title {background:none; padding:0; border:none;}
+.shopqi-dialog-bg {position: fixed; background-color: #666; opacity:0.3; top: 0; left: 0; z-index:5000;}
+.shopqi-dialog {position: absolute; background-color: #fff; border:1px solid #AAAAAA; width:auto !important; padding:1px; outline:none; z-index:9999; box-shadow:0 0 15px rgba(0,0,0,0.1); -moz-box-shadow:0 0 15px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 15px rgba(0,0,0,0.1);}
+.shopqi-dialog-title {position: relative; background:url("../images/editor/toolbar-bg.png") repeat-x scroll left bottom #FAFAFA; border-bottom:1px solid #bbb; color:#333; cursor:move; font-size:16px; font-weight:700; padding:10px 15px; vertical-align:middle;}
+.shopqi-dialog-title.no-title {background:none; padding:0; border:none;}
 
-.shopify-dialog-content {padding:15px; overflow:auto; max-height:500px;}
-.shopify-dialog-title-close {display:block; float:left; text-indent:-9999px; background:url(../images/admin/icons/close.png) no-repeat 0px 0px; height:24px; width:24px; position:absolute; margin-left:-32px; left:100%; top:8px; cursor:pointer;}
-.shopify-dialog-title-close:hover {background:url(../images/admin/icons/close.png) no-repeat 0px -23px;}
-.shopify-dialog-title-close:active {background:url(../images/admin/icons/close.png) no-repeat 0px -46px;}
+.shopqi-dialog-content {padding:15px; overflow:auto; max-height:500px;}
+.shopqi-dialog-title-close {display:block; float:left; text-indent:-9999px; background:url(../images/admin/icons/close.png) no-repeat 0px 0px; height:24px; width:24px; position:absolute; margin-left:-32px; left:100%; top:8px; cursor:pointer;}
+.shopqi-dialog-title-close:hover {background:url(../images/admin/icons/close.png) no-repeat 0px -23px;}
+.shopqi-dialog-title-close:active {background:url(../images/admin/icons/close.png) no-repeat 0px -46px;}
 .closure-lightbox-placeholder {text-align:center; height:50px; width:50px; padding:30px 130px; background:url(../images/spinner_big.gif) no-repeat center center;}
-.shopify-dialog-content .dialog-actions {padding:5px 0 0 0;}
+.shopqi-dialog-content .dialog-actions {padding:5px 0 0 0;}
 
 div.not-found {padding:40px;}
 .not-found p {font-size:18px;}

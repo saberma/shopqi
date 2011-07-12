@@ -140,12 +140,12 @@ body.homepage { background: #4f9a0e url('/images/background/bg-homepagegreennois
 #masthead { height:54px;  background: #212121 url('/images/background/bg-masthead.gif?1271811441') top left repeat-x; }  
 
 /* this is old code and should be removed, ask Mark - March 8 '10 */
-#masthead img.shopify-logo  { display:block; float:left; position: relative; bottom: 5px; }        
+#masthead img.shopqi-logo  { display:block; float:left; position: relative; bottom: 5px; }        
                                                             
 
 /* Rename the old logo and apply a the new html */ 
-#masthead a.logo-shopify { text-indent:-9999px; position:absolute; width:163px; height:55px; background:url('/images/logos/logo-shopify.gif?1289327933'); top:-1px; display:block;}    
-#masthead a.logo-shopify:hover, #masthead a.logo-shopify:focus  { background-position:0 -55px; outline:none;}
+#masthead a.logo-shopqi { text-indent:-9999px; position:absolute; width:163px; height:55px; background:url('/images/logos/logo-shopqi.gif?1289327933'); top:-1px; display:block;}    
+#masthead a.logo-shopqi:hover, #masthead a.logo-shopqi:focus  { background-position:0 -55px; outline:none;}
 
 ul#nav-primary { float:right; margin:0px 0 0 0; }
 ul#nav-primary li { float:left; list-style-type:none; margin:0 0px 0 0;  background:none; padding:0;  }
@@ -535,7 +535,7 @@ border:1px solid #ccc; border:1px solid rgba(244,244,244,1); -moz-border-radius:
 .essential-features h2 { padding-top:20px; margin:0 0 35px 0;}
 
 .essential-features img, 
-.behance-shopify img, .behance-why img
+.behance-shopqi img, .behance-why img
 { display:block; border:1px solid #ccc;  border:1px solid rgba(255,255,255,1); background:#f5f5f5; padding:12px; -moz-box-shadow: 0 1px 4px #888; -webkit-box-shadow: 0 1px 4px #888; box-shadow: 0 1px 4px #888; }
 
 .essential-features ul { margin:0px 0; padding:0; width:120%; }
@@ -941,9 +941,9 @@ ul.nextsteps li img { vertical-align:middle; margin:-4px 6px 0 0 ; }
 /* = Interviews = */
 /* ============== */
 #interview h3 { color:#1E5171; margin:35px 0 8px; }
-#interview .shopify h3 { color:#6F8726; }
+#interview .shopqi h3 { color:#6F8726; }
 #interview p { color:#607178; }
-#interview .shopify p { color:#91AD3C; }
+#interview .shopqi p { color:#91AD3C; }
 
 
 
@@ -1102,7 +1102,7 @@ p.loading { background: url('/images/lightbox/loading.gif?1250534009') top left 
 
 
 /* ============================================= */
-/* = Behance landing page: shopify.com/behance = */
+/* = Behance landing page: shopqi.com/behance = */
 /* ============================================= */
 .behance a { color: #005cff; }
 .behance h2 { font-weight: bold; }
@@ -1115,15 +1115,15 @@ p.loading { background: url('/images/lightbox/loading.gif?1250534009') top left 
 .behance-signup img { float: right; height: 17px; }
 .behance-signup p { color: #2c2c2c; margin: 0; }
 
-.behance-shopify, .behance-why { padding-top: 45px; }
-.behance-shopify h3, .behance-why h3 { font-size: 26px; font-weight: bold; letter-spacing: -0.5px; line-height: 1.2em; text-align: center; }
-.behance-shopify h4, .behance-why h4 { font-weight: normal; padding-top: 15px;}
-.behance-shopify p { font-size: 14px; line-height: 1.65em; margin: 0 auto; text-align: center; width: 550px; }
+.behance-shopqi, .behance-why { padding-top: 45px; }
+.behance-shopqi h3, .behance-why h3 { font-size: 26px; font-weight: bold; letter-spacing: -0.5px; line-height: 1.2em; text-align: center; }
+.behance-shopqi h4, .behance-why h4 { font-weight: normal; padding-top: 15px;}
+.behance-shopqi p { font-size: 14px; line-height: 1.65em; margin: 0 auto; text-align: center; width: 550px; }
 
-.behance-steps ul, .behance-shopify ul, .behance-why ul { margin: auto; overflow: hidden; padding: 0 0 0 10px; width: 850px; }
-.behance-steps li, .behance-shopify li, .behance-why li { background: transparent; color: #888; float: left; line-height: 1.65em; list-style: none; margin: 0 65px 35px 0; padding: 0; width: 240px; }
-.behance-steps ul img, .behance-shopify ul img, .behance-why ul img { padding-bottom: 10px; }
-.behance-shopify ul, .behance-why ul { padding-top: 35px; }
+.behance-steps ul, .behance-shopqi ul, .behance-why ul { margin: auto; overflow: hidden; padding: 0 0 0 10px; width: 850px; }
+.behance-steps li, .behance-shopqi li, .behance-why li { background: transparent; color: #888; float: left; line-height: 1.65em; list-style: none; margin: 0 65px 35px 0; padding: 0; width: 240px; }
+.behance-steps ul img, .behance-shopqi ul img, .behance-why ul img { padding-bottom: 10px; }
+.behance-shopqi ul, .behance-why ul { padding-top: 35px; }
 
 .behance .next-feature { margin: 0 auto; width: 850px; }
 
@@ -1133,7 +1133,7 @@ p.loading { background: url('/images/lightbox/loading.gif?1250534009') top left 
 
 
 /* =========================================== */
-/* = Paypal landing page: shopify.com/paypal = */
+/* = Paypal landing page: shopqi.com/paypal = */
 /* =========================================== */
 .paypal-promo h3 { border-bottom:1px solid #d9d9d9; padding-bottom:5px; margin-bottom:20px;}  
 
@@ -1227,7 +1227,7 @@ h3#iphone-on-the-go { background: url('/images/icons/arrow18.png?1291752234') no
 /* ======================== */
 /* =       Boagworld      = */
 /* ======================== */
-div#boagworld-top { background: url('/images/graphics/designer-shopify-mbp.png?1294099134') no-repeat 312px top; margin-top:-57px;}
+div#boagworld-top { background: url('/images/graphics/designer-shopqi-mbp.png?1294099134') no-repeat 312px top; margin-top:-57px;}
 div#boagworld-top div:first-child { padding:100px 0;}
 div#boagworld-top .feature-box { margin: 5px 0 30px; padding: 20px 30px; color:#7f7f7f;}
 div#boagworld-top .feature-box h4 { color:#555;}
@@ -1265,16 +1265,16 @@ a.shop-button-url { background-position: bottom left;}
 a#music-button { background: url('/images/buttons/btn-openyourstorenow-blue-riskfree.png?1296601867') no-repeat top left; position:absolute; z-index:10; margin:-170px 0 0 58px; width:411px; height:60px;}
 a#music-button:hover { background: url('/images/buttons/btn-openyourstorenow-blue-riskfree.png?1296601867') no-repeat 0 -77px;}
 
-#shopify-bands, #shopify-festivals, #shopify-labels { margin-left: 34px;}
-#shopify-bands img, #shopify-festivals img, #shopify-labels img { margin-left:55px; padding:6px 0;}
-#shopify-bands div, #shopify-festivals div, #shopify-labels div { width:296px; height:69px;}
-#shopify-bands div { background: url('/images/graphics/music-ribbons.jpg?1295631025') no-repeat;}
-#shopify-festivals div { background: url('/images/graphics/music-ribbons.jpg?1295631025') no-repeat; background-position:0 -70px; margin-top:30px;}
-#shopify-labels div { background: url('/images/graphics/music-ribbons.jpg?1295631025') no-repeat; background-position:0 -140px; margin-top:30px;}
+#shopqi-bands, #shopqi-festivals, #shopqi-labels { margin-left: 34px;}
+#shopqi-bands img, #shopqi-festivals img, #shopqi-labels img { margin-left:55px; padding:6px 0;}
+#shopqi-bands div, #shopqi-festivals div, #shopqi-labels div { width:296px; height:69px;}
+#shopqi-bands div { background: url('/images/graphics/music-ribbons.jpg?1295631025') no-repeat;}
+#shopqi-festivals div { background: url('/images/graphics/music-ribbons.jpg?1295631025') no-repeat; background-position:0 -70px; margin-top:30px;}
+#shopqi-labels div { background: url('/images/graphics/music-ribbons.jpg?1295631025') no-repeat; background-position:0 -140px; margin-top:30px;}
 
-#shopify-quotes blockquote { background: url('/images/graphics/music-quote.jpg?1295631025') no-repeat top right; font-size:14px; text-align:right; padding:60px 30px 70px 100px; margin: 30px -31px 5px; line-height:1.5em;}
-#shopify-quotes blockquote b { font-size:18px; }
-#shopify-quotes cite { color: #777; font-family:georgia, serif; margin-left:120px; font-size:12px; }
+#shopqi-quotes blockquote { background: url('/images/graphics/music-quote.jpg?1295631025') no-repeat top right; font-size:14px; text-align:right; padding:60px 30px 70px 100px; margin: 30px -31px 5px; line-height:1.5em;}
+#shopqi-quotes blockquote b { font-size:18px; }
+#shopqi-quotes cite { color: #777; font-family:georgia, serif; margin-left:120px; font-size:12px; }
 
 
 /* =============================== */

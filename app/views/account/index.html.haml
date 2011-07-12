@@ -7,14 +7,8 @@
 .group.box2
   %table#account-about.values-aligned{:cellspacing => "0"}
     %tr
-      %td.r Your URL:
-      %td http://medhurst-shields-and-kunde7896.myshopify.com
-      %td.r Payment method:
-      %td
-        None
-        (
-        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/subscription/payment"}> add a credit card
-        )
+      %td.r 您的商店URL地址:
+      %td=show_shop_url
     %tr
       %td.r
         SKUs used:
@@ -31,9 +25,6 @@
           .progress-container{:style => "margin-top:7px"}
             .progress-bar{:style => "width: 2%; "}
         %span.note 97.1 MB free
-        (
-        %a{:href => "mailto:sales@shopify.com?subject=Request%20for%20more%20disk%20space%20from%20medhurst-shields-and-kunde7896.myshopify.com"}> need more?
-        )
     %tr
       %td &nbsp;
       %td
