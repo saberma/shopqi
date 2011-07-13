@@ -21,6 +21,7 @@ Shopqi::Application.routes.draw do
       post '/cart/add' => 'cart#add'
       get '/cart' => 'cart#show'
       post '/cart' => 'cart#update'
+      get '/blogs/:handle/:id' => 'articles#show'
     end
   end
 

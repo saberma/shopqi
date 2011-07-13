@@ -50,7 +50,7 @@ class ShopObserver < ActiveRecord::Observer
     footer.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 2
 
     # 博客(最新动态)
-    shop.blogs.create title: '最新动态', handle: 'latest-news'
+    shop.blogs.create title: '最新动态', handle: 'latest-news', commentable: 'no'
 
     # 默认顾客
     shop.customers.create [

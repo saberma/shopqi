@@ -8,6 +8,10 @@ class Blog < ActiveRecord::Base
     self.handle = Pinyin.t(self.title, '-') if self.handle.blank? # 新增时初始化handle
   end
 
+  def comments_enabled?
+    commentable != 'no'
+  end
+
   define_index do
     has :shop_id
     indexes :title
@@ -42,8 +46,16 @@ class Article < ActiveRecord::Base
     @tags_text ||= tags.map(&:name).join(',')
   end
 
+  def comments_count
+    comments.size
+  end
+
   before_create do
     self.shop_id = blog.shop_id #冗余商店ID，方便全文检索过滤
+  end
+
+  def url
+    "/#{blog.handle}/#{id}"
   end
 
   after_save do
