@@ -6,6 +6,4 @@ App.Controllers.Themes.Index = Backbone.Controller.extend
   initialize: ->
 
   search: (splat)->
-    $.get "/themes/filter?#{splat}", (data) ->
-      themes = new App.Collections.Themes data
-      new App.Views.Theme.Index.Index collection: themes
+    $.get "/themes/filter?#{splat}", (data) -> App.themes.refresh data

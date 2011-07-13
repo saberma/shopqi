@@ -95,3 +95,6 @@
     new App.Controllers.Themes.Index();
     Backbone.history.start();
   }
+
+  App.themes = new App.Collections.Themes();
+  new App.Views.Theme.Index.Index({collection: App.themes});
