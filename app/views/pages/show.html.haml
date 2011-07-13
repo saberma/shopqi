@@ -12,7 +12,7 @@
 .page-edit
   .group(style="margin-top:0")
     =form_for page do |f|
-      #page-form
+      #page-form.group-fields
         %dl
           %dt=f.label :title
           %dd=f.text_field :title, class: [:big, :sb]

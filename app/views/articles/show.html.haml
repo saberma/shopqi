@@ -16,7 +16,7 @@
 #article-edit{:style => "display: none;"}
   .group.sst
     =form_for [blog,article], html:{class:"edit_article"} do |f|
-      #article-form
+      #article-form.group-fields
         %dl
           =render partial:"form",locals:{f:f,article:article}
           %dd.btns.editor-btns
