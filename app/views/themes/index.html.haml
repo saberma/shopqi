@@ -4,7 +4,7 @@
     %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")
     %title ShopQi 主题商店 | 电子商务模板
     = stylesheet_link_tag "base_packaged", "resources-nav"
-    = javascript_include_tag 'jquery'
+    = javascript_include_tag :theme, 'models/theme', 'collections/themes', 'views/themes/index/show', 'views/themes/index/index', 'controllers/themes/index'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie7'
     /[if IE]
@@ -14,291 +14,85 @@
     .resources-nav
       %ul
         %li.logo
-          %a(href="http://shopify.com/resources")
-            %img(src="/images/resources-nav/logo-shopify.png")/
+          %a(href="http://shopqi.com/resources")=image_tag 'resources-nav/logo-shopqi.png'
         %li
-          %a(href="http://apps.shopify.com/" title="ShopQi App Store") Apps
-        %li.current
-          %a(href="http://themes.shopify.com/" title="Home") Themes
+          %a(href="http://apps.shopqi.com/" title="ShopQi App Store") 应用
+        %li.current=link_to '主题外观', 'http://themes.shopqi.com'
         %li
-          %a(href="http://support.myshopify.com/" title="ShopQi &mdash; Support") Support
+          %a(href="http://support.myshopqi.com/" title="ShopQi &mdash; Support") 支持
         %li
-          %a(href="http://forums.shopify.com/" title="ShopQi Community") Forums
+          %a(href="http://forums.shopqi.com/" title="ShopQi Community") 论坛
         %li
-          %a(href="http://wiki.shopify.com/" title="Main Page - ShopQi Wiki") Wiki
-    / .resources-nav
+          %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki") 文档
     .vig-left
-    / .vig-left
     .vig-right
-    / .vig-right
     #wrapper
       #header
         #navigation.clearfix
-          %a.logo(href="/")
-            %img(alt="Logo Themestore" src="/images/logos/logo-themestore.png")
+          %a.logo(href="/")=image_tag 'logos/logo-themestore.png'
           %ul
             %li
-              %a(href="/services/themes/guidelines") Theme Guidelines
+              %a(href="#") 主题指南
             %li
-              %a(href="/services/themes/new") Submit theme
-        / #navigation
+              %a(href="#") 提交主题
         #filter-bar
           .theme-price.selection-bar
             %ul
               %li.first.selected.price
-                %a.price(href="/?price=both" rel="both") both
+                %a.price(href="/?price=both" rel="both") 全部
               %li.price
-                %a.price(href="/?price=free" rel="free") free
+                %a.price(href="/?price=free" rel="free") 免费
               %li.last.price
-                %a.price(href="/?price=paid" rel="paid") paid
+                %a.price(href="/?price=paid" rel="paid") 收费
           / .theme-price
           .colors.selection-bar
             %ul
               %li.first.selected.color
-                %a.color(href="/?color=" rel="") all colors
-              %li.color
-                %a.color(href="/?color=Red" rel="Red")
-                  %img(alt="Button-colorred" src="/images/buttons/button-colorred.png?1309973532")/
-              %li.color
-                %a.color(href="/?color=Yellow" rel="Yellow")
-                  %img(alt="Button-coloryellow" src="/images/buttons/button-coloryellow.png?1309973532")/
-              %li.color
-                %a.color(href="/?color=Green" rel="Green")
-                  %img(alt="Button-colorgreen" src="/images/buttons/button-colorgreen.png?1309973532")/
-              %li.color
-                %a.color(href="/?color=Blue" rel="Blue")
-                  %img(alt="Button-colorblue" src="/images/buttons/button-colorblue.png?1309973532")/
-              %li.color
-                %a.color(href="/?color=Magenta" rel="Magenta")
-                  %img(alt="Button-colormagenta" src="/images/buttons/button-colormagenta.png?1309973532")/
-              %li.color
-                %a.color(href="/?color=White" rel="White")
-                  %img(alt="Button-colorwhite" src="/images/buttons/button-colorwhite.png?1309973532")/
-              %li.color
-                %a.color(href="/?color=Black" rel="Black")
-                  %img(alt="Button-colorblack" src="/images/buttons/button-colorblack.png?1309973532")/
-              %li.last.color
-                %a.color(href="/?color=Grey" rel="Grey")
-                  %img(alt="Button-colorgrey" src="/images/buttons/button-colorgrey.png?1309973532")/
-          / .colors
+                %a.color(href="/?color=" rel="") 所有颜色
+              -%w(red yellow green blue magenta white black grey).each do |color|
+                %li.color
+                  %a.color(href="/?color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
           .sortby.dropdown
             %ul#sortby-dropdown
               %li.sortby
                 %a.sortby(href="#" rel="")
-                  %span Sort by
+                  %span 排序
             %ul.drop(style="display:none;")
               %li.sortby
-                %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") Newest Themes
+                %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") 最新主题
               %li.sortby
-                %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") Official Themes
+                %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") 官方主题
               %li.sortby
-                %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") Most Downloaded
-          / .sortby
-          .single
-            %ul
-              %li.rounded.woo
-                %a.woo(href="/?woo=true" rel="1")
-                  %span
-                    %img(alt="Button-woo" src="/images/buttons/button-woo.png?1309973532")/
-          / .theme-price
-          %img.spinner(src="/images/spinner.gif" style="display:none")/
-      / #header
-      #featured-theme-grid
-        #feature.clearfix
-          %ul.theme-thumbs
-            %li
-              %a(href="/themes/woostore/styles/default-settings")
-                %p
-                  %big $180
-                  %strong WooStore
-                  %small Default Settings
-                %img(alt="Featured" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/124/main/featured.png")/
-            %li
-              %a(href="/themes/cogify/styles/concorde")
-                %p
-                  %big $150
-                  %strong Cogify
-                  %small Concorde
-                %img(alt="Featured" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/173/main/featured.png")/
-            %li
-              %a(href="/themes/monochrome/styles/blue-orange")
-                %p
-                  %big Free
-                  %strong Monochrome
-                  %small Blue/Orange
-                %img(alt="Featured" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/166/main/featured.jpg")/
+                %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") 最多下载
+          %img.spinner(src="/images/spinner_big.gif" style="display:none")
+      -#
+        #featured-theme-grid
+          #feature.clearfix
+            %ul.theme-thumbs
       #content
-        #woothemes.clearfix
-          %img.ninja(src="../images/icons/icon-wooninja.png")/
-          .woo-description
-            %h2 What is WooThemes?
-            %p WooThemes is an international team of designers and developers producing commercial themes for specific online content management systems. With our head quarters based in Cape Town South Africa we pride ourselves in collaborating with industry-leading web designers and budding amateur designers around the world - releasing hugely unique and customizable themes every month!
-            %p
-              %a(href="http://www.woothemes.com/" title="WooThemes | Premium WordPress Themes") Learn more about WooThemes
-              or
-              = succeed "." do
-                %a(href="http://www.woothemes.com/meet-the-team/" title="Meet the team  |  WooThemes") meet the team
-          / .woo-description
-        / .name
         #noresults(style="display:none")
           .noresults-message
-            %h2 We couldn't find any themes that match your criteria
+            %h2 我们找不到任何主题符合您的查询条件
             %p
-              Try a simpler search by using one or two properties. You could also
-              %a(href="http://wiki.shopify.com/Category:Designer" title="Category:Designer - ShopQi Wiki") find a ShopQi designer
-              or post on our
-              = succeed "." do
-                %a(href="http://forums.shopify.com/categories/11" title="Job Board") job board
-          / .noresults-messege
-          %h2 Closest Matches...
+              请尝试使用一两个查询条件的简单查询
+          %h2 最接近要求的主题...
         #theme-grid.clearfix
           %ul#themes.theme-thumbs
-            %li#theme-243.theme
-              %a(href="/themes/hipster/styles/grid")
-                %p
-                  %big $120
-                  %strong.has-style
-                    Hipster
-                  %small
-                    Grid
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/243/main/medium.jpg")/
-            %li#theme-242.theme
-              %a(href="/themes/hipster/styles/denim-default")
-                %p
-                  %big $120
-                  %strong.has-style
-                    Hipster
-                  %small
-                    Denim (default)
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/242/main/medium.jpg")/
-            %li#theme-227.theme
-              %a(href="/themes/radiance/styles/slate")
-                %p
-                  %big Free
-                  %strong.has-style
-                    Radiance
-                  %small
-                    Slate
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/227/main/medium.jpg")/
-            %li#theme-226.theme
-              %a(href="/themes/radiance/styles/good-morning")
-                %p
-                  %big Free
-                  %strong.has-style
-                    Radiance
-                  %small
-                    Good Morning
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/226/main/medium.jpg")/
-            %li#theme-236.theme
-              %a(href="/themes/expo/styles/denim")
-                %p
-                  %big $150
-                  %strong.has-style
-                    Expo
-                  %small
-                    Denim
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/236/main/medium.png")/
-            %li#theme-235.theme
-              %a(href="/themes/expo/styles/eple")
-                %p
-                  %big $150
-                  %strong.has-style
-                    Expo
-                  %small
-                    Eple
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/235/main/medium.png")/
-            %li#theme-234.theme
-              %a(href="/themes/expo/styles/mello")
-                %p
-                  %big $150
-                  %strong.has-style
-                    Expo
-                  %small
-                    Mello
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/234/main/medium.png")/
-            %li#theme-233.theme
-              %a(href="/themes/expo/styles/vintage")
-                %p
-                  %big $150
-                  %strong.has-style
-                    Expo
-                  %small
-                    Vintage
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/233/main/medium.png")/
-            %li#theme-202.theme
-              %a(href="/themes/couture/styles/arioso")
-                %p
-                  %big Free
-                  %strong.has-style
-                    Couture
-                  %small
-                    Arioso
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/202/main/medium.png")/
-            %li#theme-201.theme
-              %a(href="/themes/couture/styles/faust")
-                %p
-                  %big Free
-                  %strong.has-style
-                    Couture
-                  %small
-                    Faust
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/201/main/medium.png")/
-            %li#theme-211.theme
-              %a(href="/themes/minimo/styles/minimo-white")
-                %p
-                  %big $120
-                  %strong.has-style
-                    Minimo
-                  %small
-                    Minimo - White
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/211/main/medium.jpg")/
-            %li#theme-208.theme
-              %a(href="/themes/minimo/styles/minimo-black")
-                %p
-                  %big $120
-                  %strong.has-style
-                    Minimo
-                  %small
-                    Minimo - Black
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/208/main/medium.jpg")/
-            %li#theme-207.theme
-              %a(href="/themes/minimo/styles/minimo-grey")
-                %p
-                  %big $120
-                  %strong.has-style
-                    Minimo
-                  %small
-                    Minimo - Grey
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/207/main/medium.jpg")/
-            %li#theme-206.theme
-              %a(href="/themes/minimo/styles/minimo-blue")
-                %p
-                  %big $120
-                  %strong.has-style
-                    Minimo
-                  %small
-                    Minimo - Blue
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/206/main/medium.jpg")/
-            %li#theme-192.theme
-              %a(href="/themes/fashionopolism/styles/mono")
-                %p
-                  %big $100
-                  %strong
-                    %span.smaller Fashionopolism
-                %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/192/main/medium.jpg")/
-              %li#theme-196.theme
-                %a(href="/themes/new-york/styles/5th-avenue")
-                  %p
-                    %big $120
-                    %strong.has-style
-                      New York
-                    %small
-                      5th Avenue
-                  %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/196/main/medium.jpg")/
-          :javascript
-            //
-            $("#themes").pageless(("total_pages":7,"totalPages":7,"url":"/themes","params":(),"loaderImage":"/images/spinner-bag.gif"));
-            //
-        / #themes_grid
-      / #content
-    / #wrapper
+
+%script(id="theme-item" type="text/x-jquery-tmpl")
+  %a(href="/themes/hipster/styles/grid")
+    %p
+      %big {{{budget}}}
+      %strong.has-style {{{name}}}
+      %small {{{style}}}
+    %img(src="http://s3.amazonaws.com/shopify-theme-store/screenshots/243/main/medium.jpg")
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Themes.Index();
+    Backbone.history.start();
+  }
+
+  App.themes = new App.Collections.Themes();
+  App.themes.refresh(#{themes_json});
+  new App.Views.Theme.Index.Index({collection: App.themes});

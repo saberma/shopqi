@@ -1,4 +1,4 @@
-/*This is the universal nav for every subsite EXCEPT for the main shopify.com site*/
+/*This is the universal nav for every subsite EXCEPT for the main shopqi.com site*/
 .resources-nav { height:55px; background: url('/images/resources-nav/bg.png?1272564223'); margin:0 0 40px 0; padding:0 20px; }
 .resources-nav ul { padding:0; width:925px;  height: 55px; margin:0 auto; position:relative;}  
 .resources-nav ul ul { padding:0; width:auto; height:auto; margin:0; position:static;}
@@ -15,5 +15,4 @@
 .resources-nav li a:active { background:#444; }     
 .resources-nav li.current a { background:#65b600 url('/images/resources-nav/bg-activelink.png?1271083424') repeat-x bottom;  text-shadow:1px 1px 0.5px #417f09;  border-left: 1px solid #649e15; border-right:1px solid #69a922;  } 
 .resources-nav li.current a:hover, .resources-nav li.current a:active  { color:#FFF; }          
-.resources-nav li.logo a { position:absolute; top:0; left:0 ; margin:0; padding:0px; line-height:0px; border:0px; height:55px; width:210px;text-indent:-99999px; background:  url('/images/resources-nav/logo-shopify.png?555') no-repeat; }   
-
+.resources-nav li.logo a { position:absolute; top:0; left:0 ; margin:0; padding:0px; line-height:0px; border:0px; height:55px; width:210px;text-indent:-99999px; background:  url('/images/resources-nav/logo-shopqi.png?555') no-repeat; }   

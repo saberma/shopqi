@@ -7,6 +7,13 @@ class ThemesController < ApplicationController
   expose(:theme) { shop.theme }
   expose(:settings_html) { theme.settings.transform }
   expose(:settings_json) { theme.settings.as_json.to_json }
+  # 主题商店列表
+  expose(:themes_json) do
+    Theme.all.inject([]) do |result, theme|
+      result << { theme: theme.attributes }
+      result
+    end.to_json
+  end
 
   def index
     render 'index', layout: nil
