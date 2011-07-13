@@ -6,5 +6,6 @@ App.Views.Theme.Index.Index = Backbone.View.extend
     this.render()
 
   render: ->
+    $('#themes').html ''
     @collection.each (model) ->
       new App.Views.Theme.Index.Show model: model

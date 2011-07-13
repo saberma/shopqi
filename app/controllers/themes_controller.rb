@@ -1,22 +1,32 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: :index
+  prepend_before_filter :authenticate_user!, except: [:index, :filter]
   layout 'admin'
 
   expose(:shop) { current_user.shop }
   expose(:theme) { shop.theme }
   expose(:settings_html) { theme.settings.transform }
   expose(:settings_json) { theme.settings.as_json.to_json }
-  # 主题商店列表
-  expose(:themes_json) do
-    Theme.all.inject([]) do |result, theme|
-      result << { theme: theme.attributes }
-      result
-    end.to_json
-  end
 
-  def index
-    render 'index', layout: nil
+  begin 'store'
+
+    def index
+      render 'index', layout: nil
+    end
+
+    def filter # 查询主题
+      price = params[:price]
+      color = params[:color]
+      themes =  Theme.all.clone # 一定要复制
+      themes.select! {|t| t.price == 0} if price == 'free'
+      themes.reject! {|t| t.price == 0} if price == 'paid'
+      themes.select! {|t| t.color == color} unless color.blank?
+      themes_json = themes.inject([]) do |result, theme|
+        result << { theme: theme.attributes }; result
+      end.to_json
+      render json: themes_json
+    end
+
   end
 
   begin 'admin' # 后台管理

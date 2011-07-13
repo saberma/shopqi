@@ -39,19 +39,18 @@
           .theme-price.selection-bar
             %ul
               %li.first.selected.price
-                %a.price(href="/?price=both" rel="both") 全部
+                %a.price(href="#" rel="both") 全部
               %li.price
-                %a.price(href="/?price=free" rel="free") 免费
+                %a.price(href="#price=free" rel="free") 免费
               %li.last.price
-                %a.price(href="/?price=paid" rel="paid") 收费
-          / .theme-price
+                %a.price(href="#price=paid" rel="paid") 收费
           .colors.selection-bar
             %ul
               %li.first.selected.color
-                %a.color(href="/?color=" rel="") 所有颜色
-              -%w(red yellow green blue magenta white black grey).each do |color|
+                %a.color(href="#" rel="") 所有颜色
+              -Theme::COLOR.each do |color|
                 %li.color
-                  %a.color(href="/?color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
+                  %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
           .sortby.dropdown
             %ul#sortby-dropdown
               %li.sortby
@@ -83,8 +82,12 @@
   %a(href="/themes/{{{name}}}/styles/{{{style}}}")
     %p
       %big {{{budget}}}
+      {{#if has_style}}
       %strong.has-style {{{name}}}
       %small {{{style}}}
+      {{else}}
+      %strong {{{name}}}
+      {{/if}}
     =image_tag '/s/theme/screenshots/{{{id}}}/main/medium.jpg'
 
 :javascript
@@ -92,7 +95,3 @@
     new App.Controllers.Themes.Index();
     Backbone.history.start();
   }
-
-  App.themes = new App.Collections.Themes();
-  App.themes.refresh(#{themes_json});
-  new App.Views.Theme.Index.Index({collection: App.themes});
