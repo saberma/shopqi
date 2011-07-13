@@ -3,3 +3,8 @@
     %span.shopqi-dialog-title-text=title
     %span.shopqi-dialog-title-close(title='单击关闭') x
   .shopqi-dialog-content(style="text-align: left; cursor: default")=body
+:javascript
+  $('.blockUI.blockMsg.blockPage').draggable({
+    handle: '.shopqi-dialog-title',
+    cancel: '.shopqi-dialog-content'
+  });

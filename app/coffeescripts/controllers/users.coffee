@@ -1,5 +1,5 @@
 App.Controllers.Users = Backbone.Controller.extend
- 
+
   initialize: ->
     $('#add-user').click ->
       $("#new-user-form").toggle()
