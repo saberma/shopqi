@@ -13,7 +13,7 @@
   #preview-body
 .group.sst
   =form_for [blog,article],html:{id:"new_article",class:"new-article"} do |f|
-    #article-form
+    #article-form.group-fields
       %dl
         =render partial:"form",locals:{f:f}
         %dd.btns.editor-btns
