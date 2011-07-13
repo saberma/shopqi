@@ -7,11 +7,12 @@ Shopqi::Application.routes.draw do
     get "login", to: "devise/sessions#new"
   end
 
+  constraints(subdomain: 'themes') do # 主题商店 
+    get '/' => 'themes#index'
+  end
 
-  # 前台商店
-  constraints(Subdomain) do
+  constraints(Subdomain) do # 前台商店
     #match '/' => 'home#dashboard'
-
     scope module: :shop do
       match '/' => 'shops#show'
       get '/search' => 'search#show'
