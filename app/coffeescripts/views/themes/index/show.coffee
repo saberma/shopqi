@@ -12,4 +12,3 @@ App.Views.Theme.Index.Show = Backbone.View.extend
     attrs['has_style'] = @model.get('style') not in ['default', 'original']
     attrs['budget'] = if price is 0 then '免费' else "￥#{price}"
     $(@el).attr('data-id', "theme-#{@model.id}").html template attrs
-    #$('#themes').append @el

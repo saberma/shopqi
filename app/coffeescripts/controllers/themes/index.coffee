@@ -6,6 +6,7 @@ App.Controllers.Themes.Index = Backbone.Controller.extend
   initialize: ->
 
   search: (splat)->
+    $(".spinner").show()
     query = _(splat.split('&')).inject (result, item) -> #color=grey&price=free => {color: grey, price: free}
       str = item.split '='
       result[str[0]] = str[1]
