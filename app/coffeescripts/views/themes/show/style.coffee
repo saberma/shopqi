@@ -7,4 +7,4 @@ App.Views.Theme.Show.Style = Backbone.View.extend
 
   render: ->
     template = Handlebars.compile $('#styles-item').html()
-    $(@el).html template styles: App.styles_json, current_id: App.theme.id
+    $(@el).html template styles: App.styles_json

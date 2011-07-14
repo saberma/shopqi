@@ -15,10 +15,16 @@ class ThemesController < ApplicationController
     end
 
     def show
-      @theme_json = Theme.find_by_name_and_style(params[:name], params[:style]).attributes.to_json
+      theme = Theme.find_by_name_and_style(params[:name], params[:style])
+      @theme_json = theme.attributes.to_json
       styles = Theme.find_all_by_name(params[:name])
+      #others = Theme.find_all_by_author(theme.author).take(4)
+      others = Theme.find_all_by_author(theme.author).take(4)
       @styles_json = styles.inject([]) do |result, theme|
         result << theme.attributes; result
+      end.to_json
+      @others_json = others.inject([]) do |result, theme|
+        result << { theme: theme.attributes }; result
       end.to_json
       render 'show', layout: 'theme'
     end

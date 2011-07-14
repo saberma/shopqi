@@ -8,37 +8,6 @@
 .secondary-details.clearfix
   #styles.col-16.last
 #more-designer.more-themes.clearfix
-  %h4
-    更多
-    %a(href="/designers/woothemes") WooThemes
-    设计的主题
-  .shelf.clearfix
-    %ul#themes.theme-thumbs
-      %li#theme-128.theme
-        %a(href="/themes/air/styles/air")
-          %p
-            %big $180
-            %strong
-              Air
-          %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/128/main/medium.png")/
-      %li#theme-129.theme
-        %a(href="/themes/coquette/styles/sand")
-          %p
-            %big $180
-            %strong.has-style
-              Coquette
-            %small
-              Sand
-          %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/129/main/medium.png")/
-      %li#theme-130.theme
-        %a(href="/themes/coquette/styles/slate")
-          %p
-            %big $180
-            %strong.has-style
-              Coquette
-            %small
-              Slate
-          %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/130/main/medium.png")/
 %p.continuity-link
   %a(href="/##{session[:q]}")
     \&lsaquo; 返回主题商店
@@ -85,15 +54,35 @@
       %li
         %a(href="/themes/{{{name}}}/styles/{{{style}}}")
           %p
-            %strong 风格: {{{is_current}}}{{{style}}}
+            %strong 风格: {{{style}}}
           %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
         {{#unless is_current}}
         %p.view-style-demo
           %a(href="http://{{{shop}}}.myshopqi.com/" target="_blank") 查看示例  ›
         {{/unless}}
       {{/each}}
+%script(id="more-designer-item" type="text/x-jquery-tmpl")
+  %h4
+    更多
+    %a(href="#") {{{author}}}
+    设计的主题
+  .shelf.clearfix
+    %ul#themes.theme-thumbs
+%script(id="theme-item" type="text/x-jquery-tmpl")
+  %li.theme
+    %a(href="/themes/{{{name}}}/styles/{{{style}}}")
+      %p
+        %big {{{budget}}}
+        {{#if has_style}}
+        %strong.has-style {{{name}}}
+        %small {{{style}}}
+        {{else}}
+        %strong {{{name}}}
+        {{/if}}
+      %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
 
 :javascript
   App.theme = new Theme(#{@theme_json});
   App.styles_json = #{@styles_json};
+  App.others_json = new App.Collections.Themes(#{@others_json});
   new App.Views.Theme.Show.Index({model: App.theme});
