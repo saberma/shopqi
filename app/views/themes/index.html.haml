@@ -4,7 +4,7 @@
     %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")
     %title ShopQi 主题商店 | 电子商务模板
     = stylesheet_link_tag "base_packaged", "resources-nav"
-    = javascript_include_tag :theme, 'models/theme', 'collections/themes', 'views/themes/index/show', 'views/themes/index/index', 'controllers/themes/index'
+    = javascript_include_tag :theme, 'models/theme', 'collections/themes', 'views/themes/index/show', 'views/themes/index/index', 'controllers/themes/index', 'jquery.quicksand'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie7'
     /[if IE]
@@ -36,7 +36,7 @@
             %li
               %a(href="#") 提交主题
         #filter-bar
-          .theme-price.selection-bar
+          .prices.selection-bar
             %ul
               %li.first.selected.price
                 %a.price(href="#" rel="both") 全部

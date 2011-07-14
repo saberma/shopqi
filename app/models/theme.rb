@@ -6,7 +6,7 @@ class Theme < ActiveHash::Base
   # 名称 风格 价格 颜色 描述
   self.data = [
     {id: 1, name: 'Prettify' , style: 'default'    , price: 0, color: 'magenta'}, #26
-    {id: 2, name: 'Threadify', style: 'original'   , price: 0, color: 'blue'}   , #65
+    {id: 2, name: 'Threadify', style: 'original'   , price: 0, color: 'grey'}   , #65
     {id: 3, name: 'Woodland' , style: 'Slate'      , price: 0, color: 'grey'}   , #96
     {id: 4, name: 'Woodland' , style: 'Birchwood'  , price: 0, color: 'yellow'} , #90
     {id: 5, name: 'Woodland' , style: 'Dark Alder' , price: 0, color: 'black'}  , #89
