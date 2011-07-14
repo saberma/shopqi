@@ -5,6 +5,8 @@
 
 #overview.theme-overview.col-6
 #screenshots.theme-screenshots.col-10.last
+.secondary-details.clearfix
+  #styles.col-16.last
 #more-designer.more-themes.clearfix
   %h4
     更多
@@ -75,7 +77,23 @@
     %li
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/product/original.jpg")
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb.jpg")
+%script(id="styles-item" type="text/x-jquery-tmpl")
+  %ul
+    %h3 此主题包括 种风格
+    %ul.theme-thumbs.packaged-styles
+      {{#each styles}}
+      %li
+        %a(href="/themes/{{{name}}}/styles/{{{style}}}")
+          %p
+            %strong 风格: {{{is_current}}}{{{style}}}
+          %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
+        {{#unless is_current}}
+        %p.view-style-demo
+          %a(href="http://{{{shop}}}.myshopqi.com/" target="_blank") 查看示例  ›
+        {{/unless}}
+      {{/each}}
 
 :javascript
   App.theme = new Theme(#{@theme_json});
+  App.styles_json = #{@styles_json};
   new App.Views.Theme.Show.Index({model: App.theme});

@@ -12,3 +12,4 @@ App.Views.Theme.Show.Index = Backbone.View.extend
     $('#overview').html template attrs
     template = Handlebars.compile $('#screenshots-item').html()
     $('#screenshots').html template id: @model.id
+    new App.Views.Theme.Show.Style()
