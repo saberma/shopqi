@@ -1,0 +1,81 @@
+=content_for :filter do
+  %p.pointed
+    %a(href="/##{session[:q]}")
+      %span ‹ 返回主题商店
+
+#overview.theme-overview.col-6
+#screenshots.theme-screenshots.col-10.last
+#more-designer.more-themes.clearfix
+  %h4
+    更多
+    %a(href="/designers/woothemes") WooThemes
+    设计的主题
+  .shelf.clearfix
+    %ul#themes.theme-thumbs
+      %li#theme-128.theme
+        %a(href="/themes/air/styles/air")
+          %p
+            %big $180
+            %strong
+              Air
+          %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/128/main/medium.png")/
+      %li#theme-129.theme
+        %a(href="/themes/coquette/styles/sand")
+          %p
+            %big $180
+            %strong.has-style
+              Coquette
+            %small
+              Sand
+          %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/129/main/medium.png")/
+      %li#theme-130.theme
+        %a(href="/themes/coquette/styles/slate")
+          %p
+            %big $180
+            %strong.has-style
+              Coquette
+            %small
+              Slate
+          %img(alt="Medium" src="http://s3.amazonaws.com/shopify-theme-store/screenshots/130/main/medium.png")/
+%p.continuity-link
+  %a(href="/##{session[:q]}")
+    \&lsaquo; 返回主题商店
+
+%script(id="overview-item" type="text/x-jquery-tmpl")
+  %h1 {{{name}}}
+  %p.summary {{{desc}}}
+  .purchase
+    .clearfix
+      %p.price {{{budget}}}
+      %p.download
+        %a.standard-button.login(href="/themes/{{{name}}}/styles/{{{style}}}/download") 获取主题
+        或者
+        %a(href="http://{{{shop}}}.myshopqi.com" target="_blank")
+          %span 查看示例 &rsaquo;
+  %ul.theme-details
+    %li
+      此主题由
+      %a(href="{{{site}}}") {{{author}}}
+      提供官方技术支持
+      %br/
+      申请技术支持请发邮件至
+      %a(href="mailto: {{{email}}}") {{{email}}}
+  %br/
+  %li
+    主题作者:
+    %a(href="{{{site}}}") {{{author}}}
+%script(id="screenshots-item" type="text/x-jquery-tmpl")
+  %ul
+    %li
+      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/main/original.jpg")
+        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/main/large.jpg")
+    %li
+      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/collection/original.jpg")
+        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/collection/thumb.jpg")
+    %li
+      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/product/original.jpg")
+        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb.jpg")
+
+:javascript
+  App.theme = new Theme(#{@theme_json});
+  new App.Views.Theme.Show.Index({model: App.theme});

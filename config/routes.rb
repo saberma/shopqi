@@ -10,6 +10,7 @@ Shopqi::Application.routes.draw do
   constraints(subdomain: 'themes') do # 主题商店 
     get '/' => 'themes#index'
     get '/themes/filter' => 'themes#filter'
+    get '/themes/:name/styles/:style' => 'themes#show'
   end
 
   constraints(Subdomain) do # 前台商店

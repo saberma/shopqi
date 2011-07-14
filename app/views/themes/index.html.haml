@@ -1,83 +1,43 @@
-!!!
-%html
-  %head
-    %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")
-    %title ShopQi 主题商店 | 电子商务模板
-    = stylesheet_link_tag "base_packaged", "resources-nav"
-    = javascript_include_tag :theme, 'models/theme', 'collections/themes', 'views/themes/index/show', 'views/themes/index/index', 'controllers/themes/index', 'jquery.quicksand'
-    /[if lt IE 8]
-      = stylesheet_link_tag 'ie7'
-    /[if IE]
-      = stylesheet_link_tag 'ie'
-    = stylesheet_link_tag "force-scrollbar"
-  %body
-    .resources-nav
-      %ul
-        %li.logo
-          %a(href="http://shopqi.com/resources")=image_tag 'resources-nav/logo-shopqi.png'
-        %li
-          %a(href="http://apps.shopqi.com/" title="ShopQi App Store") 应用
-        %li.current=link_to '主题外观', 'http://themes.shopqi.com'
-        %li
-          %a(href="http://support.myshopqi.com/" title="ShopQi &mdash; Support") 支持
-        %li
-          %a(href="http://forums.shopqi.com/" title="ShopQi Community") 论坛
-        %li
-          %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki") 文档
-    .vig-left
-    .vig-right
-    #wrapper
-      #header
-        #navigation.clearfix
-          %a.logo(href="/")=image_tag 'logos/logo-themestore.png'
-          %ul
-            %li
-              %a(href="#") 主题指南
-            %li
-              %a(href="#") 提交主题
-        #filter-bar
-          .prices.selection-bar
-            %ul
-              %li.first.selected.price
-                %a.price(href="#" rel="both") 全部
-              %li.price
-                %a.price(href="#price=free" rel="free") 免费
-              %li.last.price
-                %a.price(href="#price=paid" rel="paid") 收费
-          .colors.selection-bar
-            %ul
-              %li.first.selected.color
-                %a.color(href="#" rel="") 所有颜色
-              -Theme::COLOR.each do |color|
-                %li.color(class="#{color == Theme::COLOR.last and 'last'}")
-                  %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
-          -#
-            .sortby.dropdown
-              %ul#sortby-dropdown
-                %li.sortby
-                  %a.sortby(href="#" rel="")
-                    %span 排序
-              %ul.drop(style="display:none;")
-                %li.sortby
-                  %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") 最新主题
-                %li.sortby
-                  %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") 官方主题
-                %li.sortby
-                  %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") 最多下载
-          %img.spinner(src="/images/spinner_big.gif" style="display:none")
-      -#
-        #featured-theme-grid
-          #feature.clearfix
-            %ul.theme-thumbs
-      #content
-        #noresults(style="display:none")
-          .noresults-message
-            %h2 我们找不到任何主题符合您的查询条件
-            %p
-              请尝试使用一个条件的简单查询
-          -#%h2 最接近要求的主题...
-        #theme-grid.clearfix
-          %ul#themes.theme-thumbs
+=content_for :filter do
+  .prices.selection-bar
+    %ul
+      %li.first.selected.price
+        %a.price(href="#" rel="both") 全部
+      %li.price
+        %a.price(href="#price=free" rel="free") 免费
+      %li.last.price
+        %a.price(href="#price=paid" rel="paid") 收费
+  .colors.selection-bar
+    %ul
+      %li.first.selected.color
+        %a.color(href="#" rel="") 所有颜色
+      -Theme::COLOR.each do |color|
+        %li.color(class="#{color == Theme::COLOR.last and 'last'}")
+          %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
+  -#
+    .sortby.dropdown
+      %ul#sortby-dropdown
+        %li.sortby
+          %a.sortby(href="#" rel="")
+            %span 排序
+      %ul.drop(style="display:none;")
+        %li.sortby
+          %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") 最新主题
+        %li.sortby
+          %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") 官方主题
+        %li.sortby
+          %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") 最多下载
+  %img.spinner(src="/images/spinner_big.gif" style="display:none")
+
+#content
+  #noresults(style="display:none")
+    .noresults-message
+      %h2 我们找不到任何主题符合您的查询条件
+      %p
+        请尝试使用一个条件的简单查询
+    -#%h2 最接近要求的主题...
+  #theme-grid.clearfix
+    %ul#themes.theme-thumbs
 
 %script(id="theme-item" type="text/x-jquery-tmpl")
   %a(href="/themes/{{{name}}}/styles/{{{style}}}")

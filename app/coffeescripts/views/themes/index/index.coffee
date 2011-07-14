@@ -23,7 +23,8 @@ App.Views.Theme.Index.Index = Backbone.View.extend
 
   search: (e) -> # 多条件联合查询
     current = window.location.hash.substr(1)
-    query = _(current.split('&')).inject (result, item) -> #color=grey&price=free => {color: grey, price: free}
+    items = _.compact current.split('&')
+    query = _(items).inject (result, item) -> #color=grey&price=free => {color: grey, price: free}
       str = item.split '='
       result[str[0]] = str[1]
       result
@@ -34,8 +35,9 @@ App.Views.Theme.Index.Index = Backbone.View.extend
     false
 
   finish: -> # 查询完毕
-    $(".spinner").hide()
-    if @collection.length is 0
-      $("#noresults").fadeIn("fast").slideDown("medium")
-    else
-      $("#noresults").fadeOut("fast").slideUp("fast")
+    if $(".spinner:visible")[0] # 避免重复执行
+      $(".spinner").hide()
+      if @collection.length is 0
+        $("#noresults").fadeIn("fast").slideDown("medium")
+      else
+        $("#noresults").fadeOut("fast").slideUp("fast")

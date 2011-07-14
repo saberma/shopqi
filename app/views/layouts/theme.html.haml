@@ -1,0 +1,41 @@
+!!!
+%html
+  %head
+    %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")
+    %title ShopQi 主题商店 | 电子商务模板
+    = stylesheet_link_tag "base_packaged", "resources-nav", "jquery.fancybox-1.3.4"
+    = javascript_include_tag :theme, 'models/theme', 'collections/themes', 'views/themes/show/index', 'views/themes/index/show', 'views/themes/index/index', 'controllers/themes/index', 'jquery.quicksand', 'jquery.fancybox-1.3.4'
+    /[if lt IE 8]
+      = stylesheet_link_tag 'ie7'
+    /[if IE]
+      = stylesheet_link_tag 'ie'
+    = stylesheet_link_tag "force-scrollbar"
+  %body
+    .resources-nav
+      %ul
+        %li.logo
+          %a(href="http://shopqi.com/resources")=image_tag 'resources-nav/logo-shopqi.png'
+        %li
+          %a(href="http://apps.shopqi.com/" title="ShopQi App Store") 应用
+        %li.current=link_to '主题外观', 'http://themes.shopqi.com'
+        %li
+          %a(href="http://support.myshopqi.com/" title="ShopQi &mdash; Support") 支持
+        %li
+          %a(href="http://forums.shopqi.com/" title="ShopQi Community") 论坛
+        %li
+          %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki") 文档
+    .vig-left
+    .vig-right
+    #wrapper
+      #header
+        #navigation.clearfix
+          %a.logo(href="/")=image_tag 'logos/logo-themestore.png'
+          %ul
+            %li
+              %a(href="#") 主题指南
+            %li
+              %a(href="#") 提交主题
+        #filter-bar
+          =yield :filter
+      #content
+        =yield

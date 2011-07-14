@@ -2,6 +2,7 @@ App =
   Views:
     Theme:
       Index: {}
+      Show: {}
   Controllers:
     Themes: {}
   Collections: {}

@@ -1,0 +1,98 @@
+- id: 1
+  name: Prettify
+  style: default
+  price: 0
+  color: magenta
+  desc: Prettify 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: prettify
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 2
+  name: Threadify
+  style: original
+  price: 0
+  color: grey
+  desc: Threadify 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: threadify
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 3
+  name: Woodland
+  style: Slate
+  price: 0
+  color: grey
+  desc: Woodland 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: woodland
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 4
+  name: Woodland
+  style: Birchwood
+  price: 0
+  color: yellow
+  desc: Woodland 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: woodland
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 5
+  name: Woodland
+  style: Dark Alder
+  price: 0
+  color: black
+  desc: Woodland 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: woodland
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 6
+  name: Structure
+  style: Electronics
+  price: 0
+  color: black
+  desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: structure
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 7
+  name: Structure
+  style: Apparel
+  price: 0
+  color: red
+  desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: structure
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 8
+  name: Structure
+  style: Crafts
+  price: 0
+  color: green
+  desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: structure
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com
+
+- id: 9
+  name: Structure
+  style: Jewelry
+  price: 0
+  color: black
+  desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  shop: structure
+  site: http://www.shopqi.com
+  author: ShopQi
+  email: support@shopqi.com

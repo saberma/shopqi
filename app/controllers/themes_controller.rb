@@ -1,6 +1,6 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: [:index, :filter]
+  prepend_before_filter :authenticate_user!, except: [:index, :show, :filter]
   layout 'admin'
 
   expose(:shop) { current_user.shop }
@@ -11,10 +11,17 @@ class ThemesController < ApplicationController
   begin 'store'
 
     def index
-      render 'index', layout: nil
+      render 'index', layout: 'theme'
+    end
+
+    def show
+      Theme.all # Fixed: NoMethodError: undefined method `find_by_name_and_style' for Theme:Class
+      @theme_json = Theme.find_by_name_and_style(params[:name], params[:style]).attributes.to_json
+      render 'show', layout: 'theme'
     end
 
     def filter # 查询主题
+      session[:q] = request.query_string
       price = params[:price]
       color = params[:color]
       themes =  Theme.all.clone # 一定要复制
