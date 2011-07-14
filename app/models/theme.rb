@@ -8,3 +8,4 @@ class Theme < ActiveYaml::Base
     find_by_name('Threadify')
   end
 end
+Theme.all # Fixed: NoMethodError: undefined method `find_by_name_and_style' for Theme:Class

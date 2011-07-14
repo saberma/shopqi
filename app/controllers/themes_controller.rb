@@ -15,7 +15,6 @@ class ThemesController < ApplicationController
     end
 
     def show
-      Theme.all # Fixed: NoMethodError: undefined method `find_by_name_and_style' for Theme:Class
       @theme_json = Theme.find_by_name_and_style(params[:name], params[:style]).attributes.to_json
       styles = Theme.find_all_by_name(params[:name])
       @styles_json = styles.inject([]) do |result, theme|
