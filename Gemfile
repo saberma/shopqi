@@ -47,6 +47,7 @@ gem "uuid" # 生成36位(或32位)唯一序列号
 gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
+gem "oauth-plugin", ">= 0.4.0.pre6" # oauth认证服务
 
 group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
