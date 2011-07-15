@@ -335,6 +335,12 @@ ul.indv-theme-stats li .theme-details a {margin-top:7px; display:inline-block;}
 ul.indv-theme-stats li .theme-details strong {color:#000; font-weight:bold}
  .message-box {width:382px; text-align:center; margin:30px auto ;}
 .message-box h1 {margin-bottom:10px;}
+#fancybox-content label {text-transform:none; letter-spacing:0px}
+#fancybox-content input[type="text"] {padding:7px 4px; float:left; width:200px;}
+#fancybox-content input[type="submit"] {padding:5px 5px 4px; font-size:13px; float:left}
+#fancybox-content textarea {margin-bottom:15px;}
+#fancybox-content h1 {margin-bottom:20px}
+#fancybox-content .hint {font-family:helvetica, arial; padding-top:3px}
     form ul li {margin-bottom:25px}
 label {display:block; color:#333; font-size:14px; margin:0 0 4px 0;}
 textarea {-moz-border-radius:4px; background:#f0f0f0; border:0px; padding:5px 5px; border-top:1px solid #a8a8a8; font-family:helvetica, arial; font-size:13px; border-left:1px solid #a8a8a8; border-bottom:1px solid #dfdfdf; border-right:1px solid #dfdfdf; display:block; margin-bottom:30px; line-height:1.41em}

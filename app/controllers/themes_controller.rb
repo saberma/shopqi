@@ -1,6 +1,6 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: [:index, :show, :login, :filter]
+  prepend_before_filter :authenticate_user!, except: [:index, :show, :download, :login, :filter]
   layout 'admin'
   layout 'theme', only: [:index, :show, :download]
 
@@ -28,10 +28,15 @@ class ThemesController < ApplicationController
     end
 
     def download
+      redirect_to theme_login_path
     end
 
-    def login
+    def login # 未登录时提示用户登录或者注册(如果直接跳转至登录页面则对未注册用户不友好)
       render layout: nil
+    end
+
+    def authenticate # 跳转至登录页面oauth
+      redirect_to "#{params[:shop]}/auth/login"
     end
 
     def filter # 查询主题

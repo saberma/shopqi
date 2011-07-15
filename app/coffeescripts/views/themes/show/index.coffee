@@ -4,7 +4,7 @@ App.Views.Theme.Show.Index = Backbone.View.extend
   initialize: ->
     self = this
     this.render()
-    $("a.fancy-box").fancybox()
+    $("a.fancy-box, a.login").fancybox()
 
   render: ->
     template = Handlebars.compile $('#overview-item').html()

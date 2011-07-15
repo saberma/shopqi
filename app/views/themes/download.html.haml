@@ -1,115 +1,25 @@
-!!!
-%html
-  %head
-    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
-    %title Install Couture | Ecommerce Templates
-    %link{:href => "/stylesheets/base_packaged.css?1309973532", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-    %link{:href => "http://www.shopify.com/static/stylesheets/resources-nav.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-    %meta{:content => "authenticity_token", :name => "csrf-param"}/
-    %meta{:content => "p/NzRVj3Z58fzF5eTWG1/Ksc9tiiZWLNKHI8SzPKvpI=", :name => "csrf-token"}/
-    %script{:src => "/javascripts/base_packaged.js?1309973532", :type => "text/javascript"}
-    /[if lt IE 8]
-      <link href="/stylesheets/ie7.css?1309973532" media="screen" rel="stylesheet" type="text/css" />
-    /[if IE]
-      <link href="/stylesheets/ie.css?1309973532" media="screen" rel="stylesheet" type="text/css" />
-    :javascript
-      (function() {
-        var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'shopify-aggregate.heroku.com/track.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-      })();
-     %body
-    .resources-nav
-      %ul
-        %li.logo
-          %a{:href => "http://shopify.com/resources"}
-            %img{:src => "/images/resources-nav/logo-shopify.png"}/
-        %li
-          %a{:href => "http://apps.shopify.com/", :title => "Shopify App Store"} Apps
-        %li.current
-          %a{:href => "http://themes.shopify.com/", :title => "Home"} Themes
-        %li
-          %a{:href => "http://support.myshopify.com/", :title => "Shopify &mdash; Support"} Support
-        %li
-          %a{:href => "http://forums.shopify.com/", :title => "Shopify Community"} Forums
-        %li
-          %a{:href => "http://wiki.shopify.com/", :title => "Main Page - Shopify Wiki"} Wiki
-    / .resources-nav
-    .vig-left
-    / .vig-left
-    .vig-right
-    / .vig-right
-    #wrapper
-      #header
-        #navigation.clearfix
-          %a.logo{:href => "/"}
-            %img{:alt => "Logo Themestore", :src => "/images/logos/logo-themestore.png"}/
-          %ul
-            / <li><a class="youtube" href="firstimepickingatheme.html?iframe">How to pick the best theme</a></li>
-            %li
-              %a{:href => "/services/themes/guidelines"} Theme Guidelines
-            %li
-              %a{:href => "/services/themes/new"} Submit theme
-            %li
-              Logged in as
-              %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com"} medhurst-shields-and-kunde7896
-              (
-              %a{:href => "/logout"}> log out
-              )
-        / #navigation
-        #content.divider.clearfix
-          .col-16
-            #theme-download
-              %h1
-                / How would you like to install  your theme?
-                You are about to install Couture to medhurst-shields-and-kunde7896.myshopify.com
-              %p
-                %a#apply-theme.standard-button{"data-confirm" => "Doing this will delete any modifications you have made to your current theme on medhurst-shields-and-kunde7896.myshopify.com. Are you sure?", "data-method" => "post", :href => "/themes/couture/styles/arioso/apply", :rel => "nofollow"}
-                  Apply theme automatically to my store
-                  %br/
-                  %small This will overwrite your current theme
-                or
-                %a{:href => "/themes/couture/styles/arioso/download_file"} download theme as a .zip
-            / #theme-download
-            %p.hint{:style => "text-align: center; margin-top: 30px;"}
-              By choosing one of the above options you consent that you
-              %br>/
-              have read and agree to
-              = succeed "." do
-                %a{:href => "http://checkout.shopify.com/legal/terms.html#themes"} Shopify's Terms of Service
-          / .col-6
-        / content
-      / #wrapper
-      :javascript
-        //
-        var gaJsHost = (("https:" == document.location.protocol) ?
-        "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-        //
-              :javascript
-        //
-         var pageTracker = _gat._getTracker("UA-82702-3");
-         pageTracker._setDomainName("themes.shopify.com");
-         pageTracker._initData();
- 
-         try {
-           var results = new RegExp("[\\?&](source|r|ref)=([^&#]*)",
-        "gi").exec(window.location.href);
-           if(results != null) {
-             var date = new Date();
-             var days = results[2] == 'cj' ? 45 : 7;
-             date.setTime(date.getTime()+days*86400000);
- 
-             document.cookie = "source=" + results[2] + "; expires=" + date.toGMTString() + "; path=/; domain=.shopify.com";
- 
-             pageTracker._setVar("ref: " + results[2]);
-           }
- 
-           $$('.external-links a').each(function(el) { el.target = '_blank'; });
-         }
-         catch(e) {}
- 
-         pageTracker._trackPageview();
- 
-        //
-        
+=content_for :login do
+  %li
+    以
+    %a(href="http://test.myshopqi.com") test
+    身份登录
+    (
+    %a(href="/logout")> log out
+    )
+
+.col-16
+  #theme-download
+    %h1 您即将为 test.myshopqi.com 网店安装 Couture 主题风格
+    %p
+      %a#apply-theme.standard-button(data-confirm="此操作将删除您在 test.myshopqi.com 网店上当前所使用的主题，包括之前对它所做的修改.您确定吗?" data-method="post" href="/themes/couture/styles/arioso/apply" rel="nofollow")
+        我的商店要使用此主题
+        %br/
+        %small 此操作将覆盖您当前使用的主题
+      或者
+      %a(href="/themes/couture/styles/arioso/download_file") 以.zip格式下载此主题
+  %p.hint(style="text-align: center; margin-top: 30px;")
+    选择以上任一操作表明您
+    %br/
+    已经阅读并同意
+    = succeed "." do
+      %a(href="http://checkout.shopqi.com/legal/terms.html#themes") ShopQi的服务协议
