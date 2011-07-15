@@ -1,0 +1,13 @@
+.review-dialog
+  %form(accept-charset="UTF-8" action="/login/authenticate" method="post")
+    %p
+      %label(for="shop")
+        %strong 输入您的商店URL地址
+        %br/
+        %span.hint (例如: example.myshopqi.com 或者 example.com)
+    %p.clearfix
+      %input#shop(name="shop" size="35" type="text" value="")
+      %input.standard-button(name="commit" style="float:left" type="submit" value="登录")
+    %p.hint(style="margin-top:30px")
+      还没有ShopQi商店?
+      %a(href="http://shopqi.com/services/signup") 现在就注册一个

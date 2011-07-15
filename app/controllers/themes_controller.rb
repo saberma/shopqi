@@ -1,7 +1,8 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: [:index, :show, :filter]
+  prepend_before_filter :authenticate_user!, except: [:index, :show, :login, :filter]
   layout 'admin'
+  layout 'theme', only: [:index, :show, :download]
 
   expose(:shop) { current_user.shop }
   expose(:theme) { shop.theme }
@@ -11,14 +12,12 @@ class ThemesController < ApplicationController
   begin 'store'
 
     def index
-      render 'index', layout: 'theme'
     end
 
     def show
       theme = Theme.find_by_name_and_style(params[:name], params[:style])
       @theme_json = theme.attributes.to_json
       styles = Theme.find_all_by_name(params[:name])
-      #others = Theme.find_all_by_author(theme.author).take(4)
       others = Theme.find_all_by_author(theme.author).take(4)
       @styles_json = styles.inject([]) do |result, theme|
         result << theme.attributes; result
@@ -26,7 +25,13 @@ class ThemesController < ApplicationController
       @others_json = others.inject([]) do |result, theme|
         result << { theme: theme.attributes }; result
       end.to_json
-      render 'show', layout: 'theme'
+    end
+
+    def download
+    end
+
+    def login
+      render layout: nil
     end
 
     def filter # 查询主题

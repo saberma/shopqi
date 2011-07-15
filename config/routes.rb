@@ -9,8 +9,10 @@ Shopqi::Application.routes.draw do
 
   constraints(subdomain: 'themes') do # 主题商店 
     get '/' => 'themes#index'
+    get '/themes/login' => 'themes#login', as: :theme_login
     get '/themes/filter' => 'themes#filter'
     get '/themes/:name/styles/:style' => 'themes#show'
+    get '/themes/:name/styles/:style/download' => 'themes#download'
   end
 
   constraints(Subdomain) do # 前台商店
