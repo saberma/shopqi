@@ -70,6 +70,7 @@ group :development do
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
 end
 
+
 group :test, :travis do
   gem "rspec-rails"
   gem "factory_girl"

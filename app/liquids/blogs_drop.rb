@@ -26,4 +26,9 @@ class BlogDrop < Liquid::Drop
     end
   end
 
+  def comments_enabled?
+    #@blog.commentable != 'no'
+    true
+  end
+
 end

@@ -22,6 +22,7 @@ Shopqi::Application.routes.draw do
       get '/cart' => 'cart#show'
       post '/cart' => 'cart#update'
       get '/blogs/:handle/:id' => 'articles#show'
+      post '/articles/:article_id/comments' => 'articles#add_comment'
     end
   end
 
@@ -125,7 +126,9 @@ Shopqi::Application.routes.draw do
     resources :pages, except: :edit
 
     resources :blogs do
-      resources :articles
+      resources :articles do
+        resources :comments
+      end
     end
 
     resources :users
@@ -136,7 +139,6 @@ Shopqi::Application.routes.draw do
       end
     end
 
-    resources :comments
 
     resources :link_lists, only: [:index, :create, :destroy, :update] do
       resources :links, only: [:create, :destroy] do

@@ -4,7 +4,7 @@
   Liquid::Template.register_filter filter
 end
 
-[Paginate].each do |tag|
+[Paginate,Form].each do |tag|
   Liquid::Template.register_tag(tag.name.downcase, tag)
 end
 

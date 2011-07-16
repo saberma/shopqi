@@ -4,10 +4,17 @@ class ArticleDrop < Liquid::Drop
     @article = article
   end
 
-  delegate :title,:created_at,:url,:comments_count, to: :@article
+  delegate :created_at, :title, :id,  to: :@article
 
   def content
     @article.body_html.html_safe
+  end
+
+  def url
+  end
+
+  def comments_count
+    @article.comments.size
   end
 
 end

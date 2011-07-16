@@ -3,11 +3,7 @@ class CommentDrop < Liquid::Drop
     @comment = comment
   end
 
-  delegate :created_at
-
-  def author
-    @comment.name
-  end
+  delegate :created_at, :author, to: :@comment
 
   def content
     @comment.comment.html_safe
