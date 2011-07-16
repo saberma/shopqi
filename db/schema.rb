@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
     t.text     "body_html"
     t.boolean  "published",  :default => true
     t.integer  "user_id"
+    t.string   "author"
     t.boolean  "delta",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"

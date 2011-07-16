@@ -124,6 +124,7 @@ Shopqi::Application.routes.draw do
     end
 
     resources :pages, except: :edit
+    resources :articles, only: [:new,:create]
 
     resources :blogs do
       resources :articles

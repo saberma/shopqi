@@ -3,6 +3,7 @@
   %ul
     %li#create-page= link_to "新增页面", new_page_path
     %li#create-blog= link_to "新增博客", new_blog_path
+    %li#create-article= link_to "新增博客", new_article_path
 #pages
   %h4 页面
   %p.description
@@ -14,7 +15,7 @@
     %thead
       %tr
         %th(scope="col") 标题
-        %th(scope="col" style="width: 114px; text-align: right; padding-right: 0") 更新时间
+        %th(scope="col" style="width: 150px;") 更新时间
         %th(scope="col" style="width: 50px") &nbsp;
     %tbody= render pages
   / PAGINATION LINKS

@@ -7,6 +7,8 @@ class PagesController < ApplicationController
   expose(:page)
 
   expose(:blogs) { current_user.shop.blogs }
+  expose(:blog)
+  expose(:articles)
 
   def create
     page.save

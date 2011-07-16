@@ -1,3 +1,5 @@
+%dt=f.label :author
+%dd=f.select :author, shop.users.map(&:name)
 %dt=f.label :title
 %dd=f.text_field :title,class:"big"
 %dt.sst=f.label :body_html
@@ -8,8 +10,7 @@
   %p
     =f.text_field :tags_text, size:50
     %p.note{:style => "clear: both"} 最近使用过的标签，单击增加。
-    %ul#tag-list.clearfix.nobull.st
+    %ul#tag-list.tag-list.clearfix.nobull.st
       -tags.each do |tag|
         %li
           %a(href="#")=tag.name
-

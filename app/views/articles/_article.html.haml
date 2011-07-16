@@ -1,12 +1,15 @@
 %tr(class="#{cycle(:odd, :event)}")
   %td
-    =link_to article.title,blog_article_path(blog,article) 
-    %span.description{:style => "margin: 0 0 0 4px;"}
-      %span.hint==由#{article.user.name} 
-      ==发表于:#{distance_of_time_in_words(article.updated_at,Time.now)}
-  %td.date{:style => "text-align: right"}
-    =article.created_at.to_s(:with_year)
-  %td.date{:style => "text-align: right"}
-    =article.updated_at.to_s(:with_year)
-  %td{:style => "text-align: center"}
+    =link_to article.title,blog_article_path(blog,article)
+  %td
+    %span.comment-number 0
+  %td
+    %ul.tag-list
+      %li
+        -article.tags.each do |tag|
+          =link_to tag.name, blog_path(blog,tag: tag.name),class: 'active-tag'
+  %td=article.author
+  %td
+    %span.note=article.updated_at.to_s(:with_year)
+  %td.r
     = link_to image_tag('admin/icons/trash.gif'), blog_article_path(blog,article), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del

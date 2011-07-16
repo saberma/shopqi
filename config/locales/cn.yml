@@ -74,6 +74,7 @@ cn:
         title: 标题
       article:
         title: 标题
+        author: 作者
         body_html: 内容
         tags: 标签
       custom_collection:

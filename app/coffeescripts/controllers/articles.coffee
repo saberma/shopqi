@@ -1,9 +1,9 @@
 App.Controllers.Articles = Backbone.Controller.extend
-  
+
   initialize: ->
     #标签
     $('#tag-list a').click ->
-      $(this).toggleClass('active')
+      $(this).toggleClass('active-tag')
       tags = StringUtils.to_a($('#article_tags_text').val())
       tag = $(this).text()
       if tag not in tags
@@ -16,9 +16,9 @@ App.Controllers.Articles = Backbone.Controller.extend
       tags = StringUtils.to_a($('#article_tags_text').val())
       $('#tag-list a').each ->
         if $(this).text() in tags
-          $(this).addClass('active')
+          $(this).addClass('active-tag')
         else
-          $(this).removeClass('active')
+          $(this).removeClass('active-tag')
     .keyup()
 
     $('#article-show,#article-edit-link,.cancel').click ->

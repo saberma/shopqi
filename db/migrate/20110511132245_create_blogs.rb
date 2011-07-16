@@ -17,6 +17,7 @@ class CreateBlogs < ActiveRecord::Migration
       t.text :body_html   , comment: '内容'
       t.boolean :published, comment: '是否可见'                  , default: true
       t.integer :user_id  , comment: '更新人'
+      t.string :author    , comment: '作者'
       t.boolean :delta    , comment: "ts全文检索增量更新标记"    , default: true, null: false
 
       t.timestamps
