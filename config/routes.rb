@@ -126,10 +126,10 @@ Shopqi::Application.routes.draw do
     resources :pages, except: :edit
 
     resources :blogs do
-      resources :articles do
-        resources :comments
-      end
+      resources :articles
     end
+
+    resources :comments
 
     resources :users
 

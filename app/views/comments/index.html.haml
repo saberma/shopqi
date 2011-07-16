@@ -14,7 +14,7 @@
   %span.current
     =link_to "所有评论",comments_path,title:"显示所有评论"
 #comments
-  %h4 Showing 2 comments
+  %h4 这里有评论
   %p.description
     你可以管理发表在你博客上的所有评论，
   / Required arguments: parent, counts
@@ -33,7 +33,7 @@
   %table.data{:cellpadding => "0", :cellspacing => "0"}
     %thead
       %tr
-        %th{:scope => "col"} Status
+        %th{:scope => "col"} 状态
         %th{:scope => "col"} Comment
         %th{:scope => "col", :style => "text-align: right;"} &nbsp;
     %tbody
@@ -64,29 +64,6 @@
             %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/remove", :loading => "var action = $('comment_18223242_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
               %img{:alt => "Trash", :src => "/images/admin/icons/trash.gif"}/
       / Required arguments: comment, parent
-      %tr#comment_18190332.row_class
-        %td#comment_18190332_status{:style => "width: 100px;"}
-          %span.status_tag.published
-            %a{:href => "/admin/comments?status=published", :title => "Show all published comments..."} published
-        %td{:style => "padding-right: 5px"}
-          %p.comment-metadata
-            eee
-            (
-            %a.note{:href => "mailto:liwh87@gmail.com", :title => "From IP address: 119.122.153.111"}> liwh87@gmail.com
-            ) wrote:
-          .comment-body{:style => "font-size: 14px"}
-            %p fjkfjsakfsaj
-          %p{:style => "font-size: 8pt"}
-            posted 11. May 11:06 PM as comment to
-            %a{:href => "/admin/blogs/941902/articles/3198442"} bbbbbbb
-            in blog
-            %a{:href => "/admin/blogs/941902"} aaa
-        %td{:style => "text-align: right; width: 150px"}
-          %span#comment_18190332_actions
-            %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18190332/spam", :loading => "var action = $('comment_18190332_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
-            |
-            %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18190332/remove", :loading => "var action = $('comment_18190332_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
-              %img{:alt => "Trash", :src => "/images/admin/icons/trash.gif"}/
 / PAGINATION LINKS
 #btm-nav.act-screen
-  #pagination 
+  #pagination
