@@ -2,9 +2,9 @@ class RequestToken < OauthToken
 
   attr_accessor :provided_oauth_verifier
 
-  def authorize!(shop)
+  def authorize!(user)
     return false if authorized?
-    self.shop = shop
+    self.shop = user.shop
     self.authorized_at = Time.now
     self.verifier=OAuth::Helper.generate_key(20)[0,20] unless oauth10?
     self.save
