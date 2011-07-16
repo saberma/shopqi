@@ -1,10 +1,12 @@
 class OauthClientsController < ApplicationController
-  before_filter :login_required
+  prepend_before_filter :authenticate_user!
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
 
+  expose(:shop) { current_user.shop }
+
   def index
-    @client_applications = current_user.client_applications
-    @tokens = current_user.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
+    @client_applications = shop.clients
+    @tokens = shop.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
   end
 
   def new
@@ -12,7 +14,7 @@ class OauthClientsController < ApplicationController
   end
 
   def create
-    @client_application = current_user.client_applications.build(params[:client_application])
+    @client_application = shop.clients.build(params[:client_application])
     if @client_application.save
       flash[:notice] = "Registered the information successfully"
       redirect_to :action => "show", :id => @client_application.id
@@ -44,7 +46,7 @@ class OauthClientsController < ApplicationController
 
   private
   def get_client_application
-    unless @client_application = current_user.client_applications.find(params[:id])
+    unless @client_application = shop.clients.find(params[:id])
       flash.now[:error] = "Wrong application id"
       raise ActiveRecord::RecordNotFound
     end

@@ -1,9 +1,9 @@
 class Oauth2Verifier < OauthToken
-  validates_presence_of :user
+  validates_presence_of :shop
 
   def exchange!(params={})
     OauthToken.transaction do
-      token = Oauth2Token.create! :user=>user,:client_application=>client_application
+      token = Oauth2Token.create! :shop=>shop,:client_application=>client_application
       invalidate!
       token
     end

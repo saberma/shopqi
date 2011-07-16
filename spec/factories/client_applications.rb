@@ -9,9 +9,7 @@ Factory.define :client, class: ClientApplication do |f|
 end
 
 Factory.define :client_one, parent: :client do |f|
-  f.user_id 1
 end
 
 Factory.define :client_two, parent: :client do |f|
-  f.user_id 2
 end

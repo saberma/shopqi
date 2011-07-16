@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RequestToken do
 
-  let(:client) { Factory(:client_one) }
+  let(:shop) { Factory(:user).shop }
 
-  let(:admin) { Factory(:user_admin) }
+  let(:client) { Factory(:client_one, shop: shop) }
 
   before(:each) do
     @token = RequestToken.create client_application: client
@@ -59,7 +59,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(admin)
+          @token.authorize!(shop)
         end
 
         it "should be authorized" do
@@ -70,8 +70,8 @@ describe RequestToken do
           @token.authorized_at.should_not be_nil
         end
 
-        it "should have user set" do
-          @token.user.should == admin
+        it "should have shop set" do
+          @token.shop.should == shop
         end
 
         it "should have verifier" do
@@ -97,8 +97,8 @@ describe RequestToken do
             @token.should be_invalidated
           end
 
-          it "should set user on access token" do
-            @access.user.should == admin
+          it "should set shop on access token" do
+            @access.shop.should == shop
           end
 
           it "should authorize accesstoken" do
@@ -159,7 +159,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(admin)
+          @token.authorize!(shop)
         end
 
         it "should be authorized" do
@@ -170,8 +170,8 @@ describe RequestToken do
           @token.authorized_at.should_not be_nil
         end
 
-        it "should have user set" do
-          @token.user.should == admin
+        it "should have shop set" do
+          @token.shop.should == shop
         end
 
         it "should have verifier" do
@@ -189,8 +189,8 @@ describe RequestToken do
             @token.should be_invalidated
           end
 
-          it "should set user on access token" do
-            @access.user.should == admin
+          it "should set shop on access token" do
+            @access.shop.should == shop
           end
 
           it "should authorize accesstoken" do
@@ -249,7 +249,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(admin)
+          @token.authorize!(shop)
         end
 
         it "should be authorized" do
@@ -260,8 +260,8 @@ describe RequestToken do
           @token.authorized_at.should_not be_nil
         end
 
-        it "should have user set" do
-          @token.user.should == admin
+        it "should have shop set" do
+          @token.shop.should == shop
         end
 
         it "should not have verifier" do
@@ -278,8 +278,8 @@ describe RequestToken do
             @token.should be_invalidated
           end
 
-          it "should set user on access token" do
-            @access.user.should == admin
+          it "should set shop on access token" do
+            @access.shop.should == shop
           end
 
           it "should authorize accesstoken" do

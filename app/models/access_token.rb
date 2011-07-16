@@ -1,5 +1,5 @@
 class AccessToken < OauthToken
-  validates_presence_of :user, :secret
+  validates_presence_of :shop, :secret
   before_create :set_authorized_at
 
   # Implement this to return a hash or array of the capabilities the access token has

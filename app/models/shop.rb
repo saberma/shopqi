@@ -16,6 +16,8 @@ class Shop < ActiveRecord::Base
   has_many :carts             , dependent: :destroy
   has_many :subscribes        , dependent: :destroy
   has_one  :theme             , dependent: :destroy                      , class_name: 'ShopTheme'
+  has_many :clients           , dependent: :destroy                      , class_name: 'ClientApplication'
+  has_many :tokens            , dependent: :destroy                      , class_name: 'OauthToken'
 
   has_many :types             , dependent: :destroy                      , class_name: 'ShopProductType'
   has_many :vendors           , dependent: :destroy                      , class_name: 'ShopProductVendor'

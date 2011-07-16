@@ -2,12 +2,12 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Oauth2Token do
 
-  let(:client) { Factory(:client_one) }
+  let(:shop) { Factory(:user).shop }
 
-  let(:admin) { Factory(:user_admin) }
+  let(:client) { Factory(:client_one, shop: shop) }
 
   before(:each) do
-    @token = Oauth2Token.create client_application: client, user: admin
+    @token = Oauth2Token.create client_application: client, shop: shop
   end
 
   it "should be valid" do

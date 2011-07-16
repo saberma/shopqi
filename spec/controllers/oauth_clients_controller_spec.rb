@@ -1,20 +1,22 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require File.dirname(__FILE__) + '/oauth_controller_spec_helper'
 require 'oauth/client/action_controller_request'
 
 describe OauthClientsController do
-  if defined?(Devise)
-    include Devise::TestHelpers
-  end
-  include OAuthControllerSpecHelper
-  fixtures :client_applications, :oauth_tokens, :users
-  before(:each) do
-    login_as_application_owner
+  include Devise::TestHelpers
+
+  let(:user) { Factory(:user) }
+
+  let(:shop) { user.shop }
+
+  let(:client) { Factory(:client_one, shop: shop) }
+
+  before :each do
+    sign_in(user)
   end
 
   describe "index" do
     before do
-      @client_applications = @user.client_applications
+      @client_applications = shop.clients
     end
 
     def do_get
@@ -40,7 +42,7 @@ describe OauthClientsController do
   describe "show" do
 
     def do_get
-      get :show, :id => '1'
+      get :show, :id => client.id
     end
 
     it "should be successful" do
@@ -50,7 +52,7 @@ describe OauthClientsController do
 
     it "should assign client_applications" do
       do_get
-      assigns[:client_application].should==current_client_application
+      assigns[:client_application].should==client
     end
 
     it "should render show template" do
@@ -85,7 +87,7 @@ describe OauthClientsController do
 
   describe "edit" do
     def do_get
-      get :edit, :id => '1'
+      get :edit, :id => client.id
     end
 
     it "should be successful" do
@@ -95,7 +97,7 @@ describe OauthClientsController do
 
     it "should assign client_applications" do
       do_get
-      assigns[:client_application].should==current_client_application
+      assigns[:client_application].should==client
     end
 
     it "should render edit template" do
@@ -131,7 +133,7 @@ describe OauthClientsController do
   describe "destroy" do
 
     def do_delete
-      delete :destroy, :id => '1'
+      delete :destroy, :id => client.id
     end
 
     it "should destroy client applications" do
@@ -150,17 +152,17 @@ describe OauthClientsController do
   describe "update" do
 
     def do_valid_update
-      put :update, :id => '1', 'client_application'=>{'name' => 'updated site'}
+      put :update, :id => client.id, 'client_application'=>{'name' => 'updated site'}
     end
 
     def do_invalid_update
-      put :update, :id => '1', 'client_application'=>{'name' => nil}
+      put :update, :id => client.id, 'client_application'=>{'name' => nil}
     end
 
     it "should redirect to show client_application" do
       do_valid_update
       response.should be_redirect
-      response.should redirect_to(:action => "show", :id => 1)
+      response.should redirect_to(:action => "show", :id => client.id)
     end
 
     it "should assign client_applications" do

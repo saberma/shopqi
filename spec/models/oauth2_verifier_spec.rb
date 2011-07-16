@@ -2,12 +2,12 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Oauth2Verifier do
 
-  let(:client) { Factory(:client_one) }
+  let(:shop) { Factory(:user).shop }
 
-  let(:admin) { Factory(:user_admin) }
+  let(:client) { Factory(:client_one, shop: shop) }
 
   before(:each) do
-    @verifier = Oauth2Verifier.create client_application: client, user: admin
+    @verifier = Oauth2Verifier.create client_application: client, shop: shop
   end
 
   it "should be valid" do
@@ -39,8 +39,8 @@ describe Oauth2Verifier do
       @verifier.should be_invalidated
     end
 
-    it "should set user on token" do
-      @token.user.should==@verifier.user
+    it "should set shop on token" do
+      @token.shop.should==@verifier.shop
     end
 
     it "should set client application on token" do

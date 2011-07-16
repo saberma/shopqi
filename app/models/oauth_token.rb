@@ -1,6 +1,6 @@
 class OauthToken < ActiveRecord::Base
   belongs_to :client_application
-  belongs_to :user
+  belongs_to :shop
   validates_uniqueness_of :token
   validates_presence_of :client_application, :token
   before_validation :generate_keys, :on => :create
