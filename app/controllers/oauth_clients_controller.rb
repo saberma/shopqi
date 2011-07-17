@@ -1,4 +1,5 @@
 class OauthClientsController < ApplicationController
+  alias :login_required :authenticate_user!
   prepend_before_filter :authenticate_user!
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
 

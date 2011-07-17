@@ -28,11 +28,18 @@ class ThemesController < ApplicationController
     end
 
     def download
-      redirect_to theme_login_path
+      access_token = client.web_server.get_access_token( params[:code], :redirect_uri => oauth_callback_url)
+
+      user_json = access_token.get('/me')
+      # in reality you would at this point store the access_token.token value as well as 
+      # any user info you wanted
+      render :json => user_json
     end
 
     def login # 未登录时提示用户登录或者注册(如果直接跳转至登录页面则对未注册用户不友好)
-      render layout: nil
+      redirect_to client.web_server.authorize_url(
+        :redirect_uri => oauth_callback_url
+      )
     end
 
     def authenticate # 跳转至登录页面oauth
@@ -73,5 +80,17 @@ class ThemesController < ApplicationController
       render nothing: true
     end
 
+  end
+
+
+  protected
+  def client
+    @client ||= OAuth2::Client.new(
+      'ow0lvGeMEUmjrLh8SIFhxzGVfCZK5flWbI8AMIKu', 'Y1KgbKUkd12kU3hoVJ3rnCp2IQTckVlOFjqsPPdq', :site => 'http://lvh.me:4001'
+    )
+  end
+
+  def oauth_callback_url
+    'http://themes.lvh.me:4000/themes/Prettify/styles/default/download'
   end
 end

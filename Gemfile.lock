@@ -314,6 +314,7 @@ DEPENDENCIES
   mini_magick
   nokogiri
   oauth-plugin (>= 0.4.0.pre6)
+  oauth2
   on_the_spot
   pg
   rack-cache

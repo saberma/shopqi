@@ -1,5 +1,8 @@
 require 'oauth/controllers/provider_controller'
 class OauthController < ApplicationController
+  # oauth plugin使用了login_required方法
+  alias :logged_in? :user_signed_in?
+  alias :login_required :authenticate_user!
   include OAuth::Controllers::ProviderController
 
   protected

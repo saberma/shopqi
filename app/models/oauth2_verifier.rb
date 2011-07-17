@@ -1,5 +1,10 @@
 class Oauth2Verifier < OauthToken
   validates_presence_of :shop
+  attr_accessor :user
+
+  before_validation do # 特殊处理:oauth-plugin关联了用户
+    self.shop = self.user.shop
+  end
 
   def exchange!(params={})
     OauthToken.transaction do
