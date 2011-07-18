@@ -1,9 +1,29 @@
-require 'oauth/controllers/provider_controller'
 class OauthController < ApplicationController
-  # oauth plugin使用了login_required方法
-  alias :logged_in? :user_signed_in?
-  alias :login_required :authenticate_user!
-  include OAuth::Controllers::ProviderController
+  prepend_before_filter :authenticate_user!, except: :access_token
+
+  expose(:shop) { current_user.shop }
+
+  def authorize # 返回authorize_code
+    @oauth2 = OAuth2::Provider.parse(shop, request)
+    #response.headers = @oauth2.response_headers
+    #response.status = @oauth2.response_status
+    redirect_to @oauth2.redirect_uri  if @oauth2.redirect?
+  end
+
+  def access_token # 返回access_token
+    @oauth2 = OAuth2::Provider.parse(nil, request)
+    render text: @oauth2.response_body
+  end
+
+  def allow
+    @auth = OAuth2::Provider::Authorization.new(shop, params)
+    if params['allow'] == '1'
+      @auth.grant_access!
+    else
+      @auth.deny_access!
+    end
+    redirect_to @auth.redirect_uri
+  end
 
   protected
   # Override this to match your authorization page form

@@ -27,13 +27,14 @@ class ThemesController < ApplicationController
       end.to_json
     end
 
-    def download
-      access_token = client.web_server.get_access_token( params[:code], :redirect_uri => oauth_callback_url)
+    def download # 确认切换主题
+      access_token = client.web_server.get_access_token params[:code], redirect_uri: oauth_callback_url
+      me = access_token.get('/api/me')
+      #ap me
+      render :text => access_token
+    end
 
-      user_json = access_token.get('/me')
-      # in reality you would at this point store the access_token.token value as well as 
-      # any user info you wanted
-      render :json => user_json
+    def apply # 切换主题
     end
 
     def login # 未登录时提示用户登录或者注册(如果直接跳转至登录页面则对未注册用户不友好)
@@ -86,7 +87,9 @@ class ThemesController < ApplicationController
   protected
   def client
     @client ||= OAuth2::Client.new(
-      'ow0lvGeMEUmjrLh8SIFhxzGVfCZK5flWbI8AMIKu', 'Y1KgbKUkd12kU3hoVJ3rnCp2IQTckVlOFjqsPPdq', :site => 'http://lvh.me:4001'
+      '4rvacrldtx5w5utihdp50i328',
+      '5lvh1ml1ategg8v6udc1n99rd',
+      site: 'http://lvh.me:4001'
     )
   end
 

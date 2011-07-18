@@ -61,9 +61,6 @@ module Shopqi
       :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
     }
 
-    require 'oauth/rack/oauth_filter' # oauth plugin
-    config.middleware.use OAuth::Rack::OAuthFilter
-
     #config.middleware.use ::Rack::PerftoolsProfiler, :default_printer => 'gif', :bundler => true, :mode => :walltime
   end
 end

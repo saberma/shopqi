@@ -2,13 +2,15 @@
 #include Rails.application.routes.url_helpers #在console中调用orders_path等
 Shopqi::Application.routes.draw do
 
-  resources :oauth_clients
-  match '/oauth/test_request',  :to => 'oauth#test_request',  :as => :test_request
-  match '/oauth/token',         :to => 'oauth#token',         :as => :token
-  match '/oauth/access_token',  :to => 'oauth#access_token',  :as => :access_token
-  match '/oauth/request_token', :to => 'oauth#request_token', :as => :request_token
-  match '/oauth/authorize',     :to => 'oauth#authorize',     :as => :authorize
-  match '/oauth',               :to => 'oauth#index',         :as => :oauth
+  begin 'oauth2'
+    get '/oauth/authorize', :to => 'oauth#authorize', :as => :authorize
+    post '/oauth/access_token', :to => 'oauth#access_token', :as => :access_token
+    match '/oauth/allow'   , :to => 'oauth#allow'    , :as => :oauth_allow
+  end
+
+  scope "/api" do # 供oauth2调用
+    get '/me' => 'shops#me', as: :api_me
+  end
 
   devise_for :user, controllers: {registrations: "users/registrations"} do
     get "signup", to: "users/registrations#new"
@@ -21,6 +23,7 @@ Shopqi::Application.routes.draw do
     get '/themes/filter' => 'themes#filter'
     get '/themes/:name/styles/:style' => 'themes#show'
     get '/themes/:name/styles/:style/download' => 'themes#download'
+    get '/themes/:name/styles/:style/apply' => 'themes#apply'
   end
 
   constraints(Subdomain) do # 前台商店

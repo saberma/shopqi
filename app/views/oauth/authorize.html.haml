@@ -1,16 +1,19 @@
-%h1 Authorize access to your account
+%h3 Authorize OAuth client
 %p
-  Would you like to authorize
-  = link_to @token.client_application.name,@token.client_application.url
-  (
-  = link_to @token.client_application.url,@token.client_application.url
-  ) to access your account?
-- form_tag authorize_url do
-  = hidden_field_tag "oauth_token", @token.token
-  - if params[:oauth_callback]
-    = hidden_field_tag "oauth_callback", params[:oauth_callback]
-  %p
-    = check_box_tag 'authorize'
-    authorize access
-  %p
-    = submit_tag
+  This application
+  %b=@oauth2.client.name
+  wants
+  the following permissions:
+%ul
+  -@oauth2.scopes.each do |scope|
+    -next unless PERMISSIONS[scope]
+    %li=PERMISSIONS[scope]
+=form_tag oauth_allow_path do
+  - @oauth2.params.each do |key, value|
+    %input{:name => "#{key}", :type => "hidden", :value => "#{value}"}
+  -#%input{:name => "user_id", :type => "hidden", :value => "#{@user.id}"}
+  %fieldset
+    %input#allow{:name => "allow", :type => "checkbox", :value => "1"}
+    %label{:for => "allow"} Allow this application
+  %fieldset
+    %input{:type => "submit", :value => "Go!"}/
