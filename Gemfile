@@ -48,7 +48,6 @@ gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
 gem 'oauth2'
-gem "oauth-plugin", ">= 0.4.0.pre6" # oauth认证服务 #http://j.mp/np5jVw
 
 group :development do
   gem 'rails3-generators'
