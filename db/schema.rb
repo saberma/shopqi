@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
 
   create_table "comments", :force => true do |t|
     t.integer  "article_id"
+    t.integer  "shop_id"
     t.string   "status"
     t.string   "author"
     t.string   "email"

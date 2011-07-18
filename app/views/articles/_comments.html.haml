@@ -5,16 +5,17 @@
   #comments
     %h4==文章#{article.title}的评论
     %p.description
-      These are comments for this article, you can view and manage all your
-      %a{:href => "/admin/comments"} comments here
+      下面是这篇文章的评论, 你可以
+      %a{:href => "/admin/comments"}在这里
+      查看和管理所有的评论
     %form#batch-form{"accept-charset" => "UTF-8", :action => "/admin/articles/set", :method => "post"}
       %table#comments-list.standard-table.hide_checkboxes{:cellpadding => "0", :cellspacing => "0"}
         %thead
           %tr
             %th.checkbox{:width => "5%"}
               %input#select-all{:type => "checkbox"}/
-            %th{:width => "17%"} From
-            %th{:width => "55%"} Comment
+            %th{:width => "17%"} 评论人
+            %th{:width => "55%"} 内容
             %th{:width => "22%"} &nbsp;
         %tbody
           / Required arguments: comment, parent
@@ -36,5 +37,4 @@
               %span.comment-actions
                 %span#comment_19083422_actions
                   %a.action.btn{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19083422/spam", :loading => "var action = $('comment_19083422_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
-                  %a.action{"data-confirm" => "Are you sure you want to delete this comment?", "data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19083422/remove", :loading => "var action = $('comment_19083422_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
-                    %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?19b2f7c9ac918121a1eed4f4e75712320f420f18"}/
+                  -#=link_to_delete comment_path(comment),class: 'action'

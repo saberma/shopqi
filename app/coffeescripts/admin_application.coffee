@@ -28,6 +28,7 @@ App =
       Show:
         Variant: {}
       Index: {}
+    Comment: {}
     ProductOption: {}
   Controllers:
     Orders: {}

@@ -24,6 +24,7 @@ class CreateBlogs < ActiveRecord::Migration
     end
     create_table :comments do |t|
       t.integer :article_id, comment: '所属文章'
+      t.integer :shop_id, comment: '所属商店'
       t.string :status     , comment: '状态'
       t.string :author       , comment: '评论人'
       t.string :email      , comment: '邮箱'

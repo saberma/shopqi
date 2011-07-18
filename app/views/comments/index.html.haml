@@ -1,69 +1,107 @@
-%h2#title==文章"#{article.title}"的评论
+-use_javascripts 'models/comment', 'collections/comments', 'views/comments/index', 'views/comments/show', 'controllers/comments'
+%h2#title All  comments
 #action-links
   %ul
-=render partial:"shared/noscript"
-=render partial:"shared/upgrade_ie"
-%div{:style => "margin: 15px 5px 0 5px"}
-  %h3 仅显示
-  = succeed "," do
-    %span
-      =link_to "已删除评论",comments_path(status:"removed"),title:"显示已删除评论"
-  = succeed "," do
-    %span
-      =link_to "垃圾评论",comments_path(status:"removed"),title:"显示垃圾评论"
-  %span.current
-    =link_to "所有评论",comments_path,title:"显示所有评论"
+#table-filters.box2.sst.ssb
+  Showing
+  #comment-status-select.filter-select
+    %a#status-filter-link{:href => "#", :onclick => "; return false;"} all
+    %ul.dropdown{:style => "display: none"}
+      %li
+        %strong Comment Status
+      %li.current
+        %a{:href => "/admin/comments?status=all"} all
+      %li
+        %a{:href => "/admin/comments?status=spam"} spam
+      %li
+        %a{:href => "/admin/comments?status=unapproved"} unapproved
+      %li
+        %a{:href => "/admin/comments?status=published"} published
+      %li.filter-show-all
+        %a{:href => "/admin/comments"} show all
+  comments
+
+  from
+  #blog-select.filter-select
+    %a#blog-filter-link{:href => "#", :onclick => "; return false;"} any
+    %ul.dropdown{:style => "display: none"}
+      %li
+        %strong Blog
+      %li
+        %a{:href => "/admin/comments?blog=1111&amp;status=all"} 1111
+      %li
+        %a{:href => "/admin/comments?blog=aaa&amp;status=all"} aaa
+      %li
+        %a{:href => "/admin/comments?blog=aaa-1&amp;status=all"} aaa
+      %li
+        %a{:href => "/admin/comments?blog=aaaa&amp;status=all"} aaaa
+      %li
+        %a{:href => "/admin/comments?blog=ccc&amp;status=all"} ccc
+      %li
+        %a{:href => "/admin/comments?blog=fffff&amp;status=all"} fffff
+      %li
+        %a{:href => "/admin/comments?blog=introduction&amp;status=all"} introduction
+      %li
+        %a{:href => "/admin/comments?blog=wwww&amp;status=all"} wwww
+      %li.filter-show-all.current
+        %a{:href => "/admin/comments?status=all"} show all
+  blog
 #comments
-  %h4 这里有评论
-  %p.description
-    你可以管理发表在你博客上的所有评论，
-  / Required arguments: parent, counts
-  %p#comment-counts.info.c.st
-    This article has
-    2 comments |
-    %span#comment_published_count.status_tag.published
-      %a{:href => "/admin/comments?article_id=3198442&amp;blog_id=941902&amp;status=published", :title => "Show all published comments for article &quot;bbbbbbb&quot;"} 1 published
-    |
-    %span#comment_unapproved_count.status_tag.unapproved
-      %a{:href => "/admin/comments?article_id=3198442&amp;blog_id=941902&amp;status=unapproved", :title => "Show all unapproved comments for article &quot;bbbbbbb&quot;"} 1 unapproved
-    |
-    %span#comment_removed_count.status_tag.removed
-      %a{:href => "/admin/comments?article_id=3198442&amp;blog_id=941902&amp;status=removed", :title => "Show all removed comments for article &quot;bbbbbbb&quot;"} 0 removed
-  / Don't show table if there are no comments
-  %table.data{:cellpadding => "0", :cellspacing => "0"}
-    %thead
-      %tr
-        %th{:scope => "col"} 状态
-        %th{:scope => "col"} Comment
-        %th{:scope => "col", :style => "text-align: right;"} &nbsp;
-    %tbody
-      / Required arguments: comment, parent
-      %tr#comment_18223242.row_class
-        %td#comment_18223242_status{:style => "width: 100px;"}
-          %span.status_tag.unapproved
-            %a{:href => "/admin/comments?status=unapproved", :title => "Show all unapproved comments..."} unapproved
-        %td{:style => "padding-right: 5px"}
-          %p.comment-metadata
-            www
-            (
-            %a.note{:href => "mailto:liwh87@gmail.com", :title => "From IP address: 119.123.220.88"}> liwh87@gmail.com
-            ) wrote:
-          .comment-body{:style => "font-size: 14px"}
-            %p bbbb
-          %p{:style => "font-size: 8pt"}
-            posted 14. May 11:00 AM as comment to
-            %a{:href => "/admin/blogs/941902/articles/3198442"} bbbbbbb
-            in blog
-            %a{:href => "/admin/blogs/941902"} aaa
-        %td{:style => "text-align: right; width: 150px"}
-          %span#comment_18223242_actions
-            %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/spam", :loading => "var action = $('comment_18223242_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
-            |
-            %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/approve", :loading => "var action = $('comment_18223242_actions'); action.update('approving...'); action.addClassName('hint');", :rel => "nofollow", :title => "Approve this comment"} approve
-            |
-            %a.action{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/18223242/remove", :loading => "var action = $('comment_18223242_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
-              %img{:alt => "Trash", :src => "/images/admin/icons/trash.gif"}/
-      / Required arguments: comment, parent
-/ PAGINATION LINKS
-#btm-nav.act-screen
+  =form_for :comment,url: set_comments_path,id: 'batch-form' do |f|
+    %div{:style => "height: 32px;"}
+      %table#comment-actions{:cellpadding => "0", :cellspacing => "0", :style => "display:none;"}
+        %tr
+          %td{:style => "text-align:left;vertical-align: middle"}
+            %select#comment_bulk_action{:name => "operation"}
+              %option{:checked => "checked", :value => ""} 选择操作...
+              %option{:value => "mark_spam"} 标记所选为垃圾评论
+              %option{:value => "mark_non_spam"} 标记所选为非垃圾评论
+              %option{:value => "approve"} 接收
+              %option{:value => "destroy"} 删除
+          %td{:style => "text-align:center;vertical-align: middle"}
+            \&nbsp;
+          %td{:style => "text-align:right;vertical-align: middle"}
+            %span#comments_count.note{:style => "margin-bottom: 5px"}
+    %table#comments-list.standard-table.show_checkboxes{:cellpadding => "0", :cellspacing => "0"}
+      %thead
+        %tr
+          %th.checkbox{:width => "5%"}
+            %input#select-all{:type => "checkbox"}/
+          %th{:width => "17%"} 评论人
+          %th{:width => "55%"} 内容
+          %th{:width => "22%"} &nbsp;
+      %tbody
+#btm-nav.act-screen.ssb
   #pagination
+%script(id="show-comment-item" type="text/html")
+  %td.checkbox
+    %input.selector.approvable(name="comments[]" type="checkbox" value="{{id}}" id="checkbox-{{id}}")
+  %td
+    {{ author }}
+    %a.email{:href => "mailto:{{ email }}"} {{ email }}
+    %span.note
+      %span.today Today, 01:50
+  %td
+    %p {{ body }}
+    %span.posted-on
+      发表在文章:
+      %a{:href => "/admin/blogs/941902/articles/3200602"} aaa
+      from the blog
+      %a{:href => "/admin/blogs/941902"} aaa
+  %td.r
+    %span.comment-actions
+      %span#comment_19138352_actions
+        %a.action.btn{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19138352/approve", :loading => "var action = $('comment_19138352_actions'); action.update('approving...'); action.addClassName('hint');", :rel => "nofollow", :title => "Approve this comment"} approve
+        %a.action.btn{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19138352/spam", :loading => "var action = $('comment_19138352_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
+        %a.action{"data-confirm" => "Are you sure you want to delete this comment?", "data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19138352/remove", :loading => "var action = $('comment_19138352_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
+          %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?19b2f7c9ac918121a1eed4f4e75712320f420f18"}/
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Comments();
+    Backbone.history.start();
+  }
+
+  App.comments = new App.Collections.Comments();
+  App.comments.refresh(#{comments_json});
+  new App.Views.Comment.Index({collection: App.comments})

@@ -28,9 +28,9 @@ class Article < ActiveRecord::Base
   #公开的评论　
   has_many :published_comments,class_name:"Comment", conditions:"comments.status = 'published'"
   #待审核评论
-  has_many :unapproved_comments,class_name:"Comment",conditions:"comments.status = 'unapproved'"
-  #已删除评论
-  has_many :removed_comments,class_name:"Comment",conditions:"comments.status = 'removed'"
+  has_many :unapproved_comments,class_name:"Comment",conditions:"comments.status = 'pending'"
+  #垃圾评论
+  has_many :spam_comments,class_name:"Comment",conditions:"comments.status = 'spam'"
 
   define_index do
     has :shop_id
@@ -83,6 +83,18 @@ end
 #文章评论
 class Comment < ActiveRecord::Base
   belongs_to :article
+  belongs_to :shop
   validates_presence_of :body
-end
 
+  def is_spam?
+    self.status == 'spam'
+  end
+
+  def is_published?
+    self.status == 'published'
+  end
+
+  def is_pending?
+    self.status == 'pending'
+  end
+end
