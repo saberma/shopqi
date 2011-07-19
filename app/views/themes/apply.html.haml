@@ -1,3 +1,5 @@
+-@content_class = 'divider'
+
 =content_for :login do
   =render 'shop'
 
@@ -5,7 +7,7 @@
   %h2 您的主题正在更换...
   %p
     完成主题更换可能需要一两分钟的时间。您可以检查
-    %a(href="http://medhurst-shields-and-kunde7896.myshopify.com") 您的商店
+    %a(href="#{shop_url}") 您的商店
     看看是否已经更新为新的主题或者返回
     =succeed "." do
       %a(href="/") 主题商店

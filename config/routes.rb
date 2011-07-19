@@ -3,13 +3,14 @@
 Shopqi::Application.routes.draw do
 
   begin 'oauth2'
-    get '/oauth/authorize', :to => 'oauth#authorize', :as => :authorize
+    get '/oauth/authorize'    , :to => 'oauth#authorize'   , :as => :authorize
     post '/oauth/access_token', :to => 'oauth#access_token', :as => :access_token
-    match '/oauth/allow'   , :to => 'oauth#allow'    , :as => :oauth_allow
+    match '/oauth/allow'      , :to => 'oauth#allow'       , :as => :oauth_allow
   end
 
   scope "/api" do # 供oauth2调用
-    get '/me' => 'shops#me', as: :api_me
+    get '/me' => 'shops#me'                 , as: :api_me
+    post '/themes/switch' => 'themes#switch'
   end
 
   devise_for :user, controllers: {registrations: "users/registrations"} do
@@ -20,14 +21,14 @@ Shopqi::Application.routes.draw do
   constraints(subdomain: 'themes') do # 主题商店 
     get '/' => 'themes#index'
     scope "/themes" do
-      get '/login' => 'themes#login', as: :theme_login
-      get '/logout' => 'themes#logout', as: :theme_logout
-      get '/get_shop' => 'themes#get_shop', as: :theme_get_shop
-      post '/login/authenticate' => 'themes#authenticate', as: :theme_authenticate
+      get '/login' => 'themes#login'                          , as: :theme_login
+      get '/logout' => 'themes#logout'                        , as: :theme_logout
+      get '/get_shop' => 'themes#get_shop'                    , as: :theme_get_shop
+      post '/login/authenticate' => 'themes#authenticate'     , as: :theme_authenticate
       get '/filter' => 'themes#filter'
-      get '/:name/styles/:style' => 'themes#show', as: :theme
+      get '/:name/styles/:style' => 'themes#show'             , as: :theme
       get '/:name/styles/:style/download' => 'themes#download', as: :theme_download
-      get '/:name/styles/:style/apply' => 'themes#apply'
+      match '/:name/styles/:style/apply' => 'themes#apply'
     end
 
     begin 'client' # 作为oauth client

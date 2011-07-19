@@ -1,9 +1,10 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: [:index, :show, :download, :login, :authenticate, :filter]
-  skip_before_filter :verify_authenticity_token, :only => [:authenticate]
+  prepend_before_filter :authenticate_user!, except: [:index, :show, :download, :login, :get_shop, :apply, :logout, :authenticate, :filter, :switch]
+  prepend_before_filter :authenticate_shop!, only: [:get_shop, :apply, :logout]
+  skip_before_filter :verify_authenticity_token, :only => [:authenticate, :apply]
   layout 'admin'
-  layout 'theme', only: [:index, :show, :download]
+  layout 'theme', only: [:index, :show, :download, :apply]
 
   expose(:shop) { current_user.shop }
   expose(:theme) { shop.theme }
@@ -13,8 +14,8 @@ class ThemesController < ApplicationController
   expose(:permanent_domain) { session[:shop] }
   expose(:shop_url) { session[:shop_url] }
   expose(:shop_host) { URI.parse(shop_url).host }
-  expose(:name) { session[:name] }
-  expose(:style) { session[:style] }
+  expose(:name) { session[:name] || params[:name] }
+  expose(:style) { session[:style] || params[:style] }
 
   begin 'store'
 
@@ -58,6 +59,10 @@ class ThemesController < ApplicationController
     end
 
     def apply # 切换主题
+      if request.post?
+        access_token = OAuth2::AccessToken.new(client, token)
+        access_token.post('/api/themes/switch', name: name, style: style)
+      end
     end
 
     def login # 未登录时提示用户登录或者注册(如果直接跳转至登录页面则对未注册用户不友好)
@@ -90,6 +95,18 @@ class ThemesController < ApplicationController
       render json: themes_json
     end
 
+  end
+
+  begin 'api'
+    def switch
+      authorization = OAuth2::Provider.access_token(nil, [], request)
+      if authorization.valid?
+        shop = authorization.owner
+        theme = Theme.find_by_name name
+        shop.theme.switch theme
+      end
+      render nothing: true
+    end
   end
 
   begin 'admin' # 后台管理
@@ -127,5 +144,9 @@ class ThemesController < ApplicationController
     shop = Shop.where(:permanent_domain => subdomain).first
     consumer = OAuth2::Model::Consumer.where(shop: shop, client_id: Theme.client_id).first
     consumer.access_token
+  end
+
+  def authenticate_shop! # 必须通过认证
+    redirect_to theme_path(name: name, style: style) unless permanent_domain
   end
 end
