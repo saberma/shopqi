@@ -10,6 +10,12 @@ class ThemesController < ApplicationController
   expose(:settings_html) { theme.settings.transform }
   expose(:settings_json) { theme.settings.as_json.to_json }
 
+  expose(:permanent_domain) { session[:shop] }
+  expose(:shop_url) { session[:shop_url] }
+  expose(:shop_host) { URI.parse(shop_url).host }
+  expose(:name) { session[:name] }
+  expose(:style) { session[:style] }
+
   begin 'store'
 
     def index
@@ -32,13 +38,13 @@ class ThemesController < ApplicationController
 
     def download # 确认切换主题
       if request.xhr? # ajax
-        if session[:shop]
+        if permanent_domain
           render text: 'logged'
         else
           redirect_to theme_login_path
         end
       else # html
-        redirect_to theme_path(name: session[:name], style: session[:style]) unless session[:shop]
+        redirect_to theme_path(name: name, style: style) unless permanent_domain
       end
     end
 
@@ -48,7 +54,7 @@ class ThemesController < ApplicationController
       if result['error'].blank?
         session[:shop] = result['permanent_domain']
       end
-      redirect_to theme_download_path(name: session[:name], style: session[:style])
+      redirect_to theme_download_path(name: name, style: style)
     end
 
     def apply # 切换主题
@@ -60,7 +66,7 @@ class ThemesController < ApplicationController
     def logout
       session[:shop] = nil
       session[:shop_url] = nil
-      redirect_to theme_path(name: session[:name], style: session[:style])
+      redirect_to theme_path(name: name, style: style)
     end
 
     def authenticate # 跳转至登录页面oauth
@@ -112,12 +118,12 @@ class ThemesController < ApplicationController
     @client ||= OAuth2::Client.new(
       Theme.client_id,
       Theme.client_secret,
-      site: session[:shop_url] #'http://lvh.me:4001'
+      site: shop_url #'http://lvh.me:4001'
     )
   end
 
   def token
-    subdomain = URI.parse(session[:shop_url]).host.split('.')[0]
+    subdomain = shop_host.split('.')[0]
     shop = Shop.where(:permanent_domain => subdomain).first
     consumer = OAuth2::Model::Consumer.where(shop: shop, client_id: Theme.client_id).first
     consumer.access_token
