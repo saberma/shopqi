@@ -11,10 +11,8 @@ App.Views.Theme.Index.Index = Backbone.View.extend
 
   render: ->
     self = this
-    data = @collection.map (model) ->
-      new App.Views.Theme.Index.Show(model: model).el.outerHTML
-    .join ''
-    data = "<ul>#{data}</ul>"
+    data = $('<ul/>')
+    @collection.each (model) -> data.append new App.Views.Theme.Index.Show(model: model).el
     $("#themes").quicksand $(data).find('li'),
       attribute: "data-id"
       useScaling: false
