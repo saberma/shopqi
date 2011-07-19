@@ -1,13 +1,7 @@
 -@content_class = 'divider'
 
 =content_for :login do
-  %li
-    以
-    %a(href="http://test.myshopqi.com") test
-    身份登录
-    (
-    %a(href="/logout")> log out
-    )
+  =render 'shop'
 
 .col-16
   #theme-download

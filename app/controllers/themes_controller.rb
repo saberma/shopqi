@@ -44,10 +44,9 @@ class ThemesController < ApplicationController
 
     def get_shop # 获取商店信息
       access_token = OAuth2::AccessToken.new(client, token)
-      result = access_token.get('/api/me')
+      result = JSON(access_token.get('/api/me'))
       if result['error'].blank?
-        session[:shop] = result
-        session[:shop_url] = nil
+        session[:shop] = result['permanent_domain']
       end
       redirect_to theme_download_path(name: session[:name], style: session[:style])
     end
@@ -56,6 +55,12 @@ class ThemesController < ApplicationController
     end
 
     def login # 未登录时提示用户登录或者注册(如果直接跳转至登录页面则对未注册用户不友好)
+    end
+
+    def logout
+      session[:shop] = nil
+      session[:shop_url] = nil
+      redirect_to theme_path(name: session[:name], style: session[:style])
     end
 
     def authenticate # 跳转至登录页面oauth

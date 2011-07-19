@@ -19,8 +19,7 @@ class ShopsController < ApplicationController
   def me
     authorization = OAuth2::Provider.access_token(nil, [], request)
     result = if authorization.valid?
-      shop = authorization.owner
-      shop.as_json
+      authorization.owner.as_json(only: [:permanent_domain, :deadline, :created_at, :updated_at, :name])['shop']
     else
       {error: 'No soup for you!'}
     end

@@ -21,6 +21,7 @@ Shopqi::Application.routes.draw do
     get '/' => 'themes#index'
     scope "/themes" do
       get '/login' => 'themes#login', as: :theme_login
+      get '/logout' => 'themes#logout', as: :theme_logout
       get '/get_shop' => 'themes#get_shop', as: :theme_get_shop
       post '/login/authenticate' => 'themes#authenticate', as: :theme_authenticate
       get '/filter' => 'themes#filter'
