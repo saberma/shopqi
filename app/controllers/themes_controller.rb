@@ -16,7 +16,8 @@ class ThemesController < ApplicationController
     end
 
     def show
-      session[:state] = "#{params[:name]}__#{params[:style]}"
+      session[:name] = params[:name]
+      session[:style] = params[:style]
       theme = Theme.find_by_name_and_style(params[:name], params[:style])
       @theme_json = theme.attributes.to_json
       styles = Theme.find_all_by_name(params[:name])
@@ -30,20 +31,25 @@ class ThemesController < ApplicationController
     end
 
     def download # 确认切换主题
-      if session[:shop]
-      else
-        if params[:code].blank? # callback
-          redirect_to theme_login_path and return
+      if request.xhr? # ajax
+        if session[:shop]
+          render text: 'logged'
         else
-          access_token = OAuth2::AccessToken.new(client, token)
-          result = access_token.get('/api/me')
-          if result['error'].blank?
-            session[:shop] = result
-            session[:shop_url] = nil
-          end
+          redirect_to theme_login_path
         end
+      else # html
+        redirect_to theme_path(name: session[:name], style: session[:style]) unless session[:shop]
       end
-      render :text => session[:shop]
+    end
+
+    def get_shop # 获取商店信息
+      access_token = OAuth2::AccessToken.new(client, token)
+      result = access_token.get('/api/me')
+      if result['error'].blank?
+        session[:shop] = result
+        session[:shop_url] = nil
+      end
+      redirect_to theme_download_path(name: session[:name], style: session[:style])
     end
 
     def apply # 切换主题
@@ -55,8 +61,7 @@ class ThemesController < ApplicationController
     def authenticate # 跳转至登录页面oauth
       session[:shop_url] = params[:shop_url]
       redirect_to client.web_server.authorize_url(
-        redirect_uri: Theme.redirect_uri,
-        state: session[:state]
+        redirect_uri: Theme.redirect_uri
       )
     end
 

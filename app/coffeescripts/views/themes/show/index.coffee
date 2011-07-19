@@ -4,7 +4,13 @@ App.Views.Theme.Show.Index = Backbone.View.extend
   initialize: ->
     self = this
     this.render()
-    $("a.fancy-box, a.login").fancybox()
+    $("a.fancy-box").fancybox()
+    $("a.login").fancybox ajax: {
+      success: (href, data, textStatus) ->
+        if data is 'logged'
+          window.location = href
+          false # 不弹出窗口
+    }
 
   render: ->
     template = Handlebars.compile $('#overview-item').html()
