@@ -16,17 +16,15 @@ class Theme < ActiveYaml::Base
     end
 
     def self.client_id
-      clients['client_id']
+      client.client_id
     end
 
     def self.client_secret
-      clients['client_secret']
+      client.client_secret
     end
 
-    def self.clients
-      path = File.join Rails.root, 'config', 'clients.yml'
-      config = YAML::load_file path
-      config[Rails.env]['themes']
+    def self.client
+      OAuth2::Model::ConsumerClient.where(name: 'themes').first
     end
   end
 end

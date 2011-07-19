@@ -142,7 +142,7 @@ class ThemesController < ApplicationController
   def token
     subdomain = shop_host.split('.')[0]
     shop = Shop.where(:permanent_domain => subdomain).first
-    consumer = OAuth2::Model::Consumer.where(shop: shop, client_id: Theme.client_id).first
+    consumer = OAuth2::Model::ConsumerToken.where(shop: shop, client_id: Theme.client_id).first
     consumer.access_token
   end
 

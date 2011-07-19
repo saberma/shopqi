@@ -84,7 +84,7 @@ class ShopObserver < ActiveRecord::Observer
     #author = OAuth2::Model::Authorization.new owner: shop, client: client
     author.access_token = OAuth2::Model::Authorization.create_access_token
     author.save
-    shop.oauth2_consumers.create client_id: client.client_id, access_token: author.access_token
+    shop.oauth2_consumer_tokens.create client_id: client.client_id, access_token: author.access_token
   end
 
 end

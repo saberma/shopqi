@@ -237,14 +237,23 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
 
   add_index "oauth2_clients", ["client_id"], :name => "index_oauth2_clients_on_client_id"
 
-  create_table "oauth2_consumers", :force => true do |t|
-    t.integer  "shop_id"
-    t.string   "client_id"
-    t.string   "access_token", :limit => 36
+  create_table "oauth2_consumer_clients", :force => true do |t|
+    t.string   "name",          :limit => 20
+    t.string   "client_id",     :limit => 40
+    t.string   "client_secret", :limit => 40
     t.datetime "created_at"
   end
 
-  add_index "oauth2_consumers", ["shop_id", "client_id"], :name => "index_oauth2_consumers_on_shop_id_and_client_id"
+  add_index "oauth2_consumer_clients", ["name"], :name => "index_oauth2_consumer_clients_on_name"
+
+  create_table "oauth2_consumer_tokens", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "client_id",    :limit => 40
+    t.string   "access_token", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "oauth2_consumer_tokens", ["shop_id", "client_id"], :name => "index_oauth2_consumer_tokens_on_shop_id_and_client_id"
 
   create_table "order_billing_addresses", :force => true do |t|
     t.integer "order_id",               :null => false

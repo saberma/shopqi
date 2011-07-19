@@ -2,28 +2,28 @@
 class Shop < ActiveRecord::Base
   include OAuth2::Model::ClientOwner
   include OAuth2::Model::ResourceOwner
-  has_many :users             , dependent: :destroy
-  has_many :products          , dependent: :destroy                      , order: :id.desc
-  has_many :variants          , class_name: 'ProductVariant' #冗余shop_id
-  has_many :link_lists        , dependent: :destroy
-  has_many :pages             , dependent: :destroy
-  has_many :blogs             , dependent: :destroy
-  has_many :smart_collections , dependent: :destroy
-  has_many :custom_collections, dependent: :destroy
-  has_many :tags              , dependent: :destroy
-  has_many :orders            , dependent: :destroy
-  has_many :customers         , dependent: :destroy
-  has_many :customer_groups   , dependent: :destroy
-  has_many :customer_tags     , dependent: :destroy
-  has_many :carts             , dependent: :destroy
-  has_many :subscribes        , dependent: :destroy
-  has_one  :theme             , dependent: :destroy                      , class_name: 'ShopTheme'
-  has_many :oauth2_consumers  , dependent: :destroy                      , class_name: 'OAuth2::Model::Consumer'
+  has_many :users                 , dependent: :destroy
+  has_many :products              , dependent: :destroy                      , order: :id.desc
+  has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
+  has_many :link_lists            , dependent: :destroy
+  has_many :pages                 , dependent: :destroy
+  has_many :blogs                 , dependent: :destroy
+  has_many :smart_collections     , dependent: :destroy
+  has_many :custom_collections    , dependent: :destroy
+  has_many :tags                  , dependent: :destroy
+  has_many :orders                , dependent: :destroy
+  has_many :customers             , dependent: :destroy
+  has_many :customer_groups       , dependent: :destroy
+  has_many :customer_tags         , dependent: :destroy
+  has_many :carts                 , dependent: :destroy
+  has_many :subscribes            , dependent: :destroy
+  has_one  :theme                 , dependent: :destroy                      , class_name: 'ShopTheme'
+  has_many :oauth2_consumer_tokens, dependent: :destroy                      , class_name: 'OAuth2::Model::ConsumerToken'
 
-  has_many :types             , dependent: :destroy                      , class_name: 'ShopProductType'
-  has_many :vendors           , dependent: :destroy                      , class_name: 'ShopProductVendor'
-  has_many :emails            , dependent: :destroy
-  has_many :countries         , dependent: :destroy
+  has_many :types                 , dependent: :destroy                      , class_name: 'ShopProductType'
+  has_many :vendors               , dependent: :destroy                      , class_name: 'ShopProductVendor'
+  has_many :emails                , dependent: :destroy
+  has_many :countries             , dependent: :destroy
 
   attr_readonly :orders_count
 

@@ -28,18 +28,27 @@ class CreateOauth2Provider < ActiveRecord::Migration
     add_index :oauth2_authorizations, [:client_id, :access_token_hash]
     add_index :oauth2_authorizations, [:client_id, :refresh_token_hash]
 
-    create_table :oauth2_consumers, force: true do |t| # 非provider
-      t.integer :shop_id    , comment: '所属商店'
-      t.string :client_id
-      t.string :access_token, limit: 36
+    create_table :oauth2_consumer_clients, force: true do |t| # shopqi自身提供的client
+      t.string :name         , limit: 20, unique: true
+      t.string :client_id    , limit: 40
+      t.string :client_secret, limit: 40
       t.datetime :created_at
     end
-    add_index :oauth2_consumers, [:shop_id, :client_id]
+    add_index :oauth2_consumer_clients, :name
+
+    create_table :oauth2_consumer_tokens, force: true do |t| # 用于保存access_token
+      t.integer :shop_id
+      t.string :client_id   , limit: 40
+      t.string :access_token, limit: 40
+      t.datetime :created_at
+    end
+    add_index :oauth2_consumer_tokens, [:shop_id, :client_id]
   end
 
   def self.down
     drop_table :oauth2_clients
     drop_table :oauth2_authorizations
-    drop_table :oauth2_consumer
+    drop_table :oauth2_consumer_clients
+    drop_table :oauth2_consumer_tokens
   end
 end

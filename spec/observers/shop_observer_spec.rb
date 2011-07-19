@@ -20,9 +20,9 @@ describe ShopObserver do
           expect do
             shop
             shop.oauth2_authorizations.first.access_token_hash.should_not be_blank
-            shop.oauth2_consumers.first.access_token.should_not be_blank
+            shop.oauth2_consumer_tokens.first.access_token.should_not be_blank
           end.to change(OAuth2::Model::Authorization, :count).by(1)
-        end.to change(OAuth2::Model::Consumer, :count).by(1)
+        end.to change(OAuth2::Model::ConsumerToken, :count).by(1)
       end
 
     end
