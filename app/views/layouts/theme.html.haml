@@ -36,7 +36,6 @@
             %li
               %a(href="#") 提交主题
             =yield :login
-        #filter-bar
-          =yield :filter
-      #content
+        =yield :filter
+      #content(class=@content_class)
         =yield

@@ -1,33 +1,34 @@
 =content_for :filter do
-  .prices.selection-bar
-    %ul
-      %li.first.selected.price
-        %a.price(href="#" rel="both") 全部
-      %li.price
-        %a.price(href="#price=free" rel="free") 免费
-      %li.last.price
-        %a.price(href="#price=paid" rel="paid") 收费
-  .colors.selection-bar
-    %ul
-      %li.first.selected.color
-        %a.color(href="#" rel="") 所有颜色
-      -Theme::COLOR.each do |color|
-        %li.color(class="#{color == Theme::COLOR.last and 'last'}")
-          %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
-  -#
-    .sortby.dropdown
-      %ul#sortby-dropdown
-        %li.sortby
-          %a.sortby(href="#" rel="")
-            %span 排序
-      %ul.drop(style="display:none;")
-        %li.sortby
-          %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") 最新主题
-        %li.sortby
-          %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") 官方主题
-        %li.sortby
-          %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") 最多下载
-  %img.spinner(src="/images/spinner_big.gif" style="display:none")
+  #filter-bar
+    .prices.selection-bar
+      %ul
+        %li.first.selected.price
+          %a.price(href="#" rel="both") 全部
+        %li.price
+          %a.price(href="#price=free" rel="free") 免费
+        %li.last.price
+          %a.price(href="#price=paid" rel="paid") 收费
+    .colors.selection-bar
+      %ul
+        %li.first.selected.color
+          %a.color(href="#" rel="") 所有颜色
+        -Theme::COLOR.each do |color|
+          %li.color(class="#{color == Theme::COLOR.last and 'last'}")
+            %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
+    -#
+      .sortby.dropdown
+        %ul#sortby-dropdown
+          %li.sortby
+            %a.sortby(href="#" rel="")
+              %span 排序
+        %ul.drop(style="display:none;")
+          %li.sortby
+            %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") 最新主题
+          %li.sortby
+            %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") 官方主题
+          %li.sortby
+            %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") 最多下载
+    %img.spinner(src="/images/spinner_big.gif" style="display:none")
 
 #content
   #noresults(style="display:none")
