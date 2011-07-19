@@ -1,7 +1,7 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:index, :show, :download, :login, :get_shop, :apply, :logout, :authenticate, :filter, :switch]
-  prepend_before_filter :authenticate_shop!, only: [:get_shop, :apply, :logout]
+  prepend_before_filter :authenticate_shop!, only: [:apply, :logout]
   skip_before_filter :verify_authenticity_token, :only => [:authenticate, :apply]
   layout 'admin'
   layout 'theme', only: [:index, :show, :download, :apply]

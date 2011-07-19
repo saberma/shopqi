@@ -128,6 +128,7 @@ class ShopTheme < ActiveRecord::Base
   end
 
   after_save do
+    FileUtils.rm_rf public_path # 切换主题时先清空整个目录
     repo = Grit::Repo.init public_path # 初始化为git repo
     FileUtils.cp_r "#{app_path}/.", public_path
     commit repo, '1'
