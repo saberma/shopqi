@@ -19,11 +19,22 @@ Shopqi::Application.routes.draw do
 
   constraints(subdomain: 'themes') do # 主题商店 
     get '/' => 'themes#index'
-    get '/themes/login' => 'themes#login', as: :theme_login
-    get '/themes/filter' => 'themes#filter'
-    get '/themes/:name/styles/:style' => 'themes#show'
-    get '/themes/:name/styles/:style/download' => 'themes#download'
-    get '/themes/:name/styles/:style/apply' => 'themes#apply'
+    scope "/themes" do
+      get '/login' => 'themes#login', as: :theme_login
+      post '/login/authenticate' => 'themes#authenticate', as: :theme_authenticate
+      get '/filter' => 'themes#filter'
+      get '/:name/styles/:style' => 'themes#show'
+      get '/:name/styles/:style/download' => 'themes#download'
+      get '/:name/styles/:style/apply' => 'themes#apply'
+    end
+
+    begin 'client' # 作为oauth client
+      get '/callback' => redirect {|params, request|
+        query = request.query_parameters
+        name, style = query['state'].split '__' # name__style
+        "/themes/#{name}/styles/#{style}/download?code=#{query['code']}"
+      }
+    end
   end
 
   constraints(Subdomain) do # 前台商店

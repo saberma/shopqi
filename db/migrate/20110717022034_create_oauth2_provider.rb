@@ -1,3 +1,4 @@
+#encoding: utf-8
 class CreateOauth2Provider < ActiveRecord::Migration
   def self.up
     create_table :oauth2_clients, force: true do |t|
@@ -26,10 +27,19 @@ class CreateOauth2Provider < ActiveRecord::Migration
     add_index :oauth2_authorizations, [:access_token_hash]
     add_index :oauth2_authorizations, [:client_id, :access_token_hash]
     add_index :oauth2_authorizations, [:client_id, :refresh_token_hash]
+
+    create_table :oauth2_consumers, force: true do |t| # 非provider
+      t.integer :shop_id    , comment: '所属商店'
+      t.string :client_id
+      t.string :access_token, limit: 36
+      t.datetime :created_at
+    end
+    add_index :oauth2_consumers, [:shop_id, :client_id]
   end
 
   def self.down
     drop_table :oauth2_clients
     drop_table :oauth2_authorizations
+    drop_table :oauth2_consumer
   end
 end

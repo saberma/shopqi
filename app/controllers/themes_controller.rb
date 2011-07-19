@@ -1,6 +1,7 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!, except: [:index, :show, :download, :login, :filter]
+  prepend_before_filter :authenticate_user!, except: [:index, :show, :download, :login, :authenticate, :filter]
+  skip_before_filter :verify_authenticity_token, :only => [:authenticate]
   layout 'admin'
   layout 'theme', only: [:index, :show, :download]
 
@@ -15,6 +16,7 @@ class ThemesController < ApplicationController
     end
 
     def show
+      session[:state] = "#{params[:name]}__#{params[:style]}"
       theme = Theme.find_by_name_and_style(params[:name], params[:style])
       @theme_json = theme.attributes.to_json
       styles = Theme.find_all_by_name(params[:name])
@@ -28,23 +30,34 @@ class ThemesController < ApplicationController
     end
 
     def download # 确认切换主题
-      access_token = client.web_server.get_access_token params[:code], redirect_uri: oauth_callback_url
-      me = access_token.get('/api/me')
-      #ap me
-      render :text => access_token
+      if session[:shop]
+      else
+        if params[:code].blank? # callback
+          redirect_to theme_login_path and return
+        else
+          access_token = OAuth2::AccessToken.new(client, token)
+          result = access_token.get('/api/me')
+          if result['error'].blank?
+            session[:shop] = result
+            session[:shop_url] = nil
+          end
+        end
+      end
+      render :text => session[:shop]
     end
 
     def apply # 切换主题
     end
 
     def login # 未登录时提示用户登录或者注册(如果直接跳转至登录页面则对未注册用户不友好)
-      redirect_to client.web_server.authorize_url(
-        :redirect_uri => oauth_callback_url
-      )
     end
 
     def authenticate # 跳转至登录页面oauth
-      redirect_to "#{params[:shop]}/auth/login"
+      session[:shop_url] = params[:shop_url]
+      redirect_to client.web_server.authorize_url(
+        redirect_uri: Theme.redirect_uri,
+        state: session[:state]
+      )
     end
 
     def filter # 查询主题
@@ -87,13 +100,16 @@ class ThemesController < ApplicationController
   protected
   def client
     @client ||= OAuth2::Client.new(
-      '4rvacrldtx5w5utihdp50i328',
-      '5lvh1ml1ategg8v6udc1n99rd',
-      site: 'http://lvh.me:4001'
+      Theme.client_id,
+      Theme.client_secret,
+      site: session[:shop_url] #'http://lvh.me:4001'
     )
   end
 
-  def oauth_callback_url
-    'http://themes.lvh.me:4000/themes/Prettify/styles/default/download'
+  def token
+    subdomain = URI.parse(session[:shop_url]).host.split('.')[0]
+    shop = Shop.where(:permanent_domain => subdomain).first
+    consumer = OAuth2::Model::Consumer.where(shop: shop, client_id: Theme.client_id).first
+    consumer.access_token
   end
 end
