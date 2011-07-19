@@ -130,7 +130,7 @@ Shopqi::Application.routes.draw do
       resources :articles
     end
 
-    resources :comments, only: [:index,:delete] do
+    resources :comments, only: [:index,:destroy] do
       member do
         post :spam
         post :approve

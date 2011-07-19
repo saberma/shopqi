@@ -22,7 +22,7 @@ App.Views.LinkList.Show = Backbone.View.extend
       $.post "#{self.model.links.url}/sort", $(this).sortable('serialize')
       #排序后设置到model
       ids = _.map $(this).sortable('toArray'), (id) ->
-        id.substr(5) #link_1 
+        id.substr(5) #link_1
       i = 0
       _.each ids, (id) ->
         self.model.links.get(id).set { position: i++ }, silent: true
@@ -30,8 +30,7 @@ App.Views.LinkList.Show = Backbone.View.extend
 
   destroy: ->
     #therubyracer暂时无法编译中文，最新版已修正问题但未发布
-    #if confirm '您确定要删除吗'
-    if confirm '\u60A8\u786E\u5B9A\u8981\u5220\u9664\u5417'
+    if confirm '您确定要删除吗'
       self = this
       this.model.destroy
         success: (model, response) ->

@@ -20,7 +20,7 @@ App.Views.Comment.Index = Backbone.View.extend
     this.$('.selector').attr 'checked', this.$('#select-all').attr('checked')
     this.changeCommentCheckbox()
 
-  # 商品复选框操作
+  # 评论复选框操作
   changeCommentCheckbox: ->
     checked = this.$('.selector:checked')
     all_checked = (checked.size() == this.$('.selector').size())
@@ -31,7 +31,6 @@ App.Views.Comment.Index = Backbone.View.extend
     else
       $('#comment-actions').hide()
 
-  # 操作面板修改
   changeCommentSelect: ->
     operation = this.$('#comment_bulk_action').val()
     is_destroy = (operation is 'destroy')

@@ -3,6 +3,7 @@ App.Views.Comment.Show = Backbone.View.extend
 
   events:
     "click .selector": 'select'
+    "click .destroy" : 'destroy'
 
   initialize: ->
     self = this
@@ -21,3 +22,12 @@ App.Views.Comment.Show = Backbone.View.extend
 
   select: ->
     $(@el).toggleClass 'active', this.$('.selector').attr('checked')
+
+  destroy: ->
+    if confirm '您确定要删除吗'
+      self = this
+      this.model.destroy
+        success: (model, response) ->
+          self.remove()
+          msg '删除成功!'
+    false
