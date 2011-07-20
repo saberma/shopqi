@@ -34,7 +34,10 @@ App.Views.Comment.Show = Backbone.View.extend
     position = _.indexOf @model.collection.models, @model
     cycle = if position % 2 == 0 then 'odd' else 'even'
     $(@el).addClass "row#{cycle}"
-    $('#comments-list > tbody').append @el
+    if $('.more-comments').size() > 0
+      $('.more-comments').before @el
+    else
+      $('#comments-list > tbody').append @el
 
   select: ->
     $(@el).toggleClass 'active', this.$('.selector').attr('checked')
