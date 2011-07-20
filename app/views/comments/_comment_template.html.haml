@@ -1,0 +1,40 @@
+%script(id="show-comment-item" type="text/html")
+  %td.checkbox
+    %input.selector.approvable(name="comments[]" type="checkbox" value="{{id}}" id="checkbox-{{id}}")
+  %td
+    {{ author }}
+    %a.email{:href => "mailto:{{ email }}"} {{ email }}
+    %span.note
+      %span.today {{date created_at }}
+  %td
+    %p {{ body }}
+    %span.posted-on
+      {{#with article }}
+      发表在文章:
+      %a{:href => "/admin/blogs/{{ blog_id }}/articles/{{ id }}"} {{ title }}
+      {{/with }}
+  %td.r
+    %span.comment-actions
+      %span(id="comment_{{id}}_actions")
+        {{#if is_unapproved}}
+        %a.action.btn.approve approve
+        {{/if }}
+        {{#if is_spam}}
+        %a.action.btn.approve not spam
+        {{/if }}
+        {{#if is_published}}
+        %a.action.btn.spam spam
+        {{/if }}
+        %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')
+%script(id="show-comment-handle" type="text/html")
+  %span(id="comment_{{id}}_actions")
+    {{#if is_unapproved}}
+    %a.action.btn.approve approve
+    {{/if }}
+    {{#if is_spam}}
+    %a.action.btn.approve not spam
+    {{/if }}
+    {{#if is_published}}
+    %a.action.btn.spam spam
+    {{/if }}
+    %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')
