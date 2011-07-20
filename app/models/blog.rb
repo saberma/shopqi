@@ -85,17 +85,4 @@ class Comment < ActiveRecord::Base
   belongs_to :article
   belongs_to :shop
   validates_presence_of :body
-
-  #由于这里也设置到handlebars里面,所以不加?后缀
-  def is_spam
-    self.status == 'spam'
-  end
-
-  def is_published
-    self.status == 'published'
-  end
-
-  def is_unapproved
-    self.status == 'unapproved'
-  end
 end

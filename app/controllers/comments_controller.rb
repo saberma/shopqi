@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
 
   expose(:comments_json){
     comments.to_json({
-      methods: [:is_spam,:is_published,:is_unapproved]
+      include:{ article: { only: [:id, :blog_id,:title]} }
     })
   }
 
@@ -32,4 +32,8 @@ class CommentsController < ApplicationController
     render json: comment
   end
 
+  def update
+    comment.save
+    render json: comment.to_json({include:{ article: { only: [:id, :blog_id,:title]} }})
+  end
 end

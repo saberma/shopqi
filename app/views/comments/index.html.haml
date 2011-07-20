@@ -1,5 +1,5 @@
 -use_javascripts 'models/comment', 'collections/comments', 'views/comments/index', 'views/comments/show', 'controllers/comments'
-%h2#title All  comments
+%h2#title 所 有 评 论
 #action-links
   %ul
 #table-filters.box2.sst.ssb
@@ -80,21 +80,26 @@
     {{ author }}
     %a.email{:href => "mailto:{{ email }}"} {{ email }}
     %span.note
-      %span.today Today, 01:50
+      %span.today {{date created_at }}
   %td
     %p {{ body }}
     %span.posted-on
+      {{#with article }}
       发表在文章:
-      %a{:href => "/admin/blogs/941902/articles/3200602"} aaa
-      from the blog
-      %a{:href => "/admin/blogs/941902"} aaa
+      %a{:href => "/admin/blogs/{{ blog_id }}/articles/{{ id }}"} {{ title }}
+      {{/with }}
   %td.r
     %span.comment-actions
       %span(id="comment_{{id}}_actions")
         {{#if is_unapproved}}
-        %a.action.btn approve
+        %a.action.btn.approve approve
         {{/if }}
-        %a.action.btn{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19138352/spam", :loading => "var action = $('comment_19138352_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
+        {{#if is_spam}}
+        %a.action.btn.not_spam not spam
+        {{/if }}
+        {{#if is_published}}
+        %a.action.btn.spam spam
+        {{/if }}
         %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')
 
 :javascript
