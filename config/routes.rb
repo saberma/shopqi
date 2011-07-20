@@ -19,20 +19,22 @@ Shopqi::Application.routes.draw do
   end
 
   constraints(subdomain: 'themes') do # 主题商店 
-    get '/' => 'themes#index'
-    scope "/themes" do
-      get '/login' => 'themes#login'                          , as: :theme_login
-      get '/logout' => 'themes#logout'                        , as: :theme_logout
-      get '/get_shop' => 'themes#get_shop'                    , as: :theme_get_shop
-      post '/login/authenticate' => 'themes#authenticate'     , as: :theme_authenticate
-      get '/filter' => 'themes#filter'
-      get '/:name/styles/:style' => 'themes#show'             , as: :theme
-      get '/:name/styles/:style/download' => 'themes#download', as: :theme_download
-      match '/:name/styles/:style/apply' => 'themes#apply'
-    end
+    scope module: :theme do
+      get '/' => 'themes#index', as: :theme_index
+      scope "/themes" do
+        get '/login' => 'themes#login'                          , as: :theme_login
+        get '/logout' => 'themes#logout'                        , as: :theme_logout
+        get '/get_shop' => 'themes#get_shop'                    , as: :theme_get_shop
+        post '/login/authenticate' => 'themes#authenticate'     , as: :theme_authenticate
+        get '/filter' => 'themes#filter'
+        get '/:name/styles/:style' => 'themes#show'             , as: :theme
+        get '/:name/styles/:style/download' => 'themes#download', as: :theme_download
+        match '/:name/styles/:style/apply' => 'themes#apply'
+      end
 
-    begin 'client' # 作为oauth client
-      get '/callback' => redirect('/themes/get_shop')
+      begin 'client' # 作为oauth client
+        get '/callback' => redirect('/themes/get_shop')
+      end
     end
   end
 

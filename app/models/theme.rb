@@ -10,9 +10,7 @@ class Theme < ActiveYaml::Base
 
   begin 'oauth2' # theme作为client，向provider请求认证时传递的返回跳转uri
     def self.redirect_uri
-      url = "http://themes.#{Setting.domain.url}"
-      url += ":#{Setting.domain.port}" unless Setting.domain.port == 80
-      "#{url}/callback"
+      "#{Setting.theme_store_url}/callback"
     end
 
     def self.client_id
