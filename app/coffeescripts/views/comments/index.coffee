@@ -45,8 +45,10 @@ App.Views.Comment.Index = Backbone.View.extend
         if is_destroy
           $('#comment-actions').hide()
           App.comments.remove model
-        else if operation in ['mark_spam', 'mark_non_spam','approve']
-          model.set published: (operation is 'publish')
+        else if operation is 'mark_spam'
+          model.set status: 'spam'
+        else
+          model.set status: 'published'
       msg_text = if is_destroy then '删除' else '更新'
       msg "批量#{msg_text}成功!"
     $('#comment_bulk_action').val('')

@@ -4,8 +4,8 @@ App.Views.Comment.Show = Backbone.View.extend
   events:
     "click .selector": 'select'
     "click .destroy" : 'destroy'
-    "click .not_spam"    : 'not_spam'
     "click .spam"    : 'spam'
+    "click .approve" : 'approve'
 
   initialize: ->
     self = this
@@ -38,15 +38,14 @@ App.Views.Comment.Show = Backbone.View.extend
           msg '删除成功!'
     false
 
-  not_spam: ->
-    self = this
-    this.model.save {status: 'published'},
-      success: (model,resp) ->
-        self.render()
-
   spam: ->
     self = this
     this.model.save {status: 'spam'},
       success: (model,resp) ->
         self.render()
 
+  approve: ->
+    self = this
+    this.model.save {status: 'published'},
+      success: (model,resp) ->
+        self.render()

@@ -20,7 +20,10 @@ class CommentsController < ApplicationController
   def set
     operation = params[:operation].to_sym
     ids = params[:comments]
-    if false
+    if :mark_spam == operation
+      comments.where(id:ids).update_all status: 'spam'
+    elsif [:mark_non_spam,:approve].include? operation
+      comments.where(id:ids).update_all status: 'published'
     elsif operation == :destroy
       comments.find(ids).map(&:destroy)
     end
