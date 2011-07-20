@@ -1,0 +1,62 @@
+=content_for :filter do
+  #filter-bar
+    .prices.selection-bar
+      %ul
+        %li.first.selected.price
+          %a.price(href="#" rel="both") 全部
+        %li.price
+          %a.price(href="#price=free" rel="free") 免费
+        %li.last.price
+          %a.price(href="#price=paid" rel="paid") 收费
+    .colors.selection-bar
+      %ul
+        %li.first.selected.color
+          %a.color(href="#" rel="") 所有颜色
+        -Theme::COLOR.each do |color|
+          %li.color(class="#{color == Theme::COLOR.last and 'last'}")
+            %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
+    -#
+      .sortby.dropdown
+        %ul#sortby-dropdown
+          %li.sortby
+            %a.sortby(href="#" rel="")
+              %span 排序
+        %ul.drop(style="display:none;")
+          %li.sortby
+            %a.sortby(href="/?sortby=Newest+Themes" rel="Newest Themes") 最新主题
+          %li.sortby
+            %a.sortby(href="/?sortby=Official+Themes" rel="Official Themes") 官方主题
+          %li.sortby
+            %a.sortby(href="/?sortby=Most+Downloaded" rel="Most Downloaded") 最多下载
+    %img.spinner(src="/images/spinner_big.gif" style="display:none")
+
+#content
+  #noresults(style="display:none")
+    .noresults-message
+      %h2 我们找不到任何主题符合您的查询条件
+      %p
+        请尝试使用一个条件的简单查询
+    -#%h2 最接近要求的主题...
+  #theme-grid.clearfix
+    %ul#themes.theme-thumbs
+
+%script(id="theme-item" type="text/x-jquery-tmpl")
+  %a(href="/themes/{{{name}}}/styles/{{{style}}}")
+    %p
+      %big {{{budget}}}
+      {{#if has_style}}
+      %strong.has-style {{{name}}}
+      %small {{{style}}}
+      {{else}}
+      %strong {{{name}}}
+      {{/if}}
+    =image_tag '/s/theme/screenshots/{{{id}}}/main/medium.jpg'
+
+:javascript
+  App.init = function(){
+    new App.Controllers.Themes.Index();
+    Backbone.history.start();
+  }
+
+  App.themes = new App.Collections.Themes();
+  new App.Views.Theme.Index.Index({collection: App.themes});

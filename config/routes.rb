@@ -2,16 +2,44 @@
 #include Rails.application.routes.url_helpers #在console中调用orders_path等
 Shopqi::Application.routes.draw do
 
+  begin 'oauth2'
+    get '/oauth/authorize'    , :to => 'oauth#authorize'   , :as => :authorize
+    post '/oauth/access_token', :to => 'oauth#access_token', :as => :access_token
+    match '/oauth/allow'      , :to => 'oauth#allow'       , :as => :oauth_allow
+  end
+
+  scope "/api" do # 供oauth2调用
+    get '/me' => 'shops#me'                 , as: :api_me
+    post '/themes/switch' => 'themes#switch'
+  end
+
   devise_for :user, controllers: {registrations: "users/registrations"} do
     get "signup", to: "users/registrations#new"
     get "login", to: "devise/sessions#new"
   end
 
+  constraints(subdomain: 'themes') do # 主题商店 
+    scope module: :theme do
+      get '/' => 'themes#index', as: :theme_index
+      scope "/themes" do
+        get '/login' => 'themes#login'                          , as: :theme_login
+        get '/logout' => 'themes#logout'                        , as: :theme_logout
+        get '/get_shop' => 'themes#get_shop'                    , as: :theme_get_shop
+        post '/login/authenticate' => 'themes#authenticate'     , as: :theme_authenticate
+        get '/filter' => 'themes#filter'
+        get '/:name/styles/:style' => 'themes#show'             , as: :theme
+        get '/:name/styles/:style/download' => 'themes#download', as: :theme_download
+        match '/:name/styles/:style/apply' => 'themes#apply'
+      end
 
-  # 前台商店
-  constraints(Subdomain) do
+      begin 'client' # 作为oauth client
+        get '/callback' => redirect('/themes/get_shop')
+      end
+    end
+  end
+
+  constraints(Subdomain) do # 前台商店
     #match '/' => 'home#dashboard'
-
     scope module: :shop do
       match '/' => 'shops#show'
       get '/search' => 'search#show'

@@ -77,6 +77,14 @@ class ShopObserver < ActiveRecord::Observer
       body  = Setting.templates.email.send(code).body
       shop.emails.create title: title,mail_type: code , body: body
     end
+
+    # 生成consumer access_token
+    client = OAuth2::Model::Client.find_by_client_id(Theme.client_id)
+    author = shop.oauth2_authorizations.build client: client
+    #author = OAuth2::Model::Authorization.new owner: shop, client: client
+    author.access_token = OAuth2::Model::Authorization.create_access_token
+    author.save
+    shop.oauth2_consumer_tokens.create client_id: client.client_id, access_token: author.access_token
   end
 
 end

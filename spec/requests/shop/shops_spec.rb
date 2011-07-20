@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'subdomain_capybara_server'
 
 describe "Shop::Shops", js:true do
 
@@ -12,8 +13,7 @@ describe "Shop::Shops", js:true do
 
   after(:each) { Capybara::Server.manual_host = nil }
 
-  # 首页
-  describe "GET /products" do
+  describe "GET /products" do # 首页
 
     it "should show product" do
       product = shop.products.where(handle: 'example-1').first
@@ -114,23 +114,4 @@ describe "Shop::Shops", js:true do
     end
   end
 
-end
-
-# hack:支持subdomain #see: http://blog.jamesalmond.com/testing-subdomains-using-capybara
-class Capybara::Server
-  def self.manual_host=(value)
-    @manual_host = value
-  end
-
-  def self.manual_host
-    @manual_host ||= '127.0.0.1'
-  end
-
-  def url(path)
-    if path =~ /^http/
-      path
-    else
-      (Capybara.app_host || "http://#{Capybara::Server.manual_host}:#{port}") + path.to_s
-    end
-  end
 end

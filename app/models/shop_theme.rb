@@ -128,6 +128,7 @@ class ShopTheme < ActiveRecord::Base
   end
 
   after_save do
+    FileUtils.rm_rf public_path # 切换主题时先清空整个目录
     repo = Grit::Repo.init public_path # 初始化为git repo
     FileUtils.cp_r "#{app_path}/.", public_path
     commit repo, '1'
@@ -145,7 +146,7 @@ class ShopTheme < ActiveRecord::Base
   begin #相对路径
     def files_relative_path # s/files/1/theme
       test = %w(test travis).include?(Rails.env) ? Rails.env : '' #测试目录与其他环境分开,不干扰
-      File.join 's', 'files', test, self.id.to_s, 'theme'
+      File.join 's', 'files', test, self.shop.id.to_s, 'theme'
     end
 
     def asset_relative_path(asset) # s/files/1/theme/assets/theme.liquid

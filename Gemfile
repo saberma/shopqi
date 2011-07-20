@@ -25,6 +25,7 @@ gem 'meta_search'
 
 gem 'carmen'#地区
 gem 'on_the_spot' #及时编辑
+gem 'seedbank' # 分离出各个环境下的seed
 
 ##### 控制器相关 #####
 gem 'decent_exposure'
@@ -47,16 +48,7 @@ gem "uuid" # 生成36位(或32位)唯一序列号
 gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
-
-group :development, :test do
-  gem "awesome_print", require: 'ap' # 调试
-  gem "interactive_editor"
-  # 编译coffee-script
-  gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
-  #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
-  gem 'execjs'
-  gem 'barista'
-end
+gem 'oauth2'
 
 group :development do
   gem 'rails3-generators'
@@ -70,13 +62,25 @@ group :development do
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
 end
 
+group :development, :test do
+  gem "awesome_print", require: 'ap' # 调试
+  gem "interactive_editor"
+  # 编译coffee-script
+  gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
+  #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
+  gem 'execjs'
+  gem 'barista'
+end
 
 group :test, :travis do
   gem "rspec-rails"
-  gem "factory_girl"
-  gem "factory_girl_rails"
   gem 'capybara', git: 'git://github.com/jnicklas/capybara.git' # 集成测试，最新版才支持:js=>true参数
   gem 'resque_spec' # resque测试
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
+end
+
+group :development, :test, :travis do
+  gem "factory_girl"
+  gem "factory_girl_rails"
 end

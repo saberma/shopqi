@@ -1,0 +1,19 @@
+%h3 Authorize OAuth client
+%p
+  This application
+  %b=@oauth2.client.name
+  wants
+  the following permissions:
+%ul
+  -@oauth2.scopes.each do |scope|
+    -next unless PERMISSIONS[scope]
+    %li=PERMISSIONS[scope]
+=form_tag oauth_allow_path do
+  - @oauth2.params.each do |key, value|
+    %input{:name => "#{key}", :type => "hidden", :value => "#{value}"}
+  -#%input{:name => "user_id", :type => "hidden", :value => "#{@user.id}"}
+  %fieldset
+    %input#allow{:name => "allow", :type => "checkbox", :value => "1"}
+    %label{:for => "allow"} Allow this application
+  %fieldset
+    %input{:type => "submit", :value => "Go!"}/

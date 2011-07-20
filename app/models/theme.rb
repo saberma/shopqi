@@ -1,36 +1,29 @@
 # encoding: utf-8
 # 可选外观主题(使用ActiveHash，以后增加记录直接加item，无须增加migration)
-class Theme < ActiveHash::Base
-  # 名称 风格 价格 颜色(Red Yellow Green Blue Magenta White Black Grey) 描述 
-  self.data = [
-    {id: 1 , name: 'Prettify'    , style: 'default'       , price: 0 , color: ''},
-    {id: 2 , name: 'Couture'     , style: 'Arioso'        , price: 0 , color: ''},
-    {id: 3 , name: 'Couture'     , style: 'Faust'         , price: 0 , color: ''},
-    {id: 4 , name: 'Monochrome'  , style: 'Blue/Orange'   , price: 0 , color: ''},
-    {id: 5 , name: 'Monochrome'  , style: 'Grey/Red'      , price: 0 , color: ''},
-    {id: 6 , name: 'Woodland'    , style: 'Slate'         , price: 0 , color: ''},
-    {id: 7 , name: 'Woodland'    , style: 'Birchwood'     , price: 0 , color: ''},
-    {id: 8 , name: 'Woodland'    , style: 'Dark Alder'    , price: 0 , color: ''},
-    {id: 9 , name: 'Threadify'   , style: 'original'      , price: 0 , color: ''},
-    {id: 10, name: 'Spotless'    , style: 'default'       , price: 0 , color: ''},
-    {id: 11, name: 'Structure'   , style: 'Electronics'   , price: 0 , color: ''},
-    {id: 12, name: 'Structure'   , style: 'Apparel'       , price: 0 , color: ''},
-    {id: 13, name: 'Structure'   , style: 'Crafts'        , price: 0 , color: ''},
-    {id: 14, name: 'Structure'   , style: 'Jewelry'       , price: 0 , color: ''},
-    {id: 15, name: 'Sortable'    , style: 'default'       , price: 0 , color: ''},
-    {id: 16, name: 'Solo'        , style: 'solo'          , price: 0 , color: ''},
-    {id: 17, name: 'Tribble'     , style: 'default'       , price: 0 , color: ''},
-    {id: 18, name: 'Moderno'     , style: 'default'       , price: 0 , color: ''},
-    {id: 19, name: 'Onyx'        , style: 'Royal/blue'    , price: 0 , color: ''},
-    {id: 20, name: 'Onyx'        , style: 'Ivory/bright'  , price: 0 , color: ''},
-    {id: 21, name: 'Onyx'        , style: 'Onyx/dark'     , price: 0 , color: ''},
-    {id: 22, name: 'Onyx'        , style: 'Summer/playful', price: 0 , color: ''},
-    {id: 23, name: 'Ripen'       , style: 'original'      , price: 0 , color: ''},
-    {id: 24, name: 'Reconfigured', style: 'original'      , price: 0 , color: ''},
-    {id: 25, name: 'Vogue'       , style: 'default'       , price: 0 , color: ''},
-  ]
+class Theme < ActiveYaml::Base
+  COLOR = %w(red yellow green blue magenta white black grey)
+  set_root_path "#{Rails.root}/app/models"
 
   def self.default
     find_by_name('Threadify')
   end
+
+  begin 'oauth2' # theme作为client，向provider请求认证时传递的返回跳转uri
+    def self.redirect_uri
+      "#{Setting.theme_store_url}/callback"
+    end
+
+    def self.client_id
+      client.client_id
+    end
+
+    def self.client_secret
+      client.client_secret
+    end
+
+    def self.client
+      OAuth2::Model::ConsumerClient.where(name: 'themes').first
+    end
+  end
 end
+Theme.all # Fixed: NoMethodError: undefined method `find_by_name_and_style' for Theme:Class

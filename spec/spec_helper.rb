@@ -64,6 +64,8 @@ Spork.each_run do
       # sentient_user
       Thread.current[:user] = nil
       DatabaseCleaner.start
+      client = Factory(:oauth2_client) # 保存与db/seeds.rb一致，生成themes client
+      Factory(:oauth2_consumer_client, client_id: client.client_id, client_secret: client.client_secret)
     end
 
     config.after(:each) do

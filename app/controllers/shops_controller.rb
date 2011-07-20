@@ -1,6 +1,6 @@
 # encoding: utf-8
 class ShopsController < ApplicationController
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, except: :me
   layout 'admin', only: :edit
 
   expose(:shop) { current_user.shop }
@@ -13,6 +13,18 @@ class ShopsController < ApplicationController
     respond_to do |format|
       format.html {redirect_to admin_general_preferences_path, notice: notice_msg}
       format.js   {render nothing: true}
+    end
+  end
+
+  begin 'api'
+    def me
+      authorization = OAuth2::Provider.access_token(nil, [], request)
+      result = if authorization.valid?
+        authorization.owner.as_json(only: [:permanent_domain, :deadline, :created_at, :updated_at, :name])['shop']
+      else
+        {error: 'No soup for you!'}
+      end
+      render json: result.to_json
     end
   end
 

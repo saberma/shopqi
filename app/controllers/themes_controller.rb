@@ -1,6 +1,6 @@
 #encoding: utf-8
 class ThemesController < ApplicationController
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, except: [:switch]
   layout 'admin'
 
   expose(:shop) { current_user.shop }
@@ -8,19 +8,36 @@ class ThemesController < ApplicationController
   expose(:settings_html) { theme.settings.transform }
   expose(:settings_json) { theme.settings.as_json.to_json }
 
-  def settings
+  begin 'api'
+    def switch
+      authorization = OAuth2::Provider.access_token(nil, [], request)
+      if authorization.valid?
+        shop = authorization.owner
+        theme = Theme.find_by_name name
+        shop.theme.switch theme
+      end
+      render nothing: true
+    end
   end
 
-  def update # 更新主题配置
-    preset = params[:theme][:save_preset][:existing]
-    preset = params[:theme][:save_preset][:new] if preset.blank?
-    preset = params[:theme][:load_preset] if preset.blank?
-    theme.settings.save preset, params[:theme][:settings]
-    render json: params[:theme][:settings]
+  begin 'admin' # 后台管理
+
+    def settings # 主题配置
+    end
+
+    def update # 更新主题配置
+      preset = params[:theme][:save_preset][:existing]
+      preset = params[:theme][:save_preset][:new] if preset.blank?
+      preset = params[:theme][:load_preset] if preset.blank?
+      theme.settings.save preset, params[:theme][:settings]
+      render json: params[:theme][:settings]
+    end
+
+    def delete_preset # 删除预设
+      theme.settings.destroy_preset params[:name]
+      render nothing: true
+    end
+
   end
 
-  def delete_preset # 删除预设
-    theme.settings.destroy_preset params[:name]
-    render nothing: true
-  end
 end

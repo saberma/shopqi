@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110623141854) do
+ActiveRecord::Schema.define(:version => 20110717022034) do
 
   create_table "articles", :force => true do |t|
     t.integer  "shop_id"
@@ -207,6 +207,55 @@ ActiveRecord::Schema.define(:version => 20110623141854) do
   end
 
   add_index "links", ["link_list_id"], :name => "index_links_on_link_list_id"
+
+  create_table "oauth2_authorizations", :force => true do |t|
+    t.string   "oauth2_resource_owner_type"
+    t.integer  "oauth2_resource_owner_id"
+    t.integer  "client_id"
+    t.string   "scope"
+    t.string   "code",                       :limit => 40
+    t.string   "access_token_hash",          :limit => 40
+    t.string   "refresh_token_hash",         :limit => 40
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth2_authorizations", ["access_token_hash"], :name => "index_oauth2_authorizations_on_access_token_hash"
+  add_index "oauth2_authorizations", ["client_id", "access_token_hash"], :name => "index_oauth2_authorizations_on_client_id_and_access_token_hash"
+  add_index "oauth2_authorizations", ["client_id", "code"], :name => "index_oauth2_authorizations_on_client_id_and_code"
+  add_index "oauth2_authorizations", ["client_id", "refresh_token_hash"], :name => "index_oauth2_authorizations_on_client_id_and_refresh_token_hash"
+
+  create_table "oauth2_clients", :force => true do |t|
+    t.string   "oauth2_client_owner_type"
+    t.integer  "oauth2_client_owner_id"
+    t.string   "name"
+    t.string   "client_id"
+    t.string   "client_secret_hash"
+    t.string   "redirect_uri"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth2_clients", ["client_id"], :name => "index_oauth2_clients_on_client_id"
+
+  create_table "oauth2_consumer_clients", :force => true do |t|
+    t.string   "name",          :limit => 20
+    t.string   "client_id",     :limit => 40
+    t.string   "client_secret", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "oauth2_consumer_clients", ["name"], :name => "index_oauth2_consumer_clients_on_name"
+
+  create_table "oauth2_consumer_tokens", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "client_id",    :limit => 40
+    t.string   "access_token", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "oauth2_consumer_tokens", ["shop_id", "client_id"], :name => "index_oauth2_consumer_tokens_on_shop_id_and_client_id"
 
   create_table "order_billing_addresses", :force => true do |t|
     t.integer "order_id",               :null => false
