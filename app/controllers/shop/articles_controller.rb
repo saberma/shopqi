@@ -13,9 +13,15 @@ class Shop::ArticlesController < Shop::AppController
   end
 
   def add_comment
+    if article.blog.commentable == 'moderate'
+      comment.status = 'unapproved'
+    else
+      comment.status = 'published'
+    end
+    comment.shop = shop
+    comment.article = article
     if comment.save
       redirect_to "/blogs/#{article.blog.handle}/#{article.id}"
-    else
     end
   end
 end

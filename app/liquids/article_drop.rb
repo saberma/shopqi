@@ -10,6 +10,12 @@ class ArticleDrop < Liquid::Drop
     @article.body_html.html_safe
   end
 
+  def comments
+    @article.comments.map do |comment|
+      CommentDrop.new comment
+    end
+  end
+
   def url
   end
 
