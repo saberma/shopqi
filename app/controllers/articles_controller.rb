@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
   expose(:blog)
   expose(:articles){ blog.articles }
   expose(:article)
+  expose(:comments){ article.comments }
   expose(:tags) { shop.tags.previou_used(2) }
 
   def create

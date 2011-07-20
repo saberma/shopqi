@@ -2,39 +2,7 @@
   %p.description.highlight(style="text-align: center")
     ==此博客评论已被禁用，你可以#{link_to "启用评论",edit_blog_path(blog)}
 -else
-  #comments
-    %h4==文章#{article.title}的评论
-    %p.description
-      下面是这篇文章的评论, 你可以
-      %a{:href => "/admin/comments"}在这里
-      查看和管理所有的评论
-    %form#batch-form{"accept-charset" => "UTF-8", :action => "/admin/articles/set", :method => "post"}
-      %table#comments-list.standard-table.hide_checkboxes{:cellpadding => "0", :cellspacing => "0"}
-        %thead
-          %tr
-            %th.checkbox{:width => "5%"}
-              %input#select-all{:type => "checkbox"}/
-            %th{:width => "17%"} 评论人
-            %th{:width => "55%"} 内容
-            %th{:width => "22%"} &nbsp;
-        %tbody
-          / Required arguments: comment, parent
-          %tr#comment_19083422.odd
-            %td.checkbox
-              %input#checkbox-19083422.selector{:name => "comments[]", :type => "checkbox", :value => "19083422"}/
-            %td
-              jj
-              %a.email{:href => "mailto:jj@gmail.com"} jj@gmail.com
-              %span.note 12 Jul 23:12
-            %td
-              %p fasffas
-              %span.posted-on
-                Posted in
-                %a{:href => "/admin/blogs/941902/articles/3200602"} aaa
-                from the blog
-                %a{:href => "/admin/blogs/941902"} aaa
-            %td.r
-              %span.comment-actions
-                %span#comment_19083422_actions
-                  %a.action.btn{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19083422/spam", :loading => "var action = $('comment_19083422_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
-                  -#=link_to_delete comment_path(comment),class: 'action'
+  -unless article.comments.blank?
+    #comments
+      %h4==文章#{article.title}的评论
+      =render partial:"comments/comment",locals:{blog:blog,article:article}
