@@ -12,9 +12,19 @@ App.Views.Comment.Show = Backbone.View.extend
     this.render()
     @model.bind 'remove', (model) ->
       self.remove()
+    @model.bind 'change:status', (model) ->
+      attrs = model.attributes
+      attrs['is_spam'] = attrs['is_published'] = attrs['is_unapproved'] = false
+      switch attrs['status']
+        when 'spam' then attrs['is_spam'] = true
+        when 'published' then attrs['is_published'] = true
+        when 'unapproved' then attrs['is_unapproved'] = true
+      template = Handlebars.compile $('#show-comment-handle').html()
+      log template attrs
+      self.$('.comment-actions').html template attrs
 
   render: ->
-    attrs = _.clone @model.attributes
+    attrs = @model.attributes
     switch attrs['status']
       when 'spam' then attrs['is_spam'] = true
       when 'published' then attrs['is_published'] = true
@@ -41,11 +51,7 @@ App.Views.Comment.Show = Backbone.View.extend
   spam: ->
     self = this
     this.model.save {status: 'spam'},
-      success: (model,resp) ->
-        self.render()
 
   approve: ->
     self = this
     this.model.save {status: 'published'},
-      success: (model,resp) ->
-        self.render()
