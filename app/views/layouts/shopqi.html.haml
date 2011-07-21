@@ -22,14 +22,14 @@
       #masthead
         .content
           %a(href="/")
-          %a.logo-shopqi(href="http://www.shopqi.com")=image_tag 'logos/shopqi_bag.gif'
+          %a.logo-shopqi(href="/")=image_tag 'logos/shopqi_bag.gif'
           %ul#nav-primary
             %li
               %a(href="/tour/") 功能演示
             -#
               %li
                 %a(href="/examples/") 成功案例
-            %li
+            %li(class=@current_faq)
               %a(href="/faq/") 常见问题
             %li
               %a(href="/signup/") 价格 &amp; 注册
