@@ -17,7 +17,7 @@
       = stylesheet_link_tag "ie7"
     =javascript_include_tag 'jquery'
     =csrf_meta_tag
-  %body(style="background:#fff")
+  %body(style=@body_style)
     #wrapper
       #masthead
         .content
@@ -38,22 +38,23 @@
                 %li.megadropdown
                   %a(href="#") 资源
                   %ul
-                    %li
-                      %a(href="http://support.myshopqi.com/" title="Welcome - ShopQi Support")
-                        %strong> 支持
-                        联系ShopQi
-                    %li
-                      %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki")
-                        %strong> 文档
-                        学习ShopQi相关文档
-                    %li
-                      %a(href="http://forums.shopqi.com/" title="ShopQi Community")
-                        %strong> 论坛
-                        ShopQi社区
-                    %li
-                      %a(href="http://apps.shopqi.com/" title="ShopQi Application Store")
-                        %strong> 应用
-                        选择商店应用程序
+                    -#
+                      %li
+                        %a(href="http://support.myshopqi.com/" title="Welcome - ShopQi Support")
+                          %strong> 支持
+                          联系ShopQi
+                      %li
+                        %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki")
+                          %strong> 文档
+                          学习ShopQi相关文档
+                      %li
+                        %a(href="http://forums.shopqi.com/" title="ShopQi Community")
+                          %strong> 论坛
+                          ShopQi社区
+                      %li
+                        %a(href="http://apps.shopqi.com/" title="ShopQi Application Store")
+                          %strong> 应用
+                          选择商店应用程序
                     %li
                       =link_to Setting.theme_store_url do
                         %strong> 外观

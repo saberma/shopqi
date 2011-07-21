@@ -223,8 +223,9 @@ Shopqi::Application.routes.draw do
 
   end
 
-  scope module: :shopqi do
+  scope module: :shopqi do # 官网
     root to: "home#page"
+    get '/faq' => 'home#faq', as: :faq
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]
