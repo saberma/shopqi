@@ -207,7 +207,7 @@ ul#nav-primary ul.utilities li ul li a strong { display:block; color:#fff; font-
 #footer,#push { clear:both;/* .push must be the same height as .footer */ }
 #push {height: 345px;}
 
-#footer { background:#111 url('../images/background/bg-footer.gif?1250106533') repeat-x; height: 371px; color: #666; border-top: 1px solid #222; font-size: 11.5px; margin-bottom:-16px; }
+#footer { background:#111 url('../images/background/bg-footer.gif?1250106533') repeat-x; height: 210px; color: #666; border-top: 1px solid #222; font-size: 11.5px; margin-bottom:-16px; }
 #footer-wrapper { padding:20px 0 0 0; width:925px; margin:auto;}
 
 #footer h3 { color: #fff; border-bottom: 1px solid #383838; margin-bottom: 10px; font-size: 13px; font-weight:normal; padding-bottom:6px; position:relative; text-shadow:1px 1px #000;}
