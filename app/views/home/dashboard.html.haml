@@ -70,7 +70,7 @@
   %ul#user-table.nobull
     -shop.users.each do |u|
       %li.box2
-        %img#gravatar{:alt => "", :src => "/images/avatar.jpg"}/
+        =image_tag u.gravatar_url, id: 'gravatar'
         =link_to u.name,"#users/#{u.id}",:class => "closure-lightbox"
         -if u.is_admin?
           %span.state.owner 帐户所有者
