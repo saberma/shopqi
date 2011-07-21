@@ -56,6 +56,8 @@ class Order < ActiveRecord::Base
     self.histories.create body: '创建订单'
   end
 
+  scope :recent, lambda{|o| where(:created_at.gt => o.days.ago) }
+
   define_index do
     has :shop_id
     indexes :name

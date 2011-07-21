@@ -7,27 +7,17 @@
 .col-12.last
   #dashboard-facts.box2
     %ul
+      -[:today,:yesterday,:last_week].each do |k|
+        %li
+          %p.big==¥#{statistics[k][:price]} RMB
+          %span==#{statistics[k][:des]}
+          %p==#{statistics[k][:size]}个订单
       %li
-        %p.big $0.00 USD
-        %span today
-        %p 0 orders
-      %li
-        %p.big $0.00 USD
-        %span yesterday
-        %p 0 orders
-      %li
-        %p.big $0.00 USD
-        %span last week
-        %p 0 orders
-      %li
-        %p.big 0
-        %span total orders
-      %li
-        %p.big 6
-        %span total products
+        %p.big==#{statistics[:total][:size]}
+        %span==#{statistics[:total][:des]}
       %li.last
-        %p.big 7
-        %span SKUs
+        %p.big==#{statistics[:total_product][:size]}
+        %span==#{statistics[:total_product][:des]}
 .col-8
   #stats-spinner{:style => "display:none"}
     Updating…
@@ -47,65 +37,13 @@
             %small.note
               at 03:28 am by development shop
           %td.r
-        %tr#event-195876560.even
-          %td.Apr17{:style => "width: 85px;"}
-            %strong Apr 17
-          %td
-            Collection
-            %a{:href => "/admin/custom_collections/3670472"} custom
-            was published.
-            %br/
-            %small.note
-              at 03:28 am by development shop
-          %td.r
-        %tr#event-195876400.odd
-          %td.Apr15{:style => "width: 85px;"}
-            %strong Apr 15
-          %td
-            New product:
-            = succeed "." do
-              %a{:href => "/admin/products/38742692"} new product
-            %br/
-            %small.note
-              at 11:41 am by development shop
-          %td.r
-        %tr#event-195876240.even
-          %td.Apr15{:style => "width: 85px;"}
-            %strong Apr 15
-          %td
-            New article published:
-            = succeed "." do
-              %a{:href => "/admin/blogs/892462/articles/3023012"} How to
-            %br/
-            %small.note
-              at 09:03 am by development shop
-          %td.r
-        %tr#event-195876080.odd
-          %td.Apr15{:style => "width: 85px;"}
-            %strong Apr 15
-          %td
-            New blog:
-            = succeed "." do
-              %a{:href => "/admin/pages"} introduction
-            %br/
-            %small.note
-              at 08:26 am by development shop
-          %td.r
-        %tr#event-195875920.odd
-          %td.Apr13{:style => "width: 85px;"}
-            %strong Apr 13
-          %td
-            API access was granted to Theme Store.
-            %br/
-            %small.note
-              at 11:06 pm by development shop
-          %td.r
-  %p#upgrade.box2
-    *
-    %a{:href => "/admin/account"} Upgrade your plan
-    to utilize full statistics including a draggable bar graph, a list of
-    top referrers, search terms, a traffic breakdown, and percentage of hits
-    by country of origin.
+  -#
+    %p#upgrade.box2
+      *
+      %a{:href => "/admin/account"} Upgrade your plan
+      to utilize full statistics including a draggable bar graph, a list of
+      top referrers, search terms, a traffic breakdown, and percentage of hits
+      by country of origin.
 .col-4.last.sidebar
   %h3 Recent Orders
   %p.note You have no orders yet
