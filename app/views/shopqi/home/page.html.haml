@@ -1,0 +1,178 @@
+!!!
+%html(lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml")
+  %head
+    %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")/
+    %meta(content="no" http-equiv="imagetoolbar")/
+    %meta(content="true" name="MSSmartTagsPreventParsing")/
+    %meta(content="Hosted e-commerce with ShopQi the easy way to start your own online store." name="description")/
+    %meta(content="store shop ecommerce e-commerce sell online selling goods shopping cart design easy" name="keywords")/
+    %meta(content="width=device-width initial-scale=1.0" name="viewport")/
+    %link(href="/images/favicon.png" rel="shortcut icon" type="image/x-icon")/
+    %link(href="/images/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
+    %title ShopQi &mdash; Create Your Online Store
+    = stylesheet_link_tag "master","mobile"
+    /[if IE 6]
+      = stylesheet_link_tag "ie6"
+    /[if IE 7]
+      = stylesheet_link_tag "ie7"
+    =javascript_include_tag 'jquery'
+    =csrf_meta_tag
+  %body(style="background:#fff")
+    #wrapper
+      #masthead
+        .content
+          %a(href="/")
+          %a.logo-shopqi(href="http://www.shopqi.com")=image_tag 'logos/shopqi_bag.gif'
+          %ul#nav-primary
+            %li
+              %a(href="/tour/") 功能演示
+            -#
+              %li
+                %a(href="/examples/") 成功案例
+            %li
+              %a(href="/faq/") 常见问题
+            %li
+              %a(href="/signup/") 价格 &amp; 注册
+            %li.sub-nav
+              %ul.utilities
+                %li.megadropdown
+                  %a(href="#") 资源
+                  %ul
+                    %li
+                      %a(href="http://support.myshopqi.com/" title="Welcome - ShopQi Support")
+                        %strong> 支持
+                        联系ShopQi
+                    %li
+                      %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki")
+                        %strong> 文档
+                        学习ShopQi相关文档
+                    %li
+                      %a(href="http://forums.shopqi.com/" title="ShopQi Community")
+                        %strong> 论坛
+                        ShopQi社区
+                    %li
+                      %a(href="http://apps.shopqi.com/" title="ShopQi Application Store")
+                        %strong> 应用
+                        选择商店应用程序
+                    %li
+                      =link_to Setting.theme_store_url do
+                        %strong> 外观
+                        选择商店外观
+                %li.last
+                  %a(href="/login/") 登录
+      / #masthead
+      #originalbanner
+        #header.frontpage
+          #createanonlinestore.banner.createanonlinestore
+            %h1(style="position:absolute; top:20px; left:0px")
+            %a.blue-signup-button(href="http://www.shopqi.com/signup") Sign up now
+          / .createyourown-top
+        / header
+      / #originabanner
+      #feature-bar
+        .content
+          .quote.col-6(style="margin: 0pt; padding: 30px 60px 10px 10px; width: 400px; text-align: left;")
+            #cnet-grey.sprites
+            %blockquote(style="color: rgb(85 85 85); font-size: 18px; line-height: 22px;")
+              \&ldquo;ShopQi的设计非常简洁，使得建立一个网上商店非常容易.&rdquo;
+            %p(style="font-size: 12px; color: rgb(119 119 119);") — 国内科技媒体
+          #client-logos.col-6.last
+            #amnestyinternational-grey.sprites
+            #teslamotors-grey.sprites
+            #foofighters-grey.sprites
+            %br/
+            #indianapolisstar-grey.sprites
+            #pennyarcade-grey.sprites
+            #evisu-grey.sprites
+      #container.frontpage
+        .content
+          #video-and-details.video-and-details
+            .col-6
+              #video-tour
+                %a.cboxElement(href="#")=image_tag 'graphics/dodocase-video.jpg'
+          .col-6.last.frontpage-features
+            %ul
+              %li(onclick="document.location.href='/tour/design/'")
+                %h4.title-storefront
+                  %span#monitor32.sprites>
+                  华丽的界面
+                ShopQi提供各种漂亮的主题供您的商店选择.
+              %li(onclick="document.location.href='/tour/store/'")
+                %h4.title-shoppingcart
+                  %span#shoppingcart32.sprites>
+                  购物车
+                您的网店将拥有独立的购物车和结账流程.
+              %li(onclick="document.location.href='/tour/design/'")
+                %h4.title-customizable
+                  %span#colorwheel32.sprites>
+                  100% 可定制
+                使用您自己的HTML &amp; CSS，并可以完全控制您的网店外观.
+              %li(onclick="document.location.href='/tour/security/'")
+                %h4.title-secure
+                  %span#safe32.sprites>
+                  多重安全保障
+                我们拥有专门的安全团队来保障您的网上商店的安全性.
+      #clients
+        .content
+          .col-6.clearfix
+            .col-3
+              %h3#title-appstore
+                %span#box16.sprites>
+                ShopQi应用商店
+              %p
+                此
+                %a(href="http://apps.shopqi.com/" target="_blank") 应用商店
+                让您可以为您的网上商店添加新的功能.您也可以通过ShopQi API开发自定义的功能.
+            .col-3.last
+              %h3#title-partner
+                %span#people16.sprites>
+                合作者
+              %p
+                如果您是Web设计师或者程序员，可以注册为我们的
+                = succeed "," do
+                  %a(href="http://www.shopqi.com/partners/" target="_blank") 合作者
+                并从ShopQi获取收入.
+            .quote(style="margin-left: 0; padding-top: 40px")
+              #techcrunch.sprites
+              %blockquote &ldquo;厂商不需要任何的技术人员，几分钟之内，就可以建立一个非常专业的电子商务网站.&rdquo;
+              %p &mdash; 知名科技媒体
+          .col-6.last
+            %h3 我们的客户
+            .client
+              #ericmueller.sprites
+              %p &ldquo;我记住当我第一次看到ShopQi，第一感觉就是：哇~这是我需要的.&rdquo;
+              %a(href="#") 采访详情
+              %span ShopQi客户
+      #bottom-signup
+        .content
+          %a(href="http://www.shopqi.com/tour/") 查看功能演示
+          %span or
+          %a(href="http://www.shopqi.com/signup/")
+            =image_tag 'buttons/btn-pricing-signup-lighter.png', width: 191, height: 61
+      #footer
+        #footer-wrapper
+          .content
+            .col-3
+              %h3 功能
+              %ul
+                %li
+                  %a{:href => "#"} 概览
+            .col-3
+              %h3 资源
+              %ul
+                %li
+                  %a{:href => "#"} ShopQi百科
+            .col-3
+              %h3 ShopQi
+              %ul
+                %li
+                  %a{:href => "http://blog.shopqi.com/"} 博客
+            .col-3.contact-us.last
+              %h3 联系我们
+              %ul
+                %li
+                  %img{:alt => "Phone16", :height => "12", :src => "/images/admin/icons/phone16.gif", :width => "12"}/
+                  0755-26748888
+          #copyright.center.clear
+            %p © 2011-2011 ShopQi Inc. | ShopQi - 独立网店平台.
+            %p *ShopQi is a registered trademark of ShopQi Inc.
