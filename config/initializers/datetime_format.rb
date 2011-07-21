@@ -3,7 +3,8 @@
 Time::DATE_FORMATS.merge!(
   :serial => "%Y%m%d",
   :full => "%Y-%m-%d %H:%M:%S",
-  :with_year => "%Y-%m-%d %H:%M"
+  :with_year => "%Y-%m-%d %H:%M",
+  :short => "%m-%d %H:%M"
 )
 
 Date::DATE_FORMATS.merge!(
