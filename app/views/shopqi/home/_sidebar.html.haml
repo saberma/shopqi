@@ -1,11 +1,11 @@
 %ul
-  %li(class=@current_intro)=link_to "简介", tour_path, class: :overview
-  %li(class=@current_store)=link_to "运行您的商店", store_path, class: :order
+  %li(class=@current_intro)=link_to "简介", tour_intro_path, class: :overview
+  %li(class=@current_store)=link_to "运行您的商店", tour_store_path, class: :order
   -#
     %li
       %a.marketing(href="/tour/marketing/") 市场营销
-  %li(class=@current_design)=link_to "定制主题外观", design_path, class: :design
-  %li(class=@current_security)=link_to "托管服务 & 安全", security_path, class: :security
+  %li(class=@current_design)=link_to "定制主题外观", tour_design_path, class: :design
+  %li(class=@current_security)=link_to "托管服务 & 安全", tour_security_path, class: :security
   -#
     %li
       %a.appstore(href="/tour/appstore/") App Store
@@ -15,5 +15,4 @@
   -#
     %li
       %a.designers(href="/tour/for-designers/") 您是设计师?
-  %li
-    %a.full-list(href="/tour/features/") 功能列表
+  %li=link_to "特色列表", tour_features_path, class: ['full-list', @current_features]

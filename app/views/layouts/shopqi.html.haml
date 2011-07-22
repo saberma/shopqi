@@ -24,13 +24,11 @@
           %a(href="/")
           %a.logo-shopqi(href="/")=image_tag 'logos/shopqi_bag.gif'
           %ul#nav-primary
-            %li(class=@current_tour)
-              %a(href="/tour/") 功能演示
+            %li(class=@current_tour)=link_to '特色演示', tour_intro_path
             -#
               %li
                 %a(href="/examples/") 成功案例
-            %li(class=@current_faq)
-              %a(href="/faq/") 常见问题
+            %li(class=@current_faq)=link_to '常见问题', faq_path
             %li
               %a(href="/signup/") 价格 &amp; 注册
             %li.sub-nav

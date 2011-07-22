@@ -227,10 +227,11 @@ Shopqi::Application.routes.draw do
     root to: "home#page"
     get '/faq' => 'home#faq', as: :faq
     scope "/tour" do # 功能演示
-      get '/' => 'home#tour', as: :tour
-      get '/store' => 'home#store', as: :store
-      get '/design' => 'home#design', as: :design
-      get '/security' => 'home#security', as: :security
+      get '/' => 'home#tour', as: :tour_intro
+      get '/store' => 'home#store', as: :tour_store
+      get '/design' => 'home#design', as: :tour_design
+      get '/security' => 'home#security', as: :tour_security
+      get '/features' => 'home#features', as: :tour_features
     end
   end
 
