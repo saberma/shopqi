@@ -1,4 +1,5 @@
 - @current_tour = :current
+- @current_intro = :current
 
 #banner
   .content
@@ -6,30 +7,7 @@
   / .content
 / #banner
 .content.subpage
-  #sidebar-features.col-3
-    %ul
-      %li.current
-        %a.overview(href="/tour/") 简介
-      %li
-        %a.order(href="/tour/store/") 运行您的商店
-      -#
-        %li
-          %a.marketing(href="/tour/marketing/") 市场营销
-      %li
-        %a.design(href="/tour/design/") 定制
-      %li
-        %a.security(href="/tour/security/") 托管 &amp; 安全
-      -#
-        %li
-          %a.appstore(href="/tour/appstore/") App Store
-        %li
-          %a.mobile(href="/tour/mobile/") 手机
-    %ul.list-secondary-features
-      -#
-        %li
-          %a.designers(href="/tour/for-designers/") 您是设计师?
-      %li
-        %a.full-list(href="/tour/features/") 功能列表
+  #sidebar-features.col-3=render 'sidebar'
   .col-9.last.introduction
     .tour-intro
       %h2 建立一个网上商店所需要的所有功能

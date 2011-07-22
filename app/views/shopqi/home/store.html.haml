@@ -1,0 +1,141 @@
+- @current_tour = :current
+- @current_store = :current
+
+#banner
+  .content
+    %h1 运行您的网店
+  / .content
+/ #banner
+.content.subpage
+  #sidebar-features.col-3.last=render 'sidebar'
+  .col-9.right.last.running-your-store
+    %h2.center 建立一个网上商店所需要的所有功能
+    %p.feature-subheading 所有功能
+    .col-9.screenshot.last(style="background: url(/images/graphics/features-rys-macair.jpg) top right no-repeat; height:248px")
+      %p(style="margin-top:35px; width:300px") 建立一个网上商店您需要很多的电子商务功能。ShopQi集成所有这些功能，并提供简洁直观的操作界面。
+    %hr/
+    .col-5.left=image_tag 'graphics/feature-rys-editscreen.jpg', width: 365, height: 512, class: :screenshot
+    .col-4.left.last
+      %h3 增加和修改商品
+      %p 在ShopQi中增加和修改商品是非常容易的，简洁的界面让您能更高效地组织商品。
+      %ul.screenshot-featurelist
+        %li
+          =image_tag 'graphics/feature-rys-addimages.gif', width: 86, height: 86, class: 'icon-left'
+          %strong 增加商品图片
+          %br/
+          为您的网店上传图片，而不需要担心尺寸优化等问题，我们会为您做好这些工作。
+        %li
+          =image_tag 'graphics/feature-rys-adddescr.gif', width: 86, height: 86, class: 'icon-left'
+          %strong 增加商品描述
+          %br/
+          为您的顾客描述商品.
+        %li
+          =image_tag 'graphics/feature-rys-adddetails.gif', width: 86, height: 86, class: 'icon-left'
+          %strong 修改信息
+          %br/
+          在ShopQi您可以修改商品各方面信息. 包括商品属性、标签等等.
+        %li
+          =image_tag 'graphics/feature-rys-inventory.gif', width: 86, height: 86, class: 'icon-left'
+          %strong 款式管理
+          %br/
+          非常易用的款式编辑功能，结合ShopQi的订单跟踪功能，让您轻松掌握库存情况。
+    / .col-4
+    .col-9.last
+      %h3 订单详情
+    / .col-9
+    .col-5.left
+      %ul.screenshot-featurelist(style="margin-top:0px")
+        %li
+          =image_tag 'graphics/feature-rys-notes.gif', width: 86, height: 86, class: 'icon-right'
+          %strong 附加备注
+          %br/
+          允许您的顾客在提交订单时写上备注信息.
+        %li
+          =image_tag 'graphics/feature-rys-nextstep.gif', width: 86, height: 86, class: 'icon-right'
+          %strong 及时响应
+          %br/
+          随时掌握哪些订单已经收款需要发货，或者已经到货.
+        %li
+          =image_tag 'graphics/feature-rys-productlisting.gif', width: 86, height: 86, class: 'icon-right'
+          %strong 商品列表
+          %br/
+          每款商品都会显示SKU库存及价格信息，计算出总金额.
+        %li
+          =image_tag 'graphics/feature-rys-contact.gif', width: 86, height: 86, class: 'icon-right'
+          %strong 您的顾客
+          %br/
+          查看下单人的详细顾客信息.
+    / .col-5
+    .col-4.left.last=image_tag 'graphics/feature-orderscreen.jpg', width: 285, height: 380, class: :screenshot
+    .feature-box-top(style="clear:both")
+    .feature-box-middle.clearfix.organizing-products(style="margin-bottom:40px")
+      %h3 组织您的商品
+      %p
+        =image_tag 'icons/smartcollection-large.gif', class: :right
+        ShopQi将所有商品归类至
+        = succeed "." do
+          %em 集合
+        例如: 您可以把所有的衬衫和毛衣归料至"衣服"集合，同时把衬衫中的一部分商品归类至"热门商品"集合.
+      %p
+        您也可以通过
+        %em 智能集合
+        来组织商品。智能集合会根据您设定的条件对商品进行归类。例如: 您可以新增一个智能集合，将价格低于5元的商品归类为"湊单商品".
+    .feature-box-bottom
+    -#
+      .col-3.left.clear
+        %h3 支付网关
+        %p
+          =image_tag 'icons/moneypile48.gif', width: 48, height: 48, class: [:right, :icon]
+          ShopQi集成了多种支付网关
+      / .col-3
+      .col-3.left.margin-bottom.fraud-detection
+        %h3 欺诈检测
+        %p
+          =image_tag 'icons/shield48.gif', width: 48, height: 48, class: [:right, :icon]
+          当某些人在您的网店中下订单，我们会自动检测他所提供的信用卡信息是否正确。这样可以大大降低您的交易风险。
+      / .col-3
+      .col-3.left.last.margin-bottom.x-marks-the-spot
+        %h3 X marks the spot
+        %p
+          =image_tag 'icons/compass48.gif', width: 48, height: 48, class: [:right, :icon]
+          查看下单人地址的地图位置。
+      / .col-3
+    %hr/
+    .col-5.margin-bottom.content-management
+      %h3 内容管理CMS
+      %p 新增页面和博客文章是很容易的. 
+      %ul.screenshot-featurelist
+        %li
+          =image_tag 'graphics/feature-rys-pages.gif', width: 86, height: 86, class: 'icon-right'
+          %strong 新增页面
+          %br/
+          页面内容，例如：[关于我们]页面，可以让您的顾客更多地了解您的网店.
+        %li
+          =image_tag 'graphics/feature-rys-blogs.gif', width: 86, height: 86, class: 'icon-right'
+          %strong 新增博客
+          %br/
+          一篇博客文章可以更好地介绍您的商品，可以作为一种很有效地营销工具.
+    / .col-5
+    =image_tag 'graphics/feature-pagescreen.gif', width: 283, height: 327, class: :screenshot
+    %hr/
+    .margin-bottom.clearfix
+      %h3 顾客管理
+      %div(style="width: 324px; float: left")
+        %strong(style="display: block; margin: 0 0 6px 0") 顾客帐号
+        %p 允许顾客在您的网店使用email地址和密码注册帐号，注册后顾客可以查看他们的购买记录和管理收货地址。您的商店也可以设置不需要注册帐号即可完成购买操作。
+        =image_tag 'graphics/tour-customeraccounts.jpg', width: 324, height: 186, class: :screenshot
+      %div(style="width: 324px; float: right")
+        %strong(style="display: block; margin: 0 0 6px 0") 顾客分组
+        %p 您可以根据查询条件为顾客创建分组，例如根据顾客所在地、消费总额，或者顾客标签进行分组。这样可以更好地组织顾客信息。
+        =image_tag 'graphics/tour-customergroups.jpg', width: 324, height: 186, class: :screenshot
+    .clearfix
+      .next-feature
+        .next-buttons.clearfix
+          %a.signup(href="/signup") 注册
+          %a.next-step(href="/tour/design") 查看 定制 &rsaquo;
+        / .clearfix
+      / .next-feature
+    / .clearfix
+  / .col-9
+/ content
+.no-signup-page(style="margin-top: 30px;")
