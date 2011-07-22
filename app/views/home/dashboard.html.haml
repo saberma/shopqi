@@ -23,20 +23,10 @@
     Updating…
   #stats
   #recent-activity
-    %h3.sb Recent activity
+    %h3.sb 最新的活动记录
     %table#events.data{:cellpadding => "0", :cellspacing => "0"}
       %tbody
-        %tr#event-195877440.odd
-          %td.Apr17{:style => "width: 85px;"}
-            %strong Apr 17
-          %td
-            New collection:
-            = succeed "." do
-              %a{:href => "/admin/custom_collections/3670472"} custom
-            %br/
-            %small.note
-              at 03:28 am by development shop
-          %td.r
+        =render partial:"activity"
   -#
     %p#upgrade.box2
       *
