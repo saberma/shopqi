@@ -230,6 +230,7 @@ Shopqi::Application.routes.draw do
       get '/' => 'home#tour', as: :tour
       get '/store' => 'home#store', as: :store
       get '/design' => 'home#design', as: :design
+      get '/security' => 'home#security', as: :security
     end
   end
 
