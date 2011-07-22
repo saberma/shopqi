@@ -106,6 +106,7 @@ GEM
       rack (< 2, >= 1.1.0)
     ffi (1.0.7)
       rake (>= 0.8.7)
+    gravtastic (3.1.0)
     grit (2.4.1)
       diff-lcs (~> 1.1)
       mime-types (~> 1.15)
@@ -291,6 +292,7 @@ DEPENDENCIES
   execjs
   factory_girl
   factory_girl_rails
+  gravtastic
   grit
   guard
   guard-livereload
