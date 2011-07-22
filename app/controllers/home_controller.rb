@@ -26,13 +26,15 @@ class HomeController < ApplicationController
   expose(:statistics){
     today = shop.orders.recent(1)
     yesterday = shop.orders.recent(2) - today
-    last_week = shop.orders.recent(7)
+    last_week_begin = Date.today.advance(days: -7).beginning_of_week
+    last_week_end = Date.today.advance(days: -7).end_of_week
+    last_week = shop.orders.between(last_week_begin,last_week_end)
     total = shop.orders.all
     total_product = shop.products.all
     {
       today: { price: today.map(&:total_price).inject(0,:+),size: today.size,des: '今天'},
       yesterday: { price: yesterday.map(&:total_price).inject(0,:+),size: yesterday.size,des: '昨天'},
-      last_week: { price: last_week.map(&:total_price).inject(0,:+),size: last_week.size,des: '过去一周'},
+      last_week: { price: last_week.map(&:total_price).inject(0,:+),size: last_week.size,des: '上周'},
       total: { size: total.size,des: '订单总量'},
       total_product: { size: total_product.size,des: '总商品数'}
     }

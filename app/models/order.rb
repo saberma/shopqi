@@ -58,6 +58,8 @@ class Order < ActiveRecord::Base
 
   scope :recent, lambda{|o| where(:created_at.gt => o.days.ago) }
 
+  scope :between, lambda{|d1,d2| where(:created_at.gte => d1, :created_at.lt => d2.tomorrow) }
+
   define_index do
     has :shop_id
     indexes :name
