@@ -229,6 +229,7 @@ Shopqi::Application.routes.draw do
     scope "/tour" do # 功能演示
       get '/' => 'home#tour', as: :tour
       get '/store' => 'home#store', as: :store
+      get '/design' => 'home#design', as: :design
     end
   end
 

@@ -4,8 +4,7 @@
   -#
     %li
       %a.marketing(href="/tour/marketing/") 市场营销
-  %li
-    %a.design(href="/tour/design/") 定制
+  %li(class=@current_design)=link_to "定制", design_path, class: :design
   %li
     %a.security(href="/tour/security/") 托管 &amp; 安全
   -#
