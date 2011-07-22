@@ -226,6 +226,7 @@ Shopqi::Application.routes.draw do
   scope module: :shopqi do # 官网
     root to: "home#page"
     get '/faq' => 'home#faq', as: :faq
+    get '/tour' => 'home#tour', as: :tour
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]
