@@ -233,6 +233,7 @@ Shopqi::Application.routes.draw do
       get '/security' => 'home#security', as: :tour_security
       get '/features' => 'home#features', as: :tour_features
     end
+    get '/services/signup' => 'home#signup', as: :services_signup
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]
