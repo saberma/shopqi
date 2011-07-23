@@ -1487,4 +1487,5 @@ a#fashion-btn:hover { background-position: 0 -64px;}
 #waterfallandgrey{height :32px;width :32px;background-position :-1242px -0px;}
 
 /* shopqi goes here */
-#footer { height: 210px; }
+#footer { height: 210px; } /* we do not has many footer items yet */
+h1  { z-index:999;} /* do not override fancybox window */
