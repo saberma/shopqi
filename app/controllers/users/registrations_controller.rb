@@ -1,4 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  layout 'shopqi'
+
   protected
   def build_resource(hash=nil)    
     hash ||= params[resource_name] || {} 

@@ -14,7 +14,7 @@ Shopqi::Application.routes.draw do
   end
 
   devise_for :user, controllers: {registrations: "users/registrations"} do
-    get "signup", to: "users/registrations#new"
+    get "/services/signup/new/:plan", to: "users/registrations#new", as: :signup
     get "login", to: "devise/sessions#new"
   end
 
@@ -233,6 +233,7 @@ Shopqi::Application.routes.draw do
       get '/security' => 'home#security', as: :tour_security
       get '/features' => 'home#features', as: :tour_features
     end
+    get '/signup' => redirect('/services/signup')
     get '/services/signup' => 'home#signup', as: :services_signup
   end
 
