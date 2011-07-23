@@ -34,9 +34,11 @@ module Shopqi
     config.i18n.default_locale = :cn
 
     # JavaScript files you want as :defaults (application.js is always included).
+    backbone_js = %w(jquery.min rails handlebars underscore-min backbone-min backbone.rails plugins)
     config.action_view.javascript_expansions[:defaults] = %w()
-    config.action_view.javascript_expansions[:admin] = %w(jquery.min jquery-ui-1.8.14.custom.min rails handlebars underscore-min backbone-min backbone.rails jquery.tmpl.min rails.validations jquery.blockUI plugins admin_application )
-    config.action_view.javascript_expansions[:theme] = %w(jquery.min rails handlebars underscore-min backbone-min backbone.rails plugins theme_application) # 仅用于主题商店列表
+    config.action_view.javascript_expansions[:backbone] = backbone_js # 官网注册
+    config.action_view.javascript_expansions[:admin] = backbone_js + %w(jquery-ui-1.8.14.custom.min jquery.tmpl.min rails.validations jquery.blockUI admin_application )
+    config.action_view.javascript_expansions[:theme] = backbone_js + %w(theme_application) # 仅用于主题商店列表
 
 
     # Configure generators values. Many other options are available, be sure to check the documentation.

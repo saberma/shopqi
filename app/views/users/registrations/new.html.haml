@@ -1,8 +1,10 @@
 - @current_signup = :current
 =content_for :stylesheets do
-  = stylesheet_link_tag "signup"
+  = stylesheet_link_tag "signup", "jquery.fancybox-1.3.4"
   /[if IE]
     = stylesheet_link_tag "ie-signup"
+=content_for :javascripts do
+  = javascript_include_tag :backbone, 'jquery.fancybox-1.3.4', 'signup_application', 'models/theme', 'collections/themes', 'views/signup/themes/show', 'views/signup/themes/index', 'views/signup/index'
 
 #banner
   .content
@@ -113,8 +115,11 @@
 / content
 
 %script(id="theme-item" type="text/x-jquery-tmpl")
-  %li.theme
-    %img(alt="Signup" src="/screenshots/38/main/signup.jpg" style="width: 198px; height: 254px; z-index: 2;")
-    .pick.transparent
-      %a.btn.preview(href="/screenshots/38/main/original.jpg" rel="theme-group" title="Sortable") 预览主题
-      %a.btn.next(href="#" title="Sortable") 选择此主题
+  %img(src="/s/theme/screenshots/{{{id}}}/main/signup.jpg" style="width: 198px; height: 254px; z-index: 2;")
+  .pick.transparent
+    %a.btn.preview(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="theme-group" title="{{{name}}}") 预览主题
+    %a.btn.next(href="#" title="{{{name}}}") 选择此主题
+
+:javascript
+  App.themes = new App.Collections.Themes(#{themes_json});
+  new App.Views.Signup.Index({collection: App.themes});

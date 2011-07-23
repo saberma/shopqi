@@ -1,7 +1,7 @@
 =content_for :stylesheets do
   =stylesheet_link_tag "jquery.fancybox-1.3.4"
 =content_for :javascripts do
-  =javascript_include_tag 'jquery.fancybox-1.3.4.pack'
+  =javascript_include_tag 'jquery.min', 'jquery.fancybox-1.3.4.pack'
 
 %ul
   %li(class=@current_intro)=link_to "简介", tour_intro_path, class: :overview
