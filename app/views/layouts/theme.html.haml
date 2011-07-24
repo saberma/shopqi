@@ -14,16 +14,18 @@
     .resources-nav
       %ul
         %li.logo
-          %a(href="http://shopqi.com/resources")=image_tag 'resources-nav/logo-shopqi.png'
-        %li
-          %a(href="http://apps.shopqi.com/" title="ShopQi App Store") 应用
+          %a{href: Setting.store_url}=image_tag 'resources-nav/logo-shopqi.png'
+        -#
+          %li
+            %a(href="#" title="ShopQi App Store") 应用
         %li.current=link_to '主题外观', 'http://themes.shopqi.com'
-        %li
-          %a(href="http://support.myshopqi.com/" title="ShopQi &mdash; Support") 支持
-        %li
-          %a(href="http://forums.shopqi.com/" title="ShopQi Community") 论坛
-        %li
-          %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki") 文档
+        -#
+          %li
+            %a(href="http://support.myshopqi.com/" title="ShopQi &mdash; Support") 支持
+          %li
+            %a(href="http://forums.shopqi.com/" title="ShopQi Community") 论坛
+          %li
+            %a(href="http://wiki.shopqi.com/" title="Main Page - ShopQi Wiki") 文档
     .vig-left
     .vig-right
     #wrapper

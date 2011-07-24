@@ -1,0 +1,2 @@
+module Shopqi::HomeHelper
+end

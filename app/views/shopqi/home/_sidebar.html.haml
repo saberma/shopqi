@@ -1,0 +1,18 @@
+%ul
+  %li(class=@current_intro)=link_to "简介", tour_intro_path, class: :overview
+  %li(class=@current_store)=link_to "运行您的商店", tour_store_path, class: :order
+  -#
+    %li
+      %a.marketing(href="/tour/marketing/") 市场营销
+  %li(class=@current_design)=link_to "定制主题外观", tour_design_path, class: :design
+  %li(class=@current_security)=link_to "托管服务 & 安全", tour_security_path, class: :security
+  -#
+    %li
+      %a.appstore(href="/tour/appstore/") App Store
+    %li
+      %a.mobile(href="/tour/mobile/") 手机
+%ul.list-secondary-features
+  -#
+    %li
+      %a.designers(href="/tour/for-designers/") 您是设计师?
+  %li=link_to "特色列表", tour_features_path, class: ['full-list', @current_features]

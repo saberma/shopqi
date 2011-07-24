@@ -1,0 +1,190 @@
+- @current_tour = :current
+- @current_intro = :current
+
+#banner
+  .content
+    %h1 功能演示
+  / .content
+/ #banner
+.content.subpage
+  #sidebar-features.col-3=render 'sidebar'
+  .col-9.last.introduction
+    .tour-intro
+      %h2 建立一个网上商店所需要的所有功能
+      %h3 您将拥有自己的网上商店，您可以接收在线付款、使用您自己的域名、完全定制您的商店外观，我们为您提供这一切.
+    / .tour-intro
+    -#
+      .video-tour
+        .tour-video-wrapper
+          %object(height="366" width="650")
+            %param(name="movie" value="#")/
+            %param(name="allowScriptAccess" value="always")/
+            %param(name="allowFullScreen" value="true")/
+            %embed(allowfullscreen="true" allowscriptaccess="always" height="366" src="#" type="application/x-shockwave-flash" width="650")
+      / .tour-video
+    / .video
+    .col-9.clearfix.last
+      .col-3.poloroidcopy
+        %h3 您自己的商店外观
+        %p 在ShopQi上，您拥有自己的在线店面用于销售商品. 您可以从包含众多免费或者收费的主题商店中挑选合适的外观。如果您掌握HTML &amp; CSS的技能，您也可以重新设计.
+        %p 使用ShopQi主题您可以上传您自己的Logo图案、修改颜色或者字体等等.
+        %p
+          了解一下
+          %a(href="/tour/design") 定制您的外观
+          或者访问我们的
+          = succeed "." do
+            %a(href="#{Setting.theme_store_url}" title="ShopQi Theme Store | Ecommerce Templates") 主题商店
+      / .col-3
+      .col-6.poloroid.last
+        %a.single.cboxelement(href="/images/graphics/tour-themeshelves-big.jpg")
+          =image_tag 'graphics/tour-themeshelves.jpg'
+          %em ShopQi提供丰富多样的主题
+      / .col-6
+    / .col-9 clearfix last
+    .col-9.clearfix.last
+      .col-6.poloroid
+        %a.single.cboxelement(href="/images/graphics/tour-productpage-big.jpg")
+          =image_tag 'graphics/tour-productpage.jpg'
+          %em 增加和修改您的商品是非常容易的
+      / .col-6
+      .col-3.poloroidcopy.last
+        %h3 管理您的网店
+        %p 通过登录后台管理，您可以管理和修改您的网店内容。您可以非常容易地增加商品和从顾客那里接收款项.
+        %p
+          ShopQi会将
+          %a(href="/tour/security") 您的网店放到
+          我们的高速服务器中运行，您无须涉及技术上的东西。
+        %p
+          详情请查看
+          = succeed "." do
+            %a(href="/tour/store/") 运行一个ShopQi网店
+      / .col-3
+    / .col-9 clearfix last
+    .col-9.clearfix.last
+      .col-3.poloroidcopy
+        %h3 接收款项
+        %p
+          ShopQi承担网上付款所有的技术细节，集成了市场上常用的
+          %a(href="http://www.shopqi.com/faq/#supported-gateways" title="") 支付网关
+          ，包括支付宝、财付通等等。
+        -#
+          %p
+            利用ShopQi应用，我们也支持销售数字商品
+            = succeed "." do
+              %a.single.cboxelement(href="#" title="ShopQi Application Store") Fetch
+          %p 您也可以使用淘宝物流的仓库服务。
+      / .col-3
+      .col-6.poloroid.last
+        %a.single.cboxelement(href="/images/graphics/tour-orderpage-big.jpg")
+          =image_tag 'graphics/tour-orderpage.jpg'
+          %em 在ShopQi的后台管理中您可以看到每个订单的详细信息
+      / .col-6
+    / .col-9 clearfix last
+    -#
+      .col-9.essential-features.clearfix
+        %h2(style="font-size:22px; text-align:center") 运行一个网上商店所需要的所有功能
+        %ul.clearfix
+          %li
+            =image_tag 'graphics/ov-support.jpg'
+            %strong 支持
+            %br/
+            如果您有任何疑问，可以通过email或者电话联系我们的
+            %a(href="http://support.myshopqi.com/" title="Welcome - ShopQi Support") 支持团队
+          %li
+            =image_tag 'graphics/ov-iphone.jpg'
+            %strong iPhone 应用
+            利用iphone，随时随地管理您的网店
+            = succeed "." do
+              %a(href="http://www.shopqi.com/iphone/" title="") iPhone 应用
+          %li
+            =image_tag 'graphics/ov-stats.jpg'
+            %strong ShopQi统计
+            %br/
+            跟踪并统计顾客来源。您也可以使用 谷歌Analytics服务.
+          %li
+            =image_tag 'graphics/ov-editor.jpg'
+            %strong 修改商店内容
+            %br/
+            编写一篇博客文章或者加入某个链接等等。
+          %li
+            =image_tag 'graphics/ov-orders.jpg'
+            %strong 订单管理
+            %br/
+            ShopQi会保管好您所有的订单信息和顾客资料。
+          %li
+            =image_tag 'graphics/ov-promo.jpg'
+            %strong 加入优惠码
+            %br/
+            为某些销售的商品增加优惠码可以极大地提升销售量。
+    / .col-9 last
+    .feature-box.clearfix
+      %h3(style="text-align:center; font-weight:normal; font-size:20px; text-shadow:1px 1px #fff") 我们做好所有细节工作
+      %p(style="text-align:center")
+        当您在ShopQi上注册成功，我们将为您做好所有的技术细节，这样您可以
+        %strong> 专注于开展您的网上业务
+        \. 如果您需要任何帮助，我们的专业支持团队将会协助您.
+      %ul
+        %li.backups
+          %strong 自动备份
+          %br/
+          您的网店数据会被自动备份至安全的服务器，所以您不需要担心数据丢失的问题。
+        %li.security
+          %strong 安全
+          %br/
+          您的网店采用行业标准的128位SSL加密技术来保护您的商业信息和顾客资料。
+      %ul
+        %li.servers
+          %strong 极速服务器
+          %br/
+          您的网店运行在多核高速的服务器上，性能出色。
+        %li.updates
+          %strong 免费升级
+          %br/
+          ShopQi会不断地为您的网店增加功能。未来所有的更新升级都是免费的。
+    / .feature-box
+    .clearfix
+      .col-9.essential-features
+        %ul.clearfix
+          %li
+            =image_tag 'graphics/ov-fees.jpg'
+            %strong 没有隐性费用
+            %br/
+            我们不会以带宽或者安装为由，增加额外的费用.
+          %li
+            =image_tag 'graphics/ov-subsite.jpg'
+            %strong 使用已有网站
+            %br/
+            您可以在已有网站上使用ShopQi(作为子域)，为网站增加商务功能.
+          %li
+            =image_tag 'graphics/ov-creditcards.jpg'
+            %strong 支持信用卡.
+            %br/
+            顾客可以使用Visa, Mastercard等等。
+          %li
+            =image_tag 'graphics/ov-themestore.jpg'
+            %strong 主题商店
+            %br/
+            没有设计师也没关系，可以前往
+            %a(href="#{Setting.theme_store_url}") 主题商店
+            挑选主题外观.
+          %li
+            =image_tag 'graphics/ov-urls.jpg'
+            %strong 使用您自己的域名
+            %br/
+            您可以为您的网店启用任何域名.
+          %li
+            =image_tag 'graphics/ov-customization.jpg'
+            %strong 定制您的网店
+            %br/
+            您可以非常方便地上传Logo、修改颜色或者网店内容.
+      / .col-9 last
+    / .clearfix
+    .next-feature
+      .next-buttons.clearfix
+        %a.signup(href="/signup") 注册
+        %a.next-step(href="/tour/store") 查看 运行您的网店 &rsaquo;
+      / .clearfix
+    / .next-feature
+  / .col-9 last
+/ content
+.no-signup-page(style="margin-top: 30px;")
