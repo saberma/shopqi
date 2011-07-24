@@ -51,7 +51,7 @@
           %li#themestore.theme
             =link_to image_tag('themes/themestore.jpg', style: "width: 198px; height: 254px; z-index: 2"), Setting.theme_store_url
         %input#selected-theme(name="theme" type="hidden" value="")/
-        %a#show-more-themes.box.clear(href="#" onclick="$('#more-themes').slideDown(); $('#show-more-themes').hide(); return false;") 显示更多主题
+        %a#show-more-themes.box.clear(href="#") 显示更多主题
       .section
         %h3(style="margin-bottom: 24px") 关于您
         .sidebox
