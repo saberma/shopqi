@@ -1,11 +1,13 @@
-%tr#event-195877440.odd
+%tr(class="#{cycle 'odd','even'}")
   %td.Apr17{:style => "width: 85px;"}
-    %strong Apr 17
+    -if activity.created_at.today?
+      %strong 今天
+    -else
+      %strong=activity.created_at.to_s(:m_and_d)
   %td
-    New collection:
+    =w("#{activity.operate}.#{activity.class_name}")
     = succeed "." do
-      %a{:href => "/admin/custom_collections/3670472"} custom
+      =raw activity.content
     %br/
-    %small.note
-      at 03:28 am by development shop
+    %small.note==操作人:#{activity.user.name} 时间:#{activity.created_at.to_s(:h_and_m)}
   %td.r

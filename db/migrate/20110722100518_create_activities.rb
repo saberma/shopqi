@@ -1,9 +1,11 @@
+#encoding: utf-8
 class CreateActivities < ActiveRecord::Migration
   def self.up
     create_table :activities do |t|
       t.string :operate , comment: "操作类型"
       t.string :content , comment: "操作内容"
       t.references :user, comment: "操作用户"
+      t.references :shop, comment: "关联商店"
       t.string :class_name, comment: "操作对象"
 
       t.timestamps

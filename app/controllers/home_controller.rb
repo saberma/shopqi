@@ -48,6 +48,10 @@ class HomeController < ApplicationController
     shop.comments.limit(5).where("status != 'spam'").order("created_at desc").all
   }
 
+  expose(:activities){
+    shop.activities
+  }
+
   def index
   end
 
