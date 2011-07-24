@@ -12,10 +12,24 @@ App.Views.Signup.Theme.Show = Backbone.View.extend
     this.render()
 
   render: ->
+    self = this
     template = Handlebars.compile $('#theme-item').html()
     attrs = @model.attributes
     $(@el).html template attrs
-    this.$('.preview').fancybox()
+    this.$('.preview').fancybox
+      titlePosition: 'over'
+      titleFormat: (titleStr) ->
+        titleBtn = $("<a/>").addClass("btn next").html("选择此主题")
+        titleBtn.click ->
+          self.active()
+          $.fancybox.close()
+          false
+        titleBtn
+      onComplete: ->
+        $("#fancybox-wrap").hover (->
+            $("#fancybox-title").show()
+          ), ->
+            $("#fancybox-title").hide()
 
   active: ->
     $("#themes-section").slideUp()
