@@ -52,7 +52,7 @@ class HomeController < ApplicationController
   }
 
   expose(:activities){
-    shop.activities
+    shop.activities.limit(10)
   }
 
   def index
