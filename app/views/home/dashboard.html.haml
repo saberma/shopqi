@@ -15,9 +15,12 @@
       %li
         %p.big==#{statistics[:total][:size]}
         %span==#{statistics[:total][:des]}
-      %li.last
+      %li
         %p.big==#{statistics[:total_product][:size]}
         %span==#{statistics[:total_product][:des]}
+      %li.last
+        %p.big==#{statistics[:skus][:size]}
+        %span==#{statistics[:skus][:des]}
 .col-8
   #stats-spinner{:style => "display:none"}
     Updating…
