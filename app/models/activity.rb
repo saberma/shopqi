@@ -16,7 +16,7 @@ class Activity < ActiveRecord::Base
     else
       content = record.title
     end
-    Activity.create operate: operate,class_name: class_name, user: user, shop: user.shop,content: content
+    Activity.create operate: operate,class_name: class_name, user: user, shop: user.try(:shop),content: content
   end
 
   def self.url_helpers

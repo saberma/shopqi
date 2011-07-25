@@ -18,4 +18,5 @@ class ActivityObserver < ActiveRecord::Observer
   def after_destroy(record)
     Activity.log record,'delete',current_user
   end
+
 end
