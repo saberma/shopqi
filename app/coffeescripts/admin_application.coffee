@@ -84,7 +84,7 @@ TagUtils =
     tag_items = $("##{tag_list_id} a")
     text_field = $("##{tags_text_id}")
     tag_items.click ->
-      $(this).toggleClass('active')
+      $(this).toggleClass('active-tag')
       tags = StringUtils.to_a(text_field.val())
       tag = $(this).text()
       if tag not in tags
@@ -97,9 +97,9 @@ TagUtils =
       tags = StringUtils.to_a(text_field.val())
       tag_items.each ->
         if $(this).text() in tags
-          $(this).addClass('active')
+          $(this).addClass('active-tag')
         else
-          $(this).removeClass('active')
+          $(this).removeClass('active-tag')
     .keyup()
 
 #地区

@@ -53,13 +53,13 @@
                   %tr
                     %td
                       =v.text_field :price, style: 'width: 50px'
-                      元 
+                      元
                     %td
                       =v.text_field :weight, class: :requires_shipping_relate, style: 'width: 50px'
                       kg
                     %td
                       =v.text_field :compare_at_price, style: 'width: 50px'
-                      元 
+                      元
                   %tr
                     %td(colspan="3")
                       -#check_box包含hidden require_shipping，会产生多个variant
@@ -118,7 +118,7 @@
                 =f.text_field :tags_text, size: 50
               %dd
                 %p.note{:style => "clear: both"} 最近使用过的标签，单击增加。
-                %ul#tag-list.nobull.st
+                %ul#tag-list.tag-list.clearfix.nobull.st
                   -tags.each do |tag|
                     %li
                       %a(href="#")=tag.name
