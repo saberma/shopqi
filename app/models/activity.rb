@@ -4,7 +4,7 @@ class Activity < ActiveRecord::Base
 
 
   def self.log(record,operate,user,content = "")
-    class_name = record.class.to_s.downcase
+    class_name = record.class.to_s.underscore
     unless operate == 'delete'
       if class_name == 'article'
         url = url_helpers.blog_article_path record.blog,record

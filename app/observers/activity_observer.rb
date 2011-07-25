@@ -1,7 +1,7 @@
 # encoding: utf-8
 class ActivityObserver < ActiveRecord::Observer
   cattr_accessor :current_user
-  observe :blog,:article,:product
+  observe :blog,:article,:product,:custom_collection
 
   def after_create(record)
     if record.class != Product
