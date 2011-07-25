@@ -1,5 +1,4 @@
 class ProductObserver < ActiveRecord::Observer
-  cattr_accessor :current_user
 
   def after_destroy(product)
     unless product.shop.products.exists?(vendor: product.vendor)
@@ -8,7 +7,6 @@ class ProductObserver < ActiveRecord::Observer
     unless product.shop.products.exists?(product_type: product.product_type)
       product.shop.types.where(name: product.product_type).first.destroy
     end
-    Activity.log product,'delete',current_user
   end
 
   def after_update(product)

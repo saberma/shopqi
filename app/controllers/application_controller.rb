@@ -12,6 +12,5 @@ class ApplicationController < ActionController::Base
 
   def set_current_user_for_observer
     ActivityObserver.current_user = current_user
-    ProductObserver.current_user = current_user
   end
 end
