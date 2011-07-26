@@ -23,3 +23,8 @@
             =link_to "取消",blog_path(blog)
             or
             %a.editor-preview-link{:href => "#"} 预览
+:javascript
+  App.init = function(){
+    new App.Controllers.Articles();
+    Backbone.history.start();
+  }
