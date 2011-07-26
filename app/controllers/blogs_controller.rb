@@ -5,7 +5,13 @@ class BlogsController < ApplicationController
 
   expose(:blogs){ current_user.shop.blogs}
   expose(:blog)
-  expose(:articles){ blog.articles }
+  expose(:articles){
+    if params[:tag]
+      blog.articles.where(tag: params[:tag])
+    else
+      blog.articles
+    end
+  }
 
   def create
     if blog.save

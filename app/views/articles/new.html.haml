@@ -1,10 +1,13 @@
 - use_kindeditor
 - use_javascripts 'controllers/articles'
-%h2#title==#{blog.title} - 新文章
+%h2#title=w('new.article')
 #action-links
   %ul
     %li.no-icon
-      =link_to '取消',blog_path(blog)
+      -if blog.id
+        =link_to '取消',blog_path(blog)
+      -else
+        =link_to '取消',pages_path
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
 #preview.group.sst.ssb.textile{:style => "display:none;"}
@@ -12,15 +15,13 @@
   %h4#preview-title
   #preview-body
 .group.sst
-  =form_for [blog,article],html:{id:"new_article",class:"new-article"} do |f|
+  =form_for article,html:{id:"new_article",class:"new-article"} do |f|
     #article-form.group-fields
       %dl
         =render partial:"form",locals:{f:f}
         %dd.btns.editor-btns
           %div{:style => "padding: 5px"}
             %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "新增"}/
-            或者
-            =link_to "取消",blog_path(blog)
             or
             %a.editor-preview-link{:href => "#"} 预览
 :javascript
