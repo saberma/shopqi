@@ -14,11 +14,11 @@
     .resources-nav
       %ul
         %li.logo
-          %a{href: Setting.store_url}=image_tag 'resources-nav/logo-shopqi.png'
+          %a{href: Setting.url}=image_tag 'resources-nav/logo-shopqi.png'
         -#
           %li
             %a(href="#" title="ShopQi App Store") 应用
-        %li.current=link_to '主题外观', 'http://themes.shopqi.com'
+        %li.current=link_to '主题外观', Setting.theme_store_url
         -#
           %li
             %a(href="http://support.myshopqi.com/" title="ShopQi &mdash; Support") 支持

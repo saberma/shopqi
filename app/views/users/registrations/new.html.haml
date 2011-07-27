@@ -28,8 +28,8 @@
           %span#spinner(style="display: none")=image_tag 'spinner.gif'
           %span(style="display: none")
             %select#domain_domain(name="domain[domain]")
-              %option(value=".myshopqi.com") .myshopqi.com
-          %span#myshopqi .myshopqi.com
+              %option(value="#{Setting.store_host}")=Setting.store_host
+          %span#myshopqi=Setting.store_host
           #preview-availability
             #ajax-notice(style="display:none;")
             %span#domain-available
