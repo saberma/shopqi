@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Shop::SearchController < Shop::AppController
 
-  expose(:shop) { Shop.at(request.subdomain) }
+  expose(:shop) { Shop.at(request.host) }
 
   expose(:results) do
     if params[:q].blank?

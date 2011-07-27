@@ -3,8 +3,20 @@ require 'spec_helper'
 
 describe UsersController do
   include Devise::TestHelpers
+
   before :each do 
     sign_in(Factory(:user_liwh))
+  end
+
+  context '#create' do
+
+    describe 'validate' do
+
+      it 'should accept Terms and conditions' do # 服务条款
+      end
+
+    end
+
   end
 
   context '#update' do

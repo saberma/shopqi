@@ -11,11 +11,12 @@
     %link(href="/images/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
     %title ShopQi &mdash; 建立您的网上商店
     = stylesheet_link_tag "master","mobile"
+    =yield :stylesheets
     /[if IE 6]
       = stylesheet_link_tag "ie6"
     /[if IE 7]
       = stylesheet_link_tag "ie7"
-    =javascript_include_tag 'jquery'
+    =yield :javascripts
     =csrf_meta_tag
   %body(style=@body_style)
     #wrapper
@@ -29,8 +30,7 @@
               %li
                 %a(href="/examples/") 成功案例
             %li(class=@current_faq)=link_to '常见问题', faq_path
-            %li
-              %a(href="/signup/") 价格 &amp; 注册
+            %li(class=@current_signup)=link_to '价格 & 注册', services_signup_path
             %li.sub-nav
               %ul.utilities
                 %li.megadropdown

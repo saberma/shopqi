@@ -6,7 +6,7 @@ class Shop::ShopsController < Shop::AppController
     if params[:id]
       Shop.find(params[:id]) #checkout页面
     else
-      Shop.where(permanent_domain: request.subdomain).first
+      Shop.at(request.host)
     end
   end
 

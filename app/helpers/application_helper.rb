@@ -3,7 +3,11 @@ module ApplicationHelper
 
   #用于获取当前用户请求的商店
   def shop
-    current_user ? current_user.shop : Shop.where(:permanent_domain => request.subdomain).first
+    if current_user
+      current_user.shop
+    else
+      ShopDomain.shop(request.domain)
+    end
   end
 
   def link_to_delete(path)

@@ -1,65 +1,126 @@
+- @current_signup = :current
+=content_for :stylesheets do
+  = stylesheet_link_tag "signup", "jquery.fancybox-1.3.4"
+  /[if IE]
+    = stylesheet_link_tag "ie-signup"
+=content_for :javascripts do
+  = javascript_include_tag :backbone, 'jquery.fancybox-1.3.4', 'signup_application', 'models/theme', 'collections/themes', 'views/signup/themes/show', 'views/signup/themes/index', 'views/signup/index'
+
 #banner
   .content
-    %h1{:style => "font-family:hevletica, arial, sans-serif"} 注册
+    %h1(style="font-family:hevletica arial sans-serif") 注册
+  / .content
+/ #banner
 .content.subpage
   #signup
-    =form_for(resource, :url => registration_path(resource_name),:validate => true) do |f|
-      =message_block :on => [:user,:shop]
-      %div{:style => "margin:0;padding:0;display:inline"}
+    %form#shop_new.shop_new(action="#" method="post" onsubmit="return false")
       #info
       #top-section.section
-        %h3 商店名称
+        %h3 给您的商店取个名字
         %p
-          =f.fields_for :shop do |s|
-            =s.text_field :name, id:"shop_name",size:22, style:"font-size: 20px; width: 400px"
-        .box.note{:style => "width: 350px; text-align: justify; float: right; display: none"}
-          您可以选择 shopqi.com 作为你和其他人访问商店的地址
-          您
-          %strong 不可以
-          再修改它，但您可以为您的商店增加额外的顶级域名
-          比如
-          = succeed "." do
-            %em www.example.com
-          更多信息请查看后台管理页面
-        %label#subdomain-label{:for => "domain_subdomain"} 二级域名
+          %input#shop_name(name="shop[name]" size="22" style="font-size: 20px; width: 400px" type="text")/
+        %label#subdomain-label(for="domain_subdomain") 您的ShopQi商店地址
         #domain-field
-          %label#protocol{:for => "domain_subdomain"} http://
-          =f.fields_for :shop do |s|
-            =s.text_field :permanent_domain, id:"domain_subdomain",size:22,class:"large"
-          %span#spinner{:style => "display: none"}
-            %img{:alt => "Spinner", :src => "/images/spinner.gif"}/
-          %span#myshopqi .shopqi.com
+          %label#protocol(for="domain_subdomain") http://
+          %input#domain_subdomain.large(name="domain[subdomain]" size="22" type="text")/
+          %span#spinner(style="display: none")=image_tag 'spinner.gif'
+          %span(style="display: none")
+            %select#domain_domain(name="domain[domain]")
+              %option(value=".myshopqi.com") .myshopqi.com
+          %span#myshopqi .myshopqi.com
           #preview-availability
-            #ajax-notice{:style => "display:none;"}
+            #ajax-notice(style="display:none;")
             %span#domain-available
         %p.hint.clear
-          如果您拥有顶级域名，比如
+          如果您拥有像
           %strong www.example.com
-          您随后可以将它与您的商店关联起来
-        %h4 您的注册信息
-        %label.inlined{:for => "user_email"} 邮箱
-        =f.text_field :email, :id => "user_email",:size => 26, :class => "input-text large"
+          这样的顶级域名，您可以稍候在后台管理中绑定它
+        #current-theme(style="display:none")
+          =image_tag 'themes/themestore.jpg', id: 'theme-image'
+          %p
+            %a(href="#") 选择其他主题
+      #themes-section.section
+        %h3 选择一个主题外观
+        %p#theme-hint.note
+          不确定选择哪一个?可以任选一个，或者
+          = succeed "," do
+            %a(href="#") 跳过这一步
+          您可以迟点再修改它.
+        %ul#initial-themes.themes
+        %ul#more-themes.themes.clearfix(style="display: none")
+          %li#themestore.theme
+            =link_to image_tag('themes/themestore.jpg', style: "width: 198px; height: 254px; z-index: 2"), Setting.theme_store_url
+        %input#selected-theme(name="theme" type="hidden" value="")/
+        %a#show-more-themes.box.clear(href="#") 显示更多主题
+      .section
+        %h3(style="margin-bottom: 24px") 关于您
+        .sidebox
+          %h4
+            其他信息
+            %span.hint 非必填
+          -#
+            %p.note 让我们了解多一些，以便为您提供更好的服务.
+          %label(for="signup_source") 您是从哪里得知ShopQi?
+          %select#signup_source(name="signup_source")
+            %option(value="I am not sure") 我不确定
+            %option(value="Referral from a company") 其他公司介绍
+            %option(value="Referral from a friend") 朋友介绍
+            %option(value="Blog post") 博客
+            %option(value="Web search") 搜索引擎
+            %option(value="Web advertisement") 网络广告
+            %option(value="Magazine advertisement") 杂志广告
+            %option(value="Article online or in print") 书籍
+            %option(value="other") 其他
+        .clear
+          %label.inlined(for="user_name") 姓名
+          %input#user_name.input-text.full(name="user[name]" size="18" type="text")
+        .clearfix.inline-form-select.region
+          =select_tag "shop[province]", options_for_select(District.list), {include_blank: '--省份--', style: 'width: 111px'}
+          =select_tag "shop[city]", nil, {include_blank: '--城市--', style: 'width: 111px'}
+          =select_tag "shop[district]", nil, {include_blank: '--地区--', style: 'width: 111px'}
+          %em#shop_province_message(style="display: none; color: #fff")
+        .multi-input.clearfix
+          %span
+            %label.inlined(for="shop_address") 地址
+            %input#shop_address1.input-text.large(name="shop[address]" size="20" type="text")
+          %span
+            %label.inlined(for="shop_zip_code") 邮编
+            %input#shop_zip_code.input-text.small(name="shop[zip_code]" size="16" type="text")/
+        %label.inlined(for="shop_phone") 电话
+        %input#shop_phone.input-text.large(name="shop[phone]" size="18" type="text")/
+        %h4 您的登录信息
+        %label.inlined(for="user_email") Email地址
+        %input#user_email.input-text.large(name="user[email]" size="26" type="text")/
         .toggle
-          %label.inlined{:for => "user_password"} 密码
-          =f.password_field :password, :id => "user_password",:size => 26, :class => "input-text large",:autocomplete => "off"
+          %label.inlined(for="user_password") 密码
+          %input#user_password.input-text.large(autocomplete="off" name="user[password]" size="26" type="password" value="")/
         .toggle
-          %label.inlined{:for => "user_password_confirmation"} 确认密码
-          =f.password_field :password, :id => "user_password_confirmation",:size => 26, :class => "input-text large",:autocomplete => "off"
-        %input#auth_style{:name => "auth_style", :type => "hidden", :value => "login"}/
+          %label.inlined(for="user_password_confirmation") 确认密码
+          %input#user_password_confirmation.input-text.large(autocomplete="off" name="user[password_confirmation]" size="26" type="password" value="")/
+        %label.inlined(for="user_phone") 手机
+        %input#user_phone.input-text.large(name="user[phone]" size="18" type="text")
       .block.cl
         %h3 服务条款
         %dl
           %dd#user-agreement
-            %p 创建您的帐号前，您必须同意ShopQi的服务条件
+            %p 注册前您需要同意ShopQi的服务条款.
             %p
-              %input{:name => "shop[terms_and_conditions]", :type => "hidden", :value => "0"}/
-              %input#shop_terms_and_conditions{:name => "shop[terms_and_conditions]", :style => "display: inline; margin-bottom: 0", :type => "checkbox", :value => "1"}/
-              %label#terms-and-conditions-label{:for => "shop_terms_and_conditions"}
-                我已经阅读并同意此
-                %a{:href => "https://www.shopqi.com/services/signup/new/basic#", :onclick => "window.open('http://app.shopqi.com/legal/terms.html','popup','width=800,height=600,directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');return false;; return false;"} 服务条款
-        %p.btns{:style => "margin-bottom: 0; clear: left"}
-          %input{:name => "plan", :type => "hidden", :value => "basic"}/
-          %input{:name => "ref", :type => "hidden", :value => ""}/
-          %input#shop_submit{:name => "commit", :type => "submit", :value => "创建我的ShopQi商店"}
+              %input#shop_terms_and_conditions(style="display: inline; margin-bottom: 0" type="checkbox" value="1")
+              %label#terms-and-conditions-label(for="shop_terms_and_conditions")
+                我已经阅读并同意
+                %a(href="#") 服务条款
+        %p.btns(style="margin-bottom: 0; clear: left")
+          %input(name="shop[plan]" type="hidden" value="#{params[:plan]}")
+          %input(name="ref" type="hidden" value="")
+          %input#shop_submit(name="commit" type="submit" value="创建我的ShopQi商店")
 / content
-#push
+
+%script(id="theme-item" type="text/x-jquery-tmpl")
+  %img(src="/s/theme/screenshots/{{{id}}}/main/signup.jpg" style="width: 198px; height: 254px; z-index: 2;")
+  .pick.transparent
+    %a.btn.preview(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="theme-group" title="{{{name}}}") 预览主题
+    %a.btn.next(href="#" title="{{{name}}}") 选择此主题
+
+:javascript
+  App.themes = new App.Collections.Themes(#{themes_json});
+  new App.Views.Signup.Index({collection: App.themes});

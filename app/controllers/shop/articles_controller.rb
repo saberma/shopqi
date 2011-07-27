@@ -1,6 +1,6 @@
 #encoding: utf-8
 class Shop::ArticlesController < Shop::AppController
-  expose(:shop) { Shop.at(request.subdomain) }
+  expose(:shop) { Shop.at(request.host) }
   expose(:blog){ shop.blogs.where(handle: params[:handle]).first }
   expose(:articles){ blog.articles }
   expose(:article){ Article.find(params[:article_id] || params[:id])}

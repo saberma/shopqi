@@ -4,7 +4,8 @@
   #header.frontpage
     #createanonlinestore.banner.createanonlinestore
       %h1(style="position:absolute; top:20px; left:0px")
-      =link_to '现在注册', signup_path, class: 'blue-signup-button'
+        =image_tag 'banners/text-createanonlinestore.jpg'
+      =link_to '现在注册', services_signup_path, class: 'blue-signup-button'
 -#
   #feature-bar
     .content
@@ -26,7 +27,7 @@
     #video-and-details.video-and-details
       .col-6
         #video-tour
-          %a.cboxElement(href="#")=image_tag 'graphics/dodocase-video.jpg'
+          %a.cboxElement(href="#")=image_tag 'graphics/video.jpg'
     .col-6.last.frontpage-features
       %ul
         %li(onclick="document.location.href='/tour/design/'")
@@ -85,5 +86,4 @@
   .content
     %a(href="/tour") 查看功能演示
     %span 或者
-    %a(href="/signup")
-      =image_tag 'buttons/btn-pricing-signup-lighter.png', width: 191, height: 61
+    =link_to image_tag('buttons/btn-pricing-signup-lighter.png', width: 191, height: 61), services_signup_path

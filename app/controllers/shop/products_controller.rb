@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Shop::ProductsController < Shop::AppController
 
-  expose(:shop) { Shop.at(request.subdomain) }
+  expose(:shop) { Shop.at(request.host) }
   expose(:product) { shop.products.where(handle: params[:handle]).first }
 
   def show

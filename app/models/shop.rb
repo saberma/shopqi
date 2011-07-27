@@ -3,6 +3,7 @@ class Shop < ActiveRecord::Base
   include OAuth2::Model::ClientOwner
   include OAuth2::Model::ResourceOwner
   has_many :users                 , dependent: :destroy
+  has_many :domains               , dependent: :destroy                      , class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: :id.desc
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
   has_many :link_lists            , dependent: :destroy
@@ -27,17 +28,18 @@ class Shop < ActiveRecord::Base
   has_many :countries             , dependent: :destroy
   has_many :activities             , dependent: :destroy                     , order: 'created_at desc'
 
+  accepts_nested_attributes_for :domains
   attr_readonly :orders_count
-
-  #二级域名须为3到20位数字和字母组成的，且唯一
-  validates :permanent_domain, presence: true, uniqueness: true, format: {with:  /\A([a-z0-9])*\Z/ }, length: 3..20
   validates_presence_of :name
 
   before_create :init_valid_date
 
-  # 域名
-  def self.at(domain)
-    Shop.where(permanent_domain: domain).first
+  def self.at(domain) # 域名
+    ShopDomain.from(domain).shop
+  end
+
+  def primary_domain # 主域名
+    domains.primary
   end
 
   protected
@@ -51,12 +53,36 @@ class Shop < ActiveRecord::Base
 
 end
 
-#商品类型
-class ShopProductType < ActiveRecord::Base
+class ShopDomain < ActiveRecord::Base # 域名
+  belongs_to :shop
+
+  #二级域名须为3到20位数字和字母组成的，且唯一
+  #validates :subdomain, :domain, presence: true, uniqueness: true, format: {with:  /\A([a-z0-9])*\Z/ }, length: 3..20
+
+  before_save do
+    self.host = "#{self.subdomain}#{self.domain}"
+  end
+
+  # @host admin.myshopqi.com
+  def self.from(host)
+    where(host: host).first
+  end
+
+  def self.primary # 暂时取第一个
+    first
+  end
+
+  def url # http://admin.myshopqi.com
+    store = "http://#{self.host}"
+    store += ":#{Setting.domain.port}" unless Setting.domain.port == 80
+    store
+  end
+end
+
+class ShopProductType < ActiveRecord::Base #商品类型
   belongs_to :shop
 end
 
-#商品厂商
-class ShopProductVendor < ActiveRecord::Base
+class ShopProductVendor < ActiveRecord::Base #商品厂商
   belongs_to :shop
 end
