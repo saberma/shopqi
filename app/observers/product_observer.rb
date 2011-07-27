@@ -20,6 +20,7 @@ class ProductObserver < ActiveRecord::Observer
         product.shop.types.where(name: product.product_type_was).first.destroy
       end
     end
+
   end
 
   def after_save(product)
@@ -32,5 +33,6 @@ class ProductObserver < ActiveRecord::Observer
       product.shop.vendors.create name: product.vendor
     end
   end
+
 
 end

@@ -26,6 +26,7 @@ class Shop < ActiveRecord::Base
   has_many :vendors               , dependent: :destroy                      , class_name: 'ShopProductVendor'
   has_many :emails                , dependent: :destroy
   has_many :countries             , dependent: :destroy
+  has_many :activities             , dependent: :destroy                     , order: 'created_at desc'
 
   accepts_nested_attributes_for :domains
   attr_readonly :orders_count

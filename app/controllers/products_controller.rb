@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
   expose(:custom_collections) { shop.custom_collections }
   expose(:publish_states) { KeyValues::PublishState.options }
   expose(:photos){ product.photos }
-  expose(:photo){ Photo.new } 
+  expose(:photo){ Photo.new }
 
   def index
     @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at],methods:[:index_photo]})
@@ -53,6 +53,7 @@ class ProductsController < ApplicationController
     end
     #保存商品图片
     if product.save
+      Activity.log product,'new',current_user
       redirect_to product_path(product), notice: "新增商品成功!"
     else
       render action: :new
@@ -67,6 +68,7 @@ class ProductsController < ApplicationController
   def update
     product.save
     product.options.reject! {|option| option.destroyed?} #rails bug：使用_destroy标记删除后，需要reload后，删除集合中的元素才消失，而reload后value值将被置空
+    Activity.log product,'edit',current_user
     render json: product_json
   end
 
@@ -76,6 +78,7 @@ class ProductsController < ApplicationController
     ids = params[:products]
     if [:publish, :unpublish].include? operation #可见性
       products.where(id:ids).update_all published: (operation == :publish)
+      products.where(id:ids).map{|product|log_published(product)}
     elsif operation == :destroy #删除
       products.find(ids).map(&:destroy)
     else #加入集合
@@ -107,6 +110,14 @@ class ProductsController < ApplicationController
   def update_published
     flash.now[:notice] = I18n.t("flash.actions.update.notice")
     product.save
+    log_published(product)
     render template: "shared/msg"
+  end
+
+  protected
+
+  def log_published(product)
+    handle = product.published ? 'published' : 'hidden'
+    Activity.log product,handle,current_user
   end
 end
