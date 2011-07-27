@@ -2,6 +2,7 @@ class Setting < Settingslogic
   source "#{Rails.root}/config/app_config.yml"
   namespace Rails.env
 
+  # TODO: 移至ShopDomain
   def self.domain_url # lvh.me:4000
     url = "#{Setting.domain.url}"
     url += ":#{Setting.domain.port}" unless Setting.domain.port == 80

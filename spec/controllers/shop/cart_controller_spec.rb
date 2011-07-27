@@ -9,7 +9,7 @@ describe Shop::CartController do
   let(:variant) { iphone4.variants.first }
 
   before :each do
-    request.host = "#{shop.primary_domain.url}"
+    request.host = "#{shop.primary_domain.host}"
     session = mock('session')
     session.stub!(:[], 'cart').and_return("#{variant.id}|1")
     session.stub!(:[]=)

@@ -8,7 +8,7 @@ describe Shop::PagesController do
   let(:page) { shop.pages.where(handle: 'about-us').first }
 
   before :each do
-    request.host = "#{shop.primary_domain.url}"
+    request.host = "#{shop.primary_domain.host}"
   end
 
   it 'should be show' do

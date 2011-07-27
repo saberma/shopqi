@@ -59,21 +59,23 @@ class ShopDomain < ActiveRecord::Base # 域名
   #二级域名须为3到20位数字和字母组成的，且唯一
   #validates :subdomain, :domain, presence: true, uniqueness: true, format: {with:  /\A([a-z0-9])*\Z/ }, length: 3..20
 
+  before_save do
+    self.host = "#{self.subdomain}#{self.domain}"
+  end
+
   # @host admin.myshopqi.com
   def self.from(host)
-    where(domain: host).first
+    where(host: host).first
   end
 
   def self.primary # 暂时取第一个
     first
   end
 
-  def name # admin.myshopqi.com
-    "#{self.subdomain}.#{self.domain}"
-  end
-
   def url # http://admin.myshopqi.com
-    "http://#{self.name}#{Setting.domain.port}"
+    store = "http://#{self.host}"
+    store += ":#{Setting.domain.port}" unless Setting.domain.port == 80
+    store
   end
 end
 

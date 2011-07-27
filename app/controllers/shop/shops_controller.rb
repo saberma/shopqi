@@ -6,7 +6,7 @@ class Shop::ShopsController < Shop::AppController
     if params[:id]
       Shop.find(params[:id]) #checkout页面
     else
-      ShopDomain.shop(request.domain)
+      Shop.at(request.host)
     end
   end
 

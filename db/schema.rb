@@ -464,10 +464,11 @@ ActiveRecord::Schema.define(:version => 20110722100518) do
     t.integer "shop_id"
     t.string  "subdomain", :limit => 32
     t.string  "domain",    :limit => 32
+    t.string  "host",      :limit => 64
   end
 
+  add_index "shop_domains", ["host"], :name => "index_shop_domains_on_host"
   add_index "shop_domains", ["shop_id"], :name => "index_shop_domains_on_shop_id"
-  add_index "shop_domains", ["subdomain", "domain"], :name => "index_shop_domains_on_subdomain_and_domain"
 
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"

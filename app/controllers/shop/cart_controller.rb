@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Shop::CartController < Shop::AppController
 
-  expose(:shop) { Shop.at(request.subdomain) }
+  expose(:shop) { Shop.at(request.host) }
 
   def add
     cart_hash = cookie_cart_hash

@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Shop::CollectionsController < Shop::AppController
 
-  expose(:shop) { Shop.at(request.subdomain) }
+  expose(:shop) { Shop.at(request.host) }
 
   def show
     CollectionsDrop
