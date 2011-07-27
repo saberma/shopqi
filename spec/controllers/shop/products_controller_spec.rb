@@ -7,7 +7,7 @@ describe Shop::ProductsController do
   let(:iphone4) { Factory(:iphone4, shop: shop) }
 
   before :each do
-    request.host = "#{shop.permanent_domain}.shopqi.com"
+    request.host = "#{shop.primary_domain.url}"
   end
 
   it 'should be show' do

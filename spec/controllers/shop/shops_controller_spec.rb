@@ -8,7 +8,7 @@ describe Shop::ShopsController do
 
   before :each do
     shop.theme.switch Theme.find_by_name('Prettify')
-    request.host = "#{shop.permanent_domain}.shopqi.com"
+    request.host = "#{shop.primary_domain.url}"
   end
 
   it 'should be show' do

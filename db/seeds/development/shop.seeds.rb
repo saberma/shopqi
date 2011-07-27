@@ -3,21 +3,21 @@
 
 Shop.destroy_all
 
-liwh= User.create!(
-  shop_attributes: { name: "鞋子", permanent_domain: "liwh" },
-  email: "liwh87@gmail.com", password: "666666", name: "liwh"
+shopqi = User.create!(
+  shop_attributes: { name:"shopqi", domains_attributes: [{subdomain: 'shopqi', domain: ".myshopqi.com"}] },
+  email: "admin@shopqi.com",
+  password: "666666",
+  name: "admin"
 )
 
 saberma = User.create!(
-  shop_attributes: { name: "商城", permanent_domain: "saberma" },
+  shop_attributes: { name: "商城", domains_attributes: [{subdomain: 'saberma', domain: ".myshopqi.com"}] },
   email: "mahb45@gmail.com",
   password: "666666",
   name: "saberma"
 )
 
-shopqi = User.create!(
-  shop_attributes: { name:"shopqi", permanent_domain: "shopqi" },
-  email: "admin@shopqi.com",
-  password: "666666",
-  name: "admin"
+liwh= User.create!(
+  shop_attributes: { name: "鞋子", domains_attributes: [{subdomain: 'liwh', domain: ".myshopqi.com"}] },
+  email: "liwh87@gmail.com", password: "666666", name: "liwh"
 )

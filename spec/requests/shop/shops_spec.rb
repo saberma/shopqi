@@ -9,7 +9,7 @@ describe "Shop::Shops", js:true do
 
   let(:shop) { user_admin.shop }
 
-  before(:each) { Capybara::Server.manual_host = "#{shop.permanent_domain}.lvh.me" }
+  before(:each) { Capybara::Server.manual_host = "#{shop.primary_domain.url}" }
 
   after(:each) { Capybara::Server.manual_host = nil }
 
