@@ -7,8 +7,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end.to_json
   end
 
-  #def create
-  #  super
-  #  ap resource.errors
-  #end
+  def create
+    build_resource
+
+    if resource.save
+      sign_in(resource_name, resource)
+      render json: {}
+    else
+      render json: resource.errors.to_json
+    end
+  end
 end
