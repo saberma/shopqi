@@ -57,12 +57,12 @@ module ApplicationHelper
   begin 'search'
 
     #查询条件链接需要存储上一次的查询条件
-    def search_path(path, current_search)
+    def search_path(path,current_search, obj = nil)
       if params[:search]
         current_search = params[:search].symbolize_keys.merge(current_search)
       end
       current_search.delete_if {|key, value| value.blank? }
-      send(path, search: current_search) #products_path(search: current_search)
+      send(path,obj, search: current_search) #products_path(search: current_search)
     end
 
     #查询标签

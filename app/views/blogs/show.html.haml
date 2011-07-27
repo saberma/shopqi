@@ -1,3 +1,4 @@
+- use_javascripts 'controllers/articles'
 %h2#title
   =link_to blog.title,blog_path(blog)
 #action-links
@@ -9,6 +10,35 @@
     %li.no-icon
       = link_to image_tag('admin/icons/trash.gif'), blog_path(blog), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
 / begin action_links
+#table-filters.box2.sst.ssb{:style => ""}
+  显示
+  #article-status-select.filter-select
+    %a#status-filter-link(href= "#")=search_label :published, '任何状态',status
+    %ul.dropdown{:style => "display: none"}
+      %li
+        %strong 文章状态
+      -status.each_pair do |code,name|
+        %li=link_to name,blog_search_path(blog,published_eq: code)
+      %li.filter-show-all.current=link_to '显示所有',blog_search_path(blog,published_eq: nil)
+  的文章 由
+  #author-select.filter-select
+    %a#author-filter-link(href= "#")=search_label :author, '任一作者'
+    %ul.dropdown{:style => "display: none"}
+      %li
+        %strong 作者
+      -authors.each do |author|
+        %li=link_to author,blog_search_path(blog,author_eq: author)
+      %li.filter-show-all.current=link_to '显示所有',blog_search_path(blog,author_eq: nil)
+  和
+  #tag-select.filter-select
+    %a#tag-filter-link(href= "#")=search_label :tags_name, '任一'
+    %ul.dropdown{:style => "display: none"}
+      %li
+        %strong 标签
+      -tags.each do |tag|
+        %li=link_to tag,blog_search_path(blog,tags_name_eq: tag)
+      %li.filter-show-all.current=link_to '显示所有',blog_search_path(blog,tags_name_eq: nil)
+  标签
 #blog-show
   %p.note.r{:style => "margin-bottom: 5px"}
     ==此博客有#{articles.size}篇文章
@@ -29,3 +59,8 @@
     #pagination
   / Required arguments: parent, counts
   -#=render partial:"comments"
+:javascript
+  App.init = function(){
+    new App.Controllers.Articles();
+    Backbone.history.start();
+  }
