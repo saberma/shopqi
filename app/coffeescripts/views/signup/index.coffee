@@ -35,14 +35,19 @@ App.Views.Signup.Index = Backbone.View.extend
       $.post '/user', attrs, (data) ->
         if _.isEmpty data
           window.location = '/admin'
-        else
+        else # 有错误
+          errors = {}
+          errors['shop.domains.host'] = "商店Web地址已经存在" if data['shop.domains.host']?
+          errors['email'] = "Email地址已经注册" if data.email?
+          errors['password'] = "密码与确认密码需要保持一致，长度不能少于6个字符" if data.password?
+          self.message errors
           self.reset()
-    else
+    else # 校验不通过
       self.reset()
     false
 
+  ###### private methods #####
   validate: ->
-    $('#errorExplanation p').remove()
     check_list =
       shop_name: '请给您的商店取个名字'
       domain_subdomain: '请为您的商店挑选Web地址'
@@ -61,11 +66,15 @@ App.Views.Signup.Index = Backbone.View.extend
           errors[key] = "#{text} 不能为空"
       unless $('#shop_terms_and_conditions').attr('checked')
         errors['shop_terms_and_conditions'] = "请您先阅读并接受服务条款"
-    _(errors).each (msg, key) -> $('#errorExplanation').append "<p>#{msg}</p>"
+    this.message errors
+    _.isEmpty errors
+
+  message: (errors) -> # 显示错误提示
     result = _.isEmpty errors
+    $('#errorExplanation p').remove()
+    _(errors).each (msg, key) -> $('#errorExplanation').append "<p>#{msg}</p>"
     $('#errorExplanation').toggle(!result)
     Effect.scrollTo("#errorExplanation") unless result
-    result
 
   reset: ->
     $('#shop_submit').attr('disabled', false).val '创建我的ShopQi商店'
