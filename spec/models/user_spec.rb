@@ -5,30 +5,6 @@ describe User do
 
   context '#create' do
 
-    describe 'validate' do
-
-      describe 'shop' do
-
-        it 'should validate name' do
-        end
-
-      end
-
-      describe 'domain' do
-
-        it 'should validate subdomain' do
-        end
-
-        it 'should validate domain' do
-        end
-
-        it 'should be at least 4 characters' do
-        end
-
-      end
-
-    end
-
     it 'should be success' do
       expect do
         expect do
