@@ -18,7 +18,7 @@ Shopqi::Application.routes.draw do
     get "login", to: "devise/sessions#new"
   end
 
-  constraints(subdomain: 'themes') do # 主题商店 
+  constraints(subdomain: 'themes') do # 主题商店
     scope module: :theme do
       get '/' => 'themes#index', as: :theme_index
       scope "/themes" do
@@ -152,7 +152,7 @@ Shopqi::Application.routes.draw do
     end
 
     resources :pages, except: :edit
-    resources :articles, only: [:new,:create]
+    resources :articles
 
     resources :blogs do
       resources :articles

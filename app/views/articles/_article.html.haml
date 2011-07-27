@@ -7,7 +7,7 @@
     %ul.tag-list
       %li
         -article.tags.each do |tag|
-          =link_to tag.name, blog_path(blog,tag: tag.name),class: 'active-tag'
+          =link_to tag.name, blog_path(blog,search: {tags_name_eq: tag.name}),class: 'active-tag'
   %td=article.author
   %td
     %span.note=article.updated_at.to_s(:with_year)

@@ -2,6 +2,7 @@ class ArticlesController < ApplicationController
   prepend_before_filter :authenticate_user!
   layout 'admin'
   expose(:shop) { current_user.shop }
+  expose(:blogs){ shop.blogs}
   expose(:blog)
   expose(:articles){ blog.articles }
   expose(:article)
@@ -10,6 +11,7 @@ class ArticlesController < ApplicationController
 
   def create
     article.user = current_user
+    blog = shop.blogs.find(params[:article][:blog_id])
     if article.save
       flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
       redirect_to blog_article_path(blog,article)

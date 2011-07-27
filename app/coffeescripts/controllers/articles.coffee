@@ -1,5 +1,8 @@
 App.Controllers.Articles = Backbone.Controller.extend
 
+  routes:
+    "nothing": "nothing"
+
   initialize: ->
     #标签
     TagUtils.init 'article_tags_text'
@@ -12,4 +15,26 @@ App.Controllers.Articles = Backbone.Controller.extend
       else
         $('#article-edit-link').html('返回')
       $('#article-show').toggle()
+
+    $('#status-filter-link').click ->
+      $('#author-select > ul').hide()
+      $('#tag-select > ul').hide()
+      $('#article-status-select > ul').toggle()
+      false
+
+    $('#author-filter-link').click ->
+      $('#author-select > ul').toggle()
+      $('#tag-select > ul').hide()
+      $('#article-status-select > ul').hide()
+      false
+
+    $('#tag-filter-link').click ->
+      $('#author-select > ul').hide()
+      $('#tag-select > ul').toggle()
+      $('#article-status-select > ul').hide()
+      false
+
+    $(document).click ->
+      $('.dropdown').each ->
+        $(this).hide()
 
