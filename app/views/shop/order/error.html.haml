@@ -70,6 +70,6 @@
         .block
           %p
             返回
-            %a(href="http://#{shop.permanent_domain}.myshopqi.com")=shop.name
+            %a(href="#{shop.primary_domain.url}")=shop.name
             |
             %a(href="#" onclick="history.back(); return false;") 上一页面

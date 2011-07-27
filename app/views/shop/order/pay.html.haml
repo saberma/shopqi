@@ -53,6 +53,6 @@
             %input#complete-purchase(name="commit" onclick="this.setAttribute('originalValue' this.value);this.disabled=true;this.value='正在完成订单...';;result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) (this.value = this.getAttribute('originalValue'); this.disabled = false);return false" type="submit" value="购买")
             %small#cancel-purchase
               或
-              %a(href="http://#{shop.permanent_domain}.myshopqi.com") 取消，然后返回商店
+              %a(href="#{shop.primary_domain.url}") 取消，然后返回商店
           %td(style="text-align:right;vertical-align:bottom")
             %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'

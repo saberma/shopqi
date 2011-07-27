@@ -19,7 +19,7 @@
         %h3 给您的商店取个名字
         %p
           %input#shop_name(name="shop[name]" size="22" style="font-size: 20px; width: 400px" type="text")/
-        %label#subdomain-label(for="domain_subdomain") 您的ShopQi网络地址
+        %label#subdomain-label(for="domain_subdomain") 您的ShopQi商店地址
         #domain-field
           %label#protocol(for="domain_subdomain") http://
           %input#domain_subdomain.large(name="domain[subdomain]" size="22" type="text")/
@@ -74,19 +74,19 @@
         .clear
           %label.inlined(for="user_name") 姓名
           %input#user_name.input-text.full(name="user[name]" size="18" type="text")
-        .clearfix.inline-form-select
-          =select_tag :province, options_for_select(District.list), {include_blank: '--省份--', style: 'width: 111px'}
-          =select_tag :city, nil, {include_blank: '--城市--', style: 'width: 111px'}
-          =select_tag :district, nil, {include_blank: '--地区--', style: 'width: 111px'}
+        .clearfix.inline-form-select.region
+          =select_tag "shop[province]", options_for_select(District.list), {include_blank: '--省份--', style: 'width: 111px'}
+          =select_tag "shop[city]", nil, {include_blank: '--城市--', style: 'width: 111px'}
+          =select_tag "shop[district]", nil, {include_blank: '--地区--', style: 'width: 111px'}
           %em#shop_province_message(style="display: none; color: #fff")
         .multi-input.clearfix
           %span
-            %label.inlined(for="shop_address1") 地址
-            %input#shop_address1.input-text.large(name="shop[address1]" size="20" type="text")/
+            %label.inlined(for="shop_address") 地址
+            %input#shop_address1.input-text.large(name="shop[address]" size="20" type="text")
           %span
-            %label.inlined(for="shop_zip") 邮编
-            %input#shop_zip.input-text.small(name="shop[zip]" size="16" type="text")/
-        %label.inlined(for="shop_phone") 手机
+            %label.inlined(for="shop_zip_code") 邮编
+            %input#shop_zip_code.input-text.small(name="shop[zip_code]" size="16" type="text")/
+        %label.inlined(for="shop_phone") 电话
         %input#shop_phone.input-text.large(name="shop[phone]" size="18" type="text")/
         %h4 您的登录信息
         %label.inlined(for="user_email") Email地址
@@ -97,20 +97,21 @@
         .toggle
           %label.inlined(for="user_password_confirmation") 确认密码
           %input#user_password_confirmation.input-text.large(autocomplete="off" name="user[password_confirmation]" size="26" type="password" value="")/
+        %label.inlined(for="user_phone") 手机
+        %input#user_phone.input-text.large(name="user[phone]" size="18" type="text")
       .block.cl
         %h3 服务条款
         %dl
           %dd#user-agreement
             %p 注册前您需要同意ShopQi的服务条款.
             %p
-              %input(name="shop[terms_and_conditions]" type="hidden" value="0")/
-              %input#shop_terms_and_conditions(name="shop[terms_and_conditions]" style="display: inline; margin-bottom: 0" type="checkbox" value="1")/
+              %input#shop_terms_and_conditions(style="display: inline; margin-bottom: 0" type="checkbox" value="1")
               %label#terms-and-conditions-label(for="shop_terms_and_conditions")
                 我已经阅读并同意
                 %a(href="#") 服务条款
         %p.btns(style="margin-bottom: 0; clear: left")
-          %input(name="plan" type="hidden" value="basic")/
-          %input(name="ref" type="hidden" value="")/
+          %input(name="shop[plan]" type="hidden" value="#{params[:plan]}")
+          %input(name="ref" type="hidden" value="")
           %input#shop_submit(name="commit" type="submit" value="创建我的ShopQi商店")
 / content
 

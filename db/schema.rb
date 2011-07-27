@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
 
   create_table "countries", :force => true do |t|
     t.integer  "shop_id"
-    t.string   "code"
+    t.string   "code",           :limit => 32
     t.float    "tax_percentage"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -393,7 +393,7 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
     t.float    "price"
     t.float    "min_order_subtotal"
     t.float    "max_order_subtotal"
-    t.string   "name"
+    t.string   "name",               :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -450,24 +450,33 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
   add_index "products_tags", ["product_id"], :name => "index_products_tags_on_product_id"
   add_index "products_tags", ["tag_id"], :name => "index_products_tags_on_tag_id"
 
+  create_table "shop_domains", :force => true do |t|
+    t.integer "shop_id"
+    t.string  "subdomain", :limit => 32
+    t.string  "domain",    :limit => 32
+  end
+
+  add_index "shop_domains", ["shop_id"], :name => "index_shop_domains_on_shop_id"
+  add_index "shop_domains", ["subdomain", "domain"], :name => "index_shop_domains_on_subdomain_and_domain"
+
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"
-    t.string  "name"
+    t.string  "name",    :limit => 32
   end
 
   add_index "shop_product_types", ["shop_id"], :name => "index_shop_product_types_on_shop_id"
 
   create_table "shop_product_vendors", :force => true do |t|
     t.integer "shop_id"
-    t.string  "name"
+    t.string  "name",    :limit => 32
   end
 
   add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
 
   create_table "shop_theme_settings", :force => true do |t|
-    t.integer  "shop_theme_id", :null => false
-    t.string   "name",          :null => false
-    t.string   "value"
+    t.integer  "shop_theme_id",                :null => false
+    t.string   "name",          :limit => 32,  :null => false
+    t.string   "value",         :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -475,9 +484,9 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
   add_index "shop_theme_settings", ["shop_theme_id"], :name => "index_shop_theme_settings_on_shop_theme_id"
 
   create_table "shop_themes", :force => true do |t|
-    t.integer  "shop_id",     :null => false
-    t.integer  "theme_id",    :null => false
-    t.string   "load_preset", :null => false
+    t.integer  "shop_id",                   :null => false
+    t.integer  "theme_id",                  :null => false
+    t.string   "load_preset", :limit => 16, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -485,27 +494,23 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
   add_index "shop_themes", ["shop_id"], :name => "index_shop_themes_on_shop_id"
 
   create_table "shops", :force => true do |t|
-    t.string   "name"
-    t.string   "domain"
-    t.string   "permanent_domain"
-    t.string   "email"
-    t.string   "phone"
+    t.string   "name",                :limit => 16
+    t.string   "phone",               :limit => 16
+    t.string   "plan",                :limit => 16
     t.date     "deadline"
-    t.string   "title"
-    t.string   "province"
-    t.string   "city"
-    t.string   "district"
-    t.string   "zip_code"
-    t.string   "address"
-    t.string   "keywords"
-    t.string   "password"
-    t.boolean  "password_enabled",    :default => false
+    t.string   "province",            :limit => 8
+    t.string   "city",                :limit => 8
+    t.string   "district",            :limit => 8
+    t.string   "zip_code",            :limit => 16
+    t.string   "address",             :limit => 32
+    t.string   "email",               :limit => 64
+    t.string   "password",            :limit => 64
+    t.boolean  "password_enabled",                  :default => false
     t.string   "password_message"
-    t.boolean  "public",              :default => true
-    t.integer  "orders_count",        :default => 0
-    t.string   "order_number_format", :default => "\#{{number}}"
-    t.boolean  "taxes_included",      :default => true
-    t.boolean  "tax_shipping",        :default => false
+    t.integer  "orders_count",                      :default => 0
+    t.string   "order_number_format", :limit => 32, :default => "\#{{number}}"
+    t.boolean  "taxes_included",                    :default => true
+    t.boolean  "tax_shipping",                      :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -593,7 +598,7 @@ ActiveRecord::Schema.define(:version => 20110717022034) do
     t.float    "price"
     t.float    "weight_low"
     t.float    "weight_high"
-    t.string   "name"
+    t.string   "name",        :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
   end
