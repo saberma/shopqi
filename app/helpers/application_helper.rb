@@ -58,6 +58,11 @@ module ApplicationHelper
     str
   end
 
+  #国际化显示实体属性
+  def tt(str)
+    t("activerecord.attributes.#{str}")
+  end
+
   begin 'search'
 
     #查询条件链接需要存储上一次的查询条件

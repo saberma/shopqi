@@ -173,6 +173,7 @@ Shopqi::Application.routes.draw do
     resources :account, only: [:index] do
       collection do
         post :change_ownership
+        put  :update_attribute_on_the_spot
       end
     end
 
