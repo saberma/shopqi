@@ -13,7 +13,7 @@ class EmailsController < ApplicationController
 
   def update
     email.save
-    redirect_to admin_notifications_path , notice: notice_msg
+    redirect_to notifications_path , notice: notice_msg
   end
 
   def follow

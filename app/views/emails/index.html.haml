@@ -35,7 +35,7 @@
   %p#add-subscription-btn(style='display:none')
     %input.btn(onclick="$('#add-subscription-details').toggle(); $('#add-subscription-btn').toggle();$('#email-detail').show();" type="button" value="增加新的订单提醒")
   #add-subscription-details{:style => "display:none"}
-    =form_for :subscribe, url: admin_notifications_subscribe_path, remote: true do |f|
+    =form_for :subscribe, url: notifications_subscribe_path, remote: true do |f|
       %dl
         %dt 增加一个新的订单提醒
         %dd.sb
