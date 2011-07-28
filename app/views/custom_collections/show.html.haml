@@ -26,7 +26,7 @@
       %dd=f.text_field :title, class: :big
       %dt#edit-handle-label.st(style="font-size: 85%") 链接/处理
       %dd#edit-handle.ssb
-        %span.note==http://#{current_user.shop.permanent_domain}.shopqi.com/collections/
+        %span.note==#{show_shop_url}/collections/
         =f.text_field :handle, style: 'width: 175px'
         %span.note
           (
