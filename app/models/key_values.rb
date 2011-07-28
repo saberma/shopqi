@@ -12,6 +12,16 @@ module KeyValues
     end
   end
 
+  #支付类型
+  class PaymentType < KeyValues::Base
+    self.data = [
+      {:id => 1, :name => '在线支付-支付宝', :link => 'https://b.alipay.com/order/productSign.htm?action=newsign&productId=2011011904422299'},
+      {:id => 2, :name => '在线支付-财付通', :link => 'http://union.tenpay.com/mch/mch_register.shtml'},
+      {:id => 3, :name => '在线支付-快钱', :link => 'http://www.99bill.com'}
+    ]
+  end
+
+
   # 是否发布
   class PublishState < KeyValues::Base
     self.data = [

@@ -72,6 +72,11 @@ development:
   domain:
     url: lvh.me
     port: 4000
+  alipay:
+    key: 'bfqo39l0n876cwcmftanb1d2z3s1pnb6'
+    account: '2088002956539151'
+    email: '13928452841'
+
 
 test:
   <<: *defaults
