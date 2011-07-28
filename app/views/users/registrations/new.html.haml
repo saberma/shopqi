@@ -122,6 +122,18 @@
   .pick.transparent
     %a.btn.preview(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="theme-group" title="{{{name}}}") 预览主题
     %a.btn.next(href="#" title="{{{name}}}") 选择此主题
+%script(id="available-item" type="text/x-jquery-tmpl")
+  {{#if available}}
+  %span.negative
+    抱歉，{{{domain}}} 已经
+    %strong 被使用了
+    \.
+  {{else}}
+  %span.positive
+    恭喜，{{{domain}}}
+    %strong 可以使用
+    \.
+  {{/if}}
 
 :javascript
   App.themes = new App.Collections.Themes(#{themes_json});

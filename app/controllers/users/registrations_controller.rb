@@ -17,4 +17,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render json: resource.errors.to_json
     end
   end
+
+  def check_availability
+    render text: ShopDomain.exists?(host: "#{params[:domain]}")
+  end
 end

@@ -17,6 +17,23 @@ App.Views.Signup.Index = Backbone.View.extend
       $(this).focus -> $("label[for='#{@id}']").addClass "focus"
       $(this).keypress -> $("label[for='#{@id}']").addClass("has-text").removeClass 'focus'
       $(this).blur -> $("label[for='#{@id}']").removeClass("has-text").removeClass('focus') if @value is ""
+    last_domain = this.get_domain()
+    template = Handlebars.compile $('#available-item').html()
+    setInterval -> # 定时检测域名有效性
+      domain = self.get_domain()
+      subdomain = $('#domain_subdomain').val()
+      if subdomain isnt ''
+        if subdomain.length >= 4
+          if domain isnt last_domain
+            last_domain = domain
+            $('#spinner').css('display', '') # show方法会导致移位
+            $.get '/services/signup/check_availability', domain: domain, (data) ->
+              attrs = available: (data is 'true'), domain: domain
+              $('#spinner').hide()
+              $('#domain-available').html template attrs
+        else
+          $('#domain-available').html "<span class='negative'>子域名最少需要4个字符<span>"
+    , 2000
 
   render: ->
     self = this
@@ -78,3 +95,6 @@ App.Views.Signup.Index = Backbone.View.extend
 
   reset: ->
     $('#shop_submit').attr('disabled', false).val '创建我的ShopQi商店'
+
+  get_domain: ->
+    "#{$('#domain_subdomain').val()}#{$('#domain_domain').val()}"
