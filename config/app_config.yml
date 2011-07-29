@@ -1,6 +1,7 @@
 defaults: &defaults
   domain:
-    url: shopqi.com
+    host: shopqi.com
+    store_host: myshopqi.com # 如果使用同一域名，a.shopqi.com可以放置恶意代码，b用户一旦访问，a用户就可以获取到b用户的cookie登录信息
     port: 80
   templates:
     email:
@@ -70,7 +71,8 @@ defaults: &defaults
 development:
   <<: *defaults
   domain:
-    url: lvh.me
+    host: lvh.me
+    store_host: smackaho.st
     port: 4000
   alipay:
     key: 'bfqo39l0n876cwcmftanb1d2z3s1pnb6'

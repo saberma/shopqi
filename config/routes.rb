@@ -15,6 +15,7 @@ Shopqi::Application.routes.draw do
 
   devise_for :user, controllers: {registrations: "users/registrations"} do
     get "/services/signup/new/:plan", to: "users/registrations#new", as: :signup
+    get "/services/signup/check_availability", to: "users/registrations#check_availability"
     get "login", to: "devise/sessions#new"
   end
 
@@ -72,16 +73,16 @@ Shopqi::Application.routes.draw do
     match '/s/files/test/:id/theme/assets/:file.:format' => 'shops#asset' #测试中使用
   end
 
-  match "/admin" => "home#dashboard"
-  match "/admin/general_preferences" => "shops#edit"
-  match "/admin/notifications" => "emails#index"
-  match "/admin/notifications/subscribe" => "emails#follow"
-  match "/admin/notifications/:id/unsubscribe" => "emails#unfollow", as: 'unfollow'
-  match '/admin/lookup/query' => 'home#query', via: :get
-  match '/admin/support' => redirect('http://support.shopqi.com/'), as: 'support'
-
-
   scope "/admin" do
+
+    match "/" => "home#dashboard", as: :user_root # user_root_path为用户成功登录后的跳转地址
+    match "/general_preferences" => "shops#edit"
+    match "/notifications" => "emails#index"
+    match "/notifications/subscribe" => "emails#follow"
+    match "/notifications/:id/unsubscribe" => "emails#unfollow", as: 'unfollow'
+    match '/lookup/query' => 'home#query', via: :get
+    match '/support' => redirect('http://support.shopqi.com/'), as: 'support'
+
 
     resources :shops, only: [:edit,:update]
 

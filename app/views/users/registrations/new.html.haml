@@ -15,19 +15,21 @@
   #signup
     %form#shop_new.shop_new(action="#" method="post" onsubmit="return false")
       #info
+        #errorExplanation(style='display: none')
+          %h3 创建帐号时发生以下错误:
       #top-section.section
         %h3 给您的商店取个名字
         %p
           %input#shop_name(name="shop[name]" size="22" style="font-size: 20px; width: 400px" type="text")/
-        %label#subdomain-label(for="domain_subdomain") 您的ShopQi商店地址
+        %label#subdomain-label(for="domain_subdomain") 您的ShopQi商店Web地址
         #domain-field
           %label#protocol(for="domain_subdomain") http://
           %input#domain_subdomain.large(name="domain[subdomain]" size="22" type="text")/
           %span#spinner(style="display: none")=image_tag 'spinner.gif'
           %span(style="display: none")
             %select#domain_domain(name="domain[domain]")
-              %option(value=".myshopqi.com") .myshopqi.com
-          %span#myshopqi .myshopqi.com
+              %option(value="#{Setting.store_host}")=Setting.store_host
+          %span#myshopqi=Setting.store_host
           #preview-availability
             #ajax-notice(style="display:none;")
             %span#domain-available
@@ -82,7 +84,7 @@
         .multi-input.clearfix
           %span
             %label.inlined(for="shop_address") 地址
-            %input#shop_address1.input-text.large(name="shop[address]" size="20" type="text")
+            %input#shop_address.input-text.large(name="shop[address]" size="20" type="text")
           %span
             %label.inlined(for="shop_zip_code") 邮编
             %input#shop_zip_code.input-text.small(name="shop[zip_code]" size="16" type="text")/
@@ -120,6 +122,18 @@
   .pick.transparent
     %a.btn.preview(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="theme-group" title="{{{name}}}") 预览主题
     %a.btn.next(href="#" title="{{{name}}}") 选择此主题
+%script(id="available-item" type="text/x-jquery-tmpl")
+  {{#if available}}
+  %span.negative
+    抱歉，{{{domain}}} 已经
+    %strong 被使用了
+    \.
+  {{else}}
+  %span.positive
+    恭喜，{{{domain}}}
+    %strong 可以使用
+    \.
+  {{/if}}
 
 :javascript
   App.themes = new App.Collections.Themes(#{themes_json});

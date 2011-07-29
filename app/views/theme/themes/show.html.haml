@@ -22,7 +22,7 @@
       %p.download
         %a.standard-button.login(href="/themes/{{{name}}}/styles/{{{style}}}/download") 获取主题
         或者
-        %a(href="http://{{{shop}}}.myshopqi.com" target="_blank")
+        %a(href="http://{{{shop}}}#{Setting.store_host_with_port}" target="_blank")
           %span 查看示例 &rsaquo;
   %ul.theme-details
     %li
@@ -59,7 +59,7 @@
           %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
         {{#unless is_current}}
         %p.view-style-demo
-          %a(href="http://{{{shop}}}.myshopqi.com/" target="_blank") 查看示例  ›
+          %a(href="http://{{{shop}}}#{Setting.store_host_with_port}" target="_blank") 查看示例  ›
         {{/unless}}
       {{/each}}
 %script(id="more-designer-item" type="text/x-jquery-tmpl")
