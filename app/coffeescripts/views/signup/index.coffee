@@ -3,6 +3,7 @@ App.Views.Signup.Index = Backbone.View.extend
 
   events:
     "submit #shop_new": "save"
+    "click #check_phone": "get_verify_code"
 
   initialize: ->
     self = this
@@ -98,3 +99,17 @@ App.Views.Signup.Index = Backbone.View.extend
 
   get_domain: ->
     "#{$('#domain_subdomain').val()}#{$('#domain_domain').val()}"
+
+  get_verify_code: ->
+    phone = $('#user_phone').val()
+    if this.is_mobile phone
+      $('#user_phone_hint').hide()
+      $.post '/services/signup/verify_code', phone: phone, ->
+        $('#check_phone').attr('disabled', true).val('验证码已发送，请您检查手机短信.')
+    else
+      $('#user_phone_hint').hide().fadeIn()
+
+  is_mobile: (phone) ->
+    patten= /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/
+    return false if !patten.exec(phone)
+    true
