@@ -16,6 +16,7 @@ Shopqi::Application.routes.draw do
   devise_for :user, controllers: {registrations: "users/registrations"} do
     get "/services/signup/new/:plan", to: "users/registrations#new", as: :signup
     get "/services/signup/check_availability", to: "users/registrations#check_availability"
+    post "/services/signup/verify_code", to: "users/registrations#verify_code" # 获取手机校验码
     get "login", to: "devise/sessions#new"
   end
 

@@ -3,6 +3,7 @@ App.Views.Signup.Index = Backbone.View.extend
 
   events:
     "submit #shop_new": "save"
+    "click #check_phone": "get_verify_code"
 
   initialize: ->
     self = this
@@ -57,6 +58,7 @@ App.Views.Signup.Index = Backbone.View.extend
           errors['shop.domains.host'] = "商店Web地址已经存在" if data['shop.domains.host']?
           errors['email'] = "Email地址已经注册" if data.email?
           errors['password'] = "密码与确认密码需要保持一致，长度不能少于6个字符" if data.password?
+          errors['verify_code'] = "手机校验码不正确" if data.verify_code?
           self.message errors
           self.reset()
     else # 校验不通过
@@ -72,7 +74,7 @@ App.Views.Signup.Index = Backbone.View.extend
     _(check_list).each (msg, key) ->
       errors[key] = msg if $("##{key}").val() is ''
     if _.isEmpty errors
-      empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone']
+      empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone', 'phone_verify_code']
       _(empty_check_list).each (key) ->
         if $("##{key}").val() is ''
           text = switch $("##{key}").attr('type')
@@ -98,3 +100,25 @@ App.Views.Signup.Index = Backbone.View.extend
 
   get_domain: ->
     "#{$('#domain_subdomain').val()}#{$('#domain_domain').val()}"
+
+  get_verify_code: ->
+    phone = $('#user_phone').val()
+    if this.is_mobile phone
+      $('#check_phone').attr('disabled', true)
+      $('#user_phone_hint').hide()
+      $.post '/services/signup/verify_code', phone: phone, ->
+        i = 60
+        timerId = setInterval ->
+          if i is 0
+            clearInterval timerId
+            $('#check_phone').attr('disabled', false).val "获取验证码"
+          else
+            $('#check_phone').val "已发送,请检查短信(如未收到,#{i--}秒后可重新获取)"
+        , 1000
+    else
+      $('#user_phone_hint').hide().fadeIn()
+
+  is_mobile: (phone) ->
+    patten= /^[1]([3][0-9]{1}|59|58|88|89)[0-9]{8}$/
+    return false if !patten.exec(phone)
+    true
