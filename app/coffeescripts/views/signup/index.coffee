@@ -103,13 +103,21 @@ App.Views.Signup.Index = Backbone.View.extend
   get_verify_code: ->
     phone = $('#user_phone').val()
     if this.is_mobile phone
+      $('#check_phone').attr('disabled', true)
       $('#user_phone_hint').hide()
       $.post '/services/signup/verify_code', phone: phone, ->
-        $('#check_phone').attr('disabled', true).val('验证码已发送，请您检查手机短信.')
+        i = 60
+        timerId = setInterval ->
+          if i is 0
+            clearInterval timerId
+            $('#check_phone').attr('disabled', false).val "获取验证码"
+          else
+            $('#check_phone').val "已发送,请检查短信(如未收到,#{i--}秒后可重新获取)"
+        , 1000
     else
       $('#user_phone_hint').hide().fadeIn()
 
   is_mobile: (phone) ->
-    patten= /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/
+    patten= /^[1]([3][0-9]{1}|59|58|88|89)[0-9]{8}$/
     return false if !patten.exec(phone)
     true
