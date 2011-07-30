@@ -9,14 +9,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    build_resource
-
-    if resource.save
-      sign_in(resource_name, resource)
-      render json: {}
+    errors = {}
+    if params[:verify_code].to_i == session[:verify_code] # 手机校验码
+      build_resource
+      if resource.save
+        sign_in(resource_name, resource)
+      else
+       errors = resource.errors
+      end
     else
-      render json: resource.errors.to_json
+      errors = {verify_code: '手机校验码不正确'}
     end
+    render json: errors.to_json
   end
 
   def check_availability
@@ -34,7 +38,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         session[:verify_code] ||= Random.new.rand(1000..9999)
         config = YAML::load_file(Rails.root.join('config/sms.yml'))
         url = "http://#{config['smsapi']}/#{config['charset']}/interface/send_sms.aspx"
-        content = "您好!您的手机验证码为:#{session[:verify_code]}"
+        content = "您好!您的手机验证码为:#{session[:verify_code]} 【ShopQi电子商务平台】"
         res = Net::HTTP.post_form(URI.parse(url), username: config['username'], password: config['password'], receiver: receiver, content: content)
         res.body
       end

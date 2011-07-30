@@ -58,6 +58,7 @@ App.Views.Signup.Index = Backbone.View.extend
           errors['shop.domains.host'] = "商店Web地址已经存在" if data['shop.domains.host']?
           errors['email'] = "Email地址已经注册" if data.email?
           errors['password'] = "密码与确认密码需要保持一致，长度不能少于6个字符" if data.password?
+          errors['verify_code'] = "手机校验码不正确" if data.verify_code?
           self.message errors
           self.reset()
     else # 校验不通过
@@ -73,7 +74,7 @@ App.Views.Signup.Index = Backbone.View.extend
     _(check_list).each (msg, key) ->
       errors[key] = msg if $("##{key}").val() is ''
     if _.isEmpty errors
-      empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone']
+      empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone', 'phone_verify_code']
       _(empty_check_list).each (key) ->
         if $("##{key}").val() is ''
           text = switch $("##{key}").attr('type')
