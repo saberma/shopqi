@@ -31,4 +31,8 @@ class AccountController < ApplicationController
     render :text => payment.send(field)
   end
 
+  #用于用户升级账户
+  def change
+  end
+
 end

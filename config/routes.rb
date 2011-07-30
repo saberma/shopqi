@@ -84,6 +84,7 @@ Shopqi::Application.routes.draw do
     match '/support' => redirect('http://support.shopqi.com/'), as: 'support'
 
 
+
     resources :shops, only: [:edit,:update]
 
     scope "notifications" do

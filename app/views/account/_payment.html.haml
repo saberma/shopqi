@@ -1,10 +1,11 @@
 #payments.group.box2
+  %h3 请输入支付信息(若没有，则点击[申请])
   %table.data2#payment_type
     %tbody
       %tr
-        %th=tt('payment.number')
-        %th{:width => '100px'}=tt('payment.payment_type')
-        %th{:width => '30px'}=tt('payment.apply')
+        %th(width= '40px')=tt('payment.number')
+        %th(width= '100px')=tt('payment.payment_type')
+        %th(width= '30px')=tt('payment.apply')
         %th=tt('payment.account')
         %th=tt('payment.partner')
         %th=tt('payment.key')
