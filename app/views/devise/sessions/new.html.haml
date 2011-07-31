@@ -1,69 +1,25 @@
--unless Subdomain.matches?(request)
-  #banner
-    .content
-      %h1 登录
-  .content.subpage
-    .loginarea
-      .col-5{:style => "padding-top:25px;"}
-        =form_for(resource, :url => session_path(resource_name)) do |f|
-          =message_block :on => [:user,:shop]
-          -#%label{:for => "subdomain"} Shop Address
-          -#%input#subdomain.formnote{:name => "subdomain", :type => "text"}/
-          -#%span.formnote .shopqi.com
-          =f.label :email
-          =f.text_field :email,:id => "login"
-          =f.label :password
-          =f.password_field :password,:id => "password",:class => 'formnote'
-          / <span class="formnote"><a href="">Forgot?</a></span>
-          %input{:name => "name", :onclick => "this.form.submit();", :src => "/images/buttons/btn-login-grey.gif", :type => "image", :value => "log in"}/
-      / .col-5
-      .col-5.secondcol.last{:style => "padding-top:25px;padding-bottom:25px"}
-        %h3 其他登录方式
-        %p
-          您也可以将
-          %code /admin
-          加到您的 shopqi.com 地址后面进行登录
-        %p
-          %em.light
-            如果您的商店地址是
-            %code http://examplestore.shopqi.com
-            = succeed "则" do
-              %br/
-            您的后台管理地址会是
-            %br/
-            %code http://examplestore.shopqi.com/admin
-        %p 如果您不记得您的商店名称，你可以在注册时我们发送给您的欢迎邮件中找到它
-        %h3 还没有帐号?
-        =link_to new_registration_path(resource_name) do
-          %img{:src => "/images/buttons/btn-signupnow.gif"}
-      / .col-5
-    / .col-8
-  / content
-  %div{:style => "margin-top: 30px;"}
-  #push
--else
-  #container
-    #dialog
-      .ssb.c
-        %img{:alt => "Shopqi-logo-new", :src => "/images/logos/shopqi-logo-new.jpg"}
-      =form_for(resource, :url => session_path(resource_name)) do |f|
-        #sign-in-form.lform
-          %noscript
-            %p
-              请留意:为了使用Shopqi后台管理，您需要
-              = succeed "." do
-                =render :partial => "shared/noscript"
-          #login
-            .ppb.clearfix
-              =f.label :email,:id => "email_address"
-              =f.text_field :email,:id => "login-input",:size => 30,:class => "email"
-            .ppb.clearfix
-              =f.label :password,:id => "password_label"
-              =f.password_field :password,:id => "password",:class => 'formnote',:size => 16
-              #forgot-password
-                =link_to  "忘记密码?", new_password_path(resource_name)
-            .ppb.c
-              =check_box_tag :remember_me, 1, false, :id => :remember_checkbox
-              = f.label :remember_me, :class => 'normal'
-          .actions
-            %input.btn{:name => "commit", :type => "submit", :value => "登录"}/
+#container
+  #dialog
+    .ssb.c
+      %img{:alt => "Shopqi-logo-new", :src => "/images/logos/shopqi-logo-new.jpg"}
+    =form_for(resource, :url => session_path(resource_name)) do |f|
+      #sign-in-form.lform
+        %noscript
+          %p
+            请留意:为了使用Shopqi后台管理，您需要
+            = succeed "." do
+              =render :partial => "shared/noscript"
+        #login
+          .ppb.clearfix
+            =f.label :email,:id => "email_address"
+            =f.text_field :email,:id => "login-input",:size => 30,:class => "email"
+          .ppb.clearfix
+            =f.label :password,:id => "password_label"
+            =f.password_field :password,:id => "password",:class => 'formnote',:size => 16
+            #forgot-password
+              =link_to  "忘记密码?", new_password_path(resource_name)
+          .ppb.c
+            =check_box_tag :remember_me, 1, false, :id => :remember_checkbox
+            = f.label :remember_me, :class => 'normal'
+        .actions
+          %input.btn{:name => "commit", :type => "submit", :value => "登录"}/

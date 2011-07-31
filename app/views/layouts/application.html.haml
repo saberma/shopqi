@@ -1,4 +1,4 @@
--unless Subdomain.matches?(request)
+-unless Domain::Store.matches?(request)
   !!!
   %html{:lang => "en", :style => "zoom: 100%; ", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
     %head

@@ -1,5 +1,5 @@
 #encoding: utf-8
-class Users::RegistrationsController < Devise::RegistrationsController
+class Shopqi::RegistrationsController < Devise::RegistrationsController
   layout 'shopqi'
 
   expose(:themes_json) do
