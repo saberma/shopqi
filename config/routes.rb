@@ -235,18 +235,13 @@ Shopqi::Application.routes.draw do
     get '/login'          , to: 'home#login'
     scope "/services/signup" do
       get '/'                  , to: 'home#signup'                               , as: :services_signup
-      get "/new/:plan"         , to: "registrations#new"                         , as: :signup
       get "/check_availability", to: "registrations#check_availability"
       post "/user"             , to: "registrations#create"
       post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
+      devise_scope :user do
+        get "/new/:plan"       , to: "registrations#new"                         , as: :signup
+      end
     end
-
-    # 没有使用edit, cancel, update, destroy，也许devise日后可以在route中定制删除这几个action
-    #devise_for :user, skip: [:sessions, :password], controllers: {registrations: "shopqi/registrations"} do
-    #  get "/services/signup/new/:plan"         , to: "registrations#new"                         , as: :signup
-    #  get "/services/signup/check_availability", to: "registrations#check_availability"
-    #  post "/services/signup/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
-    #end
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]

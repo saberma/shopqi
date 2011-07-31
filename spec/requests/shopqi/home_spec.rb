@@ -7,7 +7,7 @@ describe "Shopqi::Home", js: true do
 
     it "should be show" do
       visit '/'
-      has_content?('华丽的界').should be_true
+      has_content?('华丽的界面').should be_true
     end
 
   end
@@ -47,6 +47,15 @@ describe "Shopqi::Home", js: true do
     it "should show features" do
       click_on '特色列表'
       has_content?('ShopQi特色列表').should be_true
+    end
+
+  end
+
+  describe "GET /signup" do # 价格方案
+
+    it "should be show" do
+      visit '/signup'
+      has_content?('价格(元)').should be_true
     end
 
   end

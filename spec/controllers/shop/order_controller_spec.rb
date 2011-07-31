@@ -18,7 +18,6 @@ describe Shop::OrderController do
     o
   end
 
-
   let(:billing_address_attributes) { {name: 'ma', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
 
   context '#address' do
