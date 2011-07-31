@@ -53,7 +53,7 @@ Shopqi::Application.routes.draw do
 
   constraints(Domain::Store) do
 
-    devise_for :user, skip: :registrations # 登录
+    devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
 
     scope module: :shop do # 前台商店
       match '/'                            , to: 'shops#show'
