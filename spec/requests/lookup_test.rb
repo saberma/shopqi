@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'shared_stuff'
 
 describe "lookup" do
-  include_context 'login liwh'
+  include_context 'login admin'
 
   describe "search product,article,page,blog" do
     context '#query' do

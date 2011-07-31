@@ -1,25 +1,25 @@
 #container
   #dialog
     .ssb.c
-      %img{:alt => "Shopqi-logo-new", :src => "/images/logos/shopqi-logo-new.jpg"}
-    =form_for(resource, :url => session_path(resource_name)) do |f|
+      %img(alt="Shopqi-logo-new" src="/images/logos/shopqi-logo-new.jpg")
+    =form_for(resource, url: session_path(resource_name)) do |f|
       #sign-in-form.lform
         %noscript
           %p
             请留意:为了使用Shopqi后台管理，您需要
-            = succeed "." do
-              =render :partial => "shared/noscript"
+            =succeed "." do
+              =render partial="shared/noscript"
         #login
           .ppb.clearfix
-            =f.label :email,:id => "email_address"
-            =f.text_field :email,:id => "login-input",:size => 30,:class => "email"
+            =f.label :email, id: "email_address"
+            =f.text_field :email, id: "login-input", size: 30, class: :email
           .ppb.clearfix
-            =f.label :password,:id => "password_label"
-            =f.password_field :password,:id => "password",:class => 'formnote',:size => 16
+            =f.label :password, id: :password_label
+            =f.password_field :password, id: "password", class: :formnote, size: 16
             #forgot-password
-              =link_to  "忘记密码?", new_password_path(resource_name)
+              =link_to "忘记密码?", new_password_path(resource_name)
           .ppb.c
-            =check_box_tag :remember_me, 1, false, :id => :remember_checkbox
-            = f.label :remember_me, :class => 'normal'
+            =check_box_tag :remember_me, 1, false, id: :remember_checkbox
+            =f.label :remember_me, class: :normal
         .actions
-          %input.btn{:name => "commit", :type => "submit", :value => "登录"}/
+          %input.btn(name="commit" type="submit" value="登录")

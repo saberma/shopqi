@@ -18,7 +18,7 @@
         %label(for="password") 密码
         %input#password.formnote(name="user[password]" type="password" value="")/
         / <span class="formnote"><a href="">Forgot?</a></span>
-        =image_submit_tag 'buttons/btn-login-grey.gif', onclick: "this.form.action='http://'+$('#subdomain').val()+'#{Setting.store_host_with_port}/user/sign_in';this.form.submit(); return false;"
+        =image_submit_tag 'buttons/btn-login-grey.gif', value: 'log in', onclick: "this.form.action='http://'+$('#subdomain').val()+'#{Setting.store_host_with_port}/user/sign_in';this.form.submit(); return false;"
     / .col-5
     .col-5.secondcol.last(style="padding-top:25px;padding-bottom:25px")
       %h3 其他方式登录

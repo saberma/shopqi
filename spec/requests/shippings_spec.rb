@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'shared_stuff'
 
 describe "Shippings" do
-  include_context 'login liwh'
+  include_context 'login admin'
   describe "GET /admin/shipping/index" do
     it "works! ", js: true do
       visit shipping_index_path

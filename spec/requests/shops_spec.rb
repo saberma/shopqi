@@ -4,7 +4,7 @@ require 'shared_stuff'
 
 describe "Shops" do
 
-  include_context 'login liwh'
+  include_context 'login admin'
 
   #设置的集成测试
   describe "GET /admin/general_preferences" do
