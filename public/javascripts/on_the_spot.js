@@ -28,8 +28,9 @@ function initializeOnTheSpot(n){
     var options = {
         tooltip: tooltip_text,
         placeholder: tooltip_text,
-        cancel: cancel_text,
-        submit: ok_text,
+        //cancel: cancel_text,
+        //submit: ok_text,
+        onblur: 'submit',
         select: selected,
         onerror: function (settings, original, xhr) {
             original.reset();
@@ -40,7 +41,7 @@ function initializeOnTheSpot(n){
           authenticity_token: auth_token,
           _method: 'put'
         },
-        callback: new Function("value", "settings", "return "+callback+"(this, value, settings);")
+        //callback: new Function("value", "settings", "return "+callback+"(this, value, settings);")
     };
     if (edit_type != null) {
         options.type = edit_type;

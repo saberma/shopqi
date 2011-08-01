@@ -1,9 +1,12 @@
 -use_javascripts 'controllers/users'
+=javascript_include_tag :on_the_spot
 %h2#title 你的帐户信息
 #action-links
   %ul
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
+=render partial:'plans'
+=render partial:'payment'
 .group.box2
   %table#account-about.values-aligned{:cellspacing => "0"}
     %tr

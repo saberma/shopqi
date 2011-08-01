@@ -13,6 +13,7 @@ cn:
       page: 页面
       order: 订单
       subscribe: 订阅信息
+      payment: 支付信息
     attributes:
       user:
         name: 姓名
@@ -28,6 +29,15 @@ cn:
       weight_based_shipping_rate:
         name: 名称
         price: 运费
+      payment:
+        partner: 合作者身份ID
+        payment_type: 支付类型
+        remark: 备注
+        key: 交易安全校验码
+        account: 账号
+        number: 序号
+        apply: 申请
+
       price_based_shipping_rate:
         name: 名称
         price: 运费
@@ -322,3 +332,4 @@ cn:
     or: 或者
     published: 发布
     hidden: 隐藏
+    upgrade: 升级

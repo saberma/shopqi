@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110722100518) do
+ActiveRecord::Schema.define(:version => 20110728024129) do
 
   create_table "activities", :force => true do |t|
     t.string   "operate"
@@ -386,6 +386,17 @@ ActiveRecord::Schema.define(:version => 20110722100518) do
 
   add_index "pages", ["delta"], :name => "index_pages_on_delta"
   add_index "pages", ["shop_id"], :name => "index_pages_on_shop_id"
+
+  create_table "payments", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "partner"
+    t.integer  "payment_type_id"
+    t.string   "key"
+    t.string   "account"
+    t.text     "remark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "photos", :force => true do |t|
     t.integer  "product_id"
