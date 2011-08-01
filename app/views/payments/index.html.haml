@@ -93,10 +93,6 @@
           %dd#activate_manual_payment_gateway_1179792{:style => "padding: 10px 10px 5px 10px"}
             .fr
               %form.button_to{:action => "/admin/payments/1179792", :method => "post"}
-                %div
-                  %input{:name => "_method", :type => "hidden", :value => "delete"}/
-                  %input.btn{"data-confirm" => "Are you sure?", :type => "submit", :value => "Deactivate"}/
-                  %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
             Using method:
             %strong Money Order
             %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179792').show();$('activate_manual_payment_gateway_1179792').hide(); return false;"} edit
@@ -361,4 +357,3 @@
     $('#cancel').click ->
       $('#account_payment_provider').toggle()
       $('#activate_payment_provider').toggle()
-

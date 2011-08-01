@@ -1,8 +1,8 @@
 defaults: &defaults
   domain:
-    host: shopqi.com
-    store_host: myshopqi.com # 如果使用同一域名，a.shopqi.com可以放置恶意代码，b用户一旦访问，a用户就可以获取到b用户的cookie登录信息
-    port: 80
+    host: lvh.me
+    store_host: smackaho.st
+    port: 4000
   templates:
     email:
       order_confirm:
@@ -80,6 +80,10 @@ test:
 
 production:
   <<: *defaults
+  domain:
+    host: shopqi.com
+    store_host: myshopqi.com # 如果使用同一域名，a.shopqi.com可以放置恶意代码，b用户一旦访问，a用户就可以获取到b用户的cookie登录信息
+    port: 80
 
 travis:
   <<: *defaults

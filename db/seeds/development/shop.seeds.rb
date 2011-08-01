@@ -3,21 +3,36 @@
 
 Shop.destroy_all
 
+domain = Setting.store_host
 shopqi = User.create!(
-  shop_attributes: { name:"shopqi", domains_attributes: [{subdomain: 'shopqi', domain: ".myshopqi.com"}] },
+  shop_attributes: {
+    name:"shopqi",
+    domains_attributes: [{subdomain: 'shopqi', domain: domain}],
+    theme_attributes: { theme_id: Theme.default.id }
+  },
   email: "admin@shopqi.com",
   password: "666666",
   name: "admin"
 )
 
 saberma = User.create!(
-  shop_attributes: { name: "商城", domains_attributes: [{subdomain: 'saberma', domain: ".myshopqi.com"}] },
+  shop_attributes: {
+    name: "商城",
+    domains_attributes: [{subdomain: 'saberma', domain: domain}],
+    theme_attributes: { theme_id: Theme.default.id }
+  },
   email: "mahb45@gmail.com",
   password: "666666",
   name: "saberma"
 )
 
 liwh= User.create!(
-  shop_attributes: { name: "鞋子", domains_attributes: [{subdomain: 'liwh', domain: ".myshopqi.com"}] },
-  email: "liwh87@gmail.com", password: "666666", name: "liwh"
+  shop_attributes: {
+    name: "鞋子",
+    domains_attributes: [{subdomain: 'liwh', domain: domain}],
+    theme_attributes: { theme_id: Theme.default.id }
+  },
+  email: "liwh87@gmail.com",
+  password: "666666",
+  name: "liwh"
 )

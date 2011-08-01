@@ -6,7 +6,7 @@ module ApplicationHelper
     if current_user
       current_user.shop
     else
-      ShopDomain.shop(request.domain)
+      Shop.at(request.host)
     end
   end
 

@@ -30,8 +30,7 @@ class Shop < ActiveRecord::Base
   has_many :payments              , dependent: :destroy
   has_many :policies              , dependent: :destroy                     ,  class_name: 'ShopPolicy'
 
-  accepts_nested_attributes_for :domains
-  accepts_nested_attributes_for :policies
+  accepts_nested_attributes_for :domains, :theme, :policies
   attr_readonly :orders_count
   validates_presence_of :name
 

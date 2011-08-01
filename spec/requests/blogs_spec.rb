@@ -4,7 +4,7 @@ require 'shared_stuff'
 
 describe "Blogs" do
 
-  include_context 'login liwh'
+  include_context 'login admin'
 
   describe "GET /admin/blogs" do
 

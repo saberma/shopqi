@@ -1,99 +1,12 @@
--unless Subdomain.matches?(request)
-  !!!
-  %html{:lang => "en", :style => "zoom: 100%; ", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
-    %head
-      %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-      %meta{:content => "", :name => "keywords"}/
-      %meta{:content => "", :name => "description"}/
-      %title ShopQi — 注册
-      = stylesheet_link_tag "master","message_block"
-      = javascript_include_tag 'jquery','rails.validations'
-      = csrf_meta_tag
-      /[if IE 6]
-        = stylesheet_link_tag "ie6"
-      /[if IE 7]
-        = stylesheet_link_tag "ie7"
-      /[if IE]
-        = stylesheet_link_tag "ie-signup"
-    %body
-      #wrapper
-        #masthead
-          .content
-            %a.logo-shopqi{:href => "http://www.shopqi.com/"} ShopQi
-            %ul#nav-primary
-              %li
-                %a{:href => "http://www.shopqi.com/tour/"} 功能演示
-              %li
-                %a{:href => "http://www.shopqi.com/examples/"} 成功案例
-              %li
-                %a{:href => "http://www.shopqi.com/faq/"} 常见问题
-              %li.current
-                %a{:href => "/signup"} 价格 &amp; 注册
-              %li.sub-nav
-                %ul.utilities
-                  %li.megadropdown
-                    %a{:href => "https://www.shopqi.com/services/signup/new/basic#"} 资源
-                    %ul
-                      %li
-                        %a{:href => "http://support.myshopqi.com/", :title => "Welcome - ShopQi Support"}
-                          %strong> 支持
-                          联系ShopQi
-                      %li
-                        %a{:href => "http://wiki.shopqi.com/", :title => "Main Page - ShopQi Wiki"}
-                          %strong> 文档
-                          学习ShopQi相关文档
-                      %li
-                        %a{:href => "http://forums.shopqi.com/", :title => "ShopQi Community"}
-                          %strong> 论坛
-                          ShopQi社区
-                      %li
-                        %a{:href => "http://apps.shopqi.com/", :title => "ShopQi Application Store"}
-                          %strong> 应用
-                          选择商店应用程序
-                      %li
-                        %a{:href => "http://themes.shopqi.com/", :title => "ShopQi Theme Store"}
-                          %strong> 外观
-                          选择商店外观
-                  %li.last
-                    %a{:href => "/login"} 登录
-        =yield
-      #footer
-        #footer-wrapper
-          .content
-            .col-3
-              %h3 功能
-              %ul
-                %li
-                  %a{:href => "#"} 概览
-            .col-3
-              %h3 资源
-              %ul
-                %li
-                  %a{:href => "#"} ShopQi百科
-            .col-3
-              %h3 ShopQi
-              %ul
-                %li
-                  %a{:href => "http://blog.shopqi.com/"} 博客
-            .col-3.contact-us.last
-              %h3 联系我们
-              %ul
-                %li
-                  %img{:alt => "Phone16", :height => "12", :src => "/images/admin/icons/phone16.gif", :width => "12"}/
-                  0755-26748888
-          #copyright.center.clear
-            %p © 2011-2011 ShopQi Inc. | ShopQi - 独立网店平台.
-            %p *ShopQi is a registered trademark of ShopQi Inc.
--else
-  !!!
-  %html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
-    %head
-      %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "content-type"}/
-      = stylesheet_link_tag "dialog","message_block"
-      = javascript_include_tag 'jquery','rails.validations'
-      = csrf_meta_tag
-      /[if IE 6]
-        = stylesheet_link_tag "ie6"
-    %body
-      =yield
-      #footer
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "content-type"}/
+    = stylesheet_link_tag "dialog","message_block"
+    = javascript_include_tag 'jquery','rails.validations'
+    = csrf_meta_tag
+    /[if IE 6]
+      = stylesheet_link_tag "ie6"
+  %body
+    =yield
+    #footer

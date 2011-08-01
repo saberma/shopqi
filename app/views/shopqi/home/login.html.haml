@@ -1,0 +1,43 @@
+=content_for :javascripts do
+  = javascript_include_tag 'jquery.min'
+  
+#banner
+  .content
+    %h1 登录
+  / .content
+/ #banner
+.content.subpage
+  .loginarea
+    .col-5(style="padding-top:25px;")
+      %form(method="post")
+        %label(for="subdomain") 商店Web地址
+        %input#subdomain.formnote(name="subdomain" type="text")/
+        %span.formnote=Setting.store_host
+        %label(for="login") Email
+        %input#login(name="user[email]" type="text")/
+        %label(for="password") 密码
+        %input#password.formnote(name="user[password]" type="password" value="")/
+        / <span class="formnote"><a href="">Forgot?</a></span>
+        =image_submit_tag 'buttons/btn-login-grey.gif', value: 'log in', onclick: "this.form.action='http://'+$('#subdomain').val()+'#{Setting.store_host_with_port}/user/sign_in';this.form.submit(); return false;"
+    / .col-5
+    .col-5.secondcol.last(style="padding-top:25px;padding-bottom:25px")
+      %h3 其他方式登录
+      %p
+        您也可以增加
+        %code /admin
+        ==到您的 #{Setting.store_host} 商店地址.
+      %p
+        %em.light
+          如果您的商店地址是
+          %code==http://examplestore#{Setting.store_host}
+          %br/
+          则您的 后台管理 地址为
+          %br/
+          %code http://examplestore#{Setting.store_host}/admin
+      %p 如果您不记得商店地址，您可以在注册时我们发送给您的欢迎邮件中找到它.
+      %h3 还没有帐号?
+      =link_to image_tag('buttons/btn-signupnow.gif'), services_signup_path
+    / .col-5
+  / .col-8
+/ content
+.no-signup-page(style="margin-top: 30px;")

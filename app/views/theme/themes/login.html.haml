@@ -4,7 +4,7 @@
       %label(for="shop")
         %strong 输入您的商店URL地址
         %br/
-        %span.hint==(例如: example.#{Setting.store_host_with_port} 或者 example.com)
+        %span.hint==(例如: example#{Setting.store_host} 或者 example.com)
     %p.clearfix
       %input#shop(name="shop_url" size="35" type="text" value="")
       %input.standard-button(name="commit" style="float:left" type="submit" value="登录")

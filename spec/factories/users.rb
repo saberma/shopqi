@@ -3,7 +3,11 @@
 
 Factory.define :user do |u|
   u.email 'admin@shopqi.com'
-  u.shop_attributes({name: '测试商店', domains_attributes: [{subdomain: 'shop', domain: ".myshopqi.com"}]})
+  u.shop_attributes({
+    name: '测试商店',
+    domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}],
+    theme_attributes: { theme_id: Theme.default.id }
+  })
   u.password '666666'
   u.password_confirmation '666666'
 end

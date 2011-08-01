@@ -52,7 +52,7 @@
         %ul#more-themes.themes.clearfix(style="display: none")
           %li#themestore.theme
             =link_to image_tag('themes/themestore.jpg', style: "width: 198px; height: 254px; z-index: 2"), Setting.theme_store_url
-        %input#selected-theme(name="theme" type="hidden" value="")/
+        %input#selected-theme(name="shop[theme_attributes][theme_id]" type="hidden" value="")/
         %a#show-more-themes.box.clear(href="#") 显示更多主题
       .section
         %h3(style="margin-bottom: 24px") 关于您
@@ -144,4 +144,5 @@
 
 :javascript
   App.themes = new App.Collections.Themes(#{themes_json});
+  App.redirect_url = '#{Setting.store_host_with_port}/admin' //注册成功跳转
   new App.Views.Signup.Index({collection: App.themes});

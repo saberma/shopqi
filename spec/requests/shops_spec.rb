@@ -4,12 +4,12 @@ require 'shared_stuff'
 
 describe "Shops" do
 
-  include_context 'login liwh'
+  include_context 'login admin'
 
   #设置的集成测试
   describe "GET /admin/general_preferences" do
     it "works!",js:true do
-      visit admin_general_preferences_path
+      visit general_preferences_path
       fill_in 'shop[name]', with: '小商品店'
       fill_in 'shop[email]', with: 'liwh88@gmail.com'
       fill_in 'shop[address]', with: '世界之窗'

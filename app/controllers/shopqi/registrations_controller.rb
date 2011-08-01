@@ -1,5 +1,5 @@
 #encoding: utf-8
-class Users::RegistrationsController < Devise::RegistrationsController
+class Shopqi::RegistrationsController < Devise::RegistrationsController
   layout 'shopqi'
 
   expose(:themes_json) do
@@ -9,18 +9,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    errors = {}
+    data = {errors: {}}
     if params[:verify_code].to_i == session[:verify_code] # 手机校验码
+      session[:verify_code] = nil
       build_resource
       if resource.save
-        sign_in(resource_name, resource)
+        data[:token] = resource.authentication_token
       else
-       errors = resource.errors
+        data[:errors] = resource.errors
       end
     else
-      errors = {verify_code: '手机校验码不正确'}
+      data[:errors] = {verify_code: '手机校验码不正确'}
     end
-    render json: errors.to_json
+    render json: data.to_json
   end
 
   def check_availability
