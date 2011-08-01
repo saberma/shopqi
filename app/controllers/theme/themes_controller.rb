@@ -45,7 +45,7 @@ class Theme::ThemesController < Theme::AppController
       access_token = OAuth2::AccessToken.new(client, token)
       result = JSON(access_token.get('/api/me'))
       if result['error'].blank?
-        session[:shop] = result['permanent_domain']
+        session[:shop] = result['name']
       end
       redirect_to theme_download_path(name: name, style: style)
     end
@@ -100,7 +100,7 @@ class Theme::ThemesController < Theme::AppController
   end
 
   def token
-    shop = ShopDomain.shop(shop_host)
+    shop = Shop.at(shop_host)
     consumer = OAuth2::Model::ConsumerToken.where(shop: shop, client_id: Theme.client_id).first
     consumer.access_token
   end

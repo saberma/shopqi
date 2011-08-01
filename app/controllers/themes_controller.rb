@@ -13,7 +13,7 @@ class ThemesController < ApplicationController
       authorization = OAuth2::Provider.access_token(nil, [], request)
       if authorization.valid?
         shop = authorization.owner
-        theme = Theme.find_by_name name
+        theme = Theme.find_by_name params[:name]
         shop.theme.switch theme
       end
       render nothing: true

@@ -611,8 +611,8 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["shop_id", "email"], :name => "index_users_on_shop_id_and_email", :unique => true
   add_index "users", ["shop_id"], :name => "index_users_on_shop_id"
 
   create_table "weight_based_shipping_rates", :force => true do |t|
