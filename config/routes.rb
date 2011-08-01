@@ -234,12 +234,12 @@ Shopqi::Application.routes.draw do
     get '/signup'         , to: redirect('/services/signup')
     get '/login'          , to: 'home#login'
     scope "/services/signup" do
-      get '/'                  , to: 'home#signup'                               , as: :services_signup
-      get "/check_availability", to: "registrations#check_availability"
-      post "/user"             , to: "registrations#create"
-      post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
+      get '/'                    , to: 'home#signup'                               , as: :services_signup
       devise_scope :user do
-        get "/new/:plan"       , to: "registrations#new"                         , as: :signup
+        get "/new/:plan"         , to: "registrations#new"                         , as: :signup
+        get "/check_availability", to: "registrations#check_availability"
+        post "/user"             , to: "registrations#create"
+        post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
       end
     end
   end

@@ -104,7 +104,7 @@ App.Views.Signup.Index = Backbone.View.extend
   get_verify_code: ->
     phone = $('#user_phone').val()
     if this.is_mobile phone
-      $('#check_phone').attr('disabled', true)
+      $('#check_phone').attr('disabled', true).val "正在发送，请稍候..."
       $('#user_phone_hint').hide()
       $.post '/services/signup/verify_code', phone: phone, ->
         i = 60

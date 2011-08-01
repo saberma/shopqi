@@ -1,0 +1,8 @@
+不使用application.html.haml layout
+
+各个layout使用场景:
+
+# shopqi: 官网
+# admin: 后台管理
+# theme: 主题商店
+# shop/checkout: 前台商店支付页面
