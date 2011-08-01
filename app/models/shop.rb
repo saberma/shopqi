@@ -29,7 +29,7 @@ class Shop < ActiveRecord::Base
   has_many :activities            , dependent: :destroy                     , order: 'created_at desc'
   has_many :payments              , dependent: :destroy
 
-  accepts_nested_attributes_for :domains
+  accepts_nested_attributes_for :domains, :theme
   attr_readonly :orders_count
   validates_presence_of :name
 

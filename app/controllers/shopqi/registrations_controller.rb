@@ -11,6 +11,7 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
   def create
     errors = {}
     if params[:verify_code].to_i == session[:verify_code] # 手机校验码
+      session[:verify_code] = nil
       build_resource
       if resource.save
         sign_in(resource_name, resource)

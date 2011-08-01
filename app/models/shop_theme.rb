@@ -30,7 +30,6 @@ class ShopThemeSetting < ActiveRecord::Base
         settings['current'] = data
       else
         settings['current'] = preset
-        #settings['presets'][preset] = data #NoMethodError (undefined method `merge' for #<JSON::Ext::Generator::State:)
         settings['presets'][preset] = data
       end
       save_settings data
@@ -145,7 +144,7 @@ class ShopTheme < ActiveRecord::Base
   begin #相对路径
     def files_relative_path # s/files/1/theme
       test = %w(test travis).include?(Rails.env) ? Rails.env : '' #测试目录与其他环境分开,不干扰
-      File.join 's', 'files', test, self.shop.id.to_s, 'theme'
+      File.join 's', 'files', test, self.shop_id.to_s, 'theme'
     end
 
     def asset_relative_path(asset) # s/files/1/theme/assets/theme.liquid

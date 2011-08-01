@@ -50,9 +50,9 @@ App.Views.Signup.Index = Backbone.View.extend
         result[name] = obj.value
         result
       , {}
-      $.post '/user', attrs, (data) ->
+      $.post '/services/signup/user', attrs, (data) ->
         if _.isEmpty data
-          window.location = '/admin'
+          window.location = "http://#{$('#domain_subdomain').val()}#{App.redirect_url}"
         else # 有错误
           errors = {}
           errors['shop.domains.host'] = "商店Web地址已经存在" if data['shop.domains.host']?
