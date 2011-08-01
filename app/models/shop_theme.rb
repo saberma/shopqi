@@ -124,7 +124,7 @@ class ShopTheme < ActiveRecord::Base
 
   before_validation do
     # 初始化主题设置
-    self.load_preset = config_settings['current']
+    self.load_preset ||= config_settings['current']
   end
 
   after_save do
@@ -132,15 +132,14 @@ class ShopTheme < ActiveRecord::Base
     repo = Grit::Repo.init public_path # 初始化为git repo
     FileUtils.cp_r "#{app_path}/.", public_path
     commit repo, '1'
-    config_settings['presets'].each_pair do |preset, values|
-      values.each_pair do |name, value|
-        self.settings.create name: name, value: value
-      end
+    self.settings.clear
+    config_settings['presets'][self.load_preset].each_pair do |name, value|
+      self.settings.create name: name, value: value
     end
   end
 
-  def switch(new_theme) # 切换主题
-    self.update_attribute :theme, new_theme
+  def switch(new_theme, style = nil) # 切换主题
+    self.update_attributes theme: new_theme, load_preset: style
   end
 
   begin #相对路径
