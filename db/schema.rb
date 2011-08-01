@@ -607,10 +607,12 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
     t.boolean  "receive_announcements",                :default => true
     t.integer  "shop_id"
     t.boolean  "admin",                                :default => true
+    t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["shop_id", "email"], :name => "index_users_on_shop_id_and_email", :unique => true
   add_index "users", ["shop_id"], :name => "index_users_on_shop_id"

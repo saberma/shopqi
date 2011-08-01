@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
   include Gravtastic
   gravtastic
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  # :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable, :token_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
@@ -13,9 +13,14 @@ class User < ActiveRecord::Base
   belongs_to :shop
   has_many :articles, dependent: :destroy
   accepts_nested_attributes_for :shop
+  before_create :ensure_authentication_token # 生成login token，只使用一次
 
   def is_admin?
     admin
+  end
+
+  def after_token_authentication # 登录后取消token
+    self.authentication_token = nil
   end
 
   after_create do
