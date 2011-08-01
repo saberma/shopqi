@@ -8,6 +8,7 @@ class CreatePayments < ActiveRecord::Migration
       t.string     :key                , comment: "交易安全校验码"
       t.string     :account            , comment: "账号"
       t.text       :remark             , comment: '备注'
+      t.boolean    :enabled            , default: true  , comment: '是否使用此支付网关'
 
       t.timestamps
     end

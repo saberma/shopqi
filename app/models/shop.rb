@@ -28,8 +28,10 @@ class Shop < ActiveRecord::Base
   has_many :countries             , dependent: :destroy
   has_many :activities            , dependent: :destroy                     , order: 'created_at desc'
   has_many :payments              , dependent: :destroy
+  has_many :policies              , dependent: :destroy                     ,  class_name: 'ShopPolicy'
 
   accepts_nested_attributes_for :domains
+  accepts_nested_attributes_for :policies
   attr_readonly :orders_count
   validates_presence_of :name
 
@@ -87,5 +89,9 @@ class ShopProductType < ActiveRecord::Base #商品类型
 end
 
 class ShopProductVendor < ActiveRecord::Base #商品厂商
+  belongs_to :shop
+end
+
+class ShopPolicy< ActiveRecord::Base #商店政策
   belongs_to :shop
 end

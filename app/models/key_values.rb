@@ -32,6 +32,13 @@ module KeyValues
 
   end
 
+  class PolicyType < KeyValues::Base
+    self.data = [
+      {id: 1, name: '退款政策'},
+      {id: 2, name: '隐私政策'},
+      {id: 3, name: '服务条款'}
+    ]
+  end
 
   # 是否发布
   class PublishState < KeyValues::Base

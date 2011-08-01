@@ -122,6 +122,8 @@ Shopqi::Application.routes.draw do
       resources :transactions
     end
 
+    resources :payments
+
     resources :customers, except: :edit do
       collection do
         get :search
