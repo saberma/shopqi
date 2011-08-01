@@ -39,6 +39,7 @@ describe "Shopqi::Registrations", js: true do
         check 'shop_terms_and_conditions' # 服务条款
         click_on '创建我的ShopQi商店'
         find('#shop_submit')['disabled'].should be_true
+        has_content?('最新的活动记录').should be_true
       end
 
     end

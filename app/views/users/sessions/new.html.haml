@@ -1,7 +1,9 @@
 #container
   #dialog
-    .ssb.c
-      %img(alt="Shopqi-logo-new" src="/images/logos/shopqi-logo-new.jpg")
+    -if flash[:alert]
+      #system_error.status.system-error
+        %p=flash[:alert]
+    .ssb.c=image_tag 'logos/shopqi-logo-new.jpg'
     =form_for(resource, url: session_path(resource_name)) do |f|
       #sign-in-form.lform
         %noscript
