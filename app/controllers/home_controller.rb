@@ -1,7 +1,7 @@
 #encoding: utf-8
 class HomeController < ApplicationController
   include HomeHelper
-  prepend_before_filter :authenticate_user! ,:only => [:dashboard]
+  prepend_before_filter :authenticate_user! ,:only => [:dashboard, :query]
   layout 'admin', only: [:dashboard,:query]
 
   expose(:shop) { current_user.shop }
@@ -60,6 +60,9 @@ class HomeController < ApplicationController
 
   # 网店管理首页
   def dashboard
+    if params[:guide]
+      render :guide
+    end
   end
 
   def query

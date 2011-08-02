@@ -53,6 +53,7 @@ public/javascripts/collections
 public/javascripts/views
 public/javascripts/models
 public/javascripts/controllers
+public/javascripts/plugins
 public/javascripts/*application.js
 
 #主题
