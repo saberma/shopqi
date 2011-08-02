@@ -68,7 +68,7 @@ Released: Tue 2nd Aug, 2011 - 00:00
     @buildElement content
     @attach element, position
     animate && animate.call(this)
-    $(document).click @clickHandler.bind(this) # 关闭
+    this
 
   Source = (element, options) ->
     self = this
@@ -84,12 +84,12 @@ Released: Tue 2nd Aug, 2011 - 00:00
       target.closest('ul').closest('li').children('.nav-link').click() # 打开下拉选项
       guide = new Guide target, text, hook: position, offset: {left: 30, bottom: 90, right: 0}[position], ->
         @wrapper.css('opacity', 0).animate self.offset[position], 'slow'
+      $(document).click guide.clickHandler.bind(guide) # 关闭
       $this.data 'guide', guide
 
     @source = ->
       $this.click ->
         guide = $this.data("guide")
-        guide && log guide.cleared
         !(guide && !guide.cleared) && self.guideIt()
         false
 
