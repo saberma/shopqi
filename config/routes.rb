@@ -81,6 +81,8 @@ Shopqi::Application.routes.draw do
 
       resources :shops, only: [:edit,:update]
 
+      resources :payments
+
       scope "notifications" do
         resources :emails, only:[:index,:edit,:update]
       end
