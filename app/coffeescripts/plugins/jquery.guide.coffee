@@ -9,10 +9,10 @@ http://www.opensource.org/licenses/mit-license.php
 
 Launch  : Aug 2011
 Version : 1.0.0
-Released: Tue 2th Aug, 2011 - 00:00
+Released: Tue 2nd Aug, 2011 - 00:00
 ###
 (($) ->
-  Guide = (element, content, position) ->
+  Guide = (element, content, position, animate) ->
     @buildElement = (content) ->
       @el = $("<div/>").html content
       @wrapper = $("<div/>").addClass("guide-outer").css 'position', 'absolute'
@@ -26,8 +26,7 @@ Released: Tue 2th Aug, 2011 - 00:00
         bottom: @attachBelow
         top: @attachAbove
         right: @attachRight
-      #e[position.hook].call this, target, position.offset
-      @attachBelow target, position.offset
+      e[position.hook].call this, target, position.offset
       #@reattach = e[position.hook].bind(this, b)
 
     @attachBelow = (target, offset) ->
@@ -35,29 +34,73 @@ Released: Tue 2th Aug, 2011 - 00:00
       left =  position.left - (@wrapper.outerWidth() - target.outerWidth()) / 2
       top = 7 + target.outerHeight() + position.top
       top += offset  if offset
-      @wrapper.addClass "below"
-      @wrapper.css left: left, top: top
+      @wrapper.addClass("below").css left: left, top: top
 
-    @move = () ->
-      @wrapper.css('opacity', 0).animate opacity: 1, top: '-=90px', 'slow'
+    @attachAbove = (target, offset) ->
+      position = target.offset()
+      left =  position.left - (@wrapper.outerWidth() - target.outerWidth()) / 2
+      top = -25 - target.outerHeight() + position.top
+      top += offset  if offset
+      @wrapper.addClass("above").css left: left, top: top
+
+    @attachLeft = (target, offset) ->
+      position = target.offset()
+      top =  position.top - (@wrapper.outerHeight() - target.outerHeight()) / 2
+      left = -24 - @el.outerWidth() + position.left
+      left -= offset  if offset
+      @wrapper.addClass("left").css left: left, top: top
+
+    @attachRight = (target, offset) ->
+      position = target.offset()
+      top =  position.top - (@wrapper.outerHeight() - target.outerHeight()) / 2
+      left = 3 + @el.outerWidth() + position.left
+      left -= offset  if offset
+      @wrapper.addClass("right").css left: left, top: top
+
+    @clear = ->
+      unless @cleared
+        @wrapper.remove()
+        @cleared = true
+
+    @clickHandler = ->
+      @clear()
 
     @buildElement content
     @attach element, position
-    @move()
+    animate && animate.call(this)
+    $(document).click @clickHandler.bind(this) # 关闭
 
   Source = (element, options) ->
     self = this
     $this = $(element)
     defaults = {}
     settings = $.extend(defaults, options or {})
+
+    @guideIt = () ->
+      target = $($this.attr('data-guide-target'))
+      $(document.body).click()
+      text = $this.attr('data-guide-text')
+      position = $this.attr('data-guide-position')
+      target.closest('ul').closest('li').children('.nav-link').click() # 打开下拉选项
+      guide = new Guide target, text, hook: position, offset: {left: 30, bottom: 90, right: 0}[position], ->
+        @wrapper.css('opacity', 0).animate self.offset[position], 'slow'
+      $this.data 'guide', guide
+
     @source = ->
       $this.click ->
-        target = $($(this).attr('data-guide-target'))
-        $(document.body).click()
-        text = $(this).attr('data-guide-text')
-        position = $(this).attr('data-guide-position')
-        new Guide(target, text, hook: position, offset: 90)
+        guide = $this.data("guide")
+        guide && log guide.cleared
+        !(guide && !guide.cleared) && self.guideIt()
         false
+
+    @offset =
+      bottom:
+        opacity: 1
+        top: '-=90px'
+      left:
+        opacity: 1
+        left: '+=30px'
+
     @source()
 
   $.fn.extend guide: (options) ->
