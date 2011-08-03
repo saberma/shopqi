@@ -64,6 +64,14 @@ class CreateShops < ActiveRecord::Migration
     end
     add_index :shop_theme_settings , :shop_theme_id
 
+    create_table :shop_policies do |t|  #商店政策（退货政策，隐私政策以及服务条款）
+      t.string :title               , comment: '政策名字'
+      t.text :body                  , comment: '政策内容'
+      t.references :shop
+    end
+
+    add_index :shop_policies , :shop_id
+
     create_table :countries do |t| #可发往国家
       t.references :shop     , comment: "所属商店"
       t.string :code         , comment: "国家编码", limit: 32

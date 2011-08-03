@@ -7,7 +7,8 @@ class CreatePayments < ActiveRecord::Migration
       t.integer    :payment_type_id    , comment: "支付类型"
       t.string     :key                , comment: "交易安全校验码"
       t.string     :account            , comment: "账号"
-      t.text       :remark             , comment: '备注'
+      t.text       :message            , comment: '信息'
+      t.string     :name               , comment: '支付名(用于普通支付方式)'
 
       t.timestamps
     end

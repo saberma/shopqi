@@ -74,10 +74,6 @@ development:
     host: lvh.me
     store_host: smackaho.st
     port: 4000
-  alipay:
-    key: ''
-    account: ''
-    email: ''
 
 test:
   <<: *defaults

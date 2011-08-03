@@ -1,5 +1,6 @@
 #关键配置文件
 config/sms.yml
+config/alipay.yml
 
 .bundle
 db/*.sqlite3

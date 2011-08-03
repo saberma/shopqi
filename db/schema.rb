@@ -393,7 +393,8 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
     t.integer  "payment_type_id"
     t.string   "key"
     t.string   "account"
-    t.text     "remark"
+    t.text     "message"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -482,6 +483,14 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
 
   add_index "shop_domains", ["host"], :name => "index_shop_domains_on_host"
   add_index "shop_domains", ["shop_id"], :name => "index_shop_domains_on_shop_id"
+
+  create_table "shop_policies", :force => true do |t|
+    t.string  "title"
+    t.text    "body"
+    t.integer "shop_id"
+  end
+
+  add_index "shop_policies", ["shop_id"], :name => "index_shop_policies_on_shop_id"
 
   create_table "shop_product_types", :force => true do |t|
     t.integer "shop_id"

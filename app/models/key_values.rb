@@ -32,6 +32,13 @@ module KeyValues
 
   end
 
+  class PolicyType < KeyValues::Base
+    self.data = [
+      {id: 1, name: '退款政策'},
+      {id: 2, name: '隐私政策'},
+      {id: 3, name: '服务条款'}
+    ]
+  end
 
   # 是否发布
   class PublishState < KeyValues::Base
@@ -50,6 +57,16 @@ module KeyValues
       {id: 3, name: '100', code: '100'},
       {id: 4, name: '250', code: '250'},
     ]
+  end
+
+  module Payment
+    class Custom < KeyValues::Base
+        self.data = [
+          {id: 1   ,name: '银行转账'},
+          {id: 2   ,name: '邮局汇款'},
+          {id: 3   ,name: '货到付款'}
+        ]
+    end
   end
 
   module Mail

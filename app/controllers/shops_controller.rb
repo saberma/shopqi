@@ -11,7 +11,13 @@ class ShopsController < ApplicationController
     end
     shop.update_attributes(params[:shop])
     respond_to do |format|
-      format.html {redirect_to general_preferences_path, notice: notice_msg}
+      format.html {
+        unless params[:shop][:policies_attributes]
+          redirect_to general_preferences_path, notice: notice_msg
+        else
+          redirect_to payments_path, notice: notice_msg
+        end
+      }
       format.js   {render nothing: true}
     end
   end

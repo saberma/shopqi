@@ -68,8 +68,7 @@
             %ul
               %li#settings=link_to '一般设置', general_preferences_path
               %li#regions=link_to '区域&税收',countries_path
-              %li#payment
-                %a(href="https://github.shopqi.com/admin/payments") 支付
+              %li#payment=link_to '支付',payments_path
               %li#shipping=link_to '快递',shipping_index_path
               -#
                 %li#fulfillment

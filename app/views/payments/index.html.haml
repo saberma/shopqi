@@ -1,0 +1,223 @@
+-use_javascripts 'views/payments/index','views/payments/show','models/payment','collections/payments'
+%h2#title 结账&支付
+#action-links
+  %ul
+=render partial:"shared/noscript"
+=render partial:"shared/upgrade_ie"
+%h4 支 付 网 关
+%p.description
+  支付网关可以允许您商店的顾客使用相应的支付方式为订单付款(例如，支付宝). 获取更多的信息，
+  = succeed "." do
+    =link_to '请点击这里',faq_path
+.pgroup
+  .payment-service-provider
+    %table
+      %tr
+        %td.fl{:style => "padding:20px 10px 20px 20px;width:225px"}
+          =link_to image_tag('admin/payments/alipay.png'), 'https://b.alipay.com/order/productSign.htm?action=newsign&productId=2011011904422299', title: '申请', target: '_blank'
+        %td
+          %table.desc
+            %tr
+              %td.r 支付方式:
+              %td.meta
+                %strong 在线支付-支付宝
+            %tr
+              %td.r 描述:
+              %td.meta==#{link_to '支付宝', 'http://www.alipay.com'}致力于为中国电子商务提供各种安全、方便、个性化的在线支付解决方案。
+    %dl.cl.sst{:style => "padding:0px; margin-bottom: 0; border-top: 1px solid #ddd"}
+      -unless payment_alipay.id?
+        %dd{:style => "margin:0; padding-bottom: 10px"}
+          %p#gateway-select{:style => "padding-top:10px; padding-left:10px"}
+            %select#alipay-gateway-id{:name => "enabled_gateway"}
+              %option{:value => ""} 不使用支付宝
+              %option{:value => "1"} 使用支付宝
+      -else
+        %dd#activate_payment_provider{:style => "padding: 10px 10px 5px 10px"}
+          .fr
+            =link_to_delete payment_path(payment_alipay)
+          当前正在使用:
+          %strong 支付宝及时到帐服务
+          %span.warn
+            =link_to w('edit'),'#',id:'alipay_edit'
+      %dd#account_payment_provider.nsb.alipay-properties{:style => "display:none;border-top: 1px solid #ddd;"}
+        =form_for payment_alipay  do |f|
+          .group-fields
+            %table
+              %tr
+                %td{:style => "vertical-align: top; padding: 20px 20px 20px 0px; width: 180px"}
+                  .sb
+                    =f.label :partner
+                    %p.credential
+                      =f.text_field :partner ,size: 30, autocomplete: 'off'
+                  .sb
+                    =f.label :account
+                    %p.credential
+                      =f.text_field :account ,size: 30, autocomplete: 'off'
+                  .sb
+                    =f.label :key
+                    %p.credential
+                      =f.password_field :key ,size: 30, autocomplete: 'off'
+                %td.provider-info
+                  %div
+                    %p.note
+                      %strong
+                        请提供您
+                        %a{:href => "http://www.alipay.com", :target => "gateway"} 支付宝
+                        账户的合作者身份ID(partner)、交易安全校验码(key)以及账户,若没有，则请您登陆到
+                        %a{:href => "https://b.alipay.com/order/productDetail.htm?productId=2011060800327555", :target => "gateway"} 支付宝商家服务
+                        进行申请
+                    =f.hidden_field :payment_type_id, value: '1'
+          / .group-fields
+          .group-actions
+            =f.submit w('save'),class: 'btn',id: 'alipay-save'
+            =w('or')
+            =link_to w('cancel'),'#',id: 'cancel'
+            / .group-actions
+  #custom-payment-methods.payment-service-provider
+    %table
+      %tr
+        %td.fl{:style => "padding:10px;width:225px"}=image_tag 'admin/icons/custom_payment_method.gif'
+        %td
+          %table.desc
+            %tr
+              %td.r 支付方式:
+              %td.meta
+                %strong 普通支付方式
+            %tr
+              %td.r 描述:
+              %td.meta 一些不需要银行卡的支付方式，例如，银行转账，货到付款等
+    %dl#manual_payment_gateways.cl.sst{:style => "padding: 0px 0 0 0px;margin-bottom: 0; border-top: 1px solid #ddd"}
+      =render partial:'custom-payment'
+      %dt.nst{:style => "padding: 10px 0 10px 10px;"}
+        %select#select_custom_payment_method{:name => "", :style => "width: 300px;"}
+          %option(value= "") 选择增加普通支付方式
+          =options_for_select  custom_types
+      %dd#account_manual_payment_gateway.nsb{:style => "display:none;border-top: 1px solid #ddd"}
+        =form_for payment do |f|
+          .group-fields
+            .sb
+              =f.label :name
+              %p.credential=f.text_field :name
+            .sb
+              %label{:for => "message_manual_payment_gateway"}
+                %span.hint 当顾客结账时，下面提示会呈现给顾客
+              %p.credential
+                =f.text_area :message, cols: 40,rows: 10
+          .group-actions
+            =f.submit w('save'),class: 'btn'
+          / .group-actions
+#checkout-configuration
+  %form{"accept-charset" => "UTF-8", :action => "/admin/shop", :method => "post"}
+    .group
+      .group-fields
+        %h3.l{:style => "color: #999;font-size: 18px; font-weight: normal; margin: 5px"} Customer Checkout settings
+        #customer-accounts
+          %h5.note.st Your checkout settings affect how your customers check out on your shop.
+          .st.sb.sl
+            %ul.nobull
+              %li
+                %input#shop_customer_accounts_{:name => "shop[customer_accounts]", :type => "radio", :value => ""}/
+                %label{:for => "shop_customer_accounts_"}
+                  Guest checkout
+                  %span.hint Accounts are disabled. Customers can only check out as guests.
+              %li
+                %input#shop_customer_accounts_optional{:checked => "checked", :name => "shop[customer_accounts]", :type => "radio", :value => "optional"}/
+                %label{:for => "shop_customer_accounts_optional"}
+                  Guest checkout with optional sign in
+                  %span.hint Accounts are optional. Customers can check out as a guest or sign in with their account.
+              %li
+                %input#shop_customer_accounts_required{:name => "shop[customer_accounts]", :type => "radio", :value => "required"}/
+                %label{:for => "shop_customer_accounts_required"}
+                  Sign in required
+                  %span.hint
+                    Accounts are required. Customers
+                    %strong cannot check out
+                    until the merchant has created an account for them.
+          #customer-accounts-required.message{:style => "margin:15px 0 0 0; display:none;"}
+            %h4 You must create an account for each customer
+            %p Customers will only be able to place orders if you create an account for them.
+      / .group-fields
+      .group-actions
+        %input.btn{:name => "commit", :type => "submit", :value => "Apply these settings"}/
+      / .group-actions
+    / .group
+/ checkout config
+.group
+  %form#gateways-form.edit_checkout_configuration{"accept-charset" => "UTF-8", :action => "/admin/checkout_configuration", :method => "post"}
+    %div{:style => "margin:0;padding:0;display:inline"}
+      %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
+      %input{:name => "_method", :type => "hidden", :value => "put"}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
+    .group-fields
+      %h3.light Additional settings
+      #order-processing{:style => "display:none;"}
+        %h4 Order processing
+        %p.note After an order has been placed:
+        .st.sl
+          %ul.nobull
+            %li
+              %input#checkout_configuration_processing_method_authorize{:checked => "checked", :name => "checkout_configuration[processing_method]", :type => "radio", :value => "authorize"}/
+              %label{:for => "checkout_configuration_processing_method_authorize"} Automatically authorize the buyer's credit card for the full amount of the order.
+            %li
+              %input#checkout_configuration_processing_method_purchase{:name => "checkout_configuration[processing_method]", :type => "radio", :value => "purchase"}/
+              %label{:for => "checkout_configuration_processing_method_purchase"} Automatically authorize and charge the buyer's credit card for the full amount of the order.
+      #order-auto-processing
+        %p.note After an order has been paid:
+        .st.sl
+          %ul.nobull
+            %li
+              %input{:name => "checkout_configuration[shipping_behaviour]", :type => "hidden", :value => "manual"}/
+              %input#checkout_configuration_shipping_behaviour{:name => "checkout_configuration[shipping_behaviour]", :type => "checkbox", :value => "auto"}/
+              %label{:for => "checkout_configuration_shipping_behaviour"} Automatically ship all of the order's line items.
+            %li#notify_customers
+              %input{:name => "checkout_configuration[notify_customers]", :type => "hidden", :value => "0"}/
+              %input#checkout_configuration_notify_customers{:disabled => "disabled", :name => "checkout_configuration[notify_customers]", :type => "checkbox", :value => "1"}/
+              %label{:for => "checkout_configuration_notify_customers"} Notify customers of their shipment via email.
+        %p.note After an order has been shipped and paid:
+        .st.sl
+          %ul.nobull
+            %li
+              %input{:name => "checkout_configuration[order_closing]", :type => "hidden", :value => "manual"}/
+              %input#checkout_configuration_order_closing{:name => "checkout_configuration[order_closing]", :type => "checkbox", :value => "auto"}/
+              %label{:for => "checkout_configuration_order_closing"} Automatically close the order.
+      .pgroup{:style => "margin:35px 0 0 0;"}
+        %h4 Collect Information for Email Marketing
+        %p.note
+          Your customers choose during checkout whether or not they want to receive email updates from you about your shop.
+        .st
+          %label{:for => "checkout_email_marketing_mode"} Email marketing option:
+          %select#checkout_configuration_email_marketing_mode{:name => "checkout_configuration[email_marketing_mode]"}
+            %option{:selected => "selected", :value => "checked"} Customer agrees by default
+            %option{:value => "unchecked"} Customer disagrees by default
+            %option{:value => "off"} Option is disabled and hidden
+      .pgroup{:style => "margin:35px 0 0 0"}
+        %h4 Additional Content &amp; Scripts
+        %p.note.sb
+          Any additional instructions or scripts you'd like to appear on the
+          %strong Thank You
+          page of the checkout.
+          %br/
+          This is an excellent place to paste things like Google Analytics ROI code and partner tracking systems.
+        %textarea#additional-scripts{:cols => "80", :name => "checkout_configuration[content]", :rows => "2"}
+    / .group-fields
+    .group-actions
+      %input.btn{:name => "commit", :type => "submit", :value => "Apply these settings"}/
+    / .group-actions
+/ .group
+.group
+  =render partial: 'policy'
+
+:coffeescript
+  $(document).ready ->
+    $('#alipay-gateway-id').change ->
+      $('#account_payment_provider').toggle()
+    $('#alipay_edit').click ->
+      $('#account_payment_provider').toggle()
+      $('#activate_payment_provider').hide()
+    $('#cancel').click ->
+      $('#account_payment_provider').toggle()
+      $('#activate_payment_provider').toggle()
+
+  App.custom_payments = new App.Collections.Payments()
+  App.custom_payments.refresh(#{custom_payments.to_json(except: [:created_at,:updated_at])})
+  new App.Views.Payment.Index({collection: App.custom_payments})
