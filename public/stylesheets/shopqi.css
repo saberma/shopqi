@@ -23,3 +23,6 @@ color: #FFFFFF;
 ::-webkit-input-placeholder {
 color: #FFFFFF;
 }
+.item-payment {
+  border-bottom: 1px solid #ddd; padding-bottom: 10px
+}

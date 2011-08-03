@@ -1,4 +1,4 @@
--use_javascripts 'views/payments/index'
+-use_javascripts 'views/payments/index','views/payments/show','models/payment','collections/payments'
 %h2#title 结账&支付
 #action-links
   %ul
@@ -80,173 +80,34 @@
         %td
           %table.desc
             %tr
-              %td.r Service:
+              %td.r 支付方式:
               %td.meta
-                %strong Custom Payment Methods
+                %strong 普通支付方式
             %tr
-              %td.r Description:
-              %td.meta Other types of payments that don't require credit card processing such as Money Orders, Bank Deposits and Cash on Delivery (COD).
+              %td.r 描述:
+              %td.meta 一些不需要银行卡的支付方式，例如，银行转账，货到付款等
     %dl#manual_payment_gateways.cl.sst{:style => "padding: 0px 0 0 0px;margin-bottom: 0; border-top: 1px solid #ddd"}
-      %dd{:style => "border-bottom: 1px solid #ddd; padding-bottom: 10px"}
-        %dl
-          %dd#activate_manual_payment_gateway_1179792{:style => "padding: 10px 10px 5px 10px"}
-            .fr
-              %form.button_to{:action => "/admin/payments/1179792", :method => "post"}
-            Using method:
-            %strong Money Order
-            %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179792').show();$('activate_manual_payment_gateway_1179792').hide(); return false;"} edit
-          %dd#account_manual_payment_gateway_1179792.nsb{:style => "display:none; border-top: 1px solid #ddd"}
-            %form#payment_gateway_edit.payment_gateway_edit{"accept-charset" => "UTF-8", :action => "/admin/payments/1179792", :method => "post"}
-              %div{:style => "margin:0;padding:0;display:inline"}
-                %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-                %input{:name => "_method", :type => "hidden", :value => "put"}/
-                %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
-              .group-fields
-                .sb
-                  %label{:for => "name_manual_payment_gateway_1179792"} Name:
-                  %p.credential
-                    %input#name_manual_payment_gateway_1179792{:name => "payment_gateway[name]", :size => "30", :type => "text", :value => "Money Order"}/
-                .sb
-                  %label{:for => "message_manual_payment_gateway_1179792"}
-                    %span.hint Enter the instructions that will be displayed to the buyer when they are checking out
-                  %p.credential
-                    %textarea#message_manual_payment_gateway_1179792{:cols => "40", :name => "payment_gateway[message]", :rows => "10"} yeah
-                %p.sst
-                  %input#enable-paypal_manual_payment_gateway_1179792{:name => "enable_paypal", :type => "checkbox", :value => "true"}>/
-                  \&nbsp;
-                  %label{:for => "enable-paypal_manual_payment_gateway_1179792"} Also accept PayPal payments
-                %p.st.note
-                  Increase sales and expand your customer base by adding a PayPal Express Checkout button to your site. Give 150 million PayPal buyers the faster, easier way to pay.
-                  %a{:href => "http://www.paypal.com/en_US/m/demo/18077_ec.html"} See a demo
-              / .group-fields
-              .group-actions
-                %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
-                or
-                %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179792').hide(); $('activate_manual_payment_gateway_1179792').show(); return false;"} Cancel
-              / .group-actions
-      %dd{:style => "border-bottom: 1px solid #ddd; padding-bottom: 10px"}
-        %dl
-          %dd#activate_manual_payment_gateway_1179822{:style => "padding: 10px 10px 5px 10px"}
-            .fr
-              %form.button_to{:action => "/admin/payments/1179822", :method => "post"}
-                %div
-                  %input{:name => "_method", :type => "hidden", :value => "delete"}/
-                  %input.btn{"data-confirm" => "Are you sure?", :type => "submit", :value => "Deactivate"}/
-                  %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
-            Using method:
-            %strong Bank Deposit
-            %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179822').show();$('activate_manual_payment_gateway_1179822').hide(); return false;"} edit
-          %dd#account_manual_payment_gateway_1179822.nsb{:style => "display:none; border-top: 1px solid #ddd"}
-            %form#payment_gateway_edit.payment_gateway_edit{"accept-charset" => "UTF-8", :action => "/admin/payments/1179822", :method => "post"}
-              %div{:style => "margin:0;padding:0;display:inline"}
-                %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-                %input{:name => "_method", :type => "hidden", :value => "put"}/
-                %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
-              .group-fields
-                .sb
-                  %label{:for => "name_manual_payment_gateway_1179822"} Name:
-                  %p.credential
-                    %input#name_manual_payment_gateway_1179822{:name => "payment_gateway[name]", :size => "30", :type => "text", :value => "Bank Deposit"}/
-                .sb
-                  %label{:for => "message_manual_payment_gateway_1179822"}
-                    %span.hint Enter the instructions that will be displayed to the buyer when they are checking out
-                  %p.credential
-                    %textarea#message_manual_payment_gateway_1179822{:cols => "40", :name => "payment_gateway[message]", :rows => "10"} ssss
-                %p.sst
-                  %input#enable-paypal_manual_payment_gateway_1179822{:name => "enable_paypal", :type => "checkbox", :value => "true"}>/
-                  \&nbsp;
-                  %label{:for => "enable-paypal_manual_payment_gateway_1179822"} Also accept PayPal payments
-                %p.st.note
-                  Increase sales and expand your customer base by adding a PayPal Express Checkout button to your site. Give 150 million PayPal buyers the faster, easier way to pay.
-                  %a{:href => "http://www.paypal.com/en_US/m/demo/18077_ec.html"} See a demo
-              / .group-fields
-              .group-actions
-                %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
-                or
-                %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179822').hide(); $('activate_manual_payment_gateway_1179822').show(); return false;"} Cancel
-              / .group-actions
-      %dd{:style => "border-bottom: 1px solid #ddd; padding-bottom: 10px"}
-        %dl
-          %dd#activate_manual_payment_gateway_1179842{:style => "padding: 10px 10px 5px 10px"}
-            .fr
-              %form.button_to{:action => "/admin/payments/1179842", :method => "post"}
-                %div
-                  %input{:name => "_method", :type => "hidden", :value => "delete"}/
-                  %input.btn{"data-confirm" => "Are you sure?", :type => "submit", :value => "Deactivate"}/
-                  %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
-            Using method:
-            %strong Cash on Delivery (COD)
-            %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179842').show();$('activate_manual_payment_gateway_1179842').hide(); return false;"} edit
-          %dd#account_manual_payment_gateway_1179842.nsb{:style => "display:none; border-top: 1px solid #ddd"}
-            %form#payment_gateway_edit.payment_gateway_edit{"accept-charset" => "UTF-8", :action => "/admin/payments/1179842", :method => "post"}
-              %div{:style => "margin:0;padding:0;display:inline"}
-                %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-                %input{:name => "_method", :type => "hidden", :value => "put"}/
-                %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
-              .group-fields
-                .sb
-                  %label{:for => "name_manual_payment_gateway_1179842"} Name:
-                  %p.credential
-                    %input#name_manual_payment_gateway_1179842{:name => "payment_gateway[name]", :size => "30", :type => "text", :value => "Cash on Delivery (COD)"}/
-                .sb
-                  %label{:for => "message_manual_payment_gateway_1179842"}
-                    %span.hint Enter the instructions that will be displayed to the buyer when they are checking out
-                  %p.credential
-                    %textarea#message_manual_payment_gateway_1179842{:cols => "40", :name => "payment_gateway[message]", :rows => "10"}
-                %p.sst
-                  %input#enable-paypal_manual_payment_gateway_1179842{:name => "enable_paypal", :type => "checkbox", :value => "true"}>/
-                  \&nbsp;
-                  %label{:for => "enable-paypal_manual_payment_gateway_1179842"} Also accept PayPal payments
-                %p.st.note
-                  Increase sales and expand your customer base by adding a PayPal Express Checkout button to your site. Give 150 million PayPal buyers the faster, easier way to pay.
-                  %a{:href => "http://www.paypal.com/en_US/m/demo/18077_ec.html"} See a demo
-              / .group-fields
-              .group-actions
-                %input.btn{:name => "commit", :type => "submit", :value => "Save"}/
-                or
-                %a{:href => "#", :onclick => "$('account_manual_payment_gateway_1179842').hide(); $('activate_manual_payment_gateway_1179842').show(); return false;"} Cancel
-              / .group-actions
+      =render partial:'custom-payment'
       %dt.nst{:style => "padding: 10px 0 10px 10px;"}
         %select#select_custom_payment_method{:name => "", :style => "width: 300px;"}
-          %option{:value => ""} Select a custom payment method to add
-          %option{:value => ""} --------------
-          %option{:value => "Cash on Delivery (COD)"} Cash on Delivery (COD)
-          %option{:value => "Money Order"} Money Order
-          %option{:value => "Bank Deposit"} Bank Deposit
-          %option{:value => ""} --------------
-          %option{:value => "custom"} Create a custom payment method
-      %dd#account_manual_payment_gateway.nsb{:style => "display:none; border-top: 1px solid #ddd"}
-        %form#payment_gateway_new.payment_gateway_new{"accept-charset" => "UTF-8", :action => "/admin/payments", :method => "post"}
-          %div{:style => "margin:0;padding:0;display:inline"}
-            %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-            %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
+          %option(value= "") 选择增加普通支付方式
+          =options_for_select  custom_types
+      %dd#account_manual_payment_gateway.nsb{:style => "display:none;border-top: 1px solid #ddd"}
+        =form_for payment do |f|
           .group-fields
             .sb
-              %label{:for => "name_manual_payment_gateway"} Name:
-              %p.credential
-                %input#name_manual_payment_gateway{:name => "payment_gateway[name]", :size => "30", :type => "text"}/
+              =f.label :name
+              %p.credential=f.text_field :name
             .sb
               %label{:for => "message_manual_payment_gateway"}
-                %span.hint Enter the instructions that will be displayed to the buyer when they are checking out
+                %span.hint 当顾客结账时，下面提示会呈现给顾客
               %p.credential
-                %textarea#message_manual_payment_gateway{:cols => "40", :name => "payment_gateway[message]", :rows => "10"}
-            %p.sst
-              %input#enable-paypal_manual_payment_gateway{:name => "enable_paypal", :type => "checkbox", :value => "true"}>/
-              \&nbsp;
-              %label{:for => "enable-paypal_manual_payment_gateway"} Also accept PayPal payments
-            %p.st.note
-              Increase sales and expand your customer base by adding a PayPal Express Checkout button to your site. Give 150 million PayPal buyers the faster, easier way to pay.
-              %a{:href => "http://www.paypal.com/en_US/m/demo/18077_ec.html"} See a demo
-          / .group-fields
+                =f.text_area :message, cols: 40,rows: 10
           .group-actions
-            %input.btn{:name => "commit", :type => "submit", :value => "Activate"}/
+            =f.submit w('save'),class: 'btn'
           / .group-actions
 #checkout-configuration
   %form{"accept-charset" => "UTF-8", :action => "/admin/shop", :method => "post"}
-    %div{:style => "margin:0;padding:0;display:inline"}
-      %input{:name => "utf8", :type => "hidden", :value => "&#x2713;"}/
-      %input{:name => "_method", :type => "hidden", :value => "put"}/
-      %input{:name => "authenticity_token", :type => "hidden", :value => "VfRjsyCsvQGIMQ9NKDyh+WohVZb0c9Rx9arqfrTdTFA="}/
     .group
       .group-fields
         %h3.l{:style => "color: #999;font-size: 18px; font-weight: normal; margin: 5px"} Customer Checkout settings
@@ -356,3 +217,7 @@
     $('#cancel').click ->
       $('#account_payment_provider').toggle()
       $('#activate_payment_provider').toggle()
+
+  App.custom_payments = new App.Collections.Payments()
+  App.custom_payments.refresh(#{custom_payments.to_json(except: [:created_at,:updated_at])})
+  new App.Views.Payment.Index({collection: App.custom_payments})

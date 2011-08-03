@@ -1,0 +1,24 @@
+%script(id="show-custom-payment-item" type="text/html")
+  %dl
+    %dd(style= "padding: 10px 10px 5px 10px" id= "activate_manual_payment_gateway_{{id}}")
+      %a.fr.btn.destroy 删除
+      %a.fr.btn.edit 编辑
+      支付方式:
+      %strong {{ name }}
+    %dd.nsb(style= "display:none; border-top: 1px solid #ddd" id= "account_manual_payment_gateway_{{ id }}")
+      %form(accept-charset= "UTF-8" action = "#" method= "post" id="custom-payment" onsubmit="return false" )
+        .group-fields
+          .sb
+            %label(for= "name_manual_payment_gateway_{{id}}") 方式:
+            %p.credential
+              %input(name= "payment[name]" size= "30" type= "text" value= "{{ name }}")
+          .sb
+            %label(for= "message_manual_payment_gateway_{{ id }}")
+              %span.hint 当顾客结账时，下面提示会呈现给顾客
+            %p.credential
+              %textarea(cols= "40" name= "payment[message]" rows= "10" )
+                {{ message}}
+        .group-actions
+          %input.btn.submit(name= "commit" type= "submit" value= "保存")
+          或者
+          %a(href= "#" class= 'cancel') 取消

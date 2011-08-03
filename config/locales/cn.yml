@@ -37,6 +37,7 @@ cn:
         account: 账号
         number: 序号
         apply: 申请
+        name: 方式
 
       price_based_shipping_rate:
         name: 名称

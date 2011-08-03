@@ -393,8 +393,8 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
     t.integer  "payment_type_id"
     t.string   "key"
     t.string   "account"
-    t.text     "remark"
-    t.boolean  "enabled",         :default => true
+    t.text     "message"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
