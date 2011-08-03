@@ -15,6 +15,11 @@
   =hidden_field_tag 'new_product[title]'
 .st
   #product-summary
+    - if params[:new_product]
+      #create-more-products.box2.message.sb
+        %h3
+          还有商品?
+          =link_to '增加另一个商品', new_product_path
     %table(cellpadding="0" cellspacing="0" style="width:100%")
       %tr
         %td#product-details

@@ -54,7 +54,7 @@ class ProductsController < ApplicationController
     #保存商品图片
     if product.save
       Activity.log product,'new',current_user
-      redirect_to product_path(product), notice: "新增商品成功!"
+      redirect_to product_path(product, new_product: true), notice: "新增商品成功!"
     else
       render action: :new
     end
