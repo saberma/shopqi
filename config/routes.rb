@@ -70,14 +70,14 @@ Shopqi::Application.routes.draw do
 
     scope "/admin" do # 用户后台管理
 
-      match "/"                             , to: "home#dashboard", as: :user_root # user_root_path为用户成功登录后的跳转地址
+      match "/"                             , to: "home#dashboard"                      , as: :user_root # user_root_path为用户成功登录后的跳转地址
       match "/general_preferences"          , to: "shops#edit"
       match "/notifications"                , to: "emails#index"
       match "/notifications/subscribe"      , to: "emails#follow"
-      match "/notifications/:id/unsubscribe", to: "emails#unfollow", as: 'unfollow'
-      match '/lookup/query'                 , to: 'home#query', via: :get
+      match "/notifications/:id/unsubscribe", to: "emails#unfollow"                     , as: 'unfollow'
       match '/support'                      , to: redirect('http://support.shopqi.com/'), as: 'support'
-
+      get '/lookup/query'                   , to: 'home#query'
+      post "/dashboard/complete_task/:name" , to: "home#complete_task"                  , as: :complete_task
 
       resources :shops, only: [:edit,:update]
 

@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
   def set_current_user_for_observer
     ActivityObserver.current_user = current_user
   end
+
+  expose(:tasks) { current_user.shop.tasks }
+  expose(:tasks_json) { tasks.to_json(except: [:created_at, :updated_at]) }
+
 end

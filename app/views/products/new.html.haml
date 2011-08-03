@@ -165,3 +165,5 @@
   App.product_options.refresh(#{product.options.to_json(methods: :value, except: [ :created_at, :updated_at ])});
   //显示商品选项
   new App.Views.ProductOption.Index({collection: App.product_options})
+
+  current_guide = 'add_product';

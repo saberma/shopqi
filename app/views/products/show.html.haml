@@ -282,7 +282,4 @@
   App.product_variants.refresh(#{variants.to_json(except: [ :created_at, :updated_at ])});
   new App.Views.Product.Show.Index({model: App.product})
 
-
-
-
-
+  current_guide = 'add_product';

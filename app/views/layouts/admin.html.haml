@@ -11,7 +11,7 @@
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
     =yield :stylesheets
-    = javascript_include_tag :admin
+    = javascript_include_tag :admin, 'models/task', 'collections/tasks', 'views/tasks/index'
     =yield :kindeditor
     =yield :javascripts
     = csrf_meta_tag
@@ -106,3 +106,7 @@
 /[if lte IE 6]
   :javascript
     $("upgrade-ie6").show();
+
+:javascript
+  App.tasks = new App.Collections.Tasks(#{tasks_json});
+  new App.Views.Task.Index({collection: App.tasks})

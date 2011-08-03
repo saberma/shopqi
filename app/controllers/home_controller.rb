@@ -58,9 +58,14 @@ class HomeController < ApplicationController
   def index
   end
 
-  # 网店管理首页
-  def dashboard
+  def dashboard # 网店管理首页
     render :guide if shop.tasks.incomplete.size > 0
+  end
+
+  def complete_task # 完成新手指引任务
+    task = shop.tasks.where(name: params[:name])
+    task.update_attribute! :complete_task, true
+    render nothing: true
   end
 
   def query

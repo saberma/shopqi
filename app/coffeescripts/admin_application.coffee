@@ -30,6 +30,7 @@ App =
       Index: {}
     Comment: {}
     ProductOption: {}
+    Task: {}
   Controllers:
     Orders: {}
     Customers: {}
@@ -249,13 +250,3 @@ $(document).ready ->
   UpdateableSelectBox $('#product-vendor-select'), '新增厂商'
 
   $('.blockOverlay,.shopqi-dialog-title-close,.close-lightbox').live 'click', -> $.unblockUI() # 关闭弹出窗口
-
-  $("a[data-guide-target]").guide() # 新手指引
-  if $('#sticky-progress')[0]
-    path = location.pathname
-    if StringUtils.startsWith path, '/admin/products'
-      $('#task-checkoff').show()
-      $('#progress-bar').hide()
-    else
-      $('#task-checkoff').hide()
-      $('#progress-bar').show()
