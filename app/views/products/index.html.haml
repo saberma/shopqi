@@ -21,7 +21,7 @@
     (以逗号分隔商品属性).
   %a.btn(href="/admin/products.csv") 导出当前显示的商品
   %a.btn.sl(href="/admin/product_exports.csv") 导出所有商品
-#product-filters.box2.ssb.sst
+#table-filters.box2.ssb.sst
   显示
   %a#vendor-filter-link(href="#")=search_label :vendor, '所有厂商'
   和
@@ -41,9 +41,11 @@
       -types.each do |product_type|
         %li=link_to product_type.name, product_search_path(product_type_eq: product_type.name)
       %li.filter-show-all.current=link_to "显示所有", product_search_path(producty_type_eq: nil)
-.view-switcher
-  %a.btn.btn-group.btn-left.active(href="#{products_path}") 列表视图
-  %a.btn.btn-group.btn-right(href="#{inventory_products_path}")> 库存视图
+%ul.segmented.fr
+  %li
+    %a.btn.active(href="#{products_path}") 列表视图
+  %li
+    %a.btn(href="#{inventory_products_path}")> 库存视图
 / PRODUCTS LIST
 .listing.sst
   -if products.size.zero?
