@@ -26,8 +26,9 @@ class Shop < ActiveRecord::Base
   has_many :vendors               , dependent: :destroy                      , class_name: 'ShopProductVendor'
   has_many :emails                , dependent: :destroy
   has_many :countries             , dependent: :destroy
-  has_many :activities            , dependent: :destroy                     , order: 'created_at desc'
+  has_many :activities            , dependent: :destroy                      , order: 'created_at desc'
   has_many :payments              , dependent: :destroy
+  has_many :tasks                 , dependent: :destroy                      , order: :id.asc, class_name: 'ShopTask'
 
   accepts_nested_attributes_for :domains, :theme
   attr_readonly :orders_count
@@ -88,4 +89,9 @@ end
 
 class ShopProductVendor < ActiveRecord::Base #商品厂商
   belongs_to :shop
+end
+
+class ShopTask < ActiveRecord::Base #新手指引任务
+  belongs_to :shop
+  scope :incomplete, where(completed: false)
 end

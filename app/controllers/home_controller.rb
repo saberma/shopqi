@@ -60,9 +60,7 @@ class HomeController < ApplicationController
 
   # 网店管理首页
   def dashboard
-    if params[:guide]
-      render :guide
-    end
+    render :guide if shop.tasks.incomplete.size > 0
   end
 
   def query

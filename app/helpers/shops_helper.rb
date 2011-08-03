@@ -5,4 +5,8 @@ module ShopsHelper
     shop.primary_domain.url
   end
 
+  def is_home?
+    params[:controller] == 'home'
+  end
+
 end

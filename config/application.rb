@@ -37,7 +37,7 @@ module Shopqi
     backbone_js = %w(jquery.min rails handlebars underscore-min backbone-min backbone.rails plugins)
     config.action_view.javascript_expansions[:defaults] = %w()
     config.action_view.javascript_expansions[:backbone] = backbone_js # 官网注册
-    config.action_view.javascript_expansions[:admin] = backbone_js + %w(jquery-ui-1.8.14.custom.min jquery.tmpl.min rails.validations jquery.blockUI admin_application )
+    config.action_view.javascript_expansions[:admin] = backbone_js + %w(jquery-ui-1.8.14.custom.min jquery.tmpl.min rails.validations jquery.blockUI plugins/jquery.guide admin_application )
     config.action_view.javascript_expansions[:theme] = backbone_js + %w(theme_application) # 仅用于主题商店列表
 
 

@@ -47,7 +47,7 @@ Released: Tue 2nd Aug, 2011 - 00:00
       position = target.offset()
       top =  position.top - (@wrapper.outerHeight() - target.outerHeight()) / 2
       left = -24 - @el.outerWidth() + position.left
-      left -= offset  if offset
+      left -= offset if offset
       @wrapper.addClass("left").css left: left, top: top
 
     @attachRight = (target, offset) ->
@@ -78,14 +78,15 @@ Released: Tue 2nd Aug, 2011 - 00:00
 
     @guideIt = () ->
       target = $($this.attr('data-guide-target'))
-      $(document.body).click()
-      text = $this.attr('data-guide-text')
-      position = $this.attr('data-guide-position')
-      target.closest('ul').closest('li').children('.nav-link').click() # 打开下拉选项
-      guide = new Guide target, text, hook: position, offset: {left: 30, bottom: 90, right: 0}[position], ->
-        @wrapper.css('opacity', 0).animate self.offset[position], 'slow'
-      $(document).click guide.clickHandler.bind(guide) # 关闭
-      $this.data 'guide', guide
+      if target[0]
+        $(document.body).click()
+        text = $this.attr('data-guide-text')
+        position = $this.attr('data-guide-position')
+        target.closest('ul').closest('li').children('.nav-link').click() # 打开下拉选项
+        guide = new Guide target, text, hook: position, offset: {left: 30, bottom: 90, right: 0}[position], ->
+          @wrapper.css('opacity', 0).animate self.offset[position], 'slow'
+        $(document).click guide.clickHandler.bind(guide) # 关闭
+        $this.data 'guide', guide
 
     @source = ->
       $this.click ->
@@ -102,6 +103,9 @@ Released: Tue 2nd Aug, 2011 - 00:00
         left: '+=30px'
 
     @source()
+
+  $.guide = (target, text, position) ->
+     new Guide target, text, hook: position
 
   $.fn.extend guide: (options) ->
     @each ->

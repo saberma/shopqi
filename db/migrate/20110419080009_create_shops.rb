@@ -90,10 +90,20 @@ class CreateShops < ActiveRecord::Migration
       t.string :name             , comment: '快递名'            , limit: 32
       t.timestamps
     end
+    add_index :price_based_shipping_rates           , :country_id
+
+    create_table :shop_tasks do |t| #指引任务
+      t.references :shop
+      t.string :name      , comment: '名称'  , size: 32
+      t.boolean :completed, comment: '已完成', default: false
+      t.timestamps
+    end
+    add_index :shop_tasks, :shop_id
 
   end
 
   def self.down
+    drop_table :shop_tasks
     drop_table :price_based_shipping_rates
     drop_table :weight_based_shipping_rates
     drop_table :countries

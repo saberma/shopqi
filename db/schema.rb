@@ -419,6 +419,8 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
     t.datetime "updated_at"
   end
 
+  add_index "price_based_shipping_rates", ["country_id"], :name => "index_price_based_shipping_rates_on_country_id"
+
   create_table "product_options", :force => true do |t|
     t.integer "product_id", :null => false
     t.string  "name"
@@ -494,6 +496,16 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
   end
 
   add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
+
+  create_table "shop_tasks", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "name"
+    t.boolean  "completed",  :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shop_tasks", ["shop_id"], :name => "index_shop_tasks_on_shop_id"
 
   create_table "shop_theme_settings", :force => true do |t|
     t.integer  "shop_theme_id",                :null => false

@@ -59,6 +59,9 @@ StringUtils =
   to_a: (text) ->
     _.uniq _.compact text.split(/[,\uFF0C]\s*/)
 
+  startsWith: (str, starts) ->
+    str.length >= starts.length and str.substring(0, starts.length) is starts
+
   endsWith: (str, ends) ->
     str.length >= ends.length and str.substring(str.length - ends.length) is ends
 
@@ -246,3 +249,15 @@ $(document).ready ->
   UpdateableSelectBox $('#product-vendor-select'), '新增厂商'
 
   $('.blockOverlay,.shopqi-dialog-title-close,.close-lightbox').live 'click', -> $.unblockUI() # 关闭弹出窗口
+
+  $("a[data-guide-target]").guide() # 新手指引
+  if $('#sticky-progress')[0]
+    path = location.pathname
+    if path is '/admin/products'
+      $.guide $('#add-prod a'), '点击此处增加一个商品', 'left'
+    if StringUtils.startsWith path, '/admin/products'
+      $('#task-checkoff').show()
+      $('#progress-bar').hide()
+    else
+      $('#task-checkoff').hide()
+      $('#progress-bar').show()
