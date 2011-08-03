@@ -68,6 +68,7 @@ class CreateShops < ActiveRecord::Migration
       t.string :title               , comment: '政策名字'
       t.text :body                  , comment: '政策内容'
       t.references :shop
+      t.timestamps
     end
 
     add_index :shop_policies , :shop_id

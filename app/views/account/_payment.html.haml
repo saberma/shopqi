@@ -1,21 +1,22 @@
-#payments.group.box2
-  %h3 请输入支付信息(若没有，则点击[申请])
-  %table.data2#payment_type
-    %tbody
-      %tr
-        %th(width= '40px')=tt('payment.number')
-        %th(width= '100px')=tt('payment.payment_type')
-        %th(width= '30px')=tt('payment.apply')
-        %th=tt('payment.account')
-        %th=tt('payment.partner')
-        %th=tt('payment.key')
-        %th=tt('payment.remark')
-      -payment_types.each_with_index do |payment_type, index|
+-#
+  #payments.group.box2
+    %h3 请输入支付信息(若没有，则点击[申请])
+    %table.data2#payment_type
+      %tbody
         %tr
-          %td=index+1
-          %td=payment_type.name
-          %td=link_to tt('payment.apply'), payment_type.link, :target => :_blank
-          %td=on_the_spot_edit payment_type, :account
-          %td=on_the_spot_edit payment_type, :partner
-          %td=on_the_spot_edit payment_type, :key
-          %td=on_the_spot_edit payment_type, :remark
+          %th(width= '40px')=tt('payment.number')
+          %th(width= '100px')=tt('payment.payment_type')
+          %th(width= '30px')=tt('payment.apply')
+          %th=tt('payment.account')
+          %th=tt('payment.partner')
+          %th=tt('payment.key')
+          %th=tt('payment.remark')
+        -payment_types.each_with_index do |payment_type, index|
+          %tr
+            %td=index+1
+            %td=payment_type.name
+            %td=link_to tt('payment.apply'), payment_type.link, :target => :_blank
+            %td=on_the_spot_edit payment_type, :account
+            %td=on_the_spot_edit payment_type, :partner
+            %td=on_the_spot_edit payment_type, :key
+            %td=on_the_spot_edit payment_type, :remark
