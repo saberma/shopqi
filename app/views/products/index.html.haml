@@ -46,49 +46,52 @@
   %a.btn.btn-group.btn-right(href="#{inventory_products_path}")> 库存视图
 / PRODUCTS LIST
 .listing.sst
-  #products
-    %form#batch-form(action="/admin/products/set" method="post")
-      / PRODUCTS LIST
-      .listing
-        %div(style="height: 32px;")
-          %table#product-controls.hide(cellpadding="0" cellspacing="0")
-            %tbody
-              %tr
-                %td(style="text-align: left; vertical-align: middle;")
-                  %select#product-select(name="operation")
-                    %option(selected="selected" style="color: rgb(136, 136, 136);" value="") 选择操作…
-                    %option.indent(value="publish") 发布
-                    %option.indent(value="unpublish") 隐藏
-                    %option.indent(value="destroy") 删除
-                    %optgroup(label="加入自定义集合:")
-                      -custom_collections.each do |collection|
-                        %option(value="add_to_collection-#{collection.id}")=collection.title
-                %td(style="text-align: center; vertical-align: middle;")
-                  #multipage-page.hide
-                    All
-                    %b#multipage-page-count ###
-                    products on this page are selected.
-                    %a#multipage-select-link(href="#" onclick="return false")
-                      Select all
-                      %b#multipage-page-total ###
-                      products
-                  #multipage-all(style="display: none")
-                    %b#multipage-all-count ###
-                    products are selected on all pages.
-                    %a#multipage-clear-link(href="#" onclick="return false") Clear selection
-                %td(style="text-align: right; vertical-align: middle;")
-                  %span#product-count.note(style="margin-bottom: 5px")
-        #product-container
-          %table#product-table.ssb.data(cellpadding="0" cellspacing="0")
-            %thead
-              %tr
-                %th.nosort.sortcol(style="width: 16px;")
-                  %input#select-all(type="checkbox")/
-                %th.nosort.sortcol(style="width: 12px; text-align: center ! important;") &nbsp;
-                %th#product-col.sortcol.sortasc(style="padding-left: 3px; min-width: 150px;") 商品
-                %th.nosort.sortcol 库存
-                %th.sortcol.number(style="text-align: center;") 总数
-            %tbody
+  -if products.size.zero?
+    =render 'get_start'
+  -else
+    #products
+      %form#batch-form(action="/admin/products/set" method="post")
+        / PRODUCTS LIST
+        .listing
+          %div(style="height: 32px;")
+            %table#product-controls.hide(cellpadding="0" cellspacing="0")
+              %tbody
+                %tr
+                  %td(style="text-align: left; vertical-align: middle;")
+                    %select#product-select(name="operation")
+                      %option(selected="selected" style="color: rgb(136, 136, 136);" value="") 选择操作…
+                      %option.indent(value="publish") 发布
+                      %option.indent(value="unpublish") 隐藏
+                      %option.indent(value="destroy") 删除
+                      %optgroup(label="加入自定义集合:")
+                        -custom_collections.each do |collection|
+                          %option(value="add_to_collection-#{collection.id}")=collection.title
+                  %td(style="text-align: center; vertical-align: middle;")
+                    #multipage-page.hide
+                      All
+                      %b#multipage-page-count ###
+                      products on this page are selected.
+                      %a#multipage-select-link(href="#" onclick="return false")
+                        Select all
+                        %b#multipage-page-total ###
+                        products
+                    #multipage-all(style="display: none")
+                      %b#multipage-all-count ###
+                      products are selected on all pages.
+                      %a#multipage-clear-link(href="#" onclick="return false") Clear selection
+                  %td(style="text-align: right; vertical-align: middle;")
+                    %span#product-count.note(style="margin-bottom: 5px")
+          #product-container
+            %table#product-table.ssb.data(cellpadding="0" cellspacing="0")
+              %thead
+                %tr
+                  %th.nosort.sortcol(style="width: 16px;")
+                    %input#select-all(type="checkbox")/
+                  %th.nosort.sortcol(style="width: 12px; text-align: center ! important;") &nbsp;
+                  %th#product-col.sortcol.sortasc(style="padding-left: 3px; min-width: 150px;") 商品
+                  %th.nosort.sortcol 库存
+                  %th.sortcol.number(style="text-align: center;") 总数
+              %tbody
 #btm-nav.act-screen
   #pagination
 
