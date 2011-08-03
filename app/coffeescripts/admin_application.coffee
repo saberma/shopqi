@@ -253,8 +253,6 @@ $(document).ready ->
   $("a[data-guide-target]").guide() # 新手指引
   if $('#sticky-progress')[0]
     path = location.pathname
-    if path is '/admin/products'
-      $.guide $('#add-prod a'), '点击此处增加一个商品', 'left'
     if StringUtils.startsWith path, '/admin/products'
       $('#task-checkoff').show()
       $('#progress-bar').hide()

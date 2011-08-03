@@ -11,6 +11,7 @@ App.Views.Product.Index.Index = Backbone.View.extend
     @collection.view = this
     _.bindAll this, 'render'
     this.render()
+    $.guide $('#add-prod a'), '点击此处增加一个商品', 'left' if @collection.length is 0
 
   render: ->
     _(@collection.models).each (model) ->
