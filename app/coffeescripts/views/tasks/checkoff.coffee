@@ -49,7 +49,7 @@ App.Views.Task.Checkoff = Backbone.View.extend
       when 'setup_payment_gateway'
         '设置您最常用的支付网关'
       when 'setup_taxes'
-        '设置税率'
+        '设置您的税率'
       when 'setup_shipping'
         '设置物流'
       when 'setup_domain'
