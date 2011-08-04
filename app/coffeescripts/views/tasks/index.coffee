@@ -7,9 +7,13 @@ App.Views.Task.Index = Backbone.View.extend
 
   render: ->
     self = this
-    if current_guide?
-      $('#task-checkoff').show()
-      $('#progress-bar').hide()
-    else
-      $('#task-checkoff').hide()
-      $('#progress-bar').show()
+    @collection.each (model) -> new App.Views.Task.Show model: model
+    if task_name?
+      task = @collection.detect (model) -> model.get('name') is task_name
+      unless task.get('completed')
+        new App.Views.Task.Checkoff model: task, collection: @collection
+        $('#task-checkoff').show()
+        $('#progress-bar').hide()
+        return
+    $('#task-checkoff').hide()
+    $('#progress-bar').show()

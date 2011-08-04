@@ -63,8 +63,8 @@ class HomeController < ApplicationController
   end
 
   def complete_task # 完成新手指引任务
-    task = shop.tasks.where(name: params[:name])
-    task.update_attribute! :complete_task, true
+    task = shop.tasks.where(name: params[:name]).first
+    task.update_attributes! completed: true
     render nothing: true
   end
 

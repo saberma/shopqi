@@ -1,23 +1,22 @@
 #sticky-progress.position-fixed
   #launch-bar
     #task-checkoff.hide.clearfix
-      %form(accept-charset="UTF-8" action="/admin/dashboard/complete_task/add_product" method="post")
-        #task-meta
-          %strong 增加一个商品
-          %small 剩余 7 个步骤
-        / .task-meta
-        %p
-          您的商店至少要有一个商品! 点击
-          %a(data-guide-position="left" data-guide-target="#action-links li a[href='/admin/products/new']" data-guide-text="点击此处增加一个商品" href="#") 增加一个商品
-          开始录入商品信息.
-        %ul
-          %li.task-completed
-            %a#complete-task-button(data-method="put" data-remote="true" href="/admin/dashboard/complete_task/add_product" rel="nofollow")
-              我已经完成此步骤
-              %em.icon
-          %li.pick-another-task
-            %a(data-method="put" data-remote="true" href="/admin/dashboard/complete_task/add_product?skip=true" rel="nofollow") 跳过这一步
 
     #progress-bar-container
       #progress-bar(style="display:none")=render 'home/progress_task'
 / #sticky-progress
+%script(id="add_product-checkoff-item" type="text/x-jquery-tmpl")
+  #task-meta
+    %strong 增加一个商品
+    %small 剩余 {{{incomplete_task_count}}} 个步骤
+  %p
+    您的商店至少要有一个商品! 点击
+    %a(data-guide-position="left" data-guide-target="#action-links li a[href='/admin/products/new']" data-guide-text="点击此处增加一个商品" href="#") 增加一个商品
+    开始录入商品信息.
+  %ul
+    %li.task-completed
+      %a#complete-task-button(href="#")
+        我已经完成此步骤
+        %em.icon
+    %li.pick-another-task
+      %a#skip-task-button(href="#") 跳过这一步
