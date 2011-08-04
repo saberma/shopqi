@@ -29,5 +29,25 @@ App.Views.Task.Checkoff = Backbone.View.extend
       self.model.set completed: true
       $(self.el).fadeOut 500, ->
         $('#progress-bar').fadeIn 500, ->
-          $.guide $("##{next_task.get('name')}"), "下一步骤是 #{next_task.get('name')}", 'top'
+          $.guide $("##{next_task.get('name')}"), self.next_step_message(next_task), 'top'
     false
+
+  next_step_message: (task) ->
+    message = "下一步骤是 "
+    name = task.get('name')
+    desc = switch name
+      when 'customize_theme'
+        '定制您的主题设置'
+      when 'add_content'
+        '发布您的商店公告'
+      when 'setup_payment_gateway'
+        '设置支付网关'
+      when 'setup_taxes'
+        '设置税率'
+      when 'setup_shipping'
+        '设置物流'
+      when 'setup_domain'
+        '设置域名'
+      when 'launch'
+        '启用商店'
+    "#{message} #{desc}"
