@@ -1,0 +1,19 @@
+%h1
+  ==#{shop.name} 已经完成
+  %strong 29%
+  只剩下5个步骤了!
+#what-is-next.clearfix
+  =image_tag "admin/icons/progressbar/#{@task.name}.jpg"
+  #next-step-description
+    %h2
+      %strong 下一步骤:
+      内容
+    %p
+      如果您想添加新网页到您的商店，或者发布一篇博客文章，请
+      前往
+      %a.show_customize_theme_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/pages']" data-guide-text="点击此处修改您的商店内容" href="##{@task.name}")
+        %em.icon
+        %strong.triangle
+        博客 &amp; 页面
+  / #name
+/ #what-is-next
