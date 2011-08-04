@@ -59,7 +59,11 @@ class HomeController < ApplicationController
   end
 
   def dashboard # 网店管理首页
-    render :guide if shop.tasks.incomplete.size > 0
+    incomplete_tasks = shop.tasks.incomplete
+    if incomplete_tasks.size > 0
+      @task = incomplete_tasks.first
+      render :guide
+    end
   end
 
   def complete_task # 完成新手指引任务

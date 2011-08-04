@@ -5,18 +5,23 @@
     #progress-bar-container
       #progress-bar(style="display:none")=render 'home/progress_task'
 / #sticky-progress
-%script(id="add_product-checkoff-item" type="text/x-jquery-tmpl")
+%script(id="checkoff-item" type="text/x-jquery-tmpl")
   #task-meta
-    %strong 增加一个商品
+    %strong {{{name}}}
     %small 剩余 {{{incomplete_task_count}}} 个步骤
-  %p
-    您的商店至少要有一个商品! 点击
-    %a(data-guide-position="left" data-guide-target="#action-links li a[href='/admin/products/new']" data-guide-text="点击此处增加一个商品" href="#") 增加一个商品
-    开始录入商品信息.
+  %p.desc
   %ul
     %li.task-completed
       %a#complete-task-button(href="#")
         我已经完成此步骤
         %em.icon
     %li.pick-another-task
-      %a#skip-task-button(href="#") 跳过这一步
+      %a#skip-task-button(href="#") 选择其他步骤
+%script(id="add_product-desc-item" type="text/x-jquery-tmpl")
+  您的商店至少要有一个商品! 点击
+  %a(data-guide-position="left" data-guide-target="#action-links li a[href='/admin/products/new']" data-guide-text="点击此处增加一个商品" href="#") 增加一个商品
+  开始录入商品信息.
+%script(id="customize_theme-desc-item" type="text/x-jquery-tmpl")
+  在此页面中修改您当前的主题，或者在
+  %a(href="#{Setting.theme_store_url}" target="_blank") ShopQi主题商店
+  中选择一个新的主题

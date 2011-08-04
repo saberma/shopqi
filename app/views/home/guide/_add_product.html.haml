@@ -1,0 +1,16 @@
+%h1 ShopQi欢迎您！在您启用商店之前，我们将引导您完成7个小步骤.
+#what-is-next.clearfix
+  =image_tag "admin/icons/progressbar/#{@task.name}.jpg"
+  #next-step-description
+    %h2
+      %strong 下一步骤:
+      商品
+    %p
+      您的商店还没有商品! 前往
+      %a.show_add_product_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/products']" data-guide-text="点击此处增加一个商品" href="#add_product")
+        %em.icon
+        %strong.triangle
+        商品页面
+      并且增加您的第一个商品.
+  / #name
+/ #what-is-next
