@@ -26,6 +26,12 @@ class Setting < Settingslogic
     end
   end
 
+  begin 'plans for shopqi'
+    def self.plans(name)
+      Setting.plans.__send__ name
+    end
+  end
+
   private
   def self.add_port_to(host)
     host += ":#{Setting.domain.port}" unless Setting.domain.port == 80
