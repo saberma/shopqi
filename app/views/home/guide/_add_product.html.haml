@@ -7,7 +7,7 @@
       商品
     %p
       您的商店还没有商品! 前往
-      %a.show_add_product_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/products']" data-guide-text="点击此处增加一个商品" href="##{@task.name}")
+      %a(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/products']" data-guide-text="点击此处增加一个商品" href="##{@task.name}" class="show_#{@task.name}_guide")
         %em.icon
         %strong.triangle
         商品页面

@@ -20,7 +20,7 @@ Released: Tue 2nd Aug, 2011 - 00:00
 
     # postion => {hook: bottom, offset: 90}
     @attach = (target, position) ->
-      #@wrapper.style.position = "fixed"  if b.up(".position-fixed")
+      @wrapper.css('position', 'fixed') if target.closest(".position-fixed")[0] # 指向#sticky-progress中的元素时要固定位置
       e =
         left: @attachLeft
         bottom: @attachBelow

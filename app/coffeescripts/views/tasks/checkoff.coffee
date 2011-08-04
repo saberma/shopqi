@@ -39,7 +39,7 @@ App.Views.Task.Checkoff = Backbone.View.extend
     false
 
   next_step_message: (task) ->
-    message = "下一步骤是 "
+    message = "下一步是 "
     name = task.get('name')
     desc = switch name
       when 'customize_theme'
@@ -47,7 +47,7 @@ App.Views.Task.Checkoff = Backbone.View.extend
       when 'add_content'
         '修改您的网页内容'
       when 'setup_payment_gateway'
-        '设置支付网关'
+        '设置您最常用的支付网关'
       when 'setup_taxes'
         '设置税率'
       when 'setup_shipping'
@@ -67,7 +67,7 @@ App.Views.Task.Checkoff = Backbone.View.extend
       when 'add_content'
         '增加内容'
       when 'setup_payment_gateway'
-        '设置支付网关'
+        '支付网关'
       when 'setup_taxes'
         '设置税率'
       when 'setup_shipping'

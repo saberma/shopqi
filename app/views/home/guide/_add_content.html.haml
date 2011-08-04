@@ -11,7 +11,7 @@
     %p
       如果您想添加新网页到您的商店，或者发布一篇博客文章，请
       前往
-      %a.show_customize_theme_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/pages']" data-guide-text="点击此处修改您的商店内容" href="##{@task.name}")
+      %a(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/pages']" data-guide-text="点击此处修改您的商店内容" href="##{@task.name}" class="show_#{@task.name}_guide")
         %em.icon
         %strong.triangle
         博客 &amp; 页面
