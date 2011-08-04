@@ -3,6 +3,7 @@ App.Views.Task.Show = Backbone.View.extend
 
   initialize: ->
     self = this
+    @model.view = this # 与checkoff.coffee交互
     this.render()
     $(@el).attr 'id', @model.get('name')
     $('#progress-bar ul').append @el

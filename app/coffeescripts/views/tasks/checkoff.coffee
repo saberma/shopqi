@@ -28,8 +28,15 @@ App.Views.Task.Checkoff = Backbone.View.extend
     false
 
   skip: ->
-    $(@el).fadeOut 500, ->
-      $('#progress-bar').fadeIn 500
+    self = this
+    $(@el).fadeOut 500, -> $('#progress-bar').fadeIn 500
+    link = $(@model.view.el).find('a')
+    unless link.data('reverted') # 避免多次绑定click事件
+      link.data('reverted', true)
+      link.click -> # 再次点击当前任务时重新显示checkoff面板
+        $('#progress-bar').fadeOut 500, -> $(self.el).fadeIn 500
+        false
+    false
 
   next_step_message: (task) ->
     message = "下一步骤是 "
