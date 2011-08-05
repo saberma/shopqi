@@ -73,10 +73,8 @@
               -#
                 %li#fulfillment
                   %a(href="https://github.shopqi.com/admin/fulfillment_services") 其他服务
-              %li#email
-                =link_to "Email & 提醒", notifications_path
-              %li#network
-                %a(href="#") 域名
+              %li#email=link_to "Email & 提醒", notifications_path
+              %li#network=link_to "DNS & 域名", domains_path
       #main.clearfix.col-12.last.fullscreen=yield
     #footer
       %ul

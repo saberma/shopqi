@@ -14,6 +14,10 @@ class Setting < Settingslogic
     def self.theme_store_url # http://themes.shopqi.com:4000
       "http://themes.#{Setting.host_with_port}"
     end
+
+    def self.wiki_url # http://wiki.shopqi.com:4000
+      "http://wiki.#{Setting.host_with_port}"
+    end
   end
 
   begin '.myshopqi.com'

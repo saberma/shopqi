@@ -1,0 +1,23 @@
+.section
+  %h3 通过ShopQi注册域名
+  %p.note
+    ShopQi提供很多域名，您可以购买。
+    = succeed "." do
+      =link_to '了解如何通过ShopQi注册域名', "#{Setting.wiki_url}/Register_domain"
+  / if they have no domains
+  .box2.sst
+    %p
+      %em 您还没有通过ShopQi注册域名。通过ShopQi注册的域名会自动与您的商店绑定.
+    %form(action="/admin/remote_domains/check" method="post")
+      http://www.
+      %input#remote_domain_incoming_sld(name="remote_domain[incoming_sld]" size="27" type="text")/
+      %select#remote_domain_incoming_tld(name="remote_domain[incoming_tld]")
+        %option(value=".com") .com (￥ 88.00 元)
+      %input#remote_domain_submit(name="commit" onclick="$('spinner').show(); $('domain-suggestion-container').hide()" type="submit" value="检查新域名是否可用")
+      %span#spinner(style="display:none")=image_tag 'spinner.gif'
+    #domain-suggestion-container.domainavailability.warning(style="display:none;")
+      %h4#register-domain-status
+      %p#suggestions-title
+      %ul#suggestions
+    / .domainavailability
+/ end section

@@ -1,0 +1,60 @@
+%h2#title DNS &amp; 域名
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+#action-links
+  %ul
+.pgroup.st.domain-page(style="margin-bottom: 5px")
+  .section
+    %h3 域名管理
+    %p.note
+      这些是您的商店当前使用的域名.
+      = succeed "." do
+        =link_to '了解如何在ShopQi设置您的域名', "#{Setting.wiki_url}/DNS"
+    %table#domains.st.data.domainlisting(cellpadding="0" cellspacing="0")
+      %tr
+        %th(scope="col") 域名
+        %th.c(scope="col" style="text-align: center" width="50px") DNS
+        %th(colspan="2" scope="col" width="140px") &nbsp;
+      %tr.primary
+        %td.primary
+          %span.note http://
+          %span
+            %a.host(href="http://hfmhb.myshopqi.com") hfmhb.myshopqi.com
+        %td.c
+          %span#domain-1631192.dns-check=image_tag 'spinner.gif'
+        %td(style="text-align: left; padding: 10px")
+          %form#shop-update(action="https://hfmhb.myshopqi.com/admin/domains/1631192/force_redirection" method="post")
+            %p(style="margin: 0 0 7px")
+              %strong 主域名
+            %p#force-domain(style="margin: 0")
+              %small
+                %input(name="shop[force_domain]" type="hidden" value="0")/
+                %input#shop_force_domain(name="shop[force_domain]" onclick="$(&quot;shop-update&quot;).simulate(&quot;submit&quot;);" type="checkbox" value="1")/
+                %label(for="shop_force_domain" style="font-weight: normal") 总是重定向顾客到这里?
+        %td.deletions
+      %tr#add-domain-link
+        %td.action-link(colspan="4" onclick="$('add-domain-link').hide(); $('add-domain').show(); $('domain_host').select(); return false;")
+          %a(href="#")
+            %span.plus +
+            新增一个您已经拥有的域名
+    #add-domain.group(style="display:none;")
+      %form(action="/admin/domains" method="post")
+        .group-fields
+          .instructions
+            %p
+              %strong 请在下方输入您的域名
+            %p
+              http://
+              %input#domain_host(name="domain[host]" size="32" type="text")
+        / instructions
+    / .group-fields
+    .group-actions
+      %input.btn(name="commit" type="submit" value="绑定此域名")
+      或者
+      %a(href="#" onclick="$('add-domain').hide(); $('add-domain-link').show(); return false; return false;") 取消
+    / .group-actions
+  / .group
+-#=render 'buy'
+
+:javascript
+  task_name = 'setup_domain';
