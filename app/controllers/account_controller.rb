@@ -1,12 +1,11 @@
 class AccountController < ApplicationController
   prepend_before_filter :authenticate_user!
-  can_edit_on_the_spot
-  layout 'admin'
+  layout :determine_layout
+
   expose(:shop){ current_user.shop }
   expose(:users){ current_user.shop.users}
   expose(:user)
-  #expose(:payment_types){ KeyValues::PaymentType.payments(shop)}
-  #expose(:payments){ shop.payments }
+  expose(:plan_type){KeyValues::Plan::Type.find_by_code(params[:code])}
 
   def change_ownership
     if params[:user]
@@ -19,20 +18,40 @@ class AccountController < ApplicationController
     redirect_to account_index_path
   end
 
-  #def update_attribute_on_the_spot
-  #  klass, field, id = params[:id].split('__')
-  #  payment = payments.where(:payment_type_id => id).first
-  #  attrs = {:payment_type_id => id, field => params[:value]}
-  #  if payment
-  #    payment.update_attributes(attrs)
-  #  else
-  #    payment = payments.create(attrs)
-  #  end
-  #  render :text => payment.send(field)
-  #end
-
   #用于用户升级账户
-  def change
+  def confirm_plan
+    @consumption = shop.consumptions.create plan_type_id: plan_type.id,price: plan_type.price, quantity: params[:consumption][:quantity]
   end
 
-end
+  def change_plan
+  end
+
+  def notify
+    notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
+    ap request.raw_post
+    ap notification
+    ap valid?(notification)
+    if notification.acknowledge && valid?(notification)
+      @consumption = Consumption.find_by_token(notification.out_trade_no)
+      @consumption.pay! if notification.status == "TRADE_FINISHED"
+      render :text => "success"
+    else
+      render :text => "fail"
+    end
+  end
+
+
+    protected
+    def determine_layout
+      %w(confirm_plan change_plan).include?(action_name) ? "application" : "admin"
+    end
+
+    private
+    # 确认验证请求是从支付宝发出的
+    def valid?(notification)
+      url = "http://notify.alipay.com/trade/notify_query.do"
+      result = HTTParty.get(url, :query => {:partner => ActiveMerchant::Billing::Integrations::Alipay::ACCOUNT, :notify_id => notification.notify_id}).body
+      result == 'true'
+    end
+
+  end

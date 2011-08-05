@@ -30,6 +30,8 @@ class Shop < ActiveRecord::Base
   has_many :payments              , dependent: :destroy
   has_many :tasks                 , dependent: :destroy                      , order: :id.asc, class_name: 'ShopTask'
   has_many :policies              , dependent: :destroy                     ,  order: :id.asc, class_name: 'ShopPolicy'
+  has_many :plans                 , dependent: :destroy
+  has_many :consumptions          , dependent: :destroy
 
   accepts_nested_attributes_for :domains, :theme, :policies
   attr_readonly :orders_count

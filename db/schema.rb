@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110728024129) do
+ActiveRecord::Schema.define(:version => 20110804132348) do
 
   create_table "activities", :force => true do |t|
     t.string   "operate"
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
   end
 
   add_index "comments", ["article_id"], :name => "index_comments_on_article_id"
+
+  create_table "consumptions", :force => true do |t|
+    t.string   "token",        :limit => 32, :null => false
+    t.integer  "shop_id"
+    t.integer  "quantity"
+    t.float    "price"
+    t.boolean  "status"
+    t.integer  "plan_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "countries", :force => true do |t|
     t.integer  "shop_id"
@@ -409,6 +420,15 @@ ActiveRecord::Schema.define(:version => 20110728024129) do
   end
 
   add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
+
+  create_table "plans", :force => true do |t|
+    t.integer  "plan_type_id"
+    t.date     "deadline"
+    t.boolean  "status",       :default => true
+    t.integer  "shop_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "price_based_shipping_rates", :force => true do |t|
     t.integer  "country_id"

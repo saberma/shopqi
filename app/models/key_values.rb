@@ -69,6 +69,15 @@ module KeyValues
     end
   end
 
+  module Plan
+    class Type < KeyValues::Base
+        self.data = [
+          {id: 1   ,name:'基础'  , code: 'basic',        skus: 100, storage: 100, price: 0.01},
+          {id: 2   ,name:'专业'  , code: 'professional', skus: 2500, storage: 500, price: 0.02}
+        ]
+    end
+  end
+
   module Mail
 
     class Type < KeyValues::Base
