@@ -1,0 +1,18 @@
+%h1
+  ==#{shop.name} 已经完成
+  %strong 45%
+  只剩下4个步骤了!
+#what-is-next.clearfix
+  =image_tag "admin/icons/progressbar/#{@task.name}.jpg"
+  #next-step-description
+    %h2
+      %strong 下一步骤:
+      支付网关
+    %p
+      %a(data-guide-position="left" data-guide-target="#payment a" data-guide-text="点击此处选择您的支付网关" href="##{@task.name}" class="show_#{@task.name}_guide")
+        %em.icon
+        %strong.triangle
+        设置一个支付网关
+      用于从顾客那里接收货款
+  / #name
+/ #what-is-next

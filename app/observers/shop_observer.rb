@@ -47,6 +47,7 @@ class ShopObserver < ActiveRecord::Observer
       {name: :setup_taxes},
       {name: :setup_shipping},
       {name: :setup_domain},
+      {name: :launch},
     ]
 
     # 创建各个邮件样板

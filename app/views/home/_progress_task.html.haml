@@ -1,47 +1,46 @@
 %ul.clearfix
-  %li#add_product.add_product.incomplete
-    %span
-      %a.show_add_product_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/products']" data-guide-text="点击此处增加一个商品" href="#add_product")
-        %em.icon
-        %strong.triangle
-        添加商品
-  %li#customize_theme.customize_theme.incomplete
-    %span
-      %a.show_customize_theme_guide(data-guide-position="left" data-guide-target="#nav-theme-settings a" data-guide-text="点击此处修改您的主题外观" href="#customize_theme")
-        %em.icon
-        %strong.triangle
-        定制外观
-  %li#add_content.add_content.incomplete
-    %span
-      %a.show_add_content_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/pages']" data-guide-text="点击此处修改您的内容" href="#add_content")
-        %em.icon
-        %strong.triangle
-        内容管理
-  %li#setup_payment_gateway.setup_payment_gateway.incomplete
-    %span
-      %a.show_setup_payment_gateway_guide(data-guide-position="left" data-guide-target="#payment a" data-guide-text="点击此处选择您的支付网关" href="#setup_payment_gateway")
-        %em.icon
-        %strong.triangle
-        支付网关
-  %li#setup_taxes.setup_taxes.incomplete
-    %span
-      %a.show_setup_taxes_guide(data-guide-position="left" data-guide-target="#regions a" data-guide-text="点击此处设置您的税率" href="#setup_taxes")
-        %em.icon
-        %strong.triangle
-        调整税率
-  %li#setup_shipping.setup_shipping.incomplete
-    %span
-      %a.show_setup_shipping_guide(data-guide-position="left" data-guide-target="#shipping a" data-guide-text="点击此处设置您的物流费用" href="#setup_shipping")
-        %em.icon
-        %strong.triangle
-        物流配送
-  %li#setup_domain.setup_domain.incomplete
-    %span
-      %a.show_setup_domain_guide(data-guide-position="left" data-guide-target="#network a" data-guide-text="点击此处管理您的域名" href="#setup_domain")
-        %em.icon
-        %strong.triangle
-        绑定域名
-  %li.launch.incomplete
-    %span
-      %strong 启用您的商店
-/ #progress-bar
+%script(id="add_product-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_add_product_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/products']" data-guide-text="点击此处增加一个商品" href="#add_product")
+      %em.icon
+      %strong.triangle
+      添加商品
+%script(id="customize_theme-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_customize_theme_guide(data-guide-position="left" data-guide-target="#nav-theme-settings a" data-guide-text="点击此处修改您的主题外观" href="#customize_theme")
+      %em.icon
+      %strong.triangle
+      定制外观
+%script(id="add_content-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_add_content_guide(data-guide-position="bottom" data-guide-target="#navlist li a[href='/admin/pages']" data-guide-text="点击此处修改您的商店内容" href="#add_content")
+      %em.icon
+      %strong.triangle
+      内容管理
+%script(id="setup_payment_gateway-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_setup_payment_gateway_guide(data-guide-position="left" data-guide-target="#payment a" data-guide-text="点击此处选择您的支付网关" href="#setup_payment_gateway")
+      %em.icon
+      %strong.triangle
+      支付网关
+%script(id="setup_taxes-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_setup_taxes_guide(data-guide-position="left" data-guide-target="#regions a" data-guide-text="点击此处设置您的税率" href="#setup_taxes")
+      %em.icon
+      %strong.triangle
+      调整税率
+%script(id="setup_shipping-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_setup_shipping_guide(data-guide-position="left" data-guide-target="#shipping a" data-guide-text="点击此处设置您的物流费用" href="#setup_shipping")
+      %em.icon
+      %strong.triangle
+      物流配送
+%script(id="setup_domain-item" type="text/x-jquery-tmpl")
+  %span
+    %a.show_setup_domain_guide(data-guide-position="left" data-guide-target="#network a" data-guide-text="点击此处管理您的域名" href="#setup_domain")
+      %em.icon
+      %strong.triangle
+      绑定域名
+%script(id="launch-item" type="text/x-jquery-tmpl")
+  %span
+    %strong 启用您的商店
