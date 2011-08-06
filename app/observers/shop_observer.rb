@@ -5,6 +5,7 @@ class ShopObserver < ActiveRecord::Observer
   def after_create(shop)
     # 集合
     frontpage_collection = shop.custom_collections.create title: '首页商品', handle: 'frontpage'
+    shop.plans.create
 
     # 页面
     welcome_page = shop.pages.create title: '欢迎', handle: 'frontpage', body_html: %q{

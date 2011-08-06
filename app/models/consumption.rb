@@ -6,10 +6,8 @@ class Consumption < ActiveRecord::Base
 
   def pay!
     self.update_attributes status: true
-    base = shop.current_plan.deadline.future? ? shop.deadline : Date.today
+    base = shop.deadline.future? ? shop.deadline : Date.today
     deadline = base + 30 * self.quantity
-    shop.plans.update_all status: false
-    Plan.create shop: self.shop, plan_type_id: self.plan_type_id, deadline: deadline
   end
 
 end
