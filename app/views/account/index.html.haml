@@ -7,38 +7,7 @@
 =render partial:"shared/upgrade_ie"
 =render partial:'plans'
 .group.box2
-  %table#account-about.values-aligned{:cellspacing => "0"}
-    %tr
-      %td.r 您的商店URL地址:
-      %td=show_shop_url
-    %tr
-      %td.r
-        SKUs used:
-      %td
-        %div{:style => "width:140px"}
-          .progress-container{:style => "margin-top:7px"}
-            .progress-bar{:style => "width: 21%; "}
-        %span.note{:style => ""} 79 remaining
-    %tr#disk-management
-      %td.r
-        Storage space:
-      %td
-        %div{:style => "width:170px"}
-          .progress-container{:style => "margin-top:7px"}
-            .progress-bar{:style => "width: 2%; "}
-        %span.note 97.1 MB free
-    %tr
-      %td &nbsp;
-      %td
-        %a.icon.uploaded-files{:href => "/admin/files"} show uploaded files
-    %tr
-      %td.r Member since:
-      %td April 13, 2011
-      %td.r Next invoice:
-      %td May 14, 2011
-    %tr
-      %td.r Account status:
-      %td{:colspan => "3"} active
+  =render partial: 'about'
 #staff-members.group.box2
   %h3 用户列表
   #user-list

@@ -7,6 +7,8 @@ class AccountController < ApplicationController
   expose(:user)
   expose(:plan_types){KeyValues::Plan::Type.all}
   expose(:plan_type){KeyValues::Plan::Type.find_by_code(params[:code])}
+  expose(:current_plan_type){ shop.plan_type }
+  expose(:skus_size){ shop.variants.where("sku != ''").size }
 
   def change_ownership
     if params[:user]
