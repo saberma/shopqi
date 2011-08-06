@@ -5,6 +5,7 @@ class AccountController < ApplicationController
   expose(:shop){ current_user.shop }
   expose(:users){ current_user.shop.users}
   expose(:user)
+  expose(:plan_types){KeyValues::Plan::Type.all}
   expose(:plan_type){KeyValues::Plan::Type.find_by_code(params[:code])}
 
   def change_ownership

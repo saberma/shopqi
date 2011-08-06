@@ -2,103 +2,26 @@
   %table.data2{:cellspacing => "0"}
     %tr
       %th 方案
-      %th{:style => "text-align: center"} Monthly
-      %th{:style => "text-align: center"} Transaction&nbsp;Fee
-      %th{:style => "text-align: center"} SKUs
-      %th{:style => "text-align: center"} Storage
-      %th{:style => "text-align: center"} Carrier&nbsp;Shipping
-      %th{:style => "text-align: center"} Discounts
-      %th{:style => "text-align: center"} Stats
-      %th{:style => "text-align: center"} Admin&nbsp;SSL
-      %th{:style => "text-align: center"} Own&nbsp;Domains
-      %th{:style => "text-align: center"} CDN
-    %tr
-      %td
-        %strong Premier
-        %br/
-        =link_to w('upgrade'),'https://medhurst-shields-and-kunde7896.myshopify.com/admin/subscription/change/premier'
-      %td $699
-      %td 0%
-      %td 50,000
-      %td 5 GB
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-    %tr
-      %td
-        %strong Enterprise
-        %br/
-        =link_to w('upgrade'),'https://medhurst-shields-and-kunde7896.myshopify.com/admin/subscription/change/premier'
-      %td $249
-      %td 0.5%
-      %td 25,000
-      %td 2.5 GB
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-    %tr
-      %td
-        %strong Business
-        %br/
-        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/subscription/change/business"} Upgrade
-      %td $99
-      %td 1.0%
-      %td 10,000
-      %td 1000 MB
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-    %tr
-      %td
-        %strong Professional
-        %br/
-        %a{:href => "https://medhurst-shields-and-kunde7896.myshopify.com/admin/subscription/change/professional"} Upgrade
-      %td $59
-      %td 1.0%
-      %td 2,500
-      %td 500 MB
-      %td -
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-    %tr
-      %td
-        %strong Basic
-        %br/
-        =link_to w('upgrade'),change_plan_path(code: 'basic')
-      %td $29
-      %td 2.0%
-      %td 100
-      %td 100 MB
-      %td -
-      %td -
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-      %td=image_tag 'admin/icons/check2.gif'
-    %tr.current-plan
-      %td
-        %strong Development
-        %br/
-        %span.note Your Plan
-      %td $0
-      %td 0.0%
-      %td 100
-      %td 100 MB
-      %td -
-      %td=image_tag 'admin/icons/check2.gif'
-      %td -
-      %td=image_tag 'admin/icons/check2.gif'
-      %td -
-      %td -
+      %th{:style => "text-align: center"} 费用(元/月)
+      %th{:style => "text-align: center"} 最多商品款式数量
+      %th{:style => "text-align: center"} 存储空间(M)
+      -#%th{:style => "text-align: center"} 商品打折促销
+      %th{:style => "text-align: center"} SSL
+      %th{:style => "text-align: center"} 绑定域名
+      %th{:style => "text-align: center"} 统计
+    -plan_types.each do |plan_type|
+      -flag = shop.plan == plan_type.code
+      %tr(class="#{flag ? 'current-plan' : ''}")
+        %td
+          %strong=plan_type.name
+          %br/
+          -if flag
+            %span.note 您当前得方案
+          -else
+            =link_to w('upgrade'),change_plan_path(code: plan_type.code)
+        %td=plan_type.price
+        %td=plan_type.skus
+        %td=plan_type.storage
+        %td=image_tag 'admin/icons/check2.gif'
+        %td=image_tag 'admin/icons/check2.gif'
+        %td=image_tag 'admin/icons/check2.gif'

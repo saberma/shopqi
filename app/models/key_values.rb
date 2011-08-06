@@ -72,8 +72,10 @@ module KeyValues
   module Plan
     class Type < KeyValues::Base
         self.data = [
-          {id: 1   ,name:'基础'  , code: 'basic',        skus: 100, storage: 100, price: 0.01},
-          {id: 2   ,name:'专业'  , code: 'professional', skus: 2500, storage: 500, price: 0.02}
+          {id: 1   ,name:'无限版'  , code: 'unlimited'   , skus: '不限', storage: '不限', price: 0.04},
+          {id: 2   ,name:'企业版'  , code: 'business'    , skus: 2500  , storage: 1000  , price: 0.03},
+          {id: 3   ,name:'专业版'  , code: 'professional', skus: 500   , storage: 500   , price: 0.02},
+          {id: 4   ,name:'基础版'  , code: 'basic'       , skus: 100   , storage: 100   , price: 0.01},
         ]
     end
   end
