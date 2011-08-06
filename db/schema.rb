@@ -421,15 +421,6 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
 
   add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
 
-  create_table "plans", :force => true do |t|
-    t.integer  "plan_type_id"
-    t.date     "deadline"
-    t.boolean  "status",       :default => true
-    t.integer  "shop_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "price_based_shipping_rates", :force => true do |t|
     t.integer  "country_id"
     t.float    "price"
@@ -561,7 +552,7 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   create_table "shops", :force => true do |t|
     t.string   "name",                :limit => 16
     t.string   "phone",               :limit => 16
-    t.string   "plan",                :limit => 16
+    t.string   "plan",                :limit => 16, :default => "basic"
     t.date     "deadline"
     t.string   "province",            :limit => 8
     t.string   "city",                :limit => 8

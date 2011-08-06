@@ -3,15 +3,6 @@ defaults: &defaults
     host: lvh.me
     store_host: smackaho.st
     port: 4000
-  plans:
-    basic:
-      sku_limit: 100
-      storage: 100
-      price: 1
-    Professional:
-      sku_limit: 2500
-      storage: 500
-      price: 2
   templates:
     email:
       order_confirm:

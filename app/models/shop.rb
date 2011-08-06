@@ -46,6 +46,10 @@ class Shop < ActiveRecord::Base
     domains.primary
   end
 
+  def plan_type
+    KeyValues::Plan::Type.find_by_code(self.plan)
+  end
+
   protected
   def init_valid_date
     self.deadline = Date.today.next_day(30)
