@@ -32,6 +32,7 @@ App =
     Payment: {}
     ProductOption: {}
     Task: {}
+    Domain: {}
   Controllers:
     Orders: {}
     Customers: {}

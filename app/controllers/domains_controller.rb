@@ -5,4 +5,5 @@ class DomainsController < ApplicationController
 
   expose(:shop) { current_user.shop }
   expose(:domains) { shop.domains }
+  expose(:domains_json) { domains.to_json(except: [:created_at, :updated_at]) }
 end
