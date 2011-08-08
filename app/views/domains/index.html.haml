@@ -17,7 +17,7 @@
       %thead
         %tr
           %th(scope="col") 域名
-          %th.c(scope="col" style="text-align: center" width="50px") DNS
+          %th.c(scope="col" style="text-align: center" width="100px") DNS绑定至商店
           %th(colspan="2" scope="col" width="140px") &nbsp;
       %tbody.items
       %tbody
@@ -69,6 +69,8 @@
       %a.btn(href="#") 作为主域名
     {{/if}}
   %td.deletions
+%script(id="dns-wiki-item" type="text/x-jquery-tmpl")
+  %a(href="#{Setting.wiki_url}/DNS#CNAME_Status" target="_blank") 失败
 
 :javascript
   App.domains = new App.Collections.Domains(#{domains_json});

@@ -73,8 +73,16 @@ class ShopDomain < ActiveRecord::Base # 域名
     where(host: host).first
   end
 
+  def self.myshopqi # shopqi官方提供的二级子域名
+    where(domain: Setting.store_host).first
+  end
+
   def self.primary # 暂时取第一个
     first
+  end
+
+  def is_myshopqi? # 是否为shopqi官方提供的二级子域名
+    self.domain == Setting.store_host
   end
 
   def url # http://admin.myshopqi.com
