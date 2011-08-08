@@ -65,5 +65,3 @@ App.Views.Payment.Show = Backbone.View.extend
         error: (model,error)  ->
           error_msg error
           $('.submit').attr('disabled', false).val '保存'
-
-
