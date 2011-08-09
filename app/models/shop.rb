@@ -60,12 +60,11 @@ class ShopDomain < ActiveRecord::Base # 域名
   belongs_to :shop
 
   #域名须为3到20位数字和字母组成的，且唯一
-  validates :subdomain, presence: true, length: 3..32        , format: {with:  /\A([a-z0-9])*\Z/ }
-  validates :domain   , presence: true, length: {maximum: 32}
+  validates :subdomain, presence: true, length: 3..32        , format: {with:  /\A([a-z0-9])*\Z/ }, unless: "domain.blank?"
   validates :host     , presence: true, length: {maximum: 64}, uniqueness: true
 
   before_validation do
-    self.host = "#{self.subdomain}#{self.domain}"
+    self.host ||= "#{self.subdomain}#{self.domain}"
   end
 
   # @host admin.myshopqi.com

@@ -22,11 +22,15 @@
       %tbody.items
       %tbody
         %tr#add-domain-link
-          %td.action-link(colspan="4" onclick="$('add-domain-link').hide(); $('add-domain').show(); $('domain_host').select(); return false;")
+          %td.action-link(colspan="4")
             %a(href="#")
               %span.plus +
               新增一个您已经拥有的域名
     #add-domain.group(style="display:none;")
+      #errorExplanation.errorExplanation(style="display:none;")
+        %h2 保存时发生1个错误
+        %ul
+          %li 域名 不能为空
       %form(action="/admin/domains" method="post")
         .group-fields
           .instructions
@@ -35,14 +39,14 @@
             %p
               http://
               %input#domain_host(name="domain[host]" size="32" type="text")
-        / instructions
-    / .group-fields
-    .group-actions
-      %input.btn(name="commit" type="submit" value="绑定此域名")
-      或者
-      %a(href="#" onclick="$('add-domain').hide(); $('add-domain-link').show(); return false; return false;") 取消
-    / .group-actions
-  / .group
+          / instructions
+        / .group-fields
+        .group-actions
+          %input.btn(name="commit" type="submit" value="绑定此域名")
+          或者
+          %a.cancel(href="#") 取消
+        / .group-actions
+    / .group
 -#=render 'buy'
 
 %script(id="domain-item" type="text/x-jquery-tmpl")
@@ -73,7 +77,7 @@
   %a(href="#{Setting.wiki_url}/DNS#CNAME_Status" target="_blank") 失败
 
 :javascript
-  App.domains = new App.Collections.Domains(#{domains_json});
+  App.domains = new App.Collections.Domains(#{shop_domains_json});
   new App.Views.Domain.Index({collection: App.domains})
 
   task_name = 'setup_domain';
