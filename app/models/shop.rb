@@ -74,7 +74,7 @@ class ShopDomain < ActiveRecord::Base # 域名
 
   before_update do # 设置主域名
     if primary and primary_changed?
-      shop.domains.primary.update_attributes primary: false
+      shop.domains.primary.update_attributes primary: false, force_domain: false
     end
   end
 

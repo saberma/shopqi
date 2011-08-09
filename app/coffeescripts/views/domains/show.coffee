@@ -3,12 +3,13 @@ App.Views.Domain.Show = Backbone.View.extend
 
   events:
     "click a.btn": "make_primary"
+    "change #shop_force_domain": "redirect" # 重定向
 
   initialize: ->
     self = this
     this.render()
     $('#domains > .items').append @el
-    @model.bind 'change', -> self.render()
+    @model.bind 'change:primary', -> self.render()
 
   render: ->
     template = Handlebars.compile $('#domain-item').html()
@@ -29,4 +30,9 @@ App.Views.Domain.Show = Backbone.View.extend
     $.post "/admin/domains/#{@model.id}/make_primary", _method: 'put', (data) ->
       primary_domain.set primary: false
       self.model.set primary: true
+    false
+
+  redirect: ->
+    force_domain = $('#shop_force_domain').attr('checked')
+    @model.save force_domain: $('#shop_force_domain').attr('checked')
     false

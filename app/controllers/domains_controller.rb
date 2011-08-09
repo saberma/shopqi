@@ -31,4 +31,9 @@ class DomainsController < ApplicationController
     shop_domain.update_attributes primary: true
     render json: shop_domain.to_json
   end
+
+  def update # 重定向
+    shop_domain.save
+    render json: shop_domain.to_json
+  end
 end

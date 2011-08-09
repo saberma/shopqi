@@ -208,7 +208,7 @@ Shopqi::Application.routes.draw do
         end
       end
 
-      resources :domains, except: [:edit, :update, :show] do
+      resources :domains, except: [:edit, :show] do
         member do
           get :check_dns
           put :make_primary
