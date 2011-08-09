@@ -20,7 +20,7 @@ App.Views.Domain.Index = Backbone.View.extend
   save: ->
     host = $('#domain_host').val()
     if host
-      @collection.create host: host
+      @collection.create host: host, primary: false # 默认一定要为非主域名
     else
       $('#errorExplanation').show()
     false
