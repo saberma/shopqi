@@ -9,7 +9,7 @@ describe Theme do
   describe 'oauth2' do
 
     it 'should get redirect_uri' do
-      Theme.redirect_uri.should eql 'http://themes.shopqi.com/callback'
+      Theme.redirect_uri.should eql "#{Setting.theme_store_url}/callback"
     end
 
     it 'should get client_id' do

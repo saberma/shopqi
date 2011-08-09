@@ -41,9 +41,8 @@ describe ShopObserver do
       end.to change(Page, :count).by(2)
     end
 
-    it "should save collection and products" do
+    it "should save collection" do
       shop.custom_collections.where(handle: :frontpage).first.should_not be_nil
-      shop.products.empty?.should be_false
     end
 
     it "should save latest-news blog" do

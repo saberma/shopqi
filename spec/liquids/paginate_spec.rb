@@ -5,19 +5,22 @@ describe Paginate do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:iphone4) { Factory :iphone4, shop: shop }
+
   let(:collection) { CustomCollection.new(title: '所有商品', products: shop.products) }
 
   let(:collection_drop) { CollectionDrop.new(collection) }
 
   it 'should get current_page' do
+    iphone4
     variant = "{% paginate collection.products by 2 %}{{collection.products | size}},{{paginate.current_page}}{% endpaginate %}"
-    assign = { 'collection' => collection_drop, 'current_page' => 2 }
-    Liquid::Template.parse(variant).render(assign).should eql "2,2"
+    assign = { 'collection' => collection_drop, 'current_page' => 1 }
+    Liquid::Template.parse(variant).render(assign).should eql "1,1"
   end
 
   it 'should remain the methods' do
     variant = "{% paginate collection.products by 2 %}{{collection.title}}{% endpaginate %}"
-    assign = { 'collection' => collection_drop, 'current_page' => 2 }
+    assign = { 'collection' => collection_drop, 'current_page' => 1 }
     Liquid::Template.parse(variant).render(assign).should eql collection.title
   end
 

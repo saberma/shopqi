@@ -7,12 +7,15 @@ describe CustomersController do
 
   let(:shop) { user.shop }
 
+  let(:customer) { Factory(:customer_saberma, shop: shop) }
+
   before :each do
     sign_in(user)
   end
 
   it 'should be search' do
     get :search
+    customer
     JSON(response.body).should_not be_empty
   end
 

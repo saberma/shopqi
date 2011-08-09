@@ -5,9 +5,14 @@ describe CollectionsDrop do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:frontpage_collection) { shop.custom_collections.where(handle: :frontpage).first }
+
+  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
+
   it 'should get frontpage' do
+    iphone4
     variant = "{% for product in collections.frontpage.products %}<span>{{ product.title }}</span>{% endfor %}"
-    result = "<span>示例商品1</span><span>示例商品2</span><span>示例商品3</span><span>示例商品4</span><span>示例商品5</span><span>示例商品6</span>"
+    result = "<span>#{iphone4.title}</span>"
     Liquid::Template.parse(variant).render('collections' => CollectionsDrop.new(shop)).should eql result
   end
 

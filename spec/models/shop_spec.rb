@@ -9,7 +9,7 @@ describe Shop do
     before(:each) { shop }
 
     it 'should from host' do
-      host = "shop.myshopqi.com"
+      host = "shopqi#{Setting.store_host}"
       Shop.at(host).should_not be_nil
     end
 
@@ -40,11 +40,6 @@ describe Shop do
       it 'should validate subdomain' do
         domain = ShopDomain.create domain: '.myshopqi.com'
         domain.errors[:subdomain].should_not be_empty
-      end
-
-      it 'should validate domain' do
-        domain = ShopDomain.create subdomain: 'shop'
-        domain.errors[:domain].should_not be_empty
       end
 
       it 'should be at least 3 characters' do
