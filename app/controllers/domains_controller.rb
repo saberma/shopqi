@@ -24,16 +24,21 @@ class DomainsController < ApplicationController
 
   def create
     shop_domain.save
-    render json: shop_domain.to_json
+    render json: shop_domain_json
   end
 
   def make_primary # 作为主域名
     shop_domain.update_attributes primary: true
-    render json: shop_domain.to_json
+    render json: shop_domain_json
   end
 
   def update # 重定向
     shop_domain.save
-    render json: shop_domain.to_json
+    render json: shop_domain_json
+  end
+
+  def destroy
+    shop_domain.destroy
+    render json: shop_domain_json
   end
 end

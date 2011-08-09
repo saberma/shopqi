@@ -4,12 +4,17 @@ App.Views.Domain.Show = Backbone.View.extend
   events:
     "click a.btn": "make_primary"
     "change #shop_force_domain": "redirect" # 重定向
+    "click .del": "destroy"
 
   initialize: ->
     self = this
     this.render()
     $('#domains > .items').append @el
     @model.bind 'change:primary', -> self.render()
+    if @model.get('is_myshopqi?') # 主域名被删除，则官方子域名重新设置为主域名
+      @collection.bind 'remove', (model) ->
+        self.model.set primary:true, silent: true if model.get('primary')
+        self.render()
 
   render: ->
     template = Handlebars.compile $('#domain-item').html()
@@ -37,4 +42,14 @@ App.Views.Domain.Show = Backbone.View.extend
     force_domain = $('#shop_force_domain').attr('checked')
     @model.unset 'is_myshopqi?', silent: true
     @model.save force_domain: $('#shop_force_domain').attr('checked')
+    false
+
+  destroy: ->
+    self = this
+    if confirm '您确定要删除吗'
+      @model.destroy
+        success: (model, response) ->
+          self.remove()
+          self.collection.remove self.model
+          msg '删除成功!'
     false

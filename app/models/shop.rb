@@ -78,6 +78,10 @@ class ShopDomain < ActiveRecord::Base # 域名
     end
   end
 
+  before_destroy do
+    shop.domains.myshopqi.update_attributes primary: true if primary # 删除的主域名
+  end
+
   # @host admin.myshopqi.com
   def self.from(host)
     where(host: host).first
