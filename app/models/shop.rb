@@ -3,7 +3,7 @@ class Shop < ActiveRecord::Base
   include OAuth2::Model::ClientOwner
   include OAuth2::Model::ResourceOwner
   has_many :users                 , dependent: :destroy
-  has_many :domains               , dependent: :destroy                      , class_name: 'ShopDomain'
+  has_many :domains               , dependent: :destroy                      , order: :id.asc, class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: :id.desc
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
   has_many :link_lists            , dependent: :destroy
@@ -65,12 +65,17 @@ class ShopDomain < ActiveRecord::Base # 域名
   belongs_to :shop
 
   #域名须为3到20位数字和字母组成的，且唯一
-  validates :subdomain, presence: true, length: 3..32        , format: {with:  /\A([a-z0-9])*\Z/ }
-  validates :domain   , presence: true, length: {maximum: 32}
-  validates :host     , presence: true, length: {maximum: 64}, uniqueness: true
+  validates :subdomain, presence: true, length: 3..32        , format: {with:  /\A([a-z0-9])*\Z/ }, unless: "domain.blank?"
+  validates :host     , presence: true, length: {maximum: 64}, uniqueness: {scope: :shop_id}
 
   before_validation do
-    self.host = "#{self.subdomain}#{self.domain}"
+    self.host ||= "#{self.subdomain}#{self.domain}"
+  end
+
+  before_update do # 设置主域名
+    if primary and primary_changed?
+      shop.domains.primary.update_attributes primary: false, force_domain: false
+    end
   end
 
   # @host admin.myshopqi.com
@@ -78,8 +83,16 @@ class ShopDomain < ActiveRecord::Base # 域名
     where(host: host).first
   end
 
-  def self.primary # 暂时取第一个
-    first
+  def self.myshopqi # shopqi官方提供的二级子域名
+    where(domain: Setting.store_host).first
+  end
+
+  def self.primary # 主域名
+    where(primary: true).first
+  end
+
+  def is_myshopqi? # 是否为shopqi官方提供的二级子域名
+    self.domain == Setting.store_host
   end
 
   def url # http://admin.myshopqi.com

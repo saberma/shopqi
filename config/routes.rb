@@ -208,6 +208,13 @@ Shopqi::Application.routes.draw do
         end
       end
 
+      resources :domains, except: [:edit, :show] do
+        member do
+          get :check_dns
+          put :make_primary
+        end
+      end
+
       begin :themes
         get 'themes/settings'      , to: 'themes#settings'     , as: :settings_themes
         put 'themes/settings'      , to: 'themes#update'

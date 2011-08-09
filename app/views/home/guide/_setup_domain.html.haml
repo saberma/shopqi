@@ -1,0 +1,19 @@
+%h1
+  ==#{shop.name} 已经完成
+  %strong 86%
+  只剩下1个步骤了!
+#what-is-next.clearfix
+  =image_tag "admin/icons/progressbar/#{@task.name}.jpg"
+  #next-step-description
+    %h2
+      %strong 下一步骤:
+      域名
+    %p
+      在
+      %a(data-guide-position="left" data-guide-target="#network a" data-guide-text="点击此处管理您的域名" href="##{@task.name}" class="show_#{@task.name}_guide")
+        %em.icon
+        %strong.triangle
+        DNS &amp; 域名 页面
+      绑定一个域名
+  / #name
+/ #what-is-next

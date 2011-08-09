@@ -53,7 +53,7 @@ App.Views.Task.Checkoff = Backbone.View.extend
       when 'setup_shipping'
         '设置您的运费'
       when 'setup_domain'
-        '设置域名'
+        '绑定您的域名'
       when 'launch'
         '启用商店'
     "#{message} #{desc}"
@@ -73,6 +73,6 @@ App.Views.Task.Checkoff = Backbone.View.extend
       when 'setup_shipping'
         '运费'
       when 'setup_domain'
-        '设置域名'
+        '域名'
       when 'launch'
         '启用商店'

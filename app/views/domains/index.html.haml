@@ -1,0 +1,83 @@
+=content_for :javascripts do
+  =javascript_include_tag 'models/domain', 'collections/domains', 'views/domains/index', 'views/domains/show'
+
+%h2#title DNS &amp; 域名
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+#action-links
+  %ul
+.pgroup.st.domain-page(style="margin-bottom: 5px")
+  .section
+    %h3 域名管理
+    %p.note
+      这些是您的商店当前使用的域名.
+      = succeed "." do
+        =link_to '了解如何在ShopQi设置您的域名', "#{Setting.wiki_url}/DNS"
+    %table#domains.st.data.domainlisting(cellpadding="0" cellspacing="0")
+      %thead
+        %tr
+          %th(scope="col") 域名
+          %th.c(scope="col" style="text-align: center" width="100px") DNS绑定至商店
+          %th(colspan="2" scope="col" width="140px") &nbsp;
+      %tbody.items
+      %tbody
+        %tr#add-domain-link
+          %td.action-link(colspan="4")
+            %a(href="#")
+              %span.plus +
+              新增一个您已经拥有的域名
+    #add-domain.group(style="display:none;")
+      #errorExplanation.errorExplanation(style="display:none;")
+        %h2 保存时发生1个错误
+        %ul
+          %li 域名 不能为空
+      %form(action="/admin/domains" method="post")
+        .group-fields
+          .instructions
+            %p
+              %strong 请在下方输入您的域名
+            %p
+              http://
+              %input#domain_host(name="domain[host]" size="32" type="text")
+          / instructions
+        / .group-fields
+        .group-actions
+          %input.btn(name="commit" type="submit" value="绑定此域名")
+          或者
+          %a.cancel(href="#") 取消
+        / .group-actions
+    / .group
+-#=render 'buy'
+
+%script(id="domain-item" type="text/x-jquery-tmpl")
+  %td(class="{{#if primary}}primary{{/if}}")
+    %span.note http://
+    %span
+      %a.host(href="http://{{{host}}}") {{{host}}}
+  %td.c
+    %span.dns-check=image_tag 'spinner.gif'
+  %td(style="text-align: left; padding: 10px")
+    {{#if primary}}
+    %p(style="margin: 0 0 7px")
+      %strong 主域名
+    %p#force-domain(style="margin: 0")
+      %small
+        {{#if force_domain}}
+        %input#shop_force_domain(name="shop[force_domain]" type="checkbox" value="1" checked="checked")
+        {{else}}
+        %input#shop_force_domain(name="shop[force_domain]" type="checkbox" value="1")
+        {{/if}}
+        %label(for="shop_force_domain" style="font-weight: normal") 总是重定向顾客到这里?
+    {{else}}
+    %small
+      %a.btn(href="#") 作为主域名
+    {{/if}}
+  %td.deletions
+%script(id="dns-wiki-item" type="text/x-jquery-tmpl")
+  %a(href="#{Setting.wiki_url}/DNS#CNAME_Status" target="_blank") 失败
+
+:javascript
+  App.domains = new App.Collections.Domains(#{shop_domains_json});
+  new App.Views.Domain.Index({collection: App.domains})
+
+  task_name = 'setup_domain';

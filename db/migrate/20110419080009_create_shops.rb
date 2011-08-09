@@ -29,10 +29,12 @@ class CreateShops < ActiveRecord::Migration
     end
 
     create_table :shop_domains do |t| #域名
-      t.references :shop , comment: "所属商店"
-      t.string :subdomain, comment: "子域名"                         , limit: 32
-      t.string :domain   , comment: "域名"                           , limit: 32
-      t.string :host     , comment: "host冗余(子域名+域名)，方便查询", limit: 64
+      t.references :shop     , comment: "所属商店"
+      t.string :subdomain    , comment: "子域名"                         , limit: 32
+      t.string :domain       , comment: "域名"                           , limit: 32
+      t.string :host         , comment: "host冗余(子域名+域名)，方便查询", limit: 64
+      t.boolean :primary     , comment: "商店主域名"                     , default: true
+      t.boolean :force_domain, comment: "重定向到这个域名"               , default: false
     end
     add_index :shop_domains, :shop_id
     add_index :shop_domains, :host

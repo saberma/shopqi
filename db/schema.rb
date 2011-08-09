@@ -487,9 +487,11 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
 
   create_table "shop_domains", :force => true do |t|
     t.integer "shop_id"
-    t.string  "subdomain", :limit => 32
-    t.string  "domain",    :limit => 32
-    t.string  "host",      :limit => 64
+    t.string  "subdomain",    :limit => 32
+    t.string  "domain",       :limit => 32
+    t.string  "host",         :limit => 64
+    t.boolean "primary",                    :default => true
+    t.boolean "force_domain",               :default => false
   end
 
   add_index "shop_domains", ["host"], :name => "index_shop_domains_on_host"
