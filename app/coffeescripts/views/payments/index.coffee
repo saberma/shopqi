@@ -2,6 +2,7 @@ App.Views.Payment.Index = Backbone.View.extend
   el: '#main'
   events:
     'change #select_custom_payment_method' : 'select_method'
+    'click #checkout' : 'change_checkout_config'
 
 
   initialize: ->
@@ -9,6 +10,12 @@ App.Views.Payment.Index = Backbone.View.extend
     @collection.view = this
     _.bindAll this, 'render'
     this.render()
+    $('#shop_customer_accounts_required').click ->
+      $('#customer-accounts-required').show()
+    $('#shop_customer_accounts_optional,#shop_customer_accounts_').each ->
+      $(this).click ->
+        $('#customer-accounts-required').hide()
+
 
   render: ->
     _(@collection.models).each (model) ->
@@ -27,3 +34,8 @@ App.Views.Payment.Index = Backbone.View.extend
       this.$('#payment_name').val name
       this.$('#payment_name').focus()
 
+  change_checkout_config: ->
+    action = $('form#checkout-config').attr('action')
+    attrs = $('form#checkout-config').serialize()
+    $.post action, attrs, ->
+      msg '修改成功！'

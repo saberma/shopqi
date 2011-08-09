@@ -567,6 +567,7 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
     t.string   "order_number_format", :limit => 32, :default => "\#{{number}}"
     t.boolean  "taxes_included",                    :default => true
     t.boolean  "tax_shipping",                      :default => false
+    t.string   "customer_accounts",                 :default => "optional"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
