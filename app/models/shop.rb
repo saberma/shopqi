@@ -66,10 +66,16 @@ class ShopDomain < ActiveRecord::Base # 域名
 
   #域名须为3到20位数字和字母组成的，且唯一
   validates :subdomain, presence: true, length: 3..32        , format: {with:  /\A([a-z0-9])*\Z/ }, unless: "domain.blank?"
-  validates :host     , presence: true, length: {maximum: 64}, uniqueness: true
+  validates :host     , presence: true, length: {maximum: 64}, uniqueness: {scope: :shop_id}
 
   before_validation do
     self.host ||= "#{self.subdomain}#{self.domain}"
+  end
+
+  before_update do # 设置主域名
+    if primary and primary_changed?
+      shop.domains.primary.update_attributes primary: false
+    end
   end
 
   # @host admin.myshopqi.com
@@ -81,8 +87,8 @@ class ShopDomain < ActiveRecord::Base # 域名
     where(domain: Setting.store_host).first
   end
 
-  def self.primary # 暂时取第一个
-    first
+  def self.primary # 主域名
+    where(primary: true).first
   end
 
   def is_myshopqi? # 是否为shopqi官方提供的二级子域名

@@ -10,12 +10,12 @@ App.Views.Domain.Index = Backbone.View.extend
     self = this
     this.render()
     @collection.bind 'add', (model, collection) ->
-      new App.Views.Domain.Show model: model
+      new App.Views.Domain.Show model: model, collection: collection
       self.cancel()
 
   render: ->
     self = this
-    @collection.each (model) -> new App.Views.Domain.Show model: model
+    @collection.each (model) -> new App.Views.Domain.Show model: model, collection: self.collection
 
   save: ->
     host = $('#domain_host').val()
