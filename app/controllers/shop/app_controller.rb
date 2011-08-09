@@ -1,10 +1,19 @@
 # encoding: utf-8
 class Shop::AppController < ActionController::Base
   layout nil #默认不需要layout，使用liquid
+  before_filter :force_domain # 域名管理中是否设置主域名重定向
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   protected
+  def force_domain
+    host = request.host
+    primary = Shop.at(host).primary_domain
+    if primary.force_domain and host != primary.host  # 重定向
+      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}"
+    end
+  end
+
   begin 'liquid'
 
     # 渲染layout时的hash
