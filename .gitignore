@@ -56,6 +56,7 @@ public/javascripts/models
 public/javascripts/controllers
 public/javascripts/plugins
 public/javascripts/*application.js
+public/javascripts/plugins.js
 
 #主题
 public/s/files
