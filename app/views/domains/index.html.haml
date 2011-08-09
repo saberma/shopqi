@@ -73,6 +73,9 @@
       %a.btn(href="#") 作为主域名
     {{/if}}
   %td.deletions
+    {{#unless is_myshopqi}}
+    %a.del(href='#')=image_tag 'admin/icons/trash.gif', alt: '删除'
+    {{/unless}}
 %script(id="dns-wiki-item" type="text/x-jquery-tmpl")
   %a(href="#{Setting.wiki_url}/DNS#CNAME_Status" target="_blank") 失败
 

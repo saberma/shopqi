@@ -6,8 +6,8 @@ class DomainsController < ApplicationController
   expose(:shop) { current_user.shop }
   expose(:shop_domains) { shop.domains }
   expose(:shop_domain)
-  expose(:shop_domain_json) { shop_domain.to_json(except: [:created_at, :updated_at]) }
-  expose(:shop_domains_json) { shop_domains.to_json(except: [:created_at, :updated_at]) }
+  expose(:shop_domain_json) { shop_domain.to_json(methods: 'is_myshopqi?', except: [:created_at, :updated_at]) }
+  expose(:shop_domains_json) { shop_domains.to_json(methods: 'is_myshopqi?', except: [:created_at, :updated_at]) }
 
   def check_dns
     text = :failed

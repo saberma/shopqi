@@ -13,7 +13,8 @@ App.Views.Domain.Show = Backbone.View.extend
 
   render: ->
     template = Handlebars.compile $('#domain-item').html()
-    attrs = @model.attributes
+    attrs = _.clone @model.attributes
+    attrs['is_myshopqi'] = attrs['is_myshopqi?']
     $(@el).html template attrs
     $(@el).addClass 'primary' if @model.get('primary')
     this.check_dns()
@@ -34,5 +35,6 @@ App.Views.Domain.Show = Backbone.View.extend
 
   redirect: ->
     force_domain = $('#shop_force_domain').attr('checked')
+    @model.unset 'is_myshopqi?', silent: true
     @model.save force_domain: $('#shop_force_domain').attr('checked')
     false
