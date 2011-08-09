@@ -30,6 +30,7 @@ App.Views.Domain.Index = Backbone.View.extend
     false
 
   add: ->
+    $('.group-actions .btn').attr 'disabled', false
     $('#errorExplanation').hide()
     $('#add-domain-link').hide()
     $('#add-domain').show()

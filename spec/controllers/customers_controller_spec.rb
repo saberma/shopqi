@@ -14,8 +14,8 @@ describe CustomersController do
   end
 
   it 'should be search' do
-    get :search
     customer
+    get :search
     JSON(response.body).should_not be_empty
   end
 
