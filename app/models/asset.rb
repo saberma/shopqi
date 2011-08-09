@@ -4,6 +4,7 @@ class Asset
 
   attr_accessor :key, :name, :url
 
+
   def initialize(theme, key, name, url = nil)
     @key = key
     @name = name

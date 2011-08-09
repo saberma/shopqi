@@ -30,6 +30,7 @@ class Shop < ActiveRecord::Base
   has_many :payments              , dependent: :destroy
   has_many :tasks                 , dependent: :destroy                      , order: :id.asc, class_name: 'ShopTask'
   has_many :policies              , dependent: :destroy                     ,  order: :id.asc, class_name: 'ShopPolicy'
+  has_many :consumptions          , dependent: :destroy
 
   accepts_nested_attributes_for :domains, :theme, :policies
   attr_readonly :orders_count
@@ -45,9 +46,13 @@ class Shop < ActiveRecord::Base
     domains.primary
   end
 
+  def plan_type
+    KeyValues::Plan::Type.find_by_code(self.plan)
+  end
+
   protected
   def init_valid_date
-    self.deadline = Date.today.next_day(10)
+    self.deadline = Date.today.next_day(30)
   end
 
   def available?

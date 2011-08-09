@@ -168,9 +168,13 @@ Shopqi::Application.routes.draw do
 
       resources :users
 
+      match 'account/change_plan/:code'      ,to: 'account#change_plan', as: :change_plan
+
       resources :account, only: [:index] do
         collection do
           post :change_ownership
+          post :notify
+          post :confirm_plan
         end
       end
 

@@ -7,7 +7,7 @@
   =form_for user do |f|
     =message_block on:[user]
     %h4 个人信息
-    %dl.group
+    %dl.group.sst.group-fields
       %dt=f.label :name
       %dd=f.text_field :name
       %dt
@@ -19,7 +19,7 @@
         %span.hint (可选的)
       %dd=f.text_area :bio,cols:40,rows:10
     %h4 登录信息(更新此信息需重新登录)
-    %dl.group
+    %dl.group.sst.group-fields
       %dt=f.label :email
       %dd=f.text_field :email
       %dt.toggle=f.label :password
@@ -27,7 +27,7 @@
       %dt.toggle=f.label :password_confirmation
       %dd.toggle=f.password_field :password_confirmation
     %h4 联系
-    %dl.group
+    %dl.group.sst.group-fields
       %dd
         %span.note 我们会定期通过电子邮件发送有关shopqi的重要消息给我们的用户。这可能包括计划维护停机或相关的主要是提供给您的新功能公告通知。我们保持邮件数量降到最低
       %dd

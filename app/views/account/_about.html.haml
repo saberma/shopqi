@@ -1,0 +1,33 @@
+%table#account-about.values-aligned{:cellspacing => "0"}
+  %tr
+    %td.r 您的商店URL地址:
+    %td=link_to show_shop_url,show_shop_url
+  %tr
+    %td.r
+      SKUs使用量:
+    %td
+      %div{:style => "width:140px"}
+        .progress-container{:style => "margin-top:7px"}
+          .progress-bar{:style => "width: #{skus_size*100/current_plan_type.skus}%; "}
+      %span.note{:style => ""}==剩余#{current_plan_type.skus - skus_size}个
+  -#
+    %tr#disk-management
+      %td.r
+        剩余使用空间:
+      %td
+        %div{:style => "width:170px"}
+          .progress-container{:style => "margin-top:7px"}
+            .progress-bar{:style => "width: 2%; "}
+        %span.note 97.1 MB free
+    %tr
+      %td &nbsp;
+      %td
+        %a.icon.uploaded-files{:href => "/admin/files"} show uploaded files
+  %tr
+    %td.r 商店注册时间
+    %td=I18n.l shop.created_at,format: :serial
+    %td.r 账户截止时间:
+    %td=I18n.l shop.deadline, format: :long
+  %tr
+    %td.r 账户状态:
+    %td{:colspan => "3"}=shop.available? ? '活动的' : '受限的'

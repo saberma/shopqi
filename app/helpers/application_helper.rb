@@ -30,6 +30,10 @@ module ApplicationHelper
     render 'shared/block', title: title, body: capture(&block)
   end
 
+  def high_color(title,color='red')
+    "<span style='color:#{color}'>#{title}</span>"
+  end
+
   #后台管理顶端菜单
   def menus
     @menus ||= [
@@ -71,7 +75,7 @@ module ApplicationHelper
         current_search = params[:search].symbolize_keys.merge(current_search)
       end
       current_search.delete_if {|key, value| value.blank? }
-      send(path,obj, search: current_search) #products_path(search: current_search)
+      send(path, obj, search: current_search) #products_path(search: current_search)
     end
 
     #查询标签

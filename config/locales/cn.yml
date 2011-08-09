@@ -194,6 +194,7 @@ cn:
       default: "%Y年%b%d日 %A %H:%M:%S %Z"
       short: "%b%d日 %H:%M"
       long: "%Y年%b%d日 %H:%M"
+      serial: "%Y年%b%d日"
     am: "上午"
     pm: "下午"
 

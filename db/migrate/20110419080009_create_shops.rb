@@ -5,7 +5,7 @@ class CreateShops < ActiveRecord::Migration
     create_table :shops do |t|
       t.string :name                          , comment: "名称"                          , limit: 16
       t.string :phone                         , comment: "商店电话"                      , limit: 16
-      t.string :plan                          , comment: "价格方案"                      , limit: 16
+      t.string :plan                          , comment: "价格方案"                      , limit: 16,   default: 'basic'
       t.date   :deadline                      , comment: "到期时间"
       t.string :province                      , comment: "省份"                          , limit: 8
       t.string :city                          , comment: "城市"                          , limit: 8
