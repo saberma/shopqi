@@ -21,9 +21,10 @@ class CreateShops < ActiveRecord::Migration
       t.string :password_message              , comment: "提供给用户看的信息"            , limit: 255
       end
       t.integer :orders_count                 , comment: "缓存订单数，用于生成订单顺序号", default: 0
-      t.string :order_number_format           , comment: "订单格式化规则"                , default: '#{{number}}', limit: 32
+      t.string  :order_number_format           , comment: "订单格式化规则"                , default: '#{{number}}', limit: 32
       t.boolean :taxes_included               , comment: "税收是否包含在商品中"          , default: true
       t.boolean :tax_shipping                 , comment: "是否要缴航运税"                , default: false
+      t.string  :customer_accounts            , comment: "顾客付款设置"                  , default: 'optional'
       t.timestamps
     end
 
