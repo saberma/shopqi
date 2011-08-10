@@ -35,11 +35,11 @@ class ShopObserver < ActiveRecord::Observer
     footer.links.create title: '查询', link_type: 'search', position: 1
     footer.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 2
 
-    # 博客(最新动态)
-    shop.blogs.create title: '最新动态', handle: 'latest-news', commentable: 'no'
+    shop.blogs.create title: '最新动态', handle: 'latest-news', commentable: 'no' # 博客(最新动态)
 
-    # 新手指引任务
-    shop.tasks.create [
+    shop.update_attributes password_enabled: true, password: Random.new.rand(1000..9999) # 前台商店密码保护，用户完成指引任务启用商店会清除
+
+    shop.tasks.create [ # 新手指引任务
       {name: :add_product},
       {name: :customize_theme},
       {name: :add_content},

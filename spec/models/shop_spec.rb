@@ -57,4 +57,25 @@ describe Shop do
 
   end
 
+  describe ShopTask do
+
+    context '#launch' do
+
+      it 'should update shop' do
+        shop.tasks.each do |task|
+          task.update_attributes completed: true unless task.is_launch?
+        end
+        shop.guided.should be_false
+        shop.password_enabled.should be_true
+        launch_task = shop.tasks.last
+        launch_task.update_attributes! completed: true
+        shop.reload
+        shop.guided.should be_true
+        shop.password_enabled.should be_false
+      end
+
+    end
+
+  end
+
 end

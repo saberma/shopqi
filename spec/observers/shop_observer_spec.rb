@@ -49,6 +49,11 @@ describe ShopObserver do
       shop.blogs.where(handle: 'latest-news').first.should_not be_nil
     end
 
+    it "should set password" do # 设置前台商店访问密码
+      shop.password_enabled.should be_true
+      shop.password.should_not be_blank
+    end
+
   end
   
 end

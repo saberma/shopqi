@@ -7,8 +7,9 @@ App.Views.Task.Index = Backbone.View.extend
 
   render: ->
     self = this
-    @collection.each (model) -> new App.Views.Task.Show model: model
-    if task_name?
+    current_task = @collection.detect (model) -> !model.get('completed')
+    @collection.each (model) -> new App.Views.Task.Show model: model, current_task: current_task
+    if task_name? # 当前页面关联任务(变量在各个页面中定义)
       task = @collection.detect (model) -> model.get('name') is task_name
       unless task.get('completed')
         new App.Views.Task.Checkoff model: task, collection: @collection

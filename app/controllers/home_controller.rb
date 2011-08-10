@@ -1,8 +1,8 @@
 #encoding: utf-8
 class HomeController < ApplicationController
   include HomeHelper
-  prepend_before_filter :authenticate_user! ,:only => [:dashboard, :query]
-  layout 'admin', only: [:dashboard,:query]
+  prepend_before_filter :authenticate_user!
+  layout 'admin'
 
   expose(:shop) { current_user.shop }
 
@@ -59,9 +59,8 @@ class HomeController < ApplicationController
   end
 
   def dashboard # 网店管理首页
-    incomplete_tasks = shop.tasks.incomplete
-    if incomplete_tasks.size > 0
-      @task = incomplete_tasks.first
+    unless shop.guided
+      @task = shop.tasks.incomplete.first
       render :guide
     end
   end
@@ -70,6 +69,17 @@ class HomeController < ApplicationController
     task = shop.tasks.where(name: params[:name]).first
     task.update_attributes! completed: true
     render nothing: true
+  end
+
+  def launch # 启用商店
+    task = shop.tasks.where(name: :launch).first
+    task.update_attributes! completed: true
+    redirect_to action: :dashboard
+  end
+
+  def skip_tutorial # 跳过指南，直接启用商店
+    shop.launch!
+    redirect_to action: :dashboard
   end
 
   def query

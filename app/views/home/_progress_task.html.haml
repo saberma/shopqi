@@ -43,4 +43,8 @@
       绑定域名
 %script(id="launch-item" type="text/x-jquery-tmpl")
   %span
-    %strong 启用您的商店
+    {{#if is_current}}
+    =link_to '启用您的商店', user_root_path
+    {{else}}
+    %strong 启用您的商店{{is_current}}
+    {{/if}}

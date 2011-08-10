@@ -42,6 +42,10 @@ class Shop < ActiveRecord::Base
     ShopDomain.from(domain).shop
   end
 
+  def launch! # 启用商店
+    self.update_attributes! guided: true, password_enabled: false
+  end
+
   def primary_domain # 主域名
     domains.primary
   end
@@ -121,4 +125,14 @@ end
 class ShopTask < ActiveRecord::Base #新手指引任务
   belongs_to :shop
   scope :incomplete, where(completed: false)
+
+  before_update do
+    if is_launch? and completed and completed_changed? # 启用商店
+      shop.launch!
+    end
+  end
+
+  def is_launch?
+    name == 'launch'
+  end
 end

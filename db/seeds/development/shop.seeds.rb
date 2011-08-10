@@ -61,3 +61,5 @@ myshopqi.customer_groups.create [
   { name: '潜在顾客'    , query: 'last_abandoned_order_date:last_month:放弃订单时间:在最近一个月' },
   { name: '多次消费'    , query: 'orders_count_gt:1:订单数 大于:1' }                               ,
 ]
+
+myshopqi.launch!

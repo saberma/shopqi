@@ -21,10 +21,13 @@ App.Views.Task.Checkoff = Backbone.View.extend
     $('#complete-task-button').addClass 'task-checked'
     next_task = @collection.get(@model.id + 1)
     $.post "/admin/dashboard/complete_task/#{@model.get('name')}", ->
-      self.model.set completed: true
-      $(self.el).fadeOut 500, ->
-        $('#progress-bar').fadeIn 500, ->
-          $.guide $("##{next_task.get('name')}"), self.next_step_message(next_task), 'top'
+      if next_task.get('name') is 'launch'
+        window.location = '/admin' # 下一步为"启用商店"，则转至首页，显示详细信息
+      else
+        self.model.set completed: true
+        $(self.el).fadeOut 500, ->
+          $('#progress-bar').fadeIn 500, ->
+            $.guide $("##{next_task.get('name')}"), self.next_step_message(next_task), 'top'
     false
 
   skip: ->

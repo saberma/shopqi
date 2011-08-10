@@ -78,6 +78,8 @@ Shopqi::Application.routes.draw do
       match '/support'                      , to: redirect('http://support.shopqi.com/'), as: 'support'
       get '/lookup/query'                   , to: 'home#query'
       post "/dashboard/complete_task/:name" , to: "home#complete_task"                  , as: :complete_task
+      post "/dashboard/launch"              , to: "home#launch"                         , as: :launch
+      post "/dashboard/skip_tutorial"       , to: "home#skip_tutorial"                  , as: :skip_tutorial
 
       resources :shops, only: [:edit,:update]
 

@@ -12,7 +12,9 @@ App.Views.Task.Show = Backbone.View.extend
   render: ->
     name = @model.get('name')
     template = Handlebars.compile $("##{name}-item").html()
-    $(@el).html template @model.attributes
+    attrs = _.clone @model.attributes
+    attrs['is_current'] = @model is @options.current_task
+    $(@el).html template attrs
     state = if @model.get('completed') then 'completed' else 'incomplete'
     $(@el).addClass(name).addClass state
-    this.$("a[data-guide-target]").guide()
+    this.$("a[data-guide-target]").guide() # 完成任务后重新render，显示下一步的提示
