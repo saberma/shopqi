@@ -8,7 +8,9 @@ class Shop::AppController < ActionController::Base
   protected
   def force_domain
     host = request.host
-    primary = Shop.at(host).primary_domain
+    shop_domain = ShopDomain.from(host)
+    return unless shop_domain # 排除checkout页面
+    primary = shop_domain.shop.primary_domain
     if primary.force_domain and host != primary.host  # 重定向
       redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}"
     end
