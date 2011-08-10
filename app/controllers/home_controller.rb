@@ -74,12 +74,12 @@ class HomeController < ApplicationController
   def launch # 启用商店
     task = shop.tasks.where(name: :launch).first
     task.update_attributes! completed: true
-    redirect_to action: :dashboard
+    redirect_to action: :dashboard, launched: true
   end
 
   def skip_tutorial # 跳过指南，直接启用商店
     shop.launch!
-    redirect_to action: :dashboard
+    redirect_to action: :dashboard, launched: true
   end
 
   def query

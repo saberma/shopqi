@@ -4,6 +4,15 @@
   %ul
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
+-if params[:launched]
+  #launched-store.clearfix
+    =image_tag 'admin/icons/progressbar/launched.jpg'
+    .launched-message
+      %h1 您已经启用商店，恭喜您!
+      %p
+        =link_to shop.primary_domain.host, shop.primary_domain.url
+        已经可以访问，随时可以接受订单
+      %ul.share-your-store
 .col-12.last
   #dashboard-facts.box2
     %ul
