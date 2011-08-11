@@ -7,7 +7,15 @@ describe "Shop::Shops", js:true do
   #let(:user_admin) {  with_resque { Factory :user_admin } }
   let(:user_admin) {  Factory :user_admin }
 
-  let(:shop) { user_admin.shop }
+  let(:shop) do
+    model = user_admin.shop
+    model.update_attributes password_enabled: false
+    model
+  end
+
+  let(:frontpage_collection) { shop.custom_collections.where(handle: :frontpage).first }
+
+  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
 
   before(:each) { Capybara::Server.manual_host = shop.primary_domain.host }
 
@@ -16,11 +24,11 @@ describe "Shop::Shops", js:true do
   describe "GET /products" do # 首页
 
     it "should show product" do
-      product = shop.products.where(handle: 'example-1').first
+      product = iphone4
       variant = product.variants.first
       visit '/'
       click_on product.title
-      page.should have_content('这是一个商品')
+      page.should have_content(product.body_html)
       click_on 'Add to cart'
       # 更新数量
       within('#checkout') do
@@ -50,8 +58,18 @@ describe "Shop::Shops", js:true do
   describe "GET /" do
 
     it "should list products" do
+      iphone4
       visit '/'
-      page.should have_content('示例商品1')
+      page.should have_content(iphone4.title)
+    end
+
+    it "should redirect to passowrd" do  # 密码保护
+      shop.update_attributes password_enabled: true, password_message: '正在维护中...'
+      visit '/'
+      page.should have_content(shop.password_message)
+      fill_in 'password', with: shop.password
+      click_on '提交'
+      page.should have_content('关于我们')
     end
 
   end
@@ -61,6 +79,7 @@ describe "Shop::Shops", js:true do
 
     before(:each) do
       ThinkingSphinx::Test.start
+      iphone4
       visit '/'
       click_on '查询'
     end
@@ -80,9 +99,9 @@ describe "Shop::Shops", js:true do
     end
 
     it "should list products" do
-      fill_in 'q', with: '示例'
+      fill_in 'q', with: iphone4.title
       click_on 'Search'
-      page.should have_content('示例商品1')
+      page.should have_content(iphone4.title)
     end
 
     it "should list page" do
@@ -108,9 +127,10 @@ describe "Shop::Shops", js:true do
   describe "GET /collections/all" do
 
     it "should list products!" do
+      iphone4
       visit '/'
       click_on '商品列表'
-      page.should have_content('示例商品6')
+      page.should have_content(iphone4.title)
     end
   end
 
