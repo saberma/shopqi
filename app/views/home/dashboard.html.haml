@@ -4,6 +4,15 @@
   %ul
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
+-if params[:launched]
+  #launched-store.clearfix
+    =image_tag 'admin/icons/progressbar/launched.jpg'
+    .launched-message
+      %h1 您已经启用商店，恭喜您!
+      %p
+        =link_to shop.primary_domain.host, shop.primary_domain.url
+        已经可以访问，随时可以接受订单
+      %ul.share-your-store
 .col-12.last
   #dashboard-facts.box2
     %ul
@@ -22,8 +31,17 @@
         %p.big==#{statistics[:skus][:size]}
         %span==#{statistics[:skus][:des]}
 .col-8
-  #stats-spinner{:style => "display:none"}
-    Updating…
+  -if shop.payments.empty?
+    #account-status.announcement(style="margin: 2em 5em")
+      %h3 欢迎!
+      %p(style="margin-top:0.5em") ShopQi已经为您安装好了商店程序，您可以录入您的商品。在您向顾客销售商品之前，您需要告诉我们如何向顾客收取货款。
+      %p(style="margin-top:1em")
+        为此，现在请您
+        %a(href="/admin/payments/") 选择一个支付网关
+        \.
+        如果您不确定如何选择，我们推荐您选择
+        %a(href="https://www.alipay.com" target="_blank") 支付宝
+  #stats-spinner(style="display:none") 更新中…
   #stats
   #recent-activity
     %h3.sb 最新的活动记录

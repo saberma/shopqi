@@ -92,7 +92,7 @@
     #flashnotice.hide
     #indicator(style="z-index: 1000; position: absolute; width: 20px; height: 20px; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; display: none; top: 1236px; left: 591px; ")
       %img(border="0" src="/images/spinner.gif")
-    -unless is_home?
+    -unless is_home? or shop.guided
       =render 'home/progress'
 
     -if flash[:notice]
@@ -104,6 +104,7 @@
   :javascript
     $("upgrade-ie6").show();
 
-:javascript
-  App.tasks = new App.Collections.Tasks(#{tasks_json});
-  new App.Views.Task.Index({collection: App.tasks})
+-unless shop.guided
+  :javascript
+    App.tasks = new App.Collections.Tasks(#{tasks_json});
+    new App.Views.Task.Index({collection: App.tasks})
