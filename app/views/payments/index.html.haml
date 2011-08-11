@@ -105,6 +105,8 @@
                 =f.text_area :message, cols: 40,rows: 10
           .group-actions
             =f.submit w('save'),class: 'btn'
+            =w('or')
+            =link_to w('cancel'),'javascript:;',id:'cancel_custom_payment_form'
           / .group-actions
 #checkout-configuration
   =form_for shop, html:{id:'checkout-config', onsubmit: 'return false'} do |f|

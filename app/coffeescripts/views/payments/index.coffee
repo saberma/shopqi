@@ -5,7 +5,6 @@ App.Views.Payment.Index = Backbone.View.extend
     'click #checkout' : 'change_checkout_config'
     'submit form#new_custom_payment' : 'save'
 
-
   initialize: ->
     self = this
     @collection.view = this
@@ -29,6 +28,10 @@ App.Views.Payment.Index = Backbone.View.extend
       $('#account_payment_provider').toggle()
       $('#activate_payment_provider').toggle()
       $('#alipay-gateway-id option:eq(0)').attr 'selected', true
+
+    $('#cancel_custom_payment_form').click ->
+      $('#account_manual_payment_gateway').hide()
+      $('#select_custom_payment_method option:eq(0)').attr 'selected', true
 
     if $('.field-with-errors input').size() > 0
       $('#account_payment_provider').show()
@@ -70,7 +73,7 @@ App.Views.Payment.Index = Backbone.View.extend
         message: attrs.message
       },
       success: (model, resp) ->
-        msg '修改成功！'
+        msg '新增成功！'
         $('form input#payment_submit').attr('disabled', false).val '保存'
         false
       error: (model,error)  ->
