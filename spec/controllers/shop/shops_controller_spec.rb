@@ -11,14 +11,40 @@ describe Shop::ShopsController do
     request.host = "#{shop.primary_domain.host}"
   end
 
-  it 'should be show' do
-    get :show
-    response.should be_success
+  context '#password_protected' do
+
+    it 'should be show' do
+      session = mock('session')
+      session.stub!(:[], 'storefront_digest').and_return(true)
+      controller.stub!(:session).and_return(session)
+      controller.stub!(:cart_drop).and_return({}) # 特殊处理，session.stub!(:[], 'cart')会覆盖storefront_digest
+      get :show
+      response.should be_success
+    end
+
+    it 'should be redirect' do
+      get :show
+      response.should be_redirect
+    end
+
   end
 
-  it 'should get css file' do
-    get :asset, id: shop.id, file: 'style', format: 'css'
-    response.should be_success
+  context '#without password_protected' do
+
+    before :each do
+      shop.update_attributes password_enabled: false
+    end
+
+    it 'should be show' do
+      get :show
+      response.should be_success
+    end
+
+    it 'should get css file' do
+      get :asset, id: shop.id, file: 'style', format: 'css'
+      response.should be_success
+    end
+
   end
 
 end

@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe Shop::ProductsController do
 
-  let(:shop) { Factory(:user_admin).shop }
+  let(:shop) do
+    model = Factory(:user_admin).shop
+    model.update_attributes password_enabled: false
+    model
+  end
 
   let(:iphone4) { Factory(:iphone4, shop: shop) }
 

@@ -3,7 +3,11 @@ require 'spec_helper'
 
 describe Shop::PagesController do
 
-  let(:shop) { Factory(:user_admin).shop }
+  let(:shop) do
+    model = Factory(:user_admin).shop
+    model.update_attributes password_enabled: false
+    model
+  end
 
   let(:page) { shop.pages.where(handle: 'about-us').first }
 

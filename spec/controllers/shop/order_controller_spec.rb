@@ -3,7 +3,11 @@ require 'spec_helper'
 
 describe Shop::OrderController do
 
-  let(:shop) { Factory(:user).shop }
+  let(:shop) do
+    model = Factory(:user).shop
+    model.update_attributes password_enabled: false
+    model
+  end
 
   let(:iphone4) { Factory :iphone4, shop: shop }
 
