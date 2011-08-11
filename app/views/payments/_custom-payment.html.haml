@@ -2,9 +2,9 @@
   %dl
     %dd(style= "padding: 10px 10px 5px 10px" id= "activate_manual_payment_gateway_{{id}}")
       %a.fr.btn.destroy 删除
-      %a.fr.btn.edit 编辑
       支付方式:
       %strong {{ name }}
+      %a(href='#' class='edit-custom-payment') 编辑
     %dd.nsb(style= "display:none; border-top: 1px solid #ddd" id= "account_manual_payment_gateway_{{ id }}")
       %form(accept-charset= "UTF-8" action = "#" method= "post" id="custom-payment" onsubmit="return false" )
         .group-fields

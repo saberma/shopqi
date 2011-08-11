@@ -31,13 +31,11 @@ class PaymentsController < ApplicationController
       else
         render action: 'index'
       end
+    #处理普通支付部分
     else
       payment.attributes = params[:payment]
-      if payment.save
-        redirect_to payments_path,  notice: notice_msg
-      else
-        render action: 'index'
-      end
+      payment.save
+      render json: payment
     end
   end
 
