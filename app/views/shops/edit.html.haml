@@ -73,7 +73,7 @@
     
 :javascript
   $(function(){
-    $('#shop_password_enabled').click(function(){
-      $('#password-details').toggle();
-    });
+    $('#shop_password_enabled').change(function(){
+      $('#password-details').toggle($(this).attr('checked'));
+    }).change();
   })

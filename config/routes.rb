@@ -57,6 +57,7 @@ Shopqi::Application.routes.draw do
 
     scope module: :shop do # 前台商店
       match '/'                            , to: 'shops#show'
+      match '/password'                    , to: 'shops#password'
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show'
       get '/collections/all'               , to: 'collections#show'
