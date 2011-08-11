@@ -4,10 +4,9 @@ App.Views.Payment.Show = Backbone.View.extend
 
   events:
     "click .destroy" : 'destroy'
-    "click .edit" : 'edit'
+    "click .edit-custom-payment" : 'edit'
     "click .cancel" : 'cancel'
     "submit form#custom-payment" : 'save'
-
 
   initialize: ->
     self = this
@@ -19,7 +18,7 @@ App.Views.Payment.Show = Backbone.View.extend
     attrs = @model.attributes
     template = Handlebars.compile $('#show-custom-payment-item').html()
     $(@el).html template attrs
-    $('#manual_payment_gateways').prepend @el
+    $('#manual_payment_gateways').before @el
 
   destroy: ->
     if confirm '您确定要删除吗'

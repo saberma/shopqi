@@ -18,7 +18,7 @@ class Product < ActiveRecord::Base
 
   #商品列表中显示的产品图片
   def index_photo
-    photo('medium')
+    photo('thumb')
   end
 
   def photo(version = :icon)

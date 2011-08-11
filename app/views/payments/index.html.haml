@@ -93,7 +93,7 @@
           %option(value= "") 选择增加普通支付方式
           =options_for_select  custom_types
       %dd#account_manual_payment_gateway.nsb{:style => "display:none;border-top: 1px solid #ddd"}
-        =form_for payment do |f|
+        =form_for payment, html:{id: 'new_custom_payment', onsubmit: 'return false'} do |f|
           .group-fields
             .sb
               =f.label :name
@@ -105,6 +105,8 @@
                 =f.text_area :message, cols: 40,rows: 10
           .group-actions
             =f.submit w('save'),class: 'btn'
+            =w('or')
+            =link_to w('cancel'),'javascript:;',id:'cancel_custom_payment_form'
           / .group-actions
 #checkout-configuration
   =form_for shop, html:{id:'checkout-config', onsubmit: 'return false'} do |f|
@@ -202,18 +204,8 @@
   =render partial: 'policy'
 
 :coffeescript
-  $(document).ready ->
-    $('#alipay-gateway-id').change ->
-      $('#account_payment_provider').toggle()
-    $('#alipay_edit').click ->
-      $('#account_payment_provider').toggle()
-      $('#activate_payment_provider').hide()
-    $('#cancel').click ->
-      $('#account_payment_provider').toggle()
-      $('#activate_payment_provider').toggle()
-
   App.custom_payments = new App.Collections.Payments()
-  App.custom_payments.refresh(#{custom_payments.to_json(except: [:created_at,:updated_at])})
-  new App.Views.Payment.Index({collection: App.custom_payments})
+  App.custom_payments.refresh #{custom_payments.to_json(except: [:created_at,:updated_at])}
+  new App.Views.Payment.Index {collection: App.custom_payments}
 
   task_name = 'setup_payment_gateway'
