@@ -13,6 +13,7 @@ describe LinkListsController do
   let(:link_list_with_links) { Factory(:link_list_with_links, shop: shop) }
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(admin)
   end
 

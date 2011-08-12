@@ -5,6 +5,7 @@ describe UsersController do
   include Devise::TestHelpers
 
   before :each do 
+    request.host = "#{shop.primary_domain.host}"
     sign_in(Factory(:user_liwh))
   end
 

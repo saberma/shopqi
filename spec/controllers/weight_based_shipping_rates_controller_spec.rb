@@ -8,6 +8,7 @@ describe WeightBasedShippingRatesController do
   let(:user) { Factory(:user_admin) }
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(Factory(:user_admin))
   end
 

@@ -7,6 +7,7 @@ describe ProductsController do
   let(:iphone4) {Factory.build(:iphone4)}
 
   before :each do 
+    request.host = "#{shop.primary_domain.host}"
     sign_in(Factory(:user_liwh))
   end
 

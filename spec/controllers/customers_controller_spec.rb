@@ -10,6 +10,7 @@ describe CustomersController do
   let(:customer) { Factory(:customer_saberma, shop: shop) }
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(user)
   end
 

@@ -9,6 +9,7 @@ describe EmailsController do
   let(:subscribes){ shop.subscribes}
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(user)
   end
 

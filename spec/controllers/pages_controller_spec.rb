@@ -6,6 +6,7 @@ describe PagesController do
   let(:page) { Factory(:page) }
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(Factory(:user_admin))
   end
 

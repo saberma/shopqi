@@ -19,6 +19,7 @@ describe OrdersController do
   end
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(user)
   end
 
