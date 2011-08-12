@@ -85,7 +85,7 @@ Released: Tue 2nd Aug, 2011 - 00:00
         target.closest('ul').closest('li').children('.nav-link').click() # 打开下拉选项
         guide = new Guide target, text, hook: position, offset: {left: 30, bottom: 90, right: 0}[position], ->
           @wrapper.css('opacity', 0).animate self.offset[position], 'slow'
-        $(document).click guide.clickHandler.bind(guide) # 关闭
+        $(document).one 'click', -> log('aa');guide.clickHandler() # 关闭
         $this.data 'guide', guide
 
     @source = ->
