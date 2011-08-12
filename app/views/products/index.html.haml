@@ -130,13 +130,15 @@
     %span(style="font-size: 18px") ${quantity_sum}
 
 :javascript
-  App.init = function(){
-    new App.Controllers.Products();
-    Backbone.history.start();
-  }
-
-  App.products = new App.Collections.Products();
-  App.products.refresh(#{@products_json});
-  new App.Views.Product.Index.Index({collection: App.products})
-
   task_name = 'add_product';
+
+  $(function(){ // fixed: bug#130
+    App.init = function(){
+      new App.Controllers.Products();
+      Backbone.history.start();
+    }
+
+    App.products = new App.Collections.Products();
+    App.products.refresh(#{@products_json});
+    new App.Views.Product.Index.Index({collection: App.products})
+  })
