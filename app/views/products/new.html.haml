@@ -130,7 +130,7 @@
                 %p.note 选择此商品所属的自定义集合:
                 %ul.nobull.pgroup.clearfix=render partial: "collection", collection: custom_collections
         / product images
-        %td(style="width: 275px; padding: 0pt 0pt 0pt 10px;")
+        %td#product-right-col
           %h3.section-header(style="margin-bottom: 0") 商品图片
           #upload-area
             %h4.st 上传图片
@@ -138,7 +138,7 @@
             %p#file-input.st.sb
               =file_field_tag 'product[images][]', :class => 'multi nofixed'
 
-  %p.btns.cl
+  .group-actions
     =f.submit w('save'), id:"create-product-btn", class: :btn
     =w('or')
     =link_to w('cancel'), products_path

@@ -207,7 +207,7 @@
       .section-header 集合
       %p.note(style="margin: 10px 0px 5px 5px;") 选择此商品所属的自定义集合:
       %ul.nobull.pgroup.clearfix=render partial: "collection", collection: custom_collections
-    .section-submit
+    .group-actions
       =f.submit "保存", id:"update-options", class: :btn
       =w('or')
       %a.cancel(href="#")=w('cancel')

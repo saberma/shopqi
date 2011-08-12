@@ -4,7 +4,7 @@ require 'spec_helper'
 describe UsersController do
   include Devise::TestHelpers
 
-  let(:user) { Factory(:user_admin) }
+  let(:user) { Factory(:user_liwh) }
 
   let(:shop) { user.shop }
 
