@@ -4,9 +4,13 @@ require 'spec_helper'
 describe UsersController do
   include Devise::TestHelpers
 
+  let(:user) { Factory(:user_admin) }
+
+  let(:shop) { user.shop }
+
   before :each do 
     request.host = "#{shop.primary_domain.host}"
-    sign_in(Factory(:user_liwh))
+    sign_in(user)
   end
 
   context '#create' do

@@ -6,6 +6,7 @@ describe WeightBasedShippingRatesController do
   let(:weight_based_shipping_rate){ Factory(:weight_based_shipping_rate)}
   let(:c){ Factory(:country)}
   let(:user) { Factory(:user_admin) }
+  let(:shop) { user.shop }
 
   before :each do
     request.host = "#{shop.primary_domain.host}"

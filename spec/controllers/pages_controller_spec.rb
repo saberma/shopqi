@@ -3,11 +3,15 @@ require 'spec_helper'
 describe PagesController do
   include Devise::TestHelpers
 
+  let(:user) { Factory(:user_admin) }
+
+  let(:shop) { user.shop }
+
   let(:page) { Factory(:page) }
 
   before :each do
     request.host = "#{shop.primary_domain.host}"
-    sign_in(Factory(:user_admin))
+    sign_in(user)
   end
 
   context '#create' do

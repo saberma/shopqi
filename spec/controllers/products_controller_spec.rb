@@ -3,12 +3,16 @@ require 'spec_helper'
 
 describe ProductsController do
   include Devise::TestHelpers
-  
+
+  let(:user) { Factory(:user_admin) }
+
+  let(:shop) { user.shop }
+
   let(:iphone4) {Factory.build(:iphone4)}
 
   before :each do 
     request.host = "#{shop.primary_domain.host}"
-    sign_in(Factory(:user_liwh))
+    sign_in(user)
   end
 
   context '#create' do
