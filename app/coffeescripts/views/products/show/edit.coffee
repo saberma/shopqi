@@ -15,14 +15,13 @@ App.Views.Product.Show.Edit = Backbone.View.extend
 
   save: ->
     self = this
-    # 循环选项，设置回model
-    @model.options.each (model) ->
+    @model.options.each (model) -> # 循环选项，设置回model
       model.set
         name: model.view.$("input[name='product[options_attributes][][name]']").val()
         value: model.view.$("input[name='product[options_attributes][][value]']").val()
         _destroy: model.view.$("input[name='product[options_attributes][][_destroy]']").val()
-    #修正:只修改option item时也要触发change事件，更新列表
-    @model._changed = true
+    @model._changed = true #修正:只修改option item时也要触发change事件，更新列表
+    @model.unset 'photos', silent: true # 有图片会报错"ActiveRecord::AssociationTypeMismatch (Photo)"，图片不是用bb处理，暂时unset
     @model.save {
         title: this.$("input[name='title']").val(),
         handle: this.$("input[name='handle']").val(),
