@@ -2,5 +2,5 @@
 
 # database.yml
 # sms.yml
-
+# newrelic.yml # 无example，自行从newrelic注册后下载
 部署时要从本地上传至服务器
