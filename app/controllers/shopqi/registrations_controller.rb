@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Shopqi::RegistrationsController < Devise::RegistrationsController
+  skip_before_filter :force_domain # 不需要重定向
   layout 'shopqi'
 
   expose(:themes_json) do

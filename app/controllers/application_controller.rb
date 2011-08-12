@@ -1,6 +1,7 @@
 # encoding: utf-8
 class ApplicationController < ActionController::Base # 后台管理/admin
   protect_from_forgery
+  #### 注意: devise login, register控制器继承自此，所以设置过滤器的时候要考虑是否要在他们的控制器中skip掉 #####
   before_filter :set_current_user_for_observer
   before_filter :force_domain # 后台管理需要用到https，必须重定向至 .myshopqi.com
 
