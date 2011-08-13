@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     last_week = shop.orders.between(last_week_begin,last_week_end)
     total = shop.orders.all
     total_product = shop.products.all
-    skus_size = shop.variants.where("sku != ''").size
+    skus_size = shop.variants.size
     {
       today: { price: today.map(&:total_price).inject(0,:+),size: today.size,des: '今天'},
       yesterday: { price: yesterday.map(&:total_price).inject(0,:+),size: yesterday.size,des: '昨天'},
