@@ -3,6 +3,7 @@ App.Views.Link.Show = Backbone.View.extend
   className: 'sl link'
 
   initialize: ->
+    self = this
     #显示列表、隐藏无ITEM的提示
     link_list_container_id = "#default_container_link_list_#{this.model.attributes.link_list_id}"
     $('.padding', link_list_container_id).hide()
@@ -10,6 +11,8 @@ App.Views.Link.Show = Backbone.View.extend
     _.bindAll this, 'render'
     $(this.el).attr 'id', "link_#{this.model.id}"
     this.render()
+    @model.bind 'remove', (model) ->
+      self.remove()
     $('.nobull', link_list_container_id).append this.el
 
   render: ->

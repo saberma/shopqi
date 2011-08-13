@@ -7,7 +7,10 @@ App.Views.LinkList.Show = Backbone.View.extend
 
   initialize: ->
     _.bindAll this, 'render'
-    this.model.bind 'change', this.render
+    self = this
+    @model.bind 'change', this.render
+    @model.bind 'remove', (model) ->
+      self.remove()
     $(this.el).attr 'id', "link_lists/#{this.model.id}"
     $('#menus').append this.el
     this.render()
@@ -29,7 +32,6 @@ App.Views.LinkList.Show = Backbone.View.extend
       self.model.links.sort silent: true
 
   destroy: ->
-    #therubyracer暂时无法编译中文，最新版已修正问题但未发布
     if confirm '您确定要删除吗'
       self = this
       this.model.destroy
@@ -37,5 +39,5 @@ App.Views.LinkList.Show = Backbone.View.extend
           App.link_lists.remove self.model
           self.remove()
           #删除成功!
-          msg '\u5220\u9664\u6210\u529F\u0021'
+          msg '删除成功!'
     return false
