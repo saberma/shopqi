@@ -43,16 +43,15 @@
             %li=link_to menu[:label], menu[:url], id: current(menu)
     #container.clearfix
       %ul#secondary
-        -#
-          %li#apps-link
-            %a(href="#" onclick="$('#apps-dropdown').toggle()" class="nav-link") 应用
-            #apps-dropdown.nav-dropdown.dropdown.hide
-              %h3 未安装应用
-              %p#apps-manage
-                %a(href="https://github.shopqi.com/admin/applications") 管理应用
-              %p.more
-                %a(href="http://apps.shopqi.com") 获取更多应用
-                %span 访问应用商店
+        %li#apps-link
+          #apps-dropdown.nav-dropdown.dropdown.hide
+            %h3 未安装应用
+            %ul
+              %li
+            %p.nav-manage=link_to '管理应用', "javascript:msg('即将上线...')"
+            %p.more
+              =link_to '获取更多应用', "javascript:msg('即将上线...')"
+              %span 访问应用商店
         %li#theme-link
           #theme-dropdown.nav-dropdown.dropdown.hide(style="right: 10px")
             %h3 修改网店外观

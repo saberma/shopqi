@@ -43,7 +43,7 @@ module ApplicationHelper
       { label: '集合', url: custom_collections_path },
       { label: '博客 & 页面', url: pages_path },
       { label: '链接列表', url: link_lists_path },
-      { label: '市场营销', url: '/admin/marketing' }
+      { label: '市场营销', url: "javascript:msg('即将上线...')" }
     ]
     @menus
   end
