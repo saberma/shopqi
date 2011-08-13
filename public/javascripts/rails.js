@@ -208,7 +208,7 @@
 		}
 	});
 
-	$('form input[type=submit], form input[type=image], form button[type=submit], form button:not([type])').live('click.rails', function() {
+	$('form input[type=submit], form input[type=image], form button[type=submit], form button:not([type])').live('click.rails', function(e) {
 		var button = $(this);
 		if (!allowAction(button)) return stopEverything(e);
 		// register the pressed submit button

@@ -66,7 +66,7 @@
                     =v.radio_button :inventory_policy, policy.code
                     %label.inline(for="product_variant_inventory_policy_#{policy.code}")=policy.name
                     %br/
-  .btns(style="margin-top: 20px")
+  .group-actions
     %input.btn(name="commit" type="submit" value="保存")
     =w('or')
     %a.cancel(href="#")=w('cancel')

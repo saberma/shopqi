@@ -5,9 +5,11 @@ describe WeightBasedShippingRatesController do
   include Devise::TestHelpers
   let(:weight_based_shipping_rate){ Factory(:weight_based_shipping_rate)}
   let(:c){ Factory(:country)}
-  let(:user) { Factory(:user_admin) }
+  let(:user) { Factory(:user_liwh) }
+  let(:shop) { user.shop }
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(Factory(:user_admin))
   end
 

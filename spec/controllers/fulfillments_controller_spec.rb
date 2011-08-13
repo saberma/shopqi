@@ -29,6 +29,7 @@ describe FulfillmentsController do
   let(:psp_line_item) { order.line_items.second }
 
   before :each do 
+    request.host = "#{shop.primary_domain.host}"
     sign_in(user)
   end
 

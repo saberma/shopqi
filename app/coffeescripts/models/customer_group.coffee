@@ -7,7 +7,8 @@ CustomerGroup = Backbone.Model.extend
   filters: ->
     query = this.get('query')
     query = '' unless query?
-    _(query.split(';')).compact().map (filter_query) ->
+    queries = _(query.split(';')).compact()
+    _(queries).map (filter_query) ->
       [ condition, value, condition_name, value_name ] = filter_query.split ':'
       condition: condition, value: value, condition_name: condition_name, value_name: value_name
 

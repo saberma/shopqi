@@ -164,6 +164,7 @@ GEM
       subexec (~> 0.0.4)
     multi_json (1.0.3)
     multipart-post (1.1.2)
+    newrelic_rpm (3.1.1)
     nokogiri (1.4.4)
     oauth2 (0.4.1)
       faraday (~> 0.6.1)
@@ -309,6 +310,7 @@ DEPENDENCIES
   meta_search
   meta_where
   mini_magick
+  newrelic_rpm
   nokogiri
   oauth2
   on_the_spot

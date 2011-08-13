@@ -12,6 +12,7 @@ describe AssetsController do
   let(:path) { path = File.join Rails.root, 'public', 's', 'files', Rails.env, shop.id.to_s, 'theme'}
 
   before :each do
+    request.host = "#{shop.primary_domain.host}"
     sign_in(user)
   end
 
