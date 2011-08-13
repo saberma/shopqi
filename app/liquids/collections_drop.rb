@@ -12,6 +12,8 @@ end
 
 class CollectionDrop < Liquid::Drop
 
+  delegate :title, :handle, to: :@collection
+
   def initialize(collection)
     @collection = collection
   end
@@ -20,10 +22,6 @@ class CollectionDrop < Liquid::Drop
     @products ||= @collection.products.map do |product|
       ProductDrop.new product
     end
-  end
-
-  def title
-    @collection.title
   end
 
   def description

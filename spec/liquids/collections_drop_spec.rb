@@ -9,11 +9,23 @@ describe CollectionsDrop do
 
   let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
 
-  it 'should get frontpage' do
-    iphone4
-    variant = "{% for product in collections.frontpage.products %}<span>{{ product.title }}</span>{% endfor %}"
-    result = "<span>#{iphone4.title}</span>"
-    Liquid::Template.parse(variant).render('collections' => CollectionsDrop.new(shop)).should eql result
+  context 'frontpage' do
+
+    let(:collections_drop) { CollectionsDrop.new(shop) }
+
+    it 'should get handle' do
+      variant = "{{collections.frontpage.handle}}"
+      result = "frontpage"
+      Liquid::Template.parse(variant).render('collections' => collections_drop).should eql result
+    end
+
+    it 'should get products' do
+      iphone4
+      variant = "{% for product in collections.frontpage.products %}<span>{{ product.title }}</span>{% endfor %}"
+      result = "<span>#{iphone4.title}</span>"
+      Liquid::Template.parse(variant).render('collections' => collections_drop).should eql result
+    end
+
   end
 
   describe CollectionDrop do
