@@ -37,9 +37,10 @@
           .gleft
             %span.error-message
             %ul#payment-methods
-              %li#credit-cards
-                %input(checked="checked" class="payment-method" id="direct-payment" name="order[gateway]" type="radio" value="1072012")
-                %label(for="direct-payment") 货到付款
+              -shop.payments.each do |gateway|
+                %li
+                  =f.radio_button :payment_id, gateway.id
+                  =label_tag 'payment' , gateway.name? ? gateway.name :  gateway.payment_type.name
           #pay-info.gright
         %p(style="clear:both;height: 0")
       #marketing-box.group.clearfix

@@ -62,6 +62,10 @@ class Shop::OrderController < Shop::AppController
       variant = shop.variants.find(variant_id)
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
+
+    #增加默认的付款方式为支付宝
+    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first.try(:id)
+
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)
     else
@@ -76,6 +80,7 @@ class Shop::OrderController < Shop::AppController
   # 支付
   def commit
     order.financial_status = 'pending'
+    order.payment = shop.payments.find(params[:order][:payment_id])
     order.save
   end
 

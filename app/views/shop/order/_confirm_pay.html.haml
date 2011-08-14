@@ -1,0 +1,17 @@
+-payment = order.payment
+%p==您选择的付款方式为: #{payment.payment_type.name}
+%p==点击确认支付，将前往支付中心进行付款操作！
+- payment_service_for order.token, payment.account, :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
+  - service.total_fee order.total_price
+  - service.seller email: payment.account
+  - service.notify_url notify_account_index_url
+  - service.return_url account_index_url
+  - service.charset "utf-8"
+  - service.service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER
+  - service.payment_type 1
+  - service.subject '商品付款'
+  - service.sign
+.actions
+  = button_to_function "确认支付", "$('#payment-form > div').remove();$('#payment-form').submit()",class:'btn'
+  =w('or')
+  =link_to w('cancel'),account_index_path

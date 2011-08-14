@@ -13,8 +13,11 @@
       %p
         您的订单号为：
         %strong=order.name
-      -#
-        %h3 银行汇款 的简要说明
-        %p 请汇至xxxxxxx
-      %p 我们将会发送收据到您的电子邮箱中 请保留以作为您的纪录.
-      %p 感谢您的惠顾 .
+      -unless order.payment.payment_type_id?
+        %h3==#{order.payment.name} 的简要说明
+        %p==#{order.payment.message}
+        %p 我们将会发送收据到您的电子邮箱中 请保留以作为您的纪录.
+        %p 感谢您的惠顾 .
+      -else
+        =render 'confirm_pay'
+

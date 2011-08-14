@@ -6,7 +6,7 @@ class OrderDrop < Liquid::Drop
     @order = order
   end
 
-  delegate :id, :name, :order_number, :shipping_rate, :gateway, :total_price, :total_line_items_price, to: :@order
+  delegate :id, :name, :order_number, :shipping_rate, :payment, :total_price, :total_line_items_price, to: :@order
 
   def date
     @order.created_at

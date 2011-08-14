@@ -8,8 +8,9 @@ class Order < ActiveRecord::Base
   has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction' #支付记录
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment' #配送记录
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc #订单历史
+  belongs_to  :payment        , class_name: 'Payment' #支付方式
 
-  attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason
+  attr_accessible :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address

@@ -368,7 +368,7 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
     t.string   "fulfillment_status",     :limit => 16,                   :null => false
     t.string   "email",                  :limit => 32,                   :null => false
     t.string   "shipping_rate",          :limit => 32
-    t.string   "gateway",                :limit => 32
+    t.integer  "payment_id"
     t.float    "total_line_items_price",                                 :null => false
     t.float    "total_price",                                            :null => false
     t.string   "note"
