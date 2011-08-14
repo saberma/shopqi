@@ -89,7 +89,7 @@ describe "Shop::Shops", js:true do
     end
 
     it "should list blog article" do
-      blog = shop.blogs.where(handle: 'latest-news').first
+      blog = shop.blogs.where(handle: 'news').first
       article = blog.articles.create title: '如何选购iphone'
       ThinkingSphinx::Test.index 'article_delta'
       click_on '查询'

@@ -5,7 +5,7 @@ describe Form do
 
   let(:shop) { Factory(:user_liwh).shop }
 
-  let(:blog) { shop.blogs.where(handle: 'latest-news').first }
+  let(:blog) { shop.blogs.where(handle: 'news').first }
 
   let(:article) { Article.new title: '文章', shop_id: shop.id, blog_id: blog.id , body_html: '新文章。。。'}
 

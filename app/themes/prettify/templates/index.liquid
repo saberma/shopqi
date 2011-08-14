@@ -9,9 +9,9 @@
   </div>
   {% endtablerow %}
 </table>
-<div id="articles"> {% for article in blogs.latest-news.articles limit: 1 %}
+<div id="articles"> {% for article in blogs.news.articles limit: 1 %}
   <h3>{{ article.title }}</h3>
   <div class="article-body textile"> {{ article.content}} </div>
   {% endfor %} 
 
-<p><a href="blogs/latest-news">All News >></a></p></div>
+<p><a href="blogs/news">All News >></a></p></div>
