@@ -28,10 +28,12 @@ App.Views.Payment.Index = Backbone.View.extend
       $('#account_payment_provider').toggle()
       $('#activate_payment_provider').toggle()
       $('#alipay-gateway-id option:eq(0)').attr 'selected', true
+      false
 
     $('#cancel_custom_payment_form').click ->
       $('#account_manual_payment_gateway').hide()
       $('#select_custom_payment_method option:eq(0)').attr 'selected', true
+      false
 
     if $('.field-with-errors input').size() > 0
       $('#account_payment_provider').show()

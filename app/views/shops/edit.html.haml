@@ -3,7 +3,7 @@
   %ul
 #general-settings
   =form_for shop do |f|
-    %h3 关于你 
+    %h3 关于你
     %p.hint.sb
       可以为商店命名，这个名字将显示在网页的标题上
     .box2
@@ -17,14 +17,13 @@
       %dl
         %dd
           %table.data2{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "width: 600px"}
-            -#
-              %tr
-                %td{:colspan => "2"}
-                  %label{:for => "shop_address1"} 地址
-                  %br/
-                  =select_tag :province
-                  =select_tag :city
-                  =select_tag :district
+            %tr
+              %td.region{:colspan => "2"}
+                %label{:for => "shop_address1"} 地址
+                %br/
+                =f.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 106px'
+                =f.select :city, District.list(shop.province), {include_blank: '--城市--'}, style: 'width: 106px'
+                =f.select :district, District.list(shop.city), {include_blank: '--地区--'}, style: 'width: 106px'
             %tr
               %td{:style => "padding-right: 5px"}
                 =f.label :address
@@ -70,9 +69,10 @@
           %textarea#shop_password_message.image-target{:cols => "20", :name => "shop[password_message]", :rows => "8"}
     %p.btn-divider{:style => "margin: 0"}
       =f.submit "保存",class:"btn"
-    
+
 :javascript
   $(function(){
+    RegionUtils.init()
     $('#shop_password_enabled').change(function(){
       $('#password-details').toggle($(this).attr('checked'));
     }).change();
