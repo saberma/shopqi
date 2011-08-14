@@ -40,6 +40,7 @@ Shopqi::Application.routes.draw do
       match '/carts/:shop_id/:cart_token/create_order', to: 'order#create'
       get '/orders/:shop_id/:token/pay'               , to: 'order#pay'    , as: :pay_order
       match '/orders/:shop_id/:token/commit'          , to: 'order#commit' , as: :commit_order
+      post '/orders/notify'                     , to: 'order#notify', as: :notify_order
     end
   end
 

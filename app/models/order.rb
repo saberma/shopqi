@@ -89,6 +89,10 @@ class Order < ActiveRecord::Base
     "订单 #{name}"
   end
 
+  def pay!
+    order.financial_status = 'paid'
+  end
+
 end
 
 # 订单商品

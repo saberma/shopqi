@@ -4,8 +4,8 @@
 - payment_service_for order.token, payment.account, :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
   - service.total_fee order.total_price
   - service.seller email: payment.account
-  - service.notify_url notify_account_index_url
-  - service.return_url account_index_url
+  - service.notify_url notify_order_url
+  - service.return_url show_shop_url
   - service.charset "utf-8"
   - service.service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER
   - service.payment_type 1

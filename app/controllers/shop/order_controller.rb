@@ -84,4 +84,22 @@ class Shop::OrderController < Shop::AppController
     order.save
   end
 
+  def notify
+    notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
+    if notification.acknowledge && valid?(notification)
+      @order = Order.find_by_token(notification.out_trade_no)
+      @order.pay! if notification.status == "TRADE_FINISHED"
+      render :text => "success"
+    else
+      render :text => "fail"
+    end
+  end
+
+  private
+  def valid?(notification)
+    url = "http://notify.alipay.com/trade/notify_query.do"
+    result = HTTParty.get(url, :query => {:partner => ActiveMerchant::Billing::Integrations::Alipay::ACCOUNT, :notify_id => notification.notify_id}).body
+    result == 'true'
+  end
+
 end
