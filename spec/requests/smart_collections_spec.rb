@@ -21,7 +21,7 @@ describe "SmartCollections" do
       page.should have_content('low price')
 
       select '隐藏', :from => 'smart_collection_published'
-      find('#flashnotice').should have_content('修改成功!')
+      page.should have_content('修改成功!')
 
       page.execute_script("window.confirm = function(msg) { return true; }")
       find('.del').click

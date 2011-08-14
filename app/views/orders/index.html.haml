@@ -12,7 +12,7 @@
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 -#=render :export
-#order-filters.box2.sst
+#table-filters.box2.sst
   %div(style="float: right; font-size: 12px")
     每页显示条数:
     -selected_page_size = order_search_path(limit: params[:search] && params[:search][:limit])
@@ -27,27 +27,27 @@
   的
   %a#status-filter-link(href="#")=search_label :status, '正常', status
   订单
-  #order-status-select
-    %ul.nobull.filter-select.dropdown.hide(style='left: 240px')
-      %li
-        %strong 订单状态
-      -status.each_pair do |code, name|
-        %li=link_to name, order_search_path(status_eq: code)
-      %li.filter-show-all=link_to "显示所有", order_search_path(status_eq: nil)
-  #payment-status-select
-    %ul.nobull.filter-select.dropdown.hide(style='left: 60px')
+  #payment-status-select.filter-select
+    %ul.dropdown.hide(style='left: -232px')
       %li
         %strong 支付状态
       -financial_status.each_pair do |code, name|
         %li=link_to name, order_search_path(financial_status_eq: code)
       %li.filter-show-all.current=link_to "显示所有", order_search_path(financial_status_eq: nil)
-  #shipping-status-select
-    %ul.nobull.filter-select.dropdown.hide(style='left: 150px')
+  #shipping-status-select.filter-select
+    %ul.dropdown.hide(style='left: -142px')
       %li
         %strong 配送状态
       -fulfillment_status.each_pair do |code, name|
         %li=link_to name, order_search_path(fulfillment_status_eq: code)
       %li.filter-show-all.current=link_to "显示所有", order_search_path(fulfillment_status_eq: nil)
+  #order-status-select.filter-select
+    %ul.dropdown.hide(style='left: -52px')
+      %li
+        %strong 订单状态
+      -status.each_pair do |code, name|
+        %li=link_to name, order_search_path(status_eq: code)
+      %li.filter-show-all=link_to "显示所有", order_search_path(status_eq: nil)
 -#.announcement.c 公告.
 .listing.sst
   #orders

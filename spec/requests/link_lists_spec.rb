@@ -16,7 +16,7 @@ describe "LinkLists" do
       click_on '新增链接列表'
       fill_in 'link_list[title]', with: 'products'
       click_on '保存'
-      find('#flashnotice').should have_content('新增成功!')
+      page.should have_content('新增成功!')
 
       within(:xpath, "//li[contains(@class, 'link-list')][3]") do
         click_on '新增链接'

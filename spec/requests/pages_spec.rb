@@ -22,7 +22,7 @@ describe "Pages" do
       page.should have_content('new-welcome')
 
       select '显示', :from => 'page_published'
-      find('#flashnotice').should have_content('修改成功!')
+      page.should have_content('修改成功!')
 
       page.execute_script("window.confirm = function(msg) { return true; }")
       find('.del').click

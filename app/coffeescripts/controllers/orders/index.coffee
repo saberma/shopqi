@@ -4,23 +4,23 @@ App.Controllers.Orders.Index = Backbone.Controller.extend
     # 列表页面的查询条件：状态、支付状态、打包状态
     $('#status-filter-link').click ->
       $('#order-status-select
- > .filter-select').toggle()
-      $('#payment-status-select > .filter-select').hide()
-      $('#shipping-status-select > .filter-select').hide()
+ > .dropdown').toggle()
+      $('#payment-status-select > .dropdown').hide()
+      $('#shipping-status-select > .dropdown').hide()
       false
 
     $('#payment-filter-link').click ->
       $('#order-status-select
- > .filter-select').hide()
-      $('#payment-status-select > .filter-select').toggle()
-      $('#shipping-status-select > .filter-select').hide()
+ > .dropdown').hide()
+      $('#payment-status-select > .dropdown').toggle()
+      $('#shipping-status-select > .dropdown').hide()
       false
 
     $('#shipping-filter-link').click ->
       $('#order-status-select
- > .filter-select').hide()
-      $('#payment-status-select > .filter-select').hide()
-      $('#shipping-status-select > .filter-select').toggle()
+ > .dropdown').hide()
+      $('#payment-status-select > .dropdown').hide()
+      $('#shipping-status-select > .dropdown').toggle()
       false
 
     # 选择页码
@@ -28,7 +28,7 @@ App.Controllers.Orders.Index = Backbone.Controller.extend
       document.location.href = $(this).val()
 
     $(document).click ->
-      $('.filter-select').hide()
+      $('.dropdown').hide()
 
   routes:
     "nothing":      "nothing"

@@ -26,7 +26,7 @@ describe "Shopqi::Login", js: true do
       fill_in 'Email'      , with: 'admin@shopqi.com'
       fill_in '密码'       , with: '666666'
       click_on 'log in'
-      has_content?('最新的活动记录').should be_true
+      has_content?('ShopQi欢迎您').should be_true
     end
 
   end

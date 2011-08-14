@@ -1,5 +1,5 @@
 # encoding: utf-8
-class DistrictController < ApplicationController
+class DistrictController < Shopqi::AppController
   layout nil
 
   def list

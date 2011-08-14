@@ -101,6 +101,7 @@ describe "Customers", js: true do
 
       # 更多地址
       it "should show more address" do
+        customer.addresses.create name: '马海波', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13928452888'
         visit customer_path(customer)
         click_on '另外 1 个地址…'
         within '#more-customer-addresses' do
@@ -111,7 +112,7 @@ describe "Customers", js: true do
         end
         click_on '隐藏地址…'
         find('#more-customer-addresses').visible?.should be_false
-        find('#customer-note .notes').text.should eql '默认顾客'
+        find('#customer-note .notes').text.should eql '暂时没有加入备注.'
       end
 
       # 统计
@@ -191,6 +192,14 @@ describe "Customers", js: true do
   describe "GET /customers" do
 
     describe 'Group' do
+
+      before(:each) do
+        shop.customer_groups.create [
+          { name: '接收营销邮件', query: 'accepts_marketing:yes:接收营销邮件:是' }                         ,
+          { name: '潜在顾客'    , query: 'last_abandoned_order_date:last_month:放弃订单时间:在最近一个月' },
+          { name: '多次消费'    , query: 'orders_count_gt:1:订单数 大于:1' }                               ,
+        ]
+      end
 
       # 显示当前查询分组
       it "should show current search" do
@@ -364,6 +373,11 @@ describe "Customers", js: true do
     end
 
     describe 'Customer' do
+
+      before(:each) do
+        customer # 注意:此顾客信息在初始化订单时会被创建 See: OrderObserver
+        Factory(:customer_liwh, shop: shop)
+      end
 
       it "should be search" do
         visit customers_path
