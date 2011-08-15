@@ -12,12 +12,10 @@ end
 
 class BlogDrop < Liquid::Drop
 
+  delegate :title, :handle, to: :@blog
+
   def initialize(blog)
     @blog = blog
-  end
-
-  def title
-    @blog.title
   end
 
   def articles
