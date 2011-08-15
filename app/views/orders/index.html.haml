@@ -1,17 +1,8 @@
 =content_for :javascripts do
   =javascript_include_tag 'models/order', 'collections/orders', 'views/orders/index/index', 'views/orders/index/show', 'controllers/orders/index'
 
-%h2#title 订单管理
--#
-  #action-links
-    %ul
-      %li.small-icon
-        %a.feed(href="/admin/feed") RSS订阅订单
-      %li.csv
-        %a(href="#") 导出订单
-=render "shared/noscript"
-=render "shared/upgrade_ie"
--#=render :export
+=render "menu"
+
 #table-filters.box2.sst
   %div(style="float: right; font-size: 12px")
     每页显示条数:

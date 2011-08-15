@@ -39,6 +39,10 @@ class OrdersController < ApplicationController
   expose(:cancel_reasons) { KeyValues::Order::CancelReason.hash }
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
+  def index
+    render action: :blank_slate if orders.empty?
+  end
+
   # 批量修改
   def set
     operation = params[:operation].to_sym
