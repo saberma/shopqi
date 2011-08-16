@@ -30,12 +30,12 @@ describe "Blogs" do
       find('#kindeditor').visible?.should be false
 
       click_on '新增'
-      find('#flashnotice').should have_content('新增成功')
+      page.should have_content('新增成功')
       page.should have_content('新品上市')
 
       #修改文章
       select '隐藏', :from => 'article_published'
-      find('#flashnotice').should have_content('修改成功!')
+      page.should have_content('修改成功!')
 
       #删除文章
       page.execute_script("window.confirm = function(msg) { return true; }")

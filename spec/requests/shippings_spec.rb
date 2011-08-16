@@ -10,7 +10,7 @@ describe "Shippings" do
       click_on '增加'
       select 'China', from: 'country_code'
       click_on '保存'
-      find('#flashnotice').should have_content('新增成功')
+      page.should have_content('新增成功')
 
       visit shipping_index_path
       page.should have_content('China')

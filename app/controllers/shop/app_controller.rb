@@ -62,10 +62,12 @@ class Shop::AppController < ActionController::Base
       settings_drop = SettingsDrop.new(shop)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
+      blogs_drop = BlogsDrop.new(shop)
       {
         'shop' => shop_drop,
         'settings' => settings_drop,
         'linklists' => linklists_drop,
+        'blogs' => blogs_drop,
         'collections' => collections_drop
       }.merge(extra_assign)
     end

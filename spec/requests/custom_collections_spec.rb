@@ -21,12 +21,11 @@ describe "CustomCollections" do
       page.should have_content('low price')
 
       select '隐藏', from: 'custom_collection_published'
-      find('#flashnotice').should have_content('修改成功!')
+      page.should have_content('修改成功!')
 
       page.execute_script("window.confirm = function(msg) { return true; }")
       find('.del').click
       page.should_not have_content('high price')
-
     end
   end
 end

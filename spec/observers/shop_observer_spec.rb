@@ -45,8 +45,8 @@ describe ShopObserver do
       shop.custom_collections.where(handle: :frontpage).first.should_not be_nil
     end
 
-    it "should save latest-news blog" do
-      shop.blogs.where(handle: 'latest-news').first.should_not be_nil
+    it "should save news blog" do
+      shop.blogs.where(handle: 'news').first.should_not be_nil
     end
 
     it "should set password" do # 设置前台商店访问密码

@@ -17,6 +17,7 @@ class ArticleDrop < Liquid::Drop
   end
 
   def url
+    "/blogs/#{@article.blog.handle}/#{@article.id}"
   end
 
   def comments_count

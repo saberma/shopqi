@@ -9,16 +9,13 @@ describe "Shopqi::Registrations", js: true do
 
   describe "GET /signup" do
 
-    before(:each) { visit '/services/signup/new/basic' }
+    before(:each) do
+      Capybara.server_port = 31337 # 指定port
+      Setting.stub!(:store_host_with_port).and_return("#{Setting.store_host}:#{Capybara.server_port}") # registrations/new.html.haml App.redirect_uri
+      visit '/services/signup/new/basic'
+    end
 
     describe "signup" do
-
-      before(:each) do
-        session = mock('session')
-        session.stub!(:[], 'verify_code').and_return(8888)
-        session.stub!(:[]=)
-        controller.stub!(:session).and_return(session)
-      end
 
       it "should be save" do
         fill_in 'shop[name]'       , with: '苹果专卖'
@@ -38,8 +35,7 @@ describe "Shopqi::Registrations", js: true do
         fill_in '手机验证码'       , with: '8888'
         check 'shop_terms_and_conditions' # 服务条款
         click_on '创建我的ShopQi商店'
-        find('#shop_submit')['disabled'].should be_true
-        has_content?('最新的活动记录').should be_true
+        has_content?('ShopQi欢迎您').should be_true
       end
 
     end

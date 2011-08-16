@@ -3,18 +3,18 @@ App.Controllers.Products = Backbone.Controller.extend
   initialize: ->
     # 列表页面的查询条件：类型、厂商
     $('#vendor-filter-link').click ->
-      $('#type-status-select > .filter-select').hide()
-      $('#vendor-status-select > .filter-select').toggle()
+      $('#type-status-select > .dropdown').hide()
+      $('#vendor-status-select > .dropdown').toggle()
       false
 
     $('#type-filter-link').click ->
-      $('#vendor-status-select > .filter-select').hide()
-      $('#type-status-select > .filter-select').toggle()
+      $('#vendor-status-select > .dropdown').hide()
+      $('#type-status-select > .dropdown').toggle()
       false
 
     $(document).click ->
-      $('#vendor-status-select > .filter-select').hide()
-      $('#type-status-select > .filter-select').hide()
+      $('#vendor-status-select > .dropdown').hide()
+      $('#type-status-select > .dropdown').hide()
 
     ###### 新增及查看页面 #####
     # 是否要求收货地址

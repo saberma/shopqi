@@ -68,6 +68,7 @@ Shopqi::Application.routes.draw do
       get '/cart'                          , to: 'cart#show'
       post '/cart'                         , to: 'cart#update'
       get '/blogs/:handle/:id'             , to: 'articles#show'
+      get '/blogs/:handle'                 , to: 'blogs#show'
       post '/articles/:article_id/comments', to: 'articles#add_comment'
     end
 

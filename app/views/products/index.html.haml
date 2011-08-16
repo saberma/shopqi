@@ -27,15 +27,15 @@
   和
   %a#type-filter-link(href="#")=search_label :product_type, "所有类型"
   的商品
-  #vendor-status-select
-    %ul.nobull.filter-select.dropdown.hide(style='left: 50px')
+  #vendor-status-select.filter-select
+    %ul.dropdown.hide(style='left: -153px')
       %li
         %strong 厂商
       -vendors.each do |vendor|
         %li=link_to vendor.name, product_search_path(vendor_eq: vendor.name)
       %li.filter-show-all.current=link_to "显示所有", product_search_path(vendor_eq: nil)
-  #type-status-select
-    %ul.nobull.filter-select.dropdown.hide(style='left: 120px')
+  #type-status-select.filter-select
+    %ul.dropdown.hide(style='left: -86px')
       %li
         %strong 商品类型
       -types.each do |product_type|
@@ -132,13 +132,11 @@
 :javascript
   task_name = 'add_product';
 
-  $(function(){ // fixed: bug#130
-    App.init = function(){
-      new App.Controllers.Products();
-      Backbone.history.start();
-    }
+  App.init = function(){
+    new App.Controllers.Products();
+    Backbone.history.start();
+  }
 
-    App.products = new App.Collections.Products();
-    App.products.refresh(#{@products_json});
-    new App.Views.Product.Index.Index({collection: App.products})
-  })
+  App.products = new App.Collections.Products();
+  App.products.refresh(#{@products_json});
+  new App.Views.Product.Index.Index({collection: App.products})
