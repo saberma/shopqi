@@ -31,7 +31,7 @@ class Order < ActiveRecord::Base
 
   before_save do
     self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price if self.total_price.nil?
+    self.total_price = self.total_line_items_price
   end
 
   def shipping_rate_price
