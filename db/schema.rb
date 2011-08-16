@@ -128,17 +128,17 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "custom_collections", ["shop_id"], :name => "index_custom_collections_on_shop_id"
 
   create_table "customer_addresses", :force => true do |t|
-    t.integer "customer_id",               :null => false
+    t.integer "customer_id",                :null => false
     t.string  "name"
-    t.string  "company",     :limit => 64
-    t.string  "country",     :limit => 64
-    t.string  "province",    :limit => 64
-    t.string  "city",        :limit => 64
-    t.string  "district",    :limit => 64
+    t.string  "company",      :limit => 64
+    t.string  "country_code", :limit => 64
+    t.string  "province",     :limit => 64
+    t.string  "city",         :limit => 64
+    t.string  "district",     :limit => 64
     t.string  "address1"
     t.string  "address2"
-    t.string  "zip",         :limit => 12
-    t.string  "phone",       :limit => 64
+    t.string  "zip",          :limit => 12
+    t.string  "phone",        :limit => 64
   end
 
   add_index "customer_addresses", ["customer_id"], :name => "index_customer_addresses_on_customer_id"

@@ -41,7 +41,7 @@ class Customer < ActiveRecord::Base
 
   # 加入地址(不能重复)
   def add_address(a) #a可以是billing_address或者shipping_address
-    attrs = { name: a.name, company: a.company, country: a.country_code, province: a.province, city: a.city,
+    attrs = { name: a.name, company: a.company, country_code: a.country_code, province: a.province, city: a.city,
               district: a.district, address1: a.address1, address2: a.address2, zip: a.zip, phone: a.phone }
     unless self.addresses.exists?(attrs)
       self.addresses.create attrs
