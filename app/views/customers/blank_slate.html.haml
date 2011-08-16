@@ -1,0 +1,33 @@
+=content_for :javascripts do
+  =javascript_include_tag 'plugins/jquery.blank_slate'
+
+=render "menu"
+
+#blank-slate.blank-slate.clearfix.ppb
+  .heading
+    %h3 您暂时还没有顾客.
+    %p 在这里，您以后能看到顾客记录，并对这些记录进行管理.
+  .details.clearfix
+    #blank-slate-features.features.default.fl
+      %ul
+        %li.overview-your-customers
+          %h3 管理您的顾客
+          %p 跟踪您的顾客订单历史，找出谁的订单总额最多，或者谁是您的商店常客.
+        %li.filter-your-customers
+          %h3 过滤您的顾客
+          %p 通过消费总额、所在地区等条件来过滤顾客. 您可以将这些条件保存为顾客分组.
+        %li.last.group-your-customers
+          %h3 创建顾客分组
+          %p 顾客分组用于保存过滤条件，方便您关注顾客.
+    /.features
+    #blank-slate-screenshot.screenshot.fl
+      =image_tag 'admin/customer-blank-slate.jpg'
+      .overlay.group-your-customers(style="width:140px; height:170px; top:57px; left:7px;")  
+      .overlay.filter-your-customers(style="width:375px; height:70px; top:57px; left:167px;")  
+      .overlay.overview-your-customers(style="width:375px; height:427px; top:157px; left:167px;")  
+    /.screenshot
+  /.details
+/#blank-slate
+
+:coffeescript
+  $('#blank-slate').blank_slate()

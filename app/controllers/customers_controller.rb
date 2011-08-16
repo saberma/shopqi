@@ -75,6 +75,10 @@ class CustomersController < ApplicationController
   expose(:boolean) { KeyValues::Customer::Boolean.hash }
   expose(:status) { KeyValues::Customer::State.hash }
 
+  def index
+    render action: :blank_slate if customers.empty?
+  end
+
   def new
     customer.addresses.build if customer.addresses.empty?
   end

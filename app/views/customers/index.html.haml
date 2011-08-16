@@ -1,18 +1,8 @@
 =content_for :javascripts do
   =javascript_include_tag 'models/customer', 'models/customer_group', 'collections/customers', 'collections/customer_groups', 'views/customers/index/index', 'views/customers/index/search', 'views/customers/index/filters/index', 'views/customers/index/filters/show', 'views/customers/index/show', 'views/customer_groups/index/index', 'views/customer_groups/index/show', 'controllers/customers/index'
 
-%h2#title 顾客管理
-#action-links
-  %ul
-    %li#customer=link_to "新增顾客信息", new_customer_path
-    -#
-      %li.csv
-        %a#show_export_customers(href="#") 导出顾客信息
-      %li.csv
-        %a(href="/admin/customer_imports") 导入顾客信息
-=render "shared/noscript"
-=render "shared/upgrade_ie"
--#=render :export
+=render :menu
+
 .clearfix.ppb(style="padding-bottom:40px;")
   .col-4(style="width:242px; position:relative;")
     #customer-group-container.box2.preview-box
