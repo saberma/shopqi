@@ -31,11 +31,11 @@ class Order < ActiveRecord::Base
 
   before_save do
     self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price + shipping_address.country.weight_based_shipping_rates.first.price if self.total_price.nil?
+    self.total_price = self.total_line_items_price if self.total_price.nil?
   end
 
   def shipping_rate_price
-    shipping_rate.gsub(/.+-/,'').to_f
+    shipping_rate.gsub(/.+-/,'').to_f if shipping_rate
   end
 
   #订单商品总重量

@@ -5,6 +5,10 @@ $(document).ready ->
     $('#shipping-same').toggle checked
   .change()
 
+  if $('#no-shipping-rates').size() > 0
+    $('input#complete-purchase').attr 'disabled', true
+
+
   $('#shipping-rates').change ->
     action = $(this).closest('form').attr('action')
     href = action.substr(0,action.lastIndexOf('/')) + '/update_total_price'

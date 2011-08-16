@@ -76,7 +76,7 @@ class Shop::OrderController < Shop::AppController
     end
 
     #增加默认的付款方式为支付宝
-    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
+    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first if shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id)
 
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)

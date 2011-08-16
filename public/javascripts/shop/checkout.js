@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 16 Aug 2011 08:40:14 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 16 Aug 2011 10:57:54 GMT from
  * /Users/Apple/workplace/shopqi/app/coffeescripts/shop/checkout.coffee
  */
 
@@ -9,6 +9,9 @@ $(document).ready(function() {
     $('#shipping').toggle(!checked);
     return $('#shipping-same').toggle(checked);
   }).change();
+  if ($('#no-shipping-rates').size() > 0) {
+    $('input#complete-purchase').attr('disabled', true);
+  }
   $('#shipping-rates').change(function() {
     var action, href;
     action = $(this).closest('form').attr('action');

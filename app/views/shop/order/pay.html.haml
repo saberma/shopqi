@@ -14,7 +14,8 @@
       %span#cost
         ==¥ #{ order_total_price }
         =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
-      %span#shipping_span.hint .. 包含快递费#{order.shipping_rate_price}元
+      -unless shipping_rates.blank?
+        %span#shipping_span.hint .. 包含快递费#{order.shipping_rate_price}元
       %br
       %span#tax_span.hint .. 包含 0元 的税
       %br
@@ -26,28 +27,32 @@
       #payment
         .group.clearfix
           %h3 发货方式
-          %p 请选择您需要的发货方式.
+          -unless shipping_rates.blank?
+            %p 请选择您需要的发货方式.
+            %p.sst
+              %select#shipping-rates(name="order[shipping_rate]")
+                =options_for_select shipping_rates.collect{|s|["#{s.name}-¥#{s.price}","#{s.name}-#{s.price}"]}, order.shipping_rate
+          -else
+            %p#no-shipping-rates 对不起，由于本店暂时没有为该地区设置发货方式，所以，将不能发往该地区
+      -unless shipping_rates.blank?
+        .group
+          %h3 购买
+          %p.hint 所有的交易都是经过加密且安全的, 我们不会储存您的信用卡信息以及其他任何个人信息. 如想了解更多请浏览我们的隐私政策.
+          .sst
+            .gleft
+              %span.error-message
+              %ul#payment-methods
+                -shop.payments.each do |gateway|
+                  %li
+                    =f.radio_button :payment_id, gateway.id
+                    =label_tag 'payment' , gateway.name? ? gateway.name :  gateway.payment_type.name
+            #pay-info.gright
+          %p(style="clear:both;height: 0")
+        #marketing-box.group.clearfix
+          %h3 如果有更新就通知我
           %p.sst
-            %select#shipping-rates(name="order[shipping_rate]")
-              =options_for_select shipping_rates.collect{|s|["#{s.name}-¥#{s.price}","#{s.name}-#{s.price}"]}, order.shipping_rate
-      .group
-        %h3 购买
-        %p.hint 所有的交易都是经过加密且安全的, 我们不会储存您的信用卡信息以及其他任何个人信息. 如想了解更多请浏览我们的隐私政策.
-        .sst
-          .gleft
-            %span.error-message
-            %ul#payment-methods
-              -shop.payments.each do |gateway|
-                %li
-                  =f.radio_button :payment_id, gateway.id
-                  =label_tag 'payment' , gateway.name? ? gateway.name :  gateway.payment_type.name
-          #pay-info.gright
-        %p(style="clear:both;height: 0")
-      #marketing-box.group.clearfix
-        %h3 如果有更新就通知我
-        %p.sst
-          %input#marketing(type="checkbox" name="buyer_accepts_marketing" checked="checked" value="true")
-          %label(for="marketing" style="font-weight:normal") 我想接收关于新产品或促销以及其他更新的电子邮件.
+            %input#marketing(type="checkbox" name="buyer_accepts_marketing" checked="checked" value="true")
+            %label(for="marketing" style="font-weight:normal") 我想接收关于新产品或促销以及其他更新的电子邮件.
       %table#buttons(border="0" cellspacing="0" cellpadding="0" style="height: 55px; width: 100%")
         %tr
           %td(style="vertical-align:middle")
@@ -57,3 +62,4 @@
               %a(href="#{shop.primary_domain.url}") 取消，然后返回商店
           %td(style="text-align:right;vertical-align:bottom")
             %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'
+
