@@ -5,6 +5,17 @@ $(document).ready ->
     $('#shipping-same').toggle checked
   .change()
 
+  $('#shipping-rates').change ->
+    action = $(this).closest('form').attr('action')
+    href = action.substr(0,action.lastIndexOf('/')) + '/update_total_price'
+    $.post href, { shipping_rate: $(this).val() }, (data) ->
+      img = $("#cost :first-child")[0]
+      $('#cost').html(data.total_price).append(img)
+    $(this).ajaxStart ->
+      $('.spinner').show()
+    $(this).ajaxStop ->
+      $('.spinner').hide()
+
   $(".region").each ->
     selects = $('select', this)
     selects.change ->

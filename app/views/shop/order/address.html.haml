@@ -34,6 +34,9 @@
                 %td.lbl=b.label :name
                 %td=b.text_field :name, class: :short
               %tr
+                %td.lbl=b.label :country_code
+                %td=b.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
+              %tr
                 %td.lbl
                   %label(for='order_billing_address_attributes_province') 地区
                 %td.region

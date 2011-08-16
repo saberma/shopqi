@@ -61,7 +61,7 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order, comment: '所属订单', null: false
       t.string :name     , comment: '姓名'    , null: false
       t.string :company  , comment: '公司'    , limit: 64
-      t.string :country  , comment: '国家'    , limit: 64
+      t.string :country_code  , comment: '国家', limit: 64
       t.string :province , comment: '地区(省)', limit: 64
       t.string :city     , comment: '城市'    , limit: 64
       t.string :district , comment: '区'      , limit: 64
@@ -76,7 +76,7 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order, comment: '所属订单', null: false
       t.string :name     , comment: '姓名'    , null: false
       t.string :company  , comment: '公司'    , limit: 64
-      t.string :country  , comment: '国家'    , limit: 64
+      t.string :country_code  , comment: '国家', limit: 64
       t.string :province , comment: '地区(省)', limit: 64
       t.string :city     , comment: '城市'    , limit: 64
       t.string :district , comment: '区'      , limit: 64

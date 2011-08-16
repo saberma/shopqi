@@ -42,7 +42,19 @@ class Shop::OrderController < Shop::AppController
   end
 
   expose(:order_total_price) do
-    order.line_items.map(&:price).sum
+    order.total_price
+  end
+
+  expose(:countries){
+    shop.countries
+  }
+
+  expose(:country){
+    order.shipping_address.country
+  }
+
+  expose(:shipping_rates) do
+   country.weight_based_shipping_rates
   end
 
   # 订单提交Step1
@@ -64,7 +76,7 @@ class Shop::OrderController < Shop::AppController
     end
 
     #增加默认的付款方式为支付宝
-    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first.try(:id)
+    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
 
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)
@@ -93,6 +105,13 @@ class Shop::OrderController < Shop::AppController
     else
       render :text => "fail"
     end
+  end
+
+  def update_total_price
+    order.shipping_rate = params[:shipping_rate]
+    order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f
+    order.save
+    render json: {total_price: order.total_price}
   end
 
   private

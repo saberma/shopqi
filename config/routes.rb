@@ -41,6 +41,7 @@ Shopqi::Application.routes.draw do
       get '/orders/:shop_id/:token/pay'               , to: 'order#pay'    , as: :pay_order
       match '/orders/:shop_id/:token/commit'          , to: 'order#commit' , as: :commit_order
       post '/orders/notify'                     , to: 'order#notify', as: :notify_order
+      post '/orders/:shop_id/:token/update_total_price', to: 'order#update_total_price', as: :update_order_total_price
     end
   end
 

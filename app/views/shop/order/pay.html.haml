@@ -29,7 +29,7 @@
           %p 请选择您需要的发货方式.
           %p.sst
             %select#shipping-rates(name="order[shipping_rate]")
-              %option(value="international-shipping-25.00" selected="selected") International Shipping - $25.00
+              =options_for_select shipping_rates.collect{|s|["#{s.name}-#{s.price}","#{s.name}-#{s.price}"]}
       .group
         %h3 购买
         %p.hint 所有的交易都是经过加密且安全的, 我们不会储存您的信用卡信息以及其他任何个人信息. 如想了解更多请浏览我们的隐私政策.

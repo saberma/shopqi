@@ -1,7 +1,7 @@
 -payment = order.payment
 %p==您选择的付款方式为: #{payment.payment_type.name}
 %p==点击确认支付，将前往支付中心进行付款操作！
-- payment_service_for order.token, payment.account, :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
+- payment_service_for order.token, payment.partner, :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
   - service.total_fee order.total_price
   - service.seller email: payment.account
   - service.notify_url notify_order_url

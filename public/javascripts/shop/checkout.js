@@ -1,5 +1,5 @@
-/* DO NOT MODIFY. This file was compiled Tue, 07 Jun 2011 11:28:53 GMT from
- * /home/saberma/Documents/shopqi/app/coffeescripts/shop/checkout.coffee
+/* DO NOT MODIFY. This file was compiled Tue, 16 Aug 2011 03:32:07 GMT from
+ * /Users/Apple/workplace/shopqi/app/coffeescripts/shop/checkout.coffee
  */
 
 $(document).ready(function() {
@@ -9,6 +9,25 @@ $(document).ready(function() {
     $('#shipping').toggle(!checked);
     return $('#shipping-same').toggle(checked);
   }).change();
+  $('#shipping-rates').change(function() {
+    var action, href;
+    action = $(this).closest('form').attr('action');
+    href = action.substr(0, action.lastIndexOf('/')) + '/update_total_price';
+    $.post(href, {
+      shipping_rate: $(this).val()
+    }, function(data) {
+      var img;
+      log(data);
+      img = $("#cost :first-child")[0];
+      return $('#cost').html(data.total_price).append(img);
+    });
+    $(this).ajaxStart(function() {
+      return $('.spinner').show();
+    });
+    return $(this).ajaxStop(function() {
+      return $('.spinner').hide();
+    });
+  });
   return $(".region").each(function() {
     var selects;
     selects = $('select', this);

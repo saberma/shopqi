@@ -16,3 +16,5 @@ module LiquidDropHelper
 end
 
 Liquid::Drop.send :include , LiquidDropHelper
+
+Carmen.default_locale = :cn

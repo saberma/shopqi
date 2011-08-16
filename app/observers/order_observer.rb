@@ -13,7 +13,7 @@ class OrderObserver < ActiveRecord::Observer
     order.customer = customer
   end
 
-  def after_save(order)
+  def after_create(order)
     #发送客户确认邮件
     ShopMailer.notify_email(order,OrderDrop.new(order),order.shop.emails.find_by_mail_type('order_confirm')).deliver
   end

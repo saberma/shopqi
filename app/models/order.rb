@@ -31,7 +31,7 @@ class Order < ActiveRecord::Base
 
   before_save do
     self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price
+    self.total_price = self.total_line_items_price + shipping_address.country.weight_based_shipping_rates.first.price if self.total_price.nil?
   end
 
   before_update do
@@ -164,8 +164,8 @@ end
 # 发单人信息
 class OrderBillingAddress < ActiveRecord::Base
   belongs_to :order
-  validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-  default_value_for :country, :china
+  validates_presence_of :name,:country_code, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
+  default_value_for :country_code, :CN
 
   def province_name
     District.get(self.province)
@@ -184,7 +184,11 @@ end
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-  default_value_for :country, :china
+  default_value_for :country_code, :CN
+
+  def country
+    Country.where(code: country_code).first
+  end
 
   def province_name
     District.get(self.province)

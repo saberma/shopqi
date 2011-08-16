@@ -10,7 +10,7 @@
     /[if lt IE 7]
       =stylesheet_link_tag "ie-checkout"
     %link(href="/#{shop.theme.asset_relative_path('checkout.css')}" media="screen" rel="stylesheet" type="text/css")
-    = javascript_include_tag 'jquery.min', 'rails', 'shop/checkout'
+    = javascript_include_tag 'jquery.min', 'rails', 'shop/checkout','plugins'
   %body
     #info-bar
       =image_tag 'admin/icons/lock.gif'
