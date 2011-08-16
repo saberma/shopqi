@@ -1,3 +1,6 @@
+=content_for :javascripts do
+  =javascript_include_tag 'plugins/jquery.blank_slate'
+
 =render "menu"
 
 #blank-slate.blank-slate.clearfix.ppb
@@ -25,3 +28,6 @@
     /.screenshot
   /.details
 /#blank-slate
+
+:coffeescript
+  $('#blank-slate').blank_slate()
