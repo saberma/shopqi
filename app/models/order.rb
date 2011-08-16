@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc #订单历史
   belongs_to  :payment        , class_name: 'Payment' #支付方式
 
-  attr_accessible :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason
+  attr_accessible :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason, :total_weight
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
@@ -36,6 +36,12 @@ class Order < ActiveRecord::Base
 
   def shipping_rate_price
     shipping_rate.gsub(/.+-/,'').to_f
+  end
+
+  #订单商品总重量
+  #用于匹配相应的快递方式的价钱
+  def total_weight
+    line_items.map(&:product_variant).map(&:weight).sum
   end
 
   before_update do

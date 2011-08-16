@@ -12,7 +12,7 @@
       %table#thumbs(cellspacing="0" cellpadding="0")=render 'line_items', line_items: order_line_items
     #wallet
       %span#cost
-        =order_total_price
+        ==¥ #{ order_total_price }
         =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
       %span#shipping_span.hint .. 包含快递费#{order.shipping_rate_price}元
       %br
@@ -29,7 +29,7 @@
           %p 请选择您需要的发货方式.
           %p.sst
             %select#shipping-rates(name="order[shipping_rate]")
-              =options_for_select shipping_rates.collect{|s|["#{s.name}-#{s.price}","#{s.name}-#{s.price}"]}, order.shipping_rate
+              =options_for_select shipping_rates.collect{|s|["#{s.name}-¥#{s.price}","#{s.name}-#{s.price}"]}, order.shipping_rate
       .group
         %h3 购买
         %p.hint 所有的交易都是经过加密且安全的, 我们不会储存您的信用卡信息以及其他任何个人信息. 如想了解更多请浏览我们的隐私政策.

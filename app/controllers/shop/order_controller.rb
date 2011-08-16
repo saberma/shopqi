@@ -54,7 +54,7 @@ class Shop::OrderController < Shop::AppController
   }
 
   expose(:shipping_rates) do
-   country.weight_based_shipping_rates
+    country.weight_based_shipping_rates.where(:weight_low.lte => order.total_weight,:weight_high.gte => order.total_weight ).all + country.price_based_shipping_rates.where(:min_order_subtotal.lte => order.total_line_items_price,:max_order_subtotal.gte => order.total_line_items_price ).all
   end
 
   # 订单提交Step1
