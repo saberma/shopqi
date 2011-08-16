@@ -34,6 +34,10 @@ class Order < ActiveRecord::Base
     self.total_price = self.total_line_items_price + shipping_address.country.weight_based_shipping_rates.first.price if self.total_price.nil?
   end
 
+  def shipping_rate_price
+    shipping_rate.gsub(/.+-/,'').to_f
+  end
+
   before_update do
     if status_changed?
       case self.status.to_sym

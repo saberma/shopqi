@@ -11,6 +11,7 @@ $(document).ready ->
     $.post href, { shipping_rate: $(this).val() }, (data) ->
       img = $("#cost :first-child")[0]
       $('#cost').html(data.total_price).append(img)
+      $('#shipping_span').html(" ..包含快递费#{data.shipping_rate_price}元")
     $(this).ajaxStart ->
       $('.spinner').show()
     $(this).ajaxStop ->

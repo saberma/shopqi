@@ -14,9 +14,9 @@
       %span#cost
         =order_total_price
         =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
-      %span#shipping_span.hint .. 包含货运费 $25.00.
+      %span#shipping_span.hint .. 包含快递费#{order.shipping_rate_price}元
       %br
-      %span#tax_span.hint .. 包含 $2.76 的税
+      %span#tax_span.hint .. 包含 0元 的税
       %br
       %span#steps 步骤 2 之 2
     %div(style="clear:left")

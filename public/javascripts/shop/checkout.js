@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 16 Aug 2011 03:32:07 GMT from
+/* DO NOT MODIFY. This file was compiled Tue, 16 Aug 2011 03:46:08 GMT from
  * /Users/Apple/workplace/shopqi/app/coffeescripts/shop/checkout.coffee
  */
 
@@ -17,9 +17,9 @@ $(document).ready(function() {
       shipping_rate: $(this).val()
     }, function(data) {
       var img;
-      log(data);
       img = $("#cost :first-child")[0];
-      return $('#cost').html(data.total_price).append(img);
+      $('#cost').html(data.total_price).append(img);
+      return $('#shipping_span').html(" ..包含快递费" + data.shipping_rate_price + "元");
     });
     $(this).ajaxStart(function() {
       return $('.spinner').show();
