@@ -11,6 +11,12 @@ GIT
       xpath (~> 0.1.3)
 
 GIT
+  remote: git://github.com/liwh/carmen.git
+  revision: 5095c7b582bc96a5f6a2c9a4e1ddc4c9a8c29551
+  specs:
+    carmen (0.2.7)
+
+GIT
   remote: git://github.com/thedarkone/rails-dev-boost.git
   revision: 8ea07ebee74d9f2879f074c307890997b1f34f03
   specs:
@@ -64,7 +70,6 @@ GEM
     braintree (2.9.1)
       builder
     builder (2.1.2)
-    carmen (0.2.8)
     carrierwave (0.5.3)
       activesupport (~> 3.0)
     childprocess (0.1.8)
@@ -281,7 +286,7 @@ DEPENDENCIES
   awesome_print
   barista
   capybara!
-  carmen
+  carmen!
   carrierwave
   chinese_pinyin
   client_side_validations

@@ -99,7 +99,7 @@ cn:
       order_billing_address:
         name: 姓名
         company: 公司
-        country: 国家
+        country_code: 国家
         province: 省份
         city: 城市
         address1: 地址
@@ -109,7 +109,7 @@ cn:
       order_shipping_address:
         name: 姓名
         company: 公司
-        country: 国家
+        country_code: 国家
         province: 省份
         city: 城市
         address1: 地址

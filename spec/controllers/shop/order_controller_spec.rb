@@ -22,6 +22,10 @@ describe Shop::OrderController do
     o
   end
 
+  let(:payment) do
+    Factory :payment, shop: shop
+  end
+
   let(:billing_address_attributes) { {name: 'ma', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
 
   context '#address' do
@@ -54,18 +58,18 @@ describe Shop::OrderController do
     end
 
     it 'should update financial_status' do
-      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', gateway: '1' }
+      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', payment_id: payment.id }
       order.reload.financial_status.should eql 'pending'
     end
 
     it 'should show product line_items' do
       order
       expect do
-        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', gateway: '1' }
+        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', payment_id: payment.id }
         order = assigns['_resources']['order']
         order.errors.should be_empty
         order.shipping_rate.should eql '1'
-        order.gateway.should eql '1'
+        order.payment_id.should eql payment.id
       end.should_not change(Order, :count)
     end
 

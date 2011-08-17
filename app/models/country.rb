@@ -1,7 +1,7 @@
 class Country < ActiveRecord::Base
   belongs_to :shop
-  has_many :weight_based_shipping_rates,          dependent: :destroy
-  has_many :price_based_shipping_rates ,          dependent: :destroy
+  has_many :weight_based_shipping_rates,          dependent: :destroy, order: 'created_at'
+  has_many :price_based_shipping_rates ,          dependent: :destroy, order: 'created_at'
   default_value_for :tax_percentage, 0.0
 end
 

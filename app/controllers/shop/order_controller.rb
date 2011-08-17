@@ -42,7 +42,19 @@ class Shop::OrderController < Shop::AppController
   end
 
   expose(:order_total_price) do
-    order.line_items.map(&:price).sum
+    order.total_price
+  end
+
+  expose(:countries){
+    shop.countries
+  }
+
+  expose(:country){
+    order.shipping_address.country
+  }
+
+  expose(:shipping_rates) do
+    country.weight_based_shipping_rates.where(:weight_low.lte => order.total_weight,:weight_high.gte => order.total_weight ).all + country.price_based_shipping_rates.where(:min_order_subtotal.lte => order.total_line_items_price,:max_order_subtotal.gte => order.total_line_items_price ).all
   end
 
   # 订单提交Step1
@@ -62,6 +74,10 @@ class Shop::OrderController < Shop::AppController
       variant = shop.variants.find(variant_id)
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
+
+    #增加默认的付款方式为支付宝
+    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
+
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)
     else
@@ -73,10 +89,53 @@ class Shop::OrderController < Shop::AppController
   def pay
   end
 
+  def forward
+  end
+
   # 支付
   def commit
-    order.financial_status = 'pending'
-    order.save
+    data = {}
+    include_shipping_rate = shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:order][:shipping_rate]
+    if !include_shipping_rate || !params[:order][:payment_id]
+      data = data.merge({error: 'shipping_rate', shipping_rate: params[:shipping_rate] }) if !include_shipping_rate
+      data = data.merge({payment_error: true}) if !params[:order][:payment_id]
+    else
+      order.financial_status = 'pending'
+      order.payment = shop.payments.find(params[:order][:payment_id])
+      order.save
+      data = {success: true, url: forward_order_path(params[:shop_id],params[:token])}
+    end
+    render json: data
+  end
+
+  def notify
+    notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
+    if notification.acknowledge && valid?(notification)
+      @order = Order.find_by_token(notification.out_trade_no)
+      @order.pay! if notification.status == "TRADE_FINISHED"
+      render :text => "success"
+    else
+      render :text => "fail"
+    end
+  end
+
+  def update_total_price
+    if !shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:shipping_rate]
+      data = {error: 'shipping_rate', shipping_rate: params[:shipping_rate] }
+    else
+      order.shipping_rate = params[:shipping_rate]
+      order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f
+      order.save
+      data = {total_price: order.total_price, shipping_rate_price: order.shipping_rate_price}
+    end
+    render json: data
+  end
+
+  private
+  def valid?(notification)
+    url = "http://notify.alipay.com/trade/notify_query.do"
+    result = HTTParty.get(url, :query => {:partner => ActiveMerchant::Billing::Integrations::Alipay::ACCOUNT, :notify_id => notification.notify_id}).body
+    result == 'true'
   end
 
 end

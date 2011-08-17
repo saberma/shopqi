@@ -128,17 +128,17 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "custom_collections", ["shop_id"], :name => "index_custom_collections_on_shop_id"
 
   create_table "customer_addresses", :force => true do |t|
-    t.integer "customer_id",               :null => false
+    t.integer "customer_id",                :null => false
     t.string  "name"
-    t.string  "company",     :limit => 64
-    t.string  "country",     :limit => 64
-    t.string  "province",    :limit => 64
-    t.string  "city",        :limit => 64
-    t.string  "district",    :limit => 64
+    t.string  "company",      :limit => 64
+    t.string  "country_code", :limit => 64
+    t.string  "province",     :limit => 64
+    t.string  "city",         :limit => 64
+    t.string  "district",     :limit => 64
     t.string  "address1"
     t.string  "address2"
-    t.string  "zip",         :limit => 12
-    t.string  "phone",       :limit => 64
+    t.string  "zip",          :limit => 12
+    t.string  "phone",        :limit => 64
   end
 
   add_index "customer_addresses", ["customer_id"], :name => "index_customer_addresses_on_customer_id"
@@ -279,17 +279,17 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "oauth2_consumer_tokens", ["shop_id", "client_id"], :name => "index_oauth2_consumer_tokens_on_shop_id_and_client_id"
 
   create_table "order_billing_addresses", :force => true do |t|
-    t.integer "order_id",               :null => false
-    t.string  "name",                   :null => false
-    t.string  "company",  :limit => 64
-    t.string  "country",  :limit => 64
-    t.string  "province", :limit => 64
-    t.string  "city",     :limit => 64
-    t.string  "district", :limit => 64
-    t.string  "address1",               :null => false
+    t.integer "order_id",                   :null => false
+    t.string  "name",                       :null => false
+    t.string  "company",      :limit => 64
+    t.string  "country_code", :limit => 64
+    t.string  "province",     :limit => 64
+    t.string  "city",         :limit => 64
+    t.string  "district",     :limit => 64
+    t.string  "address1",                   :null => false
     t.string  "address2"
-    t.string  "zip",      :limit => 12
-    t.string  "phone",    :limit => 64, :null => false
+    t.string  "zip",          :limit => 12
+    t.string  "phone",        :limit => 64, :null => false
   end
 
   add_index "order_billing_addresses", ["order_id"], :name => "index_order_billing_addresses_on_order_id"
@@ -332,17 +332,17 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "order_line_items", ["order_id"], :name => "index_order_line_items_on_order_id"
 
   create_table "order_shipping_addresses", :force => true do |t|
-    t.integer "order_id",               :null => false
-    t.string  "name",                   :null => false
-    t.string  "company",  :limit => 64
-    t.string  "country",  :limit => 64
-    t.string  "province", :limit => 64
-    t.string  "city",     :limit => 64
-    t.string  "district", :limit => 64
-    t.string  "address1",               :null => false
+    t.integer "order_id",                   :null => false
+    t.string  "name",                       :null => false
+    t.string  "company",      :limit => 64
+    t.string  "country_code", :limit => 64
+    t.string  "province",     :limit => 64
+    t.string  "city",         :limit => 64
+    t.string  "district",     :limit => 64
+    t.string  "address1",                   :null => false
     t.string  "address2"
-    t.string  "zip",      :limit => 12
-    t.string  "phone",    :limit => 64, :null => false
+    t.string  "zip",          :limit => 12
+    t.string  "phone",        :limit => 64, :null => false
   end
 
   add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"
@@ -368,7 +368,7 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
     t.string   "fulfillment_status",     :limit => 16,                   :null => false
     t.string   "email",                  :limit => 32,                   :null => false
     t.string   "shipping_rate",          :limit => 32
-    t.string   "gateway",                :limit => 32
+    t.integer  "payment_id"
     t.float    "total_line_items_price",                                 :null => false
     t.float    "total_price",                                            :null => false
     t.string   "note"

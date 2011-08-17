@@ -8,8 +8,9 @@ class Order < ActiveRecord::Base
   has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction' #支付记录
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment' #配送记录
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc #订单历史
+  belongs_to  :payment        , class_name: 'Payment' #支付方式
 
-  attr_accessible :email, :shipping_rate, :gateway, :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason
+  attr_accessible :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason, :total_weight
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
@@ -30,7 +31,17 @@ class Order < ActiveRecord::Base
 
   before_save do
     self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price
+    self.total_price = self.total_line_items_price unless self.total_price
+  end
+
+  def shipping_rate_price
+    shipping_rate.gsub(/.+-/,'').to_f if shipping_rate
+  end
+
+  #订单商品总重量
+  #用于匹配相应的快递方式的价钱
+  def total_weight
+    line_items.map(&:product_variant).map(&:weight).sum
   end
 
   before_update do
@@ -86,6 +97,10 @@ class Order < ActiveRecord::Base
 
   def title
     "订单 #{name}"
+  end
+
+  def pay!
+    order.financial_status = 'paid'
   end
 
 end
@@ -159,8 +174,8 @@ end
 # 发单人信息
 class OrderBillingAddress < ActiveRecord::Base
   belongs_to :order
-  validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-  default_value_for :country, :china
+  validates_presence_of :name,:country_code, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
+  default_value_for :country_code, :CN
 
   def province_name
     District.get(self.province)
@@ -179,7 +194,11 @@ end
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-  default_value_for :country, :china
+  default_value_for :country_code, :CN
+
+  def country
+    Country.where(code: country_code).first
+  end
 
   def province_name
     District.get(self.province)

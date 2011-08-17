@@ -13,7 +13,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :fulfillment_status   , comment: '配送状态'                  , null: false, limit: 16
       t.string :email                , comment: '邮箱'                      , null: false, limit: 32
       t.string :shipping_rate        , comment: '发货方式'                  , limit: 32
-      t.string :gateway              , comment: '付款方式'                  , limit: 32
+      t.integer :payment_id          , comment: '付款方式'
       t.float :total_line_items_price, comment: '商品总金额'                , null: false
       t.float :total_price           , comment: '总金额(含快递等费用)'      , null: false
       t.string :note                 , comment: '备注'
@@ -61,7 +61,7 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order, comment: '所属订单', null: false
       t.string :name     , comment: '姓名'    , null: false
       t.string :company  , comment: '公司'    , limit: 64
-      t.string :country  , comment: '国家'    , limit: 64
+      t.string :country_code  , comment: '国家', limit: 64
       t.string :province , comment: '地区(省)', limit: 64
       t.string :city     , comment: '城市'    , limit: 64
       t.string :district , comment: '区'      , limit: 64
@@ -76,7 +76,7 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order, comment: '所属订单', null: false
       t.string :name     , comment: '姓名'    , null: false
       t.string :company  , comment: '公司'    , limit: 64
-      t.string :country  , comment: '国家'    , limit: 64
+      t.string :country_code  , comment: '国家', limit: 64
       t.string :province , comment: '地区(省)', limit: 64
       t.string :city     , comment: '城市'    , limit: 64
       t.string :district , comment: '区'      , limit: 64

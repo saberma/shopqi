@@ -39,7 +39,10 @@ Shopqi::Application.routes.draw do
       get '/carts/:shop_id/:cart_token'               , to: 'order#address'
       match '/carts/:shop_id/:cart_token/create_order', to: 'order#create'
       get '/orders/:shop_id/:token/pay'               , to: 'order#pay'    , as: :pay_order
+      get '/orders/:shop_id/:token/forward'           , to: 'order#forward'    , as: :forward_order
       match '/orders/:shop_id/:token/commit'          , to: 'order#commit' , as: :commit_order
+      post '/orders/notify'                     , to: 'order#notify', as: :notify_order
+      post '/orders/:shop_id/:token/update_total_price', to: 'order#update_total_price', as: :update_order_total_price
     end
   end
 

@@ -23,7 +23,8 @@ gem "carrierwave"
 gem 'meta_where'
 gem 'meta_search'
 
-gem 'carmen'#地区
+#gem 'carmen'#地区
+gem 'carmen', git: 'git://github.com/liwh/carmen.git'
 gem 'on_the_spot' #及时编辑
 gem 'seedbank' # 分离出各个环境下的seed
 gem 'gravtastic' #gravtastic头像服务
