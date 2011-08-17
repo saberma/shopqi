@@ -41,6 +41,9 @@
         .group
           %h3 购买
           %p.hint 所有的交易都是经过加密且安全的, 我们不会储存您的信用卡信息以及其他任何个人信息. 如想了解更多请浏览我们的隐私政策.
+          .field-with-errors#payment-error(style='display:none')
+            %p
+              %span 请您选择的支付方式，若没有支付方式可供选择，请联系店主！
           .sst
             .gleft
               %span.error-message
@@ -59,7 +62,7 @@
       %table#buttons(border="0" cellspacing="0" cellpadding="0" style="height: 55px; width: 100%")
         %tr
           %td(style="vertical-align:middle")
-            %input#complete-purchase(name="commit" onclick="this.setAttribute('originalValue' this.value);this.disabled=true;this.value='正在完成订单...';;result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) (this.value = this.getAttribute('originalValue'); this.disabled = false);return false" type="submit" value="购买")
+            %input#complete-purchase(name="commit" type="submit" value="购买")
             %small#cancel-purchase
               或
               %a(href="#{shop.primary_domain.url}") 取消，然后返回商店

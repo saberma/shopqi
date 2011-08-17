@@ -76,7 +76,7 @@ class Shop::OrderController < Shop::AppController
     end
 
     #增加默认的付款方式为支付宝
-    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first if shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id)
+    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
 
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)
@@ -89,11 +89,23 @@ class Shop::OrderController < Shop::AppController
   def pay
   end
 
+  def forward
+  end
+
   # 支付
   def commit
-    order.financial_status = 'pending'
-    order.payment = shop.payments.find(params[:order][:payment_id])
-    order.save
+    data = {}
+    include_shipping_rate = shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:order][:shipping_rate]
+    if !include_shipping_rate || !params[:order][:payment_id]
+      data = data.merge({error: 'shipping_rate', shipping_rate: params[:shipping_rate] }) if !include_shipping_rate
+      data = data.merge({payment_error: true}) if !params[:order][:payment_id]
+    else
+      order.financial_status = 'pending'
+      order.payment = shop.payments.find(params[:order][:payment_id])
+      order.save
+      data = {success: true, url: forward_order_path(params[:shop_id],params[:token])}
+    end
+    render json: data
   end
 
   def notify
