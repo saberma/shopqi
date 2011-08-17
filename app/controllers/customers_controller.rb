@@ -47,7 +47,6 @@ class CustomersController < ApplicationController
   expose(:tags) { shop.customer_tags.previou_used }
   expose(:customers_json) do
     customers.to_json({
-      include: :orders,
       methods: [ :address, :order, :total_spent ],
       except: [ :created_at, :updated_at ]
     })

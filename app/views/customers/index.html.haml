@@ -1,7 +1,7 @@
 =content_for :javascripts do
   =javascript_include_tag 'models/customer', 'models/customer_group', 'collections/customers', 'collections/customer_groups', 'views/customers/index/index', 'views/customers/index/search', 'views/customers/index/filters/index', 'views/customers/index/filters/show', 'views/customers/index/show', 'views/customer_groups/index/index', 'views/customer_groups/index/show', 'controllers/customers/index'
 
-=render :menu
+=render "menu"
 
 .clearfix.ppb(style="padding-bottom:40px;")
   .col-4(style="width:242px; position:relative;")
@@ -117,7 +117,7 @@
     {{{province_name}}}{{{city_name}}}{{{district_name}}}
     {{/with}}
   %td.r {{{total_spent}}}
-  %td.c {{{orders.length}}}
+  %td.c {{{orders_count}}}
   %td
     {{#if order}}
     %span.note
