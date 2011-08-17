@@ -108,10 +108,15 @@ class Shop::OrderController < Shop::AppController
   end
 
   def update_total_price
-    order.shipping_rate = params[:shipping_rate]
-    order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f
-    order.save
-    render json: {total_price: order.total_price, shipping_rate_price: order.shipping_rate_price}
+    if !shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:shipping_rate]
+      data = {error: 'shipping_rate', shipping_rate: params[:shipping_rate] }
+    else
+      order.shipping_rate = params[:shipping_rate]
+      order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f
+      order.save
+      data = {total_price: order.total_price, shipping_rate_price: order.shipping_rate_price}
+    end
+    render json: data
   end
 
   private

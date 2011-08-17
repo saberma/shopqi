@@ -12,10 +12,16 @@ $(document).ready ->
   $('#shipping-rates').change ->
     action = $(this).closest('form').attr('action')
     href = action.substr(0,action.lastIndexOf('/')) + '/update_total_price'
-    $.post href, { shipping_rate: $(this).val() }, (data) ->
-      img = $("#cost :first-child")[0]
-      $('#cost').html('¥' + data.total_price).append(img)
-      $('#shipping_span').html(" ..包含快递费#{data.shipping_rate_price}元")
+    rate = $(this).val()
+    $.post href, { shipping_rate: rate }, (data) ->
+      if data.error is 'shipping_rate'
+        $('#shipping-rate-error').show()
+        $("#shipping-rates option[value='#{data.shipping_rate}']").remove()
+      else
+        $('#shipping-rate-error').hide()
+        img = $("#cost :first-child")[0]
+        $('#cost').html('¥' + data.total_price).append(img)
+        $('#shipping_span').html(" ..包含快递费#{data.shipping_rate_price}元")
     $(this).ajaxStart ->
       $('.spinner').show()
     $(this).ajaxStop ->

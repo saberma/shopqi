@@ -1,4 +1,4 @@
-/* DO NOT MODIFY. This file was compiled Tue, 16 Aug 2011 10:57:54 GMT from
+/* DO NOT MODIFY. This file was compiled Wed, 17 Aug 2011 03:32:01 GMT from
  * /Users/Apple/workplace/shopqi/app/coffeescripts/shop/checkout.coffee
  */
 
@@ -13,16 +13,24 @@ $(document).ready(function() {
     $('input#complete-purchase').attr('disabled', true);
   }
   $('#shipping-rates').change(function() {
-    var action, href;
+    var action, href, rate;
     action = $(this).closest('form').attr('action');
     href = action.substr(0, action.lastIndexOf('/')) + '/update_total_price';
+    rate = $(this).val();
     $.post(href, {
-      shipping_rate: $(this).val()
+      shipping_rate: rate
     }, function(data) {
       var img;
-      img = $("#cost :first-child")[0];
-      $('#cost').html('¥' + data.total_price).append(img);
-      return $('#shipping_span').html(" ..包含快递费" + data.shipping_rate_price + "元");
+      if (data.error === 'shipping_rate') {
+        $('#shipping-rate-error').show();
+        $("#shipping-rates option[value='" + data.shipping_rate + "']").remove();
+        return $('#shipping-rate').change();
+      } else {
+        $('#shipping-rate-error').hide();
+        img = $("#cost :first-child")[0];
+        $('#cost').html('¥' + data.total_price).append(img);
+        return $('#shipping_span').html(" ..包含快递费" + data.shipping_rate_price + "元");
+      }
     });
     $(this).ajaxStart(function() {
       return $('.spinner').show();

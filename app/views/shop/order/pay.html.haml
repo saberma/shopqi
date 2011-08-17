@@ -27,6 +27,9 @@
       #payment
         .group.clearfix
           %h3 发货方式
+          .field-with-errors#shipping-rate-error(style='display:none')
+            %p
+              %span 您选择的快递方式已经不不存在，请选用别的方式。
           -unless shipping_rates.blank?
             %p 请选择您需要的发货方式.
             %p.sst
