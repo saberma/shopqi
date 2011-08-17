@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
       except: [ :updated_at ]
     })
   end
+  expose(:customer) { order.customer }
   expose(:order_json) do
     order.to_json({
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
