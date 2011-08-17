@@ -122,7 +122,7 @@
     {{#if order}}
     %span.note
       %a(href="/admin/orders/{{{order.id}}}") {{{order.name}}}
-      {{{date order.created_at "mm-dd"}}}
+      {{{date order.created_at "MM-dd"}}}
     {{/if}}
 
 %script(id="customer-group-item" type="text/x-jquery-tmpl")
