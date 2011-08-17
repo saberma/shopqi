@@ -47,7 +47,6 @@ class CustomersController < ApplicationController
   expose(:tags) { shop.customer_tags.previou_used }
   expose(:customers_json) do
     customers.to_json({
-      include: :orders,
       methods: [ :address, :order, :total_spent ],
       except: [ :created_at, :updated_at ]
     })
@@ -74,6 +73,10 @@ class CustomersController < ApplicationController
   expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
   expose(:boolean) { KeyValues::Customer::Boolean.hash }
   expose(:status) { KeyValues::Customer::State.hash }
+
+  def index
+    render action: :blank_slate if customers.empty?
+  end
 
   def new
     customer.addresses.build if customer.addresses.empty?

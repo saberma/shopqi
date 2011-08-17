@@ -18,10 +18,12 @@ class OrdersController < ApplicationController
   expose(:order)
   expose(:orders_json) do
     orders.to_json({
+      include: {customer: {only: [:id, :name]}},
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
       except: [ :updated_at ]
     })
   end
+  expose(:customer) { order.customer }
   expose(:order_json) do
     order.to_json({
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
@@ -38,6 +40,10 @@ class OrdersController < ApplicationController
   expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }
   expose(:cancel_reasons) { KeyValues::Order::CancelReason.hash }
   expose(:page_sizes) { KeyValues::PageSize.hash }
+
+  def index
+    render action: :blank_slate if shop.orders.empty?
+  end
 
   # 批量修改
   def set

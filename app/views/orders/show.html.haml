@@ -44,19 +44,17 @@
   #customer-box.box2(style="margin:20px 0 0 0; padding:10px; width:240px;")
     %table#customer-summary(cellpadding="0" cellspacing="0")
       %tr.first
-        %td.attribute
-          %a(href="/admin/customers/45648822")=image_tag 'admin/icons/customer.gif', id: :gravatar
+        %td.attribute=link_to image_tag('admin/icons/customer.gif', id: :gravatar), customer_path(customer)
         %td.value
-          %h3
-            %a(href="/admin/customers/45648822") saberma ma
+          %h3=link_to customer.name, customer_path(customer)
           %p(style="line-height:18px;")
-            %a(href="mailto:mahb45@gmail.com") mahb45@gmail.com
+            %a(href="mailto:#{customer.email}")=customer.email
             %br
-            13928452888
+            =order.billing_address.phone
       %tr
         %td.attribute 营销
         %td.value.image
-          %span.o-authorized 接收营销邮件
+          %span.o-authorized==#{customer.accepts_marketing ? "" : "不愿意"}接收营销邮件
   #ship-addr.customer-col
     .tools.hide
       .map-link

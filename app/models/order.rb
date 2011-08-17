@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
-  belongs_to :customer     , counter_cache: true, conditions: "customers.status != 'abandoned'"    #顾客信息
+  belongs_to :customer     , counter_cache: true    #顾客信息
   has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress' #下单人信息
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress' #收货人信息
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem' #订单商品

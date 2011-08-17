@@ -41,17 +41,17 @@ App =
 
 #日期
 DateUtils =
-  to_s: (date, format='yyyy-mm-dd hh:MM:ss') ->
+  to_s: (date, format='yyyy-MM-dd HH:mm:ss') ->
     date = new Date(date)
     text = format.replace /yyyy/, date.getFullYear()
-    text = text.replace /mm/, this.prefix(date.getMonth() + 1)
+    text = text.replace /MM/, this.prefix(date.getMonth() + 1)
     text = text.replace /dd/, this.prefix(date.getDate())
-    text = text.replace /hh/, this.prefix(date.getHours())
-    text = text.replace /MM/, this.prefix(date.getMinutes())
+    text = text.replace /HH/, this.prefix(date.getHours())
+    text = text.replace /mm/, this.prefix(date.getMinutes())
     text.replace /ss/, this.prefix(date.getSeconds())
 
   formatDate: (date) ->
-    this.to_s date, 'yyyy-mm-dd'
+    this.to_s date, 'yyyy-MM-dd'
 
   prefix: (text) ->
     if "#{text}".length == 1 then "0#{text}" else text
