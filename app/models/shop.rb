@@ -12,7 +12,7 @@ class Shop < ActiveRecord::Base
   has_many :smart_collections     , dependent: :destroy
   has_many :custom_collections    , dependent: :destroy
   has_many :tags                  , dependent: :destroy
-  has_many :orders                , dependent: :destroy
+  has_many :orders                , dependent: :destroy                      , order: :id.desc
   has_many :customers             , dependent: :destroy                      , order: :id.asc
   has_many :customer_groups       , dependent: :destroy
   has_many :customer_tags         , dependent: :destroy

@@ -42,7 +42,7 @@ class OrdersController < ApplicationController
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
   def index
-    render action: :blank_slate if orders.empty?
+    render action: :blank_slate if shop.orders.empty?
   end
 
   # 批量修改
