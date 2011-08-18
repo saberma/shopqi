@@ -31,11 +31,15 @@ class Order < ActiveRecord::Base
 
   before_save do
     self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price unless self.total_price
+    self.total_price = self.total_line_items_price + self.tax_price unless self.total_price
   end
 
   def shipping_rate_price
     shipping_rate.gsub(/.+-/,'').to_f if shipping_rate
+  end
+
+  def order_tax_price
+    shop.taxes_included? ? 0.0  : self.tax_price
   end
 
   #订单商品总重量

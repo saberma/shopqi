@@ -15,6 +15,8 @@
         =cart_total_price
         =image_tag 'spinner_big.gif', class: :spinner, style:'display:none'
       %br
+      %span#tax_span.hint .. 包含#{order.order_tax_price}元 的税
+      %br
       %span#steps 步骤 1 之 2
     %div(style="clear:left")
   /
@@ -68,6 +70,9 @@
               %tr
                 %td.lbl=s.label :name
                 %td=s.text_field :name, class: :short
+              %tr
+                %td.lbl=s.label :country_code
+                %td=s.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
               %tr
                 %td.lbl
                   %label(for='order_shipping_address_attributes_province') 地区
