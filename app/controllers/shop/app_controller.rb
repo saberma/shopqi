@@ -32,7 +32,7 @@ class Shop::AppController < ActionController::Base
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
-      powered_by_link = "<a href='http://www.shopqi.com' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>Powered by ShopQi电子商务平台</a>"
+      powered_by_link = "<a href='#{Setting.url}' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>ShopQi电子商务平台提供安全保护</a>"
       content_for_layout = Liquid::Template.parse(File.read(shop.theme.template_path(template))).render(template_assign(template_extra_object))
       {
         'shop' => shop_drop,
