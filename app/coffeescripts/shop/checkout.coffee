@@ -3,10 +3,14 @@ $(document).ready ->
   $('#order_billing_address_attributes_country_code,#order_shipping_address_attributes_country_code').each ->
     $(this).change ->
       checked = $('#shipping-toggle').attr('checked')
+      country_code = $(this).val()
+      if country_code isnt 'CN'
+        $(this).closest('table').find('.region').parent().hide()
+      else
+        $(this).closest('table').find('.region').parent().show()
       if $(this).attr('id') == 'order_billing_address_attributes_country_code' and !checked
         return false
       action = $(this).closest('form').attr('action').replace(/create_order/i,'update_tax_price')
-      country_code = $(this).val()
       $.post action, { country_code: country_code, shipping_same: checked }, (data) ->
         img = $("#cost :first-child")[0]
         $('#cost').html('¥' + data.total_price).append(img)
@@ -24,7 +28,6 @@ $(document).ready ->
       $('#order_billing_address_attributes_country_code').change()
     else
       $('#order_shipping_address_attributes_country_code').change()
-
   .change()
 
   if $('#no-shipping-rates').size() > 0
