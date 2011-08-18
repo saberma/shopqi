@@ -54,8 +54,6 @@ module Shopqi
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password,:password_confirmation]
 
-    config.middleware.use "CustomDomainCookie"
-
     config.middleware.insert 0, 'Dragonfly::Middleware', :images
     config.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
       :verbose     => true,
@@ -63,6 +61,6 @@ module Shopqi
       :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
     }
 
-    #config.middleware.use ::Rack::PerftoolsProfiler, :default_printer => 'gif', :bundler => true, :mode => :walltime
+    #config.middleware.use ::Rack::PerftoolsProfiler, :default_printer => 'gif', :bundler => true, :mode => :walltime # 开发环境下性能测试
   end
 end

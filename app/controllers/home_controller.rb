@@ -24,8 +24,8 @@ class HomeController < ApplicationController
   end
 
   expose(:statistics){
-    today = shop.orders.recent(1)
-    yesterday = shop.orders.recent(2) - today
+    today = shop.orders.today
+    yesterday = shop.orders.yesterday
     last_week_begin = Date.today.advance(days: -7).beginning_of_week
     last_week_end = Date.today.advance(days: -7).end_of_week
     last_week = shop.orders.between(last_week_begin,last_week_end)
