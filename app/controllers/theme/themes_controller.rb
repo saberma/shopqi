@@ -66,7 +66,7 @@ class Theme::ThemesController < Theme::AppController
       redirect_to theme_path(name: name, style: style)
     end
 
-    def authenticate # 跳转至登录页面oauth
+    def authenticate # 跳转至用户商店的认证登录页面oauth
       session[:shop_url] = params[:shop_url]
       redirect_to client.web_server.authorize_url(
         redirect_uri: Theme.redirect_uri
