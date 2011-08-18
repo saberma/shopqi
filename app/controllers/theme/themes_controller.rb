@@ -12,6 +12,11 @@ class Theme::ThemesController < Theme::AppController
   begin 'store'
 
     def index
+      if params[:shop_url] # 从商店后台管理中进入，则之后的操作不需要再提示商店url
+        session[:shop_url] = params[:shop_url]
+        session[:shop] = nil # 登录名(商店子域名)
+        redirect_to Setting.theme_store_url
+      end
     end
 
     def show
@@ -33,6 +38,8 @@ class Theme::ThemesController < Theme::AppController
       if request.xhr? # ajax
         if permanent_domain
           render text: 'logged'
+        elsif shop_url # 从后台管理而来
+          render text: 'from_admin'
         else
           redirect_to theme_login_path
         end
@@ -67,7 +74,7 @@ class Theme::ThemesController < Theme::AppController
     end
 
     def authenticate # 跳转至用户商店的认证登录页面oauth
-      session[:shop_url] = params[:shop_url]
+      session[:shop_url] ||= params[:shop_url] # 如果后台管理已经设置了商店url
       redirect_to client.web_server.authorize_url(
         redirect_uri: Theme.redirect_uri
       )
