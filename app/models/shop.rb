@@ -6,7 +6,7 @@ class Shop < ActiveRecord::Base
   has_many :domains               , dependent: :destroy                      , order: :id.asc, class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: :id.desc
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
-  has_many :link_lists            , dependent: :destroy
+  has_many :link_lists            , dependent: :destroy                      , order: :id.asc
   has_many :pages                 , dependent: :destroy
   has_many :blogs                 , dependent: :destroy
   has_many :smart_collections     , dependent: :destroy
