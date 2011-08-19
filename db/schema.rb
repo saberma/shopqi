@@ -371,6 +371,7 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
     t.integer  "payment_id"
     t.float    "total_line_items_price",                                 :null => false
     t.float    "total_price",                                            :null => false
+    t.float    "tax_price",                            :default => 0.0,  :null => false
     t.string   "note"
     t.datetime "closed_at"
     t.string   "cancel_reason",          :limit => 16

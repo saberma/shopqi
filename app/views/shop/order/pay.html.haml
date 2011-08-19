@@ -17,7 +17,7 @@
       -unless shipping_rates.blank?
         %span#shipping_span.hint .. 包含快递费#{order.shipping_rate_price}元
       %br
-      %span#tax_span.hint .. 包含 0元 的税
+      %span#tax_span.hint .. 包含 #{order.order_tax_price} 元 的税
       %br
       %span#steps 步骤 2 之 2
     %div(style="clear:left")

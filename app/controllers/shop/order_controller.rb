@@ -77,6 +77,8 @@ class Shop::OrderController < Shop::AppController
 
     #增加默认的付款方式为支付宝
     order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
+    #税率
+    order.tax_price = shop.taxes_included  ? 0.0 : cart_total_price * shop.countries.find_by_code(order.billing_address.country_code).tax_percentage/100
 
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)
@@ -120,14 +122,23 @@ class Shop::OrderController < Shop::AppController
   end
 
   def update_total_price
+    #处理更新快递方式
     if !shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:shipping_rate]
       data = {error: 'shipping_rate', shipping_rate: params[:shipping_rate] }
     else
       order.shipping_rate = params[:shipping_rate]
-      order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f
+      order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f + order.order_tax_price
       order.save
       data = {total_price: order.total_price, shipping_rate_price: order.shipping_rate_price}
     end
+    render json: data
+  end
+
+  def update_tax_price
+    country = shop.countries.find_by_code(params[:country_code])
+    order_tax_price = shop.taxes_included  ? 0.0 : cart_total_price * country.tax_percentage/100
+    total_price = cart_total_price + order_tax_price
+    data = {total_price: total_price, order_tax_price: order_tax_price}
     render json: data
   end
 

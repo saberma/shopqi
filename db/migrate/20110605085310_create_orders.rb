@@ -16,6 +16,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :payment_id          , comment: '付款方式'
       t.float :total_line_items_price, comment: '商品总金额'                , null: false
       t.float :total_price           , comment: '总金额(含快递等费用)'      , null: false
+      t.float :tax_price             , comment: '税收金额'                  , null: false, default: 0.0
       t.string :note                 , comment: '备注'
       t.datetime :closed_at          , comment: '关闭时间'
       t.string :cancel_reason        , comment: '取消原因'                  , limit: 16

@@ -123,7 +123,7 @@
         #unshipped-goods.fr.r
         .sb.shipping-method
           %h3 配送方式
-          %p 快递
+          %p==#{order.shipping_rate}
       %form#batch_fulfillment_form(action="#" onsubmit="return false")
         #mark-shipped.hide
           .sb.order-action-line
