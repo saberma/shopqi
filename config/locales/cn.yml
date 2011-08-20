@@ -119,6 +119,8 @@ cn:
       customer:
         name: 姓名
         email: 邮箱
+        password: 密码
+        password_confirmation: 确认密码
         accepts_marketing: 接收营销邮件
       customer_address:
         company: 公司
@@ -138,6 +140,7 @@ cn:
         invalid: 必须是有效的
         at_least_one: 至少有一项必填
         select: 尚未选择
+        confirmation: 和确认密码需一致
       models:
         user:
           attributes:

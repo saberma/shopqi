@@ -6,10 +6,16 @@ class Customer < ActiveRecord::Base
   has_and_belongs_to_many :tags, class_name: 'CustomerTag'
 
   accepts_nested_attributes_for :addresses
-  attr_accessible :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes
+  attr_accessible :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
 
+
+  # Include default devise modules. Others available are:
+  # :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable, :token_authenticatable,
+         :recoverable, :rememberable, :trackable
+  before_create :ensure_authentication_token # 生成login token，只使用一次
   validates_presence_of :name, :email
-  validates_uniqueness_of :email, scope: :shop_id, allow_blank: true
+  validates :email, :uniqueness => {:scope => :shop_id}
 
   # 标签
   attr_accessor :tags_text
@@ -46,6 +52,10 @@ class Customer < ActiveRecord::Base
     unless self.addresses.exists?(attrs)
       self.addresses.create attrs
     end
+  end
+
+  def after_token_authentication # 登录后取消token
+    self.authentication_token = nil
   end
 
   after_save do

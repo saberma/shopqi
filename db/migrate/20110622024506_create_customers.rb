@@ -11,6 +11,13 @@ class CreateCustomers < ActiveRecord::Migration
       t.float :total_spent        , comment: "消费总额"        , default: 0
       t.integer :orders_count     , comment: "缓存订单数"      , default: 0
       t.boolean :accepts_marketing, comment: "是否接收营销邮件", default: true
+      begin '顾客登陆信息'
+      t.string  :encrypted_password, :null => false, :default => '', :limit => 128
+      t.recoverable
+      t.rememberable
+      t.trackable
+      t.token_authenticatable
+      end
 
       t.timestamps
     end

@@ -1,0 +1,12 @@
+<!doctype html>
+%head
+  %meta{:charset => "utf-8"}/
+  %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+  %meta{:content => "no", "http-equiv" => "imagetoolbar"}/
+  %meta{:content => "true", :name => "MSSmartTagsPreventParsing"}/
+  %title==#{shop.name}
+  =stylesheet_link_tag 'customer','message_block'
+%body
+  #container
+    =yield
+    #footer
