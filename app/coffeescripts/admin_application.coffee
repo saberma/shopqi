@@ -1,6 +1,7 @@
 App =
   Views:
-    LinkList: {}
+    LinkList:
+      Links: {}
     Link: {}
     SmartCollection: {}
     CustomCollection: {}

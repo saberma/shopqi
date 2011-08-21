@@ -1,4 +1,6 @@
 .shopqi-dialog {position: static} /* 修正弹出窗口border显示异常的问题 */
+.sortable-placeholder {height: 31px} /* 链接拖动排序时目标位置的占位元素 */
+
 .state {
 padding: 2px 6px;
 color: white;
