@@ -172,14 +172,23 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "customer_tags_customers", ["customer_tag_id"], :name => "index_customer_tags_customers_on_customer_tag_id"
 
   create_table "customers", :force => true do |t|
-    t.integer  "shop_id",                                           :null => false
-    t.string   "status",            :limit => 8,                    :null => false
-    t.string   "name",              :limit => 16,                   :null => false
-    t.string   "email",             :limit => 32,                   :null => false
+    t.integer  "shop_id",                                               :null => false
+    t.string   "status",               :limit => 8,                     :null => false
+    t.string   "name",                 :limit => 16,                    :null => false
+    t.string   "email",                :limit => 32,                    :null => false
     t.string   "note"
-    t.float    "total_spent",                     :default => 0.0
-    t.integer  "orders_count",                    :default => 0
-    t.boolean  "accepts_marketing",               :default => true
+    t.float    "total_spent",                         :default => 0.0
+    t.integer  "orders_count",                        :default => 0
+    t.boolean  "accepts_marketing",                   :default => true
+    t.string   "encrypted_password",   :limit => 128, :default => "",   :null => false
+    t.string   "reset_password_token"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                       :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

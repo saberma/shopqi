@@ -1,0 +1,33 @@
+%style(type="text/css")
+  :sass
+    #wrapper
+      height: '1500px'
+#header
+  #logo
+    / css hook for logos
+  %h1#tagline
+    ==#{shop.name}
+    %span.subtitle Customer Area
+#wrapper.clearfix
+  #template
+    #customer_regist
+      .template_header
+        %h2.title 用户注册
+      =form_for resource,as: resource_name, url: customer_registration_path do |f|
+        #login_name.clearfix.large_form
+          =f.label :name
+          =f.text_field :name,class: 'large'
+        #login_email.clearfix.large_form
+          =f.label :email
+          =f.text_field :email,class: 'large'
+        #login_password.clearfix.large_form
+          =f.label :password
+          =f.password_field :password,class: 'large'
+        #login_password.clearfix.large_form
+          =f.label :password_confirmation
+          =f.password_field :password_confirmation,class: 'large'
+        .action_bottom
+          =f.submit '注册', class:'btn'
+          %span.note
+            =w('or')
+            =link_to '返回商店','#'

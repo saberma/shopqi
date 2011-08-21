@@ -14,6 +14,9 @@ module Shopqi
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/middlewares)
 
+    #set the generator method auto generate helper false
+    config.generators.helper = false
+
     #set the time zone to china
     config.time_zone = "Beijing"
 

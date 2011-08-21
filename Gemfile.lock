@@ -86,7 +86,7 @@ GEM
     database_cleaner (0.6.6)
     decent_exposure (1.0.1)
     default_value_for (1.0.1)
-    devise (1.2.1)
+    devise (1.4.2)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)

@@ -1,0 +1,47 @@
+#header
+  #logo
+    / css hook for logos
+  %h1#tagline
+    鞋子
+    %span.subtitle Customer Area
+#wrapper.clearfix
+  #template
+    #customer
+      .template_header
+        %h2.title Customer Login
+      %form#customer_login{:action => "https://medhurst-shields-and-kunde7896.myshopify.com/account/login", :method => "post"}
+        #login_email.clearfix.large_form
+          %label.login{:for => "customer_email"} Email Address
+          %input#customer_email.large{:name => "customer[email]", :size => "30", :type => "email", :value => ""}/
+        #login_password.clearfix.large_form
+          %label.login{:for => "customer_password"} Password
+          %input#customer_password.large.password{:name => "customer[password]", :size => "16", :type => "password", :value => ""}/
+          #forgot_password
+            %a{:href => "#", :onclick => "document.getElementById('recover-password').style.display='inline-block'; document.getElementById('customer').style.display='none';return false;"} Forgot your password?
+        .action_bottom
+          %input.btn{:type => "submit", :value => "Sign In"}/
+          %span.note
+            or
+            %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com"} Return to Store
+    #recover-password{:style => "display:none"}
+      .template_header
+        %h2.title Request Reset
+        %p.note We will send you an email to reset your password.
+      %form{:action => "/account/recover", :method => "post"}
+        %input{:name => "checkout_url", :type => "hidden", :value => "https://checkout.shopify.com/carts/726342/6b652d3d250e7436c6cc1f67499c05c9"}/
+        #recover_email.clearfix.large_form
+          %label.large{:for => "email"} Email
+          %input#recover-email.large{:name => "email", :size => "30", :type => "email", :value => ""}/
+        .action_bottom
+          %input.btn{:type => "submit", :value => "Submit"}/
+          %span.note
+            or
+            %a{:href => "#", :onclick => "document.getElementById('recover-password').style.display='none'; document.getElementById('customer').style.display='inline-block';return false;"} Cancel
+    #guest
+      .template_header
+        %h3.title Guest Login
+      %form#customer_login_guest{:action => "https://medhurst-shields-and-kunde7896.myshopify.com/account/login", :method => "post"}
+        %input{:name => "guest", :type => "hidden", :value => "true"}/
+        %input{:name => "checkout_url", :type => "hidden", :value => "https://checkout.shopify.com/carts/726342/6b652d3d250e7436c6cc1f67499c05c9"}/
+        %input{:name => "cart", :type => "hidden", :value => "6b652d3d250e7436c6cc1f67499c05c9"}/
+        %input.btn{:type => "submit", :value => "Continue as Guest"}/
