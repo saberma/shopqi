@@ -5,6 +5,5 @@ class Shop::AccountController < Shop::AppController
   expose(:shop) { Shop.at(request.host) }
 
   def index
-    ap current_customer
   end
 end

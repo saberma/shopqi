@@ -1,6 +1,13 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
   layout 'shop/checkout'
+  prepend_before_filter  do |controller|
+    if shop.customer_accounts == 'required'
+      if !current_customer
+        redirect_to new_customer_session_url(:subdomain => shop.primary_domain.subdomain)
+      end
+    end
+  end
 
   expose(:shop) { Shop.find(params[:shop_id]) }
 
