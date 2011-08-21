@@ -6,13 +6,12 @@ class CreateCustomers < ActiveRecord::Migration
       t.references :shop          , comment: "商品应从属于商店", null: false
       t.string :status            , comment: "状态"            , null: false  , limit: 8
       t.string :name              , comment: "名称"            , null: false  , limit: 16
-      t.string :email             , comment: "邮箱"            , null: false  , limit: 32
       t.string :note              , comment: "备注"
       t.float :total_spent        , comment: "消费总额"        , default: 0
       t.integer :orders_count     , comment: "缓存订单数"      , default: 0
       t.boolean :accepts_marketing, comment: "是否接收营销邮件", default: true
       begin '顾客登陆信息'
-      t.string  :encrypted_password, :null => false, :default => '', :limit => 128
+      t.database_authenticatable :null => false
       t.recoverable
       t.rememberable
       t.trackable

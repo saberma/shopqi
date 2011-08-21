@@ -175,11 +175,11 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
     t.integer  "shop_id",                                               :null => false
     t.string   "status",               :limit => 8,                     :null => false
     t.string   "name",                 :limit => 16,                    :null => false
-    t.string   "email",                :limit => 32,                    :null => false
     t.string   "note"
     t.float    "total_spent",                         :default => 0.0
     t.integer  "orders_count",                        :default => 0
     t.boolean  "accepts_marketing",                   :default => true
+    t.string   "email",                               :default => "",   :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "remember_created_at"
