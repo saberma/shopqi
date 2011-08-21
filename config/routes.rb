@@ -64,6 +64,7 @@ Shopqi::Application.routes.draw do
         devise_for :customer do
           get '/login' , to: 'sessions#new'
           get '/signup' , to: 'registrations#new'
+          get '/logout' , to: 'sessions#destroy'
         end
         get '/index', to: 'account#index'
         get '/', to: 'account#index'

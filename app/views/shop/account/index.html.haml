@@ -11,11 +11,11 @@
   #admin_header
     #return_to_store.action_link.action_return.note
       %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com"} Return to Store
-    %h2.title Account Details and Order History
+    %h2.title 账号信息 以及 订单信息
   #customer_sidebar
     #customer_detail.group
-      %h5.name ee ee
-      %p.email.note liwh87@gmail.com
+      %h5.name==#{current_customer.name}
+      %p.email.note==#{current_customer.email}
       .address.note
         %p eeee
         %p eee

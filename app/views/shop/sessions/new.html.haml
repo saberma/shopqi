@@ -3,7 +3,7 @@
     / css hook for logos
   %h1#tagline
     鞋子
-    %span.subtitle Customer Area
+    %span.subtitle 顾客面板
 #wrapper.clearfix
   #template
     #customer
@@ -22,26 +22,27 @@
           =f.submit '登录',class: 'btn'
           %span.note
             =w('or')
-            %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com"} Return to Store
+            =link_to '返回商店',show_shop_url
     #recover-password{:style => "display:none"}
       .template_header
-        %h2.title Request Reset
-        %p.note We will send you an email to reset your password.
-      %form{:action => "/account/recover", :method => "post"}
-        %input{:name => "checkout_url", :type => "hidden", :value => "https://checkout.shopify.com/carts/726342/6b652d3d250e7436c6cc1f67499c05c9"}/
+        %h2.title 忘记密码？
+        %p.note 在下面输入 邮箱地址 我们马上会发送邮件，告诉您如何找回密码!
+      =form_for(resource, url: password_path(resource_name)) do |f|
+        =hidden_field_tag :checkout_url, params[:checkout_url]
         #recover_email.clearfix.large_form
-          %label.large{:for => "email"} Email
-          %input#recover-email.large{:name => "email", :size => "30", :type => "email", :value => ""}/
+          =f.label :email, class: 'large'
+          =f.text_field :email, class: 'large'
         .action_bottom
-          %input.btn{:type => "submit", :value => "Submit"}/
+          %input.btn{:type => "submit", :value => "提交"}/
           %span.note
-            or
-            %a{:href => "#", :onclick => "document.getElementById('recover-password').style.display='none'; document.getElementById('customer').style.display='inline-block';return false;"} Cancel
-    #guest
-      .template_header
-        %h3.title Guest Login
-      %form#customer_login_guest{:action => "https://medhurst-shields-and-kunde7896.myshopify.com/account/login", :method => "post"}
-        %input{:name => "guest", :type => "hidden", :value => "true"}/
-        %input{:name => "checkout_url", :type => "hidden", :value => "https://checkout.shopify.com/carts/726342/6b652d3d250e7436c6cc1f67499c05c9"}/
-        %input{:name => "cart", :type => "hidden", :value => "6b652d3d250e7436c6cc1f67499c05c9"}/
-        %input.btn{:type => "submit", :value => "Continue as Guest"}/
+            =w('or')
+            %a{:href => "#", :onclick => "document.getElementById('recover-password').style.display='none'; document.getElementById('customer').style.display='inline-block';return false;"}=w('cancel')
+    -#
+      #guest
+        .template_header
+          %h3.title Guest Login
+        %form#customer_login_guest{:action => "https://medhurst-shields-and-kunde7896.myshopify.com/account/login", :method => "post"}
+          %input{:name => "guest", :type => "hidden", :value => "true"}/
+          %input{:name => "checkout_url", :type => "hidden", :value => "https://checkout.shopify.com/carts/726342/6b652d3d250e7436c6cc1f67499c05c9"}/
+          %input{:name => "cart", :type => "hidden", :value => "6b652d3d250e7436c6cc1f67499c05c9"}/
+          %input.btn{:type => "submit", :value => "Continue as Guest"}/
