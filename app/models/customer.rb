@@ -11,7 +11,7 @@ class Customer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :token_authenticatable,
-         :recoverable, :rememberable, :trackable,:validatable
+         :recoverable, :rememberable, :trackable#,:validatable
 
   attr_accessible :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
   before_create :ensure_authentication_token # 生成login token，只使用一次

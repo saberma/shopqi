@@ -16,6 +16,7 @@ class Shop::RegistrationsController < Shop::AppController
   # POST /resource
   def create
     build_resource
+    resource.shop = shop
 
     if resource.save
       if resource.active_for_authentication?
@@ -120,6 +121,5 @@ class Shop::RegistrationsController < Shop::AppController
   def authenticate_scope!
     send(:"authenticate_#{resource_name}!", true)
     self.resource = send(:"current_#{resource_name}")
-    resource.shop = shop
   end
 end
