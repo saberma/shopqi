@@ -9,6 +9,10 @@ end
 class Link < ActiveRecord::Base
   belongs_to :link_list
 
+  before_save do
+    self.title = self.title.blank? ? '未命名' : self.title
+  end
+
   def url
     shop = link_list.shop
     case link_type

@@ -4,11 +4,12 @@ App.Views.LinkList.Show = Backbone.View.extend
 
   events:
     "click .destroy": "destroy"
+    "click .editlist-action": "edit"
 
   initialize: ->
     self = this
-    @model.bind 'change', this.render
-    @model.bind 'remove', (model) -> self.remove()
+    @model.view = this
+    @model.bind 'change', (model) -> self.render()
     @render()
     $('#menus').append @el
 
@@ -18,7 +19,7 @@ App.Views.LinkList.Show = Backbone.View.extend
     attrs = _.clone @model.attributes
     $(@el).html template attrs
     new App.Views.LinkList.Links.Index collection: @model.links, el: @$('ul.links')
-    new App.Views.LinkList.Links.New link_list: @model, el: @$('.add_link_form_link_list')
+    new App.Views.LinkList.Links.New link_list: @model, el: @$('.add_form_link_container')
 
   destroy: ->
     if confirm '您确定要删除吗'
@@ -29,3 +30,7 @@ App.Views.LinkList.Show = Backbone.View.extend
           self.remove()
           msg '删除成功!'
     return false
+
+  edit: ->
+    new App.Views.LinkList.Edit model: @model, el: @$('.edit_form_link_container')
+    false

@@ -3,11 +3,13 @@ App.Views.LinkList.Links.Index = Backbone.View.extend
   initialize: ->
     self = this
     @collection.view = this
+    @collection.bind 'remove', (model) -> self.render() # 编辑时只删除记录也要更新
     @render()
     @cycle_class()
 
   render: ->
     self = this
+    $(@el).html ''
     @collection.each (link) -> new App.Views.LinkList.Links.Show model: link
     $(@el).sortable axis: 'y', placeholder: "sortable-placeholder", handle: '.image_handle', update: (event, ui) -> #links排序
       $.post "#{self.collection.url}/sort", $(this).sortable('serialize')
