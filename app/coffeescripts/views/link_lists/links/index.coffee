@@ -2,12 +2,13 @@ App.Views.LinkList.Links.Index = Backbone.View.extend
 
   initialize: ->
     self = this
+    @collection.view = this
     @render()
     @cycle_class()
 
   render: ->
     self = this
-    @collection.each (link) -> new App.Views.LinkList.Links.Show model: link, parent: self.el
+    @collection.each (link) -> new App.Views.LinkList.Links.Show model: link
     $(@el).sortable axis: 'y', placeholder: "sortable-placeholder", handle: '.image_handle', update: (event, ui) -> #links排序
       $.post "#{self.collection.url}/sort", $(this).sortable('serialize')
       #排序后设置到model
