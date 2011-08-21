@@ -1,6 +1,7 @@
 #encoding: utf-8
 class Shop::SessionsController < Shop::AppController
   prepend_before_filter :require_no_authentication, :only => [ :new, :create ]
+  before_filter :get_host, only: :create
   include Devise::Controllers::InternalHelpers
   layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
@@ -45,6 +46,11 @@ class Shop::SessionsController < Shop::AppController
     methods = methods.keys if methods.is_a?(Hash)
     methods << :password if resource.respond_to?(:password)
     { :methods => methods, :only => [:password] }
+  end
+
+  private
+  def get_host # 设置的域名参数在 User.find_for_database_authentication 中使用
+    params[:customer][:host] = request.host
   end
 end
 
