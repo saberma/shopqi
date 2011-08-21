@@ -57,14 +57,16 @@ Shopqi::Application.routes.draw do
 
   constraints(Domain::Store) do
 
-    devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
+    devise_for :user, skip: :registrations, controllers: {sessions: "shop/sessions"}# 登录
 
     scope module: :shop do # 前台商店
       scope '/account' do
-        devise_for :customers, controllers: {sessions: "shop/account" , registrations: 'shop/registrations'}  do
-          get '/login' , to: 'account#new'
+        devise_for :customer do
+          get '/login' , to: 'sessions#new'
           get '/signup' , to: 'registrations#new'
         end
+        get '/index', to: 'account#index'
+        get '/', to: 'account#index'
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
