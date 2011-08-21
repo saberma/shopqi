@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'views/link_lists/links/index', 'views/link_lists/links/show', 'views/link_lists/links/new', 'views/link_lists/links/edit', 'views/link_lists/index', 'views/link_lists/show', 'views/link_lists/edit', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists'
+  =javascript_include_tag 'views/link_lists/links/index', 'views/link_lists/links/show', 'views/link_lists/links/new', 'views/link_lists/links/edit', 'views/link_lists/index', 'views/link_lists/show', 'views/link_lists/edit', 'views/link_lists/new', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists'
 
 %h2#title 商店导航
 #action-links
@@ -18,7 +18,7 @@
     %p.btn-divider
       %input.btn(name="commit" type="submit" value="新增链接")
       或者
-      %a(href="#") 取消
+      %a.cancel(href="#") 取消
 #link-lists
   %h3.st.sb 链接列表
   %p.note.ssb
@@ -56,10 +56,10 @@
           .group-fields
             .add-link-title.link-col
               %span.add-link-header 新链接的名称
-              %input#add_link_title_link_list_2460472.medium(name="link[title]" type="text")
+              %input.medium(name="link[title]" type="text")
             .add-link-linksto.link-col
               %span.add-link-header 链接至
-              %select#add_link_type_link_list_2460472.selector(name="link[link_type]")
+              %select.selector(name="link[link_type]")
                 =options_for_select link_types
               %select.subject(name="link[subject_id]")
               %input.long.subject_http.linkform-hint(data-hint="http://shopify.com" name="link[subject]" type="text" style="display:none")

@@ -1,6 +1,6 @@
 App.Views.LinkList.Show = Backbone.View.extend
   tagName: 'li'
-  className: 'links toolbox default-menu link-list'
+  className: 'links toolbox link-list'
 
   events:
     "click .destroy": "destroy"
@@ -20,6 +20,7 @@ App.Views.LinkList.Show = Backbone.View.extend
     $(@el).html template attrs
     new App.Views.LinkList.Links.Index collection: @model.links, el: @$('ul.links')
     new App.Views.LinkList.Links.New link_list: @model, el: @$('.add_form_link_container')
+    $(@el).addClass('default-menu') if @model.get('system_default')
 
   destroy: ->
     if confirm '您确定要删除吗'
