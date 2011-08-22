@@ -3,9 +3,8 @@ class Shop::OrderController < Shop::AppController
   layout 'shop/checkout'
   prepend_before_filter  do |controller|
     if shop.customer_accounts == 'required'
-      if !current_customer
-        redirect_to new_customer_session_url(:subdomain => shop.primary_domain.subdomain)
-      end
+      Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}" }
+      controller.send :authenticate_customer!
     end
   end
 
