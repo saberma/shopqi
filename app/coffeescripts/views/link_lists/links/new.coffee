@@ -15,6 +15,8 @@ App.Views.LinkList.Links.New = Backbone.View.extend
       self.$("input[name='link[title]']").val ''
       self.$("input[name='link[subject]']").val ''
       new App.Views.LinkList.Links.Show model: model
+      self.link_list.view.$('.default_container_link_list .hint').hide() # 有记录了不显示"无链接"提示
+      self.link_list.view.$('.link-header, .links').show()
 
   save: ->
     self = this

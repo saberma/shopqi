@@ -42,10 +42,11 @@
         {{/unless}}
       %span(title="handle: {{{handle}}}") {{{title}}}
       %span.hint {{#if system_default}}这是默认链接列表，不能删除.{{/if}}
-    .link-header.st.sl.sr
+    .none_link_list.hint.padding(style="{{#unless is_empty_links}}display: none{{/unless}}") 此链接列表还没有加入任何链接
+    .link-header.st.sl.sr(style="{{#if is_empty_links}}display: none{{/if}}")
       %span.sl 链接名称
       %span.sl 链接路径
-    %ul.nobull.sr.ssb.links
+    %ul.nobull.sr.ssb.links(style="{{#if is_empty_links}}display: none{{/if}}")
   / begin: add new Link
   .add_form_link_container
     .action-row
