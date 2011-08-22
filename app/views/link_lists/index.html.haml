@@ -36,6 +36,10 @@
     .section-header
       %p.list-actions
         %a.editlist-action(href="#" style="padding-left: 14px;") 修改链接列表
+        {{#unless system_default}}
+        |
+        %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+        {{/unless}}
       %span(title="handle: {{{handle}}}") {{{title}}}
       %span.hint {{#if system_default}}这是默认链接列表，不能删除.{{/if}}
     .link-header.st.sl.sr
