@@ -183,6 +183,10 @@ class OrderBillingAddress < ActiveRecord::Base
   validates_presence_of :name,:country_code, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
   default_value_for :country_code, :CN
 
+  def country
+    Country.where(code: country_code).first
+  end
+
   def province_name
     District.get(self.province)
   end

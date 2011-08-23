@@ -25,7 +25,15 @@
     =form_for order, url: "/carts/#{shop.id}/#{cart.token}/create_order" do |f|
       #email
         =f.label :email, '您的 Email 地址'
-        =f.text_field :email
+        -if customer_signed_in?
+          =f.hidden_field :email, value: current_customer.email
+          %h4.active-customer
+            =current_customer.email
+            %span.sign-in-message
+              ==不是#{current_customer.name}?
+              =link_to '用另一个账号登录','#'
+        -else
+          =f.text_field :email
       / begin addresses
       #addresses.group.clearfix
         .gleft

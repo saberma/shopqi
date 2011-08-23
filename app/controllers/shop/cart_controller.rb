@@ -27,7 +27,7 @@ class Shop::CartController < Shop::AppController
       redirect_to cart_path
     else
       cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)
-      checkout_url = "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{shop.id}/#{cart.token}"
+      checkout_url = "#{request.protocol}shopqi.#{request.domain}#{request.port_string}/carts/#{shop.id}/#{cart.token}"
       redirect_to checkout_url
     end
   end

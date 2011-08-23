@@ -16,7 +16,7 @@ class Customer < ActiveRecord::Base
   attr_accessible :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
   before_create :ensure_authentication_token # 生成login token，只使用一次
   validates_presence_of :name, :email
-  validates :email, :uniqueness => {:scope => :shop_id}
+  validates :email, uniqueness: {scope: :shop_id}
 
   # 标签
   attr_accessor :tags_text
