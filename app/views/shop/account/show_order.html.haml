@@ -1,0 +1,55 @@
+#admin_header
+  #return_to_store.action_link.action_return.note
+    =link_to '返回首页',customer_account_index_path
+  %h2.title==订单 #{order.id}
+.note.order_date==下单时间: #{I18n.l order.created_at, format: :serial}
+#order_address.group
+  #order_payment
+    %h5.order_section_title 下单人地址
+    %p
+      %span.note 支付状态:
+      %span.status_pending=order.financial_status_name
+    .address.note
+      %p=order.billing_address.country_name
+      %p=order.billing_address.province_name
+      %p=order.billing_address.city_name
+      %p=order.billing_address.district_name
+      %p=order.billing_address.address1
+      %p=order.billing_address.zip
+      %p=order.billing_address.name
+  #order_shipping
+    %h5.order_section_title 收货人地址
+    %p
+      %span.note 发货状态:
+      %span.status_unfulfilled=order.fulfillment_status_name
+    .address.note
+      %p=order.shipping_address.country_name
+      %p=order.shipping_address.province_name
+      %p=order.shipping_address.city_name
+      %p=order.shipping_address.district_name
+      %p=order.shipping_address.address1
+      %p=order.shipping_address.zip
+      %p=order.shipping_address.name
+%table#order_details
+  %thead
+    %tr
+      %th 商品
+      %th SKU
+      %th 单价
+      %th.center 数量
+      %th.total 总价
+  %tbody
+    =render partial: 'order_line_item', collection: order.line_items
+  %tfoot
+    %tr.order_summary.note
+      %td.label{:colspan => "4"} 小计:
+      %td.total.money==¥#{order.total_line_items_price}
+    %tr.order_summary.note
+      %td.label{:colspan => "4"} 配送费用(快递):
+      %td.total.money==¥#{order.shipping_rate_price}
+    %tr.order_summary.note
+      %td.label{:colspan => "4"} 包含增值税:
+      %td.total.money==¥#{order.tax_price}
+    %tr.order_summary.order_total
+      %td.label{:colspan => "4"} 总金额:
+      %td.total.money==¥#{order.total_price}

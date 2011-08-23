@@ -8,5 +8,16 @@
   =stylesheet_link_tag 'customer','message_block'
 %body
   #container
-    =yield
+    #header
+      #logo
+        / css hook for logos
+      %h1#tagline
+        =shop.name
+        %span.subtitle 顾客区域
+      -if customer_signed_in?
+        %p#logout.action_link.note
+          %span==当前登陆：#{current_customer.name}
+          %a#customer_logout_link{:href => "/account/logout"} (退出登录)
+    #wrapper.clearfix
+      =yield
     #footer

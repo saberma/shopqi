@@ -1,37 +1,25 @@
-#header
-  #logo
-    / css hook for logos
-  %h1#tagline
-    鞋子
-    %span.subtitle 顾客区域
-  %p#logout.action_link.note
-    %span==当前登陆：#{current_customer.name}
-    %a#customer_logout_link{:href => "/account/logout"} (退出登录)
-#wrapper.clearfix
-  #admin_header
-    #return_to_store.action_link.action_return.note
-      =link_to '返回商店',show_shop_url
-    %h2.title 账号信息 以及 订单信息
-  #customer_sidebar
-    #customer_detail.group
-      %h5.name==#{current_customer.name}
-      %p.email.note==#{current_customer.email}
-      .address.note
-        %p eeee
-        %p eee
-        %p eee, Spain
-        %p 333000
-        %p
-        %a#view_address{:href => "/account/addresses"} View Addresses (11)
-  %table#customer_orders
-    %thead
-      %tr
-        %th.order_number 订单
-        %th.date 日期
-        %th 支付状态
-        %th 配送状态
-        %th.total 总金额
-    %tbody
-      =render partial: 'order',collection: current_customer.orders
-#footer
-  %a{:href => "mailto://liwh88@gmail.com"} Contact Shop Owner
+#admin_header
+  #return_to_store.action_link.action_return.note
+    =link_to '返回商店',show_shop_url
+  %h2.title 账号信息 以及 订单信息
+#customer_sidebar
+  #customer_detail.group
+    %h5.name==#{current_customer.name}
+    %p.email.note==#{current_customer.email}
+    .address.note
+      %p eeee
+      %p eee
+      %p eee, Spain
+      %p 333000
+      %p
+      %a#view_address{:href => "/account/addresses"} View Addresses (11)
+%table#customer_orders
+  %thead
+    %tr
+      %th.order_number 订单
+      %th.date 日期
+      %th 支付状态
+      %th 配送状态
+      %th.total 总金额
+  %tbody
+    =render partial: 'order',collection: current_customer.orders

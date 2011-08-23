@@ -66,13 +66,14 @@ Shopqi::Application.routes.draw do
           get '/signup' , to: 'registrations#new'
           get '/logout' , to: 'sessions#destroy'
         end
-        get '/index', to: 'account#index'
+        get '/orders/:token', to: 'account#show_order' , as: :account_show_order
+        get '/index', to: 'account#index', as: :customer_account_index
         get '/', to: 'account#index'
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
       get '/search'                        , to: 'search#show'
-      get '/products/:handle'              , to: 'products#show'
+      get '/products/:handle'              , to: 'products#show', as: :product_show
       get '/collections/all'               , to: 'collections#show'
       get '/pages/:handle'                 , to: 'pages#show'
       post '/cart/add'                     , to: 'cart#add'

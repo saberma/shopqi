@@ -187,6 +187,10 @@ class OrderBillingAddress < ActiveRecord::Base
     Country.where(code: country_code).first
   end
 
+  def country_name
+    Carmen.country_name(country_code)
+  end
+
   def province_name
     District.get(self.province)
   end
@@ -208,6 +212,10 @@ class OrderShippingAddress < ActiveRecord::Base
 
   def country
     Country.where(code: country_code).first
+  end
+
+  def country_name
+    Carmen.country_name(country_code)
   end
 
   def province_name

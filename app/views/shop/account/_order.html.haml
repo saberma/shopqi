@@ -1,6 +1,5 @@
 %tr(class="#{cycle(:odd,:even)}")
-  %td
-    %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com/account/orders/d9c3ee82912225f2edb26a852f98243e", :title => ""} 1022
+  %td=link_to order.id, account_show_order_path(order.token)
   %td.note=I18n.l order.created_at, format: :serial
   %td
     %span.status_pending=order.financial_status_name
