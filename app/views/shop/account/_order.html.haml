@@ -4,5 +4,5 @@
   %td
     %span(class="status_#{order.financial_status}")=order.financial_status_name
   %td
-    %span.status_unfulfilled=order.fulfillment_status_name
+    %span(class="status_#{order.fulfillment_status}")=order.fulfillment_status_name
   %td.total.money==¥ #{order.total_price}
