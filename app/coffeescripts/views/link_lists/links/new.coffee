@@ -6,13 +6,20 @@ App.Views.LinkList.Links.New = Backbone.View.extend
     "click .cancel": "cancel"
 
   initialize: ->
-    log @options.link_list
-    @model = new Link link_list_id: @options.link_list.id
+    self = this
+    @link_list = @options.link_list
+    @model = new Link link_list_id: @link_list.id
+    @link_list.links.bind 'add', (model, collection) ->
+      msg "新增链接#{model.get('title')}到#{self.link_list.get('title')}列表成功."
+      self.cancel()
+      self.$("input[name='link[title]']").val ''
+      self.$("input[name='link[subject]']").val ''
+      new App.Views.LinkList.Links.Show model: model
 
   save: ->
     self = this
-    position = @options.link_list.links.length
-    @options.link_list.links.create
+    position = @link_list.links.length
+    @link_list.links.create
       position: position
       title: this.$("input[name='link[title]']").val()
       link_type: this.$("input[name='link[link_type]']").val()

@@ -6,14 +6,20 @@ App.Views.LinkList.New = Backbone.View.extend
     "click .cancel": "cancel"
 
   initialize: ->
-    this.model = new LinkList
-    $(this.el).show()
-    $('#link_list_title').focus()
+    self = this
+    @model = new LinkList
+    @collection = App.link_lists
+    @collection.bind 'add', (model, collection) ->
+      model.with_links()
+      self.cancel()
+      msg '新增成功!'
+      new App.Views.LinkList.Show model: model
+    $('#list_title').focus()
 
   save: ->
-    App.link_lists.create title: this.$("input[name='link_list[title]']").val()
+    @collection.create title: this.$("#list_title").val()
     return false
 
   cancel: ->
-    $(this.el).hide()
-    $('#link_list_title').blur()
+    $(@el).hide()
+    $('#list_title').val('').blur()

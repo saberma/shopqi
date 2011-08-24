@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'views/link_lists/links/index', 'views/link_lists/links/show', 'views/link_lists/links/new', 'views/link_lists/index', 'views/link_lists/show', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists'
+  =javascript_include_tag 'views/link_lists/links/index', 'views/link_lists/links/show', 'views/link_lists/links/new', 'views/link_lists/links/edit', 'views/link_lists/index', 'views/link_lists/show', 'views/link_lists/edit', 'views/link_lists/new', 'models/link', 'collections/links', 'models/link_list', 'collections/link_lists'
 
 %h2#title 商店导航
 #action-links
@@ -18,7 +18,7 @@
     %p.btn-divider
       %input.btn(name="commit" type="submit" value="新增链接")
       或者
-      %a(href="#") 取消
+      %a.cancel(href="#") 取消
 #link-lists
   %h3.st.sb 链接列表
   %p.note.ssb
@@ -32,7 +32,7 @@
 
 %script(id="link-list-item" type="text/x-jquery-tmpl")
   / begin: default Link List items
-  %div
+  .default_container_link_list
     .section-header
       %p.list-actions
         %a.editlist-action(href="#" style="padding-left: 14px;") 修改链接列表
@@ -43,7 +43,7 @@
       %span.sl 链接路径
     %ul.nobull.sr.ssb.links
   / begin: add new Link
-  .add_link_form_link_list
+  .add_form_link_container
     .action-row
       .action-link
         %p
@@ -56,10 +56,10 @@
           .group-fields
             .add-link-title.link-col
               %span.add-link-header 新链接的名称
-              %input#add_link_title_link_list_2460472.medium(name="link[title]" type="text")
+              %input.medium(name="link[title]" type="text")
             .add-link-linksto.link-col
               %span.add-link-header 链接至
-              %select#add_link_type_link_list_2460472.selector(name="link[link_type]")
+              %select.selector(name="link[link_type]")
                 =options_for_select link_types
               %select.subject(name="link[subject_id]")
               %input.long.subject_http.linkform-hint(data-hint="http://shopify.com" name="link[subject]" type="text" style="display:none")
@@ -72,47 +72,53 @@
           / .group-actions
       / .group
   / begin: edit Link List items
-  #edit_form_link_container_link_list_2460472(style="display:none;")
-    %form#edit_link_list_2460472.edit_link_list(action="#" onsubmit="return false")
-      .section-header 修改这个链接列表
-      .link-list-edit-header
-        %dl.padding.nst.nsb.nsl.nsr
-          %dt.nst 名称
-          %dd
-            %input#link_list_title.big.sb(name="link_list[title]" size="30" type="text" value="Main Menu")/
-          %dt
-            链接句柄
-            %span.note
-              (
-              %a(href="#{Setting.wiki_url}/Handle" target="_blank")> 这是什么?
-              )
-          %dd
-            %input#link_list_handle(disabled="disabled" name="link_list[handle]" size="30" type="text" value="main-menu")
-            %span.hint 默认链接列表的处理是不能修改的
-      #edit_form_header_link_list_2460472.link-header.link-header-edit.nobull.st
-        %span 链接名称
-        %span 链接至
-      %ul#edit_form_link_list_2460472.nobull.st.sr.ssb.sl
-        %li#link_edit_li_10531292.sl.link.link-edit.odd
-          %input#link_list_links_attributes_0_id(name="link_list[links_attributes][0][id]" type="hidden" value="10531292")
-          %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif'
-          %input#link_list_links_attributes_0_title.medium(name="link_list[links_attributes][0][title]" size="30" type="text" value="Home")
-          %select#link_edit_link_type_10531292.selector.sl(name="link_list[links_attributes][0][link_type]")
-            =options_for_select link_types
-          %select.subject(name="link_list[links_attributes][0][subject_id]" onchange="alertSelected(this)")links_attributes
-          %input.subject_value.hide(type="text" value="")
-          %input.long.subject_http.linkform-hint(data-hint="http://shopify.com" name="link_list[links_attributes][0][subject]" size="30" type="text" value="/")
-          %input(name="link_list[links_attributes][0][subject_params]" type="hidden" value="")
-          %input.medium.subject_params.linkform-hint(data-hint="Filter by tags (comma separated)" name="link_list[links_attributes][0][subject_params]" size="30" type="text")
-      .group-actions
-        %input.btn(name="commit" type="submit" value="保存")
-        或者
-        %a(href="#") 取消
+  .edit_form_link_container(style="display:none;")
 %script(id="link-item" type="text/x-jquery-tmpl")
   =image_tag 'admin/icons/drag_handle.gif', class: [:image_handle, :nsr]
   %span.link-title
     %a(href="{{{subject}}}") {{{title}}}
   %span.link-url {{{subject}}}
+%script(id="edit_form_link_container-item" type="text/x-jquery-tmpl")
+  %form.edit_link_list(action="#" onsubmit="return false")
+    .section-header 修改这个链接列表
+    .link-list-edit-header
+      %dl.padding.nst.nsb.nsl.nsr
+        %dt.nst 名称
+        %dd
+          %input.big.sb(name="link_list[title]" size="30" type="text" value="{{{title}}}")
+        %dt
+          链接句柄
+          %span.note
+            (
+            %a(href="#{Setting.wiki_url}/Handle" target="_blank")> 这是什么?
+            )
+        %dd
+          {{#if system_default}}
+          %input(disabled="disabled" name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
+          %span.hint 默认链接列表的处理是不能修改的
+          {{else}}
+          %input(name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
+          {{/if}}
+    .link-header.link-header-edit.nobull.st
+      %span 链接名称
+      %span 链接至
+    / edit-link
+    %ul.nobull.st.sr.ssb.sl.edit_links
+    .group-actions
+      %input.btn(name="commit" type="submit" value="保存")
+      或者
+      %a.cancel(href="#") 取消
+%script(id="edit-link-item" type="text/x-jquery-tmpl")
+  %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif'
+  %input(name="id" type="hidden" value="{{{id}}}")
+  %input.medium(name="title" size="30" type="text" value="{{{title}}}")
+  %select.selector.sl(name="link_type")
+    =options_for_select link_types
+  %select.subject(name="subject_id" style="display: none")
+  %input.subject_value.hide(type="text" value="{{{subject}}}")
+  %input.long.subject_http.linkform-hint.hide(data-hint="http://shopify.com" name="subject" size="30" type="text" value="{{{subject}}}")
+  %input(name="subject_params" type="hidden" value="")
+  %input.medium.subject_params.linkform-hint.hide(data-hint="Filter by tags (comma separated)" name="subject_params" size="30" type="text")
 
 :javascript
   App.link_lists = new App.Collections.LinkLists();

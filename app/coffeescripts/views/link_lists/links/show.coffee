@@ -13,4 +13,4 @@ App.Views.LinkList.Links.Show = Backbone.View.extend
     template = Handlebars.compile $('#link-item').html()
     attrs = _.clone @model.attributes
     $(@el).html template attrs
-    @options.parent.append @el
+    $(@model.collection.view.el).append @el
