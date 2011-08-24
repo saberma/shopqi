@@ -62,13 +62,14 @@ Shopqi::Application.routes.draw do
     scope module: :shop do # 前台商店
       scope '/account' do
         devise_for :customer do
-          get '/login' , to: 'sessions#new'
-          get '/signup' , to: 'registrations#new'
-          get '/logout' , to: 'sessions#destroy'
+          get '/login'                     , to: 'sessions#new'
+          get '/signup'                    , to: 'registrations#new'
+          get '/logout'                    , to: 'sessions#destroy'
         end
-        get '/orders/:token', to: 'account#show_order' , as: :account_show_order
-        get '/index', to: 'account#index', as: :customer_account_index
-        get '/', to: 'account#index'
+        get '/orders/:token'               , to: 'account#show_order' , as: :account_show_order
+        get '/index'                       , to: 'account#index', as: :customer_account_index
+        get '/'                            , to: 'account#index'
+        resources :addresses
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'

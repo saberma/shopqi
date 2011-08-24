@@ -1,14 +1,14 @@
 #admin_header
   #return_to_store.action_link.action_return.note
     =link_to '返回首页',customer_account_index_path
-  %h2.title==订单 #{order.id}
+  %h2.title=order.title
 .note.order_date==下单时间: #{I18n.l order.created_at, format: :serial}
 #order_address.group
   #order_payment
     %h5.order_section_title 下单人地址
     %p
       %span.note 支付状态:
-      %span.status_pending=order.financial_status_name
+      %span(class="status_#{order.financial_status}")=order.financial_status_name
     .address.note
       %p=order.billing_address.country_name
       %p=order.billing_address.province_name
@@ -21,7 +21,7 @@
     %h5.order_section_title 收货人地址
     %p
       %span.note 发货状态:
-      %span.status_unfulfilled=order.fulfillment_status_name
+      %span(class="status_#{order.fulfillment_status}")=order.fulfillment_status_name
     .address.note
       %p=order.shipping_address.country_name
       %p=order.shipping_address.province_name
