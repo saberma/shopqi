@@ -1,24 +1,49 @@
 #admin_header
   #return_to_account.action_link.action_return.note
     =link_to '返回首页',customer_account_index_path
-  %h2.title 管理账号地址
+  %h2.title 管理地址簿
   .action_top
     #action.action_link.action_add.note
-      %a{:href => "#", :onclick => "Shopify.CustomerAddress.toggleNewForm(); return false;"} Add New Address
+      =link_to '增加新地址','#'
 #add_address.customer_address.edit_address{:style => "display:none;"}
-  %form#address_form_new{:action => "/account/addresses", :method => "post"}
-    %h4#add_address_title Add a new address
+  =form_for address,url: new_address_path(address)  do |f|
+    %h4#add_address_title 新增地址
     %table.customer_address_table
+      %tr
+        %td.label=f.label :name
+        %td.value=f.text_field :name
+      %tr
+        %td.label=f.label :country_code
+        %td.value=f.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
+      %tr
+        %td.label
+          %label(for='order_billing_address_attributes_province') 地区
+        %td.region
+          =f.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
+          =f.select :city, District.list(address.province), {include_blank: '--城市--'}, style: 'width: 76px'
+          =f.select :district, District.list(address.city), {include_blank: '--地区--'}, style: 'width: 76px'
+      %tr
+        %td.label=f.label :address1
+        %td(style="width: 260px")=f.text_field :address1
+      %tr
+        %td.label=f.label :phone
+        %td.value=f.text_field :phone, class: :short
+      %tr
+        %td.label=f.label :zip
+        %td.value=f.text_field :zip, class: :short
+      %tr
+        %td.label=f.label :company
+        %td.value=f.text_field :company, class: :short
       %tr
         %td.label
         %td.value
           %input#address_default_address_new{:name => "address[default_address]", :type => "checkbox", :value => "1"}/
-          Set as Default Address?
+          将此地址作为默认收货地址?
     .action_bottom
-      %input.btn{:type => "submit", :value => "Add Address"}/
+      =f.submit w('save'),class: 'btn'
       %span.note
-        or
-        %a{:href => "#", :onclick => "Shopify.CustomerAddress.toggleNewForm(); return false;"} Cancel
+        =w('or')
+        =link_to w('cancel'), '#'
 #address_tables
   .address_table
     #view_address_71144282.customer_address

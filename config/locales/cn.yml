@@ -124,6 +124,7 @@ cn:
         accepts_marketing: 接收营销邮件
       customer_address:
         company: 公司
+        country_code: 国家
         phone: 电话
         address1: 地址
         zip: 邮编
