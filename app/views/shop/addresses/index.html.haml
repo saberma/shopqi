@@ -11,57 +11,6 @@
     %table.customer_address_table
       %tr
         %td.label
-          %label{:for => "address_first_name_new"} First Name
-        %td.value
-          %input#address_first_name_new.address_form{:name => "address[first_name]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_last_name_new"} Last Name
-        %td.value
-          %input#address_last_name_new.address_form{:name => "address[last_name]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_company_new"} Company
-        %td.value
-          %input.address_form{:for => "address_company_new", :name => "address[company]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_address1_new"} Address1
-        %td.value
-          %input#address_address1_new.address_form{:name => "address[address1]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_address2_new"} Address2
-        %td.value
-          %input#address_address2_new.address_form{:name => "address[address2]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_city_new"} City
-        %td.value
-          %input#address_city_new.address_form{:name => "address[city]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_country_new"} Country
-        %td.value
-          %select#address_country_new{"data-default" => "", :name => "address[country]"}
-            %option{"data-provinces" => "[]", :value => ""} 请选择
-      %tr#address_province_container_new{:style => "display:none"}
-        %td.label
-          %label{:for => "address_province_new"} Province
-        %td.value
-          %select#address_province_new.address_form{"data-default" => "", :name => "address[province]"}
-      %tr
-        %td.label
-          %label{:for => "address_zip_new"} Zip
-        %td.value
-          %input#address_zip_new.address_form{:name => "address[zip]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
-          %label{:for => "address_phone_new"} Phone
-        %td.value
-          %input#address_phone_new.address_form{:name => "address[phone]", :size => "40", :type => "text", :value => ""}/
-      %tr
-        %td.label
         %td.value
           %input#address_default_address_new{:name => "address[default_address]", :type => "checkbox", :value => "1"}/
           Set as Default Address?

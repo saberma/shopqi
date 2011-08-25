@@ -7,12 +7,13 @@
     %h5.name==#{current_customer.name}
     %p.email.note==#{current_customer.email}
     .address.note
-      %p eeee
-      %p eee
-      %p eee, Spain
-      %p 333000
-      %p
-      %a#view_address{:href => "/account/addresses"} View Addresses (11)
+      %p=current_customer.address[:country_name]
+      %p=current_customer.address[:province_name]
+      %p=current_customer.address[:city_name]
+      %p=current_customer.address[:district_name]
+      %p=current_customer.address['address1']
+      %p=current_customer.address['zip']
+      =link_to "查看全部地址(#{current_customer.addresses.count})",addresses_path,id: 'view_address'
 %table#customer_orders
   %thead
     %tr
