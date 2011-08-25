@@ -4,6 +4,7 @@ App.Views.LinkList.Links.New = Backbone.View.extend
     "click .action-link a": "add"
     "submit form": "save"
     "click .cancel": "cancel"
+    "change .selector": "select" # 选择链接类型
 
   initialize: ->
     self = this
@@ -23,10 +24,12 @@ App.Views.LinkList.Links.New = Backbone.View.extend
     position = @link_list.links.length
     @link_list.links.create
       position: position
-      title: this.$("input[name='link[title]']").val()
-      link_type: this.$("input[name='link[link_type]']").val()
-      subject: this.$("input[name='link[subject]']").val()
-    return false
+      title: @$("input[name='title']").val()
+      link_type: @$("select[name='link_type']").val()
+      subject_handle: @$("select[name='subject_handle']").val()
+      subject_params: @$("input[name='subject_params']").val()
+      url: self.get_url()
+    false
 
   cancel: ->
     @$('.link').hide()
@@ -36,4 +39,33 @@ App.Views.LinkList.Links.New = Backbone.View.extend
   add: ->
     @$('.link').show()
     @$('.action-row').hide()
+    @$('.selector').change()
+    @$("input[name='url'], input[name='title']").val('')
     false
+
+  select: ->
+    toggle_subject_handle = toggle_subject_params = toggle_subject_http = false
+    switch @$('.selector').val()
+      when 'blog', 'page', 'product'
+        @$('select.subject').html($("#selector-#{@$('.selector').val()}-item").html())
+        toggle_subject_handle = true
+      when 'collection'
+        @$('select.subject').html($('#selector-collection-item').html())
+        toggle_subject_handle = toggle_subject_params = true
+      when 'http'
+        toggle_subject_http = true
+    @$('select.subject').toggle(toggle_subject_handle)
+    @$('input.subject_params').toggle(toggle_subject_params)
+    @$('input.subject_http').toggle(toggle_subject_http)
+
+  # private
+  get_url: -> # 设置http值
+    url = @$("input[name='url']").val()
+    return url if url
+    switch @$('.selector').val()
+      when 'blog'       then "/blogs/#{@$('select.subject').val()}"
+      when 'frontpage'  then "/"
+      when 'collection' then "/collections/#{@$('select.subject').val()}"
+      when 'page'       then "/pages/#{@$('select.subject').val()}"
+      when 'product'    then "/products/#{@$('select.subject').val()}"
+      when 'search'     then "/search"

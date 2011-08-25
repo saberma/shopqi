@@ -9,6 +9,10 @@ class LinkListsController < ApplicationController
   expose(:link_list)
   expose(:link_types) { KeyValues::Link::Type.options }
   expose(:link)
+  expose(:blog_types) { shop.blogs.map{|blog| [blog.title, blog.handle]} }
+  expose(:collection_types) { shop.custom_collections.map{|collection| [collection.title, collection.handle]} }
+  expose(:page_types) { shop.pages.map{|page| [page.title, page.handle]} }
+  expose(:product_types) { shop.products.map{|product| [product.title, product.handle]} }
 
   def index
   end

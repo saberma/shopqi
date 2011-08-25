@@ -20,7 +20,7 @@ describe LinkList do
     context '(blog)' do
 
       it 'should get url' do
-        link = link_list.links.build title: '博客', link_type: 'blog', subject_id: welcome.id.to_s
+        link = link_list.links.build title: '博客', link_type: 'blog', subject_handle: welcome.id.to_s
         link.url.should eql "/blogs/#{welcome.handle}"
       end
 
@@ -38,7 +38,7 @@ describe LinkList do
     context '(collection)' do
 
       it 'should get url' do
-        link = link_list.links.build title: '商品列表', link_type: 'collection', subject_id: collection.id.to_s
+        link = link_list.links.build title: '商品列表', link_type: 'collection', subject_handle: collection.id.to_s
         link.url.should eql "/collections/#{collection.handle}"
       end
 
@@ -47,7 +47,7 @@ describe LinkList do
     context '(page)' do
 
       it 'should get url' do
-        link = link_list.links.build title: '关于我们', link_type: 'page', subject_id: about_us.id.to_s
+        link = link_list.links.build title: '关于我们', link_type: 'page', subject_handle: about_us.id.to_s
         link.url.should eql "/pages/#{about_us.handle}"
       end
 
@@ -56,7 +56,7 @@ describe LinkList do
     context '(product)' do
 
       it 'should get url' do
-        link = link_list.links.build title: 'iphone', link_type: 'product', subject_id: iphone4.id.to_s
+        link = link_list.links.build title: 'iphone', link_type: 'product', subject_handle: iphone4.id.to_s
         link.url.should eql "/products/#{iphone4.handle}"
       end
 
