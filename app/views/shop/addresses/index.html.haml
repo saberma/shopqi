@@ -1,0 +1,155 @@
+#admin_header
+  #return_to_account.action_link.action_return.note
+    =link_to '返回首页',customer_account_index_path
+  %h2.title 管理账号地址
+  .action_top
+    #action.action_link.action_add.note
+      %a{:href => "#", :onclick => "Shopify.CustomerAddress.toggleNewForm(); return false;"} Add New Address
+#add_address.customer_address.edit_address{:style => "display:none;"}
+  %form#address_form_new{:action => "/account/addresses", :method => "post"}
+    %h4#add_address_title Add a new address
+    %table.customer_address_table
+      %tr
+        %td.label
+          %label{:for => "address_first_name_new"} First Name
+        %td.value
+          %input#address_first_name_new.address_form{:name => "address[first_name]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_last_name_new"} Last Name
+        %td.value
+          %input#address_last_name_new.address_form{:name => "address[last_name]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_company_new"} Company
+        %td.value
+          %input.address_form{:for => "address_company_new", :name => "address[company]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_address1_new"} Address1
+        %td.value
+          %input#address_address1_new.address_form{:name => "address[address1]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_address2_new"} Address2
+        %td.value
+          %input#address_address2_new.address_form{:name => "address[address2]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_city_new"} City
+        %td.value
+          %input#address_city_new.address_form{:name => "address[city]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_country_new"} Country
+        %td.value
+          %select#address_country_new{"data-default" => "", :name => "address[country]"}
+            %option{"data-provinces" => "[]", :value => ""} 请选择
+      %tr#address_province_container_new{:style => "display:none"}
+        %td.label
+          %label{:for => "address_province_new"} Province
+        %td.value
+          %select#address_province_new.address_form{"data-default" => "", :name => "address[province]"}
+      %tr
+        %td.label
+          %label{:for => "address_zip_new"} Zip
+        %td.value
+          %input#address_zip_new.address_form{:name => "address[zip]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+          %label{:for => "address_phone_new"} Phone
+        %td.value
+          %input#address_phone_new.address_form{:name => "address[phone]", :size => "40", :type => "text", :value => ""}/
+      %tr
+        %td.label
+        %td.value
+          %input#address_default_address_new{:name => "address[default_address]", :type => "checkbox", :value => "1"}/
+          Set as Default Address?
+    .action_bottom
+      %input.btn{:type => "submit", :value => "Add Address"}/
+      %span.note
+        or
+        %a{:href => "#", :onclick => "Shopify.CustomerAddress.toggleNewForm(); return false;"} Cancel
+#address_tables
+  .address_table
+    #view_address_71144282.customer_address
+      %h4.address_title
+        大大声的, 订单
+      %p.address_actions
+        %span.action_link.action_edit
+          %a{:href => "#", :onclick => "Shopify.CustomerAddress.toggleForm(71144282);return false"} Edit
+        %span.action_link.action_delete
+          %a{:href => "#", :onclick => "Shopify.CustomerAddress.destroy(71144282);return false"} Delete
+      .view_address
+        %p 委会 大时代
+        %p 哒哒哒
+        %p 大大声的, 订单
+        %p 达大厦
+        %p Algeria 333333
+        %p
+    #edit_address_71144282.customer_address.edit_address{:style => "display:none;"}
+      %form#address_form_71144282{:action => "/account/addresses/71144282", :method => "post"}
+        %input{:name => "_method", :type => "hidden", :value => "put"}/
+        %table.customer_address_table
+          %tr
+            %td.label
+              %label{:for => "address_first_name_71144282"} First Name
+            %td.value
+              %input#address_first_name_71144282.address_form{:name => "address[first_name]", :size => "40", :type => "text", :value => "委会"}/
+          %tr
+            %td.label
+              %label{:for => "address_last_name_71144282"} Last Name
+            %td.value
+              %input#address_last_name_71144282.address_form{:name => "address[last_name]", :size => "40", :type => "text", :value => "大时代"}/
+          %tr
+            %td.label
+              %label{:for => "address_company_71144282"} Company
+            %td.value
+              %input#address_company_71144282.address_form{:name => "address[company]", :size => "40", :type => "text", :value => "哒哒哒"}/
+          %tr
+            %td.label
+              %label{:for => "address_address1_71144282"} Address1
+            %td.value
+              %input#address_address1_71144282.address_form{:name => "address[address1]", :size => "40", :type => "text", :value => "大大声的"}/
+          %tr
+            %td.label
+              %label{:for => "address_address2_71144282"} Address2
+            %td.value
+              %input#address_address2_71144282.address_form{:name => "address[address2]", :size => "40", :type => "text", :value => "订单"}/
+          %tr
+            %td.label
+              %label{:for => "address_city_71144282"} City
+            %td.value
+              %input#address_city_71144282.address_form{:name => "address[city]", :size => "40", :type => "text", :value => "达大厦"}/
+          %tr
+            %td.label
+              %label{:for => "address_country_71144282"} Country
+            %td.value
+              %select#address_country_71144282{"data-default" => "Algeria", :name => "address[country]"}
+                %option{"data-provinces" => "[]", :value => "Zimbabwe"} Zimbabwe
+          %tr#address_province_container_71144282{:style => "display:none"}
+            %td.label
+              %label{:for => "address_province_71144282"} Province
+            %td.value
+              %select#address_province_71144282.address_form{"data-default" => "盛大的撒", :name => "address[province]"}
+          %tr
+            %td.label
+              %label{:for => "address_zip_71144282"} Zip
+            %td.value
+              %input#address_zip_71144282.address_form{:name => "address[zip]", :size => "40", :type => "text", :value => "333333"}/
+          %tr
+            %td.label
+              %label{:for => "address_phone_71144282"} Phone
+            %td.value
+              %input#address_phone_71144282.address_form{:name => "address[phone]", :size => "40", :type => "text", :value => ""}/
+          %tr
+            %td.label
+            %td.value
+              %input#address_default_address_71144282{:name => "address[default_address]", :type => "checkbox", :value => "1"}/
+              Set as Default Address?
+        .action_bottom
+          %input.btn{:type => "submit", :value => "Update Address"}/
+          %span.note
+            or
+            %a{:href => "#", :onclick => "Shopify.CustomerAddress.toggleForm(71144282); return false;"} Cancel
+  #address_pagination

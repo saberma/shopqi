@@ -34,7 +34,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.string     :address2            , comment: '地址 续'
       t.string     :zip                 , comment: '邮编'    , limit: 12
       t.string     :phone               , comment: '电话'    , limit: 64
-      t.boolean    :default_address     , comment: '默认地址'
+      t.boolean    :default_address     , comment: '默认地址', default: false
     end
 
     #标记

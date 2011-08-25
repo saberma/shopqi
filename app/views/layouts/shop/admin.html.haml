@@ -18,6 +18,10 @@
         %p#logout.action_link.note
           %span==当前登陆：#{current_customer.name}
           %a#customer_logout_link{:href => "/account/logout"} (退出登录)
+      -else
+        %p#logout.action_link.note
+          %span==没有账号？
+          =link_to '注册账号',new_customer_registration_path
     #wrapper.clearfix
       =yield
     #footer
