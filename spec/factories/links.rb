@@ -5,5 +5,5 @@ Factory.define :link do |f|
   f.link_type "http"
   f.subject_handle nil
   f.subject_params nil
-  f.subject "http://shopqi.com"
+  f.url "http://shopqi.com"
 end

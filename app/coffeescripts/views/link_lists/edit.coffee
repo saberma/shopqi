@@ -19,9 +19,19 @@ App.Views.LinkList.Edit = Backbone.View.extend
     self = this
     $('li', @el).each -> #循环li，把输入项设置回model
       model = self.model.links.get $("input[name='id']", this).val()
+      link_type = $('.selector', this).val()
+      handle = $("select.subject", this).val()
+      url = switch link_type
+        when 'blog', 'collection', 'page', 'product' then "/#{link_type}s/#{handle}"
+        when 'frontpage'  then "/"
+        when 'search'     then "/search"
+        when 'http'     then $("input[name='url']", this).val()
       model.set
         title: $("input[name='title']", this).val()
-        subject: $("input[name='subject']", this).val()
+        link_type: link_type
+        subject_handle: handle
+        subject_params: $("input[name='subject_params']", this).val()
+        url: url
     this.model._changed = true #修正:只修改link item时也要触发change事件，更新列表
     this.model.save {
         title: this.$("input[name='link_list[title]']").val()

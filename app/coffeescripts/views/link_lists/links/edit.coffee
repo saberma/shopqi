@@ -4,10 +4,13 @@ App.Views.LinkList.Links.Edit = Backbone.View.extend
 
   events:
     "click .delete": "destroy"
+    "change .selector": "select" # 选择链接类型
 
   initialize: ->
     @render()
     @options.parent.append @el
+    @$('.selector').val(@model.get('link_type')).change()
+    @$('.subject').val @model.get('subject_handle')
 
   render: ->
     template = Handlebars.compile $('#edit-link-item').html()
@@ -27,3 +30,18 @@ App.Views.LinkList.Links.Edit = Backbone.View.extend
           self.remove()
           msg '删除成功!'
     return false
+
+  select: ->
+    toggle_subject_handle = toggle_subject_params = toggle_subject_http = false
+    switch @$('.selector').val()
+      when 'blog', 'page', 'product'
+        @$('select.subject').html($("#selector-#{@$('.selector').val()}-item").html())
+        toggle_subject_handle = true
+      when 'collection'
+        @$('select.subject').html($('#selector-collection-item').html())
+        toggle_subject_handle = toggle_subject_params = true
+      when 'http'
+        toggle_subject_http = true
+    @$('select.subject').toggle(toggle_subject_handle)
+    @$('input.subject_params').toggle(toggle_subject_params)
+    @$('input.subject_http').toggle(toggle_subject_http)
