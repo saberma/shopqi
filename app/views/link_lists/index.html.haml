@@ -117,10 +117,10 @@
   %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif'
   %input(name="id" type="hidden" value="{{{id}}}")
   %input.medium(name="title" size="30" type="text" value="{{{title}}}")
-  %select.selector.sl(name="link_type")
+  %select.selector.sl(name="link_type" value="{{{link_type}}}")
     =options_for_select link_types
-  %select.subject(name="subject_handle" style="display: none")
-  %input.medium.subject_params.linkform-hint.hide(data-hint="根据标签过滤(以逗号分隔)" name="subject_params" size="30" type="text")
+  %select.subject(name="subject_handle" style="display: none" value="{{{subject_handle}}}")
+  %input.medium.subject_params.linkform-hint.hide(data-hint="根据标签过滤(以逗号分隔)" name="subject_params" size="30" type="text" value="{{{subject_params}}}")
   %input.long.subject_http.linkform-hint.hide(data-hint="http://shopify.com" name="url" size="30" type="text" value="{{{url}}}")
 %script(id="selector-blog-item" type="text/x-jquery-tmpl")
   =options_for_select blog_types

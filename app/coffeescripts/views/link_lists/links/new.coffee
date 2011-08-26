@@ -60,12 +60,9 @@ App.Views.LinkList.Links.New = Backbone.View.extend
 
   # private
   get_url: -> # 设置http值
-    url = @$("input[name='url']").val()
-    return url if url
-    switch @$('.selector').val()
-      when 'blog'       then "/blogs/#{@$('select.subject').val()}"
+    link_type = @$('.selector').val()
+    switch link_type
+      when 'blog', 'collection', 'page', 'product' then "/#{link_type}s/#{@$('select.subject').val()}"
       when 'frontpage'  then "/"
-      when 'collection' then "/collections/#{@$('select.subject').val()}"
-      when 'page'       then "/pages/#{@$('select.subject').val()}"
-      when 'product'    then "/products/#{@$('select.subject').val()}"
       when 'search'     then "/search"
+      when 'http'       then @$("input[name='url']").val()
