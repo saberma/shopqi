@@ -18,8 +18,9 @@ App.Views.LinkList.New = Backbone.View.extend
 
   save: ->
     @collection.create title: this.$("#list_title").val()
-    return false
+    false
 
   cancel: ->
     $(@el).hide()
     $('#list_title').val('').blur()
+    false

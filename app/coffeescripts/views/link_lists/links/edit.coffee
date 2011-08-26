@@ -29,7 +29,7 @@ App.Views.LinkList.Links.Edit = Backbone.View.extend
           collection.remove self.model
           self.remove()
           msg '删除成功!'
-    return false
+    false
 
   select: ->
     toggle_subject_handle = toggle_subject_params = toggle_subject_http = false

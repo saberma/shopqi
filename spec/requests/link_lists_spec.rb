@@ -2,48 +2,167 @@
 require 'spec_helper'
 require 'shared_stuff'
 
-describe "LinkLists" do
+describe "LinkLists", js: true do
   #do use  in integration tests(http://rdoc.info/github/plataformatec/devise/master/Devise/TestHelpers)
   #include Devise::TestHelpers
 
+  include_context 'login admin'
+
+  before :each do
+    visit link_lists_path
+  end
+
   describe "GET /admin/link_lists" do
 
-    include_context 'login admin'
+    describe "LinkList" do
 
-    it "should be index", :js => true do
-
-      visit link_lists_path
-      click_on '新增链接列表'
-      fill_in 'link_list[title]', with: 'products'
-      click_on '保存'
-      page.should have_content('新增成功!')
-
-      within(:xpath, "//li[contains(@class, 'link-list')][3]") do
-        click_on '新增链接'
-        find_field('link[title]').visible?
-        fill_in 'link[title]', with: 'shirt-1'
-        fill_in 'link[subject]', with: '/shirt'
-        click_on '保存'
-        page.should have_content('shirt-1')
-        page.should have_content('/shirt')
-
-        click_on '修改链接列表'
-        fill_in 'link_list[title]', with: 'new-products'
-        fill_in 'title', with: 'new-shirt-1'
-        fill_in 'subject', with: '/new-shirt'
-        click_on '保存'
-        page.should have_content('new-products')
-        page.should have_content('new-shirt-1')
-        page.should have_content('/new-shirt')
-
-        page.execute_script("window.confirm = function(msg) { return true; }")
-        click_on '修改链接列表'
-        find('.delete').click
-        click_on '保存'
-        page.should_not have_content('new-shirt-1')
-        click_on '删除链接列表'
+      it "should be index" do # 默认链接列表
+        within '#menus' do
+          within :xpath, './li[1]' do
+            within '.section-header' do
+              find('span:first').text.should eql '主菜单'
+              find('span.hint').text.should eql '这是默认链接列表，不能删除.'
+              has_css?('.destroy').should be_false
+            end
+            within '.links' do # 链接记录
+              within :xpath, './li[1]' do
+                find('.link-title').text.should eql '首页'
+                find('.link-url').text.should eql '/'
+              end
+              within :xpath, './li[2]' do
+                find('.link-title').text.should eql '商品列表'
+                find('.link-url').text.should eql '/collections/all'
+              end
+              within :xpath, './li[3]' do
+                find('.link-title').text.should eql '关于我们'
+                find('.link-url').text.should eql '/pages/about-us'
+              end
+            end
+          end
+          within :xpath, './li[2]' do
+            within '.section-header' do
+              find('span:first').text.should eql '页脚'
+              find('span.hint').text.should eql '这是默认链接列表，不能删除.'
+              has_css?('.destroy').should be_false
+            end
+            within '.links' do # 链接记录
+              within :xpath, './li[1]' do
+                find('.link-title').text.should eql '查询'
+                find('.link-url').text.should eql '/search'
+              end
+              within :xpath, './li[2]' do
+                find('.link-title').text.should eql '关于我们'
+                find('.link-url').text.should eql '/pages/about-us'
+              end
+            end
+          end
+        end
       end
-      page.should_not have_content('new-products')
+
+      it "should be add" do # 新增
+        click_on '新增链接列表'
+        within '#add-menu' do
+          fill_in '标题', with: '热门产品'
+          click_on '保存'
+        end
+        has_content?('新增成功!').should be_true
+        within '#menus' do
+          within :xpath, './li[3]' do
+            within '.section-header' do
+              find('span:first').text.should eql '热门产品'
+              has_content?('这是默认链接列表，不能删除.').should be_false
+              has_css?('.destroy').should be_true
+            end
+            has_content?('此链接列表还没有加入任何链接').should be_true
+          end
+        end
+      end
+
+      it "should be edit" do # 修改
+        within '#menus' do
+          within :xpath, './li[1]' do
+            click_on '修改链接列表'
+            fill_in 'link_list[title]', with: '商店菜单'
+            within '.edit_links' do # 链接记录
+              within :xpath, './li[1]' do
+                fill_in 'title', with: '商店首页'
+                select '其他网址'
+                fill_in 'url', with: '/home'
+              end
+            end
+            click_on '保存'
+            within '.section-header' do # 回显
+              find('span:first').text.should eql '商店菜单'
+            end
+            within '.links' do # 链接记录
+              within :xpath, './li[1]' do
+                find('.link-title').text.should eql '商店首页'
+                find('.link-url').text.should eql '/home'
+              end
+            end
+          end
+        end
+      end
+
+      it "should be destroy" do # 删除
+        click_on '新增链接列表'
+        within '#add-menu' do
+          fill_in '标题', with: '热门产品'
+          click_on '保存'
+        end
+        within '#menus' do
+          within :xpath, './li[3]' do
+            page.execute_script("window.confirm = function(msg) { return true; }")
+            find('.destroy').click
+          end
+          has_xpath?('./li[3]').should be_false
+        end
+      end
+
+    end
+
+    describe "Link" do
+
+      it "should be add" do # 新增
+        within '#menus' do
+          within :xpath, './li[1]' do
+            click_on '新增链接'
+            fill_in 'title', with: '查询'
+            select '查询页面'
+            find_field('subject_handle').visible?.should be_false
+            find_field('subject_params').visible?.should be_false
+            find_field('url').visible?.should be_false
+            click_on '新增链接'
+            within '.links' do # 链接记录
+              within :xpath, './li[4]' do
+                find('.link-title').text.should eql '查询'
+                find('.link-url').text.should eql '/search'
+              end
+            end
+          end
+        end
+      end
+
+      it "should be destroy" do # 删除
+        within '#menus' do
+          within :xpath, './li[1]' do
+            click_on '修改链接列表'
+            within '.edit_links' do # 链接记录
+              within :xpath, './li[1]' do
+                page.execute_script("window.confirm = function(msg) { return true; }")
+                find('.delete').click
+              end
+            end
+            click_on '保存'
+            within '.links' do # 链接记录
+              within :xpath, './li[1]' do
+                find('.link-title').text.should eql '商品列表'
+              end
+            end
+          end
+        end
+      end
+
     end
 
   end
