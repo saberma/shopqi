@@ -8,7 +8,7 @@ class Shop::CustomerAddressesController < ApplicationController
   expose(:countries){ shop.countries }
 
   def create
-    if params[:customer_address][:default_address] == 1
+    if params[:customer_address][:default_address] == '1'
       customer_addresses.update_all default_address: false
     end
     customer_address.save
@@ -16,7 +16,7 @@ class Shop::CustomerAddressesController < ApplicationController
   end
 
   def update
-    if params[:customer_address][:default_address] == 1
+    if params[:customer_address][:default_address] == '1'
       customer_addresses.update_all default_address: false
     end
     customer_address.save

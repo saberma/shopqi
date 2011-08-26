@@ -11,13 +11,9 @@
       %span.action_link.action_delete
         =link_to '删除',customer_address_path(customer_address), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它'
     .view_address
-      %p=customer_address.country_name
-      %p=customer_address.province_name
-      %p=customer_address.city_name
-      %p=customer_address.district_name
-      %p=customer_address.address1
-      %p=customer_address.zip
-      %p=customer_address.name
+      %p==收货人: #{customer_address.name}
+      %p==详细地址: #{customer_address.detail_address}
+      %p==邮政编码: #{customer_address.zip}
   %div.customer_address.edit_address(style= "display:none;" id="edit_address_#{customer_address.id}")
     =form_for customer_address  do |f|
       %h4#add_address_title 编辑地址
@@ -57,3 +53,4 @@
         %span
           =w('or')
           =link_to '取消','#', onclick: "$('#edit_address_#{customer_address.id}').hide(); $('#view_address_#{customer_address.id}').show();  return false;"
+%div(style='padding:5px')

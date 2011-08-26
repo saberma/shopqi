@@ -204,3 +204,12 @@ a.btn { color: #3A3A3A; display: inline-block; font-weight:bold; padding: 4px 8p
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+
+
+
+/* 为address table 增加背景色 */
+.address_table{
+  background-color: #f3f3f3;
+  padding: 24px 24px 24px 24px;
+}
+

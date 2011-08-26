@@ -113,6 +113,10 @@ class CustomerAddress < ActiveRecord::Base
   def district_name
     District.get(self.district)
   end
+
+  def detail_address
+    "#{country_name} #{province_name}#{city_name}#{district_name}#{address1}".gsub(/市县/,'市').gsub(/市辖区/,'')
+  end
 end
 
 class CustomerTag < ActiveRecord::Base
