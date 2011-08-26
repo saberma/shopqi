@@ -39,6 +39,10 @@
         .gleft
           %h3 发单地址
           %table#billing.form(cellspacing="0" cellpadding="0")
+            -if customer_signed_in?
+              %tr#billing_address_selection.multiple_address_selection
+                %td(colspan=2)
+                  =select_tag :billing_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''])
             =f.fields_for :billing_address do |b|
               %tr
                 %td.lbl=b.label :name
@@ -74,6 +78,10 @@
           #shipping-same.address-notification(style="display:none;")
             %span 货品将会被发送至您的发单地址.
           %table#shipping.form(cellspacing="0" cellpadding="0")
+            -if customer_signed_in?
+              %tr#shipping_address_selection.multiple_address_selection
+                %td(colspan=2)
+                  =select_tag :shipping_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''] )
             =f.fields_for :shipping_address do |s|
               %tr
                 %td.lbl=s.label :name

@@ -148,6 +148,12 @@ class Shop::OrderController < Shop::AppController
     render json: data
   end
 
+  def get_address
+    customer = current_customer
+    address = customer.addresses.where(id: params[:address_id]).first
+    render json: address
+  end
+
   private
   def valid?(notification)
     url = "http://notify.alipay.com/trade/notify_query.do"

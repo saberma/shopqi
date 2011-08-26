@@ -44,6 +44,7 @@ Shopqi::Application.routes.draw do
       post '/orders/notify'                     , to: 'order#notify', as: :notify_order
       post '/orders/:shop_id/:token/update_total_price', to: 'order#update_total_price', as: :update_order_total_price
       post '/carts/:shop_id/:cart_token/update_tax_price', to: 'order#update_tax_price', as: :update_order_tax_price
+      get '/carts/:shop_id/:cart_token/get_address', to: 'order#get_address', as: :get_address
     end
   end
 
