@@ -69,7 +69,7 @@ Shopqi::Application.routes.draw do
         get '/orders/:token'               , to: 'account#show_order' , as: :account_show_order
         get '/index'                       , to: 'account#index', as: :customer_account_index
         get '/'                            , to: 'account#index'
-        resources :addresses
+        resources :customer_addresses, path: '/addresses'
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'

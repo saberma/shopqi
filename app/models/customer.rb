@@ -98,6 +98,10 @@ class CustomerAddress < ActiveRecord::Base
     self.name = self.customer.name if self.name.blank?
   end
 
+  def country_name
+    Carmen.country_name(country_code)
+  end
+
   def province_name
     District.get(self.province)
   end

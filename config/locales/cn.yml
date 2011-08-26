@@ -123,6 +123,7 @@ cn:
         password_confirmation: 确认密码
         accepts_marketing: 接收营销邮件
       customer_address:
+        name: 姓名
         company: 公司
         country_code: 国家
         phone: 电话

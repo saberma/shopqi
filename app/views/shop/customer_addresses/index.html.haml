@@ -1,0 +1,49 @@
+#admin_header
+  #return_to_account.action_link.action_return.note
+    =link_to '返回首页',customer_account_index_path
+  %h2.title 管理地址簿
+  .action_top
+    #action.action_link.action_add.note
+      =link_to '增加新地址','#'
+#add_address.customer_address.edit_address{:style => "display:none;"}
+  =form_for customer_address  do |f|
+    %h4#add_address_title 新增地址
+    %table.customer_address_table
+      %tr
+        %td.label=f.label :name
+        %td.value=f.text_field :name
+      %tr
+        %td.label=f.label :country_code
+        %td.value=f.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
+      %tr
+        %td.label
+          %label(for='order_billing_address_attributes_province') 地区
+        %td.region
+          =f.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
+          =f.select :city, District.list(customer_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
+          =f.select :district, District.list(customer_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
+      %tr
+        %td.label=f.label :address1
+        %td(style="width: 260px")=f.text_field :address1
+      %tr
+        %td.label=f.label :phone
+        %td.value=f.text_field :phone, class: :short
+      %tr
+        %td.label=f.label :zip
+        %td.value=f.text_field :zip, class: :short
+      %tr
+        %td.label=f.label :company
+        %td.value=f.text_field :company, class: :short
+      %tr
+        %td.label
+        %td.value
+          %input#address_default_address_new{:name => "customer_address[default_address]", :type => "checkbox", :value => "1"}/
+          将此地址作为默认收货地址?
+    .action_bottom
+      =f.submit w('save'),class: 'btn'
+      %span.note
+        =w('or')
+        =link_to w('cancel'), '#'
+#address_tables
+  =render customer_addresses
+  #address_pagination
