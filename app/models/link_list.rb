@@ -7,6 +7,7 @@ class LinkList < ActiveRecord::Base
 
   before_save do
     self.title = self.title.blank? ? '未命名' : self.title
+    self.handle = Pinyin.t(self.title, '-') if self.handle.blank?
   end
 end
 
