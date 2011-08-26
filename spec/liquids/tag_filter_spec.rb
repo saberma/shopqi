@@ -23,7 +23,7 @@ describe TagFilter do
   end
 
   it 'should get link_to' do
-    link = LinkDrop.new link_list.links.build title: '查询', link_type: 'search'
+    link = LinkDrop.new link_list.links.build title: '查询', link_type: 'search', url: '/search'
     variant = "{{ link.title | escape | link_to: link.url }}"
     Liquid::Template.parse(variant).render('link' => link).should eql "<a href='/search'>查询</a>"
   end
