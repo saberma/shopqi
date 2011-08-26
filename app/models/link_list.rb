@@ -4,6 +4,10 @@ class LinkList < ActiveRecord::Base
   has_many :links, dependent: :destroy, order: :position.asc
 
   accepts_nested_attributes_for :links
+
+  before_save do
+    self.title = self.title.blank? ? '未命名' : self.title
+  end
 end
 
 class Link < ActiveRecord::Base
@@ -11,29 +15,5 @@ class Link < ActiveRecord::Base
 
   before_save do
     self.title = self.title.blank? ? '未命名' : self.title
-  end
-
-  def url
-    shop = link_list.shop
-    case link_type
-    when 'blog'
-      blog = shop.blogs.find(subject_id)
-      "/blogs/#{blog.handle}"
-    when 'frontpage'
-      "/"
-    when 'collection'
-      collection = shop.custom_collections.find(subject_id)
-      "/collections/#{collection.handle}"
-    when 'page'
-      page = shop.pages.find(subject_id)
-      "/pages/#{page.handle}"
-    when 'product'
-      product = shop.products.find(subject_id)
-      "/products/#{product.handle}"
-    when 'search'
-      "/search"
-    when 'http'
-      "#{subject}"
-    end
   end
 end

@@ -17,6 +17,7 @@ App.Views.LinkList.Show = Backbone.View.extend
     self = this
     template = Handlebars.compile $('#link-list-item').html()
     attrs = _.clone @model.attributes
+    attrs['is_empty_links'] = @model.links.length is 0 # 无链接则显示提示信息
     $(@el).html template attrs
     new App.Views.LinkList.Links.Index collection: @model.links, el: @$('ul.links')
     new App.Views.LinkList.Links.New link_list: @model, el: @$('.add_form_link_container')

@@ -28,12 +28,12 @@ class ShopObserver < ActiveRecord::Observer
 
     # 主菜单(首页、商品列表、关于我们)，页脚(查询、关于我们)
     main_menu = shop.link_lists.create title: '主菜单', handle: 'main-menu', system_default: true
-    main_menu.links.create title: '首页', link_type: 'frontpage', subject: '/', position: 1
-    main_menu.links.create title: '商品列表', link_type: 'http', subject: '/collections/all', position: 2
-    main_menu.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 3
+    main_menu.links.create title: '首页', link_type: 'frontpage', url: '/', position: 1
+    main_menu.links.create title: '商品列表', link_type: 'http', url: '/collections/all', position: 2
+    main_menu.links.create title: '关于我们', link_type: 'page', url: "/pages/#{about_us_page.handle}", subject_handle: about_us_page.handle, position: 3
     footer = shop.link_lists.create title: '页脚', handle: 'footer', system_default: true
-    footer.links.create title: '查询', link_type: 'search', position: 1
-    footer.links.create title: '关于我们', link_type: 'page', subject_id: about_us_page.id, position: 2
+    footer.links.create title: '查询', link_type: 'search', url: '/search', position: 1
+    footer.links.create title: '关于我们', link_type: 'page', url: "/pages/#{about_us_page.handle}", subject_handle: about_us_page.handle, position: 2
 
     shop.blogs.create title: '最新动态', handle: 'news', commentable: 'no' # 博客(最新动态)
 

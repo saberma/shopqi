@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc #订单历史
   belongs_to  :payment        , class_name: 'Payment' #支付方式
 
-  attr_accessible :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason, :total_weight
+  attr_accessible :id, :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason, :total_weight
 
   accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address

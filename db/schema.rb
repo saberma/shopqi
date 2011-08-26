@@ -226,12 +226,12 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "link_lists", ["shop_id"], :name => "index_link_lists_on_shop_id"
 
   create_table "links", :force => true do |t|
+    t.integer  "link_list_id"
     t.string   "title"
     t.string   "link_type"
-    t.string   "subject_id"
+    t.string   "subject_handle"
     t.string   "subject_params"
-    t.string   "subject"
-    t.integer  "link_list_id"
+    t.string   "url"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"

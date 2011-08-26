@@ -36,12 +36,17 @@
     .section-header
       %p.list-actions
         %a.editlist-action(href="#" style="padding-left: 14px;") 修改链接列表
+        {{#unless system_default}}
+        |
+        %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+        {{/unless}}
       %span(title="handle: {{{handle}}}") {{{title}}}
       %span.hint {{#if system_default}}这是默认链接列表，不能删除.{{/if}}
-    .link-header.st.sl.sr
+    .none_link_list.hint.padding(style="{{#unless is_empty_links}}display: none{{/unless}}") 此链接列表还没有加入任何链接
+    .link-header.st.sl.sr(style="{{#if is_empty_links}}display: none{{/if}}")
       %span.sl 链接名称
       %span.sl 链接路径
-    %ul.nobull.sr.ssb.links
+    %ul.nobull.sr.ssb.links(style="{{#if is_empty_links}}display: none{{/if}}")
   / begin: add new Link
   .add_form_link_container
     .action-row
@@ -56,14 +61,14 @@
           .group-fields
             .add-link-title.link-col
               %span.add-link-header 新链接的名称
-              %input.medium(name="link[title]" type="text")
+              %input.medium(name="title" type="text")
             .add-link-linksto.link-col
               %span.add-link-header 链接至
-              %select.selector(name="link[link_type]")
+              %select.selector(name="link_type")
                 =options_for_select link_types
-              %select.subject(name="link[subject_id]")
-              %input.long.subject_http.linkform-hint(data-hint="http://shopify.com" name="link[subject]" type="text" style="display:none")
-              %input.medium.subject_params.linkform-hint(data-hint="Filter by tags (comma separated)" name="link[subject_params]" type="text" style="display:none")
+              %select.subject(name="subject_handle")
+              %input.medium.subject_params.linkform-hint(data-hint="Filter by tags (comma separated)" name="subject_params" type="text" style="display:none")
+              %input.long.subject_http.linkform-hint(data-hint="http://shopify.com" name="url" type="text" style="display:none")
           / .group-fields
           .group-actions
             %input.btn(name="commit" type="submit" value="新增链接")
@@ -76,8 +81,8 @@
 %script(id="link-item" type="text/x-jquery-tmpl")
   =image_tag 'admin/icons/drag_handle.gif', class: [:image_handle, :nsr]
   %span.link-title
-    %a(href="{{{subject}}}") {{{title}}}
-  %span.link-url {{{subject}}}
+    %a(href="{{{url}}}") {{{title}}}
+  %span.link-url {{{url}}}
 %script(id="edit_form_link_container-item" type="text/x-jquery-tmpl")
   %form.edit_link_list(action="#" onsubmit="return false")
     .section-header 修改这个链接列表
@@ -114,11 +119,17 @@
   %input.medium(name="title" size="30" type="text" value="{{{title}}}")
   %select.selector.sl(name="link_type")
     =options_for_select link_types
-  %select.subject(name="subject_id" style="display: none")
-  %input.subject_value.hide(type="text" value="{{{subject}}}")
-  %input.long.subject_http.linkform-hint.hide(data-hint="http://shopify.com" name="subject" size="30" type="text" value="{{{subject}}}")
-  %input(name="subject_params" type="hidden" value="")
-  %input.medium.subject_params.linkform-hint.hide(data-hint="Filter by tags (comma separated)" name="subject_params" size="30" type="text")
+  %select.subject(name="subject_handle" style="display: none")
+  %input.medium.subject_params.linkform-hint.hide(data-hint="根据标签过滤(以逗号分隔)" name="subject_params" size="30" type="text")
+  %input.long.subject_http.linkform-hint.hide(data-hint="http://shopify.com" name="url" size="30" type="text" value="{{{url}}}")
+%script(id="selector-blog-item" type="text/x-jquery-tmpl")
+  =options_for_select blog_types
+%script(id="selector-collection-item" type="text/x-jquery-tmpl")
+  =options_for_select collection_types
+%script(id="selector-page-item" type="text/x-jquery-tmpl")
+  =options_for_select page_types
+%script(id="selector-product-item" type="text/x-jquery-tmpl")
+  =options_for_select product_types
 
 :javascript
   App.link_lists = new App.Collections.LinkLists();
