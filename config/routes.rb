@@ -34,7 +34,7 @@ Shopqi::Application.routes.draw do
   end
 
   # 订单页面
-  constraints(Domain::Checkout) do
+  constraints(Domain::Store) do
     scope module: :shop do
       get '/carts/:shop_id/:cart_token'               , to: 'order#address'
       match '/carts/:shop_id/:cart_token/create_order', to: 'order#create'
@@ -62,16 +62,19 @@ Shopqi::Application.routes.draw do
     scope module: :shop do # 前台商店
       scope '/account' do
         devise_for :customer do
-          get '/login' , to: 'sessions#new'
-          get '/signup' , to: 'registrations#new'
+          get '/login'                     , to: 'sessions#new'
+          get '/signup'                    , to: 'registrations#new'
+          get '/logout'                    , to: 'sessions#destroy'
         end
-        get '/index', to: 'account#index'
-        get '/', to: 'account#index'
+        get '/orders/:token'               , to: 'account#show_order' , as: :account_show_order
+        get '/index'                       , to: 'account#index', as: :customer_account_index
+        get '/'                            , to: 'account#index'
+        resources :customer_addresses, path: '/addresses'
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
       get '/search'                        , to: 'search#show'
-      get '/products/:handle'              , to: 'products#show'
+      get '/products/:handle'              , to: 'products#show', as: :product_show
       get '/collections/all'               , to: 'collections#show'
       get '/pages/:handle'                 , to: 'pages#show'
       post '/cart/add'                     , to: 'cart#add'

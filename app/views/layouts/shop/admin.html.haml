@@ -6,7 +6,24 @@
   %meta{:content => "true", :name => "MSSmartTagsPreventParsing"}/
   %title==#{shop.name}
   =stylesheet_link_tag 'customer','message_block'
+  =javascript_include_tag 'jquery.min','shop/account','rails'
+  =csrf_meta_tag
 %body
   #container
-    =yield
+    #header
+      #logo
+        / css hook for logos
+      %h1#tagline
+        =shop.name
+        %span.subtitle 顾客区域
+      -if customer_signed_in?
+        %p#logout.action_link.note
+          %span==当前登陆：#{current_customer.name}
+          %a#customer_logout_link{:href => "/account/logout"} (退出登录)
+      -else
+        %p#logout.action_link.note
+          %span==没有账号？
+          =link_to '注册账号',new_customer_registration_path
+    #wrapper.clearfix
+      =yield
     #footer

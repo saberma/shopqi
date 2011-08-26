@@ -23,17 +23,18 @@ class CreateCustomers < ActiveRecord::Migration
 
     #地址信息
     create_table :customer_addresses do |t|
-      t.references :customer, comment: '所属顾客', null: false
-      t.string :name        , comment: '姓名'
-      t.string :company     , comment: '公司'    , limit: 64
-      t.string :country_code   , comment: '国家'    , limit: 64
-      t.string :province    , comment: '地区(省)', limit: 64
-      t.string :city        , comment: '城市'    , limit: 64
-      t.string :district    , comment: '区'      , limit: 64
-      t.string :address1    , comment: '地址'
-      t.string :address2    , comment: '地址 续'
-      t.string :zip         , comment: '邮编'    , limit: 12
-      t.string :phone       , comment: '电话'    , limit: 64
+      t.references :customer            , comment: '所属顾客', null: false
+      t.string     :name                , comment: '姓名'
+      t.string     :company             , comment: '公司'    , limit: 64
+      t.string     :country_code        , comment: '国家'    , limit: 64
+      t.string     :province            , comment: '地区(省)', limit: 64
+      t.string     :city                , comment: '城市'    , limit: 64
+      t.string     :district            , comment: '区'      , limit: 64
+      t.string     :address1            , comment: '地址'
+      t.string     :address2            , comment: '地址 续'
+      t.string     :zip                 , comment: '邮编'    , limit: 12
+      t.string     :phone               , comment: '电话'    , limit: 64
+      t.boolean    :default_address     , comment: '默认地址', default: false
     end
 
     #标记

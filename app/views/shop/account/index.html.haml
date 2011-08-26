@@ -1,45 +1,26 @@
-#header
-  #logo
-    / css hook for logos
-  %h1#tagline
-    鞋子
-    %span.subtitle 顾客区域
-  %p#logout.action_link.note
-    %span==#{current_customer.name}
-    %a#customer_logout_link{:href => "/account/logout"} (退出登录)
-#wrapper.clearfix
-  #admin_header
-    #return_to_store.action_link.action_return.note
-      %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com"} Return to Store
-    %h2.title Account Details and Order History
-  #customer_sidebar
-    #customer_detail.group
-      %h5.name ee ee
-      %p.email.note liwh87@gmail.com
-      .address.note
-        %p eeee
-        %p eee
-        %p eee, Spain
-        %p 333000
-        %p
-        %a#view_address{:href => "/account/addresses"} View Addresses (11)
-  %table#customer_orders
-    %thead
-      %tr
-        %th.order_number Order
-        %th.date Date
-        %th Payment Status
-        %th Fulfillment Status
-        %th.total Total
-    %tbody
-      %tr.odd
-        %td
-          %a{:href => "http://medhurst-shields-and-kunde7896.myshopify.com/account/orders/d9c3ee82912225f2edb26a852f98243e", :title => ""} 1022
-        %td.note Aug 16, 2011
-        %td
-          %span.status_pending pending
-        %td
-          %span.status_unfulfilled unfulfilled
-        %td.total.money ¥48.00
-#footer
-  %a{:href => "mailto://liwh88@gmail.com"} Contact Shop Owner
+#admin_header
+  #return_to_store.action_link.action_return.note
+    =link_to '返回商店',show_shop_url
+  %h2.title 账号信息 以及 订单信息
+#customer_sidebar
+  #customer_detail.group
+    %h5.name==#{current_customer.name}
+    %p.email.note==#{current_customer.email}
+    .address.note
+      %p=current_customer.address[:country_name]
+      %p=current_customer.address[:province_name]
+      %p=current_customer.address[:city_name]
+      %p=current_customer.address[:district_name]
+      %p=current_customer.address['address1']
+      %p=current_customer.address['zip']
+      =link_to "查看地址簿(#{current_customer.addresses.count})",customer_addresses_path,id: 'view_address'
+%table#customer_orders
+  %thead
+    %tr
+      %th.order_number 订单
+      %th.date 日期
+      %th 支付状态
+      %th 配送状态
+      %th.total 总金额
+  %tbody
+    =render partial: 'order',collection: current_customer.orders

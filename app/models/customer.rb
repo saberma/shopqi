@@ -16,7 +16,7 @@ class Customer < ActiveRecord::Base
   attr_accessible :id, :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
   before_create :ensure_authentication_token # 生成login token，只使用一次
   validates_presence_of :name, :email
-  validates :email, :uniqueness => {:scope => :shop_id}
+  validates :email, uniqueness: {scope: :shop_id}
 
   # 标签
   attr_accessor :tags_text
@@ -33,7 +33,8 @@ class Customer < ActiveRecord::Base
 
   # 默认地址
   def address
-    json = addresses.first.as_json(methods: [:province_name, :city_name, :district_name])
+    default_address =  addresses.where(default_address: true).first ||  addresses.first
+    json =  default_address.as_json(methods: [:country_name,:province_name, :city_name, :district_name])
     json['customer_address']
   end
 
@@ -97,6 +98,10 @@ class CustomerAddress < ActiveRecord::Base
     self.name = self.customer.name if self.name.blank?
   end
 
+  def country_name
+    Carmen.country_name(country_code)
+  end
+
   def province_name
     District.get(self.province)
   end
@@ -107,6 +112,10 @@ class CustomerAddress < ActiveRecord::Base
 
   def district_name
     District.get(self.district)
+  end
+
+  def detail_address
+    "#{country_name} #{province_name}#{city_name}#{district_name}#{address1}".gsub(/市县/,'市').gsub(/市辖区/,'')
   end
 end
 

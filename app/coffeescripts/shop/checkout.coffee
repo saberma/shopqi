@@ -1,5 +1,6 @@
 $(document).ready ->
 
+  #处理地址，级联操作税率
   $('#order_billing_address_attributes_country_code,#order_shipping_address_attributes_country_code').each ->
     $(this).change ->
       checked = $('#shipping-toggle').attr('checked')
@@ -20,6 +21,7 @@ $(document).ready ->
       $(this).ajaxStop ->
         $('.spinner').hide()
 
+  #/carts/xxx 页面处理货品地址和发单地址
   $('#shipping-toggle').change ->
     checked = $(this).attr('checked')
     $('#shipping').toggle !checked
@@ -33,6 +35,7 @@ $(document).ready ->
   if $('#no-shipping-rates').size() > 0
     $('input#complete-purchase').attr 'disabled', true
 
+  #处理快递费用
   $('#shipping-rates').change ->
     action = $(this).closest('form').attr('action')
     href = action.substr(0,action.lastIndexOf('/')) + '/update_total_price'
@@ -52,6 +55,7 @@ $(document).ready ->
       $('.spinner').hide()
   .change()
 
+  #处理订单提交结账
   $("input#complete-purchase").click ->
     $(this).attr('disabled', 'true').val '正在完成订单...'
     form = $(this).closest('form')
@@ -72,6 +76,7 @@ $(document).ready ->
     $(this).ajaxStop ->
       $('#purchase-progress').hide()
 
+  #地区的级联选择
   $(".region").each ->
     selects = $('select', this)
     selects.change ->

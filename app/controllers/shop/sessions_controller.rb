@@ -49,7 +49,7 @@ class Shop::SessionsController < Shop::AppController
   end
 
   private
-  def get_host # 设置的域名参数在 User.find_for_database_authentication 中使用
+  def get_host
     params[:customer][:host] = request.host
   end
 end

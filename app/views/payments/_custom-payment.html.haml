@@ -1,7 +1,8 @@
 %script(id="show-custom-payment-item" type="text/html")
   %dl
     %dd(style= "padding: 10px 10px 5px 10px" id= "activate_manual_payment_gateway_{{id}}")
-      %a.fr.btn.destroy 删除
+      %a.fr.destroy
+        =image_tag 'admin/icons/trash.gif'
       支付方式:
       %strong {{ name }}
       %a(href='#' class='edit-custom-payment') 编辑

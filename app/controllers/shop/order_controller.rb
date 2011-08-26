@@ -1,6 +1,12 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
   layout 'shop/checkout'
+  prepend_before_filter  do |controller|
+    if shop.customer_accounts == 'required'
+      Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}" }
+      controller.send :authenticate_customer!
+    end
+  end
 
   expose(:shop) { Shop.find(params[:shop_id]) }
 

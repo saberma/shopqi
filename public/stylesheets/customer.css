@@ -110,12 +110,12 @@ a.btn { color: #3A3A3A; display: inline-block; font-weight:bold; padding: 4px 8p
 .order_summary .label { padding: 10px 35px 10px 0; text-align: right; }
 .order_summary td { border: none; }
 .order_total td { border-bottom: 1px solid #CCCCCC; border-top: 1px solid #CCCCCC; font-weight: bold; }
-.status_paid, .status_authorized, .status_filed, .status_pending, .status_abandoned, .status_fulfilled, .status_partial, .status_unfulfilled, .status_restocked, .status_voided, .status_refunded { font-size: 12px; padding: 1px 4px; margin: 0;
+.status_paid, .status_authorized, .status_filed, .status_pending, .status_abandoned, .status_fulfilled, .status_partial, .status_unshipped, .status_restocked, .status_voided, .status_refunded { font-size: 12px; padding: 1px 4px; margin: 0;
   -moz-border-radius:     3px;
   -webkit-border-radius:  3px;
   border-radius:          3px; }
 .status_paid, .status_authorized, .status_fulfilled { background-color: #80BD4E; color: #FFFFFF; }
-.status_filed, .status_pending, .status_unfulfilled { background-color: #EEEEEE; color: #000000; }
+.status_filed, .status_pending, .status_unshipped { background-color: #EEEEEE; color: #000000; }
 .status_abandoned, .status_voided, .status_refunded, .status_restocked { background-color: #AF9C7E; color: #FFFFFF; }
 .total { text-align: right; }
 .value { text-align: left; }
@@ -204,3 +204,12 @@ a.btn { color: #3A3A3A; display: inline-block; font-weight:bold; padding: 4px 8p
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+
+
+
+/* 为address table 增加背景色 */
+.address_table{
+  background-color: #f3f3f3;
+  padding: 24px 24px 24px 24px;
+}
+
