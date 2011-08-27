@@ -5,9 +5,9 @@
 %h2#title 新增智能集合
 #action-links
   %ul
-    %li.no-icon=link_to "取消", smart_collections_path
+    %li.no-icon=link_to "取消", custom_collections_path
 =form_for smart_collection do |f|
-  .group
+  %div(style="margin:0;padding:0;display:inline")
     %dl
       %dt.top
         %label 标题
@@ -26,7 +26,7 @@
       如果你需要为集合挑选指定的商品，请使用
       %a(href="/admin/custom_collections/new") 自定义集合
       \.
-  %p.btns
+  .group-actions
     %input#submit-collection-btn.btn(name="commit" type="submit" value="保存")
     或者
     =link_to "取消", smart_collections_path, class: :cancel

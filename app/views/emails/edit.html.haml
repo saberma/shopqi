@@ -17,7 +17,7 @@
     %p
       在下面的模板中，只允许使用纯文本格式,
       = succeed "." do
-        %a{:href => "http://wiki.shopqi.com/Email_Variable_Reference", :target => "wiki", :title => "Open Wiki in a new window"} 可用于邮件模板中的参数
+        %a{:href => "#{Setting.wiki_url}/Email_Variable_Reference", :target => "wiki", :title => "Open Wiki in a new window"} 可用于邮件模板中的参数
     =form_for email do |f|
       %dl
         %dt=f.label :title

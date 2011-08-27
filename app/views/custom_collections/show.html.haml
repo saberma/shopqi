@@ -21,22 +21,23 @@
 
 #collection-edit.group.sst.group-fields.hide
   =form_for custom_collection, html: {id: 'edit_custom_collection_form'} do |f|
-    %dl
-      %dt=f.label :title
-      %dd=f.text_field :title, class: :big
-      %dt#edit-handle-label.st(style="font-size: 85%") 链接/处理
-      %dd#edit-handle.ssb
-        %span.note==#{show_shop_url}/collections
-        =f.text_field :handle, style: 'width: 175px'
-        %span.note
-          (
-          %a(href="http://wiki.shopqi.com/Handle" target="_blank") 这是什么?
-          )
-      %dt.sst
-        =f.label :body_html
-        %span.note (非必填)
-      %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200;"
-    %p.btns(style="margin: 20px 0 0 0")
+    .group-fields
+      %dl
+        %dt=f.label :title
+        %dd=f.text_field :title, class: :big
+        %dt#edit-handle-label.st(style="font-size: 85%") 链接/处理
+        %dd#edit-handle.ssb
+          %span.note==#{show_shop_url}/collections/
+          =f.text_field :handle, style: 'width: 175px'
+          %span.note
+            (
+            %a(href="#{Setting.wiki_url}/Handle" target="_blank") 这是什么?
+            )
+        %dt.sst
+          =f.label :body_html
+          %span.note (非必填)
+        %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 200;"
+    .group-actions
       %input#submit-collection-btn.btn(name="commit" type="submit" value="#{w('save')}")
       =w('or')
       =link_to w('cancel'), '#'
