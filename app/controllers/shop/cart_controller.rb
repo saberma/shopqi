@@ -28,7 +28,7 @@ class Shop::CartController < Shop::AppController
       redirect_to cart_path
     else
       cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)
-      if shop.customer_accounts == 'required'
+      if shop.customer_accounts_required?
         Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}",  checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}"}
         self.send :authenticate_customer!
         cart.customer = current_customer

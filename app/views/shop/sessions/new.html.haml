@@ -28,15 +28,14 @@
         =f.text_field :email, class: 'large'
       .action_bottom
         %input.btn{:type => "submit", :value => "提交"}/
-        %span.note
+        %span
           =w('or')
           %a{:href => "#", :onclick => "document.getElementById('recover-password').style.display='none'; document.getElementById('customer').style.display='inline-block';return false;"}=w('cancel')
-  -#
+  -if shop.customer_accounts_optional?
     #guest
       .template_header
-        %h3.title Guest Login
-      %form#customer_login_guest{:action => "https://medhurst-shields-and-kunde7896.myshopify.com/account/login", :method => "post"}
+        %h3.title 游客访问
+      =form_for(resource, url: session_path(resource_name)) do |f|
         %input{:name => "guest", :type => "hidden", :value => "true"}/
-        %input{:name => "checkout_url", :type => "hidden", :value => "https://checkout.shopify.com/carts/726342/6b652d3d250e7436c6cc1f67499c05c9"}/
-        %input{:name => "cart", :type => "hidden", :value => "6b652d3d250e7436c6cc1f67499c05c9"}/
-        %input.btn{:type => "submit", :value => "Continue as Guest"}/
+        =hidden_field_tag :checkout_url, params[:checkout_url]
+        %input.btn{:type => "submit", :value => "继续以游客身份购物"}/

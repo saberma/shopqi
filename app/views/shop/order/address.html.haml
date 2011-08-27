@@ -35,6 +35,10 @@
               =link_to '用另一个账号登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
         -else
           =f.text_field :email
+          -if shop.customer_accounts_optional?
+            %span.sign-in-message
+              已经有账户了？
+              =link_to ' 现在就登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
       / begin addresses
       #addresses.group.clearfix
         .gleft

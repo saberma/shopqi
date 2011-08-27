@@ -16,13 +16,21 @@ class Shop::SessionsController < Shop::AppController
   # POST /resource/sign_in
   def create
     env['warden'].logout(resource_name) #点换用户时，先清空以前session中的用户,由于warden的方法，会先从sessio中找已经存在的用户
+    if params[:guest].present? and params[:checkout_url].present?
+     token = params[:checkout_url].gsub(/.+\//,'')
+      if cart = Cart.find_by_token(token)
+       cart.customer = nil
+       cart.save!
+      end
+      redirect_to params[:checkout_url] and return
+    end
     resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
     set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
     #用于增加购物车与顾客之间的关联
     if params[:checkout_url].present?
       token = params[:checkout_url].gsub(/.+\//,'')
-      if cart = Cart.find_by_token(token)
+      if cart = Cart.find_by_token(token) and !params[:guest].present?
        cart.customer = resource
        cart.save!
       end
@@ -61,6 +69,7 @@ class Shop::SessionsController < Shop::AppController
 
   private
   def get_host
+    params[:customer] ||= {}
     params[:customer][:host] = request.host
   end
 end

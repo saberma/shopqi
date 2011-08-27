@@ -54,6 +54,14 @@ class Shop < ActiveRecord::Base
     KeyValues::Plan::Type.find_by_code(self.plan)
   end
 
+  def customer_accounts_required?
+    customer_accounts == 'required'
+  end
+
+  def customer_accounts_optional?
+    customer_accounts == 'optional'
+  end
+
   protected
   def init_valid_date
     self.deadline = Date.today.next_day(30)
