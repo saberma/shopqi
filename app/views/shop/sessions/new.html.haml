@@ -3,6 +3,7 @@
     .template_header
       %h2.title 顾客登陆
     =form_for(resource, url: session_path(resource_name)) do |f|
+      =hidden_field_tag :checkout_url, params[:checkout_url]
       #login_email.clearfix.large_form
         =f.label :email
         =f.text_field :email, class: 'large'

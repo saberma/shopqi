@@ -7,13 +7,17 @@
     %h5.name==#{current_customer.name}
     %p.email.note==#{current_customer.email}
     .address.note
-      %p=current_customer.address[:country_name]
-      %p=current_customer.address[:province_name]
-      %p=current_customer.address[:city_name]
-      %p=current_customer.address[:district_name]
-      %p=current_customer.address['address1']
-      %p=current_customer.address['zip']
-      =link_to "查看地址簿(#{current_customer.addresses.count})",customer_addresses_path,id: 'view_address'
+      -if current_customer.address
+        %p=current_customer.address[:country_name]
+        %p=current_customer.address[:province_name]
+        %p=current_customer.address[:city_name]
+        %p=current_customer.address[:district_name]
+        %p=current_customer.address['address1']
+        %p=current_customer.address['zip']
+        =link_to "查看地址簿(#{current_customer.addresses.count})",customer_addresses_path,id: 'view_address'
+      -else
+        %p 当前还没有可用的地址簿
+        =link_to "查看地址簿(#{current_customer.addresses.count})",customer_addresses_path,id: 'view_address'
 %table#customer_orders
   %thead
     %tr

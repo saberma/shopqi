@@ -59,10 +59,11 @@ ActiveRecord::Schema.define(:version => 20110804132348) do
   add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
 
   create_table "carts", :force => true do |t|
-    t.integer  "shop_id",                  :null => false
-    t.string   "token",      :limit => 32, :null => false
-    t.string   "session_id", :limit => 32, :null => false
-    t.string   "cart_hash",                :null => false
+    t.integer  "shop_id",                   :null => false
+    t.string   "token",       :limit => 32, :null => false
+    t.string   "session_id",  :limit => 32, :null => false
+    t.string   "cart_hash",                 :null => false
+    t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

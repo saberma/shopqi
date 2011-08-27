@@ -34,7 +34,7 @@ Shopqi::Application.routes.draw do
   end
 
   # 订单页面
-  constraints(Domain::Store) do
+  constraints(Domain::Checkout) do
     scope module: :shop do
       get '/carts/:shop_id/:cart_token'               , to: 'order#address'
       match '/carts/:shop_id/:cart_token/create_order', to: 'order#create'

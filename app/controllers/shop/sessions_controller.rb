@@ -18,7 +18,18 @@ class Shop::SessionsController < Shop::AppController
     resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
     set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
-    respond_with resource, :location => redirect_location(resource_name, resource)
+    #用于增加购物车与顾客之间的关联
+    if params[:checkout_url].present?
+      token = params[:checkout_url].gsub(/.+\//,'')
+      cart = Cart.find_by_token(token)
+      if cart
+        cart.customer = resource
+        cart.save!
+      end
+      redirect_to params[:checkout_url]
+    else
+      respond_with resource, :location => redirect_location(resource_name, resource)
+    end
   end
 
   # GET /resource/sign_out

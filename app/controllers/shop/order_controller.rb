@@ -1,12 +1,6 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
   layout 'shop/checkout'
-  prepend_before_filter  do |controller|
-    if shop.customer_accounts == 'required'
-      Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}" }
-      controller.send :authenticate_customer!
-    end
-  end
 
   expose(:shop) { Shop.find(params[:shop_id]) }
 
@@ -23,6 +17,8 @@ class Shop::OrderController < Shop::AppController
   end
 
   expose(:cart) { shop.carts.where(token: params[:cart_token]).first }
+
+  before_filter { verify_customer!(cart) }
 
   expose(:cart_line_items) do
     JSON(cart.cart_hash).inject({}) do |result, (variant_id, quantity)|
@@ -149,9 +145,17 @@ class Shop::OrderController < Shop::AppController
   end
 
   def get_address
-    customer = current_customer
+    customer = cart.customer
     address = customer.addresses.where(id: params[:address_id]).first
     render json: address
+  end
+
+  protected
+
+  def verify_customer!(cart)
+    if cart.shop.customer_accounts == 'required' and !cart.customer
+      redirect_to new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
+    end
   end
 
   private

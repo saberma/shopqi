@@ -7,6 +7,7 @@ class CreateCarts < ActiveRecord::Migration
       t.string :token     , comment: '主键，防止id顺序访问' , null: false, limit: 32
       t.string :session_id, comment: '浏览器session'        , null: false, limit: 32
       t.string :cart_hash , comment: '(variant_id|quantity)', null: false
+      t.references :customer, comment: '关联的顾客(此字段用于处理商店选择的是否一定需要顾客登陆之后才能结账)'
       t.timestamps
     end
 
