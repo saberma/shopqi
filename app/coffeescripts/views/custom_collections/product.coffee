@@ -7,17 +7,18 @@ App.Views.CustomCollection.Product = Backbone.View.extend
 
   initialize: ->
     _.bindAll this, 'render', 'destroy'
-    $(this.el).attr 'id', "product_#{this.model.id}"
-    this.render()
+    $(@el).attr 'id', "product_#{@model.id}"
+    @render()
 
   render: ->
-    self = this
-    $(this.el).html $('#product_item').tmpl this.model.attributes
-    $('#products').append this.el
+    template = Handlebars.compile $('#product_item').html()
+    attrs = _.clone @model.attributes
+    $(@el).html template attrs
+    $('#products').append @el
 
   destroy: ->
     self = this
-    this.model.destroy
+    @model.destroy
       success: (model, response) ->
         App.custom_collection_products.remove(self.model)
         available_product = App.available_products.get(self.model.attributes.product_id)

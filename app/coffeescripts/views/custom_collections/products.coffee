@@ -1,11 +1,11 @@
 App.Views.CustomCollection.Products = Backbone.View.extend
   initialize: ->
-    this.collection.view = this
-    this.render()
+    @collection.view = this
+    @render()
 
   el: '#products'
 
   render: ->
-    $(this.el).html('')
-    _(this.collection.models).each (model) ->
+    $(@el).html ''
+    @collection.each (model) ->
       new App.Views.CustomCollection.Product model: model

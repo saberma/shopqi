@@ -7,18 +7,19 @@ App.Views.CustomCollection.AvailableProduct = Backbone.View.extend
 
   initialize: ->
     _.bindAll this, 'render', 'addToCollection'
-    $(this.el).attr 'id', "possible-product-#{this.model.id}"
-    this.render()
-    this.model.view = this
+    $(@el).attr 'id', "possible-product-#{@model.id}"
+    @render()
+    @model.view = this
 
   render: ->
-    self = this
-    $(this.el).html $('#available_product_item').tmpl this.model.attributes
-    $(this.el).addClass('added') if this.model.addedTo(App.custom_collection_products)
-    $('#product-select > .small-collection').append this.el
+    template = Handlebars.compile $('#available_product_item').html()
+    attrs = _.clone @model.attributes
+    $(@el).html template attrs
+    $(@el).addClass('added') if @model.addedTo(App.custom_collection_products)
+    $('#product-select > .small-collection').append @el
 
   addToCollection: ->
-    unless this.model.addedTo(App.custom_collection_products)
-      $(this.el).addClass('added')
-      App.custom_collection_products.create product_id: this.model.id, position: App.custom_collection_products.length
+    unless @model.addedTo(App.custom_collection_products)
+      $(@el).addClass('added')
+      App.custom_collection_products.create product_id: @model.id, position: App.custom_collection_products.length
     return false

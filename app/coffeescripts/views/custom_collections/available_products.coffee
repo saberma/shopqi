@@ -7,7 +7,7 @@ App.Views.CustomCollection.AvailableProducts = Backbone.View.extend
 
   search: ->
     self = this
-    $.getJSON "/admin/custom_collections/available_products", q: this.$("input[name='q']").val(), (data)->
+    $.getJSON "/admin/custom_collections/available_products", q: @$("input[name='q']").val(), (data)->
       self.$('.small-collection > .candidate').remove()
       App.available_products.refresh(data)
     return false

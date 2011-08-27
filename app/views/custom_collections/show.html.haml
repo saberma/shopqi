@@ -83,7 +83,7 @@
 
 %script(id="available_product_item" type="text/x-jquery-tmpl")
   %span=image_tag 'admin/no-image-pico.gif', class: :images, alt: '找不到图片...'
-  =link_to "${title}", "#", class: :title
+  =link_to "{{{title}}}", "#", class: :title
 %script(id="product_item" type="text/x-jquery-tmpl")
   .sortable-related
     =link_to image_tag('admin/icons/trash.gif'), '#', title: '删除它', class: 'remove-product'
@@ -94,8 +94,8 @@
       =image_tag 'admin/no-image-icon.gif', class: :images
     .collection-info
       %p
-        =link_to '${product.title}', '/admin/products/${product.id}'
-      .hint ${product.vendor}, ${product.type}
+        =link_to '{{{product.title}}}', '/admin/products/{{{product.id}}}'
+      .hint {{{product.vendor}}}, {{{product.type}}}
 
 :javascript
   App.init = function(){
