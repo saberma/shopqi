@@ -8,13 +8,13 @@ Factory.define :customer_saberma, parent: :customer do |f|
   f.name '马海波'
   f.email 'mahb45@gmail.com'
   f.addresses_attributes [
-    { name: '马海波', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13928452888' }]
+    { name: '马海波', country_code: 'CN', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13928452888' }]
 end
 
 Factory.define :customer_liwh, parent: :customer do |f|
   f.name '李卫辉'
   f.email 'liwh87@gmail.com'
   f.addresses_attributes [{
-    name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '311', phone: '13751042627'
+    name: '李卫辉', country_code: 'CN',province: '440000', city: '440300', district: '440305', address1: '311', phone: '13751042627'
   }]
 end
