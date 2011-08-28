@@ -87,7 +87,7 @@
         %th.section-header 描述
       %tr
         %td(style="padding: 10px; font-size: 12px")
-          %p {{html body_html}}
+          %p {{{body_html}}}
   #product-options.section
     %table.data(cellpadding="0" cellspacing="0")
       %tbody
@@ -97,12 +97,12 @@
           %td.cell-title
             %strong 商品类型:
           %td.middle.cell-data
-            %span#product-type.small ${product_type}
+            %span#product-type.small {{{product_type}}}
         %tr
           %td.cell-title
             %strong 商品生产商:
           %td.middle.cell-data
-            %span#product-vendor.small ${vendor}
+            %span#product-vendor.small {{{vendor}}}
         %tr
           %td.cell-title
             %strong 库存:
@@ -116,13 +116,13 @@
         %tr
           %td(style="padding: 15px 10px;")
             %ul#tags
-              {{each(i, tag) tags}}
+              {{#each tags}}
               %li
-                %span.list-box ${tag}
+                %span.list-box {{this}}
               {{/each}}
-            {{if tags.length == 0}}
+            {{#unless tags}}
             %p 您还没有添加任何标签到此商品.
-            {{/if}}
+            {{/unless}}
   .section
     #product-collections
       %table.data(cellpadding="0" cellspacing="0")
@@ -130,15 +130,15 @@
           %th.section-header 集合
         %tr
           %td(style="padding: 15px 10px 0 10px;")
-            {{if collections.length == 0}}
+            {{#unless collections}}
             %p 此商品不属于任何集合.
             {{else}}
             %p 此商品属于以下集合:
-            {{/if}}
+            {{/unless}}
             %ul.product-collection-list.pgroup
-              {{each(i, collection) collections}}
+              {{#each collections}}
               %li
-                %a(href="/admin/custom_collections/${collection.id}") ${collection.title}
+                %a(href="/admin/custom_collections/{{id}}") {{title}}
               {{/each}}
 
 %script(id="edit-product-item" type="text/x-jquery-tmpl")
@@ -150,7 +150,7 @@
         #errors_for_product
         %dl(style="background: none; margin-bottom: 0")
           %dt=f.label :title, nil, style: "margin: 0", for: :title
-          %dd=text_field_tag :title, '${title}', class: [:big, :sb]
+          %dd=text_field_tag :title, '{{{title}}}', class: [:big, :sb]
           %dt#edit-handle-label
             链接/处理
             %span.note
@@ -159,9 +159,9 @@
               )
           %dd#edit-handle.ssb
             %span.note==#{shop.primary_domain.url}/products
-            =text_field_tag :handle, '${handle}', style: 'width: 160px'
+            =text_field_tag :handle, '{{{handle}}}', style: 'width: 160px'
           %dt=f.label :body_html
-          %dd=text_area_tag :body_html, '${body_html}', id: 'kindeditor', style: "width: 895px; height: 200px;"
+          %dd=text_area_tag :body_html, '{{body_html}}', id: 'kindeditor', style: "width: 895px; height: 200px;"
     #product-options-edit.section
       %table#product-properties.data.sb(cellpadding="0" cellspacing="0")
         %tr
@@ -174,7 +174,7 @@
               =options_for_select types_options
             #new_product_type.st.sb.hide
               %h4.note 新的商品类型
-              =text_field_tag :product_type, '${product_type}'
+              =text_field_tag :product_type, '{{{product_type}}}'
         %tr
           %td.cell-title
             %strong 商品生产商:
@@ -183,7 +183,7 @@
               =options_for_select vendors_options
             #new_product_vendor.st.sb.hide
               %h4.note 新的商品生产商:
-              =text_field_tag :vendor, '${vendor}'
+              =text_field_tag :vendor, '{{{vendor}}}'
         %tr#add-option-bt.hide
           %td.cell-title
             %a.add-option(href="#") 新增另一个选项
@@ -195,7 +195,7 @@
       %dl.padding(style="background: none; margin: 0;")
         %dd#multi-options
           %p.note.sb 标签之间以逗号分隔.
-          =text_field_tag :tags_text, '${tags_text}', size: 50, id: :product_tags_text
+          =text_field_tag :tags_text, '{{{tags_text}}}', size: 50, id: :product_tags_text
         %dd.sst
           %p.note(style="clear: both") 最近使用过的标签，单击增加.
           %ul#tag-list.nobull.st
@@ -214,9 +214,9 @@
 %script(id="row-head-item" type="text/x-jquery-tmpl")
   %th(class="checkbox-cell")
     %input#select-all(type="checkbox")
-  {{each(i, option) App.product.options.models}}
-  %th(id="option-header-${i+1}" class="option-${i+1}" style="width:15%;") ${option.attributes.name}
-  {{/each}}
+  {{#each_with_index options}}
+  %th(id="option-header-{{index_plus}}" class="option-{{index_plus}}" style="width:15%;") {{item.attributes.name}}
+  {{/each_with_index}}
   %th(style="min-width: 150px") SKU
   %th.price-cell(style="width: 90px;")
     价格
@@ -231,45 +231,45 @@
   选择:
   %a(href="#" style="color:#000") 所有
   %a(href="#" style="color:#000") 清空
-  {{each(i, option) App.product.options.models}}
-  %span(class='option-${i+1}')
-    {{each(j, name) $data['option'+(i+1)]}}
-    %a(href="#") ${name}
-    {{/each}}
-  {{/each}}
+  {{#each_with_index options}}
+  %span(class='option-{{index_plus}}')
+    {{#each_variant_option ../this index=index_plus}}
+    %a(href="#") {{name}}
+    {{/each_variant_option}}
+  {{/each_with_index}}
 %script(id="edit-option-item" type="text/x-jquery-tmpl")
   %td.cell-title
     .option-selector-frame
       %select.option-selector=options_for_select options
-      %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="${name}")
+      %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="{{{name}}}")
   %td
     %input(type="hidden" value="0" name="product[options_attributes][][_destroy]")
-    %input(type="hidden" value="${id}" name="product[options_attributes][][id]")
-    {{if typeof(id) == 'undefined'}}
-    %input(type="text" name="product[options_attributes][][value]" size="16" value="${value}")
-    {{/if}}
-    %span.option-value.small ${variants_option0}
+    %input(type="hidden" value="{{{id}}}" name="product[options_attributes][][id]")
+    {{#unless id}}
+    %input(type="text" name="product[options_attributes][][value]" size="16" value="{{{value}}}")
+    {{/unless}}
+    %span.option-value.small {{{variants_option0}}}
     %span.fr.sr(style="margin-top: 5px")
       %a.del-option(href="#" tabindex="-1")
         =image_tag 'admin/icons/trash.gif', alt: '删除', class: [:fr, 'delete-option-link']
       .option-deletemsg.hide
         %p.small.highlight-alt
-          ${name}将被删除.
+          {{{name}}}将被删除.
           %a.resume-option(href="#") 恢复
 %script(id="show-option-item" type="text/x-jquery-tmpl")
-  %td.cell-title(class="option-${position}")
-    %strong ${name}
+  %td.cell-title(class="option-{{{position}}}")
+    %strong {{{name}}}
   %td.option-values-show.middle.cell-data
-    %span.small ${options}
+    %span.small {{{options}}}
 %script(id="product-select-item" type="text/x-jquery-tmpl")
   %option(value="" style="color: #888") 选择操作&hellip;
   %option.indent(value="price") 修改价格
   %option.indent(value="inventory_quantity") 修改库存量
   %option.indent(disabled="disabled" value="destroy") 删除
   %optgroup(label="复制款式&hellip;")
-    {{each(i, option) App.product.options.models}}
-    %option(id="dup-option-${i+1}" disabled="disabled" value="duplicate-${i+1}") &hellip;使用另一个${option.attributes.name}
-    {{/each}}
+    {{#each_with_index options}}
+    %option(id="dup-option-{{index_plus}}" disabled="disabled" value="duplicate-{{index_plus}}") &hellip;使用另一个{{{item.attributes.name}}}
+    {{/each_with_index}}
 
 :javascript
   App.init = function(){

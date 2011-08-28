@@ -148,10 +148,10 @@
 %script(id="edit-option-item" type="text/x-jquery-tmpl")
   %td
     %select.option-selector=options_for_select options
-    %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="${name}")
+    %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="{{name}}")
   %td
-    %input(name="product[options_attributes][][value]" size="16" type="text" value="${value}")
-    {{if destroyable}}
+    %input(name="product[options_attributes][][value]" size="16" type="text" value="{{value}}")
+    {{#if destroyable}}
     %span.fr.sr(style="margin-top: 5px")
       %a.del-option(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
     {{/if}}

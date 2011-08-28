@@ -7,7 +7,7 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
 
   initialize: ->
     _.bindAll this, 'render', 'save'
-    this.render()
+    @render()
     @model = new ProductVariant
     @model.bind 'error',(model, error) ->
       container = $('#errors_for_product_variant ul')
@@ -17,10 +17,12 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
       $('#errors_for_product_variant').show()
 
   render: ->
-    $(@el).html $('#new-variant-item').tmpl()
+    template = Handlebars.compile $('#new-variant-item').html()
+    attrs = options: App.product.options.models
+    $(@el).html template attrs
 
   save: ->
-    attrs = FormUtils.to_h this.$('form')
+    attrs = FormUtils.to_h @$('form')
     if @model.set attrs
       App.product_variants.create attrs
     false

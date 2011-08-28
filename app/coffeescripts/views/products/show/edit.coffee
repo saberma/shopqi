@@ -7,10 +7,12 @@ App.Views.Product.Show.Edit = Backbone.View.extend
 
   initialize: ->
     _.bindAll this, 'render', 'save'
-    this.render()
+    @render()
 
   render: ->
-    $(this.el).html $('#edit-product-item').tmpl this.model.attributes
+    template = Handlebars.compile $('#edit-product-item').html()
+    attrs = _.clone @model.attributes
+    $(@el).html template attrs
     TagUtils.init()
 
   save: ->
@@ -23,13 +25,13 @@ App.Views.Product.Show.Edit = Backbone.View.extend
     @model._changed = true #修正:只修改option item时也要触发change事件，更新列表
     @model.unset 'photos', silent: true # 有图片会报错"ActiveRecord::AssociationTypeMismatch (Photo)"，图片不是用bb处理，暂时unset
     @model.save {
-        title: this.$("input[name='title']").val(),
-        handle: this.$("input[name='handle']").val(),
-        body_html: this.$("textarea[name='body_html']").val(),
-        product_type: this.$("input[name='product_type']").val(),
-        vendor: this.$("input[name='vendor']").val(),
-        tags_text: this.$("input[name='tags_text']").val(),
-        collection_ids: _.map this.$("input[name='product[collection_ids][]']:checked"), (input) ->
+        title: @$("input[name='title']").val(),
+        handle: @$("input[name='handle']").val(),
+        body_html: @$("textarea[name='body_html']").val(),
+        product_type: @$("input[name='product_type']").val(),
+        vendor: @$("input[name='vendor']").val(),
+        tags_text: @$("input[name='tags_text']").val(),
+        collection_ids: _.map @$("input[name='product[collection_ids][]']:checked"), (input) ->
           input.value
       },
       success: (model, resp) ->

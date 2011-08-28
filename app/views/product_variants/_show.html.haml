@@ -2,54 +2,58 @@
   %table.data(cellpadding="0" cellspacing="0")
     %tr.inventory-row.odd
       %td.checkbox-cell
-        %input.selector(type="checkbox" id="variant-${id}-checkbox" value="${id}")
-      {{each(i, option) App.product.options.models}}
-      %td(style="width:15%" class="option-${i+1}")
-        %label(for="variant-${$data.id}-checkbox") ${$data['option' + (i+1)]}
-      {{/each}}
+        %input.selector(type="checkbox" id="variant-{{id}}-checkbox" value="{{id}}")
+      {{#each_with_index options}}
+      {{#option_value ../this}}
+      %td(style="width:15%" class="option-{{index_plus}}")
+        %label(for="variant-{{variant_id}}-checkbox") {{value}}
+      {{/option_value}}
+      {{/each_with_index}}
       %td(style="min-width: 150px")
-      %td.price-cell(style="width: 90px;") ${price}
-      %td.qty-cell(style="width: 50px;") ${inventory_quantity}
+      %td.price-cell(style="width: 90px;") {{price}}
+      %td.qty-cell(style="width: 50px;") {{inventory_quantity}}
       %td.action-cell(style="width: 70px; text-align:right")
         %a.edit-btn.note(href="#") 修改
     %tr.row-edit-details.hide
-      %td(colspan="${App.product.options.length + 5}" style="padding: 0")
+      %td(colspan="{{edit_td_size}}" style="padding: 0")
         %table.data.no-border(cellpadding="0" cellspacing="0")
-          %tr.shadow(class='{{if(App.product.options.length==1)}}single-variant-option-cell{{/if}}')
+          %tr(class="shadow {{#if is_single_variant}}single-variant-option-cell{{/if}}")
             %td(style="width: 29px; border: none; border-left: 1px solid #eee;background: #fcfcfc; padding: 0") &nbsp;
-            {{each(i, option) App.product.options.models}}
-            %td.edit-option-cell(class="option-${i+1}" style="width: 15%;padding-top: 10px !important")
-              %label(for="variant_${$data.id}_option_${i+1}") ${option.attributes.name}
+            {{#each_with_index options}}
+            {{#option_value ../this}}
+            %td.edit-option-cell(class="option-{{index_plus}}" style="width: 15%;padding-top: 10px !important")
+              %label(for="variant_{{variant_id}}_option_{{index_plus}}") {{value}}
               %br
-              %input(id="variant_${$data.id}_option_${i+1}" name="product_variant[option${i+1}]" size="30" style="margin-top: 5px;" type="text" value="${$data['option' + (i+1)]}")
-            {{/each}}
+              %input(id="variant_{{variant_id}}_option_{{index_plus}}" name="product_variant[option{{index_plus}}]" size="30" style="margin-top: 5px;" type="text" value="{{value}}")
+            {{/option_value}}
+            {{/each_with_index}}
             %td.edit-option-cell(style="border-right: 1px solid #eee; width:20px") &nbsp;
-            %td(style="min-width: 360px; padding: 0; border-bottom: 1px solid #eee" colspan="${5 - App.product.options.length}") &nbsp;
+            %td(style="min-width: 360px; padding: 0; border-bottom: 1px solid #eee" colspan="{{edit_td_size_except_options}}") &nbsp;
         .group.variant-edit
           %table.data.no-border(cellpadding="0" cellspacing="0")
             %tr.no-border
               %td.checkbox-cell &nbsp;
               %td
-                %label(for="variant-${id}-sku") SKU
+                %label(for="variant-{{id}}-sku") SKU
                 %span.note 库存量单位
                 %br
-                %input.st(id="variant-${id}-sku" name="product_variant[sku]" size="30" style="width:120px" type="text" value="${sku}")
+                %input.st(id="variant-{{id}}-sku" name="product_variant[sku]" size="30" style="width:120px" type="text" value="{{sku}}")
               %td
-                %label(for="variant-${id}-price") 销售价格
+                %label(for="variant-{{id}}-price") 销售价格
                 %br
-                %input.st(id="variant-${id}-price" name="product_variant[price]" size="8" style="width: 60px" type="text" value="${price}")
+                %input.st(id="variant-{{id}}-price" name="product_variant[price]" size="8" style="width: 60px" type="text" value="{{price}}")
                 &nbsp;元
               %td(style="width: 200px;")
-                %label(for="variant-${id}-compare-at-price")
+                %label(for="variant-{{id}}-compare-at-price")
                   市场价
                   %span.note (非必填)
                 %br
-                %input.st(id="variant-${id}-compare-at-price" name="product_variant[compare_at_price]" size="8" style="width:80px" type="text" value="${compare_at_price}")
+                %input.st(id="variant-{{id}}-compare-at-price" name="product_variant[compare_at_price]" size="8" style="width:80px" type="text" value="{{compare_at_price}}")
                 &nbsp;元
               %td
-                %label(for="variant-${id}-weight") 重量
+                %label(for="variant-{{id}}-weight") 重量
                 %br
-                %input.st.requires_shipping_relate(id="variant-${id}-weight" name="product_variant[weight]" size="8" style="width:40px" type="text" value="${weight}")
+                %input.st.requires_shipping_relate(id="variant-{{id}}-weight" name="product_variant[weight]" size="8" style="width:40px" type="text" value="{{weight}}")
                 &nbsp; kg
             %tr.no-border
               %td &nbsp;
@@ -57,31 +61,31 @@
                 %table.secondary-variant-options
                   %tr.no-border
                     %td.secondary-header
-                      %label(for="variant-${id}-requires-shipping") 要求收货地址
+                      %label(for="variant-{{id}}-requires-shipping") 要求收货地址
                     %td
                       %input(name="product_variant[requires_shipping]" type="hidden" value="0")
-                      {{if requires_shipping}}
-                      %input.requires_shipping(id="variant-${id}-requires-shipping" checked="checked" name="product_variant[requires_shipping]" type="checkbox" value="1")
+                      {{#if requires_shipping}}
+                      %input.requires_shipping(id="variant-{{id}}-requires-shipping" checked="checked" name="product_variant[requires_shipping]" type="checkbox" value="1")
                       {{else}}
-                      %input.requires_shipping(id="variant-${id}-requires-shipping" name="product_variant[requires_shipping]" type="checkbox" value="1")
+                      %input.requires_shipping(id="variant-{{id}}-requires-shipping" name="product_variant[requires_shipping]" type="checkbox" value="1")
                       {{/if}}
                       %span.hint 服务性质或者数字之类的商品不需要勾选
                   %tr.no-border
                     %td.secondary-header
-                      %label(for="inventory-select-${id}") 库存
+                      %label(for="inventory-select-{{id}}") 库存
                     %td
-                      %select.inventory_management(id="inventory-select-${id}" name="product_variant[inventory_management]" value="${inventory_management}")
+                      %select.inventory_management(id="inventory-select-{{id}}" name="product_variant[inventory_management]" value="{{inventory_management}}")
                         =options_for_select inventory_managements
                       %div.inventory_management_relate.hide
                         %div
                           .inventory-option.sst.inventory_management_relate.hide
                             %p.soft
-                              %label(for="variant-inventory-quantity-${id}") 现有库存量?
-                              %input.small.r.digit-2(id="variant-inventory-quantity-${id}" name="product_variant[inventory_quantity]" size="6" type="text" value="${inventory_quantity}")
+                              %label(for="variant-inventory-quantity-{{id}}") 现有库存量?
+                              %input.small.r.digit-2(id="variant-inventory-quantity-{{id}}" name="product_variant[inventory_quantity]" size="6" type="text" value="{{inventory_quantity}}")
                         %p.soft(style="margin: 10px 0 0 0")
                           -inventory_policies.each do |policy|
-                            =radio_button_tag 'product_variant[inventory_policy]', policy.code, false, id: "variant-inventory-policy-#{policy.code}-${id}"
-                            %label.inline(for="variant-inventory-policy-#{policy.code}-${id}")=policy.name
+                            =radio_button_tag 'product_variant[inventory_policy]', policy.code, false, id: "variant-inventory-policy-#{policy.code}-{{id}}"
+                            %label.inline(for="variant-inventory-policy-#{policy.code}-{{id}}")=policy.name
                             %br/
               %tr
                 %td &nbsp;

@@ -5,11 +5,18 @@ App.Views.Product.Show.Variant.QuickSelect = Backbone.View.extend
     "click a": 'select'
 
   initialize: ->
-    this.render()
+    Handlebars.registerHelper 'each_variant_option', (variant_options, block) ->
+      _(variant_options["option#{block.hash.index}"]).map (option_name) ->
+        block(name: option_name)
+      .join('')
+    @render()
 
   render: ->
     #选项快捷选择
-    $(@el).html $('#variant-options-item').tmpl @collection.options()
+    template = Handlebars.compile $('#variant-options-item').html()
+    attrs = _.clone @collection.options()
+    attrs['options'] = App.product.options.models
+    $(@el).html template attrs
 
   # 款式选项快捷选择
   select: (ev) ->

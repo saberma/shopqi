@@ -99,35 +99,41 @@
 
 %script(id="show-product-item" type="text/x-jquery-tmpl")
   %td(style="padding-right: 5px; vertical-align: middle;")
-    %input.selector(id="checkbox-${id}" name="products[]" type="checkbox" value="${id}")
+    %input.selector(id="checkbox-{{{id}}}" name="products[]" type="checkbox" value="{{{id}}}")
   %td.list-image(style="text-align: center ! important;")
-    %label(for="checkbox-${id}")
-      %img(src="${index_photo}")
+    %label(for="checkbox-{{{id}}}")
+      %img(src="{{{index_photo}}}")
   %td(style="padding-left: 3px; vertical-align: middle;")
     %p
-      %a(href="/admin/products/${id}" title=" handle: ${handle}") ${title}
-      %span(class="status-hidden {{if published}}hide{{/if}}" style="margin:0") 隐藏
-    %p.list-product-type ${product_type}
-    %p.list-vendor ${vendor}
+      %a(href="/admin/products/{{{id}}}" title=" handle: {{{handle}}}") {{{title}}}
+      %span(class="status-hidden {{#if published}}hide{{/if}}" style="margin:0") 隐藏
+    %p.list-product-type {{{product_type}}}
+    %p.list-vendor {{{vendor}}}
   %td.list-variants
     .expand-collapse-info.notification.hide
       %p(style="position: absolute; top: 11px")
         %a.expand(href="#")=image_tag 'admin/icons/arrow_right_small.png'
         %a.collapse.hide(href="#")=image_tag 'admin/icons/arrow_down_small.png'
     %ul.variant-list.nobull.product-list-option-1
-      {{each(i, variant) variants}}
+      {{#each variants}}
       %li.variant-list-item
-        {{each(j, option) options}}
-        %p.note(style="font-size: 9px; line-height: 11px; margin: 0") ${variant['option'+(j+1)]}
-        {{/each}}
-        %span.large(style="font-size: 14px;line-height: 25px") ${inventory_quantity ? inventory_quantity : '&infin;'}
+        {{#if option1}}
+        %p.note(style="font-size: 9px; line-height: 11px; margin: 0") {{option1}}
+        {{/if}}
+        {{#if option2}}
+        %p.note(style="font-size: 9px; line-height: 11px; margin: 0") {{option2}}
+        {{/if}}
+        {{#if option3}}
+        %p.note(style="font-size: 9px; line-height: 11px; margin: 0") {{option3}}
+        {{/if}}
+        %span.large(style="font-size: 14px;line-height: 25px") {{#if inventory_quantity}} {{inventory_quantity}} {{else}} &infin; {{/if}}
         %br/
         .variant-tip.newtip.hide
           .default
-            .content ${sku ? sku : '没有SKU'}
+            .content {{#if sku}} {{sku}} {{else}} '没有SKU' {{/if}}
       {{/each}}
   %td.list-total(style="text-align: center; vertical-align: middle;")
-    %span(style="font-size: 18px") ${quantity_sum}
+    %span(style="font-size: 18px") {{{quantity_sum}}}
 
 :javascript
   task_name = 'add_product';

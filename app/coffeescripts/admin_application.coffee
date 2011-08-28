@@ -202,6 +202,13 @@ Handlebars.registerHelper 'date', (date, format)->
   format = null if format.hash
   DateUtils.to_s date, format
 
+#迭代，加入 index, index_plus 属性值
+Handlebars.registerHelper 'each_with_index', (context, block) ->
+  _(context).map (item, index) ->
+    attr = item: item, index: index, index_plus: (index + 1)
+    block(attr)
+  .join('')
+
 $.fn.center = -> # 弹出窗口居中处理
   this.css("position","absolute")
   this.css("top", ( $(window).height() - this.height() ) / 2+$(window).scrollTop() + "px")

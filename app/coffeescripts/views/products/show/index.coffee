@@ -7,6 +7,9 @@ App.Views.Product.Show.Index = Backbone.View.extend
     "click #new-variant-link p": "newVariant"
 
   initialize: ->
+    Handlebars.registerHelper 'option_value', (context, block) -> # 获取款式中的option1,option2,option3等值，外围对options进行迭代，在handlebars中只能使用额外的helper实现
+      [index, index_plus] = [this.index, this.index_plus]
+      block(value: context["option#{index_plus}"], variant_id: context.id, index: index, index_plus: index_plus)
     # 先生成修改页面，以便查看页面获取集合名称
     new App.Views.Product.Show.Edit model: @model
     new App.Views.Product.Show.Show model: @model

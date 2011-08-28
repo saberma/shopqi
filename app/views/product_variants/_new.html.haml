@@ -8,13 +8,13 @@
             %ul
         %p.sb
           %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
-          {{each(i, option) App.product.options.models}}
+          {{#each_with_index options}}
           .new-variant-option
-            %label(for="product_variant_option${i+1}" class="option-${i+1}") ${option.attributes.name}
+            %label(for="product_variant_option{{index_plus}}" class="option-{{index_plus}}") {{item.attributes.name}}
             %br
-            =text_field_tag "product_variant[option${i+1}]", nil, style: "font-size:14px; width:100%", class: [:st, :ssb]
+            =text_field_tag "product_variant[option{{index_plus}}]", nil, style: "font-size:14px; width:100%", class: [:st, :ssb]
             -#%input(type="hidden" name="options[]" value="Title")
-          {{/each}}
+          {{/each_with_index}}
         .clearfix
     %tr.divider
       %td

@@ -6,11 +6,10 @@ App.Views.Product.Index.Show = Backbone.View.extend
 
   initialize: ->
     self = this
-    this.render()
+    @render()
     @model.bind 'change:published', (model) ->
       self.$('.status-hidden').toggle(!model.attributes.published)
-    @model.bind 'remove', (model) ->
-      self.remove()
+    @model.bind 'remove', (model) -> self.remove()
 
   render: ->
     attrs = _.clone @model.attributes
@@ -22,11 +21,12 @@ App.Views.Product.Index.Show = Backbone.View.extend
       attrs.quantity_sum = _.reduce quantities, (memo, num) ->
         memo + num
       , 0
-    $(@el).html $('#show-product-item').tmpl attrs
+    template = Handlebars.compile $('#show-product-item').html()
+    $(@el).html template attrs
     position = _.indexOf @model.collection.models, @model
     cycle = if position % 2 == 0 then 'odd' else 'even'
     $(@el).addClass "row#{cycle}"
     $('#product-table > tbody').append @el
 
   select: ->
-    $(@el).toggleClass 'active', this.$('.selector').attr('checked')
+    $(@el).toggleClass 'active', @$('.selector').attr('checked')
