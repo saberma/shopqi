@@ -25,20 +25,29 @@
     =form_for order, url: "/carts/#{shop.id}/#{cart.token}/create_order" do |f|
       #email
         =f.label :email, '您的 Email 地址'
-        -if customer_signed_in?
+        -current_customer = cart.customer
+        -if current_customer
           =f.hidden_field :email, value: current_customer.email
           %h4.active-customer
             =current_customer.email
             %span.sign-in-message
               ==不是#{current_customer.name}?
-              =link_to '用另一个账号登录','#'
+              =link_to '用另一个账号登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
         -else
           =f.text_field :email
+          -if shop.customer_accounts_optional?
+            %span.sign-in-message
+              已经有账户了？
+              =link_to ' 现在就登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
       / begin addresses
       #addresses.group.clearfix
         .gleft
           %h3 发单地址
           %table#billing.form(cellspacing="0" cellpadding="0")
+            -if current_customer
+              %tr#billing_address_selection.multiple_address_selection
+                %td(colspan=2)
+                  =select_tag :billing_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''])
             =f.fields_for :billing_address do |b|
               %tr
                 %td.lbl=b.label :name
@@ -74,6 +83,10 @@
           #shipping-same.address-notification(style="display:none;")
             %span 货品将会被发送至您的发单地址.
           %table#shipping.form(cellspacing="0" cellpadding="0")
+            -if current_customer
+              %tr#shipping_address_selection.multiple_address_selection
+                %td(colspan=2)
+                  =select_tag :shipping_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''] )
             =f.fields_for :shipping_address do |s|
               %tr
                 %td.lbl=s.label :name

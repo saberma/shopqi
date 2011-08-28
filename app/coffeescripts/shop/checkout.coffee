@@ -91,4 +91,41 @@ $(document).ready ->
           $.each result, (i, item) ->
             options[options.length] = new Option(item[0], item[1])
 
+  #获取地址补全
+  $('#billing_address_selector,#shipping_address_selector').each ->
+    $(this).change ->
+      val = $(this).val()
+      action = $(this).closest('form').attr('action').replace(/create_order/i,'get_address')
+      if $(this).attr('id') is 'billing_address_selector'
+        str = 'order_billing_address_attributes'
+      else
+        str = 'order_shipping_address_attributes'
+      $.get action, {address_id: val}, (data) ->
+        if data isnt null
+          address = data.customer_address
+          $("##{str}_name").val(address.name)
+          $("##{str}_country_code").val(address.country_code)
+          $("##{str}_province").val(address.province)
+          $("##{str}_city").val(address.city)
+          $("##{str}_district").val(address.district)
+          $("##{str}_address1").val(address.address1)
+          $("##{str}_address2").val(address.address2)
+          $("##{str}_zip").val(address.zip)
+          $("##{str}_company").val(address.company)
+          $("##{str}_phone").val(address.phone)
+        else
+          reset(str)
+    .change()
+
+  reset = (str) ->
+      $("##{str}_name").val('')
+      $("##{str}_country_code").val('')
+      $("##{str}_province").val('')
+      $("##{str}_city").val('')
+      $("##{str}_district").val('')
+      $("##{str}_address1").val('')
+      $("##{str}_address2").val('')
+      $("##{str}_zip").val('')
+      $("##{str}_company").val('')
+      $("##{str}_phone").val('')
 

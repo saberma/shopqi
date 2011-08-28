@@ -4,3 +4,7 @@
 Factory.define :country do |f|
   f.code 'HK'
 end
+
+Factory.define :country_china,parent: :country do |f|
+  f.code 'CN'
+end

@@ -59,7 +59,7 @@ class CustomersController < ApplicationController
   expose(:customer_json) do
     customer.to_json({
       include: {
-        addresses: { methods: [:province_name, :city_name, :district_name] },
+        addresses: { methods: [:country_name,:province_name, :city_name, :district_name] },
         orders: { methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :created_at] }
       },
       methods: [ :address, :order, :total_spent, :status_name, :tags_text ],

@@ -2,6 +2,7 @@
 # 购物车
 class Cart < ActiveRecord::Base
   belongs_to :shop
+  belongs_to :customer
 
   before_create do
     self.token = UUID.generate(:compact)

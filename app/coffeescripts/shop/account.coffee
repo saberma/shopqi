@@ -3,10 +3,11 @@ $(document).ready ->
     $('#add_address').toggle()
     return false
 
-  #$('.note a').each ->
-  #  $(this).click ->
-  #    $(this).closest('form').parent().toggle()
-  #    return false
+  #新增地址处的toggle
+  $(".note a[href='#']").each ->
+    $(this).click ->
+      $(this).closest('form').parent().toggle()
+      return false
 
   #地区的级联选择
   $(".region").each ->

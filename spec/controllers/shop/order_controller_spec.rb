@@ -14,6 +14,11 @@ describe Shop::OrderController do
   let(:variant) { iphone4.variants.first }
 
   let(:cart) { Factory :cart, shop: shop, cart_hash: %Q({"#{variant.id}":1}) }
+  let(:china) {
+    china = Factory.build :country_china, shop: shop
+    china.weight_based_shipping_rates.build name: '普通快递'
+    china.save
+  }
 
   let(:order) do
     o = Factory.build :order, shop: shop
@@ -26,7 +31,7 @@ describe Shop::OrderController do
     Factory :payment, shop: shop
   end
 
-  let(:billing_address_attributes) { {name: 'ma', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
+  let(:billing_address_attributes) { {name: 'ma',country_code: 'CN', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
 
   context '#address' do
 
@@ -51,24 +56,25 @@ describe Shop::OrderController do
   end
 
   context '#update' do
-
     it 'should be pay' do
       get :pay, shop_id: shop.id, token: order.token
       response.should be_success
     end
 
     it 'should update financial_status' do
-      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', payment_id: payment.id }
+      china
+      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
       order.reload.financial_status.should eql 'pending'
     end
 
     it 'should show product line_items' do
+      china
       order
       expect do
-        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '1', payment_id: payment.id }
+        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
         order = assigns['_resources']['order']
         order.errors.should be_empty
-        order.shipping_rate.should eql '1'
+        order.shipping_rate.should eql '普通快递-10.0'
         order.payment_id.should eql payment.id
       end.should_not change(Order, :count)
     end
