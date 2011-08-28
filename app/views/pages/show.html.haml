@@ -18,20 +18,19 @@
           %dd=f.text_field :title, class: [:big, :sb]
           %dt#edit-handle-label(style="font-size:85%") 链接/处理
           %dd#edit-handle.ssb
-            %span.note==#{shop.primary_domain}/pages
+            %span.note==#{shop.primary_domain.url}/pages/
             =f.text_field :handle, style: 'width: 175px'
             %span.note
               (
-              %a(href="http//wiki.shopqi.com/Handle" target="_blank")> 这是什么?
+              %a(href="#{Setting.wiki_url}/Handle" target="_blank")> 这是什么?
               )
           %dt
             %label(for="page_body_html") 编写您的页面
           %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor', style: "width: 895px; height: 282px;"
-          %dd.btns.editor-btns
-            %div(style="padding:5px")
-              %input#submit-page-btn.btn(name="commit" type="submit" value="保存")
-              或者
-              = link_to '取消', '#'
+      .group-actions
+        %input#submit-page-btn.btn(name="commit" type="submit" value="保存")
+        或者
+        = link_to '取消', '#'
 
 #page-show.box2.article(style="cursor: pointer" title="点击修改")
   #page-body.textile.pgroup

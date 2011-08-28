@@ -3,26 +3,27 @@
   %ul
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
-#new-blog-form.group{:style => "padding:10px;"}
+#new-blog-form.group
   =form_for blog,html:{class:"edit_blog"} do |f|
-    %dl
-      %dt.nst=f.label :title
-      %dd=f.text_field :title
-      %dt#edit-handle-label{:style => "font-size: 85%"} 链接/处理
-      %dd#edit-handle.ssb{:style => ""}
-        %span.note==#{show_shop_url}/blogs
-        =f.text_field :handle,style: 'width: 175px'
-        %span.note
-          (
-          %a(href="http//wiki.shopqi.com/Handle" target="_blank")> 这是什么?
-          )
-    %dt 评论
-    %dd.choice
-      %select#blog_commentable{:name => "blog[commentable]"}
-        %option{:selected => "selected", :value => "no"} 禁用评论
-        %option{:value => "moderate"} 允许评论,需审核
-        %option{:value => "yes"} 允许评论,并且自动发布
-    %p.btns{:style => "margin:0"}
+    .group-fields
+      %dl
+        %dt.nst=f.label :title
+        %dd=f.text_field :title
+        %dt#edit-handle-label{:style => "font-size: 85%"} 链接/处理
+        %dd#edit-handle.ssb{:style => ""}
+          %span.note==#{show_shop_url}/blogs/
+          =f.text_field :handle,style: 'width: 175px'
+          %span.note
+            (
+            %a(href="#{Setting.wiki_url}/Handle" target="_blank")> 这是什么?
+            )
+      %dt 评论
+      %dd.choice
+        %select#blog_commentable{:name => "blog[commentable]"}
+          %option{:selected => "selected", :value => "no"} 禁用评论
+          %option{:value => "moderate"} 允许评论,需审核
+          %option{:value => "yes"} 允许评论,并且自动发布
+    .group-actions
       %input.btn{:name => "commit", :type => "submit", :value => "保存"}/
       或者
       =link_to '返回', pages_path

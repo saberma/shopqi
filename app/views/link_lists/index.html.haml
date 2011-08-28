@@ -92,7 +92,7 @@
         %dd
           %input.big.sb(name="link_list[title]" size="30" type="text" value="{{{title}}}")
         %dt
-          链接句柄
+          固定链接/句柄
           %span.note
             (
             %a(href="#{Setting.wiki_url}/Handle" target="_blank")> 这是什么?
@@ -100,7 +100,7 @@
         %dd
           {{#if system_default}}
           %input(disabled="disabled" name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
-          %span.hint 默认链接列表的处理是不能修改的
+          %span.hint 默认链接列表的句柄是不能修改的
           {{else}}
           %input(name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
           {{/if}}

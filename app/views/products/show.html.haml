@@ -158,7 +158,7 @@
               %a(href="#{Setting.wiki_url}/Handle" target="_blank") 这是什么?
               )
           %dd#edit-handle.ssb
-            %span.note==#{shop.primary_domain.url}/products
+            %span.note==#{shop.primary_domain.url}/products/
             =text_field_tag :handle, '{{{handle}}}', style: 'width: 160px'
           %dt=f.label :body_html
           %dd=text_area_tag :body_html, '{{body_html}}', id: 'kindeditor', style: "width: 895px; height: 200px;"

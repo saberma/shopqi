@@ -19,12 +19,11 @@
       #article-form.group-fields
         %dl
           =render partial:"form",locals:{f:f,article:article}
-          %dd.btns.editor-btns
-            %div{:style => "padding: 5px"}
-              %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "保存"}/
-              or
-              %a.cancel{:href => "#"} 返回
-            / inline padding
+      .group-actions
+        %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "保存"}
+        或者
+        %a.cancel{:href => "#"} 返回
+        / inline padding
 #article-show.box2.article(style="cursor: pointer" title="点击修改")
   %h3#article-ttl==#{article.title}
   #body-show.textile
