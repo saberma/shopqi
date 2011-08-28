@@ -18,7 +18,9 @@ class Shop::OrderController < Shop::AppController
 
   expose(:cart) { shop.carts.where(token: params[:cart_token]).first }
 
-  before_filter { verify_customer!(cart) }
+  before_filter only: :address do
+    verify_customer!(cart)
+  end
 
   expose(:cart_line_items) do
     JSON(cart.cart_hash).inject({}) do |result, (variant_id, quantity)|
