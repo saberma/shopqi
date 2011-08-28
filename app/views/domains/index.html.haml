@@ -49,7 +49,7 @@
     / .group
 -#=render 'buy'
 
-%script(id="domain-item" type="text/x-jquery-tmpl")
+%script(id="domain-item" type="text/x-handlebars-template")
   %td(class="{{#if primary}}primary{{/if}}")
     %span.note http://
     %span
@@ -76,7 +76,7 @@
     {{#unless is_myshopqi}}
     %a.del(href='#')=image_tag 'admin/icons/trash.gif', alt: '删除'
     {{/unless}}
-%script(id="dns-wiki-item" type="text/x-jquery-tmpl")
+%script(id="dns-wiki-item" type="text/x-handlebars-template")
   %a(href="#{Setting.wiki_url}/DNS#CNAME_Status" target="_blank") 失败
 
 :javascript

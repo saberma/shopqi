@@ -30,7 +30,7 @@
   .section
     %ul#menus.nobull.st
 
-%script(id="link-list-item" type="text/x-jquery-tmpl")
+%script(id="link-list-item" type="text/x-handlebars-template")
   / begin: default Link List items
   .default_container_link_list
     .section-header
@@ -78,12 +78,12 @@
       / .group
   / begin: edit Link List items
   .edit_form_link_container(style="display:none;")
-%script(id="link-item" type="text/x-jquery-tmpl")
+%script(id="link-item" type="text/x-handlebars-template")
   =image_tag 'admin/icons/drag_handle.gif', class: [:image_handle, :nsr]
   %span.link-title
     %a(href="{{{url}}}") {{{title}}}
   %span.link-url {{{url}}}
-%script(id="edit_form_link_container-item" type="text/x-jquery-tmpl")
+%script(id="edit_form_link_container-item" type="text/x-handlebars-template")
   %form.edit_link_list(action="#" onsubmit="return false")
     .section-header 修改这个链接列表
     .link-list-edit-header
@@ -113,7 +113,7 @@
       %input.btn(name="commit" type="submit" value="保存")
       或者
       %a.cancel(href="#") 取消
-%script(id="edit-link-item" type="text/x-jquery-tmpl")
+%script(id="edit-link-item" type="text/x-handlebars-template")
   %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif'
   %input(name="id" type="hidden" value="{{{id}}}")
   %input.medium(name="title" size="30" type="text" value="{{{title}}}")
@@ -122,13 +122,13 @@
   %select.subject(name="subject_handle" style="display: none" value="{{{subject_handle}}}")
   %input.medium.subject_params.linkform-hint.hide(data-hint="根据标签过滤(以逗号分隔)" name="subject_params" size="30" type="text" value="{{{subject_params}}}")
   %input.long.subject_http.linkform-hint.hide(data-hint="http://shopify.com" name="url" size="30" type="text" value="{{{url}}}")
-%script(id="selector-blog-item" type="text/x-jquery-tmpl")
+%script(id="selector-blog-item" type="text/x-handlebars-template")
   =options_for_select blog_types
-%script(id="selector-collection-item" type="text/x-jquery-tmpl")
+%script(id="selector-collection-item" type="text/x-handlebars-template")
   =options_for_select collection_types
-%script(id="selector-page-item" type="text/x-jquery-tmpl")
+%script(id="selector-page-item" type="text/x-handlebars-template")
   =options_for_select page_types
-%script(id="selector-product-item" type="text/x-jquery-tmpl")
+%script(id="selector-product-item" type="text/x-handlebars-template")
   =options_for_select product_types
 
 :javascript

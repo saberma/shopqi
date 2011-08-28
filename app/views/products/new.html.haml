@@ -145,7 +145,7 @@
 / end div.main
 / end div.container
 -#商品选项
-%script(id="edit-option-item" type="text/x-jquery-tmpl")
+%script(id="edit-option-item" type="text/x-handlebars-template")
   %td
     %select.option-selector=options_for_select options
     %input.hide(name="product[options_attributes][][name]" size="16" style="margin-top: 5px;" type="text" value="{{name}}")

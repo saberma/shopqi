@@ -124,12 +124,12 @@
           %input#shop_submit(name="commit" type="submit" value="创建我的ShopQi商店")
 / content
 
-%script(id="theme-item" type="text/x-jquery-tmpl")
+%script(id="theme-item" type="text/x-handlebars-template")
   %img(src="/s/theme/screenshots/{{{id}}}/main/signup.jpg" style="width: 198px; height: 254px; z-index: 2;")
   .pick.transparent
     %a.btn.preview(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="theme-group" title="{{{name}}}") 预览主题
     %a.btn.next(href="#" title="{{{name}}}") 选择此主题
-%script(id="available-item" type="text/x-jquery-tmpl")
+%script(id="available-item" type="text/x-handlebars-template")
   {{#if available}}
   %span.negative
     抱歉，{{{domain}}} 已经

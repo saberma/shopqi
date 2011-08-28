@@ -46,9 +46,9 @@
   %p.r
     %input(name="commit" type="submit" value="保存配置")
 
-%script(id="section-header-item" type="text/x-jquery-tmpl")
+%script(id="section-header-item" type="text/x-handlebars-template")
   %h3(class="section-header") {{{title}}}
-%script(id="asset-image-item" type="text/x-jquery-tmpl")
+%script(id="asset-image-item" type="text/x-handlebars-template")
   =dialog '{{{title}}}' do
     %img(src="{{{url}}}")
 

@@ -13,7 +13,7 @@
   %a(href="/##{session[:q]}")
     \&lsaquo; 返回主题商店
 
-%script(id="overview-item" type="text/x-jquery-tmpl")
+%script(id="overview-item" type="text/x-handlebars-template")
   %h1 {{{name}}}
   %p.summary {{{desc}}}
   .purchase
@@ -36,7 +36,7 @@
   %li
     主题作者:
     %a(href="{{{site}}}") {{{author}}}
-%script(id="screenshots-item" type="text/x-jquery-tmpl")
+%script(id="screenshots-item" type="text/x-handlebars-template")
   %ul
     %li
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/main/original.jpg")
@@ -47,7 +47,7 @@
     %li
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/product/original.jpg")
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb.jpg")
-%script(id="styles-item" type="text/x-jquery-tmpl")
+%script(id="styles-item" type="text/x-handlebars-template")
   %ul
     %h3 此主题包括 种风格
     %ul.theme-thumbs.packaged-styles
@@ -62,14 +62,14 @@
           %a(href="http://{{{shop}}}#{Setting.store_host_with_port}" target="_blank") 查看示例  ›
         {{/unless}}
       {{/each}}
-%script(id="more-designer-item" type="text/x-jquery-tmpl")
+%script(id="more-designer-item" type="text/x-handlebars-template")
   %h4
     更多
     %a(href="#") {{{author}}}
     设计的主题
   .shelf.clearfix
     %ul#themes.theme-thumbs
-%script(id="theme-item" type="text/x-jquery-tmpl")
+%script(id="theme-item" type="text/x-handlebars-template")
   %li.theme
     %a(href="/themes/{{{name}}}/styles/{{{style}}}")
       %p

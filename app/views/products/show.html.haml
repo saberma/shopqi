@@ -80,7 +80,7 @@
             新增款式
   #new-variant.hide
 
-%script(id="show-product-item" type="text/x-jquery-tmpl")
+%script(id="show-product-item" type="text/x-handlebars-template")
   #product-body.textile.ssb
     %table.data.table-wrapper(cellpadding="0" cellspacing="0")
       %tr
@@ -141,7 +141,7 @@
                 %a(href="/admin/custom_collections/{{id}}") {{title}}
               {{/each}}
 
-%script(id="edit-product-item" type="text/x-jquery-tmpl")
+%script(id="edit-product-item" type="text/x-handlebars-template")
   =form_for product, class: :edit_product, html: {id: 'product-detail-form', onsubmit: 'return false;'} do |f|
     #product-body-edit.sb
       .section-header
@@ -211,7 +211,7 @@
       =f.submit "保存", id:"update-options", class: :btn
       =w('or')
       %a.cancel(href="#")=w('cancel')
-%script(id="row-head-item" type="text/x-jquery-tmpl")
+%script(id="row-head-item" type="text/x-handlebars-template")
   %th(class="checkbox-cell")
     %input#select-all(type="checkbox")
   {{#each_with_index options}}
@@ -223,11 +223,11 @@
     %span.note 元
   %th.qty-cell(style="width:50px") 库存量
   %th.action-cell(style="width: 70px;") &nbsp;
-%script(id="show-variant-item" type="text/x-jquery-tmpl")
+%script(id="show-variant-item" type="text/x-handlebars-template")
   =render partial: "product_variants/show"
-%script(id="new-variant-item" type="text/x-jquery-tmpl")
+%script(id="new-variant-item" type="text/x-handlebars-template")
   =render partial: "product_variants/new"
-%script(id="variant-options-item" type="text/x-jquery-tmpl")
+%script(id="variant-options-item" type="text/x-handlebars-template")
   选择:
   %a(href="#" style="color:#000") 所有
   %a(href="#" style="color:#000") 清空
@@ -237,7 +237,7 @@
     %a(href="#") {{name}}
     {{/each_variant_option}}
   {{/each_with_index}}
-%script(id="edit-option-item" type="text/x-jquery-tmpl")
+%script(id="edit-option-item" type="text/x-handlebars-template")
   %td.cell-title
     .option-selector-frame
       %select.option-selector=options_for_select options
@@ -256,12 +256,12 @@
         %p.small.highlight-alt
           {{{name}}}将被删除.
           %a.resume-option(href="#") 恢复
-%script(id="show-option-item" type="text/x-jquery-tmpl")
+%script(id="show-option-item" type="text/x-handlebars-template")
   %td.cell-title(class="option-{{{position}}}")
     %strong {{{name}}}
   %td.option-values-show.middle.cell-data
     %span.small {{{options}}}
-%script(id="product-select-item" type="text/x-jquery-tmpl")
+%script(id="product-select-item" type="text/x-handlebars-template")
   %option(value="" style="color: #888") 选择操作&hellip;
   %option.indent(value="price") 修改价格
   %option.indent(value="inventory_quantity") 修改库存量

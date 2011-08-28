@@ -81,10 +81,10 @@
     =form_for custom_collection, url: update_published_custom_collection_path(custom_collection), remote: true, html: {id: 'custom_collection_publicshed_form'} do |f|
       =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#custom_collection_publicshed_form').submit();"
 
-%script(id="available_product_item" type="text/x-jquery-tmpl")
+%script(id="available_product_item" type="text/x-handlebars-template")
   %span=image_tag 'admin/no-image-pico.gif', class: :images, alt: '找不到图片...'
   =link_to "{{{title}}}", "#", class: :title
-%script(id="product_item" type="text/x-jquery-tmpl")
+%script(id="product_item" type="text/x-handlebars-template")
   .sortable-related
     =link_to image_tag('admin/icons/trash.gif'), '#', title: '删除它', class: 'remove-product'
     .sortable-related(style="float: left; position: relative; top: 15px")

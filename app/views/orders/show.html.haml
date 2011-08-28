@@ -178,7 +178,7 @@
     %h3 订单历史
     %table#order-history-table(cellspacing="0")
 
-%script(id="order-status-item" type="text/x-jquery-tmpl")
+%script(id="order-status-item" type="text/x-handlebars-template")
   .fr.r
     {{#if payed}}
     %h3 已支付
@@ -191,7 +191,7 @@
     {{/if}}
   %h3 支付方式
   %p 货到付款
-%script(id="order-history-table-item" type="text/x-jquery-tmpl")
+%script(id="order-history-table-item" type="text/x-handlebars-template")
   {{#loop}}
   %tr.log-date
     %td(colspan="2") {{{created_at}}}
@@ -205,9 +205,9 @@
       {{else}} {{{body}}} {{/if}}
   {{/each}}
   {{/loop}}
-%script(id="order-history-fulfillment-item" type="text/x-jquery-tmpl")=render 'fulfillments/show'
+%script(id="order-history-fulfillment-item" type="text/x-handlebars-template")=render 'fulfillments/show'
 
-%script(id="unshipped-goods-item" type="text/x-jquery-tmpl")
+%script(id="unshipped-goods-item" type="text/x-handlebars-template")
   {{#if fulfilled}}
   %h3 完成发货
   %p.instruction 此订单的所有商品已经发货
@@ -217,7 +217,7 @@
     您需要准备
     %strong {{{unshipped_line_items.length}}} 款商品
   {{/if}}
-%script(id="edit-fulfillment-item" type="text/x-jquery-tmpl")
+%script(id="edit-fulfillment-item" type="text/x-handlebars-template")
   %td(style="width: 24px; vertical-align:middle")
     {{#if fulfilled}}
     =image_tag 'admin/icons/shipping.gif'
@@ -239,7 +239,7 @@
   %td
     %label(for="line-item-{{{id}}}")
       %span.note(style="font-weight:normal") {{{sku}}}
-%script(id="line-items-item" type="text/x-jquery-tmpl")
+%script(id="line-items-item" type="text/x-handlebars-template")
   %td(style="vertical-align:middle")
   %td(style="max-width:320px")
     %strong
@@ -253,7 +253,7 @@
   %td.line-price {{{price}}}
   %td.line-qty.c {{{quantity}}}
   %td.total-col {{{total_price}}}
-%script(id="price-summary-item" type="text/x-jquery-tmpl")
+%script(id="price-summary-item" type="text/x-handlebars-template")
   %tr#sep.summary
     %td.r(colspan="4") 总共:
     %td.r.subtotal.total-col {{{total_line_items_price}}}
@@ -266,7 +266,7 @@
   %tr#total.summary
     %td.totalnum.r(colspan="4") 总金额:
     %td.r.totalnum.total-col {{{total_price}}}
-%script#cancel-order-item(type="text/x-jquery-tmpl")=render 'cancel'
+%script#cancel-order-item(type="text/x-handlebars-template")=render 'cancel'
 
 :javascript
   App.init = function(){

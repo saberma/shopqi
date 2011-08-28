@@ -45,13 +45,13 @@
       或者
       %a.close-lightbox(href="#") 取消
 
-%script(id="customer-note-item" type="text/x-jquery-tmpl")
+%script(id="customer-note-item" type="text/x-handlebars-template")
   %h3.clearfix 顾客备注
   .notes {{#if note}} {{note}} {{else}} 暂时没有加入备注. {{/if}}
-%script(id="customer-tags-item" type="text/x-jquery-tmpl")
+%script(id="customer-tags-item" type="text/x-handlebars-template")
   %h3.clearfix 顾客标签
   %p {{#if tags_text}} {{tags_text}} {{else}} 暂时没有加入标签. {{/if}}
-%script(id="customer-summary-item" type="text/x-jquery-tmpl")
+%script(id="customer-summary-item" type="text/x-handlebars-template")
   %tbody
     %tr.first
       %td.attribute=image_tag 'admin/icons/customer.gif', id: :gravatar
@@ -105,7 +105,7 @@
       %td.value
         %a#show-customer-addresses(href="#") 另外 {{{more_addresses.length}}} 个地址&hellip;
   {{/if}}
-%script(id="customer-facts-item" type="text/x-jquery-tmpl")
+%script(id="customer-facts-item" type="text/x-handlebars-template")
   %ul
     %li.first
       %p.big ¥{{{total_spent}}}
@@ -116,7 +116,7 @@
     %li.last
       %p.big {{{first_order_date}}}
       %span 首次下单
-%script(id="order-item" type="text/x-jquery-tmpl")
+%script(id="order-item" type="text/x-handlebars-template")
   %td
     %a(class="{{{abandoned_class}}}" href="/admin/orders/{{{id}}}") {{{name}}}
   %td
@@ -127,7 +127,7 @@
     %span(style="font-size: 11px")
       %span(class='{{{fulfill_class}}}') {{{fulfillment_status_name}}}
   %td(style="text-align: right") ¥{{{total_price}}}
-%script(id="edit-customer-screen-item" type="text/x-jquery-tmpl")
+%script(id="edit-customer-screen-item" type="text/x-handlebars-template")
   %form.edit_customer(onsubmit='return false')
     .section-header(style="margin-top:0;") 顾客信息
     .customer-group.white.clearfix
