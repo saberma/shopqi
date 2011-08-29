@@ -1,7 +1,7 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.6'
+gem 'rails', '3.1.0.rc8'
 
 ##### 实体相关 #####
 gem 'pg'
@@ -20,12 +20,12 @@ gem 'rack-cache', require: 'rack/cache'
 gem 'liquid' #模板语言
 gem "carrierwave"
 #查询
-gem 'meta_where'
+#gem 'meta_where'
 gem 'meta_search'
+gem 'squeel'
 
 #gem 'carmen'#地区
-gem 'carmen', git: 'git://github.com/liwh/carmen.git'
-gem 'on_the_spot' #及时编辑
+gem 'carmen'
 gem 'seedbank' # 分离出各个环境下的seed
 gem 'gravtastic' #gravtastic头像服务
 
