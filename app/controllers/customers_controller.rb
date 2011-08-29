@@ -83,6 +83,7 @@ class CustomersController < ApplicationController
   end
 
   def create
+    customer.password = Random.new.rand(100000..999999) #用于在后台新增用户时，为顾客增加一个随机密码
     if customer.save
       redirect_to customer_path(customer)
     else
