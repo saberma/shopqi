@@ -2,6 +2,7 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 Factory.define :customer do |f|
+  f.password '666666'
 end
 
 Factory.define :customer_saberma, parent: :customer do |f|
