@@ -14,11 +14,6 @@ describe Shop::OrderController do
   let(:variant) { iphone4.variants.first }
 
   let(:cart) { Factory :cart, shop: shop, cart_hash: %Q({"#{variant.id}":1}) }
-  let(:china) {
-    china = Factory.build :country_china, shop: shop
-    china.weight_based_shipping_rates.build name: '普通快递'
-    china.save
-  }
 
   let(:order) do
     o = Factory.build :order, shop: shop
@@ -62,13 +57,13 @@ describe Shop::OrderController do
     end
 
     it 'should update financial_status' do
-      china
+      #china
       post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
       order.reload.financial_status.should eql 'pending'
     end
 
     it 'should show product line_items' do
-      china
+      #china
       order
       expect do
         post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }

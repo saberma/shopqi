@@ -47,10 +47,10 @@ end
 # 默认顾客
 myshopqi.customers.create [
   {
-    name: '李卫辉', email: 'liwh87@gmail.com', note: '默认顾客',
+    name: '李卫辉', email: 'liwh87@gmail.com', note: '默认顾客',password: '666666',
     addresses_attributes: [{ name: '李卫辉', province: '440000', city: '440300', district: '440305', address1: '科技园南区311', phone: '13751042627', zip: '517058' }]
   }, {
-    name: '马海波', email: 'mahb45@gmail.com', note: '默认顾客',
+    name: '马海波', email: 'mahb45@gmail.com', note: '默认顾客',password: '666666',
     addresses_attributes: [{ name: '马海波', province: '440000', city: '440300', district: '440305', address1: '科技园南区311', phone: '13928452888', zip: '517058' }]
   }
 ]

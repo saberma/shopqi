@@ -25,11 +25,6 @@ describe "Shop::Customers", js: true do
     o.save
     o
   }
-  let(:china) {
-    china = Factory.build :country_china, shop: shop
-    china.weight_based_shipping_rates.build name: '普通快递'
-    china.save
-  }
   before(:each) { Capybara::Server.manual_host = shop.primary_domain.host }
   after(:each) { Capybara::Server.manual_host = nil }
 
@@ -64,7 +59,6 @@ describe "Shop::Customers", js: true do
     end
 
     it "should can registe a new customer " do
-      china
       visit new_customer_registration_path
       click_on '注册'
       within '#login_name' do
