@@ -14,6 +14,8 @@
       %p==收货人: #{customer_address.name}
       %p==详细地址: #{customer_address.detail_address}
       %p==邮政编码: #{customer_address.zip}
+      %p==电话号码: #{customer_address.phone}
+      %p==公司: #{customer_address.company}
   %div.customer_address.edit_address(style= "display:none;" id="edit_address_#{customer_address.id}")
     =form_for customer_address  do |f|
       %h4#add_address_title 编辑地址

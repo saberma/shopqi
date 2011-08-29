@@ -77,7 +77,7 @@ end
 
 group :test, :travis do
   gem "rspec-rails"
-  gem 'capybara', git: 'git://github.com/jnicklas/capybara.git' # 集成测试，最新版才支持:js=>true参数
+  gem 'capybara'
   gem 'resque_spec' # resque测试
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
