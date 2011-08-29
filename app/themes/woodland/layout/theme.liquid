@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">      
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -18,7 +18,7 @@
 {{ 'option_selection.js' | asset_url | script_tag }}
 
 <script type="text/javascript">
-$(document).ready(function() {  $("a.single_image").fancybox(); $("a.single_image").fancybox({ 'hideOnContentClick': true }); $("a.group").fancybox({ 'zoomSpeedIn': 300, 'zoomSpeedOut': 300, 'overlayShow': false }); }); 
+$(document).ready(function() {  $("a.single_image").fancybox(); $("a.single_image").fancybox({ 'hideOnContentClick': true }); $("a.group").fancybox({ 'zoomSpeedIn': 300, 'zoomSpeedOut': 300, 'overlayShow': false }); });
 </script>
 
 {{ content_for_header }}
@@ -31,8 +31,8 @@ $(document).ready(function() {  $("a.single_image").fancybox(); $("a.single_imag
 <body id="page-{{ template }}">
 
 <div id="wrapper">
-    <div id="header" class="clearfix">    
-      
+    <div id="header" class="clearfix">
+
       <div id="nav-search">
       <form action="/search" method="get" class="search clearfix">
 				<input type="text" name="q" id="q" class="search-field" />
@@ -43,10 +43,10 @@ $(document).ready(function() {  $("a.single_image").fancybox(); $("a.single_imag
       {% for link in linklists.main-menu.links  %}
         <li><a href="{{ link.url }}">{{ link.title }}</a></li>
       {% endfor %}
-        <li class="cart"><a href="/cart">Your cart ({{ cart.item_count }})</a></li>
+        <li class="cart"><a href="/cart">购物车 ({{ cart.item_count }})</a></li>
       </ul>
       </div><!-- #nav-search -->
-       
+
       <div class="logo">
         <h1>
           {% if settings.use_logo_image %}
@@ -59,13 +59,13 @@ $(document).ready(function() {  $("a.single_image").fancybox(); $("a.single_imag
 
     </div><!-- #header -->
     <div class="content clearfix">
-      
+
      {{ content_for_layout }}
     </div><!-- .content -->
 </div><!-- #wrapper -->
 
 <div id="footer">
-  Copyright &copy; {{ "now" | date: "%Y" }} to {{ shop.name }} | We use {{ powered_by_link }} |
+  Copyright &copy; {{ "now" | date: "%Y" }} {{ shop.name }} 版权所有 | {{ powered_by_link }} |
   <ul>
     {% for link in linklists.footer.links %}
     <li><a href="{{ link.url }}">{{ link.title }}</a></li>

@@ -6,7 +6,7 @@
 
 {% paginate collection.products by 12 %}
 {% if collection.products.size == 0 %}
-<strong>No products found in this collection.</strong>
+<strong>此集合没有任何商品.</strong>
 {% else %}
 <table class="products">
   {% tablerow product in collection.products cols: 4  %}

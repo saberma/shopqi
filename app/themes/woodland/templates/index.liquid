@@ -2,14 +2,14 @@
 <div class="banner">
   <a href="{{ settings.banner_url }}">{{ 'banner.jpg' | asset_url | img_tag }}</a>
 </div><!-- .banner -->
-{% endif %}  
+{% endif %}
 
 
 {% if settings.show_homepage != blank %}
 <div class="frontpage-intro clearfix">
 {{ pages[settings.show_homepage].content }}
 </div>
-{% endif %}  
+{% endif %}
 
 {% if collections.frontpage.handle == "frontpage" %}
 <table class="products">
@@ -21,7 +21,7 @@
 </table>
 {% else %}
 <div class="note">
-  You need to create a collection with the handle "frontpage"
+  您需要创建一个句柄为"frontpage"的集合
 </div><!-- .note -->
 {% endif %}
 
@@ -30,30 +30,17 @@
 </div><!-- .col-7 -->
 
 <div class="col-5 contact last">
-  <h2>Contact Us</h2>
+  <h2>联系我们</h2>
   <ul>
     <li>
-      {% if settings.show_phone  %} 
-      Phone: {{ settings.phone_url }}
-      {% endif %} 
+      {% if settings.show_phone  %}
+      电话: {{ settings.phone_url }}
+      {% endif %}
     </li>
     <li>
-      {% if settings.show_email %} 
-      Email: <a href="mailto:{{ settings.email_url }}">{{ settings.email_url }}</a> 
-      {% endif %} 
+      {% if settings.show_email %}
+      Email: <a href="mailto:{{ settings.email_url }}">{{ settings.email_url }}</a>
+      {% endif %}
     </li>
-  </ul>
-  <ul> 
-    <li>
-      {% if settings.show_twitter  %}  
-      Twitter: <a href="{{ settings.twitter_url }}">{{ settings.twitter_name }}</a>
-      {% endif  %} 
-    </li>
-    <li>
-      {% if settings.show_facebook  %}  
-      Facebook: <a href="{{ settings.facebook_url }}">{{ settings.facebook_name }}</a>
-      {% endif %} 
-    </li>
-
   </ul>
 </div><!-- .col-5 -->

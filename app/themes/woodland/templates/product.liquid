@@ -45,10 +45,10 @@ input[type="submit"].disabled:hover { background: {{ settings.button_color }} }
       </div>
     </div><!-- product variants -->
 
-    <p class="float-left">&lsaquo; See more {{ product.type | link_to_type }}.</p>
+    <p class="float-left">&lsaquo; 更多 {{ product.type | link_to_type }}.</p>
     <div class="price-field"><del></del> <span></span></div>
 
-    <input type="submit" name="add" value="Add to cart" id="purchase" />
+    <input type="submit" name="add" value="加入购物车" id="purchase" />
 
   </form>
 
@@ -61,20 +61,20 @@ input[type="submit"].disabled:hover { background: {{ settings.button_color }} }
         {% endfor %}
       </select>
     </div><!-- product variants -->
-    <p class="float-left">&lsaquo; See more {{ product.type | link_to_type }}. </p>
+    <p class="float-left">&lsaquo; 更多 {{ product.type | link_to_type }}. </p>
     <div class="price-field"><del></del> <span></span></div>
-    <input type="submit" name="add" value="Add to cart" id="purchase" />
+    <input type="submit" name="add" value="加入购物车" id="purchase" />
   </form>
 
   {% else %}
   <form action="/cart/add" method="post">
     <div id="product-variants">
     </div><!-- product variants -->
-    <p class="float-left">&lsaquo; See more {{ product.type | link_to_type }}. </p>
+    <p class="float-left">&lsaquo; 更多 {{ product.type | link_to_type }}. </p>
     {% assign variant = product.variants.first %}
     <div class="variant-price">{% if product.compare_at_price > product.price %}<del>{{ product.compare_at_price | money_with_currency }}</del>{% endif %} <span>{{ product.price | money_with_currency }}</span></div>
     <input type="hidden" id="{{ variant.id }}" name="id" value="{{ variant.id }}" />
-    <input type="submit" name="add" value="Add to cart" id="purchase" />
+    <input type="submit" name="add" value="加入购物车" id="purchase" />
   </form>
   {% endif %}
 
