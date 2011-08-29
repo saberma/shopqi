@@ -12,7 +12,10 @@ module Shopqi
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/middlewares)
+    config.autoload_paths += %W(
+      #{config.root}/lib
+      #{config.root}/app/middlewares
+    )
 
     #set the generator method auto generate helper false
     config.generators.helper = false
@@ -56,6 +59,9 @@ module Shopqi
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password,:password_confirmation]
+
+    #enable the asset pipline
+    config.assets.enabled = true
 
     config.middleware.insert 0, 'Dragonfly::Middleware', :images
     config.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
