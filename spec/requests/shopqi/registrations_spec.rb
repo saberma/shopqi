@@ -35,6 +35,7 @@ describe "Shopqi::Registrations", js: true do
         fill_in '手机验证码'       , with: '8888'
         check 'shop_terms_and_conditions' # 服务条款
         click_on '创建我的ShopQi商店'
+        sleep 10 # 等待后台保存shop对象
         has_content?('ShopQi欢迎您').should be_true
       end
 

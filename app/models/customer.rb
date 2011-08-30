@@ -13,7 +13,7 @@ class Customer < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :token_authenticatable,
          :recoverable, :rememberable, :trackable#,:validatable
 
-  attr_accessible :id, :name, :email, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
+  attr_accessible :id, :name, :email, :orders_count, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
   before_create :ensure_authentication_token # 生成login token，只使用一次
   validates_presence_of :name, :email, :password
   validates :email, uniqueness: {scope: :shop_id}, format: {with: Devise::Email::EXACT_PATTERN  }

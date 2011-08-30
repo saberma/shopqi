@@ -18,6 +18,7 @@ describe "Shopqi::Login", js: true do
     it "should show message" do
       fill_in '商店Web地址', with: shop.primary_domain.subdomain
       click_on 'log in'
+      sleep 3 # 等待页面跳转
       has_content?('邮箱或密码错误').should be_true
     end
 
@@ -26,6 +27,7 @@ describe "Shopqi::Login", js: true do
       fill_in 'Email'      , with: 'admin@shopqi.com'
       fill_in '密码'       , with: '666666'
       click_on 'log in'
+      sleep 3 # 等待页面跳转
       has_content?('ShopQi欢迎您').should be_true
     end
 

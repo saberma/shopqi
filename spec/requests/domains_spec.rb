@@ -29,6 +29,7 @@ describe "Domains", js: true do
       click_on '新增一个您已经拥有的域名'
       fill_in 'domain[host]', with: 'www.example.com'
       click_on '绑定此域名'
+      has_content?('www.example.com').should be_true
       page.execute_script("window.confirm = function(msg) { return true; }")
       click_on '删除'
       within '#domains > .items' do
@@ -80,7 +81,7 @@ describe "Domains", js: true do
         end
       end
 
-      it "should be force redirect" do # 重定向 
+      it "should be force redirect" do # 重定向
         within '#domains > .items' do
           within :xpath, './tr[1]/td[3]' do
             find('#shop_force_domain')['checked'].should be_false
