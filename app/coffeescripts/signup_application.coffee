@@ -16,11 +16,12 @@ Effect =
       scrollTop: destination-20
     }, 1000
 
-#地区
+#地区(冗余代码待重构)
 RegionUtils =
   init: (seed = [], region = '.region') ->
     $(region).each ->
       selects = $('select', this)
+      selects.unbind('change') # 避免多次绑定change事件
       selects.change ->
         $this = this
         select_index = selects.index($this) + 1

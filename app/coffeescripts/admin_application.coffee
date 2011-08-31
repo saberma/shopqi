@@ -114,6 +114,7 @@ RegionUtils =
   init: (seed = [], region = '.region') ->
     $(region).each ->
       selects = $('select', this)
+      selects.unbind('change') # 避免多次绑定change事件
       selects.change ->
         $this = this
         select_index = selects.index($this) + 1

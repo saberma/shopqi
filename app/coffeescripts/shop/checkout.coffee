@@ -1,3 +1,22 @@
+#地区(冗余代码待重构)
+RegionUtils =
+  init: (seed = [], region = '.region') ->
+    $(region).each ->
+      selects = $('select', this)
+      selects.unbind('change') # 避免多次绑定change事件
+      selects.change ->
+        $this = this
+        select_index = selects.index($this) + 1
+        select = selects.eq(select_index)
+        if $(this).val() and select[0]
+          $.get "/district/" + $(this).val(), (data) ->
+            result = eval(data)
+            options = select.attr("options")
+            $("option:gt(0)", select).remove()
+            $.each result, (i, item) -> options[options.length] = new Option(item[0], item[1])
+            value = seed[select_index]
+            select.val(value).change() if value # 级联回显
+
 $(document).ready ->
 
   #处理地址，级联操作税率
@@ -49,10 +68,8 @@ $(document).ready ->
         img = $("#cost :first-child")[0]
         $('#cost').html('¥' + data.total_price).append(img)
         $('#shipping_span').html(" ..包含快递费#{data.shipping_rate_price}元")
-    $(this).ajaxStart ->
-      $('.spinner').show()
-    $(this).ajaxStop ->
-      $('.spinner').hide()
+    $(this).ajaxStart -> $('.spinner').show()
+    $(this).ajaxStop -> $('.spinner').hide()
   .change()
 
   #处理订单提交结账
@@ -70,11 +87,10 @@ $(document).ready ->
         $('#payment-error').show()
       if data.success is true
         window.location = data.url
+    $(this).ajaxStart -> $('#purchase-progress').show()
+    $(this).ajaxStop -> $('#purchase-progress').hide()
+    false
 
-    $(this).ajaxStart ->
-      $('#purchase-progress').show()
-    $(this).ajaxStop ->
-      $('#purchase-progress').hide()
 
   #地区的级联选择
   $(".region").each ->
@@ -97,17 +113,17 @@ $(document).ready ->
       val = $(this).val()
       action = $(this).closest('form').attr('action').replace(/create_order/i,'get_address')
       if $(this).attr('id') is 'billing_address_selector'
-        str = 'order_billing_address_attributes'
+        id = 'billing'
       else
-        str = 'order_shipping_address_attributes'
+        id = 'shipping'
       $.get action, {address_id: val}, (data) ->
         if data isnt null
           address = data.customer_address
+          str = "order_#{id}_address_attributes"
           $("##{str}_name").val(address.name)
           $("##{str}_country_code").val(address.country_code)
-          $("##{str}_province").val(address.province)
-          $("##{str}_city").val(address.city)
-          $("##{str}_district").val(address.district)
+          RegionUtils.init [address.province, address.city, address.district], "##{id} .region"
+          $("##{str}_province").val(address.province).change()
           $("##{str}_address1").val(address.address1)
           $("##{str}_address2").val(address.address2)
           $("##{str}_zip").val(address.zip)
