@@ -3,7 +3,13 @@ require 'rails/all'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  #Bundler.require *Rails.groups(:assets => %w(development test))
+  # If you want your assets lazily compiled in production, use this line
+   Bundler.require(:default, :assets, Rails.env)
+end
+
 
 module Shopqi
   class Application < Rails::Application
@@ -40,11 +46,11 @@ module Shopqi
     config.i18n.default_locale = :cn
 
     # JavaScript files you want as :defaults (application.js is always included).
-    backbone_js = %w(jquery.min rails handlebars underscore-min backbone-min backbone.rails plugins)
-    config.action_view.javascript_expansions[:defaults] = %w()
-    config.action_view.javascript_expansions[:backbone] = backbone_js # 官网注册
-    config.action_view.javascript_expansions[:admin] = backbone_js + %w(jquery-ui-1.8.14.custom.min rails.validations jquery.blockUI plugins/jquery.guide admin_application )
-    config.action_view.javascript_expansions[:theme] = backbone_js + %w(theme_application) # 仅用于主题商店列表
+    #backbone_js = %w(jquery.min rails handlebars underscore-min backbone-min backbone.rails plugins)
+    #config.action_view.javascript_expansions[:defaults] = %w()
+    #config.action_view.javascript_expansions[:backbone] = backbone_js # 官网注册
+    #config.action_view.javascript_expansions[:admin] = backbone_js + %w(jquery-ui-1.8.14.custom.min rails.validations jquery.blockUI plugins/jquery.guide admin_application )
+    #config.action_view.javascript_expansions[:theme] = backbone_js + %w(theme_application) # 仅用于主题商店列表
 
 
     # Configure generators values. Many other options are available, be sure to check the documentation.
