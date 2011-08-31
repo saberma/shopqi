@@ -1,4 +1,4 @@
-.clearfix {zoom: 1;  /* triggers hasLayout */ display: block;     /* resets display for IE/Win */}  
+.clearfix {zoom: 1;  /* triggers hasLayout */ display: block;     /* resets display for IE/Win */}
 
 h1 { margin-top: -11px; }
 
@@ -27,24 +27,24 @@ input  {display:block; clear:both; margin-top:10px;}
 /* fixes the float issue in ie6 homepage */
  #client-logos { float:left; }
 .frontpage .col-6 { width:365px;} /* fixes the column issue in ie6 */
- 
- 
+
+
 /* weird ie6 doesn't show background*/
 
-#header { background: #4aa30d url('../images/background/bg-header-frontpage.gif?1273087967') top left repeat-x;}
-#header.frontpage.createbluegreen { background:url('../images/background/bg-bannergreentoblue.jpg?1273268734') repeat-x;}
+#header { background: #4aa30d url('../assets/background/bg-header-frontpage.gif?1273087967') top left repeat-x;}
+#header.frontpage.createbluegreen { background:url('../assets/background/bg-bannergreentoblue.jpg?1273268734') repeat-x;}
 #subheader ul li { padding-left:14px;}
 #subheader ul li img { display:none;}
- 
+
 /* ============ */
 /* = Lightbox = */
 /* ============ */
-#cboxTopLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderTopLeft.png, sizingMethod='scale');}
-#cboxTopCenter{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderTopCenter.png, sizingMethod='scale');}
-#cboxTopRight{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderTopRight.png, sizingMethod='scale');}
-#cboxBottomLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderBottomLeft.png, sizingMethod='scale');}
-#cboxBottomCenter{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderBottomCenter.png, sizingMethod='scale');}
-#cboxBottomRight{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderBottomRight.png, sizingMethod='scale');}
-#cboxMiddleLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderMiddleLeft.png, sizingMethod='scale');}
-#cboxMiddleRight{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/internet_explorer/borderMiddleRight.png, sizingMethod='scale');}
+#cboxTopLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderTopLeft.png, sizingMethod='scale');}
+#cboxTopCenter{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderTopCenter.png, sizingMethod='scale');}
+#cboxTopRight{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderTopRight.png, sizingMethod='scale');}
+#cboxBottomLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderBottomLeft.png, sizingMethod='scale');}
+#cboxBottomCenter{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderBottomCenter.png, sizingMethod='scale');}
+#cboxBottomRight{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderBottomRight.png, sizingMethod='scale');}
+#cboxMiddleLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderMiddleLeft.png, sizingMethod='scale');}
+#cboxMiddleRight{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderMiddleRight.png, sizingMethod='scale');}
 

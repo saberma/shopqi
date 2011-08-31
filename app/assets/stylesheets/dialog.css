@@ -4,7 +4,7 @@ body { margin: 0; text-align: center; font: 1em/1.4em "Lucida Grande", "Trebuche
 textarea { font: 1em/1.4em "Lucida Grande", "Trebuchet MS", Helvetica, sans-serif;}
 h1,h2,h3,h4,h5,h6 { color: #000; margin:5px 0 10px 0; font-weight:400;}
 h3,h4,h5,h6 {font-weight:700;}
-a { color: #3084CA; } 
+a { color: #3084CA; }
 a:hover { color: #25669C; }
 hr {color:#ededed; background-color:#ededed; border:none; margin:0; padding:0; height:1px;}
 
@@ -26,12 +26,12 @@ p {color:#666;}
 .inner-content h1 {padding:0 0 10px 0; margin:0 0 10px 0 !important; border-bottom:1px solid #EEEEEE;}
 
 #container { padding: 0; text-align: left; font-size: 75%; margin: 0 auto; width: 616px; }
-#dialog { background: #fff; border:none; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; margin: 50px auto 0 auto; padding:20px; width:575px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; box-shadow: 0 0 10px rgba(0,0,0,0.1); -moz-box-shadow: 0 0 10px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 10px rgba(0,0,0,0.1); box-shadow:0 0 10px rgba(0,0,0,0.1);} 
+#dialog { background: #fff; border:none; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; margin: 50px auto 0 auto; padding:20px; width:575px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; box-shadow: 0 0 10px rgba(0,0,0,0.1); -moz-box-shadow: 0 0 10px rgba(0,0,0,0.1); -webkit-box-shadow:0 0 10px rgba(0,0,0,0.1); box-shadow:0 0 10px rgba(0,0,0,0.1);}
 #dialog .actions {text-align:center; border-top:1px solid #ededed; padding-top:20px;}
 
-.status {border-top:1px solid #959595; border-left:1px solid #959595; border-right:1px solid #959595; border-bottom: 1px solid #7a7a7a; font-weight:400; color: #fff; padding:7px 0; margin:0; height:21px; background:#9D9D9D url(../images/admin/info-message-bg.jpg) repeat-x top left; position:relative; top:-20px; left:-20px; text-align:center; -moz-border-radius-topleft:4px; -moz-border-radius-topright:4px; border-top-right-radius:4px; border-top-left-radius:4px; -webkit-border-top-right-radius:4px; -webkit-border-top-left-radius:4px; text-shadow: rgba(0, 0, 0, 0.5) 1px 1px 1px; width:614px;}
+.status {border-top:1px solid #959595; border-left:1px solid #959595; border-right:1px solid #959595; border-bottom: 1px solid #7a7a7a; font-weight:400; color: #fff; padding:7px 0; margin:0; height:21px; background:#9D9D9D url(../assets/admin/info-message-bg.jpg) repeat-x top left; position:relative; top:-20px; left:-20px; text-align:center; -moz-border-radius-topleft:4px; -moz-border-radius-topright:4px; border-top-right-radius:4px; border-top-left-radius:4px; -webkit-border-top-right-radius:4px; -webkit-border-top-left-radius:4px; text-shadow: rgba(0, 0, 0, 0.5) 1px 1px 1px; width:614px;}
 .status p, .status h1 {display:inline; color:#fff; line-height:21px; margin:0 auto; font-size:12px; font-weight:700; border:0;}
-.status.system-error p { background:transparent url(../images/admin/icons/error.png) no-repeat 0 1px; padding:2px 0 2px 22px;}
+.status.system-error p { background:transparent url(../assets/admin/icons/error.png) no-repeat 0 1px; padding:2px 0 2px 22px;}
 
 ul {padding:10px 0 10px 25px;}
 ul li {color:#666;}
@@ -50,8 +50,8 @@ ul.full li.last {border-bottom:none;}
 .lform label {float:left; display:block; color:#999; font-size:13px; width:125px; text-align:right; margin:0 20px 0 0; font-weight:400; padding:0; height:32px; line-height:32px;}
 .lform label.normal {float:none; width:auto; text-align:center; display:inline-block;}
 .lform label.hint { background:none; height:20px; line-height:20px;}
-.lform label.open-id {background:transparent url(/images/admin/icons/openid-orange-grey.png) no-repeat 44px 10px;}
-.lform label.open-id.hint {background:transparent url(/images/admin/icons/openid-orange-grey.png) no-repeat 44px 3px;}
+.lform label.open-id {background:transparent url(/assets/admin/icons/openid-orange-grey.png) no-repeat 44px 10px;}
+.lform label.open-id.hint {background:transparent url(/assets/admin/icons/openid-orange-grey.png) no-repeat 44px 3px;}
 
 .tform td {line-height:25px;}
 .tform td.r span {font-size:11px; color:#999; padding-right:10px;}
@@ -93,10 +93,10 @@ textarea.lform {border:1px solid #e8e8e8; font-size:12px; color:#666; margin:10p
 .app-icon p, .shopqi-icon p {width:112px; font-size:11px; color:#999; padding:4px 0; line-height:13px; word-wrap: break-word;}
 #app-install div.connect {width:200px; padding:24px 10px; height:66px; }
 #app-install div.connect.read {display:inline-block; padding:41px 10px; height:30px;}
-#visual-install-details img, img.border {border:1px solid #dedede; padding:5px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}       
+#visual-install-details img, img.border {border:1px solid #dedede; padding:5px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
 #visual-install-details {padding:25px 0;}
-#app-install p.write {float:left; text-align:left; width:197px; padding-left:3px; height:32px; background:transparent url('/images/admin/write-arrow.jpg') no-repeat left 14px;}
-#app-install p.read {float:right; text-align:right; width:197px; padding-right:3px; height:32px; background:transparent url('/images/admin/read-arrow.jpg') no-repeat right 14px;}
+#app-install p.write {float:left; text-align:left; width:197px; padding-left:3px; height:32px; background:transparent url('/assets/admin/write-arrow.jpg') no-repeat left 14px;}
+#app-install p.read {float:right; text-align:right; width:197px; padding-right:3px; height:32px; background:transparent url('/assets/admin/read-arrow.jpg') no-repeat right 14px;}
 #app-links-list {list-style:disc inside; border-top:1px solid #ededed; padding:20px 0; margin:0; background-color:#f3f3f3;}
 #app-links-list li {font-size:11px; color:#999;}
 
@@ -107,7 +107,7 @@ textarea.lform {border:1px solid #e8e8e8; font-size:12px; color:#666; margin:10p
 
 form label { margin: 0; font-size: 12px; color: #555; font-weight: normal; }
 form select { font-size: 12px; }
-form input[type="text"], form input[type="password"] { display: block; background-color: transparent; padding: 5px 3px; margin-bottom: 22px !important; font-size: 12px; 
+form input[type="text"], form input[type="password"] { display: block; background-color: transparent; padding: 5px 3px; margin-bottom: 22px !important; font-size: 12px;
     border-top: 1px #aeaeae solid;
     border-left: 1px #e1e1e1 solid;
     border-right: 1px #e1e1e1 solid;
@@ -116,7 +116,7 @@ form input[type="text"], form input[type="password"] { display: block; backgroun
     -webkit-border-radius: 2px; }
 
 form input[type="text"]:focus, form input[type="text"]:active,
-form input[type="password"]:focus, form input[type="password"]:active { 
+form input[type="password"]:focus, form input[type="password"]:active {
   border-top: 1px #90abb6 solid;
   border-left: 1px #abc4ce solid;
   border-right: 1px #abc4ce solid;

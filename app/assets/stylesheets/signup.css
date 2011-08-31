@@ -9,7 +9,7 @@ p { margin-bottom: 8px; }
 
 form label { margin: 0; font-size: 12px; color: #555; font-weight: normal; }
 form select { font-size: 12px; }
-form input[type="text"], form input[type="password"] { display: block; background-color: transparent; padding: 5px 3px; margin-bottom: 22px !important; font-size: 12px; 
+form input[type="text"], form input[type="password"] { display: block; background-color: transparent; padding: 5px 3px; margin-bottom: 22px !important; font-size: 12px;
     border-top: 1px #aeaeae solid;
     border-left: 1px #e1e1e1 solid;
     border-right: 1px #e1e1e1 solid;
@@ -18,7 +18,7 @@ form input[type="text"], form input[type="password"] { display: block; backgroun
     -webkit-border-radius: 2px; }
 
 form input[type="text"]:focus, form input[type="text"]:active,
-form input[type="password"]:focus, form input[type="password"]:active { 
+form input[type="password"]:focus, form input[type="password"]:active {
   border-top: 1px #90abb6 solid;
   border-left: 1px #abc4ce solid;
   border-right: 1px #abc4ce solid;
@@ -67,10 +67,10 @@ table#price-chart { padding:0; margin:0 0 25px 0; border-collapse:collapse; }
 table#price-chart th img { margin-top:160px;} /* sign up button */
 
 table#price-chart th.heading { width: 198px ;}
-table#price-chart th.basic { background:url('../images/signup/basic.jpg') no-repeat; width:174px; height:208px; }
-table#price-chart th.professional { background:url('../images/signup/professional.jpg') no-repeat; width:174px; height:208px; }
-table#price-chart th.business { background:url('../images/signup/business.jpg') no-repeat; width:200px; height:208px; }
-table#price-chart th.unlimited { background:url('../images/signup/unlimited.jpg') no-repeat; width:174px; height:208px; }
+table#price-chart th.basic { background:url('../assets/signup/basic.jpg') no-repeat; width:174px; height:208px; }
+table#price-chart th.professional { background:url('../assets/signup/professional.jpg') no-repeat; width:174px; height:208px; }
+table#price-chart th.business { background:url('../assets/signup/business.jpg') no-repeat; width:200px; height:208px; }
+table#price-chart th.unlimited { background:url('../assets/signup/unlimited.jpg') no-repeat; width:174px; height:208px; }
 
 table#price-chart th,table#price-chart td  { border-right: 1px solid #FFF; text-align:center;  }
 table#price-chart td{ padding:10px;}
@@ -80,14 +80,14 @@ td.unlimited .special { font-weight: bold; color: #070; }
 table#price-chart .even td { background: #e6e6e6;}
 
 table#price-chart .odd .table-col-0 { background: #e4f0d5;}
-table#price-chart .odd .table-col-1 { background: #d8ebd3 url('../images/signup/col2-odd.gif') repeat-y top right;  }
+table#price-chart .odd .table-col-1 { background: #d8ebd3 url('../assets/signup/col2-odd.gif') repeat-y top right;  }
 table#price-chart .odd .table-col-2 { background: #d3e5ec; }
-table#price-chart .odd .table-col-3 { background: #daeefb url('../images/signup/col4-odd.gif') repeat-y top left;}
+table#price-chart .odd .table-col-3 { background: #daeefb url('../assets/signup/col4-odd.gif') repeat-y top left;}
 
 table#price-chart .even .table-col-0 { background: #cbe1ab; }
-table#price-chart .even .table-col-1 { background: #b1d7a7 url('../images/signup/col2-even.gif') repeat-y top right; }
+table#price-chart .even .table-col-1 { background: #b1d7a7 url('../assets/signup/col2-even.gif') repeat-y top right; }
 table#price-chart .even .table-col-2 { background: #a9cdd9;  }
-table#price-chart .even .table-col-3 { background: #b5ddf7 url('../images/signup/col4-even.gif') repeat-y top left; }
+table#price-chart .even .table-col-3 { background: #b5ddf7 url('../assets/signup/col4-even.gif') repeat-y top left; }
 
 
 
@@ -106,16 +106,16 @@ table#price-chart .even .table-col-3 { background: #b5ddf7 url('../images/signup
 #current-theme { position: absolute; top: 55px; right: 35px; text-align: center; }
 #current-theme img { width: 140px; height: 180px; padding: 5px; margin: 0 0 10px; background: #eee; border: 1px solid #fff; -webkit-box-shadow: 0px 2px 6px #999; -moz-box-shadow: 0 2px 6px #999; box-shadow: 0 2px 6px #999; }
 
-#signup .theme { background: url(../images/signup/theme-bg.png) top left no-repeat; width: 206px; height: 266px; padding: 8px 0 0 8px; margin: 0 20px 20px 0; border: none; float: left; }
+#signup .theme { background: url(../assets/signup/theme-bg.png) top left no-repeat; width: 206px; height: 266px; padding: 8px 0 0 8px; margin: 0 20px 20px 0; border: none; float: left; }
 #signup .themes { padding: 0; margin: 25px 0px 0px 0px; width: 1000px; overflow: hidden; }
-#signup .themes .pick { background: #fff; background: rgba(255, 255, 255, 0.7); position: relative; height: 186px; bottom: 259px; right: 4px; padding: 60px 0 20px; text-align: center; 
+#signup .themes .pick { background: #fff; background: rgba(255, 255, 255, 0.7); position: relative; height: 186px; bottom: 259px; right: 4px; padding: 60px 0 20px; text-align: center;
                         -webkit-transition: opacity 0.2s ease-in-out;
                         -moz-transition: opacity 0.2s ease-in-out;
                         -o-transition: opacity 0.2s ease-in-out;
                         transition: opacity 0.2s ease-in-out; }
-#signup .themes .pick .btn, #fancybox-title .btn { display: block; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; width: 135px; background: #ddd url(../images/signup/btn-next-bg.jpg) center right no-repeat; margin: 20px auto; padding: 7px 24px 7px 12px; font-size: 14px; border: 1px solid #fff; -webkit-box-shadow: 0px 2px 6px #555; -moz-box-shadow: 0 2px 6px #555; box-shadow: 0 2px 6px #555; }
+#signup .themes .pick .btn, #fancybox-title .btn { display: block; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; width: 135px; background: #ddd url(../assets/signup/btn-next-bg.jpg) center right no-repeat; margin: 20px auto; padding: 7px 24px 7px 12px; font-size: 14px; border: 1px solid #fff; -webkit-box-shadow: 0px 2px 6px #555; -moz-box-shadow: 0 2px 6px #555; box-shadow: 0 2px 6px #555; }
 #signup .themes .pick .btn:hover, #fancybox-title .btn:hover { color: #3084CA; }
-#signup .themes .pick .next, #fancybox-title .next { background: #ddd url(../images/signup/btn-next-bg2.jpg) center right no-repeat; color: #132002; border: 1px solid #C9E67C; border-top: 1px solid #fff; }
+#signup .themes .pick .next, #fancybox-title .next { background: #ddd url(../assets/signup/btn-next-bg2.jpg) center right no-repeat; color: #132002; border: 1px solid #C9E67C; border-top: 1px solid #fff; }
 #signup .themes .pick .next:hover, #fancybox-title .next:hover { color: #f0f2b4; text-shadow: none; }
 #signup #domain-available .positive, #signup #domain-available .negative { background: #FFFBE5; color: #4f3613; padding: 8px; border: 1px solid #ebe4bf; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; display: block; float: right; position: absolute; top: 0; right: 138px; width: 280px; }
 #signup #domain-available .positive strong { color: #3F8916; }
@@ -137,11 +137,11 @@ table#price-chart .even .table-col-3 { background: #b5ddf7 url('../images/signup
 
 #paypal-email.modified { background: #FFFBE5; color: #4f3613; }
 
-input.btn { margin: 20px 0 0 0; font-weight: bold; cursor: pointer; border: 1px solid #bbb; border-top: 1px solid #ccc; border-bottom: 1px solid #aaa; background: #ddd url('../images/admin/btns/bg.gif?1') top left repeat-x; padding: 4px 6px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; text-shadow: 0px 1px 1px #fff; color: #3a3a3a; }
+input.btn { margin: 20px 0 0 0; font-weight: bold; cursor: pointer; border: 1px solid #bbb; border-top: 1px solid #ccc; border-bottom: 1px solid #aaa; background: #ddd url('../assets/admin/btns/bg.gif?1') top left repeat-x; padding: 4px 6px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; text-shadow: 0px 1px 1px #fff; color: #3a3a3a; }
 input.btn:hover { -webkit-box-shadow: 0px 0px 3px #3084CA; -moz-box-shadow: 0px 0px 3px #3084CA; }
 input.btn:active, input.btn:focus { outline: none; -moz-outline-style: none; background: #eee; border-top: 1px solid #aaa; border-bottom: 1px solid #ccc; color: #555;}
 
-a.btn { font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid #bbb; border-top: 1px solid #ccc; border-bottom: 1px solid #aaa; background: #ddd url('../images/admin/btns/bg.gif?1') top left repeat-x; padding: 6px 8px; text-shadow: 0px 1px 1px #fff; color: #3a3a3a; text-decoration: none; border-radius:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+a.btn { font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid #bbb; border-top: 1px solid #ccc; border-bottom: 1px solid #aaa; background: #ddd url('../assets/admin/btns/bg.gif?1') top left repeat-x; padding: 6px 8px; text-shadow: 0px 1px 1px #fff; color: #3a3a3a; text-decoration: none; border-radius:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 a.btn-group { -moz-border-radius: 0px; -webkit-border-radius: 0px; border-right: 1px solid #eee; }
 a.btn-left { -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; -moz-border-radius-bottomleft: 5px; -webkit-border-bottom-left-radius: 5px; border-right: 1px solid #fff; }
 a.btn:hover {color:#3a3a3a;}

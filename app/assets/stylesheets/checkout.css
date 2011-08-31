@@ -11,14 +11,14 @@ h1, h2, h3, h4, h5, h6 {
 	color: #333;
 }
 
-h1 { 
+h1 {
   font-size: 180%;
   color: black;
   margin-bottom: 2px;
 }
 
-h2 { 
-  font-size: 175%; 
+h2 {
+  font-size: 175%;
   margin-bottom: 5px;
   border-bottom: 1px solid #eee;
   padding: 0 0 2px 0;
@@ -27,23 +27,23 @@ h2 {
   font-weight: normal;
 }
 
-h1 span.subtitle { 
-  font-size: 50%; 
+h1 span.subtitle {
+  font-size: 50%;
   color: #888;
 }
 
 
-h3 { 
+h3 {
   font-size: 110%;
 	margin-bottom: 2px;
 	margin-top: 5px;
   color: #741C1C;
   }
-  
+
 h3.divider {
   border-bottom: 1px solid #999;
 }
-  
+
 img { border: 0; }
 
 
@@ -59,27 +59,27 @@ a:hover {
 #welcome {margin:0 0 10px 0; padding:1px 10px;}
 
 #container {
-  width: 776px;  
+  width: 776px;
   margin: 20px auto 0px auto;
   text-align: left;
   font-size: 80%;
 }
 
 #container.slim {
-  width: 430px;  
+  width: 430px;
 }
 
 #main {
-  width: 776px;  
+  width: 776px;
   background-color: #fff;
   padding: 0 13px;
-  background: url('/images/checkout/checkout-bg.gif') bottom left repeat-y;
+  background: url('/assets/checkout/checkout-bg.gif') bottom left repeat-y;
 }
 
 #container.slim #main {
   width: 413px;
   padding: 0 15px;
-  background: url('/images/checkout/checkout-bg-slim.gif') bottom left repeat-y;
+  background: url('/assets/checkout/checkout-bg-slim.gif') bottom left repeat-y;
 }
 
 #content {
@@ -89,12 +89,12 @@ a:hover {
 #header {
   width: 792px;
   padding: 8px 5px;
-  background: url('/images/checkout/checkout-bg-top.gif') bottom left no-repeat;
+  background: url('/assets/checkout/checkout-bg-top.gif') bottom left no-repeat;
 }
 
 #container.slim #header {
-  width: 430px;  
-  background: url('/images/checkout/checkout-bg-top-slim.gif') bottom left no-repeat;
+  width: 430px;
+  background: url('/assets/checkout/checkout-bg-top-slim.gif') bottom left no-repeat;
 }
 
 #header h1 {
@@ -110,7 +110,7 @@ a:hover {
   position: absolute;
   left: 0;
   top: 0;
-  font-size: 80%;    
+  font-size: 80%;
   width: 100%;
 }
 
@@ -120,15 +120,15 @@ a:hover {
   width: 792px;
   padding: 8px 5px;
   margin: 0 auto;
-  background: url('/images/checkout/checkout-bg-bottom.gif') top center no-repeat;
+  background: url('/assets/checkout/checkout-bg-bottom.gif') top center no-repeat;
   text-align: center;
   color: #888;
   font-size: 80%;
 }
 
 #container.slim #footer {
-  width: 430px;  
-  background: url('/images/checkout/checkout-bg-bottom-slim.gif') top center no-repeat;
+  width: 430px;
+  background: url('/assets/checkout/checkout-bg-bottom-slim.gif') top center no-repeat;
 }
 
 /*
@@ -136,7 +136,7 @@ a:hover {
  */
 
 #overview {
-  background: #FFFBE5 url('/images/checkout/checkout-overview-bg.gif') top left repeat-x;
+  background: #FFFBE5 url('/assets/checkout/checkout-overview-bg.gif') top left repeat-x;
   border-bottom: 1px solid #EFEBA5;
   padding: 10px;
   margin: 0;
@@ -216,7 +216,7 @@ div.wallet-highlight { background: #ffff99 }
   width: 50px;
   height: 50px;
   padding: 1px;
-  margin: 0 4px 0 0;  
+  margin: 0 4px 0 0;
   border: 1px solid #FFEB80;
   float: left;
   text-align: center;
@@ -363,7 +363,7 @@ li.text-payment {
   color: #000;
   margin: 40px 0 20px 0;
 }
- 
+
 #payment {
   position: relative;
 }
@@ -386,12 +386,12 @@ li.text-payment {
   padding: 0;
 }
 
-#payment-methods li { 
+#payment-methods li {
   padding: 6px;
   margin-bottom: 1px;
 }
 
-#payment-methods li * { 
+#payment-methods li * {
 	vertical-align: middle;
 }
 
@@ -410,7 +410,7 @@ img.credit-card {
 .inactive {
 	-moz-opacity: 0.25;
 	opacity:.25;
-	filter: alpha(opacity=25);	
+	filter: alpha(opacity=25);
 }
 
 /*
@@ -421,7 +421,7 @@ img.credit-card {
   background-color: #FFFBE5;
   border: 1px solid #FED600;
   padding: 3px 5px;
-  line-height: 140%;  
+  line-height: 140%;
 }
 
 .field-with-errors input {
@@ -430,10 +430,10 @@ img.credit-card {
 
 .field-with-errors .error-message {
   color: #B30905;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
-.severe-error { 
+.severe-error {
   margin: 35px 5px;
 }
 
@@ -471,7 +471,7 @@ input[type=text], input[type=password], textarea {
  border: 1px solid #ccc;
  border-bottom: 1px solid #e7e7e7;
  border-right: 1px solid #e7e7e7;
- padding: 2px; 
+ padding: 2px;
 }
 
 textarea {
@@ -494,7 +494,7 @@ border-bottom: 2px solid #ccc;
 }
 
 #buttons input {
- font-weight: bold;   
+ font-weight: bold;
  padding: 2px 5px;
 }
 
@@ -664,7 +664,7 @@ span.hint a {
 /* Variant form sizing */
 td.label { width: 150px; vertical-align: middle; }
 td.lprice, td.sprice {width: 70px;}
-td.weight { width: 40px; } 
+td.weight { width: 40px; }
 th.trash { width: 20px;}
 th.sku {width: 30px;}
 
@@ -676,16 +676,16 @@ a.bottab {
  padding: 4px 10px 4px 25px;
 }
 
-a.more { background: #fff url(/images/admin/icons/textarea-more.gif) 2% 50% no-repeat;}
-a.less { background: #fff url(/images/admin/icons/textarea-less.gif) 2% 50% no-repeat;}
+a.more { background: #fff url(/assets/admin/icons/textarea-more.gif) 2% 50% no-repeat;}
+a.less { background: #fff url(/assets/admin/icons/textarea-less.gif) 2% 50% no-repeat;}
 
 
 
 .clearfix:after {
-   content: "."; 
-   display: block; 
-   height: 0; 
-   clear: both; 
+   content: ".";
+   display: block;
+   height: 0;
+   clear: both;
    visibility: hidden;
 }
 
@@ -707,7 +707,7 @@ input { padding: 0; margin: 0;}
   color: #000;
   font-size: 130%;
   margin-bottom: 10px;
-  border-bottom: 1px solid #ddd;  
+  border-bottom: 1px solid #ddd;
 }
 
 .form {

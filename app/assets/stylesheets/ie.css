@@ -1,4 +1,4 @@
-/* MAKE IE EMULATE FIXED POS */ 
+/* MAKE IE EMULATE FIXED POS */
 
 #flashnotice { position: absolute; bottom: 0; right: 0; right: auto; bottom: auto; left: expression( ( 0 - flashnotice.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' ); top: expression( ( 0 - flashnotice.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' ); margin: 0; }
 #flasherrors { position: absolute; bottom: 0; right: 0; right: auto; bottom: auto; left: expression( ( 0 - flasherrors.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' ); top: expression( ( 0 - flasherrors.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' ); margin: 0; }
@@ -6,7 +6,7 @@
 #dialog-content { position: absolute; }
 #utils { position: relative; top: 4px; }
 
-.shopqi-dialog-title-close {display:block; float:left; text-indent:-9999px; background:url(/images/admin/icons/close.png) no-repeat 0px 0px; height:24px; width:24px; position:absolute; margin-left:-48px; left:100%; top:8px; cursor:pointer;}
+.shopqi-dialog-title-close {display:block; float:left; text-indent:-9999px; background:url(/assets/admin/icons/close.png) no-repeat 0px 0px; height:24px; width:24px; position:absolute; margin-left:-48px; left:100%; top:8px; cursor:pointer;}
 
 /* END FIXED POS */
 
@@ -31,7 +31,7 @@ textarea { width: auto; }
 .tools { left: -50px; top: 2px; }
 .tools img { margin: 0; position: relative; bottom: 1px; }
 
-.activation-gfx { background: url(/images/admin/icons/check.gif) top left no-repeat; }
+.activation-gfx { background: url(/assets/admin/icons/check.gif) top left no-repeat; }
 
 /* dialog fixes */
 .status {position:absolute; top:20px; left:50%; margin-left:-308px;}
@@ -70,7 +70,7 @@ a#current img { margin-top: 4px; }
 #customer-search_filters .filter-tag a.close-filter-tag {display:inline-block; float:none;}
 #customer-table_list tr a span.contact-details {display:none;}
 
-.newtip .default { background: url('/images/admin/icons/sku.gif') top left no-repeat; right: 110px; }
+.newtip .default { background: url('/assets/admin/icons/sku.gif') top left no-repeat; right: 110px; }
 
 #product div { border: none; }
 #add-image-link { width: auto; }

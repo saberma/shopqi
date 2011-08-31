@@ -14,23 +14,23 @@
 }
 
 .message_block ul.error {
-  background: #fcf6d0 url(../../images/message_block/error.gif) 16px 50% no-repeat;
+  background: #fcf6d0 url(../../assets/message_block/error.gif) 16px 50% no-repeat;
 }
 
 .message_block ul.info {
-  background: #fcf6d0 url(../../images/message_block/info.gif) 16px 50% no-repeat;
+  background: #fcf6d0 url(../../assets/message_block/info.gif) 16px 50% no-repeat;
 }
 
 .message_block ul.notice {
-  background: #fcf6d0 url(../../images/message_block/notice.gif) 16px 50% no-repeat;
+  background: #fcf6d0 url(../../assets/message_block/notice.gif) 16px 50% no-repeat;
 }
 
 .message_block ul.confirm {
-  background: #fcf6d0 url(../../images/message_block/confirmation.gif) 16px 50% no-repeat;
+  background: #fcf6d0 url(../../assets/message_block/confirmation.gif) 16px 50% no-repeat;
 }
 
 .message_block ul.warn {
-  background: #fcf6d0 url(../../images/message_block/warn.gif) 1em 50% no-repeat;
+  background: #fcf6d0 url(../../assets/message_block/warn.gif) 1em 50% no-repeat;
 }
 
 field_with_errors {

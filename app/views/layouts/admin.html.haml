@@ -21,7 +21,7 @@
         %span#message.hide
     #navigation.content
       %a(href="/admin" style="position: absolute; top: 0; z-index: 30")
-        %img#logo-small(alt="Logo-small" src="/images/admin/logo-small.gif" style="position: absolute; top: 0")
+        =image_tag 'admin/logo-small.gif',id: 'logo-small', style: "position: absolute; top:0",alt:'logi-small'
       #utils
         %ul
           %li(style="float: left; margin-left: 60px; position: relative;")=link_to show_shop_url, show_shop_url

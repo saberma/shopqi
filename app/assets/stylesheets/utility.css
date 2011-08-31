@@ -14,7 +14,7 @@ hr { border: 1px solid #ccc; border-top: 1px solid #eee; }
 
 /*.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 .clearfix {display: inline-table;}
-* html .clearfix {height: 1%;} 
+* html .clearfix {height: 1%;}
 .clearfix {display: block;} */
 
 /* clearfix */
@@ -23,9 +23,9 @@ hr { border: 1px solid #ccc; border-top: 1px solid #eee; }
 * html .clearfix {height: 1%;}
 html[xmlns] .clearfix {display:block;}
 
-form { padding: 0; margin: 0;} 
-input { padding: 0; margin: 0;} 
-address { font-style: normal; } 
+form { padding: 0; margin: 0;}
+input { padding: 0; margin: 0;}
+address { font-style: normal; }
 option { padding-right: 5px; }
 .highlight { background: #FFFFDD; }
 
@@ -43,47 +43,47 @@ ul.indent {padding-left:20px;}
 /* *=GENERAL UTILITIES */
 
 .no-style { margin: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; }
-.l { text-align: left; } 
-.r { text-align: right; } 
+.l { text-align: left; }
+.r { text-align: right; }
 .c { text-align: center;}
-.fl { float: left; } 
+.fl { float: left; }
 .fr { float: right; }
 .fn { float:none; }
-.cl { clear: left; } 
-.cr { clear: right; } 
+.cl { clear: left; }
+.cr { clear: right; }
 .cb { clear: both; }
 
-/* Spacing */ 
-.st { margin-top: 10px; } 
-.sl { margin-left: 10px; } 
-.sr { margin-right: 10px; } 
+/* Spacing */
+.st { margin-top: 10px; }
+.sl { margin-left: 10px; }
+.sr { margin-right: 10px; }
 .sb { margin-bottom: 10px; }
-.ssb { margin-bottom: 20px; } 
-.sst { margin-top: 20px; } 
+.ssb { margin-bottom: 20px; }
+.sst { margin-top: 20px; }
 .ssl { margin-left: 20px; }
 
-/* No space */ 
-.nst { margin-top: 0;} 
-.nsb { margin-bottom: 0;} 
-.nsl { margin-left: 0;} 
+/* No space */
+.nst { margin-top: 0;}
+.nsb { margin-bottom: 0;}
+.nsl { margin-left: 0;}
 .nsr { margin-right: 0;}
 
 /* Padding */
 .padding { padding: 10px !important; }
 .no-padding { padding: 0 !important; }
-.pt { padding-top: 10px; } 
-.pl { padding-left: 10px; } 
-.pr { padding-right: 10px; } 
+.pt { padding-top: 10px; }
+.pl { padding-left: 10px; }
+.pr { padding-right: 10px; }
 .pb { padding-bottom: 10px; }
-.ppb { padding-bottom: 20px; } 
-.ppt { padding-top: 20px; } 
+.ppb { padding-bottom: 20px; }
+.ppt { padding-top: 20px; }
 .ppl { padding-left: 20px; }
 .ppr { padding-right:20px; }
 
 .hide { display: none;}
 .bb { border-bottom: 1px solid #ccc; }
 
-/* Thick Border */ 
+/* Thick Border */
 .tbl { border-left: 8px solid #ccc; padding-left: 10px; }
 .em { font-style: italic; }
 
@@ -106,8 +106,8 @@ ul.indent {padding-left:20px;}
 #errorExplanation p { padding: 0 10px; }
 #errorExplanation ul li { list-style: square; color: black; margin-left: 20px; }
 #flashnotice, #flasherrors { position: fixed; left: 0; bottom: 0; width: 100%; list-style-type: none; text-align: center; background: #000; padding: 10px; font-size: 100%; color: #fff; z-index: 9999; }
-#flashnotice { background: #172830 url('../images/admin/bubbles.gif') top left no-repeat; border-top: 3px solid #000; color: #fff; vertical-align: center; }
-#flasherrors { background: #8A1111 url('../images/admin/bubbles_error.gif') top left no-repeat; border-top: 3px solid #000; color: #fff; }
+#flashnotice { background: #172830 url('../assets/admin/bubbles.gif') top left no-repeat; border-top: 3px solid #000; color: #fff; vertical-align: center; }
+#flasherrors { background: #8A1111 url('../assets/admin/bubbles_error.gif') top left no-repeat; border-top: 3px solid #000; color: #fff; }
 
 .errors { padding: 5px; }
 
