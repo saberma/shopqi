@@ -17,6 +17,8 @@ describe "Shop::Shops", js:true do
 
   let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
 
+  let(:payment) { Factory :payment, shop: shop }
+
   before(:each) { Capybara::Server.manual_host = shop.primary_domain.host }
 
   after(:each) { Capybara::Server.manual_host = nil }
@@ -24,6 +26,7 @@ describe "Shop::Shops", js:true do
   describe "GET /products" do # 首页
 
     it "should show product" do
+      payment
       product = iphone4
       variant = product.variants.first
       visit '/'
@@ -48,6 +51,7 @@ describe "Shop::Shops", js:true do
       click_on '去到下一步'
       #选择支付方式
       page.should have_content(product.title)
+      choose '邮局汇款'
       click_on '购买'
       page.should have_content("您的订单号为： #1001")
     end

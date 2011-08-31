@@ -23,7 +23,7 @@
     %div(style="clear:left")
   / end overview
   #content
-    =form_for order, url: "/orders/#{shop.id}/#{order.token}/commit" do |f|
+    =form_for order, url: "/orders/#{shop.id}/#{order.token}/commit", html: { onsubmit: 'return false' } do |f|
       #payment
         .group.clearfix
           %h3 发货方式
@@ -51,7 +51,7 @@
                 -shop.payments.each do |gateway|
                   %li
                     =f.radio_button :payment_id, gateway.id
-                    =label_tag 'payment' , gateway.name? ? gateway.name :  gateway.payment_type.name
+                    =label_tag "order_payment_id_#{gateway.id}" , gateway.name? ? gateway.name :  gateway.payment_type.name
             #pay-info.gright
           %p(style="clear:both;height: 0")
         #marketing-box.group.clearfix
