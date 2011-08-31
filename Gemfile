@@ -1,12 +1,11 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc8'
+gem 'rails', '3.1.0'
 
 ##### 实体相关 #####
 gem 'pg'
-#gem 'devise'         , '~> 1.4.2' #由于更新版还未发布解决 bcrypt-ruby 兼容问题
-gem 'devise', git: 'git://github.com/plataformatec/devise.git'
+gem 'devise'
 
 #use unicorn as web server
 gem 'unicorn'
