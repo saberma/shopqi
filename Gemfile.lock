@@ -4,6 +4,15 @@ GIT
   specs:
     rails-dev-boost (0.1.1)
 
+GIT
+  remote: git@github.com:liwh/meta_search.git
+  revision: b5fc31f8fde8b5d43b5363c31d8b7f8ebd0a9acc
+  specs:
+    meta_search (1.1.0.pre2)
+      actionpack (~> 3.1.0)
+      activerecord (~> 3.1.0)
+      activesupport (~> 3.1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -149,11 +158,6 @@ GEM
       treetop (~> 1.4.8)
     message_block (1.0.4)
       rails (>= 3.0.0)
-    meta_search (0.5.4)
-      actionpack (>= 3.0.0.beta4)
-      activerecord (>= 3.0.0.beta4)
-      activesupport (>= 3.0.0.beta4)
-      arel (>= 0.4.0)
     mime-types (1.16)
     mini_magick (3.3)
       subexec (~> 0.1.0)
@@ -322,7 +326,7 @@ DEPENDENCIES
   kaminari
   liquid
   message_block
-  meta_search
+  meta_search!
   mini_magick
   mustang
   newrelic_rpm

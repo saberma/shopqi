@@ -25,7 +25,7 @@ gem 'liquid' #模板语言
 gem "carrierwave"
 #查询
 #gem 'meta_where'
-gem 'meta_search'
+gem 'meta_search', git: 'git@github.com:liwh/meta_search.git'
 gem 'squeel'
 
 #gem 'carmen'#地区

@@ -240,15 +240,15 @@ Shopqi::Application.routes.draw do
         put 'themes/settings'      , to: 'themes#update'
         post 'themes/delete_preset', to: 'themes#delete_preset'
       end
-      scope 'themes' do
-        resources :assets do
-          member do
-            get :versions
-            put :rename
-            post :upload
-          end
-        end
-      end
+      #scope 'themes' do
+      #  resources :assets do
+      #    member do
+      #      get :versions
+      #      put :rename
+      #      post :upload
+      #    end
+      #  end
+      #end
 
     end
 
