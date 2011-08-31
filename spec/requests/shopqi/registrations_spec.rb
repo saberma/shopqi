@@ -10,8 +10,6 @@ describe "Shopqi::Registrations", js: true do
   describe "GET /signup" do
 
     before(:each) do
-      Capybara.server_port = 31337 # 指定port
-      Setting.stub!(:store_host_with_port).and_return("#{Setting.store_host}:#{Capybara.server_port}") # registrations/new.html.haml App.redirect_uri
       visit '/services/signup/new/basic'
     end
 
@@ -35,7 +33,7 @@ describe "Shopqi::Registrations", js: true do
         fill_in '手机验证码'       , with: '8888'
         check 'shop_terms_and_conditions' # 服务条款
         click_on '创建我的ShopQi商店'
-        sleep 10 # 等待后台保存shop对象
+        sleep 5 # 等待后台保存shop对象
         has_content?('ShopQi欢迎您').should be_true
       end
 

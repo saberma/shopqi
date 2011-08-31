@@ -144,5 +144,5 @@
 
 :javascript
   App.themes = new App.Collections.Themes(#{themes_json});
-  App.redirect_url = '#{Setting.store_host_with_port}/admin' //注册成功跳转
+  App.redirect_url = '#{Setting.store_host}#{request.port_string}/admin' //注册成功跳转
   new App.Views.Signup.Index({collection: App.themes});
