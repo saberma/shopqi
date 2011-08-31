@@ -17,7 +17,7 @@ class Customer < ActiveRecord::Base
   before_create :ensure_authentication_token # 生成login token，只使用一次
   validates_presence_of :name, :email, :password
   validates :email, uniqueness: {scope: :shop_id}, format: {with: Devise::Email::EXACT_PATTERN  }
-  validates :password, confirmation: true, length: 6..20
+  validates :password, confirmation: true, length: 6..20, if: :password_required?
   validates :name, length: 2..10
 
   # 标签
@@ -91,6 +91,9 @@ class Customer < ActiveRecord::Base
     where(conditions).where(shop_id: shop_domain.shop_id).first
   end
 
+  def password_required? # copy from devise
+    !persisted? || !password.nil? || !password_confirmation.nil?
+  end
 end
 
 class CustomerAddress < ActiveRecord::Base
