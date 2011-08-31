@@ -15,8 +15,9 @@ class Customer < ActiveRecord::Base
 
   attr_accessible :id, :name, :email, :orders_count, :note, :accepts_marketing, :tags_text, :addresses_attributes, :password, :password_confirmation
   before_create :ensure_authentication_token # 生成login token，只使用一次
-  validates_presence_of :name, :email, :password
+  validates_presence_of :name, :email
   validates :email, uniqueness: {scope: :shop_id}, format: {with: Devise::Email::EXACT_PATTERN  }
+  validates_presence_of :password, if: :password_required?
   validates :password, confirmation: true, length: 6..20, if: :password_required?
   validates :name, length: 2..10
 
