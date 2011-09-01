@@ -22,3 +22,11 @@ CustomerGroup = Backbone.Model.extend
 # 辅助实体，后端应用不需要相应的实体
 CustomerGroupFilter = Backbone.Model.extend
   name: 'customer_group_filter'
+
+
+
+App.Collections.CustomerGroups = Backbone.Collection.extend
+  model: CustomerGroup
+
+App.Collections.CustomerGroupFilters = Backbone.Collection.extend
+  model: CustomerGroupFilter

@@ -11,3 +11,6 @@ Order = Backbone.Model.extend
       when 'fulfilled' then 'o-fulfilled'
       when 'partial' then 'o-partial'
       when 'unshipped' then 'o-not-fulfilled'
+
+App.Collections.Orders = Backbone.Collection.extend
+  model: Order

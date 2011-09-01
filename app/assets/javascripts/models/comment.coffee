@@ -8,3 +8,8 @@ class Comment extends Backbone.Model
     this.unset 'is_published', silent: true
     this.unset 'is_unapproved', silent: true
     attrs = this.wrappedAttributes()
+
+
+App.Collections.Comments = Backbone.Collection.extend
+  model: Comment
+  url: '/admin/comments'

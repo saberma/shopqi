@@ -4,3 +4,7 @@ Payment = Backbone.Model.extend
   validate: (attrs) ->
     if attrs.name == ""
       "方式不能为空"
+
+App.Collections.Payments = Backbone.Collection.extend
+  model: Payment
+  url: '/admin/payments'

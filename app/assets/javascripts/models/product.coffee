@@ -84,3 +84,73 @@ ProductVariant = Backbone.Model.extend
       return
     else
       error
+
+
+
+
+App.Collections.AvailableProducts = Backbone.Collection.extend
+  model: Product
+  url: '/admin/available_products'
+
+  initialize: ->
+    self = this
+    this.bind 'refresh', ->
+      _(self.models).each (model) ->
+        new App.Views.CustomCollection.AvailableProduct model: model
+
+App.Collections.Products = Backbone.Collection.extend
+  model: Product
+
+
+
+App.Collections.ProductOptions = Backbone.Collection.extend
+  model: ProductOption
+
+  initialize: ->
+    _.bindAll this, 'addOne', 'removeOne', 'showBtn'
+    this.bind 'add', this.addOne
+    this.bind 'remove', this.removeOne
+    # 超过3个则隐藏[新增按钮]
+    this.bind 'all', this.showBtn
+
+  addOne: (model, collection) ->
+    new App.Views.ProductOption.Edit model: model
+
+  removeOne: (model, collection) ->
+    model.view.remove()
+
+  showBtn: (model, collection) ->
+    if this.length >= 3
+      $('#add-option-bt').hide()
+    else
+      $('#add-option-bt').show()
+
+
+App.Collections.ProductVariants = Backbone.Collection.extend
+  model: ProductVariant
+
+  url: ->
+    "/admin/products/#{App.product.id}/variants"
+
+  initialize: ->
+    _.bindAll this, 'addOne'
+    this.bind 'add', this.addOne
+
+  addOne: (model, collection) ->
+    msg '新增成功!'
+    $('#new-variant-link').show()
+    $('#new-variant').hide()
+    new App.Views.Product.Show.Variant.Show model: model
+    new App.Views.Product.Show.Variant.QuickSelect collection: collection
+    new App.Views.ProductOption.Index collection: App.product.options
+
+  # 所有款式的选项合集
+  options: ->
+    #return @data if @data
+    @data = option1: [], option2: [], option3: []
+    _(@models).each (model) =>
+      i = 1
+      _(@data).each (option, key) =>
+        option.push model.attributes["option#{i++}"]
+        @data[key] = _.uniq _.compact option
+    @data

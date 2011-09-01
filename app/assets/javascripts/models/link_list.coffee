@@ -25,3 +25,7 @@ LinkList = Backbone.Model.extend
       this.links.refresh this.attributes.links
       this.unset 'links', silent: true
     this
+
+App.Collections.LinkLists = Backbone.Collection.extend
+  model: LinkList
+  url: '/admin/link_lists'
