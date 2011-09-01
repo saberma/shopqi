@@ -1,5 +1,5 @@
 -use_kindeditor
--use_javascripts 'models/product', 'collections/product_options', 'collections/product_variants', 'views/products/show/index', 'views/products/show/show', 'views/products/show/edit', 'views/product_options/edit', 'views/product_options/show', 'views/product_options/index', 'views/products/show/variants/index', 'views/products/show/variants/new', 'views/products/show/variants/show', 'views/products/show/variants/quick_select', 'controllers/products'
+-use_javascripts 'backbone/models/product', 'backbone/views/products/show/index', 'backbone/views/products/show/show', 'backbone/views/products/show/edit', 'backbone/views/product_options/edit', 'backbone/views/product_options/show', 'backbone/views/product_options/index', 'backbone/views/products/show/variants/index', 'backbone/views/products/show/variants/new', 'backbone/views/products/show/variants/show', 'backbone/views/products/show/variants/quick_select', 'backbone/controllers/products'
 
 %h2#product_title= link_to product.title, "/products/#{product.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links
@@ -40,7 +40,7 @@
           #upload-area.hide
             %p#status.hide
               =image_tag 'admin/icons/trash.gif', alt: '删除'
-              %img.fr.st.pad(alt="Spinner" src="/images/spinner.gif")
+              =image_tag 'spinner.gif',class: 'fr st pad', alt: 'Spinner'
             =form_for [product,photo], html: { multipart: true },remote: true do |p|
               %h4.st 上传图片
               %p.note 允许上传文件类型( .gif, .jpg, .jpeg, .png)
@@ -276,7 +276,7 @@
     new App.Controllers.Products();
     Backbone.history.start();
   }
-  App.product = new Product(#{product_json});
+  App.product = new App.Models.Product(#{product_json});
   App.product.url = "#{product_path(product)}";
   App.product_variants = new App.Collections.ProductVariants();
   App.product_variants.refresh(#{variants.to_json(except: [ :created_at, :updated_at ])});

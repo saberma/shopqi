@@ -89,7 +89,7 @@ App.Models.ProductVariant = Backbone.Model.extend
 
 
 App.Collections.AvailableProducts = Backbone.Collection.extend
-  model: Product
+  model: App.Models.Product
   url: '/admin/available_products'
 
   initialize: ->
