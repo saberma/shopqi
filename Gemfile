@@ -75,7 +75,6 @@ group :development, :test do
   # 编译coffee-script
   gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
   gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
-  gem 'execjs'
 end
 
 group :test, :travis do
@@ -91,10 +90,12 @@ group :development, :test, :travis do
   gem "factory_girl_rails"
 end
 
-
-#group :assets do
-#  gem 'sass-rails', "  ~> 3.1.0.rc"
-#  gem 'coffee-rails', "~> 3.1.0.rc"
-#  gem 'uglifier'
-#end
+# Gems used only for assets and not required
+# in production environments by default.
+# rake assets:precompile 部署到生产环境下执行
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
 

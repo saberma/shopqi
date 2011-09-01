@@ -33,7 +33,7 @@
     if "#{text}".length == 1 then "0#{text}" else text
 
 #字符串
-StringUtils =
+@StringUtils =
   #转化为数组
   to_a: (text) ->
     _.uniq _.compact text.split(/[,\uFF0C]\s*/)
@@ -45,7 +45,7 @@ StringUtils =
     str.length >= ends.length and str.substring(str.length - ends.length) is ends
 
 #表单
-FormUtils =
+@FormUtils =
   #表单输入项转化为hash: option1 => value
   to_h: (form) ->
     inputs = {}
@@ -61,7 +61,7 @@ FormUtils =
     inputs
 
 #标签
-TagUtils =
+@TagUtils =
   init: (tags_text_id = 'tags_text', tag_list_id = 'tag-list')->
     tag_items = $("##{tag_list_id} a")
     text_field = $("##{tags_text_id}")
@@ -85,7 +85,7 @@ TagUtils =
     .keyup()
 
 #地区
-RegionUtils =
+@RegionUtils =
   init: (seed = [], region = '.region') ->
     $(region).each ->
       selects = $('select', this)
@@ -103,7 +103,7 @@ RegionUtils =
             select.val(value).change() if value # 级联回显
 
 #为IE添加placeholder属性
-setPlaceholderText = ->
+@setPlaceholderText = ->
   PLACEHOLDER_SUPPORTED = "placeholder" of document.createElement("input")
   return  if PLACEHOLDER_SUPPORTED or !$(":input[placeholder]").length
   $(":input[placeholder]").each ->
@@ -122,7 +122,7 @@ setPlaceholderText = ->
     ).bind "reset", ->
       setTimeout add_placeholder, 50
 #特效
-Effect =
+@Effect =
   scrollTo: (id) ->
     destination = $(id).offset().top
     $("html:not(:animated),body:not(:animated)").animate {
@@ -130,7 +130,7 @@ Effect =
     }, 1000
 
 #右上角菜单
-NavigationDropdown = (navs) ->
+@NavigationDropdown = (navs) ->
   _.each navs, (label, parent_id) ->
     $("<a href='#' onclick='return false;' class='nav-link'>#{label}</a>").prependTo("##{parent_id}").click ->
       $(document).click()
@@ -140,13 +140,13 @@ NavigationDropdown = (navs) ->
     $('#secondary > li > a').removeClass 'current'
     $('#secondary > li > .nav-dropdown').hide()
 
-TogglePair = (ids) ->
+@TogglePair = (ids) ->
   _.each ids, (id) ->
     $("##{id}").toggle()
   false
 
 #可新增下拉框
-UpdateableSelectBox = (select_box, create_label) ->
+@UpdateableSelectBox = (select_box, create_label) ->
   input_field = select_box.next()
   input_field = input_field.children('input') if input_field.hasClass('field_with_errors')
   if select_box.children().size() > 0
@@ -173,12 +173,12 @@ UpdateableSelectBox = (select_box, create_label) ->
 
 ##### 注册handlebars helpers #####
 #日期，用于订单列表创建日期的格式化
-Handlebars.registerHelper 'date', (date, format)->
+@Handlebars.registerHelper 'date', (date, format)->
   format = null if format.hash
   DateUtils.to_s date, format
 
 #迭代，加入 index, index_plus 属性值
-Handlebars.registerHelper 'each_with_index', (context, block) ->
+@Handlebars.registerHelper 'each_with_index', (context, block) ->
   _(context).map (item, index) ->
     attr = item: item, index: index, index_plus: (index + 1)
     block(attr)

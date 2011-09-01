@@ -8,7 +8,7 @@
 #
 #TODO:将工具类重构至独立的文件中
 #特效
-window.Effect =
+@Effect =
   scrollTo: (id) ->
     destination = $(id).offset().top
     $("html:not(:animated),body:not(:animated)").animate {
@@ -16,7 +16,7 @@ window.Effect =
     }, 1000
 
 #地区
-window.RegionUtils =
+@RegionUtils =
   init: (seed = [], region = '.region') ->
     $(region).each ->
       selects = $('select', this)
