@@ -45,7 +45,7 @@ class ShopThemeSetting < ActiveRecord::Base
     end
 
     def transform # settings.html的内容要先经过处理: 上传、字体、改名
-      doc = Nokogiri::HTML(File.open(html_path)) #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
+      doc = Nokogiri::HTML(File.open(html_path), nil, 'utf-8') #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
       doc.css("input[type='file']").each do |file| # 上传文件
         name = file['name']
         url = "/#{theme.files_relative_path}/assets/#{name}"

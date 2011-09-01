@@ -22,14 +22,14 @@
     #settings_panel.col-8.sst.last
       =render inline: settings_html
       %fieldset.required_setting
-        %legend Additional Layouts
+        %legend 其他布局
         %table
           %tr
             %th
-              %label(for="theme_settings_customer_layout") Customer Area Layout
+              %label(for="theme_settings_customer_layout") 自定义布局
             %td
               %select#theme_settings_customer_layout.layout(name="theme[settings][customer_layout]")
-                %option(value="customer_area") default
+                %option(value="customer_area") 默认
                 %option(value="") ---
                 %option(selected="selected" value="theme") theme
       .r.st.sb
