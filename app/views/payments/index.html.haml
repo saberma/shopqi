@@ -203,9 +203,9 @@
 .group
   =render partial: 'policy'
 
-:coffeescript
-  App.custom_payments = new App.Collections.Payments()
-  App.custom_payments.refresh #{custom_payments.to_json(except: [:created_at,:updated_at])}
-  new App.Views.Payment.Index {collection: App.custom_payments}
+:javascript
+  App.custom_payments = new App.Collections.Payments();
+  App.custom_payments.refresh(#{custom_payments.to_json(except: [:created_at,:updated_at])})
+  new App.Views.Payment.Index({collection: App.custom_payments})
 
   task_name = 'setup_payment_gateway'

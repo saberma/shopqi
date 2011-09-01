@@ -16,7 +16,7 @@
 #=require_self
 
 #日期
-DateUtils =
+@DateUtils =
   to_s: (date, format='yyyy-MM-dd HH:mm:ss') ->
     date = new Date(date)
     text = format.replace /yyyy/, date.getFullYear()
