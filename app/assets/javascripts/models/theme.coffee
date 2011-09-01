@@ -1,4 +1,4 @@
-Theme = Backbone.Model.extend
+class Theme extends Backbone.Model
   name: 'theme'
 
   clone_attributes: ->

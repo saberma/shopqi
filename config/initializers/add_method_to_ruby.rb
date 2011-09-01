@@ -21,6 +21,7 @@ Carmen.default_locale = :cn
 
 
 #增加subdomain属性
+#rails 3.1默认支持subdomain和domain
 #module UrlHelper
 #  extend ActionDispatch::Routing::UrlFor
 #

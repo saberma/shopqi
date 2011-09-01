@@ -1,4 +1,4 @@
-Comment = Backbone.Model.extend
+class Comment extends Backbone.Model
   name: 'comment'
 
   toJSON : ->

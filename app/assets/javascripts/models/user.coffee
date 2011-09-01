@@ -1,2 +1,2 @@
-User = Backbone.Model.extend
+class User extends Backbone.Model
   name: 'user'

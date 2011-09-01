@@ -4,7 +4,15 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery
-//= require jquery_ujs
+//=require jquery
+//=require jquery_ujs
 //=require jquery-ui
-//= require_tree .
+//=require underscore-min
+//=require backbone
+//=require handlebars
+//=require backbone.rails
+//=require plugins
+//=require rails.validations
+//=require jquery.blockUI
+//=require plugins/jquery.guide
+//=require jquery.MultiFile
