@@ -9,7 +9,7 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
     @collection = new App.Collections.Presets
     @collection.bind 'add', (model) -> new App.Views.Theme.Settings.Preset.Show model: model
     @collection.bind 'remove', (model) -> model.view.destroy()
-    this.render()
+    @render()
 
   render: ->
     self = this
@@ -17,14 +17,14 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
     if _.isString settings.current
       $('#theme_load_preset').val(settings.current)
     else
-      this.loadSettings settings.current
+      @loadSettings settings.current
     $('#theme_load_preset').change()
 
   load: -> # 加载预设至右边配置项
     name = $('#theme_load_preset').children('option:selected').val()
     preset = @collection.detect (model) -> model.get('name') is name
-    this.loadSettings preset.get('value')
-    this.showDelete() # 显示删除按钮
+    @loadSettings preset.get('value') if preset
+    @showDelete() # 显示删除按钮
 
   # private
   loadSettings: (settings_hash) -> # 加载配置项

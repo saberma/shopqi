@@ -71,7 +71,9 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
         $('#theme_load_preset').val exist_preset_name
 
   customize: (e) -> # 修改配置项，切换至定制预设
-    $('#theme_load_preset').val '' if e.target.type not in ['submit', 'file']
+    if e.target.type not in ['submit', 'file']
+      $('#theme_load_preset').val ''
+      $('#delete_theme_preset_link').hide()
 
   select: -> # 显示新增命名输入项
     checked = $('#save-current-setting').attr 'checked'
