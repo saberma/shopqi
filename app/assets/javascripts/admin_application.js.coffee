@@ -7,56 +7,13 @@
 #=require jquery
 #=require jquery_ujs
 #=require jquery-ui
-#=require underscore-min
-#=require backbone
-#=require handlebars
-#=require backbone.rails
+#=require backbone_js
+#=require backbone/admin
 #=require plugins
 #=require rails.validations
 #=require jquery.blockUI
 #=require plugins/jquery.guide
 #=require_self
-window.App =
-  Views:
-    LinkList:
-      Links: {}
-    Link: {}
-    SmartCollection: {}
-    CustomCollection: {}
-    Order:
-      Index: {}
-      Show:
-        Transaction: {}
-        Fulfillment: {}
-        LineItem: {}
-        History: {}
-    Customer:
-      Index:
-        Filter: {}
-      Show:
-        Order: {}
-      New: {}
-    CustomerGroup:
-      Index: {}
-    Asset:
-      Index: {}
-    Theme:
-      Settings:
-        Preset: {}
-    Product:
-      Show:
-        Variant: {}
-      Index: {}
-    Comment: {}
-    Payment: {}
-    ProductOption: {}
-    Task: {}
-    Domain: {}
-  Controllers:
-    Orders: {}
-    Customers: {}
-  Collections: {}
-  init: ->
 
 #日期
 DateUtils =

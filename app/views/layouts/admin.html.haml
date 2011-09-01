@@ -11,7 +11,7 @@
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
     =yield :stylesheets
-    = javascript_include_tag :admin_application, 'models/task', 'collections/tasks', 'views/tasks/checkoff', 'views/tasks/show', 'views/tasks/index'
+    = javascript_include_tag :admin_application
     =yield :kindeditor
     =yield :javascripts
     = csrf_meta_tag
@@ -92,7 +92,7 @@
     #flasherrors.hide
     #flashnotice.hide
     #indicator(style="z-index: 1000; position: absolute; width: 20px; height: 20px; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; display: none; top: 1236px; left: 591px; ")
-      %img(border="0" src="/images/spinner.gif")
+      =image_tag 'spinner.gif', style: 'border=0'
     -unless is_home? or shop.guided
       =render 'home/progress'
 

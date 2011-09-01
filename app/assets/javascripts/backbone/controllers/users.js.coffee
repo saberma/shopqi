@@ -16,7 +16,7 @@ App.Controllers.Users = Backbone.Controller.extend
       $.getJSON "/admin/users/#{id}", (user) ->
         template = Handlebars.compile $('#user-details-area').html()
         $.blockUI message: template(user), css: { width: '380px' }
-      false
+      return false
 
   routes:
     "nothing":      "nothing"
