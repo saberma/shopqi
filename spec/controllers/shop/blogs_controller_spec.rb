@@ -13,7 +13,7 @@ describe Shop::BlogsController do
 
   before :each do
     request.host = "#{shop.primary_domain.host}"
-    shop.theme.switch Theme.find_by_name('Woodland')
+    shop.theme.switch Theme.find_by_handle('woodland')
   end
 
   it 'should be show' do
