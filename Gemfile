@@ -76,7 +76,6 @@ group :development, :test do
   gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
   gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
   gem 'execjs'
-  gem 'barista'
 end
 
 group :test, :travis do
