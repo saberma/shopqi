@@ -83,7 +83,7 @@
       %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
 
 :javascript
-  App.theme = new Theme(#{@theme_json});
+  App.theme = new App.Models.Theme(#{@theme_json});
   App.styles_json = #{@styles_json};
   App.others_json = new App.Collections.Themes(#{@others_json});
   new App.Views.Theme.Show.Index({model: App.theme});

@@ -1,4 +1,4 @@
-class Theme extends Backbone.Model
+App.Models.Theme  = Backbone.Model.extend
   name: 'theme'
 
   clone_attributes: ->
@@ -8,7 +8,5 @@ class Theme extends Backbone.Model
     attrs['budget'] = if price is 0 then '免费' else "￥#{price}"
     attrs
 
-
-
 App.Collections.Themes = Backbone.Collection.extend
-  model: Theme
+  model: App.Models.Theme
