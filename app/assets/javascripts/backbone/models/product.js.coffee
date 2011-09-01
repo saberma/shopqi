@@ -1,5 +1,5 @@
 # 自定义集合中会用到
-Product = Backbone.Model.extend
+App.Models.Product = Backbone.Model.extend
   name: 'product'
 
   initialize: (args) ->
@@ -55,11 +55,11 @@ Product = Backbone.Model.extend
     $('ul li:first-child').append("<div class='featured'></div>")
 
 # 商品选项
-ProductOption = Backbone.Model.extend
+App.Models.ProductOption = Backbone.Model.extend
   name: 'product_option'
 
 # 商品款式
-ProductVariant = Backbone.Model.extend
+App.Models.ProductVariant = Backbone.Model.extend
   name: 'product_variant'
 
   validate: (attrs) ->
@@ -99,12 +99,12 @@ App.Collections.AvailableProducts = Backbone.Collection.extend
         new App.Views.CustomCollection.AvailableProduct model: model
 
 App.Collections.Products = Backbone.Collection.extend
-  model: Product
+  model: App.Models.Product
 
 
 
 App.Collections.ProductOptions = Backbone.Collection.extend
-  model: ProductOption
+  model: App.Models.ProductOption
 
   initialize: ->
     _.bindAll this, 'addOne', 'removeOne', 'showBtn'
@@ -127,7 +127,7 @@ App.Collections.ProductOptions = Backbone.Collection.extend
 
 
 App.Collections.ProductVariants = Backbone.Collection.extend
-  model: ProductVariant
+  model: App.Models.ProductVariant
 
   url: ->
     "/admin/products/#{App.product.id}/variants"

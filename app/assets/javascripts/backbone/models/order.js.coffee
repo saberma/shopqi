@@ -1,4 +1,4 @@
-Order = Backbone.Model.extend
+App.Models.Order = Backbone.Model.extend
   name: 'order'
   url: ->
     "/admin/orders/#{this.id}"
@@ -13,4 +13,4 @@ Order = Backbone.Model.extend
       when 'unshipped' then 'o-not-fulfilled'
 
 App.Collections.Orders = Backbone.Collection.extend
-  model: Order
+  model: App.Models.Order

@@ -4,6 +4,7 @@
 #=require ./views/tasks/show
 #=require ./views/tasks/index
 window.App =
+  Models: {}
   Views:
     LinkList:
       Links: {}

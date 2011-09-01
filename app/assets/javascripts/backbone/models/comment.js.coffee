@@ -1,4 +1,4 @@
-class Comment extends Backbone.Model
+class App.Models.Comment extends Backbone.Model
   name: 'comment'
 
   toJSON : ->
@@ -11,5 +11,5 @@ class Comment extends Backbone.Model
 
 
 App.Collections.Comments = Backbone.Collection.extend
-  model: Comment
+  model: App.Models.Comment
   url: '/admin/comments'

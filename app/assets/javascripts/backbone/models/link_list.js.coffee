@@ -1,4 +1,4 @@
-LinkList = Backbone.Model.extend
+App.Models.LinkList = Backbone.Model.extend
   name: 'link_list'
 
   initialize: (args) ->
@@ -27,5 +27,5 @@ LinkList = Backbone.Model.extend
     this
 
 App.Collections.LinkLists = Backbone.Collection.extend
-  model: LinkList
+  model: App.Models.LinkList
   url: '/admin/link_lists'

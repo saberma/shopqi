@@ -1,4 +1,4 @@
-CustomerGroup = Backbone.Model.extend
+App.Models.CustomerGroup = Backbone.Model.extend
   name: 'customer_group'
   url: ->
     "/admin/customer_groups/#{this.id}"
@@ -20,13 +20,13 @@ CustomerGroup = Backbone.Model.extend
     this.set query: query
 
 # 辅助实体，后端应用不需要相应的实体
-CustomerGroupFilter = Backbone.Model.extend
+App.Models.CustomerGroupFilter = Backbone.Model.extend
   name: 'customer_group_filter'
 
 
 
 App.Collections.CustomerGroups = Backbone.Collection.extend
-  model: CustomerGroup
+  model: App.Models.CustomerGroup
 
 App.Collections.CustomerGroupFilters = Backbone.Collection.extend
-  model: CustomerGroupFilter
+  model: App.Models.CustomerGroupFilter

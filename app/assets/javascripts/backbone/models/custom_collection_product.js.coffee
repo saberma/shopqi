@@ -1,8 +1,8 @@
-CustomCollectionProduct = Backbone.Model.extend
+App.Models.CustomCollectionProduct = Backbone.Model.extend
   name: 'custom_collection_product'
 
 App.Collections.CustomCollectionProducts = Backbone.Collection.extend
-  model: CustomCollectionProduct
+  model: App.Models.CustomCollectionProduct
   url: ->
     "/admin/custom_collections/#{App.custom_collection_id}/products"
 
