@@ -17,14 +17,14 @@ Shopqi::Application.routes.draw do
     scope module: :theme do
       get '/', to: 'themes#index', as: :theme_index
       scope "/themes" do
-        get '/login'                       , to: 'themes#login'       , as: :theme_login
-        get '/logout'                      , to: 'themes#logout'      , as: :theme_logout
-        get '/get_shop'                    , to: 'themes#get_shop'    , as: :theme_get_shop
-        post '/login/authenticate'         , to: 'themes#authenticate', as: :theme_authenticate
-        get '/filter'                      , to: 'themes#filter'
-        get '/:name/styles/:style'         , to: 'themes#show'        , as: :theme
-        get '/:name/styles/:style/download', to: 'themes#download'    , as: :theme_download
-        match '/:name/styles/:style/apply' , to: 'themes#apply'
+        get '/login'                                , to: 'themes#login'       , as: :theme_login
+        get '/logout'                               , to: 'themes#logout'      , as: :theme_logout
+        get '/get_shop'                             , to: 'themes#get_shop'    , as: :theme_get_shop
+        post '/login/authenticate'                  , to: 'themes#authenticate', as: :theme_authenticate
+        get '/filter'                               , to: 'themes#filter'
+        get '/:handle/styles/:style_handle'         , to: 'themes#show'        , as: :theme
+        get '/:handle/styles/:style_handle/download', to: 'themes#download'    , as: :theme_download
+        match '/:handle/styles/:style_handle/apply' , to: 'themes#apply'
       end
 
       begin 'client' # 作为oauth client

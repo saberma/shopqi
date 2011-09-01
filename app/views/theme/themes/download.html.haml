@@ -5,14 +5,14 @@
 
 .col-16
   #theme-download
-    %h1==您即将为 #{shop_host} 网店安装 #{name} 主题风格
+    %h1==您即将为 #{shop_host} 网店安装 #{theme.name} 主题风格
     %p
-      %a#apply-theme.standard-button(data-confirm="此操作将删除您在 #{shop_host} 网店上当前所使用的主题，包括之前对它所做的修改.您确定吗?" data-method="post" href="/themes/#{name}/styles/#{style}/apply" rel="nofollow")
+      %a#apply-theme.standard-button(data-confirm="此操作将删除您在 #{shop_host} 网店上当前所使用的主题，包括之前对它所做的修改.您确定吗?" data-method="post" href="/themes/#{handle}/styles/#{style_handle}/apply" rel="nofollow")
         我的商店要使用此主题
         %br/
         %small 此操作将覆盖您当前使用的主题
       或者
-      %a(href="/themes/#{name}/styles/#{style}/download_file" onclick="alert('暂时不支持此功能');return false") 以.zip格式下载此主题
+      %a(href="/themes/#{handle}/styles/#{style_handle}/download_file" onclick="alert('暂时不支持此功能');return false") 以.zip格式下载此主题
   %p.hint(style="text-align: center; margin-top: 30px;")
     选择以上任一操作表明您
     %br/

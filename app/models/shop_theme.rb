@@ -154,7 +154,7 @@ class ShopTheme < ActiveRecord::Base
 
   begin # 所属主题相关PATH(非当前theme)
     def app_path
-      File.join Rails.root, 'app', 'themes', self.theme.name.downcase
+      File.join Rails.root, 'app', 'themes', self.theme.handle.downcase
     end
 
     def shopqi_theme_path # app/themes/shopqi # 用于保存顾客登录等模板

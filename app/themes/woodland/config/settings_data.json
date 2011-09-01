@@ -1,5 +1,5 @@
 {"presets":
-  {"Dark Alder":
+  {"dark-alder":
     {"regular_font": "'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Lucida, Helvetica, Arial, sans-serif",
      "use_logo_image": true,
      "link_color": "#971616",
@@ -33,7 +33,7 @@
      "linkhover_color": "#830606",
      "shadows": true,
      "phone_url": "400-123-4567"},
-   "Slate":
+   "slate":
     {"regular_font": "Helvetica, Arial, sans-serif",
      "use_logo_image": true,
      "link_color": "#69941e",
@@ -67,7 +67,7 @@
      "linkhover_color": "#5c850f",
      "shadows": true,
      "phone_url": "400-123-4567"},
-   "Birchwood":
+   "birchwood":
     {"use_logo_image": false,
      "regular_font": "'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Lucida, Helvetica, Arial, sans-serif",
      "email_url": "admin@shopqi.com",

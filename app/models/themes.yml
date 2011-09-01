@@ -1,6 +1,8 @@
 - id: 1
   name: Prettify
+  handle: Prettify
   style: default
+  style_handle: default
   price: 0
   color: magenta
   desc: Prettify 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -11,7 +13,9 @@
 
 - id: 2
   name: Threadify
+  handle: Threadify
   style: original
+  style_handle: original
   price: 0
   color: grey
   desc: Threadify 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -21,33 +25,39 @@
   email: support@shopqi.com
 
 - id: 3
-  name: Woodland
-  style: Slate
+  name: 乔木林地
+  handle: woodland
+  style: 石板
+  style_handle: slate
   price: 0
   color: grey
-  desc: Woodland 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  desc: 乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
   shop: woodland
   site: http://www.shopqi.com
   author: ShopQi
   email: support@shopqi.com
 
 - id: 4
-  name: Woodland
-  style: Birchwood
+  name: 乔木林地
+  handle: woodland
+  style: 桦木
+  style_handle: birchwood
   price: 0
   color: yellow
-  desc: Woodland 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  desc: 乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
   shop: woodland
   site: http://www.shopqi.com
   author: ShopQi
   email: support@shopqi.com
 
 - id: 5
-  name: Woodland
-  style: Dark Alder
+  name: 乔木林地
+  handle: woodland
+  style: 黑桤木
+  style_handle: dark-alder
   price: 0
   color: black
-  desc: Woodland 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
+  desc: 乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
   shop: woodland
   site: http://www.shopqi.com
   author: ShopQi
@@ -55,7 +65,9 @@
 
 - id: 6
   name: Structure
+  handle: Structure
   style: Electronics
+  style_handle: Electronics
   price: 0
   color: black
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -66,7 +78,9 @@
 
 - id: 7
   name: Structure
+  handle: Structure
   style: Apparel
+  style_handle: Apparel
   price: 0
   color: red
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -77,7 +91,9 @@
 
 - id: 8
   name: Structure
+  handle: Structure
   style: Crafts
+  style_handle: Crafts
   price: 0
   color: green
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -88,7 +104,9 @@
 
 - id: 9
   name: Structure
+  handle: Structure
   style: Jewelry
+  style_handle: Jewelry
   price: 0
   color: black
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。

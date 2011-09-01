@@ -6,8 +6,9 @@ class Theme::ThemesController < Theme::AppController
   expose(:permanent_domain) { session[:shop] }
   expose(:shop_url) { session[:shop_url] }
   expose(:shop_host) { URI.parse(shop_url).host }
-  expose(:name) { session[:name] || params[:name] }
-  expose(:style) { session[:style] || params[:style] }
+  expose(:handle) { session[:handle] || params[:handle] }
+  expose(:style_handle) { session[:style_handle] || params[:style_handle] }
+  expose(:theme) { Theme.find_by_handle_and_style_handle(params[:handle], params[:style_handle]) }
 
   begin 'store'
 
@@ -20,11 +21,10 @@ class Theme::ThemesController < Theme::AppController
     end
 
     def show
-      session[:name] = params[:name]
-      session[:style] = params[:style]
-      theme = Theme.find_by_name_and_style(params[:name], params[:style])
+      session[:handle] = params[:handle]
+      session[:style_handle] = params[:style_handle]
       @theme_json = theme.attributes.to_json
-      styles = Theme.find_all_by_name(params[:name])
+      styles = Theme.find_all_by_handle(params[:handle])
       others = Theme.find_all_by_author(theme.author).take(4)
       @styles_json = styles.inject([]) do |result, theme|
         result << theme.attributes; result
@@ -44,7 +44,7 @@ class Theme::ThemesController < Theme::AppController
           redirect_to theme_login_path
         end
       else # html
-        redirect_to theme_path(name: name, style: style) unless permanent_domain
+        redirect_to theme_path(handle: handle, style_handle: style_handle) unless permanent_domain
       end
     end
 
@@ -54,13 +54,13 @@ class Theme::ThemesController < Theme::AppController
       if result['error'].blank?
         session[:shop] = result['name']
       end
-      redirect_to theme_download_path(name: name, style: style)
+      redirect_to theme_download_path(handle: handle, style_handle: style_handle)
     end
 
     def apply # 切换主题
       if request.post?
         access_token = OAuth2::AccessToken.new(client, token)
-        access_token.post('/api/themes/switch', name: name, style: style)
+        access_token.post('/api/themes/switch', handle: handle, style_handle: style_handle)
       end
     end
 
@@ -70,7 +70,7 @@ class Theme::ThemesController < Theme::AppController
     def logout
       session[:shop] = nil
       session[:shop_url] = nil
-      redirect_to theme_path(name: name, style: style)
+      redirect_to theme_path(handle: handle, style_handle: style_handle)
     end
 
     def authenticate # 跳转至用户商店的认证登录页面oauth
@@ -113,6 +113,6 @@ class Theme::ThemesController < Theme::AppController
   end
 
   def authenticate_shop! # 必须通过认证
-    redirect_to theme_path(name: name, style: style) unless permanent_domain
+    redirect_to theme_path(handle: handle, style_handle: style_handle) unless permanent_domain
   end
 end
