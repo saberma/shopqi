@@ -97,9 +97,9 @@
         if $(this).val() and select[0]
           $.get "/district/" + $(this).val(), (data) ->
             result = eval(data)
-            options = select.attr("options")
+            options = select[0].options
             $("option:gt(0)", select).remove()
-            $.each result, (i, item) -> options[options.length] = new Option(item[0], item[1])
+            $.each result, (i, item) -> options.add new Option(item[0], item[1])
             value = seed[select_index]
             select.val(value).change() if value # 级联回显
 
