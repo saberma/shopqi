@@ -6,7 +6,7 @@ Factory.define :user do |u|
   u.shop_attributes({
     name: '测试商店',
     domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}],
-    theme_attributes: { theme_id: Theme.default.id }
+    themes_attributes: [{ theme_id: Theme.default.id }]
   })
   u.password '666666'
   u.password_confirmation '666666'
