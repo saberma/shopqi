@@ -16,7 +16,7 @@ describe EmailsController do
   context '#follow' do
     it "should create subscribe success" do
       expect do
-        xhr :post, :follow,subscribe: "email", address: "ee@gmail.com"
+        xhr :post, :follow,subscribe_type: 'email', address: "ee@gmail.com"
       end.should change(Subscribe, :count).by(1)
     end
   end

@@ -17,7 +17,7 @@ class EmailsController < ApplicationController
   end
 
   def follow
-    sub = params[:subscribe]
+    sub = params[:subscribe_type]
     address = params[:address]
     if sub == 'email'
       subscribe.address = address

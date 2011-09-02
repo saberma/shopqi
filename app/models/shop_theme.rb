@@ -108,7 +108,9 @@ class ShopThemeSetting < ActiveRecord::Base
     end
 
     def theme
-      proxy_owner
+      @association.owner
+      #fix DEPRECATION
+      #proxy_owner
     end
   end
 end
