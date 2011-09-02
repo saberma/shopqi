@@ -9,7 +9,7 @@ describe ShopThemeSetting do
   end
 
   it 'should get confit_settings' do
-    shop.theme.settings.exists?(name: :bg_image_y_position).should be_true
+    shop.theme.settings.exists?(name: 'bg_image_y_position').should be_true
   end
 
 end

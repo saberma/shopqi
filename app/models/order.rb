@@ -107,6 +107,8 @@ class Order < ActiveRecord::Base
 
   def pay!
     order.financial_status = 'paid'
+    #TODO
+    #支付记录
   end
 
 end

@@ -37,7 +37,7 @@ product_description = %q{
 <p>然后，您需要为商店的导航菜单新增一个链接，指向您的集合。您可以打开后台管理的<a href="/admin/link_lists">链接标签</a>，并点击“新增链接”。</p>
 <p>一切顺利!</p>
 }
-frontpage_collection = myshopqi.custom_collections.where(handle: :frontpage).first
+frontpage_collection = myshopqi.custom_collections.where(handle: 'frontpage').first
 1.upto(6) do |i|
   product = myshopqi.products.create title: "示例商品#{i}", handle: "example-#{i}", body_html: product_description, product_type: '手机', vendor: 'ShopQi'
   product.collections << frontpage_collection
