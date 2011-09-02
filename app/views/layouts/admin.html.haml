@@ -58,6 +58,8 @@
             %ul
               %li#nav-theme-settings=link_to "外观设置", settings_themes_path
               %li#nav-template-editor=link_to "模板编辑器", assets_path
+            %p.nav-manage.pb
+              =link_to '主题管理', themes_path
             %p.more
               =link_to '浏览外观', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
               %span 访问外观商店

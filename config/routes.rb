@@ -235,10 +235,12 @@ Shopqi::Application.routes.draw do
         end
       end
 
-      begin :themes
-        get 'themes/settings'      , to: 'themes#settings'     , as: :settings_themes
-        put 'themes/settings'      , to: 'themes#update'
-        post 'themes/delete_preset', to: 'themes#delete_preset'
+      resources :themes, only: [:index] do
+        collection do
+          get :settings      , to: 'themes#settings'     , as: :settings_themes
+          put :settings      , to: 'themes#update'
+          post :delete_preset, to: 'themes#delete_preset'
+        end
       end
       scope 'themes' do
         resources :assets do

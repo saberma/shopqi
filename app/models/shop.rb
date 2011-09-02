@@ -111,7 +111,7 @@ class ShopDomain < ActiveRecord::Base # 域名
     self.domain == Setting.store_host
   end
 
-  def url # http://admin.myshopqi.com
+  def url # http://apple.myshopqi.com
     store = "http://#{self.host}"
     store += ":#{Setting.domain.port}" unless Setting.domain.port == 80
     store
