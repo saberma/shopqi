@@ -29,7 +29,7 @@ gem 'meta_search'
 gem 'squeel'
 
 #gem 'carmen'#地区
-gem 'carmen'
+gem 'carmen', git: "git://github.com/jim/carmen.git"
 gem 'seedbank' # 分离出各个环境下的seed
 gem 'gravtastic' #gravtastic头像服务
 

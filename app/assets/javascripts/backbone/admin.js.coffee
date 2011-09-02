@@ -3,6 +3,8 @@
 #=require ./views/tasks/checkoff
 #=require ./views/tasks/show
 #=require ./views/tasks/index
+#When the project deploy,I think we should take all the
+#backbone js file required
 window.App =
   Models: {}
   Views:

@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/customer', 'models/order', 'collections/orders', 'views/customers/show/index', 'views/customers/show/show', 'views/customers/show/note', 'views/customers/show/tags', 'views/customers/show/edit', 'views/customers/show/orders/index', 'views/customers/show/orders/show'
+  =javascript_include_tag 'backbone/models/customer', 'backbone/models/order', 'backbone/views/customers/show/index', 'backbone/views/customers/show/show', 'backbone/views/customers/show/note', 'backbone/views/customers/show/tags', 'backbone/views/customers/show/edit', 'backbone/views/customers/show/orders/index', 'backbone/views/customers/show/orders/show'
 
 %h2#title
 #action-links
@@ -204,6 +204,6 @@
       %a#cancel-customer-link(href="#") 取消
 
 :javascript
-  App.customer = new Customer(#{customer_json});
+  App.customer = new App.Models.Customer(#{customer_json});
   App.tags = #{tags_json};
   new App.Views.Customer.Show.Index({model: App.customer});

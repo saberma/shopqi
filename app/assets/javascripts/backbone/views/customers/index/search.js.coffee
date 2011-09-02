@@ -47,7 +47,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     [value, filters] = [@model.get('term'), @model.filters()]
     value = '' unless value
     params = q: value, f: _(filters).map (filter) -> "#{filter.condition}:#{filter.value}"
-    $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/images/spinner.gif)')
+    $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/assets/spinner.gif)')
     $('#customer-search_overlay').show()
     $.get '/admin/customers/search', params, (data) ->
       App.customers.refresh(data)
