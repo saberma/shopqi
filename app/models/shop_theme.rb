@@ -122,6 +122,8 @@ class ShopTheme < ActiveRecord::Base
   belongs_to_active_hash :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
 
+  default_value_for :role, :main # 默认为普通主题
+
   validates_presence_of :load_preset
 
   before_validation do
@@ -138,6 +140,10 @@ class ShopTheme < ActiveRecord::Base
     config_settings['presets'][self.load_preset].each_pair do |name, value|
       self.settings.create name: name, value: value
     end
+  end
+
+  def published? # 是否已发布
+    self.role != 'unpublish'
   end
 
   def switch(new_theme, style = nil) # 切换主题

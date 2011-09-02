@@ -3,6 +3,8 @@ class ThemeObserver < ActiveRecord::Observer
   observe :shop
 
   def after_destroy(shop)
-    FileUtils.rm_rf shop.theme.public_path
+    shop.themes.each do |theme|
+      FileUtils.rm_rf theme.public_path
+    end
   end
 end

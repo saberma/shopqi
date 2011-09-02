@@ -59,6 +59,17 @@ module KeyValues
     ]
   end
 
+  module Theme # 主题
+
+    class Role < KeyValues::Base # 发布类型
+      self.data = [
+        {id: 1, name: '普通', code: 'main'  },
+        {id: 2, name: '手机', code: 'mobile'},
+      ]
+    end
+
+  end
+
   module Payment
     class Custom < KeyValues::Base
         self.data = [

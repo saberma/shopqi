@@ -1,3 +1,6 @@
+=content_for :javascripts do
+  =javascript_include_tag 'views/themes/settings/index', 'views/themes/settings/presets/show', 'views/themes/settings/presets/index', 'jquery.miniColors.min', 'fileuploader'
+
 %h2#title 安装主题
 #action-links
   %ul
@@ -117,3 +120,10 @@
                 %input(name="commit" type="submit" value="提交")
                 或者
                 %a(href="#") 取消
+
+:javascript
+  App.published_themes = #{@published_themes_json}
+  App.unpublish_themes = #{@unpublish_themes_json}
+  new App.Views.Theme.Index();
+
+  task_name = 'customize_theme';
