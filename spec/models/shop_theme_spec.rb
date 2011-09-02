@@ -55,7 +55,7 @@ describe ShopTheme do
     end
 
     it 'should parse select element' do
-      theme.switch Theme.find_by_name('Prettify')
+      theme.switch Theme.find_by_handle('Prettify')
       settings = theme.config_settings['presets']['default']
       settings['bg_image_y_position'].should eql 'top'
     end
