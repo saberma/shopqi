@@ -77,9 +77,9 @@
           %label.inlined(for="user_name") 姓名
           %input#user_name.input-text.full(name="user[name]" size="18" type="text")
         .clearfix.inline-form-select.region
-          =select_tag "shop[province]", options_for_select(District.list), {include_blank: '--省份--', style: 'width: 111px'}
-          =select_tag "shop[city]", nil, {include_blank: '--城市--', style: 'width: 111px'}
-          =select_tag "shop[district]", nil, {include_blank: '--地区--', style: 'width: 111px'}
+          =select_tag "shop[province]", options_for_select(District.list), {prompt: '--省份--', style: 'width: 111px'}
+          =select_tag "shop[city]", nil, {prompt: '--城市--', style: 'width: 111px'}
+          =select_tag "shop[district]", nil, {prompt: '--地区--', style: 'width: 111px'}
           %em#shop_province_message(style="display: none; color: #fff")
         .multi-input.clearfix
           %span
