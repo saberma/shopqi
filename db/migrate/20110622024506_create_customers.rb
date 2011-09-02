@@ -26,7 +26,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.references :customer            , comment: '所属顾客', null: false
       t.string     :name                , comment: '姓名'
       t.string     :company             , comment: '公司'    , limit: 64
-      t.string     :country_code        , comment: '国家'    , limit: 64
+      t.string     :country_code        , comment: '国家'    , limit: 10, default: 'CN' , null: false
       t.string     :province            , comment: '地区(省)', limit: 64
       t.string     :city                , comment: '城市'    , limit: 64
       t.string     :district            , comment: '区'      , limit: 64

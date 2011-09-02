@@ -8,6 +8,7 @@ class OrderObserver < ActiveRecord::Observer
     unless customer
       customer = shop.customers.create email: order.email, name: order.billing_address.name, password: Random.new.rand(100000..999999)
     end
+    ap order.billing_address
     customer.add_address order.billing_address
     customer.add_address order.shipping_address
     order.customer = customer

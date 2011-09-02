@@ -104,8 +104,6 @@ class CustomerAddress < ActiveRecord::Base
     self.name = self.customer.name if self.name.blank?
   end
 
-  default_value_for :country_code, :CN
-
   def country_name
     Carmen.country_name(country_code)
   end
