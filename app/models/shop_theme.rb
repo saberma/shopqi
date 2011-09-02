@@ -115,8 +115,9 @@ end
 
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
+  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :shop
-  belongs_to :theme
+  belongs_to_active_hash :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
 
   validates_presence_of :load_preset
