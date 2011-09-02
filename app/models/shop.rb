@@ -19,7 +19,7 @@ class Shop < ActiveRecord::Base
   has_many :carts                 , dependent: :destroy
   has_many :subscribes            , dependent: :destroy
   has_many :comments              , dependent: :destroy
-  has_one  :theme                 , dependent: :destroy                      , class_name: 'ShopTheme'
+  has_many :themes                , dependent: :destroy                      , class_name: 'ShopTheme'
   has_many :oauth2_consumer_tokens, dependent: :destroy                      , class_name: 'OAuth2::Model::ConsumerToken'
 
   has_many :types                 , dependent: :destroy                      , class_name: 'ShopProductType'
@@ -32,7 +32,7 @@ class Shop < ActiveRecord::Base
   has_many :policies              , dependent: :destroy                     ,  order: :id.asc, class_name: 'ShopPolicy'
   has_many :consumptions          , dependent: :destroy
 
-  accepts_nested_attributes_for :domains, :theme, :policies
+  accepts_nested_attributes_for :domains, :themes, :policies
   attr_readonly :orders_count
   validates_presence_of :name
 
@@ -60,6 +60,18 @@ class Shop < ActiveRecord::Base
 
   def customer_accounts_optional?
     customer_accounts == 'optional'
+  end
+
+  begin 'Theme' # 主题相关
+
+    def theme # 普通主题
+      themes.where(role: :main).first
+    end
+
+    def mobile_theme # 手机主题
+      themes.where(role: :mobile).first
+    end
+
   end
 
   protected

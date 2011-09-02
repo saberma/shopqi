@@ -5,6 +5,7 @@ class ThemesController < ApplicationController
 
   expose(:shop) { current_user.shop }
   expose(:theme) { shop.theme }
+  expose(:themes) { shop.themes }
   expose(:settings_html) { theme.settings.transform }
   expose(:settings_json) { theme.settings.as_json.to_json }
 
@@ -21,6 +22,14 @@ class ThemesController < ApplicationController
   end
 
   begin 'admin' # 后台管理
+
+    def index # 主题管理
+      themes = shop.themes
+      published_themes = themes.select {|theme| theme.published? }
+      unpublish_themes = themes.select {|theme| !theme.published? }
+      @published_themes_json = published_themes.to_json(except: [:created_at, :updated_at])
+      @unpublish_themes_json = unpublish_themes.to_json(except: [:created_at, :updated_at])
+    end
 
     def settings # 主题配置
     end
