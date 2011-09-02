@@ -79,7 +79,7 @@ end
 
 group :test, :travis do
   gem "rspec-rails"
-  gem 'capybara'
+  gem 'capybara' , ' ~> 1.1.0'
   gem 'resque_spec' # resque测试
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
