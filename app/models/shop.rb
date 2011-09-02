@@ -3,17 +3,17 @@ class Shop < ActiveRecord::Base
   include OAuth2::Model::ClientOwner
   include OAuth2::Model::ResourceOwner
   has_many :users                 , dependent: :destroy
-  has_many :domains               , dependent: :destroy                      , order: :id.asc, class_name: 'ShopDomain'
-  has_many :products              , dependent: :destroy                      , order: :id.desc
+  has_many :domains               , dependent: :destroy                      , order: 'id asc', class_name: 'ShopDomain'
+  has_many :products              , dependent: :destroy                      , order: 'id desc'
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
-  has_many :link_lists            , dependent: :destroy                      , order: :id.asc
+  has_many :link_lists            , dependent: :destroy                      , order: 'id asc'
   has_many :pages                 , dependent: :destroy
   has_many :blogs                 , dependent: :destroy
   has_many :smart_collections     , dependent: :destroy
   has_many :custom_collections    , dependent: :destroy
   has_many :tags                  , dependent: :destroy
-  has_many :orders                , dependent: :destroy                      , order: :id.desc
-  has_many :customers             , dependent: :destroy                      , order: :id.asc
+  has_many :orders                , dependent: :destroy                      , order: 'id desc'
+  has_many :customers             , dependent: :destroy                      , order: 'id asc'
   has_many :customer_groups       , dependent: :destroy
   has_many :customer_tags         , dependent: :destroy
   has_many :carts                 , dependent: :destroy
@@ -28,8 +28,8 @@ class Shop < ActiveRecord::Base
   has_many :countries             , dependent: :destroy
   has_many :activities            , dependent: :destroy                      , order: 'created_at desc'
   has_many :payments              , dependent: :destroy
-  has_many :tasks                 , dependent: :destroy                      , order: :id.asc, class_name: 'ShopTask'
-  has_many :policies              , dependent: :destroy                     ,  order: :id.asc, class_name: 'ShopPolicy'
+  has_many :tasks                 , dependent: :destroy                      , order: 'id asc', class_name: 'ShopTask'
+  has_many :policies              , dependent: :destroy                     ,  order: 'id asc', class_name: 'ShopPolicy'
   has_many :consumptions          , dependent: :destroy
 
   accepts_nested_attributes_for :domains, :theme, :policies

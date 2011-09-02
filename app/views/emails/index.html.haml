@@ -1,4 +1,4 @@
--use_javascripts 'controllers/emails'
+-use_javascripts 'backbone/controllers/emails'
 %h2#title 邮件 &amp; 提醒
 #action-links
   %ul
@@ -40,7 +40,7 @@
         %dt 增加一个新的订单提醒
         %dd.sb
           %label{:for => "subscription-type"} 提  醒
-          %select#subscription-type{:name => "subscribe"}
+          %select#subscription-type{:name => "subscribe_type"}
             %optgroup{:label => "提醒方式..."}
               %option{:value => "email"} 邮件地址&hellip;
             %optgroup{:label => "或者发送邮件给本店用户"}

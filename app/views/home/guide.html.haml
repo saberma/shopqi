@@ -10,7 +10,8 @@
     / .skip-setup
 / #store-completion
 
-:coffeescript
-  $('#launch a').live 'click', ->
-    $('#launch_btn').click()
-    false
+:javascript
+  $('#launch a').live('click',function(){
+    $('#launch_btn').click();
+    return false;
+    });

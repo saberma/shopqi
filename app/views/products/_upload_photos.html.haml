@@ -1,7 +1,7 @@
 -if product.photos.blank?
   #upload-product-image.c
     %a.show-upload-link
-      %img.sb(alt="No_product_image" src="/images/other/no_product_image.gif")
+      =image_tag 'other/no_product_image.gif',class: 'sb', alt: 'No_product_image'
 -else
   %ul#image_list.clearfix(url="#{sort_product_photos_path(product)}")
     -product.photos.each_with_index do |photo,index|

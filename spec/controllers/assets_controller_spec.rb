@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 
 describe AssetsController do
@@ -23,3 +24,4 @@ describe AssetsController do
   end
 
 end
+=end

@@ -1,0 +1,18 @@
+/*This is the universal nav for every subsite EXCEPT for the main shopqi.com site*/
+.resources-nav { height:55px; background: url('/assets/resources-nav/bg.png?1272564223'); margin:0 0 40px 0; padding:0 20px; }
+.resources-nav ul { padding:0; width:925px;  height: 55px; margin:0 auto; position:relative;}
+.resources-nav ul ul { padding:0; width:auto; height:auto; margin:0; position:static;}
+.resources-nav li { float:right; list-style:none;  margin-right:0px; line-height:13px; }
+.resources-nav li a { color:#fff; font-size:12.5px; font-family:helvetica, arial, sans-serif; padding:21px 15px; display:block; margin:0; border:1px solid transparent; border-width:0 1px; text-decoration:none; letter-spacing:0.5px;}
+.resources-nav li a:hover, .resources-nav li a:focus { color:#fff!important;background: #6B6B6B; /* old browsers */
+
+ background: -moz-linear-gradient(top, #6B6B6B 0%, #6B6B6B 59%, #5B5B5B 100%); /* firefox */
+
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6B6B6B), color-stop(59%,#6B6B6B), color-stop(100%,#5B5B5B)); /* webkit */
+
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6B6B6B', endColorstr='#5B5B5B',GradientType=0 ); /* ie */
+   }
+.resources-nav li a:active { background:#444; }
+.resources-nav li.current a { background:#65b600 url('/assets/resources-nav/bg-activelink.png?1271083424') repeat-x bottom;  text-shadow:1px 1px 0.5px #417f09;  border-left: 1px solid #649e15; border-right:1px solid #69a922;  }
+.resources-nav li.current a:hover, .resources-nav li.current a:active  { color:#FFF; }
+.resources-nav li.logo a { position:absolute; top:0; left:0 ; margin:0; padding:0px; line-height:0px; border:0px; height:55px; width:210px;text-indent:-99999px; background:  url('/assets/resources-nav/logo-shopqi.png?555') no-repeat; }
