@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'views/themes/settings/index', 'views/themes/settings/presets/show', 'views/themes/settings/presets/index', 'jquery.miniColors.min', 'fileuploader'
+  =javascript_include_tag 'backbone/views/themes/settings/index', 'backbone/views/themes/settings/presets/show', 'backbone/views/themes/settings/presets/index', 'jquery.miniColors.min', 'fileuploader'
 
 %h2#title 安装主题
 #action-links
@@ -25,7 +25,7 @@
         %dd
           %input(name="theme[upload]" size="25" type="file" value="")
       .group-actions
-        %input#commit.btn(name="commit" type="submit" value="Upload theme")
+        %input#commit.btn(name="commit" type="submit" value="上传主题")
         或者
         %a(href="#") 取消
       / .group-actions

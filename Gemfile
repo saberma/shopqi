@@ -56,10 +56,10 @@ gem 'settingslogic' #用于解析一些配置信息
 gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
 gem 'oauth2'
 gem 'newrelic_rpm' # 性能监控
+gem "jquery-rails"
 
 group :development do
   gem 'rails3-generators'
-  gem "jquery-rails"
   gem "haml-rails"
   gem 'guard'
   gem 'guard-livereload' # 修改后台文件后，safari或chrome浏览器会自动刷新
@@ -94,7 +94,6 @@ end
 # in production environments by default.
 # rake assets:precompile 部署到生产环境下执行
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end

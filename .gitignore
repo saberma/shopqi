@@ -17,6 +17,7 @@ capybara-*.html
 public/uploads
 public/images/logo/4*.png
 public/images/menu/4*.png
+public/assets/**
 
 #上传的图片
 public/images/uploads/**
