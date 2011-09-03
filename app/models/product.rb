@@ -1,9 +1,9 @@
 # encoding: utf-8
 class Product < ActiveRecord::Base
   belongs_to :shop
-  has_many :photos             , dependent: :destroy           ,order: :position.asc
+  has_many :photos             , dependent: :destroy           ,order: 'position asc'
   has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'
-  has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: :position.asc
+  has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: 'position asc'
   has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
   has_many :collections        , class_name: 'CustomCollection', through: :collection_products        , source: :custom_collection
   has_and_belongs_to_many :tags
@@ -25,7 +25,7 @@ class Product < ActiveRecord::Base
     unless photos.blank?
       photos.first.send(version)
     else
-      "/images/admin/no-image-#{version}.gif"
+      "/assets/admin/no-image-#{version}.gif"
     end
   end
 

@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'models/customer', 'models/customer_group', 'collections/customers', 'collections/customer_groups', 'views/customers/index/index', 'views/customers/index/search', 'views/customers/index/filters/index', 'views/customers/index/filters/show', 'views/customers/index/show', 'views/customer_groups/index/index', 'views/customer_groups/index/show', 'controllers/customers/index'
+  =javascript_include_tag 'backbone/models/customer', 'backbone/models/customer_group', 'backbone/views/customers/index/index', 'backbone/views/customers/index/search', 'backbone/views/customers/index/filters/index', 'backbone/views/customers/index/filters/show', 'backbone/views/customers/index/show', 'backbone/views/customer_groups/index/index', 'backbone/views/customer_groups/index/show', 'backbone/controllers/customers/index'
 
 =render "menu"
 
@@ -169,7 +169,7 @@
 
   App.customers = new App.Collections.Customers();
   App.customer_groups = new App.Collections.CustomerGroups();
-  App.customer_group = new CustomerGroup(); //用于分组与查询的中介
+  App.customer_group = new App.Models.CustomerGroup(); //用于分组与查询的中介
   App.customer_groups.refresh(#{customer_groups_json});
   new App.Views.Customer.Index.Index({collection: App.customers})
   new App.Views.CustomerGroup.Index.Index({collection: App.customer_groups})

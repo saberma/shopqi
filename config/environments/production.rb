@@ -12,6 +12,9 @@ Shopqi::Application.configure do
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
+   # Compress JavaScripts and CSS
+  config.assets.compress = true
+
   # For nginx:
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 

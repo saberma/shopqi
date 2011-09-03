@@ -108,15 +108,18 @@ class ShopThemeSetting < ActiveRecord::Base
     end
 
     def theme
-      proxy_owner
+      @association.owner
+      #fix DEPRECATION
+      #proxy_owner
     end
   end
 end
 
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
+  extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :shop
-  belongs_to :theme
+  belongs_to_active_hash :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
 
   default_value_for :role, :main # 默认为普通主题

@@ -9,7 +9,7 @@ describe Shop::BlogsController do
     model
   end
 
-  let(:blog) { shop.blogs.where(handle: :news).first }
+  let(:blog) { shop.blogs.where(handle: 'news').first }
 
   before :each do
     request.host = "#{shop.primary_domain.host}"

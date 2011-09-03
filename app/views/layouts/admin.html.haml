@@ -6,12 +6,12 @@
     %meta(http-equiv="X-UA-Compatible" content="chrome=1")
     %meta(name="MSSmartTagsPreventParsing" content="true")
     %title 后台管理
-    = stylesheet_link_tag "admin", "shopqi", "message_block","jquery-ui-1.8.14.custom"
+    = stylesheet_link_tag :layout_admin
     = stylesheet_link_tag 'print', media: :print
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
     =yield :stylesheets
-    = javascript_include_tag :admin, 'models/task', 'collections/tasks', 'views/tasks/checkoff', 'views/tasks/show', 'views/tasks/index'
+    = javascript_include_tag :admin_application
     =yield :kindeditor
     =yield :javascripts
     = csrf_meta_tag
@@ -21,7 +21,7 @@
         %span#message.hide
     #navigation.content
       %a(href="/admin" style="position: absolute; top: 0; z-index: 30")
-        %img#logo-small(alt="Logo-small" src="/images/admin/logo-small.gif" style="position: absolute; top: 0")
+        =image_tag 'admin/logo-small.gif',id: 'logo-small', style: "position: absolute; top:0",alt:'logi-small'
       #utils
         %ul
           %li(style="float: left; margin-left: 60px; position: relative;")=link_to show_shop_url, show_shop_url
@@ -57,7 +57,7 @@
             %h3 修改网店外观
             %ul
               %li#nav-theme-settings=link_to "外观设置", settings_themes_path
-              %li#nav-template-editor=link_to "模板编辑器", assets_path
+              %li#nav-template-editor=link_to "模板编辑器", #assets_path
             %p.nav-manage.pb
               =link_to '主题管理', themes_path
             %p.more
@@ -94,7 +94,7 @@
     #flasherrors.hide
     #flashnotice.hide
     #indicator(style="z-index: 1000; position: absolute; width: 20px; height: 20px; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; display: none; top: 1236px; left: 591px; ")
-      %img(border="0" src="/images/spinner.gif")
+      =image_tag 'spinner.gif', style: 'border=0'
     -unless is_home? or shop.guided
       =render 'home/progress'
 

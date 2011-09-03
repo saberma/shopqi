@@ -107,6 +107,8 @@ class Order < ActiveRecord::Base
 
   def pay!
     order.financial_status = 'paid'
+    #TODO
+    #支付记录
   end
 
 end
@@ -181,7 +183,6 @@ end
 class OrderBillingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name,:country_code, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-  default_value_for :country_code, :CN
 
   def country
     Country.where(code: country_code).first
@@ -208,7 +209,6 @@ end
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-  default_value_for :country_code, :CN
 
   def country
     Country.where(code: country_code).first

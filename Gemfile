@@ -1,11 +1,15 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.6'
+gem 'rails', '3.1.0'
 
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise'
+
+#use unicorn as web server
+gem 'unicorn'
+
 gem 'default_value_for'
 gem 'thinking-sphinx', '2.0.5'
 gem 'riddle', require: 'riddle/0.9.9' #sphinx无法获取CoreSeek版本
@@ -20,12 +24,12 @@ gem 'rack-cache', require: 'rack/cache'
 gem 'liquid' #模板语言
 gem "carrierwave"
 #查询
-gem 'meta_where'
+#gem 'meta_where'
 gem 'meta_search'
+gem 'squeel'
 
 #gem 'carmen'#地区
-gem 'carmen', git: 'git://github.com/liwh/carmen.git'
-gem 'on_the_spot' #及时编辑
+gem 'carmen', git: "git://github.com/jim/carmen.git"
 gem 'seedbank' # 分离出各个环境下的seed
 gem 'gravtastic' #gravtastic头像服务
 
@@ -70,9 +74,7 @@ group :development, :test do
   gem "interactive_editor"
   # 编译coffee-script
   gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
-  #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
-  gem 'execjs'
-  gem 'barista'
+  gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
 end
 
 group :test, :travis do
@@ -87,3 +89,13 @@ group :development, :test, :travis do
   gem "factory_girl"
   gem "factory_girl_rails"
 end
+
+# Gems used only for assets and not required
+# in production environments by default.
+# rake assets:precompile 部署到生产环境下执行
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
+
