@@ -65,11 +65,11 @@ class Shop < ActiveRecord::Base
   begin 'Theme' # 主题相关
 
     def theme # 普通主题
-      themes.where(role: :main).first
+      themes.where(role: 'main').first
     end
 
     def mobile_theme # 手机主题
-      themes.where(role: :mobile).first
+      themes.where(role: 'mobile').first
     end
 
   end

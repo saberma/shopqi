@@ -140,7 +140,7 @@ class ShopTheme < ActiveRecord::Base
   end
 
   def published? # 是否已发布
-    self.role != 'unpublish'
+    self.role != 'unpublished'
   end
 
   def switch(new_theme, style = nil) # 切换主题

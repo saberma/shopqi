@@ -23,6 +23,7 @@ App =
     Asset:
       Index: {}
     Theme:
+      Themes: {}
       Settings:
         Preset: {}
     Product:

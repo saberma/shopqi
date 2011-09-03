@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'views/themes/settings/index', 'views/themes/settings/presets/show', 'views/themes/settings/presets/index', 'jquery.miniColors.min', 'fileuploader'
+  =javascript_include_tag 'models/shop_theme', 'collections/shop_themes', 'views/themes/themes/index', 'views/themes/themes/show'
 
 %h2#title 安装主题
 #action-links
@@ -29,101 +29,77 @@
         或者
         %a(href="#") 取消
       / .group-actions
-%h3.heading 已发布的主题
-%p.note.sb
-  这里是您已经发布的主题. 这些主题
-  %strong 已经应用
-  到您的商店前台. 您对这些主题所做的任何修改将立即生效.
-%ul.theme.pb.clearfix
-  %li.clearfix
-    .fl.theme-icon=image_tag 'admin/theme-placeholder.jpg'
-    #theme_1732622.fr.theme-details
-      .heading.clearfix
-        %h3
-          乔木林地
-          %span.main 普通
-        %p.main-actions
-      %ul.theme-actions.clearfix
-        %li.theme-settings
-          %a(href="/admin/themes/1732622/settings") 外观设置
-        %li.duplicate-theme
-          %a(href="/admin/themes/1732622/duplicate") 复制主题
-        %li.theme-editor
-          %a(href="/admin/themes/1732622") 模板编辑器
-        %li.export-theme
-          %a(href="/admin/themes/1732622.zip") 导出主题
-      %ul.theme-actions.extra.clearfix
-        %li
-          %span.main-theme 已经发布为普通主题
-  -#
-    %li.clearfix
-      .fl.theme-icon=image_tag 'admin/theme-placeholder.jpg'
-      #theme_1722822.fr.theme-details
-        .heading.clearfix
-          %h3
-            On the Go
-            %span.mobile 手机
-          %p.main-actions
-            %span.preview
-              %a(data-popup="true" href="#{show_shop_url}?preview_theme_id=1722822") 预览
-            %span.delete-theme
-              |
-              %a(href="/admin/themes/1722822")=image_tag 'admin/icons/trash.gif'
-        %ul.theme-actions.clearfix
-          %li.theme-settings
-            %a(href="/admin/themes/1722822/settings") 外观设置
-          %li.duplicate-theme
-            %a(href="/admin/themes/1722822/duplicate" rel="nofollow") 复制主题
-          %li.theme-editor
-            %a(href="/admin/themes/1722822") 模板编辑器
-          %li.export-theme
-            %a(href="/admin/themes/1722822.zip") 导出主题
-        %ul.theme-actions.extra.clearfix
-          %li
-            %span.mobile-theme 已经发布为手机主题
-          %li
-            %a(href="/admin/themes/1722822?theme[role]=unpublished" style="float:right;") 取消发布
-%h3.heading 未发布的主题
-%p.note.sb 这里是您未发布的主题. 您对这些主题所作的修改,不会影响到当前的商店前台.
-#unpublished-themes
-  %ul.theme.unpublished.pb.clearfix
-    %li.clearfix
-      .fl.theme-icon=image_tag 'admin/unpublished-theme-placeholder.jpg'
-      #theme_1471712.fr.theme-details
-        .heading.clearfix
-          %h3 复制的 乔木林地
-          %p.main-actions
-            %span.preview
-              %a(data-popup="true" href="#{show_shop_url}?preview_theme_id=1471712") 预览
-            %span.delete-theme
-              |
-              %a.delete(href="#")=image_tag 'admin/icons/trash.gif'
-        %ul.theme-actions.clearfix
-          %li.theme-settings
-            %a(href="/admin/themes/1471712/settings") 外观设置
-          %li.duplicate-theme
-            %a(href="/admin/themes/1471712/duplicate") 复制主题
-          %li.theme-editor
-            %a(href="/admin/themes/1471712") 模板编辑器
-          %li.export-theme
-            %a(href="/admin/themes/1471712.zip") 导出主题
-        %ul.theme-actions.extra.clearfix
-          %li.publish-main
-            .publish-theme-link
-              %a(href="#") 发布此主题
-            .publish-theme-dropdown(style="display:none;")
-              %span.fl
-                %select#theme_role(name="theme[role]")
-                  %option(value="main") 发布为普通主题
-                  %option(value="mobile") 发布为手机主题
-              %span.fr
-                %input(name="commit" type="submit" value="提交")
-                或者
-                %a(href="#") 取消
+
+#published
+  %h3.heading 已发布的主题
+  %p.note.sb
+    这里是您已经发布的主题. 这些主题
+    %strong 已经应用
+    到您的商店前台. 您对这些主题所做的任何修改将立即生效.
+  #published-themes
+    %ul.theme.pb.clearfix
+
+#unpublished.hide
+  %h3.heading 未发布的主题
+  %p.note.sb 这里是您未发布的主题. 您对这些主题所作的修改,不会影响到当前的商店前台.
+  #unpublished-themes
+    %ul.theme.unpublished.pb.clearfix
+
+%script(id="theme-item" type="text/x-handlebars-template")
+  .fl.theme-icon
+    {{#if is_published}}
+    =image_tag 'admin/theme-placeholder.jpg'
+    {{else}}
+    =image_tag 'admin/unpublished-theme-placeholder.jpg'
+    {{/if}}
+  .fr.theme-details
+    .heading.clearfix
+      %h3
+        乔木林地
+        %span(class="{{role}}") {{#if is_main}}普通{{else}}手机{{/if}}
+      %p.main-actions
+        {{#unless is_main}}
+        %span.preview
+          %a(data-popup="true" href="#{show_shop_url}?preview_theme_id={{id}}") 预览
+        %span.delete-theme
+          |
+          %a(href="/admin/themes/{{id}}")=image_tag 'admin/icons/trash.gif'
+        {{/unless}}
+    %ul.theme-actions.clearfix
+      %li.theme-settings
+        %a(href="/admin/themes/{{id}}/settings") 外观设置
+      %li.duplicate-theme
+        %a(href="/admin/themes/{{id}}/duplicate") 复制主题
+      %li.theme-editor
+        %a(href="/admin/themes/{{id}}") 模板编辑器
+      %li.export-theme
+        %a(href="/admin/themes/{{id}}") 导出主题
+    %ul.theme-actions.extra.clearfix
+      %li.publish-main
+        {{#if is_published}}
+        %span.main-theme 已经发布为{{#if is_main}}普通{{else}}手机{{/if}}主题
+        {{else}}
+        .publish-theme-link
+          %a(href="#") 发布此主题
+        .publish-theme-dropdown(style="display:none;")
+          %span.fl
+            %select#theme_role(name="theme[role]")
+              %option(value="main") 发布为普通主题
+              %option(value="mobile") 发布为手机主题
+          %span.fr
+            %input(name="commit" type="submit" value="提交")
+            或者
+            %a(href="#") 取消
+        {{/if}}
+      {{#if is_mobile}}
+      %li
+        %a(href="/admin/themes/{{id}}?theme[role]=unpublished" style="float:right;") 取消发布
+      {{/if}}
 
 :javascript
-  App.published_themes = #{@published_themes_json}
-  App.unpublish_themes = #{@unpublish_themes_json}
-  new App.Views.Theme.Index();
+  App.published_themes = new App.Collections.ShopThemes(#{@published_themes_json})
+  App.unpublished_themes = new App.Collections.ShopThemes(#{@unpublished_themes_json})
+  new App.Views.Theme.Themes.Index({el: '#published', collection: App.published_themes});
+  new App.Views.Theme.Themes.Index({el: '#unpublished', collection: App.published_themes});
 
   task_name = 'customize_theme';
