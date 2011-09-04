@@ -23,7 +23,7 @@ cn:
         current_password: 当前密码
         password: 密码
         password_confirmation: 确认密码
-        shop:
+      user/shop:
           permanent_domain: 二级域名
           name: 网店名
       weight_based_shipping_rate:
@@ -47,13 +47,13 @@ cn:
         body_html: 描述
         product_type: 商品类型
         vendor: 商品生产商
-        variants:
+      product/variants:
           price: 价格
           weight: 重量
           compare_at_price: 市场价
           sku: 商品唯一标识符
           requires_shipping: 要求送货地址
-        photos:
+      product/photos:
           product_image: 商品图片
       product_variant:
         price: 价格
