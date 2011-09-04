@@ -26,9 +26,9 @@ class ThemesController < ApplicationController
     def index # 主题管理
       themes = shop.themes
       published_themes = themes.select {|theme| theme.published? }
-      unpublish_themes = themes.select {|theme| !theme.published? }
+      unpublished_themes = themes.select {|theme| !theme.published? }
       @published_themes_json = published_themes.to_json(except: [:created_at, :updated_at])
-      @unpublish_themes_json = unpublish_themes.to_json(except: [:created_at, :updated_at])
+      @unpublished_themes_json = unpublished_themes.to_json(except: [:created_at, :updated_at])
     end
 
     def settings # 主题配置
