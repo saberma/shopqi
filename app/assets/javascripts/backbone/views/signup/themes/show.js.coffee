@@ -36,7 +36,7 @@ App.Views.Signup.Theme.Show = Backbone.View.extend
     $("#theme-image").attr 'src', this.$('img').attr('src')
     $('#current-theme').fadeIn('slow')
     $("#selected-theme").val @model.id
-    Effect.scrollTo("#shop_new")
+    Utils.Effect.scrollTo("#shop_new")
     $("#user_name").focus()  if $("#user_name").val() is ""
     false
 

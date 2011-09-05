@@ -15,10 +15,10 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
     attrs['tags'] = App.tags
     $(@el).html template attrs
 
-    TagUtils.init()
+    Utils.Tag.init()
 
     address = @model.get('address')
-    RegionUtils.init [address.province, address.city, address.district]
+    Utils.Region.init [address.province, address.city, address.district]
     $('#province').val(address.province).change()
 
   save: ->

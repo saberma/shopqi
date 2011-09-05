@@ -8,7 +8,7 @@ App.Views.Signup.Index = Backbone.View.extend
   initialize: ->
     self = this
     this.render()
-    RegionUtils.init()
+    Utils.Region.init()
     $("#shop_name").focus()
     inputFields = $("input.input-text")
     setInterval ->
@@ -94,7 +94,7 @@ App.Views.Signup.Index = Backbone.View.extend
     $('#errorExplanation p').remove()
     _(errors).each (msg, key) -> $('#errorExplanation').append "<p>#{msg}</p>"
     $('#errorExplanation').toggle(!result)
-    Effect.scrollTo("#errorExplanation") unless result
+    Utils.Effect.scrollTo("#errorExplanation") unless result
 
   reset: ->
     $('#shop_submit').attr('disabled', false).val '创建我的ShopQi商店'

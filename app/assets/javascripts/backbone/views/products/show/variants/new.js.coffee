@@ -22,7 +22,7 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
     $(@el).html template attrs
 
   save: ->
-    attrs = FormUtils.to_h @$('form')
+    attrs = Utils.Form.to_h @$('form')
     if @model.set attrs
       App.product_variants.create attrs
     false
