@@ -5,7 +5,7 @@ describe CollectionsDrop do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:frontpage_collection) { shop.custom_collections.where(handle: :frontpage).first }
+  let(:frontpage_collection) { shop.custom_collections.where(handle: 'frontpage').first }
 
   let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
 
