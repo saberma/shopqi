@@ -16,6 +16,17 @@
 #=require ./utils/utils
 #=require_self
 
+#字符串
+@StringUtils =
+  #转化为数组
+  to_a: (text) ->
+    _.uniq _.compact text.split(/[,\uFF0C]\s*/)
+
+  startsWith: (str, starts) ->
+    str.length >= starts.length and str.substring(0, starts.length) is starts
+
+  endsWith: (str, ends) ->
+    str.length >= ends.length and str.substring(str.length - ends.length) is ends
 
 #为IE添加placeholder属性
 @setPlaceholderText = ->
