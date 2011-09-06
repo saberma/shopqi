@@ -24,7 +24,7 @@ describe UrlFilter do
 
   it 'should get product_img_url' do
     variant = "{{ product.photos.first | product_img_url: 'medium' }}"
-    Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql '/images/admin/no-image-medium.gif'
+    Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql '/assets/admin/no-image-medium.gif'
   end
 
 end
