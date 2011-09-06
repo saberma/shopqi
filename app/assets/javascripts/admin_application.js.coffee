@@ -13,24 +13,8 @@
 #=require rails.validations
 #=require jquery.blockUI
 #=require plugins/jquery.guide
+#=require ./utils/utils
 #=require_self
-
-#日期
-@DateUtils =
-  to_s: (date, format='yyyy-MM-dd HH:mm:ss') ->
-    date = new Date(date)
-    text = format.replace /yyyy/, date.getFullYear()
-    text = text.replace /MM/, this.prefix(date.getMonth() + 1)
-    text = text.replace /dd/, this.prefix(date.getDate())
-    text = text.replace /HH/, this.prefix(date.getHours())
-    text = text.replace /mm/, this.prefix(date.getMinutes())
-    text.replace /ss/, this.prefix(date.getSeconds())
-
-  formatDate: (date) ->
-    this.to_s date, 'yyyy-MM-dd'
-
-  prefix: (text) ->
-    if "#{text}".length == 1 then "0#{text}" else text
 
 #字符串
 @StringUtils =
@@ -43,65 +27,6 @@
 
   endsWith: (str, ends) ->
     str.length >= ends.length and str.substring(str.length - ends.length) is ends
-
-#表单
-@FormUtils =
-  #表单输入项转化为hash: option1 => value
-  to_h: (form) ->
-    inputs = {}
-    $(':input', form).each ->
-      #product_variant[option1] => option1
-      name = $(this).attr('name')
-      match = name.match(/.+\[(.+)\]/)
-      return true unless match
-      # 单选项
-      return true if $(this).attr('type') in ['radio', 'checkbox'] and !$(this).attr('checked')
-      field = match[1]
-      inputs[field] = $(this).val()
-    inputs
-
-#标签
-@TagUtils =
-  init: (tags_text_id = 'tags_text', tag_list_id = 'tag-list')->
-    tag_items = $("##{tag_list_id} a")
-    text_field = $("##{tags_text_id}")
-    tag_items.click ->
-      $(this).toggleClass('active-tag')
-      tags = StringUtils.to_a(text_field.val())
-      tag = $(this).text()
-      if tag not in tags
-        tags.push tag
-      else
-        tags = _.without tags, tag
-      text_field.val(tags.join(', '))
-      false
-    text_field.keyup ->
-      tags = StringUtils.to_a(text_field.val())
-      tag_items.each ->
-        if $(this).text() in tags
-          $(this).addClass('active-tag')
-        else
-          $(this).removeClass('active-tag')
-    .keyup()
-
-#地区
-@RegionUtils =
-  init: (seed = [], region = '.region') ->
-    $(region).each ->
-      selects = $('select', this)
-      selects.unbind('change') # 避免多次绑定change事件
-      selects.change ->
-        $this = this
-        select_index = selects.index($this) + 1
-        select = selects.eq(select_index)
-        if $(this).val() and select[0]
-          $.get "/district/" + $(this).val(), (data) ->
-            result = eval(data)
-            options = select[0].options
-            $("option:gt(0)", select).remove()
-            $.each result, (i, item) -> options.add new Option(item[0], item[1])
-            value = seed[select_index]
-            select.val(value).change() if value # 级联回显
 
 #为IE添加placeholder属性
 @setPlaceholderText = ->
@@ -122,13 +47,6 @@
       el.val ""  if el.val() == text
     ).bind "reset", ->
       setTimeout add_placeholder, 50
-#特效
-@Effect =
-  scrollTo: (id) ->
-    destination = $(id).offset().top
-    $("html:not(:animated),body:not(:animated)").animate {
-      scrollTop: destination-20
-    }, 1000
 
 #右上角菜单
 @NavigationDropdown = (navs) ->
@@ -176,7 +94,7 @@
 #日期，用于订单列表创建日期的格式化
 @Handlebars.registerHelper 'date', (date, format)->
   format = null if format.hash
-  DateUtils.to_s date, format
+  Utils.Date.to_s date, format
 
 #迭代，加入 index, index_plus 属性值
 @Handlebars.registerHelper 'each_with_index', (context, block) ->

@@ -54,12 +54,14 @@ class Shop < ActiveRecord::Base
     KeyValues::Plan::Type.find_by_code(self.plan)
   end
 
-  def customer_accounts_required?
-    customer_accounts == 'required'
-  end
+  begin 'customer account' #用于顾客结账页面是否需要登录账号
+    def customer_accounts_required?
+      customer_accounts == 'required'
+    end
 
-  def customer_accounts_optional?
-    customer_accounts == 'optional'
+    def customer_accounts_optional?
+      customer_accounts == 'optional'
+    end
   end
 
   begin 'Theme' # 主题相关

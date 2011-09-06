@@ -46,7 +46,7 @@ describe SearchDrop do
 
     it 'should get featured_image' do
       photo = iphone4.photos.build
-      photo.product_image = Rails.root.join('public/images/avatar.jpg')
+      photo.product_image = Rails.root.join('app/assets/images/avatar.jpg')
       photo.save!
       variant = "{% for item in search.results %}{{ item.featured_image | product_img_url: 'thumb' }}{% endfor %}"
       liquid(variant).should_not be_blank

@@ -42,7 +42,7 @@ describe ShopObserver do
     end
 
     it "should save collection" do
-      shop.custom_collections.where(handle: :frontpage).first.should_not be_nil
+      shop.custom_collections.where(handle: 'frontpage').first.should_not be_nil
     end
 
     it "should save news blog" do
@@ -55,5 +55,5 @@ describe ShopObserver do
     end
 
   end
-  
+
 end

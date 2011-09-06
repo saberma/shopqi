@@ -13,7 +13,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
     template = Handlebars.compile $('#edit-product-item').html()
     attrs = _.clone @model.attributes
     $(@el).html template attrs
-    TagUtils.init()
+    Utils.Tag.init()
 
   save: ->
     self = this

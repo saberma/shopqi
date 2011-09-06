@@ -14,7 +14,7 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
     if params[:verify_code].to_i == session[:verify_code] or Rails.env.test? # 手机校验码(测试环境下不校验)
       session[:verify_code] = nil
       build_resource
-      resource.shop.theme.theme_id ||= Theme.default.id # 默认主题
+      resource.shop.themes.first.theme_id ||= Theme.default.id
       if resource.save
         data[:token] = resource.authentication_token
       else

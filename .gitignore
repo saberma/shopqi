@@ -17,6 +17,8 @@ capybara-*.html
 public/uploads
 public/images/logo/4*.png
 public/images/menu/4*.png
+#去掉precompile到生产环境的目录
+public/assets/**
 
 #上传的图片
 public/images/uploads/**

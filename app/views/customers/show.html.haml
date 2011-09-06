@@ -158,9 +158,9 @@
           .pb.clearfix.region
             .fl(style="margin-right:10px")
               %label(for="province") 地区
-              =select_tag :province, options_for_select(District.list), {include_blank: '--省份--', style: 'width: 106px'}
-              =select_tag :city, nil, {include_blank: '--城市--', style: 'width: 106px'}
-              =select_tag :district, nil, {include_blank: '--地区--', style: 'width: 106px'}
+              =select_tag :province, options_for_select(District.list), {prompt: '--省份--', style: 'width: 106px'}
+              =select_tag :city, nil, {prompt: '--城市--', style: 'width: 106px'}
+              =select_tag :district, nil, {prompt: '--地区--', style: 'width: 106px'}
           .pb.clearfix
             .fl
               %label(for="address1") 地址

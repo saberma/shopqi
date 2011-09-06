@@ -40,7 +40,7 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
 
   save: ->
     self = this
-    @model.save FormUtils.to_h(@$('form')),
+    @model.save Utils.Form.to_h(@$('form')),
       success: (model, resp) ->
         self.render()
         msg '修改成功!'

@@ -3,8 +3,8 @@ App.Views.Customer.New.Index = Backbone.View.extend
 
   initialize: ->
     this.render()
-    TagUtils.init()
-    RegionUtils.init()
+    Utils.Tag.init()
+    Utils.Region.init()
 
     # 即时显示
     this.instantText '#customer_name', '#preview_customer_first_name'

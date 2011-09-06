@@ -214,4 +214,9 @@ class ShopTheme < ActiveRecord::Base
       repo.commit_all message
     end
   end
+
+  #删除对应的目录
+  after_destroy do
+    FileUtils.rm_rf self.public_path
+  end
 end

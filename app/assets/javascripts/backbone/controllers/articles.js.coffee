@@ -5,7 +5,7 @@ App.Controllers.Articles = Backbone.Controller.extend
 
   initialize: ->
     #标签
-    TagUtils.init 'article_tags_text'
+    Utils.Tag.init 'article_tags_text'
 
     $('#article-show,#article-edit-link,.cancel').click ->
       $('#article-edit').toggle()

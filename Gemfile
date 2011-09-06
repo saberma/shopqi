@@ -56,10 +56,10 @@ gem 'settingslogic' #用于解析一些配置信息
 gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
 gem 'oauth2' # 提供访问oauth provider的客户端访问接口,服务端(Provider)使用http://j.mp/nCZiUj, 代码放在 lib/oauth2
 gem 'newrelic_rpm' # 性能监控
+gem "jquery-rails"
 
 group :development do
   gem 'rails3-generators'
-  gem "jquery-rails"
   gem "haml-rails"
   gem 'guard'
   gem 'guard-livereload' # 修改后台文件后，safari或chrome浏览器会自动刷新
@@ -79,7 +79,7 @@ end
 
 group :test, :travis do
   gem "rspec-rails"
-  gem 'capybara'
+  gem 'capybara' , ' ~> 1.1.0'
   gem 'resque_spec' # resque测试
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
@@ -94,7 +94,6 @@ end
 # in production environments by default.
 # rake assets:precompile 部署到生产环境下执行
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end

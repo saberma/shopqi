@@ -97,10 +97,10 @@ class ProductsController < ApplicationController
 
   # 复制
   def duplicate
-    new_product = product.clone
-    new_product.variants = product.variants.map(&:clone)
-    new_product.options = product.options.map(&:clone).each{|o| o.position = nil } # Fixed: #159 position不为空导致排序报错
-    new_product.collection_products = product.collection_products.map(&:clone)
+    new_product = product.dup
+    new_product.variants = product.variants.map(&:dup)
+    new_product.options = product.options.map(&:dup).each{|o| o.position = nil } # Fixed: #159 position不为空导致排序报错
+    new_product.collection_products = product.collection_products.map(&:dup)
     new_product.tags_text = product.tags_text
     new_product.update_attribute :title, params[:new_title]
     render json: {id: new_product.id}

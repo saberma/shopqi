@@ -59,7 +59,7 @@ GEM
     braintree (2.11.0)
       builder (>= 2.0.0)
     builder (3.0.0)
-    capybara (1.0.1)
+    capybara (1.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -240,11 +240,6 @@ GEM
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.4)
-    sass (3.1.7)
-    sass-rails (3.1.0)
-      actionpack (~> 3.1.0)
-      railties (~> 3.1.0)
-      sass (>= 3.1.4)
     seedbank (0.0.7)
     selenium-webdriver (2.5.0)
       childprocess (>= 0.2.1)
@@ -307,7 +302,7 @@ DEPENDENCIES
   activemerchant
   activemerchant_patch_for_china
   awesome_print
-  capybara
+  capybara (~> 1.1.0)
   carmen!
   carrierwave
   chinese_pinyin
@@ -350,7 +345,6 @@ DEPENDENCIES
   riddle
   rspec-rails
   ruby-debug19
-  sass-rails
   seedbank
   sentient_user
   settingslogic
