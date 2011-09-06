@@ -46,7 +46,7 @@ describe ProductDrop do
 
   it 'should get images' do
     photo = iphone4.photos.build
-    photo.product_image = Rails.root.join('public/images/avatar.jpg')
+    photo.product_image = Rails.root.join('app/assets/images/avatar.jpg')
     photo.save!
     variant = "{{ product.images | size }}"
     liquid(variant, {'product' => ProductDrop.new(iphone4)}).should eql '1'
