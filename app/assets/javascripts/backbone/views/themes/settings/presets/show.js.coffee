@@ -3,8 +3,7 @@ App.Views.Theme.Settings.Preset.Show = Backbone.View.extend
 
   initialize: ->
     @model.view = this
-    self = this
-    this.render()
+    @render()
 
   render: ->
     name = @model.get('name')
@@ -12,7 +11,7 @@ App.Views.Theme.Settings.Preset.Show = Backbone.View.extend
     $(@el).clone().appendTo('#theme_save_preset_existing')
 
   destroy: ->
-    this.remove()
+    @remove()
     name = @model.get('name')
     $('#theme_save_preset_existing').children("option[value='#{name}']").eq(0).remove()
     $('#theme_load_preset').change()

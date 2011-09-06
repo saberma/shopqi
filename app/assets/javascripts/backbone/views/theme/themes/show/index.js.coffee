@@ -1,4 +1,4 @@
-App.Views.Theme.Show.Index = Backbone.View.extend
+App.Views.Theme.Themes.Show.Index = Backbone.View.extend
   el: '#wrapper'
 
   initialize: ->
@@ -23,5 +23,5 @@ App.Views.Theme.Show.Index = Backbone.View.extend
     $('#overview').html template attrs
     template = Handlebars.compile $('#screenshots-item').html()
     $('#screenshots').html template id: @model.id
-    new App.Views.Theme.Show.Style
-    new App.Views.Theme.Show.Other
+    new App.Views.Theme.Themes.Show.Style
+    new App.Views.Theme.Themes.Show.Other

@@ -54,9 +54,9 @@
 
 :javascript
   App.init = function(){
-    new App.Controllers.Themes.Index();
+    new App.Controllers.Theme.Themes.Index();
     Backbone.history.start();
   }
 
   App.themes = new App.Collections.Themes();
-  new App.Views.Theme.Index.Index({collection: App.themes});
+  new App.Views.Theme.Themes.Index.Index({collection: App.themes});

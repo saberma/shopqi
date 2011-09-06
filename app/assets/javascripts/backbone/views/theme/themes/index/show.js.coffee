@@ -1,4 +1,4 @@
-App.Views.Theme.Index.Show = Backbone.View.extend
+App.Views.Theme.Themes.Index.Show = Backbone.View.extend
   tagName: 'li'
 
   initialize: ->

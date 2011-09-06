@@ -1,5 +1,5 @@
 #=require "backbone/models/shop_theme"
-App.Views.Theme.Themes.Show = Backbone.View.extend
+App.Views.Theme.Show = Backbone.View.extend
   tagName: 'li'
   tagClass: 'clearfix'
 

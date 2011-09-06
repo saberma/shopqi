@@ -1,6 +1,6 @@
 #=require "backbone/models/shop_theme"
 #=require "./show"
-App.Views.Theme.Themes.Index = Backbone.View.extend
+App.Views.Theme.Index = Backbone.View.extend
 
   initialize: ->
     self = this
@@ -9,4 +9,4 @@ App.Views.Theme.Themes.Index = Backbone.View.extend
   render: ->
     self = this
     data = $('<ul/>')
-    @collection.each (model) -> new App.Views.Theme.Themes.Show model: model, parent: self.el
+    @collection.each (model) -> new App.Views.Theme.Show model: model, parent: self.el

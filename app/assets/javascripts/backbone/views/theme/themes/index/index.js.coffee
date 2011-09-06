@@ -1,4 +1,4 @@
-App.Views.Theme.Index.Index = Backbone.View.extend
+App.Views.Theme.Themes.Index.Index = Backbone.View.extend
   el: '#wrapper'
 
   events:
@@ -12,7 +12,7 @@ App.Views.Theme.Index.Index = Backbone.View.extend
   render: ->
     self = this
     data = $('<ul/>')
-    @collection.each (model) -> data.append new App.Views.Theme.Index.Show(model: model).el
+    @collection.each (model) -> data.append new App.Views.Theme.Themes.Index.Show(model: model).el
     $("#themes").quicksand $(data).find('li'),
       attribute: "data-id"
       useScaling: false
