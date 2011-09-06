@@ -84,7 +84,7 @@ class Theme::ThemesController < Theme::AppController
       session[:q] = request.query_string
       price = params[:price]
       color = params[:color]
-      themes =  Theme.all.clone # 一定要复制
+      themes =  Theme.all.dup # 一定要复制
       themes.select! {|t| t.price == 0} if price == 'free'
       themes.reject! {|t| t.price == 0} if price == 'paid'
       themes.select! {|t| t.color == color} unless color.blank?

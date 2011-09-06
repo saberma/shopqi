@@ -100,6 +100,6 @@
   App.published_themes = new App.Collections.ShopThemes(#{@published_themes_json})
   App.unpublished_themes = new App.Collections.ShopThemes(#{@unpublished_themes_json})
   new App.Views.Theme.Index({el: '#published', collection: App.published_themes});
-  new App.Views.Theme.Index({el: '#unpublished', collection: App.published_themes});
+  new App.Views.Theme.Index({el: '#unpublished', collection: App.unpublished_themes});
 
   task_name = 'customize_theme';
