@@ -54,7 +54,7 @@ gem "uuid" # 生成36位(或32位)唯一序列号
 gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
-gem 'oauth2'
+gem 'oauth2' # 提供访问oauth provider的客户端访问接口,服务端(Provider)使用http://j.mp/nCZiUj, 代码放在 lib/oauth2
 gem 'newrelic_rpm' # 性能监控
 
 group :development do
@@ -98,4 +98,3 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
 end
-

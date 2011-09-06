@@ -14,7 +14,7 @@ App.Views.Theme.Themes.Show.Index = Backbone.View.extend
           form.setAttribute("action", "/themes/login/authenticate")
           form.setAttribute("method", "post")
           form.submit()
-          false # 不弹出窗口
+        false # 不弹出窗口
     }
 
   render: ->
