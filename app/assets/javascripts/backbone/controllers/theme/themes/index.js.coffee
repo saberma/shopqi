@@ -1,4 +1,4 @@
-App.Controllers.Themes.Index = Backbone.Controller.extend
+App.Controllers.Theme.Themes.Index = Backbone.Controller.extend
 
   routes:
     "*splat":      "search"

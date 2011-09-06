@@ -1,18 +1,16 @@
 #=require_self
-#=require ./controllers/themes/index
+#=require ./controllers/theme/themes/index
 #=require ./models/theme
-#=require ./views/themes/show/index
-#=require ./views/themes/show/style
-#=require ./views/themes/show/other
-#=require ./views/themes/index/show
-#=require ./views/themes/index/index
+#=require_tree ./views/theme/themes
 window.App =
   Views:
     Theme:
-      Index: {}
-      Show: {}
+      Themes:
+        Index: {}
+        Show: {}
   Controllers:
-    Themes: {}
+    Theme:
+      Themes: {}
   Collections: {}
   Models: {}
   init: ->

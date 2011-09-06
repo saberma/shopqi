@@ -62,7 +62,7 @@ class ShopObserver < ActiveRecord::Observer
       shop.emails.create title: title,mail_type: code , body: body
     end
 
-    # 生成consumer access_token，用于主题商店切换主题
+    # 预先生成consumer access_token(不需要用户手动授权主题应用)，用于主题商店切换主题
     client = OAuth2::Model::Client.find_by_client_id(Theme.client_id)
     author = shop.oauth2_authorizations.build client: client
     #author = OAuth2::Model::Authorization.new owner: shop, client: client

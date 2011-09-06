@@ -5,7 +5,7 @@ class Theme < ActiveYaml::Base
   set_root_path "#{Rails.root}/app/models"
 
   def self.default
-    find_by_name('Threadify')
+    find_by_handle('Threadify')
   end
 
   begin 'oauth2' # theme作为client，向provider请求认证时传递的返回跳转uri

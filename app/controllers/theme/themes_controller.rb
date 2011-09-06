@@ -49,8 +49,9 @@ class Theme::ThemesController < Theme::AppController
     end
 
     def get_shop # 获取商店信息
-      access_token = OAuth2::AccessToken.new(client, token)
-      result = JSON(access_token.get('/api/me'))
+      access_token = OAuth2::AccessToken.from_hash(client, access_token: token, header_format: 'OAuth %s') # 注意,由于oauth2标准处于草稿修订阶段,变动较频繁.此处的header_format要与 lib/oauth2/router.rb 中的 self.access_token 对应
+      response = access_token.get('/api/me')
+      result = JSON(response.body)
       if result['error'].blank?
         session[:shop] = result['name']
       end
@@ -59,8 +60,8 @@ class Theme::ThemesController < Theme::AppController
 
     def apply # 切换主题
       if request.post?
-        access_token = OAuth2::AccessToken.new(client, token)
-        access_token.post('/api/themes/switch', handle: handle, style_handle: style_handle)
+        access_token = OAuth2::AccessToken.from_hash(client, access_token: token, header_format: 'OAuth %s') # 注意,由于oauth2标准处于草稿修订阶段,变动较频繁.此处的header_format要与 lib/oauth2/router.rb 中的 self.access_token 对应
+        access_token.post('/api/themes/switch', params: { handle: handle, style_handle: style_handle })
       end
     end
 
@@ -75,7 +76,7 @@ class Theme::ThemesController < Theme::AppController
 
     def authenticate # 跳转至用户商店的认证登录页面oauth
       session[:shop_url] ||= params[:shop_url] # 如果后台管理已经设置了商店url
-      redirect_to client.web_server.authorize_url(
+      redirect_to client.auth_code.authorize_url(
         redirect_uri: Theme.redirect_uri
       )
     end
@@ -84,7 +85,7 @@ class Theme::ThemesController < Theme::AppController
       session[:q] = request.query_string
       price = params[:price]
       color = params[:color]
-      themes =  Theme.all.clone # 一定要复制
+      themes =  Theme.all.dup # 一定要复制
       themes.select! {|t| t.price == 0} if price == 'free'
       themes.reject! {|t| t.price == 0} if price == 'paid'
       themes.select! {|t| t.color == color} unless color.blank?
@@ -108,7 +109,7 @@ class Theme::ThemesController < Theme::AppController
 
   def token
     shop = Shop.at(shop_host)
-    consumer = OAuth2::Model::ConsumerToken.where(shop: shop, client_id: Theme.client_id).first
+    consumer = OAuth2::Model::ConsumerToken.where(shop_id: shop.id, client_id: Theme.client_id).first
     consumer.access_token
   end
 

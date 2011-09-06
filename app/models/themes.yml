@@ -3,6 +3,7 @@
   handle: Prettify
   style: default
   style_handle: default
+  role: main
   price: 0
   color: magenta
   desc: Prettify 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -16,6 +17,7 @@
   handle: Threadify
   style: original
   style_handle: original
+  role: main
   price: 0
   color: grey
   desc: Threadify 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -29,6 +31,7 @@
   handle: woodland
   style: 石板
   style_handle: slate
+  role: main
   price: 0
   color: grey
   desc: 乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -42,6 +45,7 @@
   handle: woodland
   style: 桦木
   style_handle: birchwood
+  role: main
   price: 0
   color: yellow
   desc: 乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -55,6 +59,7 @@
   handle: woodland
   style: 黑桤木
   style_handle: dark-alder
+  role: main
   price: 0
   color: black
   desc: 乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -68,6 +73,7 @@
   handle: Structure
   style: Electronics
   style_handle: Electronics
+  role: main
   price: 0
   color: black
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -81,6 +87,7 @@
   handle: Structure
   style: Apparel
   style_handle: Apparel
+  role: main
   price: 0
   color: red
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -94,6 +101,7 @@
   handle: Structure
   style: Crafts
   style_handle: Crafts
+  role: main
   price: 0
   color: green
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。
@@ -107,6 +115,7 @@
   handle: Structure
   style: Jewelry
   style_handle: Jewelry
+  role: main
   price: 0
   color: black
   desc: Structure 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。

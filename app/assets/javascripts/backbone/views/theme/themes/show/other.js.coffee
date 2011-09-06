@@ -1,4 +1,4 @@
-App.Views.Theme.Show.Other = Backbone.View.extend
+App.Views.Theme.Themes.Show.Other = Backbone.View.extend
   el: '#more-designer'
 
   initialize: ->

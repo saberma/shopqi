@@ -1,4 +1,4 @@
-App.Views.Theme.Show.Style = Backbone.View.extend
+App.Views.Theme.Themes.Show.Style = Backbone.View.extend
   el: '#styles'
 
   initialize: ->

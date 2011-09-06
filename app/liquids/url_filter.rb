@@ -14,7 +14,7 @@ module UrlFilter
   end
 
   def product_img_url(photo, size)
-    photo ? photo.version(size) : "/images/admin/no-image-#{size}.gif"
+    photo ? photo.version(size) : "/assets/admin/no-image-#{size}.gif"
   end
 
 end

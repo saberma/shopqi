@@ -6,6 +6,17 @@ describe ShopTheme do
 
   let(:theme) { shop.theme }
 
+  describe 'Theme' do
+
+    it 'should be switch' do
+      theme
+      expect do
+        theme.switch Theme.find_by_handle('Prettify')
+      end.should change(ShopTheme, :count).by(1)
+    end
+
+  end
+
   describe ShopThemeSetting do
 
     describe 'settings.html' do
@@ -56,6 +67,7 @@ describe ShopTheme do
 
     it 'should parse select element' do
       theme.switch Theme.find_by_handle('Prettify')
+      theme = shop.theme
       settings = theme.config_settings['presets']['default']
       settings['bg_image_y_position'].should eql 'top'
     end

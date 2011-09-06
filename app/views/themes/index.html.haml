@@ -1,5 +1,5 @@
 =content_for :javascripts do
-  =javascript_include_tag 'backbone/models/shop_theme', 'backbone/views/themes/themes/index', 'backbone/views/themes/themes/show'
+  =javascript_include_tag 'backbone/views/themes/index'
 
 %h2#title 安装主题
 #action-links
@@ -99,7 +99,7 @@
 :javascript
   App.published_themes = new App.Collections.ShopThemes(#{@published_themes_json})
   App.unpublished_themes = new App.Collections.ShopThemes(#{@unpublished_themes_json})
-  new App.Views.Theme.Themes.Index({el: '#published', collection: App.published_themes});
-  new App.Views.Theme.Themes.Index({el: '#unpublished', collection: App.published_themes});
+  new App.Views.Theme.Index({el: '#published', collection: App.published_themes});
+  new App.Views.Theme.Index({el: '#unpublished', collection: App.unpublished_themes});
 
   task_name = 'customize_theme';

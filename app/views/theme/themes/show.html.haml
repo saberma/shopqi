@@ -86,4 +86,4 @@
   App.theme = new App.Models.Theme(#{@theme_json});
   App.styles_json = #{@styles_json};
   App.others_json = new App.Collections.Themes(#{@others_json});
-  new App.Views.Theme.Show.Index({model: App.theme});
+  new App.Views.Theme.Themes.Show.Index({model: App.theme});

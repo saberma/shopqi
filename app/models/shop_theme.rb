@@ -147,7 +147,8 @@ class ShopTheme < ActiveRecord::Base
   end
 
   def switch(new_theme, style = nil) # 切换主题
-    self.update_attributes theme: new_theme, load_preset: style
+    self.update_attributes role: 'unpublished'
+    self.shop.themes.create theme_id: new_theme.id, load_preset: style, role: new_theme.role
   end
 
   begin #相对路径
