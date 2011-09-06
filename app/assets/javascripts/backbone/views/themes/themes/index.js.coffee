@@ -1,3 +1,5 @@
+#=require "backbone/models/shop_theme"
+#=require "./show"
 App.Views.Theme.Themes.Index = Backbone.View.extend
 
   initialize: ->
