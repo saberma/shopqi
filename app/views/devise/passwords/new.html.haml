@@ -1,8 +1,7 @@
 #container
   #dialog
-    .ssb.c
-      %img(alt="Shopqi-logo-new" src="/images/logos/shopqi-logo-new.jpg")
-    =form_for(resource, url: password_path) do |f|
+    .ssb.c=image_tag 'logos/shopqi-logo-new.jpg'
+    =form_for(resource, :as => resource_name, url: user_password_path(resource)) do |f|
       .lform.c.clearfix.ppb
         %h3 忘记密码？ 不能登录？
         %p.ppb
