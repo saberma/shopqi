@@ -9,12 +9,13 @@ App.Views.Theme.Themes.Show.Index = Backbone.View.extend
       success: (href, data, textStatus) ->
         if data is 'logged' # 已登录
           window.location = href
+          false # 不弹出窗口
         else if data is 'from_admin' # 后台管理中进入主题商店，则不需要显示登录窗口
           form = document.createElement("form")
           form.setAttribute("action", "/themes/login/authenticate")
           form.setAttribute("method", "post")
           form.submit()
-        false # 不弹出窗口
+          false # 不弹出窗口
     }
 
   render: ->

@@ -61,7 +61,7 @@ class Theme::ThemesController < Theme::AppController
     def apply # 切换主题
       if request.post?
         access_token = OAuth2::AccessToken.from_hash(client, access_token: token, header_format: 'OAuth %s') # 注意,由于oauth2标准处于草稿修订阶段,变动较频繁.此处的header_format要与 lib/oauth2/router.rb 中的 self.access_token 对应
-        access_token.post('/api/themes/switch', handle: handle, style_handle: style_handle)
+        access_token.post('/api/themes/switch', params: { handle: handle, style_handle: style_handle })
       end
     end
 
