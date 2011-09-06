@@ -1,9 +1,9 @@
 #container
   #dialog
     .status
-      %p==重置密码:#{resource.email}
-    = form_for(resource, :as => resource_name, :url => user_password_path(resource), :html => { :method => :put }) do |f|
-      = devise_error_messages!
+      %p==重置密码#{resource.email}
+    = form_for(resource, :as => resource_name, :url => user_password_path, :html => { :method => :put }) do |f|
+      =message_block on: [resource]
       .lform
         = f.hidden_field :reset_password_token
         .ppb.clearfix

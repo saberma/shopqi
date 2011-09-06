@@ -11,6 +11,8 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
       %{<div class="field-with-errors"><span class="error-message">#{instance.error_message.first}</span><br/>#{html_tag}</div>}.html_safe
     elsif instance.respond_to?(:object_name) and instance.object_name =~ /^payment/
       %{<div class="field-with-errors"><span class="error-message">#{instance.error_message.first}</span><br/>#{html_tag}</div>}.html_safe
+    elsif instance.respond_to?(:object_name) and instance.object_name =~ /^user/
+      html_tag.html_safe
     else
       #将输入项的后面插入的field_with_errors div改为span，否则会破坏布局(比如[价格]输入项后面带'元'，'元'字会被移至下一行)
       %{<span class="field_with_errors">#{html_tag}<label for="#{instance.send(:tag_id)}" class="message">#{instance.error_message.first}</label></span>}.html_safe
