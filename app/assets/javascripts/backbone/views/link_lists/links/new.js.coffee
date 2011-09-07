@@ -9,7 +9,7 @@ App.Views.LinkList.Links.New = Backbone.View.extend
   initialize: ->
     self = this
     @link_list = @options.link_list
-    @model = new Link link_list_id: @link_list.id
+    @model = new App.Models.Link link_list_id: @link_list.id
     @link_list.links.bind 'add', (model, collection) ->
       msg "新增链接#{model.get('title')}到#{self.link_list.get('title')}列表成功."
       self.cancel()
