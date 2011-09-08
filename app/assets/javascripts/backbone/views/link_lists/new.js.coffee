@@ -7,7 +7,7 @@ App.Views.LinkList.New = Backbone.View.extend
 
   initialize: ->
     self = this
-    @model = new LinkList
+    @model = new App.Models.LinkList
     @collection = App.link_lists
     @collection.bind 'add', (model, collection) ->
       model.with_links()
