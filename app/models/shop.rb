@@ -76,13 +76,13 @@ class Shop < ActiveRecord::Base
 
   end
 
+  def available?
+    !self.deadline.past?
+  end
+
   protected
   def init_valid_date
     self.deadline = Date.today.next_day(30)
-  end
-
-  def available?
-    !self.deadline.past?
   end
 
 end

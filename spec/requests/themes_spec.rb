@@ -11,7 +11,7 @@ describe "Themes", js: true do
   describe "GET /settings" do # theme = Threadify
 
     before(:each) do
-      visit settings_themes_path
+      visit settings_theme_path(shop.theme)
     end
 
     it "should be index" do
@@ -58,7 +58,7 @@ describe "Themes", js: true do
           find('#theme_save_preset_new_container').visible?.should be_false # 隐藏名称输入项
           click_on '保存配置'
           find('#theme_load_preset').value.should eql 'original'
-          visit settings_themes_path # 回显
+          visit settings_theme_path(shop.theme) # 回显
           find('#theme_load_preset').value.should eql 'original'
           find('#use_logo_image')['checked'].should be_false
         end
@@ -70,7 +70,7 @@ describe "Themes", js: true do
           click_on '保存配置'
           find('#save-preset').visible?.should be_false
           find('#theme_load_preset').value.should eql 'new_preset'
-          visit settings_themes_path # 回显
+          visit settings_theme_path(shop.theme) # 回显
           find('#theme_load_preset').value.should eql 'new_preset'
           find('#use_logo_image')['checked'].should be_false
         end
@@ -111,7 +111,7 @@ describe "Themes", js: true do
   describe "GET /assets" do
 
     before(:each) do
-      visit assets_path
+      visit theme_assets_path(shop.theme)
     end
 
     after(:each) do
@@ -262,7 +262,7 @@ describe "Themes", js: true do
       describe 'rename' do
 
         it "should be forbid" do # 关键文件不能重命名
-          within '#current-asset' do 
+          within '#current-asset' do
             has_css?('#asset-link-rename').should be_false
           end
         end
@@ -289,7 +289,7 @@ describe "Themes", js: true do
       describe "destroy" do
 
         it "should be forbid" do # 关键文件不能删除
-          within '#current-asset' do 
+          within '#current-asset' do
             has_css?('#asset-link-destroy').should be_false
           end
         end
@@ -329,7 +329,7 @@ describe "Themes", js: true do
         page.execute_script("TemplateEditor.editor.getSession().setValue('#{content}')");
         click_on '保存'
         find('#asset-info').has_content?('您的文件已经保存.').should be_true
-        visit assets_path
+        visit theme_assets_path(shop.theme)
         within '#theme-layout' do # 布局
           find(:xpath, './/li[1]').find('a').click
         end

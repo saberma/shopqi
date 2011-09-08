@@ -1,3 +1,6 @@
+#=require jquery
+#=require jquery_ujs
+
 #地区(冗余代码待重构)
 RegionUtils =
   init: (seed = [], region = '.region') ->
@@ -102,7 +105,7 @@ $(document).ready ->
       if $(this).val() and select[0]
         $.get "/district/" + $(this).val(), (data) ->
           result = eval(data)
-          options = select.attr("options")
+          options = select[0].options
           $("option:gt(0)", select).remove()
           $.each result, (i, item) ->
             options[options.length] = new Option(item[0], item[1])
