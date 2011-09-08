@@ -113,9 +113,11 @@
     %a.customer-display-link(href="#" onclick="return false;")
       %span.contact-details.customer-display-link(data-popup-id="customer-display-{{{id}}}") i
   %td
+    {{#if address}}
     {{#with address}}
     {{{province_name}}}{{{city_name}}}{{{district_name}}}
     {{/with}}
+    {{/if}}
   %td.r {{{total_spent}}}
   %td.c {{{orders_count}}}
   %td
