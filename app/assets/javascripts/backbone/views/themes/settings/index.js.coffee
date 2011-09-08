@@ -29,7 +29,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
       new qq.FileUploader
         multiple: false
         element: $(this)[0],
-        action: '/admin/themes/assets/0/upload'
+        action: "/admin/themes/#{theme_id}/assets/0/upload"
         allowedExtensions: ['jpg', 'jpeg', 'png', 'gif']
         sizeLimit: 1048576 # 1M
         messages:
@@ -55,7 +55,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
       result[obj.name] = obj.value
       result
     , {_method: 'put'}
-    $.post "/admin/themes/settings", attrs, (data) ->
+    $.post "/admin/themes/#{theme_id}/settings", attrs, (data) ->
       msg '保存成功!'
       collection = self.presets_view.collection
       new_preset_name = $('#theme_save_preset_new').val()

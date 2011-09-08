@@ -6,7 +6,7 @@
 %h2#title 主题外观配置
 #action-links
   %ul
-    %li.template-editor=link_to "模板编辑器", assets_path
+    %li.template-editor=link_to "模板编辑器", theme_assets_path(shop.theme)
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 %form#theme_settings_form(action="#" onsubmit="return false")
@@ -53,6 +53,7 @@
     %img(src="{{{url}}}")
 
 :javascript
+  var theme_id = #{theme.id};
   settings = #{settings_json}
   new App.Views.Theme.Settings.Index();
 

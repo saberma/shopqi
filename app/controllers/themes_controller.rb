@@ -4,8 +4,8 @@ class ThemesController < ApplicationController
   layout 'admin'
 
   expose(:shop) { current_user.shop }
-  expose(:theme) { shop.theme }
   expose(:themes) { shop.themes }
+  expose(:theme)
   expose(:settings_html) { theme.settings.transform }
   expose(:settings_json) { theme.settings.as_json.to_json }
 

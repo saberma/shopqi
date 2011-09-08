@@ -60,7 +60,7 @@ class ShopThemeSetting < ActiveRecord::Base
                 div.asset {
                   div(class: 'asset-image') {
                     a(class: 'closure-lightbox', href: url) {
-                      img(src: '/images/admin/icons/mimes/png.gif') } }
+                      img(src: '/assets/admin/icons/mimes/png.gif') } }
                   span.note {
                     a(class: 'closure-lightbox', href: url) { text name } } } } } }
         end

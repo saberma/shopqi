@@ -236,9 +236,9 @@ Shopqi::Application.routes.draw do
       end
 
       resources :themes, only: [:index] do
-        collection do
-          get :settings      , to: 'themes#settings'     , as: :settings_themes
+        member do
           put :settings      , to: 'themes#update'
+          get :settings      , to: 'themes#settings'
           post :delete_preset, to: 'themes#delete_preset'
         end
         resources :assets do
