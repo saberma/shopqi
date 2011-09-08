@@ -1,7 +1,7 @@
 =content_for :stylesheets do
   =stylesheet_link_tag 'fileuploader'
 =content_for :javascripts do
-  =javascript_include_tag 'models/asset', 'collections/assets', 'views/assets/index/show', 'views/assets/index/panel', 'views/assets/index/sidebar', 'views/assets/index/index', 'ace/ace', 'ace/theme-clouds', 'ace/mode-html', 'ace/mode-css', 'ace/mode-javascript', 'fileuploader'
+  =javascript_include_tag 'backbone/views/assets/index/index'
 
 %h2#title 模板编辑器
 #action-links
@@ -198,5 +198,6 @@
     %a.cancel(href="#") 关闭
 
 :javascript
+  var theme_id = #{theme.id};
   var assets_json = #{@assets_json};
   new App.Views.Asset.Index.Index({data: assets_json});

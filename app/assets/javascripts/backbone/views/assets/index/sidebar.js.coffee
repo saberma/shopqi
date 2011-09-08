@@ -101,7 +101,7 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     name = $('#new_snippet_basename_without_ext').val()
     name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
     key = "snippets/#{name}"
-    $.post '/admin/themes/assets', key: key, (data) ->
+    $.post "/admin/themes/#{theme_id}/assets", key: key, (data) ->
       self.options.assets.snippets.add key: key, name: name
       self.cancelSnippet()
 
@@ -123,7 +123,7 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     name = $('#new_asset_basename_without_ext').val()
     name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
     key = "assets/#{name}"
-    $.post '/admin/themes/assets', key: key, (data) ->
+    $.post "/admin/themes/#{theme_id}/assets", key: key, (data) ->
       self.options.assets.assets.add key: key, name: name
       self.cancelAsset()
 

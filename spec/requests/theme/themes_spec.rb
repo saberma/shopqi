@@ -35,7 +35,7 @@ describe "Theme::Themes", js: true do # 主题商店
       end
 
       it "should be index" do
-        visit '/themes/Woodland/styles/Slate'
+        visit '/themes/woodland/styles/slate'
         all('#styles li').size.should_not eql 0
       end
 
@@ -92,7 +92,7 @@ describe "Theme::Themes", js: true do # 主题商店
       end
 
     end
-    
+
   end
 
   # 由于获取主题需要进行oauth2认证(独立进程)，暂时不进行测试

@@ -78,7 +78,7 @@ App.Views.Signup.Index = Backbone.View.extend
       empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone', 'phone_verify_code']
       _(empty_check_list).each (key) ->
         if $("##{key}").val() is ''
-          text = switch $("##{key}").attr('type')
+          text = switch $("##{key}")[0].type
             when 'select-one'
               $("##{key}").children('option:first').text().substr(2,2)
             else #'text'

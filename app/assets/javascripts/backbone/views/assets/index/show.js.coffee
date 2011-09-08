@@ -46,7 +46,7 @@ App.Views.Asset.Index.Show = Backbone.View.extend
       if @session
         TemplateEditor.editor.setSession @session
       else
-        $.get "/admin/themes/assets/master", key: @model.get('key'), (data) ->
+        $.get "/admin/themes/#{theme_id}/assets/master", key: @model.get('key'), (data) ->
           editor = TemplateEditor.editor
           session = new TemplateEditor.EditSession('')
           editor.setSession session

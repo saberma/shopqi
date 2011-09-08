@@ -1,3 +1,13 @@
+#=require "backbone/models/asset"
+#=require "./sidebar"
+#=require "./panel"
+#=require "./show"
+#=require "fileuploader"
+#=require "ace/ace"
+#=require "ace/theme-clouds"
+#=require "ace/mode-html"
+#=require "ace/mode-css"
+#=require "ace/mode-javascript"
 App.Views.Asset.Index.Index = Backbone.View.extend
   el: '#main'
 
