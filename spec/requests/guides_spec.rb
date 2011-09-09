@@ -72,7 +72,7 @@ describe "Guides", js: true do
 
       before(:each) do
         shop.tasks[0,1].map{|t| t.update_attributes completed: true}
-        visit '/admin/themes/settings'
+        visit "/admin/themes/#{shop.theme.id}/settings"
       end
 
       it "should show check off" do
@@ -272,7 +272,7 @@ describe "Guides", js: true do
       has_content?('您已经启用商店，恭喜您').should be_true
     end
 
-    it "should be launch" do
+    it "should be launch", focus: true do
       shop.tasks[0,7].map{|t| t.update_attributes completed: true}
       visit '/admin'
       click_on '启用我的商店'
