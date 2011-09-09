@@ -31,9 +31,9 @@ describe "Domains", js: true do
       click_on '绑定此域名'
       has_content?('www.example.com').should be_true
       page.execute_script("window.confirm = function(msg) { return true; }")
-      click_on '删除'
       within '#domains > .items' do
-        has_xpath?('./tr[2]').should be_false
+        click_on '删除'
+        page.should have_no_xpath('./tr[2]')
       end
     end
 
@@ -55,7 +55,7 @@ describe "Domains", js: true do
             find('a.host').text.should eql "www.example.com"
             find('.dns-check').has_content?('失败').should be_true
             find(:xpath, './td[3]').has_content?('总是重定向顾客到这里?').should be_false
-            has_css?('.deletions .del').should be_true
+            page.should have_css('.deletions .del')
           end
         end
         visit domains_path # 回显
