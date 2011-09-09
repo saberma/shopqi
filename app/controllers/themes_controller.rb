@@ -27,19 +27,19 @@ class ThemesController < ApplicationController
       themes = shop.themes
       published_themes = themes.select {|theme| theme.published? }
       unpublished_themes = themes.select {|theme| !theme.published? }
-      @published_themes_json = published_themes.to_json(except: [:created_at, :updated_at])
-      @unpublished_themes_json = unpublished_themes.to_json(except: [:created_at, :updated_at])
+      @published_themes_json = published_themes.to_json(methods: :name, except: [:created_at, :updated_at])
+      @unpublished_themes_json = unpublished_themes.to_json(methods: :name, except: [:created_at, :updated_at])
     end
 
     def settings # 主题配置
     end
 
     def update # 更新主题配置
-      preset = params[:theme][:save_preset][:existing]
-      preset = params[:theme][:save_preset][:new] if preset.blank?
-      preset = params[:theme][:load_preset] if preset.blank?
-      theme.settings.save preset, params[:theme][:settings]
-      render json: params[:theme][:settings]
+      preset = params[:save_preset][:existing]
+      preset = params[:save_preset][:new] if preset.blank?
+      preset = params[:load_preset] if preset.blank?
+      theme.settings.save preset, params[:settings]
+      render json: params[:settings]
     end
 
     def delete_preset # 删除预设

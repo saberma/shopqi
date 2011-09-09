@@ -42,6 +42,7 @@ describe "Themes", js: true do
           check '将当前配置保存为预设'
           fill_in 'theme_save_preset_new', with: 'new_preset'
           click_on '保存配置'
+          has_content?('保存成功!').should be_true
           find('#save-preset').visible?.should be_false
           select 'original', from: 'theme_load_preset'
           find('#use_logo_image')['checked'].should be_true
@@ -57,6 +58,7 @@ describe "Themes", js: true do
           select 'original', from: 'theme_save_preset_existing'
           find('#theme_save_preset_new_container').visible?.should be_false # 隐藏名称输入项
           click_on '保存配置'
+          has_content?('保存成功!').should be_true
           find('#theme_load_preset').value.should eql 'original'
           visit settings_theme_path(shop.theme) # 回显
           find('#theme_load_preset').value.should eql 'original'
@@ -68,6 +70,7 @@ describe "Themes", js: true do
           check '将当前配置保存为预设'
           fill_in 'theme_save_preset_new', with: 'new_preset'
           click_on '保存配置'
+          has_content?('保存成功!').should be_true
           find('#save-preset').visible?.should be_false
           find('#theme_load_preset').value.should eql 'new_preset'
           visit settings_theme_path(shop.theme) # 回显
@@ -88,7 +91,7 @@ describe "Themes", js: true do
     describe 'tranform' do
 
       it "should change name" do
-        find('#use_logo_image')['name'].should eql 'theme[settings][use_logo_image]'
+        find('#use_logo_image')['name'].should eql 'settings[use_logo_image]'
       end
 
       it "should add image widget" do
@@ -96,7 +99,7 @@ describe "Themes", js: true do
       end
 
       it "should add hidden checkbox" do
-        has_css?("input[name='theme[settings][use_logo_image]']", visible: false).should be_true
+        has_css?("input[name='settings[use_logo_image]']", visible: false).should be_true
       end
 
       it "should add fonts" do
@@ -137,7 +140,7 @@ describe "Themes", js: true do
 
         it "should be show" do
           click_on '新增附件'
-          attach_file 'file', File.join(Rails.root, 'public', 'images', 'spinner.gif')
+          attach_file 'file', File.join(Rails.root, 'app', 'assets', 'images', 'spinner.gif')
           within '#current-asset' do
             find('#asset-title').has_content?('spinner.gif').should be_true
             find('#asset-link-rollback').visible?.should be_true # 版本
@@ -233,7 +236,10 @@ describe "Themes", js: true do
 
         it "should be show" do
           click_on 'theme.liquid'
-          theme_text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
+          within '#current-asset' do # 避免下一语句theme_text被赋值为空字符串
+            find('#asset-title').has_content?('theme.liquid').should be_true
+          end
+          theme_text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()')
           click_on '新增布局'
           fill_in 'new_layout_basename_without_ext', with: 'foo_theme'
           click_on '新增布局'
@@ -242,7 +248,8 @@ describe "Themes", js: true do
             find('#asset-link-rollback').visible?.should be_true # 版本
             find('#asset-link-rename').visible?.should be_true # 重命名
             find('#asset-link-destroy').visible?.should be_true # 删除
-            text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
+            text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()')
+            puts text.size
             text.should eql theme_text
           end
         end
@@ -267,8 +274,10 @@ describe "Themes", js: true do
           end
         end
 
-        it "should be permit" do
+        it "should be permit", focus: true do
+          name = ''
           within '#theme-assets' do # 附件
+            name = find('.asset-gif').text
             find('.asset-gif').click
           end
           within '#current-asset' do
@@ -277,6 +286,7 @@ describe "Themes", js: true do
             click_on '重命名'
             fill_in 'asset-basename-field', with: 'new_name.gif'
             click_on '提交'
+            has_css?('#asset-link-rename').should be_true # 延时处理
             find('#asset-title').text.should eql 'new_name.gif'
           end
           within '#theme-assets' do # 附件
@@ -294,7 +304,7 @@ describe "Themes", js: true do
           end
         end
 
-        it "should be permit" do
+        it "should be permit", focus: true do
           name = ''
           within '#theme-assets' do # 附件
             name = find('.asset-gif').text
@@ -303,6 +313,7 @@ describe "Themes", js: true do
           within '#current-asset' do
             page.execute_script("window.confirm = function(msg) { return true; }")
             find('#asset-link-destroy a').click # 删除按钮图标
+            has_css?('#asset-link-destroy').should be_false # 延时处理
             find('#asset-title').text.should eql '没有选择文件'
           end
           within '#theme-assets' do # 附件
@@ -322,7 +333,10 @@ describe "Themes", js: true do
         end
       end
 
-      it "should be update" do
+      it "should be update", focus: true do
+        within '#current-asset' do # 避免下一语句被赋值为空字符串
+          find('#asset-title').has_content?('theme.liquid').should be_true
+        end
         text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
         content = 'to be or not to be'
         text.should_not include content
@@ -333,10 +347,14 @@ describe "Themes", js: true do
         within '#theme-layout' do # 布局
           find(:xpath, './/li[1]').find('a').click
         end
+        within '#current-asset' do # 避免下一语句被赋值为空字符串
+          find('#asset-title').has_content?('theme.liquid').should be_true
+        end
         text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
         text.should include content
         click_on '查看之前版本'
         select '1', from: 'rollback-selectbox'
+        click_on '取消'
         text = page.evaluate_script('TemplateEditor.editor.getSession().getValue()');
         text.should_not include content
       end
@@ -344,8 +362,8 @@ describe "Themes", js: true do
       it "should list versions" do
         within '#current-asset' do
           click_on '查看之前版本'
-          has_css?('#asset-link-rollback').should be_false
           find('#rollback-selectbox option').text.should eql '1'
+          has_css?('#asset-link-rollback').should be_false
           click_on '取消'
           has_css?('#asset-link-rollback').should be_true
           has_css?('#rollback-selectbox').should be_false

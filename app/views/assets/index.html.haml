@@ -6,7 +6,7 @@
 %h2#title 模板编辑器
 #action-links
   %ul
-    %li.settings= link_to "主题设置", settings_themes_path
+    %li.settings= link_to "主题设置", settings_theme_path(shop.theme)
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 -#
@@ -38,8 +38,9 @@
         %h3 导出
         %p.note 导出您当前的主题为一个zip文件，用于离线编辑.
         %a(href="/admin/themes/current.zip") 下载您的主题
-#theme-edit-announcement.announcement.box2.c
-  %p 您对主题所做的修改将直接生效. 商店访问者将立即看到修改后的内容.
+-if shop.theme == theme
+  #theme-edit-announcement.announcement.box2.c
+    %p 您对主题所做的修改将直接生效. 商店访问者将立即看到修改后的内容.
 #theme-editor.container
   #theme-editor-sidebar.col-3
     #theme-editor-sidebar-top

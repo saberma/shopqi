@@ -94,7 +94,7 @@ class ShopThemeSetting < ActiveRecord::Base
         element.inner_html = builder.doc.at_css('div').inner_html
       end
       doc.css("input, select, textarea").each do |element| # 改名
-        element['name'] = "theme[settings][#{element['name']}]"
+        element['name'] = "settings[#{element['name']}]"
       end
       doc.inner_html
     end
@@ -123,6 +123,8 @@ class ShopTheme < ActiveRecord::Base
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
 
   default_value_for :role, :main # 默认为普通主题
+
+  delegate :name, to: :theme # 获取名称
 
   validates_presence_of :load_preset
 

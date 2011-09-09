@@ -12,14 +12,19 @@ class Shop::ShopsController < Shop::AppController
   end
 
   def show
-    html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign)
-    render text: html
+    if params[:preview_theme_id] # 预览主题
+      session[:preview_theme_id] = params[:preview_theme_id]
+      redirect_to preview_theme_id: nil
+    else
+      html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign)
+      render text: html
+    end
   end
 
   # 附件
   def asset
     asset = "#{params[:file]}.#{params[:format]}" # style.css
-    html = Liquid::Template.parse(File.read(shop.theme.asset_path(asset))).render(asset_assign)
+    html = Liquid::Template.parse(File.read(theme.asset_path(asset))).render(asset_assign)
     render text: html
   end
 

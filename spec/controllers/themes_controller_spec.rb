@@ -13,7 +13,7 @@ describe ThemesController do
   end
 
   it 'should be update' do
-    put :update, theme: { load_preset: 'origin', save_preset: {}, settings: {}}
+    put :update, id: shop.theme.id, load_preset: 'origin', save_preset: {}, settings: {}
     response.should be_success
   end
 

@@ -55,8 +55,10 @@
   .fr.theme-details
     .heading.clearfix
       %h3
-        乔木林地
+        {{name}}
+        {{#if is_published}}
         %span(class="{{role}}") {{#if is_main}}普通{{else}}手机{{/if}}
+        {{/if}}
       %p.main-actions
         {{#unless is_main}}
         %span.preview
@@ -71,26 +73,27 @@
       %li.duplicate-theme
         %a(href="/admin/themes/{{id}}/duplicate") 复制主题
       %li.theme-editor
-        %a(href="/admin/themes/{{id}}") 模板编辑器
+        %a(href="/admin/themes/{{id}}/assets") 模板编辑器
       %li.export-theme
         %a(href="/admin/themes/{{id}}") 导出主题
     %ul.theme-actions.extra.clearfix
-      %li.publish-main
-        {{#if is_published}}
-        %span.main-theme 已经发布为{{#if is_main}}普通{{else}}手机{{/if}}主题
-        {{else}}
-        .publish-theme-link
+      {{#if is_published}}
+      %span.main-theme 已经发布为{{#if is_main}}普通{{else}}手机{{/if}}主题
+      {{else}}
+      .publish-theme-link
+        %li.publish-main
           %a(href="#") 发布此主题
-        .publish-theme-dropdown(style="display:none;")
+      .publish-theme-dropdown(style="display:none;")
+        %form.edit_theme(action="#" onsubmit="return false")
           %span.fl
             %select#theme_role(name="theme[role]")
               %option(value="main") 发布为普通主题
-              %option(value="mobile") 发布为手机主题
+              -#%option(value="mobile") 发布为手机主题
           %span.fr
             %input(name="commit" type="submit" value="提交")
             或者
-            %a(href="#") 取消
-        {{/if}}
+            %a(href="#" style="background:none") 取消
+      {{/if}}
       {{#if is_mobile}}
       %li
         %a(href="/admin/themes/{{id}}?theme[role]=unpublished" style="float:right;") 取消发布

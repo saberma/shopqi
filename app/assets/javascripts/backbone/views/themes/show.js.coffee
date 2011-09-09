@@ -3,6 +3,11 @@ App.Views.Theme.Show = Backbone.View.extend
   tagName: 'li'
   tagClass: 'clearfix'
 
+  events:
+    'click .publish-theme-link a': 'publish'
+    'click .publish-theme-dropdown a': 'cancel'
+    'submit form': 'save'
+
   initialize: ->
     @render()
 
@@ -14,4 +19,17 @@ App.Views.Theme.Show = Backbone.View.extend
     $(@el).html template attrs
     parent = $(@options.parent)
     parent.show()
-    $('ul', parent).append @el
+    $('ul.theme', parent).append @el
+
+  publish: ->
+    @$('.publish-theme-link').hide()
+    @$('.publish-theme-dropdown').show()
+    false
+
+  save: ->
+    #$.post "/admin/themes/#{@model.id}", _method: 'put', ->
+
+  cancel: ->
+    @$('.publish-theme-link').show()
+    @$('.publish-theme-dropdown').hide()
+    false

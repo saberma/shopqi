@@ -23,17 +23,22 @@ class Shop::AppController < ActionController::Base
     end
   end
 
+  def theme # 支持主题预览
+    id = session[:preview_theme_id]
+    (id && shop.themes.find(id)) || shop.theme
+  end
+
   begin 'liquid'
 
     # 渲染layout时的hash
     def shop_assign(template = 'index', template_extra_object = {})
-      shop_drop = ShopDrop.new(shop)
+      shop_drop = ShopDrop.new(shop, theme)
       settings_drop = SettingsDrop.new(shop)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
       powered_by_link = "<a href='#{Setting.url}' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>ShopQi电子商务平台提供安全保护</a>"
-      content_for_layout = Liquid::Template.parse(File.read(shop.theme.template_path(template))).render(template_assign(template_extra_object))
+      content_for_layout = Liquid::Template.parse(File.read(theme.template_path(template))).render(template_assign(template_extra_object))
       {
         'shop' => shop_drop,
         'cart' => cart_drop,
@@ -51,14 +56,14 @@ class Shop::AppController < ActionController::Base
     # 渲染附件asset时的hash
     def asset_assign
       {
-        'shop' => ShopDrop.new(shop),
+        'shop' => ShopDrop.new(shop, theme),
         'settings' => SettingsDrop.new(shop),
       }
     end
 
     # 渲染template时的hash
     def template_assign(extra_assign)
-      shop_drop = ShopDrop.new(shop)
+      shop_drop = ShopDrop.new(shop, theme)
       settings_drop = SettingsDrop.new(shop)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
