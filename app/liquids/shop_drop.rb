@@ -1,8 +1,8 @@
 class ShopDrop < Liquid::Drop
 
-  def initialize(shop, theme)
+  def initialize(shop, theme = nil)
     @shop = shop
-    @theme = theme
+    @theme = theme || shop.theme
   end
 
   def id

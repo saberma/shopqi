@@ -237,9 +237,11 @@ Shopqi::Application.routes.draw do
 
       resources :themes, only: [:index] do
         member do
-          get :settings      , to: 'themes#settings'
-          put :settings      , to: 'themes#update'
-          post :delete_preset, to: 'themes#delete_preset'
+          begin 'settings' # 外观设置
+            get :settings      , to: 'shop_theme_settings#show'
+            put :settings      , to: 'shop_theme_settings#update'
+            post :delete_preset, to: 'shop_theme_settings#delete_preset'
+          end
         end
         resources :assets do
           member do
