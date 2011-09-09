@@ -19,7 +19,7 @@ App.Views.Product.Index.Index = Backbone.View.extend
 
   # 商品复选框全选操作
   selectAll: ->
-    this.$('.selector').attr 'checked', this.$('#select-all').attr('checked')
+    this.$('.selector').attr 'checked', (@$('#select-all').attr('checked') is 'checked')
     this.changeProductCheckbox()
 
   # 商品复选框操作

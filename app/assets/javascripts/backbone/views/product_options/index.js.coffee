@@ -11,7 +11,7 @@ App.Views.ProductOption.Index = Backbone.View.extend
     if @collection.length > 0
       self.render()
     $('#enable-options').change ->
-      if $(this).attr('checked')
+      if $(this).attr('checked') is 'checked'
         if self.collection.length <= 0
           self.collection.add new ProductOption()
         $('#create-options-frame').show()

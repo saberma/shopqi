@@ -40,7 +40,7 @@ App.Views.Comment.Show = Backbone.View.extend
       $('#comments-list > tbody').append @el
 
   select: ->
-    $(@el).toggleClass 'active', this.$('.selector').attr('checked')
+    $(@el).toggleClass 'active', (@$('.selector').attr('checked') is 'checked')
 
   destroy: ->
     if confirm '您确定要删除吗'

@@ -39,7 +39,7 @@ App.Views.Domain.Show = Backbone.View.extend
     false
 
   redirect: ->
-    force_domain = if $('#shop_force_domain').attr('checked') is 'checked' then true else false
+    force_domain = $('#shop_force_domain').attr('checked') is 'checked'
     @model.unset 'is_myshopqi?', silent: true # 一定要先取消临时属性
     @model.save force_domain: force_domain
     false

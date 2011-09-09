@@ -29,4 +29,4 @@ App.Views.Product.Index.Show = Backbone.View.extend
     $('#product-table > tbody').append @el
 
   select: ->
-    $(@el).toggleClass 'active', @$('.selector').attr('checked')
+    $(@el).toggleClass 'active', (@$('.selector').attr('checked') is 'checked')

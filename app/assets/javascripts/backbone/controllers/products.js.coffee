@@ -21,7 +21,7 @@ App.Controllers.Products = Backbone.Controller.extend
     $('body').delegate "input.requires_shipping", 'change', ->
       container = $(this).parent().closest('table').parent().closest('table')
       requires_shipping_relate = $('.requires_shipping_relate', container)
-      if $(this).attr('checked')
+      if $(this).attr('checked') is 'checked'
         requires_shipping_relate.attr('disabled', false)
       else
         requires_shipping_relate.attr('disabled', true).val('0.0')

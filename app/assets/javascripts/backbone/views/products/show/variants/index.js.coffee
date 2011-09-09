@@ -41,7 +41,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
 
   # 款式复选框全选操作
   selectAll: ->
-    @$('.selector').attr 'checked', @$('#select-all').attr('checked')
+    @$('.selector').attr 'checked', (@$('#select-all').attr('checked') is 'checked')
     @changeProductCheckbox()
 
   # 款式复选框操作

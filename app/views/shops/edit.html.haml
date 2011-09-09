@@ -62,7 +62,7 @@
         %dt.nst
           =f.label :password
         %dd
-          =f.password_field :password
+          =f.text_field :password
         %dt.sst
           %label{:for => "shop_password_message"} 告知顾客的信息
         %dd
@@ -74,6 +74,6 @@
   $(function(){
     Utils.Region.init()
     $('#shop_password_enabled').change(function(){
-      $('#password-details').toggle($(this).attr('checked'));
+      $('#password-details').toggle($(this).attr('checked') == 'checked');
     }).change();
   })

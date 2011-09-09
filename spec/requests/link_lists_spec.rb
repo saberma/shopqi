@@ -115,7 +115,7 @@ describe "LinkLists", js: true do
             page.execute_script("window.confirm = function(msg) { return true; }")
             find('.destroy').click
           end
-          has_xpath?('./li[3]').should be_false
+          page.should have_no_xpath('./li[3]')
         end
       end
 

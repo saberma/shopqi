@@ -25,7 +25,7 @@ $(document).ready ->
   #处理地址，级联操作税率
   $('#order_billing_address_attributes_country_code,#order_shipping_address_attributes_country_code').each ->
     $(this).change ->
-      checked = $('#shipping-toggle').attr('checked')
+      checked = $('#shipping-toggle').attr('checked') is 'checked'
       country_code = $(this).val()
       if country_code isnt 'CN'
         $(this).closest('table').find('.region').parent().hide()
@@ -45,7 +45,7 @@ $(document).ready ->
 
   #/carts/xxx 页面处理货品地址和发单地址
   $('#shipping-toggle').change ->
-    checked = $(this).attr('checked')
+    checked = $(this).attr('checked') is 'checked'
     $('#shipping').toggle !checked
     $('#shipping-same').toggle checked
     if checked

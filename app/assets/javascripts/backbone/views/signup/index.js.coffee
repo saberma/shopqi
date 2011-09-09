@@ -84,7 +84,7 @@ App.Views.Signup.Index = Backbone.View.extend
             else #'text'
               $("label[for='#{key}']").text()
           errors[key] = "#{text} 不能为空"
-      unless $('#shop_terms_and_conditions').attr('checked')
+      if $('#shop_terms_and_conditions').attr('checked') isnt 'checked'
         errors['shop_terms_and_conditions'] = "请您先阅读并接受服务条款"
     this.message errors
     _.isEmpty errors

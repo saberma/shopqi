@@ -16,7 +16,7 @@ App.Views.Order.Show.History.Fulfillment = Backbone.View.extend
 
   save: ->
     self = this
-    attrs = notify_customer: this.$("input[name='notify_customer']").attr('checked'), fulfillment: {
+    attrs = notify_customer: (@$("input[name='notify_customer']").attr('checked') is 'checked'), fulfillment: {
       tracking_number: this.$("input[name='tracking_number']").val(),
       tracking_company: this.$("select[name='tracking_company']").val()
       tracking_company: this.$("select[name='tracking_company']").val()

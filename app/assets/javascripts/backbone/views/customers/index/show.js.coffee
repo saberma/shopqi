@@ -20,7 +20,7 @@ App.Views.Customer.Index.Show = Backbone.View.extend
     $('#customer-table > tbody').append @el
 
   select: ->
-    $(@el).toggleClass 'active', this.$('.selector').attr('checked')
+    $(@el).toggleClass 'active', (@$('.selector').attr('checked') is 'checked')
 
   message: ->
     this.$('.display_message').fadeIn('slow')

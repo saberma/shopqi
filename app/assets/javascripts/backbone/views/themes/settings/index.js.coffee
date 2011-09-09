@@ -60,7 +60,7 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
       collection = self.presets_view.collection
       new_preset_name = $('#theme_save_preset_new').val()
       exist_preset_name = $('#theme_save_preset_existing').val()
-      if $('#save-current-setting').attr('checked') # 名称要先保存到变量，此操作会清空名称
+      if $('#save-current-setting').attr('checked') is 'checked' # 名称要先保存到变量，此操作会清空名称
         $('#save-current-setting').attr('checked', false).change()
       if new_preset_name
         collection.add name: new_preset_name, value: data
