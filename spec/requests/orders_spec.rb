@@ -177,6 +177,7 @@ describe "Orders", js: true do
           fill_in 'order[note]', with: '顾客要求尽快发货'
         end
         click_on '保存备注'
+        sleep 3 # 延时处理
         find('#order-note').visible?.should be_true
         find('#note-body').text.should eql '顾客要求尽快发货'
         visit order_path(order)

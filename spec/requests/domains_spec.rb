@@ -33,6 +33,9 @@ describe "Domains", js: true do
       page.execute_script("window.confirm = function(msg) { return true; }")
       within '#domains > .items' do
         click_on '删除'
+      end
+      page.should have_content('删除成功!')
+      within '#domains > .items' do
         page.should have_no_xpath('./tr[2]')
       end
     end

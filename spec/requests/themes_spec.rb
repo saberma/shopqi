@@ -274,7 +274,7 @@ describe "Themes", js: true do
           end
         end
 
-        it "should be permit", focus: true do
+        it "should be permit" do
           name = ''
           within '#theme-assets' do # 附件
             name = find('.asset-gif').text
@@ -304,7 +304,7 @@ describe "Themes", js: true do
           end
         end
 
-        it "should be permit", focus: true do
+        it "should be permit" do
           name = ''
           within '#theme-assets' do # 附件
             name = find('.asset-gif').text
@@ -313,7 +313,7 @@ describe "Themes", js: true do
           within '#current-asset' do
             page.execute_script("window.confirm = function(msg) { return true; }")
             find('#asset-link-destroy a').click # 删除按钮图标
-            has_css?('#asset-link-destroy').should be_false # 延时处理
+            sleep 3 # 延时处理
             find('#asset-title').text.should eql '没有选择文件'
           end
           within '#theme-assets' do # 附件
@@ -333,7 +333,7 @@ describe "Themes", js: true do
         end
       end
 
-      it "should be update", focus: true do
+      it "should be update" do
         within '#current-asset' do # 避免下一语句被赋值为空字符串
           find('#asset-title').has_content?('theme.liquid').should be_true
         end
