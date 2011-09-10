@@ -41,7 +41,7 @@ describe Shop::ShopsController do
     end
 
     it 'should get css file' do
-      get :asset, id: shop.id, file: 'style', format: 'css'
+      get :asset, id: shop.id, theme_id: shop.theme.id, file: 'style', format: 'css'
       response.should be_success
     end
 

@@ -6,7 +6,7 @@ describe ThemeObserver do
 
   let(:theme) { shop.theme }
 
-  let(:path) { path = File.join Rails.root, 'public', 's', 'files', Rails.env, shop.id.to_s, 'theme'}
+  let(:path) { File.join Rails.root, 'public', 's', 'files', Rails.env, shop.id.to_s, 'theme', theme.id.to_s }
 
   let(:layout_theme_path) { File.join path, 'layout', 'theme.liquid' }
 
@@ -18,6 +18,7 @@ describe ThemeObserver do
     end
 
     it 'should be delete' do
+      path
       shop.destroy
       File.exist?(path).should be_false
       File.exist?(layout_theme_path).should be_false
@@ -36,22 +37,22 @@ describe ThemeObserver do
     end
 
     it 'should get the public_theme' do
-      theme.public_path.should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme"
+      theme.public_path.should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}"
     end
 
     it 'should get the asset_path' do
-      theme.asset_path('stylesheet.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/assets/stylesheet.css.liquid"
+      theme.asset_path('stylesheet.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/stylesheet.css.liquid"
       File.exist?(theme.asset_path('stylesheet.css')).should be_true
-      theme.asset_path('ie.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/assets/ie.css"
+      theme.asset_path('ie.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/ie.css"
       File.exist?(theme.asset_path('ie.css')).should be_true
     end
 
     it 'should get the layout_theme' do
-      theme.layout_theme_path.should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/layout/theme.liquid"
+      theme.layout_theme_path.should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/layout/theme.liquid"
     end
 
     it 'should get the template_theme' do
-      theme.template_path('index').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/templates/index.liquid"
+      theme.template_path('index').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/templates/index.liquid"
     end
 
   end
