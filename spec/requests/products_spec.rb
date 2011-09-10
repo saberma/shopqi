@@ -382,12 +382,15 @@ describe "Products", js: true do
           check 'products[]'
         end
         select '隐藏'
+        page.should have_content('批量更新成功!') # 延时处理
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_true }
         select '发布'
+        page.should have_content('批量更新成功!') # 延时处理
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_false } #隐藏提示消失
         select '热门商品'
         title = ''
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]/td[3]") { title = find('a').text }
+        page.should have_content('批量更新成功!') # 延时处理
         product = shop.products.where(title: title).first
         product.collections.first.title.should eql '热门商品'
         page.execute_script("window.confirm = function(msg) { return true; }")
@@ -560,6 +563,9 @@ describe "Products", js: true do
                 fill_in 'product_variant[option1]', with: '最新上市'
               end
               click_on '保存'
+            end
+            page.should have_content('修改成功!') # 延时处理
+            within :xpath, "//ul[@id='variants-list']/li[1]" do
               find('.option-1').text.should eql '最新上市'
             end
             within('#variant-options') do #快捷选择

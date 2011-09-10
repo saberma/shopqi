@@ -8,7 +8,7 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
   initialize: ->
     _.bindAll this, 'render', 'save'
     @render()
-    @model = new ProductVariant
+    @model = new App.Models.ProductVariant
     @model.bind 'error',(model, error) ->
       container = $('#errors_for_product_variant ul')
       container.html('')

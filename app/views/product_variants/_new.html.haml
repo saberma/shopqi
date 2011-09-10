@@ -1,4 +1,4 @@
-=form_for [product, variant] do |v|
+%form(action='#' onsubmit='return false')
   .section-header.sst 新的款式
   %table.data.no-border(cellpadding="0" cellspacing="0" style="width: 650px")
     %tr
@@ -22,23 +22,23 @@
           SKU
           %span.note 库存量单位
         %br
-        =v.text_field :sku, size: 20, class: :st
+        %input.st(name='product_variant[sku]' type='text' size=20)
       %td
         %label(for="variant_price") 销售价格
         %br
-        =v.text_field :price, size: 8, class: :st
+        %input.st(name='product_variant[price]' type='text' size=8)
         元
       %td
         %label(for="variant_compare_at_price")
           市场价
           %span.note (非必填)
         %br
-        =v.text_field :compare_at_price, size: 8, class: :st, style: 'width: 80px'
+        %input.st(name='product_variant[compare_at_price]' type='text' size=8 style='width: 80px')
         元
       %td
         %label(for="variant_weight") 重量
         %br
-        =v.text_field :weight, size: 8, class: [:st, :requires_shipping_relate], style: 'width: 40px'
+        %input.st.requires_shipping_relate(name='product_variant[weight]' type='text' size=8 style='width: 40px')
         kg
     %tr.no-border
       %td(colspan="4")
@@ -47,23 +47,23 @@
             %td.secondary-header
               %label(for="product_variant_requires_shipping") 要求收货地址
             %td
-              =v.check_box :requires_shipping, class: :requires_shipping
-              %input(name="variant[requires_shipping]" type="hidden" value="0")
+              %input.requires_shipping(name='product_variant[requires_shipping]' type='checkbox' checked='checked')
               %span.hint 服务性质或者数字之类的商品不需要勾选
           %tr.no-border
             %td.secondary-header
               %label(for="inventory-select-new") 库存
             %td
-              =v.select :inventory_management, inventory_managements, {}, class: :inventory_management
+              %select.inventory_management(name='product_variant[inventory_management]' type='check_box')
+                =options_for_select inventory_managements
               .inventory_management_relate.hide
                 %div
                   .inventory-option.sst.inventory_management_relate.hide
                     %p.soft
-                      =v.label :inventory_quantity
-                      =v.text_field :inventory_quantity, class: [:small, :r, 'digit-2'], size: 6
+                      %label(for="product_variant_inventory_quantity") 现有库存量?
+                      %input#product_variant_inventory_quantity.small.r.digit-2(name="product_variant[inventory_quantity]" size="6" type="text")
                 %p.soft(style="margin: 10px 0 0 0")
                   -inventory_policies.each do |policy|
-                    =v.radio_button :inventory_policy, policy.code
+                    %input(id="product_variant_inventory_policy_#{policy.code}" name="product_variant[inventory_policy]" type="radio" value="#{policy.code}")
                     %label.inline(for="product_variant_inventory_policy_#{policy.code}")=policy.name
                     %br/
   .group-actions

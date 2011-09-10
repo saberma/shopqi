@@ -1,21 +1,21 @@
-=form_for [product, variant] do |v|
-  %table.data(cellpadding="0" cellspacing="0")
-    %tr.inventory-row.odd
-      %td.checkbox-cell
-        %input.selector(type="checkbox" id="variant-{{id}}-checkbox" value="{{id}}")
-      {{#each_with_index options}}
-      {{#option_value ../this}}
-      %td(style="width:15%" class="option-{{index_plus}}")
-        %label(for="variant-{{variant_id}}-checkbox") {{value}}
-      {{/option_value}}
-      {{/each_with_index}}
-      %td(style="min-width: 150px")
-      %td.price-cell(style="width: 90px;") {{price}}
-      %td.qty-cell(style="width: 50px;") {{inventory_quantity}}
-      %td.action-cell(style="width: 70px; text-align:right")
-        %a.edit-btn.note(href="#") 修改
-    %tr.row-edit-details.hide
-      %td(colspan="{{edit_td_size}}" style="padding: 0")
+%table.data(cellpadding="0" cellspacing="0")
+  %tr.inventory-row.odd
+    %td.checkbox-cell
+      %input.selector(type="checkbox" id="variant-{{id}}-checkbox" value="{{id}}")
+    {{#each_with_index options}}
+    {{#option_value ../this}}
+    %td(style="width:15%" class="option-{{index_plus}}")
+      %label(for="variant-{{variant_id}}-checkbox") {{value}}
+    {{/option_value}}
+    {{/each_with_index}}
+    %td(style="min-width: 150px")
+    %td.price-cell(style="width: 90px;") {{price}}
+    %td.qty-cell(style="width: 50px;") {{inventory_quantity}}
+    %td.action-cell(style="width: 70px; text-align:right")
+      %a.edit-btn.note(href="#") 修改
+  %tr.row-edit-details.hide
+    %td(colspan="{{edit_td_size}}" style="padding: 0")
+      %form(action="#" onsubmit='return false')
         %table.data.no-border(cellpadding="0" cellspacing="0")
           %tr(class="shadow {{#if is_single_variant}}single-variant-option-cell{{/if}}")
             %td(style="width: 29px; border: none; border-left: 1px solid #eee;background: #fcfcfc; padding: 0") &nbsp;
