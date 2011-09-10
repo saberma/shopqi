@@ -56,7 +56,7 @@ describe "Domains", js: true do
         within '#domains > .items' do
           within :xpath, './tr[2]' do
             find('a.host').text.should eql "www.example.com"
-            find('.dns-check').has_content?('失败').should be_true
+            find('.dns-check').should have_content('失败')
             find(:xpath, './td[3]').has_content?('总是重定向顾客到这里?').should be_false
             page.should have_css('.deletions .del')
           end

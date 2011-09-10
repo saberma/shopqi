@@ -5,11 +5,11 @@ class ShopThemeSetting < ActiveRecord::Base
 
   # 修改此模块内方法要记得重启服务
   module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
-    def html_path  # public/s/files/1/theme/config/settings.html
+    def html_path  # public/s/files/1/theme/1/config/settings.html
       File.join theme.public_path, 'config', 'settings.html'
     end
 
-    def data_path # public/s/files/1/theme/config/settings_data.json
+    def data_path # public/s/files/1/theme/1/config/settings_data.json
       File.join theme.public_path, 'config', 'settings_data.json'
     end
 
@@ -154,12 +154,12 @@ class ShopTheme < ActiveRecord::Base
   end
 
   begin #相对路径
-    def files_relative_path # s/files/1/theme
+    def files_relative_path # s/files/1/theme/1
       test = %w(test travis).include?(Rails.env) ? Rails.env : '' #测试目录与其他环境分开,不干扰
-      File.join 's', 'files', test, self.shop_id.to_s, 'theme'
+      File.join 's', 'files', test, self.shop_id.to_s, 'theme', self.id.to_s
     end
 
-    def asset_relative_path(asset) # s/files/1/theme/assets/theme.liquid
+    def asset_relative_path(asset) # s/files/1/theme/1/assets/theme.liquid
       File.join files_relative_path, 'assets', asset
     end
   end
@@ -187,11 +187,11 @@ class ShopTheme < ActiveRecord::Base
   end
 
   begin # 当前theme所在PATH
-    def public_path # public/s/files/1/theme
+    def public_path # public/s/files/1/theme/1
       File.join Rails.root, 'public', files_relative_path
     end
 
-    def asset_path(asset) # public/s/files/1/theme/assets/checkout.css.liquid
+    def asset_path(asset) # public/s/files/1/theme/1/assets/checkout.css.liquid
       asset_liquid = "#{asset}.liquid"
       path = File.join public_path, 'assets', asset_liquid
       if File.exist?(path) #存在liquid文件，则解释liquid
@@ -201,11 +201,11 @@ class ShopTheme < ActiveRecord::Base
       end
     end
 
-    def layout_theme_path # public/s/files/1/theme/layout/theme.liquid
+    def layout_theme_path # public/s/files/1/theme/1/layout/theme.liquid
       File.join public_path, 'layout', 'theme.liquid'
     end
 
-    def template_path(template) # public/s/files/1/theme/templates/products.liquid
+    def template_path(template) # public/s/files/1/theme/1/templates/products.liquid
       File.join public_path, 'templates', "#{template}.liquid"
     end
   end

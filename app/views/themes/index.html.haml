@@ -7,8 +7,7 @@
     -#
       %li#customer
         %a(href="#") 上传一个主题
-    %li#themestore
-      %a(href="#{Setting.theme_store_url}") 查找更多的主题
+    %li#themestore=link_to '查找更多的主题', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 #upload-theme.box2.ssb.clearfix(style="display:none;")

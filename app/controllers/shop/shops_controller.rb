@@ -24,6 +24,7 @@ class Shop::ShopsController < Shop::AppController
   # 附件
   def asset
     asset = "#{params[:file]}.#{params[:format]}" # style.css
+    theme = shop.themes.find(params[:theme_id])
     html = Liquid::Template.parse(File.read(theme.asset_path(asset))).render(asset_assign)
     render text: html
   end

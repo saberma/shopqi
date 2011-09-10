@@ -8,7 +8,7 @@ class Shop::PagesController < Shop::AppController
   def show
     PagesDrop
     assign = template_assign('page' => PageDrop.new(page))
-    html = Liquid::Template.parse(File.read(shop.theme.layout_theme_path)).render(shop_assign('page', assign))
+    html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('page', assign))
     render text: html
   end
 end

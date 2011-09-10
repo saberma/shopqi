@@ -33,7 +33,7 @@ class Shop::AppController < ActionController::Base
     # 渲染layout时的hash
     def shop_assign(template = 'index', template_extra_object = {})
       shop_drop = ShopDrop.new(shop, theme)
-      settings_drop = SettingsDrop.new(shop)
+      settings_drop = SettingsDrop.new(theme)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
@@ -57,14 +57,14 @@ class Shop::AppController < ActionController::Base
     def asset_assign
       {
         'shop' => ShopDrop.new(shop, theme),
-        'settings' => SettingsDrop.new(shop),
+        'settings' => SettingsDrop.new(theme),
       }
     end
 
     # 渲染template时的hash
     def template_assign(extra_assign)
       shop_drop = ShopDrop.new(shop, theme)
-      settings_drop = SettingsDrop.new(shop)
+      settings_drop = SettingsDrop.new(theme)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       blogs_drop = BlogsDrop.new(shop)
