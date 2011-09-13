@@ -115,9 +115,7 @@ describe "Shop::Customers", js: true do
 
       page.execute_script("window.confirm = function(msg) { return true; }")
       click_link '删除'
-      page.has_content?('详细地址').should be_false
-
-
+      page.should_not have_content('详细地址')
 
     end
   end
