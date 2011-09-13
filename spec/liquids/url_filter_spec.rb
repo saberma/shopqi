@@ -4,12 +4,14 @@ describe UrlFilter do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:theme) { shop.theme }
+
   let(:iphone4) { Factory :iphone4, shop: shop }
 
   it 'should get asset_url' do
     variant = "{{ 'shop.css' | asset_url }}"
     params = { 'shop' => ShopDrop.new(shop) } # 不能使用 { shop: shop }，即key不能为symbol，否则会找不到shop对象
-    Liquid::Template.parse(variant).render(params).should eql "/s/files/#{Rails.env}/#{shop.id}/theme/assets/shop.css"
+    Liquid::Template.parse(variant).render(params).should eql "/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/shop.css"
   end
 
   it 'should get global_asset_url' do

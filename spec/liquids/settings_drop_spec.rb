@@ -6,7 +6,7 @@ describe SettingsDrop do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:assign) { {'settings' => SettingsDrop.new(shop)} }
+  let(:assign) { {'settings' => SettingsDrop.new(shop.theme)} }
 
   it 'should get value' do
     variant = "{{ settings.text_color }}"

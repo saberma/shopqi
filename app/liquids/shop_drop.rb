@@ -1,7 +1,8 @@
 class ShopDrop < Liquid::Drop
 
-  def initialize(shop)
+  def initialize(shop, theme = nil)
     @shop = shop
+    @theme = theme || shop.theme
   end
 
   def id
@@ -14,7 +15,7 @@ class ShopDrop < Liquid::Drop
 
   # UrlFilter调用
   def asset_path(asset)
-    @shop.theme.asset_relative_path(asset)
+    @theme.asset_relative_path(asset)
   end
 
 end

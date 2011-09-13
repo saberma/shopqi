@@ -8,5 +8,4 @@ App.Views.Theme.Index = Backbone.View.extend
 
   render: ->
     self = this
-    data = $('<ul/>')
     @collection.each (model) -> new App.Views.Theme.Show model: model, parent: self.el

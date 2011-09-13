@@ -6,7 +6,7 @@
 %h2#title 主题外观配置
 #action-links
   %ul
-    %li.template-editor=link_to "模板编辑器", assets_path
+    %li.template-editor=link_to "模板编辑器", theme_assets_path(shop.theme)
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 %form#theme_settings_form(action="#" onsubmit="return false")
@@ -14,7 +14,7 @@
     #presets.col-4.sst
       %h3 您当前的预设
       %p.note.sb 选择下方的下拉框可以切换外观配置的预设集合。调整右边的配置项目并且保存修改。
-      %select#theme_load_preset(name="theme[load_preset]")
+      %select#theme_load_preset(name="load_preset")
         %option(value="") 定制
         %option(value="undefined" disabled='disabled') ---
       %span.sl
@@ -28,7 +28,7 @@
             %th
               %label(for="theme_settings_customer_layout") 自定义布局
             %td
-              %select#theme_settings_customer_layout.layout(name="theme[settings][customer_layout]")
+              %select#theme_settings_customer_layout.layout(name="settings[customer_layout]")
                 %option(value="customer_area") 默认
                 %option(value="") ---
                 %option(selected="selected" value="theme") theme
@@ -37,12 +37,12 @@
         %label(for="save-current-setting") 将当前配置保存为预设
       #save-preset.st.sb.r(style="display: none")
         %label(for="theme_save_preset_existing") 保存当前主题配置为
-        %select#theme_save_preset_existing(name="theme[save_preset][existing]")
+        %select#theme_save_preset_existing(name="save_preset[existing]")
           %option(value="") 一个新的预设
           %option(value="undefined" disabled='disabled') ---
         %span#theme_save_preset_new_container
           %label(for="theme_save_preset_new") 并命名为
-          %input#theme_save_preset_new(name="theme[save_preset][new]" type="text")
+          %input#theme_save_preset_new(name="save_preset[new]" type="text")
   %p.r
     %input(name="commit" type="submit" value="保存配置")
 
@@ -53,6 +53,7 @@
     %img(src="{{{url}}}")
 
 :javascript
+  var theme_id = #{theme.id};
   settings = #{settings_json}
   new App.Views.Theme.Settings.Index();
 

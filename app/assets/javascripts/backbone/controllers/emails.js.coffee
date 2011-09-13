@@ -27,7 +27,7 @@ App.Controllers.Emails = Backbone.Controller.extend
 
     $(document).ready ->
 
-      if $('#email_include_html').attr('checked')
+      if $('#email_include_html').attr('checked') is 'checked'
         $('#html_form').show()
 
       if $('.order-subscription').size() == 0

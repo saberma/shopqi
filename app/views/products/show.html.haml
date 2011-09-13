@@ -56,7 +56,7 @@
               =f.select :published, publish_states, {}, style: "width: 120px; font-size: 13px", onchange: "$('#product_publicshed_form').submit();"
   #variant-inventory.pgroup
     %h3.sb 库存
-    =form_for [product, variant], html: {id: 'batch-form'} do |f|
+    %form#batch-form(action='#' onsumbit='return false')
       #variant-options.note(style="margin:10px 0")
       %table#product-controls.hide(cellpadding="0" cellspacing="0")
         %tr

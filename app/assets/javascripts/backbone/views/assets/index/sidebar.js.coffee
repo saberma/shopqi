@@ -25,7 +25,7 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     uploader = new qq.FileUploader
       multiple: false
       element: $('#file-uploader')[0],
-      action: '/admin/themes/assets/0/upload'
+      action: "/admin/themes/#{theme_id}/assets/0/upload"
       onSubmit: (id, file_name) ->
         $('#indicator').show()
         $(document).mousemove window.moveIndicator
@@ -48,7 +48,7 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
     name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
     key = source_key.replace source_name, name
     attrs = key: key, source_key: source_key
-    $.post '/admin/themes/assets', attrs, (data) ->
+    $.post "/admin/themes/#{theme_id}/assets", attrs, (data) ->
       self.options.assets.layout.add key: key, name: name
       self.cancelLayout()
 
@@ -74,7 +74,7 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
       return
     [key, name] = ["templates/#{source.val()}.liquid", "#{source.text()}.liquid"]
     name = "#{name}.liquid" unless StringUtils.endsWith(name, '.liquid')
-    $.post '/admin/themes/assets', key: key, (data) ->
+    $.post "/admin/themes/#{theme_id}/assets", key: key, (data) ->
       self.options.assets.templates.add key: key, name: name
       self.cancelTemplate()
 

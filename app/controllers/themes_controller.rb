@@ -4,10 +4,8 @@ class ThemesController < ApplicationController
   layout 'admin'
 
   expose(:shop) { current_user.shop }
-  expose(:theme) { shop.theme }
   expose(:themes) { shop.themes }
-  expose(:settings_html) { theme.settings.transform }
-  expose(:settings_json) { theme.settings.as_json.to_json }
+  expose(:theme)
 
   begin 'api'
     def switch
@@ -27,24 +25,8 @@ class ThemesController < ApplicationController
       themes = shop.themes
       published_themes = themes.select {|theme| theme.published? }
       unpublished_themes = themes.select {|theme| !theme.published? }
-      @published_themes_json = published_themes.to_json(except: [:created_at, :updated_at])
-      @unpublished_themes_json = unpublished_themes.to_json(except: [:created_at, :updated_at])
-    end
-
-    def settings # 主题配置
-    end
-
-    def update # 更新主题配置
-      preset = params[:theme][:save_preset][:existing]
-      preset = params[:theme][:save_preset][:new] if preset.blank?
-      preset = params[:theme][:load_preset] if preset.blank?
-      theme.settings.save preset, params[:theme][:settings]
-      render json: params[:theme][:settings]
-    end
-
-    def delete_preset # 删除预设
-      theme.settings.destroy_preset params[:name]
-      render nothing: true
+      @published_themes_json = published_themes.to_json(methods: :name, except: [:created_at, :updated_at])
+      @unpublished_themes_json = unpublished_themes.to_json(methods: :name, except: [:created_at, :updated_at])
     end
 
   end

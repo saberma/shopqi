@@ -261,6 +261,7 @@ describe "Customers", js: true do
             find(:xpath, './ul/li[2]').text.should eql '接收营销邮件 是'
           end
           click_on '更新'
+          sleep 3 # 延时处理
           find_link('更新').visible?.should be_false
         end
       end
@@ -275,6 +276,7 @@ describe "Customers", js: true do
             page.execute_script("window.confirm = function(msg) { return true; }")
             find('.delete').click
           end
+          sleep 3 # 延时处理
           has_content?('多次消费').should be_false
         end
       end
@@ -381,11 +383,10 @@ describe "Customers", js: true do
 
       it "should be search" do
         visit customers_path
-        find('#customer-search_overlay').visible?.should be_true
         has_content?('找到 2位 顾客').should be_true
         has_content?('李卫辉').should be_true
         fill_in_blur 'customer-search_field', with: '马海波'
-        sleep 10
+        sleep 5
         has_content?('找到 1位 顾客').should be_true
         has_content?('马海波').should be_true
         has_content?('李卫辉').should be_false

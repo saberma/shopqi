@@ -18,7 +18,8 @@ class Customer < ActiveRecord::Base
   validates_presence_of :name, :email
   validates_presence_of :password, if: :password_required?
   validates :email, uniqueness: {scope: :shop_id}, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }
-  validates :password, confirmation: true, length: 6..20
+  validates :password, confirmation: true, length: 6..20, if: :password_required?
+
   validates :name, length: 2..10
 
   # 标签

@@ -17,7 +17,7 @@ App.Views.Comment.Index = Backbone.View.extend
       new App.Views.Comment.Show model: model
 
   selectAll: ->
-    this.$('.selector').attr 'checked', this.$('#select-all').attr('checked')
+    this.$('.selector').attr 'checked', (@$('#select-all').attr('checked') is 'checked')
     this.changeCommentCheckbox()
 
   # 评论复选框操作

@@ -50,7 +50,7 @@ namespace 'Utils', (exports) ->
           match = name.match(/.+\[(.+)\]/)
           return true unless match
           # 单选项
-          return true if $(this).attr('type') in ['radio', 'checkbox'] and !$(this).attr('checked')
+          return true if $(this).attr('type') in ['radio', 'checkbox'] and ($(this).attr('checked') isnt 'checked')
           field = match[1]
           inputs[field] = $(this).val()
         inputs

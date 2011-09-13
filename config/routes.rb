@@ -52,8 +52,8 @@ Shopqi::Application.routes.draw do
   match '/district/:id', to: 'district#list' # 地区选择(创建订单页面)
   #match '/s/files/:id/theme/assets/:asset', to: 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
   scope module: :shop do
-    match '/s/files/:id/theme/assets/:file.:format'     , to: 'shops#asset'
-    match '/s/files/test/:id/theme/assets/:file.:format', to: 'shops#asset' #测试中使用
+    match '/s/files/:id/theme/:theme_id/assets/:file.:format'     , to: 'shops#asset'
+    match '/s/files/test/:id/theme/:theme_id/assets/:file.:format', to: 'shops#asset' #测试中使用
   end
 
   constraints(Domain::Store) do
@@ -236,10 +236,12 @@ Shopqi::Application.routes.draw do
       end
 
       resources :themes, only: [:index] do
-        collection do
-          get :settings      , to: 'themes#settings'     , as: :settings_themes
-          put :settings      , to: 'themes#update'
-          post :delete_preset, to: 'themes#delete_preset'
+        member do
+          begin 'settings' # 外观设置
+            get :settings      , to: 'shop_theme_settings#show'
+            put :settings      , to: 'shop_theme_settings#update'
+            post :delete_preset, to: 'shop_theme_settings#delete_preset'
+          end
         end
         resources :assets do
           member do

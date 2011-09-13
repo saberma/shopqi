@@ -20,4 +20,4 @@ App.Views.Order.Index.Show = Backbone.View.extend
     $('#order-table > tbody').append @el
 
   select: ->
-    $(@el).toggleClass 'active', this.$('.selector').attr('checked')
+    $(@el).toggleClass 'active', (@$('.selector').attr('checked') is 'checked')

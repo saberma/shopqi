@@ -72,7 +72,7 @@ class HomeController < ApplicationController
   end
 
   def launch # 启用商店
-    task = shop.tasks.where(name: :launch).first
+    task = shop.tasks.where(name: 'launch').first
     task.update_attributes! completed: true
     redirect_to action: :dashboard, launched: true
   end

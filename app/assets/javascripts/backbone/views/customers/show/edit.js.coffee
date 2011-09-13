@@ -26,7 +26,7 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
     attrs =
       customer:
         name: this.$("input[name='customer[name]']").val(),
-        accepts_marketing: this.$("input[name='customer[accepts_marketing]']").attr('checked'),
+        accepts_marketing: (this.$("input[name='customer[accepts_marketing]']").attr('checked') is 'checked'),
         note: this.$("textarea[name='customer[note]']").val(),
         tags_text: this.$("input[name='customer[tags_text]']").val(),
         addresses_attributes: [
