@@ -35,7 +35,7 @@ class Customer < ActiveRecord::Base
   end
 
   # 默认地址
-  def address
+  def default_address
     default_address =  addresses.where(default_address: true).first ||  addresses.first
     json =  default_address.as_json(methods: [:country_name,:province_name, :city_name, :district_name])
     json['customer_address']

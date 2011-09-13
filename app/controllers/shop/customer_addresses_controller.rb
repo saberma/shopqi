@@ -2,7 +2,9 @@ class Shop::CustomerAddressesController < ApplicationController
   prepend_before_filter :authenticate_customer!
   layout 'shop/admin'
 
-  expose(:customer_addresses){ current_customer.addresses }
+  expose(:customer_addresses){
+    current_customer.addresses
+  }
   expose(:customer_address)
   expose(:shop){ current_customer.shop }
   expose(:countries){ shop.countries }
