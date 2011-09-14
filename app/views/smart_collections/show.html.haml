@@ -57,7 +57,7 @@
     %tr
       %td(style="text-align: left")
         %h4
-          %span#collection-product-count==#{products.size} 个商品
+          %span#collection-product-count==#{collection_products.size} 个商品
           属于此集合
       %td
         %p
@@ -65,8 +65,8 @@
           =form_for smart_collection, url: update_order_smart_collection_path(smart_collection), remote: true, html: {id: 'smart_collection_orders_form'} do |f|
             =f.select :products_order, orders, {}, onchange: "$('#smart_collection_orders_form').submit();"
 %ul#products.nobull.products_for_collection(url="#{sort_smart_collection_path(smart_collection)}")
-  =render partial: 'product', collection: products
--if products.empty?
+  =render partial: 'product', collection: collection_products
+-if collection_products.empty?
   #no-products.pgroup(style="")
     %em.highlight-alt 没有商品符合您的集合条件.
 

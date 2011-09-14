@@ -5,7 +5,7 @@ class SmartCollectionsController < ApplicationController
 
   expose(:smart_collections) { current_user.shop.smart_collections }
   expose(:smart_collection)
-  expose(:products) { smart_collection.products }
+  expose(:collection_products) { smart_collection.collection_products}
 
   expose(:rule_columns) { KeyValues::Collection::Column.all }
   expose(:rule_relations) { KeyValues::Collection::Relation.all }
@@ -50,7 +50,7 @@ class SmartCollectionsController < ApplicationController
   def sort
     smart_collection.update_attribute :products_order, :manual
     params[:product].each_with_index do |id, index|
-      smart_collection.products.find(id).update_attribute :position, index
+      smart_collection.collection_products.find(id).update_attribute :position, index
     end
     render :nothing => true
   end

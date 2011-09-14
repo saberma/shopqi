@@ -18,13 +18,13 @@ class SmartCollection < ActiveRecord::Base
       # 例如，价格大于0的条件改为大于10，原有手动排序不能改变
       ids = rules_products.map(&:id)
       # 删除不匹配的商品排序记录
-      products.each do |collection_product|
+      collection_products.each do |collection_product|
         unless ids.include?(collection_product.product.id)
           collection_product.destroy
         end
       end
       rules_products.each_with_index do |product, index|
-        collection_product = self.products.where(product_id: product).first || self.products.new(product: product)
+        collection_product = self.collection_products.where(product_id: product).first || self.collection_products.new(product: product)
         collection_product.update_attribute :position, index
       end
     end
