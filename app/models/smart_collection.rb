@@ -2,7 +2,8 @@
 class SmartCollection < ActiveRecord::Base
   belongs_to :shop
   has_many :rules   , class_name: 'SmartCollectionRule'   , dependent: :destroy
-  has_many :products, class_name: 'SmartCollectionProduct', dependent: :destroy
+  has_many :collection_products, dependent: :destroy          , class_name: 'SmartCollectionProduct'
+  has_many :products           , through: :collection_products
   validates_presence_of :title
   accepts_nested_attributes_for :rules, allow_destroy: true
 
@@ -23,7 +24,7 @@ class SmartCollection < ActiveRecord::Base
         end
       end
       rules_products.each_with_index do |product, index|
-        collection_product = self.products.where(product: product).first || self.products.new(product: product)
+        collection_product = self.products.where(product_id: product).first || self.products.new(product: product)
         collection_product.update_attribute :position, index
       end
     end

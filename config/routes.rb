@@ -76,7 +76,7 @@ Shopqi::Application.routes.draw do
       match '/password'                    , to: 'shops#password'
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show', as: :product_show
-      get '/collections/all'               , to: 'collections#show'
+      get '/collections/:handle'               , to: 'collections#show'
       get '/pages/:handle'                 , to: 'pages#show'
       post '/cart/add'                     , to: 'cart#add'
       get '/cart'                          , to: 'cart#show'
