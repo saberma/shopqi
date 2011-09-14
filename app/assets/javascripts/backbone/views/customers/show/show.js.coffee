@@ -3,7 +3,7 @@ App.Views.Customer.Show.Show = Backbone.View.extend
 
   initialize: ->
     self = this
-    @more_addresses = _(@model.get('addresses')).reject (address) -> address.id is self.model.get('address').id
+    @more_addresses = _(@model.get('addresses')).reject (address) -> address.id is self.model.get('default_address').id
     this.render()
     @model.bind 'change', -> self.render()
 

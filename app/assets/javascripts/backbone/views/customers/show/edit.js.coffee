@@ -17,9 +17,9 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
 
     Utils.Tag.init()
 
-    address = @model.get('address')
-    Utils.Region.init [address.province, address.city, address.district]
-    $('#province').val(address.province).change()
+    default_address = @model.get('default_address')
+    Utils.Region.init [default_address.province, default_address.city, default_address.district]
+    $('#province').val(default_address.province).change()
 
   save: ->
     self = this
@@ -30,7 +30,7 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
         note: this.$("textarea[name='customer[note]']").val(),
         tags_text: this.$("input[name='customer[tags_text]']").val(),
         addresses_attributes: [
-          id: @model.get('address').id,
+          id: @model.get('default_address').id,
           name: this.$("input[name='name']").val(),
           company: this.$("input[name='company']").val(),
           phone: this.$("input[name='phone']").val(),
@@ -43,11 +43,11 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
       _method: 'put'
     $.post "/admin/customers/#{@model.id}", attrs, (data) ->
       customer = attrs.customer
-      address = self.model.get('address')
-      _(customer.addresses_attributes[0]).each (value, name) -> address[name] = value
-      address['province_name'] = self.$("select[name='province']").children(':selected').text()
-      address['city_name'] = self.$("select[name='city']").children(':selected').text()
-      address['district_name'] = self.$("select[name='district']").children(':selected').text()
+      default_address = self.model.get('default_address')
+      _(customer.addresses_attributes[0]).each (value, name) -> default_address[name] = value
+      default_address['province_name'] = self.$("select[name='province']").children(':selected').text()
+      default_address['city_name'] = self.$("select[name='city']").children(':selected').text()
+      default_address['district_name'] = self.$("select[name='district']").children(':selected').text()
       self.model.set customer
       $('#edit-customer-link').click()
       msg '修改成功!'

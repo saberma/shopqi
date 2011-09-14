@@ -60,7 +60,7 @@
         %p(style="line-height:18px;")
           %a(href="mailto:{{{email}}}") {{{email}}}
           %br/
-          {{{address.phone}}}
+          {{{default_address.phone}}}
     %tr
       %td.attribute 帐号
       %td.value
@@ -72,7 +72,7 @@
     %tr
       %td.attribute 默认地址
       %td.value
-        {{#with address}}
+        {{#with default_address}}
         {{{name}}}
         %br/
         {{{province_name}}}
@@ -143,7 +143,7 @@
       .section-header 地址信息
       .address
         .customer-group.white
-          {{#with address}}
+          {{#with default_address}}
           .pb.clearfix
             .fl
               %label(for="name") 姓名
