@@ -25,7 +25,7 @@ class Shop::AppController < ActionController::Base
 
   def theme # 支持主题预览
     id = session[:preview_theme_id]
-    (id && shop.themes.find(id)) || shop.theme
+    (!id.blank? && shop.themes.find(id)) || shop.theme
   end
 
   begin 'liquid'
