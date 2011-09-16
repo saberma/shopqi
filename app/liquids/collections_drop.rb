@@ -8,6 +8,12 @@ class CollectionsDrop < Liquid::Drop
     CollectionDrop.new @shop.custom_collections.where(handle: handle).first
   end
 
+  def all
+    @collections ||= @shop.collections.map do |collection|
+      CollectionDrop.new collection
+    end
+  end
+
 end
 
 class CollectionDrop < Liquid::Drop
@@ -26,6 +32,10 @@ class CollectionDrop < Liquid::Drop
 
   def description
     @collection.body_html
+  end
+
+  def url
+    "/collections/#{@collection.handle}"
   end
 
 end
