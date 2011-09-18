@@ -144,12 +144,16 @@ class ShopTheme < ActiveRecord::Base
     end
   end
 
+  def unpublish! # 取消发布
+    self.update_attributes! role: 'unpublished'
+  end
+
   def published? # 是否已发布
     self.role != 'unpublished'
   end
 
   def switch(new_theme, style = nil) # 切换主题
-    self.update_attributes role: 'unpublished'
+    self.unpublish!
     self.shop.themes.create theme_id: new_theme.id, load_preset: style, role: new_theme.role
   end
 
