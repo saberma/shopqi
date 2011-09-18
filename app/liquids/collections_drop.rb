@@ -5,7 +5,7 @@ class CollectionsDrop < Liquid::Drop
   end
 
   def before_method(handle) #相当于method_missing
-    CollectionDrop.new @shop.custom_collections.where(handle: handle).first
+    CollectionDrop.new(@shop.custom_collections.where(published: true, handle: handle).first)  || CollectionDrop.new(@shop.smart_collections.where(published: true, handle: handle).first)
   end
 
   def all
@@ -36,6 +36,18 @@ class CollectionDrop < Liquid::Drop
 
   def url
     "/collections/#{@collection.handle}"
+  end
+
+  #显示集合包含的所有商品的product_type
+  def all_types
+  end
+
+  #显示集合包含的所有商品的品牌
+  def all_vendors
+  end
+
+  #显示匹配当前集合，当前页面的商品总数
+  def products_count
   end
 
 end

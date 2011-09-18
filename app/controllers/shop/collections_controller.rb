@@ -16,10 +16,15 @@ class Shop::CollectionsController < Shop::AppController
     if params[:handle] == 'all'
       collection = CustomCollection.new(title: '所有商品', products: shop.products)
     else
-      collection = shop.custom_collections.find_by_handle(params[:handle]) || shop.smart_collections.find_by_handle(params[:handle])
+      collection = shop.custom_collections.where(published: true, handle: params[:handle]).first || shop.smart_collections.where(published: true, handle: params[:handle]).first
     end
     assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page])
-    html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('collection', assign))
+    #若不存在集合，则显示404页面
+    if collection.nil?
+      html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('404', assign))
+    else
+      html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('collection', assign))
+    end
     render text: html
   end
 end
