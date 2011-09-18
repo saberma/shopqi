@@ -235,7 +235,7 @@ Shopqi::Application.routes.draw do
         end
       end
 
-      resources :themes, only: [:index] do
+      resources :themes, only: [:index, :update] do
         member do
           begin 'settings' # 外观设置
             get :settings      , to: 'shop_theme_settings#show'

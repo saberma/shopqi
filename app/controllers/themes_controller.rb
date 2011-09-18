@@ -29,6 +29,12 @@ class ThemesController < ApplicationController
       @unpublished_themes_json = unpublished_themes.to_json(methods: :name, except: [:created_at, :updated_at])
     end
 
+    def update # 发布主题
+      shop.theme.unpublish!
+      theme.save
+      render nothing: true
+    end
+
   end
 
 end

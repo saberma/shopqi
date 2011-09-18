@@ -27,7 +27,8 @@ App.Views.Theme.Show = Backbone.View.extend
     false
 
   save: ->
-    #$.post "/admin/themes/#{@model.id}", _method: 'put', ->
+    $.post "/admin/themes/#{@model.id}", 'theme[role]': @$("select[name='theme[role]']").val(), _method: 'put', ->
+      window.location = window.location # 刷新页面
 
   cancel: ->
     @$('.publish-theme-link').show()

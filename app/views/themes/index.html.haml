@@ -85,7 +85,7 @@
       .publish-theme-dropdown(style="display:none;")
         %form.edit_theme(action="#" onsubmit="return false")
           %span.fl
-            %select#theme_role(name="theme[role]")
+            %select(name="theme[role]")
               %option(value="main") 发布为普通主题
               -#%option(value="mobile") 发布为手机主题
           %span.fr
