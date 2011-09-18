@@ -1,0 +1,18 @@
+{% if collections.all.size == 0 %}
+<em>该商店没有任何集合</em>
+{% else %}
+<h1> 商品集合 </h1>
+<ul>
+  {% for collection in collections.all  %}
+    <li class="collection">
+      <strong><a href="{{ collection.url }}">{{ collection.title }}</a></strong>
+      <small class="hint">共有{{ collection.products.size }}件商品</small>
+    </li>
+  {% endfor %}
+</ul>
+{% if paginate.pages > 1 %}
+<div class="paginate">
+  {{ paginate | default_pagination }}
+</div><!-- .paginate -->
+{% endif %}
+{% endif %}

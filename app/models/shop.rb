@@ -42,6 +42,10 @@ class Shop < ActiveRecord::Base
     ShopDomain.from(domain).shop
   end
 
+  def collections
+    custom_collections + smart_collections
+  end
+
   def launch! # 启用商店
     self.update_attributes! guided: true, password_enabled: false
   end
@@ -49,6 +53,7 @@ class Shop < ActiveRecord::Base
   def primary_domain # 主域名
     domains.primary
   end
+
 
   def plan_type
     KeyValues::Plan::Type.find_by_code(self.plan)
