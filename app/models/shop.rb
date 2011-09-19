@@ -43,7 +43,7 @@ class Shop < ActiveRecord::Base
   end
 
   def collections
-    custom_collections + smart_collections
+    custom_collections.where(published: true) + smart_collections.where(published: true)
   end
 
   def launch! # 启用商店

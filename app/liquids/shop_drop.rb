@@ -13,6 +13,10 @@ class ShopDrop < Liquid::Drop
     @shop.name
   end
 
+  def url
+    @shop.primary_domain.url
+  end
+
   # UrlFilter调用
   def asset_path(asset)
     @theme.asset_relative_path(asset)
