@@ -35,6 +35,11 @@ class ThemesController < ApplicationController
       render nothing: true
     end
 
+    def duplicate # 复制主题
+      duplicate_theme = theme.duplicate
+      render json: duplicate_theme.to_json(methods: :name, except: [:created_at, :updated_at])
+    end
+
   end
 
 end

@@ -5,6 +5,7 @@ App.Views.Theme.Show = Backbone.View.extend
 
   events:
     'click .publish-theme-link a': 'publish'
+    'click .duplicate-theme a': 'duplicate'
     'click .publish-theme-dropdown a': 'cancel'
     'submit form': 'save'
 
@@ -24,6 +25,16 @@ App.Views.Theme.Show = Backbone.View.extend
   publish: ->
     @$('.publish-theme-link').hide()
     @$('.publish-theme-dropdown').show()
+    false
+
+  duplicate: ->
+    self = this
+    btn = @$('.duplicate-theme a')
+    unless btn.hasClass('disabledrow')
+      @$('.duplicate-theme a').addClass('disabledrow')
+      $.post "/admin/themes/#{@model.id}/duplicate", (data) ->
+        App.unpublished_themes.add data
+        self.$('.duplicate-theme a').removeClass('disabledrow')
     false
 
   save: ->
