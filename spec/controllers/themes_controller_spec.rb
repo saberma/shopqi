@@ -26,4 +26,15 @@ describe ThemesController do
 
   end
 
+  context '#duplicate' do # 复制主题
+
+    it 'should be duplicate', focus: true do
+      expect do
+        put :duplicate, id: theme.id
+        JSON(response.body)['shop_theme']['role'].should eql 'unpublished'
+      end.should change(ShopTheme, :count).by(1)
+    end
+
+  end
+
 end

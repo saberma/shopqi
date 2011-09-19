@@ -57,6 +57,7 @@ class CreateShops < ActiveRecord::Migration
     create_table :shop_themes do |t| #商店外观主题(可以支持多个主题切换)
       t.references :shop   , comment: '所属商店'              , null: false
       t.references :theme  , comment: '所使用的主题'          , null: false
+      t.string :name       , comment: '名称'                  , null: false, limit: 32
       t.string :role       , comment: '角色(普通 手机 未发布)', null: false, limit: 16
       t.string :load_preset, comment: '预设'                  , null: false, limit: 16
       t.timestamps

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe ShopTheme do
@@ -12,6 +13,14 @@ describe ShopTheme do
       theme
       expect do
         theme.switch Theme.find_by_handle('Prettify')
+      end.should change(ShopTheme, :count).by(1)
+    end
+
+    it 'should be duplicate' do
+      theme
+      expect do
+        duplicate_theme = theme.duplicate
+        duplicate_theme.name.should eql "副本 #{theme.name}"
       end.should change(ShopTheme, :count).by(1)
     end
 

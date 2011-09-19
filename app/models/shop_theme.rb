@@ -124,21 +124,17 @@ class ShopTheme < ActiveRecord::Base
 
   default_value_for :role, :main # 默认为普通主题
 
-  delegate :name, to: :theme # 获取名称
-
-  validates_presence_of :load_preset
+  validates_presence_of :name, :load_preset
 
   before_validation do
-    # 初始化主题设置
-    self.load_preset ||= config_settings['current']
+    self.name ||= theme.name # 默认为主题名称(复制时直接指定)
+    self.load_preset ||= config_settings['current'] # 初始化主题设置
   end
 
-  after_save do
-    FileUtils.rm_rf public_path # 切换主题时先清空整个目录
+  after_create do
     repo = Grit::Repo.init public_path # 初始化为git repo
     FileUtils.cp_r "#{app_path}/.", public_path
     commit repo, '1'
-    self.settings.clear
     config_settings['presets'][self.load_preset].each_pair do |name, value|
       self.settings.create name: name, value: value
     end
@@ -155,6 +151,10 @@ class ShopTheme < ActiveRecord::Base
   def switch(new_theme, style = nil) # 切换主题
     self.unpublish!
     self.shop.themes.create theme_id: new_theme.id, load_preset: style, role: new_theme.role
+  end
+
+  def duplicate # 复制主题
+    self.shop.themes.create theme_id: self.theme_id, name: "副本 #{self.name}", load_preset: self.load_preset, role: 'unpublished'
   end
 
   begin #相对路径
@@ -221,8 +221,7 @@ class ShopTheme < ActiveRecord::Base
     end
   end
 
-  #删除对应的目录
-  after_destroy do
+  after_destroy do #删除对应的目录
     FileUtils.rm_rf self.public_path
   end
 end
