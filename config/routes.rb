@@ -77,8 +77,6 @@ Shopqi::Application.routes.draw do
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show', as: :product_show
       get '/collections'                   , to: 'collections#index'
-      get '/collections/types'             , to: 'collections#types'
-      get '/collections/vendors'           , to: 'collections#vendors'
       get '/collections/:handle'           , to: 'collections#show'
       get '/pages/:handle'                 , to: 'pages#show'
       post '/cart/add'                     , to: 'cart#add'
