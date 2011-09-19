@@ -14,7 +14,7 @@ class Shop::CollectionsController < Shop::AppController
   def show
     CollectionsDrop
     if params[:handle] == 'all'
-      collection = CustomCollection.new(title: '所有商品', products: shop.products.where(published: true))
+      collection = CustomCollection.new(title: '所有商品',handle: 'all', products: shop.products.where(published: true))
     #handle为types时显示商品类型为params[:q]时的商品
     #handle为vendors时显示商品品牌为params[:q]时的商品
     elsif params[:handle] == 'types' || params[:handle] == 'vendors'
@@ -24,7 +24,7 @@ class Shop::CollectionsController < Shop::AppController
     else
       collection = shop.custom_collections.where(published: true, handle: params[:handle]).first || shop.smart_collections.where(published: true, handle: params[:handle]).first
     end
-    assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page])
+    assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q])
     #若不存在集合，则显示404页面
     if collection.nil?
       html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('404', assign))
