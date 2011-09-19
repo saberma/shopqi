@@ -40,6 +40,7 @@ class CollectionDrop < Liquid::Drop
 
   #显示集合包含的所有商品的product_type
   def all_types
+    self.products.map(&:type).uniq! if @collection.handle != 'types'
   end
 
   #显示集合包含的所有商品的品牌

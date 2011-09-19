@@ -19,15 +19,30 @@ describe Shop::CollectionsController do
     request.host = "#{shop.primary_domain.host}"
   end
 
-  it "should show the collection index url" do
-    smart_collection_low_price
-    iphone4
-    get 'index'
-    response.should be_success
-    response.body.should have_content('首页商品')
-    response.body.should have_content('低价商品')
-    response.body.should have_content('共有1件商品')
-    response.body.should have_content('共有0件商品')
+  context 'when product published is true' do
+    it "should get the index collection url" do
+      smart_collection_low_price
+      iphone4
+      get 'index'
+      response.should be_success
+      response.body.should have_content('首页商品')
+      response.body.should have_content('低价商品')
+      response.body.should have_content('共有1件商品')
+      response.body.should have_content('共有0件商品')
+    end
+  end
+
+  context 'when product published is false' do
+    it "should view the index collections" do
+      smart_collection_low_price
+      iphone4.update_attribute :published, false
+      get 'index'
+      response.should be_success
+      response.body.should have_content('首页商品')
+      response.body.should have_content('低价商品')
+      response.body.should_not have_content('共有1件商品')
+      response.body.should have_content('共有0件商品')
+    end
   end
 
   it "should show the frontpage collection products" do

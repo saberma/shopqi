@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :tags
   # 标签
   attr_accessor :tags_text,:images
+  scope :published, where( published: true)
 
   accepts_nested_attributes_for :photos  , allow_destroy: true
   accepts_nested_attributes_for :variants, allow_destroy: true

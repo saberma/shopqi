@@ -44,6 +44,10 @@ class ProductDrop < Liquid::Drop
     @product.title
   end
 
+  def type
+    @product.product_type
+  end
+
   def price
     @product.variants.map(&:price).min
   end
@@ -55,7 +59,6 @@ class ProductDrop < Liquid::Drop
   def featured_image
     @product.photos.first
   end
-
 end
 
 class ProductImageDrop < Liquid::Drop
