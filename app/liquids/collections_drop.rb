@@ -25,9 +25,11 @@ class CollectionDrop < Liquid::Drop
   end
 
   def products #数组要缓存，以便paginate替换为当前页
+    #注：不能用products.where,因为有地方是直接用collection.new来直接关联products,
+    #而没有在数据库中存储对应的记录的
     @products ||= @collection.products.map do |product|
-      ProductDrop.new product
-    end
+      ProductDrop.new product if product.published #只显示product published的商品
+    end.compact
   end
 
   def description

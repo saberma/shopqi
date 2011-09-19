@@ -53,6 +53,14 @@ describe Shop::CollectionsController do
     response.body.should have_content('iphone4')
   end
 
+  it "should show the assign type product" do
+    iphone4
+    get 'types', q: '手机'
+    response.should be_success
+    response.body.should have_content('手机')
+    response.body.should have_content('iphone4')
+  end
+
   it "should only show the published collection" do
     smart_collection_low_price
     get 'index'
