@@ -42,11 +42,12 @@ class CollectionDrop < Liquid::Drop
 
   #显示集合包含的所有商品的product_type
   def all_types
-    self.products.map(&:type).uniq! if @collection.handle != 'types'
+    self.products.map(&:type).uniq if @collection.handle != 'types'
   end
 
   #显示集合包含的所有商品的品牌
   def all_vendors
+    self.products.map(&:vendor).uniq if @collection.handle != 'vendors'
   end
 
   #显示匹配当前集合，当前页面的商品总数

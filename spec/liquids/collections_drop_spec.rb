@@ -61,6 +61,21 @@ describe CollectionsDrop do
       Liquid::Template.parse(variant).render('collection' => collection_drop).should eql result
     end
 
+    it "should get all types" do
+      frontpage_collection
+      iphone4
+      variant = "{% for product_type in collection.all_types %}{{ product_type }}{% endfor %}"
+      result = '手机'
+      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
+    end
+
+    it "should get all vendors" do
+      iphone4
+      variant = "{% for vendor in collection.all_vendors %}{{ vendor }}{% endfor %}"
+      result = 'Apple'
+      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
+    end
+
   end
 
 end

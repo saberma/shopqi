@@ -61,6 +61,14 @@ describe Shop::CollectionsController do
     response.body.should have_content('iphone4')
   end
 
+  it "should show the assign vendor product" do
+    iphone4
+    get 'vendors', q: 'Apple'
+    response.should be_success
+    response.body.should have_content('Apple')
+    response.body.should have_content('iphone4')
+  end
+
   it "should only show the published collection" do
     smart_collection_low_price
     get 'index'

@@ -36,4 +36,13 @@ class Shop::CollectionsController < Shop::AppController
     html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('collection', assign))
     render text: html
   end
+
+  def vendors
+    CollectionsDrop
+    vendor = params[:q]
+    collection = CustomCollection.new(title: params[:q], handle: 'vendors', products: shop.products.where(vendor: params[:q], published: true))
+    assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page])
+    html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('collection', assign))
+    render text: html
+  end
 end

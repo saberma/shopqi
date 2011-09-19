@@ -6,9 +6,7 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
-  def id
-    @product.id
-  end
+  delegate :id, :title,:vendor, to: :@product
 
   def variants
     @product.variants.map do |variant|
@@ -40,9 +38,6 @@ class ProductDrop < Liquid::Drop
     "/products/#{@product.handle}"
   end
 
-  def title
-    @product.title
-  end
 
   def type
     @product.product_type
