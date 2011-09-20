@@ -12,7 +12,7 @@ class Shop::SearchController < Shop::AppController
   end
 
   def show
-    assign = template_assign('search' => SearchDrop.new(results, params[:q]))
+    assign = template_assign('search' => SearchDrop.new(results, params[:q]), 'q' => params[:q])
     html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('search', assign))
     render text: html
   end
