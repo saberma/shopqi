@@ -9,7 +9,7 @@
     %meta(content="width=device-width initial-scale=1.0" name="viewport")/
     %link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon")/
     %link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
-    %title ShopQi &mdash; 建立您的网上商店
+    %title ShopQi &mdash; 最适合企业的电子商务平台 低成本构建网上商店 快速建立独立网店
     = stylesheet_link_tag "master","mobile"
     =yield :stylesheets
     /[if IE 6]
@@ -25,6 +25,7 @@
           %a(href="/")
           %a.logo-shopqi(href="/")=image_tag 'logos/shopqi_bag.gif'
           %ul#nav-primary
+            %li(style='line-height:56px; color: #a3a3a3; margin-right: 10px') 服务热线 400-676-7720
             %li(class=@current_tour)=link_to '特色演示', tour_intro_path
             -#
               %li
@@ -83,7 +84,6 @@
               %ul
                 %li
                   =image_tag 'admin/icons/phone16.gif', height: 12, width: 12
-                  0755-26748888
+                  0755-26002041
           #copyright.center.clear
-            %p © 2011-2011 ShopQi Inc. | ShopQi - 独立网店平台.
-            %p *ShopQi is a registered trademark of ShopQi Inc.
+            %p © 2011 shopqi.com All Rights Reserved | ShopQi - 电子商务平台.
