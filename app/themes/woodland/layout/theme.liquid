@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 {{ 'stylesheet.css' | asset_url | stylesheet_tag }}
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+{{ 'jquery/1.5.2/jquery.js' | global_asset_url | script_tag }}
 
 <!--[if IE 7]>
 	{{ 'ie7.css' | asset_url | stylesheet_tag }}

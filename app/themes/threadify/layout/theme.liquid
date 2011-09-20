@@ -15,19 +15,19 @@
 <![endif]-->
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  {{ 'jquery/1.5.2/jquery.js' | global_asset_url | script_tag }}
   {{ 'option_selection.js' | shopqi_asset_url | script_tag }}
   <title>
 {% case template %}
 {% when 'index' %}
     {{ page_title }} - {{ shop.name }}
-{% when 'page' %} 
+{% when 'page' %}
     {{ page_title }} - {{ shop.name }}
 {% when 'product' %}
     {{ page_title }} - {{ shop.name }}
-{% when 'blog' %} 
+{% when 'blog' %}
     {{ page_title }} - {{ shop.name }}
-{% when 'article' %} 
+{% when 'article' %}
     {{ page_title }} - {{ shop.name }}
 {% when 'collection' %}
    {{ page_title }}  - {{ shop.name }}
@@ -35,7 +35,7 @@
     {{ page_title }} - {{ product.title }}
 {% endcase %}
   </title>
-  
+
   {{ 'imgbox.js' | asset_url | script_tag }}
   {{ 'lightbox.js' | asset_url | script_tag }}
   {{ content_for_header }}
@@ -54,7 +54,7 @@
         <div id="logo-wrapper">
           <div id="logo">
             {% if settings.use_logo_image %}
-            <a href="/">{{ 'logo.png' | asset_url | img_tag }}</a>	
+            <a href="/">{{ 'logo.png' | asset_url | img_tag }}</a>
             {% else %}
             <h1><a href="/">{{ shop.name }}</a></h1>
             {% endif %}
@@ -64,7 +64,7 @@
           {% for link in linklists.footer.links %}
           <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {% endfor %}
-          {% if shop.customer_accounts_enabled %} 
+          {% if shop.customer_accounts_enabled %}
   {% if customer %}
     <li> <span class="login_link">Welcome {{ customer.first_name }}</span> <a href="/account">(VIEW ACCOUNT</a> / {{ 'Logout' | customer_logout_link }})</li>
   {% else %}
@@ -77,7 +77,7 @@
           <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {% endfor %}
         </ul>
-        
+
         <ul id="cart">
            <li><a {% if settings.cart_graphic %}class="checkout"{% endif %} href="/cart">Your Cart {% if settings.cart_graphic %}<em>{{ cart.item_count }}</em>{% endif %}</a></li>
         </ul>
@@ -90,7 +90,7 @@
       <div class="container">
         <a href="http://{{ settings.use_bannerurl_image }}">{{ "feature.jpg" |  asset_url | img_tag, "featured product"}}</a>
       </div><!-- .container -->
-    </div><!-- .feature -->	
+    </div><!-- .feature -->
     {% endif %}
 
 {% if settings.border_grunge %}
@@ -99,10 +99,10 @@
 
     <div class="container">
       <div id="content">
-      
+
       {% if flash.error %}<div class="flash error">{{ flash.error }}</div>{% endif %}
 {% if flash.notice %}<div class="flash notice">{{ flash.notice }}</div>{% endif %}
-      
+
         {{ content_for_layout }}
       </div> <!-- content -->
     </div><!-- .container -->
