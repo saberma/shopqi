@@ -11,6 +11,8 @@ describe CollectionsDrop do
 
   let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
 
+  let(:psp) { Factory :psp, shop: shop, collections: [frontpage_collection] }
+
   context 'frontpage' do
 
     let(:collections_drop) { CollectionsDrop.new(shop) }
@@ -74,6 +76,28 @@ describe CollectionsDrop do
       variant = "{% for vendor in collection.all_vendors %}{{ vendor }}{% endfor %}"
       result = 'Apple'
       Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
+    end
+
+    it "should get all products count and all tags" do
+      frontpage_collection
+      iphone4.tags_text = '手机，电脑'
+      psp.tags_text = '电脑，游戏机'
+      iphone4.save
+      psp.save
+      variant = "{{ collection.all_products_count }} {{ collection.all_tags}}"
+      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '2 手机,电脑,游戏机'
+    end
+
+    it "should get products count and tags" do
+      frontpage_collection
+      iphone4
+      psp
+      iphone4.tags_text = '手机,电脑'
+      psp.tags_text = '电脑,游戏机'
+      iphone4.save
+      psp.save
+      variant = "{% paginate collection.products by 1 %}{{ collection.products_count }} {{ collection.tags}}{% endpaginate %}"
+      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 手机,电脑'
     end
 
   end
