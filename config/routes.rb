@@ -238,7 +238,7 @@ Shopqi::Application.routes.draw do
         end
       end
 
-      resources :themes, only: [:index, :update] do
+      resources :themes, only: [:index, :update, :destroy] do
         member do
           post :duplicate  # 复制主题
           begin 'settings' # 外观设置
@@ -247,7 +247,7 @@ Shopqi::Application.routes.draw do
             post :delete_preset, to: 'shop_theme_settings#delete_preset'
           end
         end
-        resources :assets do
+        resources :assets do # 模板编辑器
           member do
             get :versions
             put :rename

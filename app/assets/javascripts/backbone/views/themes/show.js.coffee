@@ -4,10 +4,11 @@ App.Views.Theme.Show = Backbone.View.extend
   tagClass: 'clearfix'
 
   events:
-    'click .publish-theme-link a': 'publish'
-    'click .duplicate-theme a': 'duplicate'
-    'click .publish-theme-dropdown a': 'cancel'
-    'submit form': 'save'
+    'click .publish-theme-link a'     : 'publish'
+    'click .duplicate-theme a'        : 'duplicate'
+    'click .delete-theme a'           : 'destroy'
+    'click .publish-theme-dropdown a' : 'cancel'
+    'submit form'                     : 'save'
 
   initialize: ->
     @render()
@@ -35,6 +36,17 @@ App.Views.Theme.Show = Backbone.View.extend
       $.post "/admin/themes/#{@model.id}/duplicate", (data) ->
         App.unpublished_themes.add data
         self.$('.duplicate-theme a').removeClass('disabledrow')
+    false
+
+  destroy: ->
+    if confirm '您确定要删除吗'
+      self = this
+      collection = @model.collection
+      @model.destroy
+        success: (model, response) ->
+          self.remove()
+          collection.remove self.model
+          msg '删除成功!'
     false
 
   save: ->

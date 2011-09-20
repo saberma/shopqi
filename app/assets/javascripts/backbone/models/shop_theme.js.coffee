@@ -3,3 +3,4 @@ class App.Models.ShopTheme extends Backbone.Model
 
 App.Collections.ShopThemes = Backbone.Collection.extend
   model: App.Models.ShopTheme
+  url: '/admin/themes'

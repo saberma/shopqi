@@ -40,6 +40,11 @@ class ThemesController < ApplicationController
       render json: duplicate_theme.to_json(methods: :name, except: [:created_at, :updated_at])
     end
 
+    def destroy # 删除
+      theme.destroy
+      render json: theme.to_json(methods: :name, except: [:created_at, :updated_at])
+    end
+
   end
 
 end
