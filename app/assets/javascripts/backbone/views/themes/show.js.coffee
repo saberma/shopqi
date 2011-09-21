@@ -7,6 +7,7 @@ App.Views.Theme.Show = Backbone.View.extend
     'click .publish-theme-link a'     : 'publish'
     'click .duplicate-theme a'        : 'duplicate'
     'click .delete-theme a'           : 'destroy'
+    'click .export-theme a'           : 'export'
     'click .publish-theme-dropdown a' : 'cancel'
     'submit form'                     : 'save'
 
@@ -47,6 +48,11 @@ App.Views.Theme.Show = Backbone.View.extend
           self.remove()
           collection.remove self.model
           msg '删除成功!'
+    false
+
+  export: ->
+    $.post "/admin/themes/#{@model.id}/export", ->
+      msg "正将模板、附件等打包成一个压缩文件，此过程需要几分钟的时间，完成后我们会将文件发送至 ", 5000
     false
 
   save: ->

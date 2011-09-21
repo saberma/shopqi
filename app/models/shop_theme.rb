@@ -159,8 +159,7 @@ class ShopTheme < ActiveRecord::Base
 
   begin #相对路径
     def files_relative_path # s/files/1/theme/1
-      test = %w(test travis).include?(Rails.env) ? Rails.env : '' #测试目录与其他环境分开,不干扰
-      File.join 's', 'files', test, self.shop_id.to_s, 'theme', self.id.to_s
+      File.join 's', 'files', test_dir, self.shop_id.to_s, 'theme', self.id.to_s
     end
 
     def asset_relative_path(asset) # s/files/1/theme/1/assets/theme.liquid

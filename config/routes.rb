@@ -241,6 +241,7 @@ Shopqi::Application.routes.draw do
       resources :themes, only: [:index, :update, :destroy] do
         member do
           post :duplicate  # 复制主题
+          post :export     # 导出主题
           begin 'settings' # 外观设置
             get :settings      , to: 'shop_theme_settings#show'
             put :settings      , to: 'shop_theme_settings#update'

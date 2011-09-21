@@ -45,6 +45,11 @@ class ThemesController < ApplicationController
       render json: theme.to_json(methods: :name, except: [:created_at, :updated_at])
     end
 
+    def export # 导出(后台任务型)
+      Resque.enqueue(ThemeExporter, shop.id, params[:id].to_i)
+      render nothing: true
+    end
+
   end
 
 end
