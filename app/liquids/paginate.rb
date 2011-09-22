@@ -31,14 +31,16 @@ class Paginate < Liquid::Block
       if current_page > 1
         context['paginate']['previous'] = { 'url' => "?page=#{current_page - 1}", 'title' => 'Previous' }
       end
+      query_param = context['q'] ? "&q=#{context['q']}" : ""
       context['paginate']['parts'] = (1..pages).map do |page|
-        { 'url' => "?page=#{page}", 'title' => page, 'is_link' => (page != current_page) }
+        { 'url' => "?page=#{page}#{query_param}", 'title' => page, 'is_link' => (page != current_page) }
       end
       if current_page < pages
-        context['paginate']['next'] = { 'url' => "?page=#{current_page + 1}", 'title' => 'Next' }
+        context['paginate']['next'] = { 'url' => "?page=#{current_page + 1}#{query_param}", 'title' => 'Next' }
       end
 
       super
     end
   end
+
 end

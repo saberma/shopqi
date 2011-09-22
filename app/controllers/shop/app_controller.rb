@@ -53,7 +53,8 @@ class Shop::AppController < ActionController::Base
         'collections' => collections_drop,
         'content_for_header' => '',
         'content_for_layout' => content_for_layout,
-        'powered_by_link' => powered_by_link
+        'powered_by_link' => powered_by_link,
+        'page_title' =>  get_current_page_title(template,template_extra_object)
       }
     end
 
@@ -83,6 +84,19 @@ class Shop::AppController < ActionController::Base
 
     def cart_drop
       CartDrop.new(cookie_cart_hash)
+    end
+
+    def get_current_page_title(template,template_extra_object)
+      case template
+      when 'index'      ; '欢迎光临'
+      when 'page'       ; template_extra_object['page'].title
+      when 'product'    ; template_extra_object['product'].title
+      when 'blog'       ; template_extra_object['blog'].title
+      when 'collection' ; template_extra_object['collection'].title
+      when 'article'    ; template_extra_object['article'].title
+      when 'search'     ; '查询'
+      when 'cart'       ; '购物车'
+      else ; '' end
     end
 
   end

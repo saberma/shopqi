@@ -42,16 +42,39 @@ class CollectionDrop < Liquid::Drop
 
   #显示集合包含的所有商品的product_type
   def all_types
-    self.products.map(&:type).uniq if @collection.handle != 'types'
+    self.products.map(&:type).uniq if !['types','all','vendors'].include?(@collection.handle)
   end
 
   #显示集合包含的所有商品的品牌
   def all_vendors
-    self.products.map(&:vendor).uniq if @collection.handle != 'vendors'
+    self.products.map(&:vendor).uniq if !['types','all','vendors'].include?(@collection.handle)
   end
 
   #显示匹配当前集合，当前页面的商品总数
   def products_count
+    self.products.size
+  end
+
+  #所有商品
+  def all_products
+    @collection.products.map do |product|
+      ProductDrop.new product if product.published #只显示product published的商品
+    end.compact
+  end
+
+  #显示当前集合所含商品总数
+  def all_products_count
+    self.all_products.size
+  end
+
+  #显示集合中所有商品的标签
+  def all_tags
+    self.all_products.map(&:tags).flatten.map(&:name).uniq.join(',')
+  end
+
+  #显示集合中当前页面商品所包含的标签
+  def tags
+    self.products.map(&:tags).flatten.map(&:name).uniq.join(',')
   end
 
 end

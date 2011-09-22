@@ -55,7 +55,7 @@ describe Shop::CollectionsController do
 
   it "should show the assign type product" do
     iphone4
-    get 'types', q: '手机'
+    get 'show', handle: 'types', q: '手机'
     response.should be_success
     response.body.should have_content('手机')
     response.body.should have_content('iphone4')
@@ -63,7 +63,7 @@ describe Shop::CollectionsController do
 
   it "should show the assign vendor product" do
     iphone4
-    get 'vendors', q: 'Apple'
+    get 'show', handle: 'vendors', q: 'Apple'
     response.should be_success
     response.body.should have_content('Apple')
     response.body.should have_content('iphone4')
