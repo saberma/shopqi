@@ -1,3 +1,5 @@
+#=require "backbone/models/domain"
+#=require "./show"
 App.Views.Domain.Index = Backbone.View.extend
   el: '#main'
 

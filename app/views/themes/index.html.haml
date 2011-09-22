@@ -1,12 +1,12 @@
+=content_for :stylesheets do
+  =stylesheet_link_tag 'fileuploader'
 =content_for :javascripts do
   =javascript_include_tag 'backbone/views/themes/index'
 
 %h2#title 安装主题
 #action-links
   %ul
-    -#
-      %li#customer
-        %a(href="#") 上传一个主题
+    %li#customer=link_to '上传一个主题', '#'
     %li#themestore=link_to '查找更多的主题', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
 =render "shared/noscript"
 =render "shared/upgrade_ie"
@@ -19,15 +19,13 @@
       上传的主题将会安装到您的商店
       = succeed "." do
         %strong 但是不会自动发布
-    %form(action="/admin/themes/upload" enctype="multipart/form-data" method="post")
-      %dl
-        %dd
-          %input(name="theme[upload]" size="25" type="file" value="")
-      .group-actions
-        %input#commit.btn(name="commit" type="submit" value="上传主题")
-        或者
-        %a(href="#") 取消
-      / .group-actions
+    %dl
+      %dd
+        #file-uploader
+    .group-actions
+      或者
+      %a.cancel(href="#") 取消
+    / .group-actions
 
 #published
   %h3.heading 已发布的主题
@@ -101,7 +99,6 @@
 :javascript
   App.published_themes = new App.Collections.ShopThemes(#{@published_themes_json})
   App.unpublished_themes = new App.Collections.ShopThemes(#{@unpublished_themes_json})
-  new App.Views.Theme.Index({el: '#published', collection: App.published_themes});
-  new App.Views.Theme.Index({el: '#unpublished', collection: App.unpublished_themes});
+  new App.Views.Theme.Index();
 
   task_name = 'customize_theme';

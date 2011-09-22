@@ -1,4 +1,6 @@
 #encoding: utf-8
+require 'zip/zip'
+require 'zip/zipfilesystem'
 class ThemesController < ApplicationController
   prepend_before_filter :authenticate_user!, except: [:switch]
   layout 'admin'
@@ -27,6 +29,21 @@ class ThemesController < ApplicationController
       unpublished_themes = themes.select {|theme| !theme.published? }
       @published_themes_json = published_themes.to_json(methods: :name, except: [:created_at, :updated_at])
       @unpublished_themes_json = unpublished_themes.to_json(methods: :name, except: [:created_at, :updated_at])
+    end
+
+    def upload # 上传主题
+      path = Rails.root.join 'tmp', 'themes', shop.id.to_s
+      theme_path = File.join path, params[:qqfile]
+      FileUtils.mkdir_p path
+      File.open(theme_path, 'wb') {|f| f.write(request.body.read) }
+      Zip::ZipFile::open(theme_path) do |zf|
+        zf.each do |e|
+          fpath = File.join(path, e.name)
+          FileUtils.mkdir_p File.dirname(fpath)
+          zf.extract e, fpath
+        end
+      end
+      render nothing: true
     end
 
     def update # 发布主题

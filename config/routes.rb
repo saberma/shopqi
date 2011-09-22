@@ -237,6 +237,9 @@ Shopqi::Application.routes.draw do
       end
 
       resources :themes, only: [:index, :update, :destroy] do
+        collection do
+          post :upload     # 上传主题
+        end
         member do
           post :duplicate  # 复制主题
           post :export     # 导出主题

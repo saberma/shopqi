@@ -343,6 +343,7 @@ DEPENDENCIES
   riddle
   rspec-rails
   ruby-debug19
+  rubyzip
   seedbank
   sentient_user
   settingslogic
