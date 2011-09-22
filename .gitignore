@@ -9,6 +9,7 @@ log/*
 logfile
 tmp/*
 tmp/**/*
+wiki/**
 
 #cucumber测试生成的临时文件
 capybara-*.html

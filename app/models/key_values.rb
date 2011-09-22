@@ -19,17 +19,6 @@ module KeyValues
       {:id => 2, :name => '在线支付-财付通', :link => 'http://union.tenpay.com/mch/mch_register.shtml'},
       {:id => 3, :name => '在线支付-快钱', :link => 'http://www.99bill.com'}
     ]
-
-    attr_accessor :payment
-
-    delegate  :account, :partner, :key, :remark, :to => :payment, :allow_nil => true
-
-    def self.payments(shop)
-      all.each do |payment_type|
-        payment_type.payment = shop.payments.where(payment_type_id: payment_type.id).first
-      end
-    end
-
   end
 
   class PolicyType < KeyValues::Base

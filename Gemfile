@@ -57,6 +57,8 @@ gem 'grit' # 主题版本控制(每个商店主题都是一个git repository)
 gem 'oauth2' # 提供访问oauth provider的客户端访问接口,服务端(Provider)使用http://j.mp/nCZiUj, 代码放在 lib/oauth2
 #gem 'newrelic_rpm' # 性能监控(模板编辑器中的layout/theme.liquid也会被注入script,暂时不使用此gem)
 gem "jquery-rails"
+gem 'gollum'  #用于wiki系统
+gem 'RedCloth'
 
 group :development do
   gem 'rails3-generators'
