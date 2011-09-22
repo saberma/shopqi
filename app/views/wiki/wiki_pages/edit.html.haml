@@ -76,7 +76,7 @@
           #gollum-editor-help-wrapper
             #gollum-editor-help-content
               %p
-        %textarea#gollum-editor-body{"data-markup-lang" => "markdown", :name => "content"}
+        %textarea#gollum-editor-body{"data-markup-lang" => @format, :name => "content"}
           =@content
         #gollum-editor-edit-summary.singleline
           %label.jaws{:for => "message"} 编辑信息:
