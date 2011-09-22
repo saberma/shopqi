@@ -51,8 +51,8 @@ App.Views.Theme.Show = Backbone.View.extend
     false
 
   export: ->
-    $.post "/admin/themes/#{@model.id}/export", ->
-      msg "正将模板、附件等打包成一个压缩文件，此过程需要几分钟的时间，完成后我们会将文件发送至 ", 5000
+    $.post "/admin/themes/#{@model.id}/export", (data) ->
+      msg "正将模板、附件等打包成一个压缩文件，此过程需要几分钟的时间，完成后我们会将文件发送至 #{data}", 5000
     false
 
   save: ->

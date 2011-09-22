@@ -46,8 +46,9 @@ class ThemesController < ApplicationController
     end
 
     def export # 导出(后台任务型)
+      user = shop.users.where(admin: true).first
       Resque.enqueue(ThemeExporter, shop.id, params[:id].to_i)
-      render nothing: true
+      render text: "#{user.name} &lt;#{user.email}>"
     end
 
   end

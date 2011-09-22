@@ -1,0 +1,4 @@
+参考资源
+
+"Rails ActionMailer官方指南":http://guides.rubyonrails.org/action_mailer_basics.html
+"(ASCIIcasts) Action Mailer in Rails 3":http://asciicasts.com/episodes/206-action-mailer-in-rails-3

@@ -6,12 +6,12 @@ module ThemeExporter
   def self.perform(shop_id, theme_id) # 导出tmp/theme_exporter/shopqi/qiao-mu-ling-di-057ae9ce55.tar.gz
     shop = Shop.find(shop_id)
     theme = shop.themes.find(theme_id)
-    theme_exporter_path = Rails.root.join('tmp', 'theme_exporter', test_dir, shop.domains.myshopqi.subdomain)
-    FileUtils.mkdir_p theme_exporter_path
     repo = Grit::Repo.new theme.public_path
     sha = repo.commits(nil, 1).first.sha[0, 10]
-    file_path = File.join theme_exporter_path, "#{Pinyin.t(theme.name, '-')}-#{sha}.tar.gz"
-    repo.archive_to_file('master', nil, file_path) unless File.exists?(file_path)
+    name = "#{Pinyin.t(theme.name.gsub(' ', '-'))}-#{sha}.tar.gz"
+    tar_gz_content = repo.archive_tar_gz # 不保存为文件，直接将文件内容发送 http://j.mp/nGqbZ4
+
+    ThemeMailer.export(shop, name, tar_gz_content).deliver # 发到管理员邮箱
   end
 
 end
