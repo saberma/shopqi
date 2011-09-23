@@ -59,6 +59,10 @@ class Wiki::WikiPagesController < Wiki::AppController
     @results = wiki.pages
   end
 
+  def search
+     @results = wiki.search params[:q]
+  end
+
   protected
   def show_page_or_file(name)
     if page = wiki.page(name)

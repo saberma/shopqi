@@ -1,0 +1,10 @@
+#head
+  %h1 查询 #{@name} 的结果
+-if !@results.empty?
+  %ul
+    -@results.each do |r|
+      %li
+        =link_to r[:name],"/#{r[:name]}"
+        %span==(匹配#{r[:count]}个)
+-else
+  没有任何匹配记录

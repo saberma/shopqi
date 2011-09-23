@@ -49,10 +49,9 @@
               %h5
                 %label{:for => "searchInput"} 查询
               #searchBody.pBody
-                %form#searchform{:action => "/Special:Search"}
+                %form#searchform(action= "/search" method='get')
                   %div
-                    %input#searchInput{:accesskey => "f", :name => "search", :type => "text", :value => ""}/
-                    %input#mw-searchButton.searchButton{:name => "fulltext", :type => "submit", :value => "Search"}/
+                    %input#searchInput{:accesskey => "f", :name => "q", :type => "text", :value => ""}/
             #category-navigation
               %h3
                 %a{:href => "#"} Using Shopify

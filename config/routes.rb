@@ -17,6 +17,7 @@ Shopqi::Application.routes.draw do
     scope module: :wiki do
       get '/', to: 'wiki_pages#index', as: :wiki_pages_index
       get '/pages', to: 'wiki_pages#pages'
+      match '/search' ,to: 'wiki_pages#search'
       get '/:name', to: 'wiki_pages#show'
       match '/edit/:name', to: 'wiki_pages#edit'
       post '/update', to: 'wiki_pages#update', as: :update_page
