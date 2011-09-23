@@ -16,15 +16,8 @@ class WikiPage
       Gollum::Wiki.new(path)
     end
 
-    def create(name,format,content,commit_message)
-      begin
-        wiki.write_page(name, format, content, commit_message)
-      rescue Gollum::DuplicatePageError => e
-        "Duplicate page: #{e.message}"
-      end
-    end
-
-    def update
+    def create(name,format = :textile,content,commit_message)
+      wiki.write_page(name, format.intern, content, commit_message)
     end
   end
 

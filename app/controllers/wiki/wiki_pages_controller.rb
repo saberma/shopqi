@@ -1,24 +1,34 @@
+#encoding: utf-8
 class Wiki::WikiPagesController < Wiki::AppController
   layout 'wiki'
   expose(:wiki){ WikiPage.wiki }
 
   def index
-    @name = params[:name] || 'index'
-    @page = wiki.page('index') || wiki.page('home')
+    @page = wiki.page('home')
+    if @page
+      render text: @page.formatted_data, layout: true
+    else
+      render text: "请创建<a href='/home'>wiki首页</a>", layout: true
+    end
   end
 
   def create
-    WikiPage.create params[:name],:textile, params[:content],commit_message
-    redirect_to "/#{Gollum::Page.cname params[:name]}"
+    begin
+      WikiPage.create params[:name],params[:format], params[:content],commit_message
+      redirect_to "/#{CGI.escape(params[:name])}"
+    rescue Gollum::DuplicatePageError => e
+      @message = "页面重名了: #{e.message}"
+      render text: @message, layout: true
+    end
   end
 
   def show
-    name = params[:name] || 'index'
+    name = params[:name]
     show_page_or_file(name)
   end
 
   def edit
-    @name = params[:name] || 'index'
+    @name = params[:name]
     page = wiki.page(@name)
     @format = page.format
     @content = page.raw_data
@@ -43,6 +53,10 @@ class Wiki::WikiPagesController < Wiki::AppController
     page   = wiki.page(params[:name])
     wiki.delete_page(page, commit_message)
     redirect_to '/'
+  end
+
+  def pages
+    @results = wiki.pages
   end
 
   protected

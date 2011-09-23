@@ -1,0 +1,8 @@
+#head
+  %h1 所有wiki页面
+-if !@results.empty?
+  %ul
+    -@results.each do |r|
+      %li=link_to r.name,r.name
+-else
+  此wiki尚未创建任何页面

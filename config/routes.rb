@@ -16,6 +16,7 @@ Shopqi::Application.routes.draw do
   constraints(Domain::Wiki) do # 主题商店
     scope module: :wiki do
       get '/', to: 'wiki_pages#index', as: :wiki_pages_index
+      get '/pages', to: 'wiki_pages#pages'
       get '/:name', to: 'wiki_pages#show'
       match '/edit/:name', to: 'wiki_pages#edit'
       post '/update', to: 'wiki_pages#update', as: :update_page
