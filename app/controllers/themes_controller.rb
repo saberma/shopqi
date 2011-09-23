@@ -31,19 +31,38 @@ class ThemesController < ApplicationController
       @unpublished_themes_json = unpublished_themes.to_json(methods: :name, except: [:created_at, :updated_at])
     end
 
-    def upload # 上传主题
+    def upload # 上传主题(只检查必须的文件，解压操作转入后台运行)
       path = Rails.root.join 'tmp', 'themes', shop.id.to_s
-      theme_path = File.join path, params[:qqfile]
+      name = params[:qqfile]
+      theme_path = File.join path, "t#{DateTime.now.to_i}-#{name}"
       FileUtils.mkdir_p path
-      File.open(theme_path, 'wb') {|f| f.write(request.body.read) }
-      Zip::ZipFile::open(theme_path) do |zf|
-        zf.each do |e|
-          fpath = File.join(path, e.name)
-          FileUtils.mkdir_p File.dirname(fpath)
-          zf.extract e, fpath
+      File.open(theme_path, 'wb') {|f| f.write(request.raw_post) }
+      files = []
+      begin
+        Zip::ZipFile::open(theme_path) do |zf|
+          addition_root_dir = '' # 兼容额外的一级目录
+          root_dirs = zf.dir.entries('.')
+          addition_root_dir = root_dirs.first if root_dirs.size == 1 and !%w(layout templates).include?(root_dirs.first)
+          addition_regexp = Regexp.new("^#{addition_root_dir}/")
+          zf.each do |e|
+            name = addition_root_dir.blank? ?  e.name : e.name.sub(addition_regexp, '')
+            files << name unless name.blank? or name.end_with?('/')
+            #fpath = File.join(path, name)
+            #FileUtils.mkdir_p File.dirname(fpath)
+            #zf.extract e, fpath
+          end
         end
+      rescue
+        render json: {error_type: true} and return # 上传非zip文件，提示错误直接返回
       end
-      render nothing: true
+      missing = nil
+      ShopTheme::REQUIRED_FILES.each do |required_file|
+        next if files.include?(required_file)
+        missing = required_file
+        break
+      end
+
+      render json: {missing: missing}
     end
 
     def update # 发布主题

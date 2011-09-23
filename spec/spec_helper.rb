@@ -86,3 +86,7 @@ end
 # - These instructions should self-destruct in 10 seconds.  If they don't,
 #   feel free to delete them.
 
+# 上传文件
+def raw_attach_file(file)
+  request.env['RAW_POST_DATA'] = File.read(file) # 模拟ajax上传附件，上传后控制器通过request.raw_post获取文件内容 http://j.mp/n71jxS http://j.mp/ouLYdw
+end

@@ -118,6 +118,8 @@ end
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
+  REQUIRED_FILES = ["layout/theme.liquid","templates/index.liquid","templates/collection.liquid","templates/product.liquid","templates/cart.liquid","templates/search.liquid","templates/page.liquid","templates/blog.liquid","templates/article.liquid"]
+
   belongs_to :shop
   belongs_to_active_hash :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension

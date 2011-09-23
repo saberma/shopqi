@@ -31,6 +31,10 @@ App.Views.Theme.Index = Backbone.View.extend
         onComplete: (id, file_name, responseJSON)->
           $('#indicator').hide()
           $(document).unbind 'mousemove'
+          if responseJSON['error_type']
+            error_msg("上传失败，请确定上传的文件类型为zip压缩格式", 5000)
+          else if responseJSON['missing']
+            error_msg("上传失败，缺少 #{responseJSON['missing']}", 5000)
     $('.qq-upload-list').hide() # 不显示上传文件列表
     $(".qq-upload-button").contents().first().replaceWith("选择文件")
     $('#upload-theme').show()
