@@ -241,6 +241,7 @@ Shopqi::Application.routes.draw do
           post :upload     # 上传主题
         end
         member do
+          get  :background_queue_status  # 检查主题解压状态
           post :duplicate  # 复制主题
           post :export     # 导出主题
           begin 'settings' # 外观设置

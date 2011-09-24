@@ -10,6 +10,9 @@
     %li#themestore=link_to '查找更多的主题', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
 =render "shared/noscript"
 =render "shared/upgrade_ie"
+.import-wrapper
+  #theme-progress-bar.box2.import-in-progress.c.toggle(style='display: none') 正在处理您的主题文件…
+  #finished-dialog.box2.import-complete.c.toggle(style='display: none')
 #upload-theme.box2.ssb.clearfix(style="display:none;")
   .fl.st(style="margin-right: 15px")
     %a(href="#")=image_tag 'admin/icons/arrow-up-large.gif'
@@ -95,6 +98,13 @@
       %li
         %a(href="/admin/themes/{{id}}?theme[role]=unpublished" style="float:right;") 取消发布
       {{/if}}
+%script(id="finished-dialog-item" type="text/x-handlebars-template")
+  您的主题文件已经上传完成.
+  %br
+  %span.import-actions
+    %a(href="#{show_shop_url}?preview_theme_id={{id}}") 预览{{name}}
+    或者
+    %a(href="/admin/themes/{{id}}/assets") 进入模板编辑器页面
 
 :javascript
   App.published_themes = new App.Collections.ShopThemes(#{@published_themes_json})

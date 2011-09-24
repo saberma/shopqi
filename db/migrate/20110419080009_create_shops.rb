@@ -55,11 +55,11 @@ class CreateShops < ActiveRecord::Migration
     add_index :shop_product_vendors, :shop_id
 
     create_table :shop_themes do |t| #商店外观主题(可以支持多个主题切换)
-      t.references :shop   , comment: '所属商店'              , null: false
-      t.references :theme  , comment: '所使用的主题'          , null: false
-      t.string :name       , comment: '名称'                  , null: false, limit: 32
-      t.string :role       , comment: '角色(普通 手机 未发布)', null: false, limit: 16
-      t.string :load_preset, comment: '预设'                  , null: false, limit: 16
+      t.references :shop   , comment: '所属商店'                       , null: false
+      t.references :theme  , comment: '所使用的主题'                   , null: true # 自行上传主题时，与Theme对象不关联
+      t.string :name       , comment: '名称'                           , null: false , limit: 32
+      t.string :role       , comment: '角色(普通 手机 未发布 等待解压)', null: false , limit: 16
+      t.string :load_preset, comment: '预设'                           , null: true  , limit: 16
       t.timestamps
     end
     add_index :shop_themes         , :shop_id

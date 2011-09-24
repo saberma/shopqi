@@ -126,19 +126,21 @@ class ShopTheme < ActiveRecord::Base
 
   default_value_for :role, :main # 默认为普通主题
 
-  validates_presence_of :name, :load_preset
+  validates_presence_of :name
 
   before_validation do
     self.name ||= theme.name # 默认为主题名称(复制时直接指定)
-    self.load_preset ||= config_settings['current'] # 初始化主题设置
   end
 
   after_create do
-    repo = Grit::Repo.init public_path # 初始化为git repo
-    FileUtils.cp_r "#{app_path}/.", public_path
-    commit repo, '1'
-    config_settings['presets'][self.load_preset].each_pair do |name, value|
-      self.settings.create name: name, value: value
+    if self.theme_id # 应用某个主题，而非手动上传主题
+      repo = Grit::Repo.init public_path # 初始化为git repo
+      FileUtils.cp_r "#{app_path}/.", public_path
+      commit repo, '1'
+      self.load_preset ||= config_settings['current'] # 初始化主题设置
+      config_settings['presets'][self.load_preset].each_pair do |name, value|
+        self.settings.create name: name, value: value
+      end
     end
   end
 
@@ -147,7 +149,11 @@ class ShopTheme < ActiveRecord::Base
   end
 
   def published? # 是否已发布
-    self.role != 'unpublished'
+    %w(main mobile).include? self.role
+  end
+
+  def unpublished? # 是否未发布
+    self.role == 'unpublished'
   end
 
   def switch(new_theme, style = nil) # 切换主题
@@ -177,23 +183,23 @@ class ShopTheme < ActiveRecord::Base
     def shopqi_theme_path # app/themes/shopqi # 用于保存顾客登录等模板
       File.join Rails.root, 'app', 'themes', 'shopqi'
     end
-
-    def config_settings_path # app/themes/threadify/config/settings.html
-      File.join app_path, 'config', 'settings.html'
-    end
-
-    def config_settings_data_path # app/themes/threadify/config/settings_data.json #script/theme.rb将保证此文件存在
-      File.join app_path, 'config', 'settings_data.json'
-    end
-
-    def config_settings
-      JSON(File.read(config_settings_data_path))
-    end
   end
 
   begin # 当前theme所在PATH
     def public_path # public/s/files/1/theme/1
       File.join Rails.root, 'public', files_relative_path
+    end
+
+    def config_settings_path # public/s/files/1/config/settings.html
+      File.join public_path, 'config', 'settings.html'
+    end
+
+    def config_settings_data_path # public/s/files/1/config/settings_data.json
+      File.join public_path, 'config', 'settings_data.json'
+    end
+
+    def config_settings
+      JSON(File.read(config_settings_data_path))
     end
 
     def asset_path(asset) # public/s/files/1/theme/1/assets/checkout.css.liquid
