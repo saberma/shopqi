@@ -13,7 +13,7 @@ Shopqi::Application.routes.draw do
     post '/themes/switch', to: 'themes#switch'
   end
 
-  constraints(Domain::Wiki) do # 主题商店
+  constraints(Domain::Wiki) do # 百科文档
     scope module: :wiki do
       get '/', to: 'wiki_pages#index', as: :wiki_pages_index
       get '/pages', to: 'wiki_pages#pages'
