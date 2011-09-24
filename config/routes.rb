@@ -24,7 +24,7 @@ Shopqi::Application.routes.draw do
       get '/edit/:name', to: 'wiki_pages#edit'
       post '/compare/:name', to: 'wiki_pages#compare'
       get '/compare/:name/:sha1/:sha2', to: 'wiki_pages#compare_versions'
-      get '/revert/:name/:sha1/:sha2', to: 'wiki_pages#revert'
+      post '/revert/:name/:sha1/:sha2', to: 'wiki_pages#revert'
       get '/:name/:sha', to: 'wiki_pages#show'
       post '/update', to: 'wiki_pages#update', as: :update_page
       post '/preview', to: 'wiki_pages#preview'

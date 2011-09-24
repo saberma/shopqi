@@ -32,7 +32,7 @@ class Wiki::WikiPagesController < Wiki::AppController
     @name = params[:name]
     if page = wiki.page(@name)
       @format = page.format
-      @content = page.raw_data
+      @content = page.raw_data.force_encoding('utf-8')
     else
       render text: '没有找到对应的页面',layout: true
     end
@@ -51,15 +51,10 @@ class Wiki::WikiPagesController < Wiki::AppController
   def compare_versions
     @name     = params[:name]
     @page     = wiki.page(@name)
-    diffs     = wiki.repo.diff(params[:sha1], params[:sha2], @page.path)
+    @sha1,@sha2 = params[:sha1],params[:sha2]
+    diffs     = wiki.repo.diff(@sha1, @sha2, @page.path)
     @diff     = diffs.first
-    @lines = []
-    @diff.diff.split("\n")[2..-1].each_with_index do |line, line_index|
-      @lines << { :line  => line,
-                 :class => line_class(line),
-                 :ldln  => left_diff_line_number(0, line),
-                 :rdln  => right_diff_line_number(0, line) }
-    end if @diff
+    @lines    = lines_json(@diff)
     render action: 'compare'
   end
 
@@ -111,6 +106,24 @@ class Wiki::WikiPagesController < Wiki::AppController
     end
   end
 
+  def revert
+    @name = params[:name]
+    @page = wiki.page(@name)
+    @sha1 = params[:sha1]
+    @sha2 = params[:sha2]
+    if wiki.revert_page(@page, @sha1, @sha2, commit_message)
+      redirect_to "/#{CGI.escape(@name)}"
+    else
+      @sha2, @sha1 = @sha1, "#{@sha1}^" if !@sha2
+      @versions = [@sha1, @sha2]
+      diffs     = wiki.repo.diff(@versions.first, @versions.last, @page.path)
+      @diff     = diffs.first
+      @lines    = lines_json(@diff)
+      @message  = "The patch does not apply."
+      render action: :compare
+    end
+  end
+
   protected
   def show_page_or_file(name,sha)
     if sha
@@ -134,6 +147,7 @@ class Wiki::WikiPagesController < Wiki::AppController
       end
     end
   end
+
 
   private
 
@@ -191,5 +205,16 @@ class Wiki::WikiPagesController < Wiki::AppController
       @current_line_number = @right_diff_line_number - 1
     end
     ret
+  end
+
+  def lines_json(diff_value)
+    lines = []
+    diff_value.diff.split("\n")[2..-1].each_with_index do |line, line_index|
+      lines << { :line  => line,
+                  :class => line_class(line),
+                  :ldln  => left_diff_line_number(0, line),
+                  :rdln  => right_diff_line_number(0, line) }
+    end if diff_value
+    lines
   end
 end
