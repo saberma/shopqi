@@ -1,12 +1,4 @@
--content_for :gollum do
-  =stylesheet_link_tag 'gollum/gollum'
-  =stylesheet_link_tag 'gollum/editor'
-  =stylesheet_link_tag 'gollum/dialog'
-  =stylesheet_link_tag 'gollum/template'
-  =javascript_include_tag 'jquery'
-  =javascript_include_tag 'gollum','gollum.dialog','gollum.placeholder','editor/gollum.editor'
-/[if IE 7]
-  <link rel="stylesheet" type="text/css" href="/css/ie7.css" media="all">
+-use_gollum
 %h1
   编辑
   %strong=@name

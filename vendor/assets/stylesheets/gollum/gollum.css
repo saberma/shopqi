@@ -6,7 +6,6 @@
 /* @section core */
 body, html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10px; /* -> 1em */
   margin: 0;
   padding: 0;
 }
@@ -52,6 +51,7 @@ a:hover, a:visited {
 #wiki-content {
   height: 1%;
   overflow: visible;
+  font-size: 10px;
 }
 
   #wiki-content .wrap {
@@ -261,7 +261,6 @@ a:hover, a:visited {
 
   #wiki-history table tr td {
     border: 1px solid #c0dce9;
-    font-size: 1.2em;
     line-height: 1.6em;
     margin: 0;
     padding: 0.3em 0.7em;
@@ -416,6 +415,8 @@ a:hover, a:visited {
   .compare .data pre {
     margin: 0;
     padding: 0;
+    border: 0px;
+    font-size: 14px;
   }
 
   .compare .data pre div {
@@ -424,7 +425,6 @@ a:hover, a:visited {
 
   .compare .data tr td {
     font-family: "Consolas", "Monaco", "Andale Mono", "Courier New", monospace;
-    font-size: 1.2em;
     line-height: 1.8em;
     margin: 0;
     padding: 0;

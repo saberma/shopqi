@@ -10,7 +10,9 @@
     %link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon")/
     %link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
     %title ShopQi Wiki
-    = stylesheet_link_tag "resources-nav", "wiki"
+    /[if IE 7]
+      =stylesheet_link_tag 'gollum/ie7'
+    = stylesheet_link_tag "resources-nav", "wiki", 'gollum/editor','gollum/gollum'
     =yield :gollum
     =csrf_meta_tag
   %body
@@ -40,7 +42,7 @@
         %ul.user-options
           %li#pt-anonlogin=link_to '删除',"/delete/#{@name}",onclick: "if (confirm('您确定要删除此页面?')){return true}else{ return false }"
         %ul.user-options
-          %li#pt-anonlogin=link_to '比较',"/delete/#{@name}"
+          %li#pt-anonlogin=link_to '历史',"/history/#{@name}"
     #wrapper
       #container.clearfix
         #sidebar.col-3
