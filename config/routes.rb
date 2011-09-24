@@ -21,6 +21,7 @@ Shopqi::Application.routes.draw do
       match '/search' ,to: 'wiki_pages#search'
       get '/history/:name', to: 'wiki_pages#history'
       get '/:name', to: 'wiki_pages#show'
+      post '/destroy/:name', to: 'wiki_pages#destroy'
       get '/edit/:name', to: 'wiki_pages#edit'
       post '/compare/:name', to: 'wiki_pages#compare'
       get '/compare/:name/:sha1/:sha2', to: 'wiki_pages#compare_versions'

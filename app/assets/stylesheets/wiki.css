@@ -19,7 +19,7 @@ body{font-family:helvetica, arial, serif; font-size:14px; background:#FFF url('.
 #header #pt-anonuserpage, #header #pt-anontalk { display:none;}
 
 
-#content{color:#292929; line-height:1.5em;  margin:0 0 34px 0;}
+#content{color:#292929;  margin:0 0 34px 0;}
 #content h1, #content h2, #content h3, #content h4, #content h5,#content h6 {  padding:0 0 2px 0; }
 #content h2,#content h3, #content h4, #content h5, #content h6 { margin-top:25px; font-weight:normal;  }
 
@@ -114,7 +114,7 @@ blockquote{font-family:Times,"Times New Roman",serif;font-style:italic;}
 .margin-bottom {margin-bottom:10px; }
 
 code{background-color:#f9f9f9;}
-pre{padding:1em;border:1px dashed #c9c9c9;color:black;background-color:#f9f9f9;margin-bottom:20px; display:block;white-space:pre-wrap; -moz-border-radius:2px;}
+pre{border:1px dashed #c9c9c9;color:black;background-color:#f9f9f9;margin-bottom:20px; display:block;white-space:pre-wrap; -moz-border-radius:2px;}
 pre.output { background:#eee; margin-top:-21px;}
 
 

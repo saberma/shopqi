@@ -30,9 +30,7 @@
     / .resources-nav
     #header.clearfix
       .clearfix
-        %h1
-          %a{:href => "http://wiki.shopify.com"}
-            =image_tag 'skins/logo-documentation.png'
+        %h1=link_to image_tag('skins/logo-documentation.png'),"#{Setting.wiki_url}"
         %ul.user-options
           %li#pt-anonlogin=link_to '登录','#'
         %ul.user-options
@@ -40,7 +38,8 @@
         %ul.user-options
           %li#pt-anonlogin=link_to '编辑',"/edit/#{@name}"
         %ul.user-options
-          %li#pt-anonlogin=link_to '删除',"/delete/#{@name}",onclick: "if (confirm('您确定要删除此页面?')){return true}else{ return false }"
+          %form(action="/destroy/#{@name}" method="post")
+            %li#pt-anonlogin=link_to '删除',"javascript:;",onclick: "if (confirm('您确定要删除此页面?')){$(this).closest('form').submit();return true}else{ return false }"
         %ul.user-options
           %li#pt-anonlogin=link_to '历史',"/history/#{@name}"
     #wrapper

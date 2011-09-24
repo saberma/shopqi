@@ -76,7 +76,7 @@ class Wiki::WikiPagesController < Wiki::AppController
   def destroy
     page   = wiki.page(params[:name])
     wiki.delete_page(page, commit_message)
-    redirect_to '/'
+    redirect_to '/pages'
   end
 
   def pages
