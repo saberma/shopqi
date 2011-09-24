@@ -1,0 +1,90 @@
+-content_for :gollum do
+  =stylesheet_link_tag 'gollum/gollum'
+  =stylesheet_link_tag 'gollum/editor'
+  =stylesheet_link_tag 'gollum/dialog'
+  =stylesheet_link_tag 'gollum/template'
+  =javascript_include_tag 'jquery'
+  =javascript_include_tag 'gollum','gollum.dialog','gollum.placeholder','editor/gollum.editor'
+/[if IE 7]
+  <link rel="stylesheet" type="text/css" href="/css/ie7.css" media="all">
+%h1
+  新增页面
+#wiki-content
+  #gollum-editor.create.edit
+    %form{:action => "#{wiki_pages_path}", :method => "post", :name => "gollum-editor"}
+      %fieldset#gollum-editor-fields
+        #gollum-editor-title-field.singleline
+          %input#gollum-editor-page-title{:name => "name",:value => @name }/
+        #gollum-editor-function-bar
+          #gollum-editor-function-buttons
+            %a#function-bold.function-button{:href => "#"}
+              %span Bold
+            %a#function-italic.function-button{:href => "#"}
+              %span Italic
+            %a#function-code.function-button{:href => "#"}
+              %span Code
+            %span.function-divider &nbsp;
+            %a#function-ul.function-button{:href => "#"}
+              %span Unordered List
+            %a#function-ol.function-button{:href => "#"}
+              %span Ordered List
+            %a#function-blockquote.function-button{:href => "#"}
+              %span Blockquote
+            %a#function-hr.function-button{:href => "#"}
+              %span Horizontal Rule
+            %span.function-divider &nbsp;
+            %a#function-h1.function-button{:href => "#"}
+              %span h1
+            %a#function-h2.function-button{:href => "#"}
+              %span h2
+            %a#function-h3.function-button{:href => "#"}
+              %span h3
+            %span.function-divider &nbsp;
+            %a#function-link.function-button{:href => "#"}
+              %span Link
+            %a#function-image.function-button{:href => "#"}
+              %span Image
+            %span.function-divider &nbsp;
+            %a#function-help.function-button{:href => "#"}
+              %span Help
+          #gollum-editor-format-selector
+            =select_tag 'format',options_for_select(['textile','markdown'],'textile')
+            %label{:for => "format"} 编辑模式
+        #gollum-editor-help.jaws
+          %ul#gollum-editor-help-parent
+            %li
+              %a.selected{:href => "javascript:void(0);"} Help 1
+            %li
+              %a{:href => "javascript:void(0);"} Help 1
+            %li
+              %a{:href => "javascript:void(0);"} Help 1
+          %ul#gollum-editor-help-list
+            %li
+              %a{:href => "javascript:void(0);"} Help 2
+            %li
+              %a{:href => "javascript:void(0);"} Help 3
+            %li
+              %a{:href => "javascript:void(0);"} Help 4
+            %li
+              %a{:href => "javascript:void(0);"} Help 5
+            %li
+              %a{:href => "javascript:void(0);"} Help 6
+            %li
+              %a{:href => "javascript:void(0);"} Help 7
+            %li
+              %a{:href => "javascript:void(0);"} Help 8
+          #gollum-editor-help-wrapper
+            #gollum-editor-help-content
+              %p
+        %textarea#gollum-editor-body{"data-markup-lang" => "textile", :name => "content"}
+        #gollum-editor-edit-summary.singleline
+          %label.jaws{:for => "message"} 编辑信息:
+          %input#gollum-editor-message-field{:name => "message", :type => "text", :value => "关于改变的信息(可选的)"}/
+        %span.jaws
+          %br/
+        %input#gollum-editor-submit{:title => "保存当前改变", :type => "submit", :value => "保存"}/
+        %a#gollum-editor-preview.minibutton{:href => "javascript:void(0)", :title => "Preview this Page"} 预览
+:javascript
+  jQuery(document).ready(function() {
+    $.GollumEditor();
+  });

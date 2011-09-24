@@ -1,0 +1,64 @@
+!!!
+%html(lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml")
+  %head
+    %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")/
+    %meta(content="no" http-equiv="imagetoolbar")/
+    %meta(content="true" name="MSSmartTagsPreventParsing")/
+    %meta(content="Hosted e-commerce with ShopQi the easy way to start your own online store." name="description")/
+    %meta(content="store shop ecommerce e-commerce sell online selling goods shopping cart design easy" name="keywords")/
+    %meta(content="width=device-width initial-scale=1.0" name="viewport")/
+    %link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon")/
+    %link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
+    %title ShopQi Wiki
+    = stylesheet_link_tag "resources-nav", "wiki"
+    =yield :gollum
+    =csrf_meta_tag
+  %body
+    .resources-nav
+      %ul
+        %li.logo
+          %a{:href => "http://www.shopqi.com/"}
+            =image_tag 'resources-nav/logo-shopqi.png'
+        %li=link_to '主题',"#{Setting.theme_store_url}"
+        %li=link_to '支持','#'
+        -#
+          %li=link_to '论坛','#'
+        %li.current
+          =link_to '百科',"#{Setting.wiki_url}"
+    / .resources-nav
+    #header.clearfix
+      .clearfix
+        %h1
+          %a{:href => "http://wiki.shopify.com"}
+            =image_tag 'skins/logo-documentation.png'
+        %ul.user-options
+          %li#pt-anonlogin=link_to '登录','#'
+        %ul.user-options
+          %li#pt-anonlogin=link_to '新增', new_wiki_page_path
+        %ul.user-options
+          %li#pt-anonlogin=link_to '编辑',"/edit/#{@name}"
+        %ul.user-options
+          %li#pt-anonlogin=link_to '删除',"/delete/#{@name}",onclick: "if (confirm('您确定要删除此页面?')){return true}else{ return false }"
+        %ul.user-options
+          %li#pt-anonlogin=link_to '比较',"/delete/#{@name}"
+    #wrapper
+      #container.clearfix
+        #sidebar.col-3
+          .sidebar-wrapper
+            #p-search.portlet
+              %h5
+                %label{:for => "searchInput"} 查询
+              #searchBody.pBody
+                %form#searchform(action= "/search" method='get')
+                  %div
+                    %input#searchInput{:accesskey => "f", :name => "q", :type => "text", :value => ""}/
+            #category-navigation
+              %h3
+                %a{:href => "#"} Using Shopify
+              #using-shopify.drop
+                %h4 Intro to Shopify
+                %ul
+                  %li
+                    %a{:href => "http://wiki.shopify.com/Getting_Started", :title => "Getting Started - Shopify Wiki"} Getting Started
+        #content.col-9.last
+          =yield
