@@ -199,6 +199,7 @@
     %a.cancel(href="#") 关闭
 
 :javascript
+  var required_files = #{ShopTheme::REQUIRED_FILES};
   var theme_id = #{theme.id};
   var assets_json = #{@assets_json};
   new App.Views.Asset.Index.Index({data: assets_json});

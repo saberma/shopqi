@@ -68,3 +68,6 @@ public/s/files
 
 #全文检索CoreSeek(sphinx)
 db/sphinx
+
+#redis
+dump.rdb

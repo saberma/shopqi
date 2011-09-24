@@ -1,33 +1,34 @@
+=content_for :stylesheets do
+  =stylesheet_link_tag 'fileuploader'
 =content_for :javascripts do
   =javascript_include_tag 'backbone/views/themes/index'
 
 %h2#title 安装主题
 #action-links
   %ul
-    -#
-      %li#customer
-        %a(href="#") 上传一个主题
+    %li#customer=link_to '上传一个主题', '#'
     %li#themestore=link_to '查找更多的主题', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
 =render "shared/noscript"
 =render "shared/upgrade_ie"
+.import-wrapper
+  #theme-progress-bar.box2.import-in-progress.c.toggle(style='display: none') 正在处理您的主题文件…
+  #finished-dialog.box2.import-complete.c.toggle(style='display: none')
 #upload-theme.box2.ssb.clearfix(style="display:none;")
   .fl.st(style="margin-right: 15px")
     %a(href="#")=image_tag 'admin/icons/arrow-up-large.gif'
   %h3 上传一个新的主题
   %div
     %p.note
-      上传的主题将会安装到您的商店
+      请先将所有主题文件打包压缩为一个zip文件；上传的主题将会安装到您的商店
       = succeed "." do
         %strong 但是不会自动发布
-    %form(action="/admin/themes/upload" enctype="multipart/form-data" method="post")
-      %dl
-        %dd
-          %input(name="theme[upload]" size="25" type="file" value="")
-      .group-actions
-        %input#commit.btn(name="commit" type="submit" value="上传主题")
-        或者
-        %a(href="#") 取消
-      / .group-actions
+    %dl
+      %dd
+        #file-uploader
+    .group-actions
+      或者
+      %a.cancel(href="#") 取消
+    / .group-actions
 
 #published
   %h3.heading 已发布的主题
@@ -97,11 +98,17 @@
       %li
         %a(href="/admin/themes/{{id}}?theme[role]=unpublished" style="float:right;") 取消发布
       {{/if}}
+%script(id="finished-dialog-item" type="text/x-handlebars-template")
+  您的主题文件已经上传完成.
+  %br
+  %span.import-actions
+    %a(href="#{show_shop_url}?preview_theme_id={{id}}") 预览 {{name}}
+    或者
+    %a(href="/admin/themes/{{id}}/assets") 进入模板编辑器页面
 
 :javascript
   App.published_themes = new App.Collections.ShopThemes(#{@published_themes_json})
   App.unpublished_themes = new App.Collections.ShopThemes(#{@unpublished_themes_json})
-  new App.Views.Theme.Index({el: '#published', collection: App.published_themes});
-  new App.Views.Theme.Index({el: '#unpublished', collection: App.unpublished_themes});
+  new App.Views.Theme.Index();
 
   task_name = 'customize_theme';

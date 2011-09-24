@@ -57,6 +57,7 @@ gem 'grit', git: 'git://github.com/mojombo/grit.git' # 主题版本控制(每个
 gem 'oauth2' # 提供访问oauth provider的客户端访问接口,服务端(Provider)使用http://j.mp/nCZiUj, 代码放在 lib/oauth2
 #gem 'newrelic_rpm' # 性能监控(模板编辑器中的layout/theme.liquid也会被注入script,暂时不使用此gem)
 gem "jquery-rails"
+gem 'rubyzip' # 解压缩用户上传的主题zip文件
 gem 'gollum', git: 'git://github.com/github/gollum.git'  #用于wiki系统
 gem 'RedCloth'
 

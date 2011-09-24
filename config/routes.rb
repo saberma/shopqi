@@ -13,7 +13,7 @@ Shopqi::Application.routes.draw do
     post '/themes/switch', to: 'themes#switch'
   end
 
-  constraints(Domain::Wiki) do # 主题商店
+  constraints(Domain::Wiki) do # 百科文档
     scope module: :wiki do
       get '/', to: 'wiki_pages#index', as: :wiki_pages_index
       resources :wiki_pages, only:[:new,:create]
@@ -256,7 +256,11 @@ Shopqi::Application.routes.draw do
       end
 
       resources :themes, only: [:index, :update, :destroy] do
+        collection do
+          post :upload     # 上传主题
+        end
         member do
+          get  :background_queue_status  # 检查主题解压状态
           post :duplicate  # 复制主题
           post :export     # 导出主题
           begin 'settings' # 外观设置
