@@ -6,17 +6,21 @@ describe "Themes", js: true do
 
   include_context 'login admin'
 
-  let(:shop) { user_admin.shop }
+  let(:shop) do
+    model = user_admin.shop
+    model.update_attributes password_enabled: false
+    model
+  end
 
   describe "GET /themes", focus: true do # 主题管理
 
-    before(:each) do
-      visit themes_path
-    end
-
     describe "published-themes" do
 
-      it "should be index", current: true do
+      before(:each) do
+        visit themes_path
+      end
+
+      it "should be index" do
         within '#published-themes' do
           page.should have_content(shop.theme.name)
           page.should have_content('已经发布为普通主题')
@@ -31,35 +35,43 @@ describe "Themes", js: true do
         within '#published-themes' do
           click_on '外观设置'
         end
-        find('#title').should have_content('主题外观配置')
+        sleep 3 # 延时处理
+        page.should have_content('主题外观配置')
         visit themes_path
         within '#published-themes' do
           click_on '模板编辑器'
         end
-        find('#title').should have_content('模板编辑器')
+        sleep 3 # 延时处理
+        page.should have_content('没有选择文件')
       end
 
       it "should be duplicate" do # 复制主题
-        within '#unpublished-themes' do
+        within '#unpublished-themes > ul' do
           page.should have_no_xpath('./li[1]')
         end
         within '#published-themes' do
           click_on '复制主题'
         end
-        within '#unpublished-themes' do
-          within './li[1]' do
+        within '#unpublished-themes > ul' do
+          page.should have_xpath('./li[1]')
+          within :xpath, './li[1]' do
             page.should have_content("副本 #{shop.theme.name}")
-            page.should have_content('已经发布为普通主题')
+            page.should have_no_content('已经发布为普通主题')
           end
         end
       end
+
+      #it "should be export" do # 导出主题(需要结合邮件附件，暂不测试)
+      #end
 
     end
 
     describe "unpublished-themes" do
 
       before(:each) do
-        @theme = shop.theme.switch(Theme.find_by_handle('woodland')) # 加一个未发布的主题
+        @theme = shop.theme
+        @new_theme = @theme.switch(Theme.find_by_handle('woodland')) # 加一个未发布的主题
+        visit themes_path
       end
 
       it "should be index" do
@@ -68,6 +80,49 @@ describe "Themes", js: true do
           page.should have_no_css('.heading .main') # 无role提示
           page.should have_css('.main-actions .preview') # 有预览、删除按钮
           page.should have_css('.main-actions .delete-theme')
+        end
+      end
+
+      it "should be preview" do # 预览
+        within '#unpublished-themes' do
+          find('.preview a').click
+        end
+        sleep 3 # 延时处理
+        page.should have_content("主题预览: #{@theme.name}")
+      end
+
+      it "should be destroy" do # 删除
+        within '#unpublished-themes' do
+          page.execute_script("window.confirm = function(msg) { return true; }")
+          find('.delete-theme a').click
+        end
+        page.should have_content('删除成功!')
+        within '#unpublished-themes > ul' do
+          page.should have_no_xpath('./li[1]')
+        end
+      end
+
+    end
+
+    describe "upload" do # 上传
+
+      before(:each) do
+        visit themes_path
+      end
+
+      it "should be upload" do # 删除
+        with_resque do
+          click_on '上传一个主题'
+          attach_file 'file', Rails.root.join('spec', 'factories', 'data', 'themes', 'woodland.zip')
+          page.should have_content('正在处理您的主题文件')
+          sleep 5 # 延时处理
+          page.should have_content('您的主题文件已经上传完成')
+          within '#unpublished-themes > ul' do
+            page.should have_xpath('./li[1]')
+            within :xpath, './li[1]' do
+              page.should have_content('woodland')
+            end
+          end
         end
       end
 
