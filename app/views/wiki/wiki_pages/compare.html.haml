@@ -1,0 +1,11 @@
+%form(action="/revert/#{@name}/#{@sha1}/#{@sha2}" method="post")
+  =submit_tag '回退'
+.compare
+  #compare-content.data.highlight
+    %table(cellpadding="0" cellspacing="0")
+      -@lines.each do |line|
+        %tr
+          %td.line_numbers=line[:ldln]
+          %td.line_numbers=line[:rdln]
+          %td
+            %pre(class="#{line[:class]}")=line[:line].force_encoding('UTF-8')

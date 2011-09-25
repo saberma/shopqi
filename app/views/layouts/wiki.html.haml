@@ -10,7 +10,9 @@
     %link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon")/
     %link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
     %title ShopQi Wiki
-    = stylesheet_link_tag "resources-nav", "wiki"
+    /[if IE 7]
+      =stylesheet_link_tag 'gollum/ie7'
+    = stylesheet_link_tag "resources-nav", "wiki", 'gollum/editor','gollum/gollum'
     =yield :gollum
     =csrf_meta_tag
   %body
@@ -28,19 +30,21 @@
     / .resources-nav
     #header.clearfix
       .clearfix
-        %h1
-          %a{:href => "http://wiki.shopify.com"}
-            =image_tag 'skins/logo-documentation.png'
+        %h1=link_to image_tag('skins/logo-documentation.png'),"#{Setting.wiki_url}"
         %ul.user-options
           %li#pt-anonlogin=link_to '登录','#'
         %ul.user-options
+          %li#pt-anonlogin=link_to '页面列表', '/pages'
+        %ul.user-options
           %li#pt-anonlogin=link_to '新增', new_wiki_page_path
-        %ul.user-options
-          %li#pt-anonlogin=link_to '编辑',"/edit/#{@name}"
-        %ul.user-options
-          %li#pt-anonlogin=link_to '删除',"/delete/#{@name}",onclick: "if (confirm('您确定要删除此页面?')){return true}else{ return false }"
-        %ul.user-options
-          %li#pt-anonlogin=link_to '比较',"/delete/#{@name}"
+        -unless controller.action_name == 'new' || controller.action_name == 'preview'
+          %ul.user-options
+            %li#pt-anonlogin=link_to '编辑',"/edit/#{@name}"
+          %ul.user-options
+            %form(action="/destroy/#{@name}" method="post")
+              %li#pt-anonlogin=link_to '删除',"javascript:;",onclick: "if (confirm('您确定要删除此页面?')){$(this).closest('form').submit();return true}else{ return false }"
+          %ul.user-options
+            %li#pt-anonlogin=link_to '历史',"/history/#{@name}"
     #wrapper
       #container.clearfix
         #sidebar.col-3
@@ -53,12 +57,12 @@
                   %div
                     %input#searchInput{:accesskey => "f", :name => "q", :type => "text", :value => ""}/
             #category-navigation
-              %h3
-                %a{:href => "#"} Using Shopify
-              #using-shopify.drop
-                %h4 Intro to Shopify
-                %ul
-                  %li
-                    %a{:href => "http://wiki.shopify.com/Getting_Started", :title => "Getting Started - Shopify Wiki"} Getting Started
+              =raw sidebar.formatted_data
         #content.col-9.last
           =yield
+:javascript
+  $(document).ready(function(){
+    $('#category-navigation h3').click(function(){
+      $(this).next().toggle();
+    })
+  })

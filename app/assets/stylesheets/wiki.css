@@ -1,5 +1,3 @@
-
-
 * { margin:0; padding:0 ;}
 body{font-family:helvetica, arial, serif; font-size:14px; background:#FFF url('../assets/skins/bg-body.gif') repeat-x  top;color:#000;margin:0;padding:0px 0 0 0;}
 
@@ -7,7 +5,7 @@ body{font-family:helvetica, arial, serif; font-size:14px; background:#FFF url('.
 
 #container { margin:0 0 65px 0;}
 
-#header { padding:0 0 16px 0; margin:0 auto; width:925px;  margin-bottom:5px;}
+#header { padding:0 0 16px 0; margin:0 auto; width:925px;  margin-bottom:5px; font-size: 14px}
 #header h1 { float:left;  }
 #header ul.main-navigation { margin:0px 0 0 0; padding:0; clear:both; }
 #header ul.main-navigation li { margin:0 5px 0;  float:left; list-style:none;    }
@@ -21,7 +19,7 @@ body{font-family:helvetica, arial, serif; font-size:14px; background:#FFF url('.
 #header #pt-anonuserpage, #header #pt-anontalk { display:none;}
 
 
-#content{color:#292929; line-height:1.5em;  margin:0 0 34px 0;}
+#content{color:#292929;  margin:0 0 34px 0;}
 #content h1, #content h2, #content h3, #content h4, #content h5,#content h6 {  padding:0 0 2px 0; }
 #content h2,#content h3, #content h4, #content h5, #content h6 { margin-top:25px; font-weight:normal;  }
 
@@ -116,7 +114,7 @@ blockquote{font-family:Times,"Times New Roman",serif;font-style:italic;}
 .margin-bottom {margin-bottom:10px; }
 
 code{background-color:#f9f9f9;}
-pre{padding:1em;border:1px dashed #c9c9c9;color:black;background-color:#f9f9f9;line-height:1.3em; margin-bottom:20px; display:block;white-space:pre-wrap; -moz-border-radius:2px;}
+pre{border:1px dashed #c9c9c9;color:black;background-color:#f9f9f9;margin-bottom:20px; display:block;white-space:pre-wrap; -moz-border-radius:2px;}
 pre.output { background:#eee; margin-top:-21px;}
 
 
@@ -569,4 +567,5 @@ ul.homepage-resources li.forums { background:url('../assets/icon-home-forums.png
 h1[title="Main Page"] {  display:none;} /*Removes H1 from the home page*/
 
 .official-shopqi-logos img { border:10px solid #eee; background: url('../assets/bg-transparent.png') repeat; padding:20px;}
+.hide{display:none}
 

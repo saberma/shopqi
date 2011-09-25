@@ -16,13 +16,19 @@ Shopqi::Application.routes.draw do
   constraints(Domain::Wiki) do # 百科文档
     scope module: :wiki do
       get '/', to: 'wiki_pages#index', as: :wiki_pages_index
+      resources :wiki_pages, only:[:new,:create]
       get '/pages', to: 'wiki_pages#pages'
       match '/search' ,to: 'wiki_pages#search'
+      get '/history/:name', to: 'wiki_pages#history'
       get '/:name', to: 'wiki_pages#show'
-      match '/edit/:name', to: 'wiki_pages#edit'
+      post '/destroy/:name', to: 'wiki_pages#destroy'
+      get '/edit/:name', to: 'wiki_pages#edit'
+      post '/compare/:name', to: 'wiki_pages#compare'
+      get '/compare/:name/:sha1/:sha2', to: 'wiki_pages#compare_versions'
+      post '/revert/:name/:sha1/:sha2', to: 'wiki_pages#revert'
+      get '/:name/:sha', to: 'wiki_pages#show'
       post '/update', to: 'wiki_pages#update', as: :update_page
       post '/preview', to: 'wiki_pages#preview'
-      resources :wiki_pages
     end
   end
 
