@@ -8,6 +8,73 @@ describe "Themes", js: true do
 
   let(:shop) { user_admin.shop }
 
+  describe "GET /themes", focus: true do # 主题管理
+
+    before(:each) do
+      visit themes_path
+    end
+
+    describe "published-themes" do
+
+      it "should be index", current: true do
+        within '#published-themes' do
+          page.should have_content(shop.theme.name)
+          page.should have_content('已经发布为普通主题')
+          find('.heading .main').should have_content('普通')
+          page.should have_no_css('.main-actions .preview') # 无预览、删除按钮
+          page.should have_no_css('.main-actions .delete-theme')
+          page.should have_no_css('.publish-main') # 无发布主题按钮
+        end
+      end
+
+      it "should go to config and template" do
+        within '#published-themes' do
+          click_on '外观设置'
+        end
+        find('#title').should have_content('主题外观配置')
+        visit themes_path
+        within '#published-themes' do
+          click_on '模板编辑器'
+        end
+        find('#title').should have_content('模板编辑器')
+      end
+
+      it "should be duplicate" do # 复制主题
+        within '#unpublished-themes' do
+          page.should have_no_xpath('./li[1]')
+        end
+        within '#published-themes' do
+          click_on '复制主题'
+        end
+        within '#unpublished-themes' do
+          within './li[1]' do
+            page.should have_content("副本 #{shop.theme.name}")
+            page.should have_content('已经发布为普通主题')
+          end
+        end
+      end
+
+    end
+
+    describe "unpublished-themes" do
+
+      before(:each) do
+        @theme = shop.theme.switch(Theme.find_by_handle('woodland')) # 加一个未发布的主题
+      end
+
+      it "should be index" do
+        within '#unpublished-themes' do
+          page.should have_content(@theme.name)
+          page.should have_no_css('.heading .main') # 无role提示
+          page.should have_css('.main-actions .preview') # 有预览、删除按钮
+          page.should have_css('.main-actions .delete-theme')
+        end
+      end
+
+    end
+
+  end
+
   describe "GET /settings" do # theme = Threadify
 
     before(:each) do
