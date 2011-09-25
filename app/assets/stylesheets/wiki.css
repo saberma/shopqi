@@ -567,4 +567,5 @@ ul.homepage-resources li.forums { background:url('../assets/icon-home-forums.png
 h1[title="Main Page"] {  display:none;} /*Removes H1 from the home page*/
 
 .official-shopqi-logos img { border:10px solid #eee; background: url('../assets/bg-transparent.png') repeat; padding:20px;}
+.hide{display:none}
 

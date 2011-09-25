@@ -2,6 +2,7 @@
 class Wiki::WikiPagesController < Wiki::AppController
   layout 'wiki'
   expose(:wiki){ WikiPage.wiki }
+  expose(:sidebar){ wiki.page('sidebar') if wiki.page('sidebar')}
 
   def index
     @page = wiki.page('home')
@@ -143,7 +144,8 @@ class Wiki::WikiPagesController < Wiki::AppController
         render :show
       else
         @name = params[:name]
-        render :new
+        self.action_name = 'new'
+        render action: :new
       end
     end
   end
