@@ -1,7 +1,7 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.1.rc1'
 
 ##### 实体相关 #####
 gem 'pg'
