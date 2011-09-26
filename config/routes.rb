@@ -2,6 +2,10 @@
 #include Rails.application.routes.url_helpers #在console中调用orders_path等
 Shopqi::Application.routes.draw do
 
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   begin 'oauth2'
     get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
     post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
