@@ -6,6 +6,7 @@ gem 'rails', '3.1.1.rc1'
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise'
+gem 'activeadmin'
 
 #use unicorn as web server
 gem 'unicorn'
@@ -98,5 +99,6 @@ end
 # rake assets:precompile 部署到生产环境下执行
 group :assets do
   gem 'coffee-rails'
+  gem 'sass-rails'
   gem 'uglifier'
 end
