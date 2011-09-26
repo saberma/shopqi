@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Shop::SessionsController < Shop::AppController
   #prepend_before_filter :require_no_authentication, :only => [:new, :create ] #去掉此句，以便用户能更改账号付账
-  before_filter :get_host, only: :create
+  #before_filter :get_host, only: :create
   include Devise::Controllers::InternalHelpers
   layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
@@ -67,10 +67,10 @@ class Shop::SessionsController < Shop::AppController
     { :methods => methods, :only => [:password] }
   end
 
-  private
-  def get_host
-    params[:customer] ||= {}
-    params[:customer][:host] = request.host
-  end
+  #private
+  #def get_host
+  #  params[:customer] ||= {}
+  #  params[:customer][:host] = request.host
+  #end
 end
 
