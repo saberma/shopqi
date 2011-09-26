@@ -1,5 +1,5 @@
 #encoding: utf-8
-class FulfillmentsController < ApplicationController
+class FulfillmentsController < AppController
   prepend_before_filter :authenticate_user!
   layout nil
 

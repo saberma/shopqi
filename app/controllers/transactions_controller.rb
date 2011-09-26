@@ -1,5 +1,5 @@
 #encoding: utf-8
-class TransactionsController < ApplicationController
+class TransactionsController < AppController
   prepend_before_filter :authenticate_user!
   layout nil
 

@@ -1,4 +1,4 @@
-class AccountController < ApplicationController
+class AccountController < AppController
   prepend_before_filter :authenticate_user!
   layout :determine_layout
 

@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class CommentsController < AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

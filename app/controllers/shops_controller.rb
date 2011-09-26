@@ -1,5 +1,5 @@
 # encoding: utf-8
-class ShopsController < ApplicationController
+class ShopsController < AppController
   prepend_before_filter :authenticate_user!, except: :me
   layout 'admin', only: :edit
 

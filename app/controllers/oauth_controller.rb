@@ -1,4 +1,4 @@
-class OauthController < ApplicationController
+class OauthController < AppController
   prepend_before_filter :authenticate_user!, except: :access_token
 
   expose(:shop) { current_user.shop }

@@ -1,5 +1,5 @@
 #encoding: utf-8
-class OrdersController < ApplicationController
+class OrdersController < AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

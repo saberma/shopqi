@@ -1,4 +1,4 @@
-class WeightBasedShippingRatesController < ApplicationController
+class WeightBasedShippingRatesController < AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
   expose(:weight_based_shipping_rate)

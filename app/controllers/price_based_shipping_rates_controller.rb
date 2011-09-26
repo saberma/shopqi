@@ -1,4 +1,4 @@
-class PriceBasedShippingRatesController < ApplicationController
+class PriceBasedShippingRatesController < AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
   expose(:price_based_shipping_rate)

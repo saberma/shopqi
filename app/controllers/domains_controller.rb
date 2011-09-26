@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'resolv'
 
-class DomainsController < ApplicationController
+class DomainsController < AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 
