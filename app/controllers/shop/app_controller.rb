@@ -1,5 +1,6 @@
 # encoding: utf-8
 class Shop::AppController < ActionController::Base
+  include ShopsHelper
   layout nil #默认不需要layout，使用liquid
   before_filter :force_domain # 域名管理中是否设置主域名重定向
   before_filter :password_protected # 设置了密码保护
@@ -37,7 +38,7 @@ class Shop::AppController < ActionController::Base
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
-      powered_by_link = "<a href='#{Setting.url}' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>ShopQi电子商务平台提供安全保护</a>"
+      powered_by_link = "<a href='#{url_with_port}' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>ShopQi电子商务平台提供安全保护</a>"
       unless template_extra_object.key?('content_for_layout')
         content_for_layout = Liquid::Template.parse(File.read(theme.template_path(template))).render(template_assign(template_extra_object))
       else

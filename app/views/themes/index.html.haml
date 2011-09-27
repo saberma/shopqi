@@ -7,7 +7,7 @@
 #action-links
   %ul
     %li#customer=link_to '上传一个主题', '#'
-    %li#themestore=link_to '查找更多的主题', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
+    %li#themestore=link_to '查找更多的主题', "#{theme_store_url_with_port}?shop_url=#{show_shop_url}"
 =render "shared/noscript"
 =render "shared/upgrade_ie"
 .import-wrapper

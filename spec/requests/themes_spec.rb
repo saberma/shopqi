@@ -12,7 +12,7 @@ describe "Themes", js: true do
     model
   end
 
-  describe "GET /themes", focus: true do # 主题管理
+  describe "GET /admin/themes" do # 主题管理
 
     describe "published-themes" do
 

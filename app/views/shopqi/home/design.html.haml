@@ -21,7 +21,7 @@
       .col-3.poloroidcopy.last
         %h3 主题商店
         %p
-          =link_to '主题商店', Setting.theme_store_url, target: :_blank
+          =link_to '主题商店', theme_store_url_with_port, target: :_blank
           里有由ShopQi专业师创建的丰富多样的外观风格.
         %p 选用主题可以让您以最快的方式建立网上商店.
       / .col-3
@@ -45,7 +45,7 @@
         %li.step1
           %strong> 步骤 1. 选择一个主题
           浏览
-          =link_to '主题商店', Setting.theme_store_url, target: :_blank
+          =link_to '主题商店', theme_store_url_with_port, target: :_blank
           然后选择一个主题用于定制.
           %a.single.cboxelement(href="/images/graphics/tour-presetex-beforebig.jpg")
             =image_tag 'graphics/tour-presetex-before.png'
@@ -66,11 +66,11 @@
         %p
           ShopQi允许您通过HTML &amp; CSS 来100%控制您的网店界面. ShopQi使用模板语言
           = succeed "." do
-            %a(href="#{Setting.wiki_url}/Liquid" target="_blank" title="Liquid - ShopQi Wiki") Liquid
+            %a(href="#{wiki_url_with_port}/Liquid" target="_blank" title="Liquid - ShopQi Wiki") Liquid
         %p Liquid可以很轻易地把静态HTML &amp; CSS转化为动态的电子商务系统.
         %p
           详情可通过
-          %a(href="#{Setting.wiki_url}/Main_Page" target="_blank" title="Main Page - ShopQi Wiki") 查看我们的文档
+          %a(href="#{wiki_url_with_port}/Main_Page" target="_blank" title="Main Page - ShopQi Wiki") 查看我们的文档
           来了解如何使用Liquid.
       / .col-3
       .col-6.poloroid.last

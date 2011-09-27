@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Theme::ThemesController < Theme::AppController
+  include ShopsHelper
   prepend_before_filter :authenticate_shop!, only: [:apply, :logout]
   layout 'theme', only: [:index, :show, :download, :apply]
 
@@ -16,7 +17,7 @@ class Theme::ThemesController < Theme::AppController
       if params[:shop_url] # 从商店后台管理中进入，则之后的操作不需要再提示商店url
         session[:shop_url] = params[:shop_url]
         session[:shop] = nil # 登录名(商店子域名)
-        redirect_to Setting.theme_store_url
+        redirect_to theme_store_url_with_port
       end
     end
 
@@ -77,7 +78,7 @@ class Theme::ThemesController < Theme::AppController
     def authenticate # 跳转至用户商店的认证登录页面oauth
       session[:shop_url] ||= params[:shop_url] # 如果后台管理已经设置了商店url
       redirect_to client.auth_code.authorize_url(
-        redirect_uri: Theme.redirect_uri
+        redirect_uri: "#{theme_store_url_with_port}/callback"
       )
     end
 

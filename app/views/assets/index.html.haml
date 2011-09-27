@@ -134,21 +134,21 @@
             在左边选择一个文件开始修改它
           %span#asset-hint-liquid.hide
             请参考
-            %a(href="#{Setting.wiki_url}/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
+            %a(href="#{wiki_url_with_port}/VariableReference" target="wiki" title="Open Wiki in a new window") 变量说明
             学习如何在您的模板中使用动态信息.
         %div(style="display:none")
           %span#asset-hint-config
             如何使用这些文件，请参考我们的
-            %a(href="#{Setting.wiki_url}/Theme%20Settings" target="wiki" title="在新的窗口打开百科") 主题配置帮助页面.
+            %a(href="#{wiki_url_with_port}/Theme%20Settings" target="wiki" title="在新的窗口打开百科") 主题配置帮助页面.
           %span#asset-hint-liquid-settings
             针对此Liquid文件有效的变量可以查看
             = succeed "." do
-              %a(href="#{Setting.wiki_url}/Theme%20Settings%23Using%20the%20settings%20object%20in%20Liquid" target="wiki" title="Open Wiki in a new window") 设置对象
+              %a(href="#{wiki_url_with_port}/Theme%20Settings%23Using%20the%20settings%20object%20in%20Liquid" target="wiki" title="Open Wiki in a new window") 设置对象
             您可能会使用任何Liquid
-            %a(href="#{Setting.wiki_url}/Liquid%23Tags" target="wiki" title="Open Wiki in a new window") 标签
+            %a(href="#{wiki_url_with_port}/Liquid%23Tags" target="wiki" title="Open Wiki in a new window") 标签
             和
             = succeed "." do
-              %a(href="#{Setting.wiki_url}/FilterReference" target="wiki" title="Open Wiki in a new window") 过滤器
+              %a(href="#{wiki_url_with_port}/FilterReference" target="wiki" title="Open Wiki in a new window") 过滤器
       #preview-image.preview-image(style="display:none;")
         %a(target="_blank")
           %img#preview-image-asset/
@@ -156,7 +156,7 @@
       #template-editor
 -#
   .box2.sst
-    %a(href="#{Setting.wiki_url}/Textmate_Bundle" style="width: 55px;float:left; margin-right: 10px")
+    %a(href="#{wiki_url_with_port}/Textmate_Bundle" style="width: 55px;float:left; margin-right: 10px")
       =image_tag 'admin/textmate-logo.gif'
     %h3 Textmate Bundle
     %p
@@ -164,7 +164,7 @@
       = succeed "," do
         %a(href="http://macromates.com/") Textmate
       那么你可以参考
-      %a(href="#{Setting.wiki_url}/Textmate_Bundle") 我们的帮助文档
+      %a(href="#{wiki_url_with_port}/Textmate_Bundle") 我们的帮助文档
       说明了如何一步步安装此插件.
       安装后您将可以看到所有的主题文件，并且修改后会自动同步.
 
