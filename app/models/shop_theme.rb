@@ -144,6 +144,10 @@ class ShopTheme < ActiveRecord::Base
     end
   end
 
+  def self.exceed? # 超过8个主题
+    all.size >= 8
+  end
+
   def unpublish! # 取消发布
     self.update_attributes! role: 'unpublished'
   end

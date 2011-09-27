@@ -33,7 +33,7 @@
           %a(href="/tour/design") 定制您的外观
           或者访问我们的
           = succeed "." do
-            %a(href="#{Setting.theme_store_url}" title="ShopQi Theme Store | Ecommerce Templates") 主题商店
+            %a(href="#{theme_store_url_with_port}" title="ShopQi Theme Store | Ecommerce Templates") 主题商店
       / .col-3
       .col-6.poloroid.last
         %a.single.cboxelement(href="/images/graphics/tour-themeshelves-big.jpg")
@@ -89,7 +89,7 @@
             %strong 支持
             %br/
             如果您有任何疑问，可以通过email或者电话联系我们的
-            %a(href="http://support#{Setting.store_host_with_port}" title="Welcome - ShopQi Support") 支持团队
+            %a(href="http://support#{store_host_with_port}" title="Welcome - ShopQi Support") 支持团队
           %li
             =image_tag 'graphics/ov-iphone.jpg'
             %strong iPhone 应用
@@ -165,7 +165,7 @@
             %strong 主题商店
             %br/
             没有设计师也没关系，可以前往
-            %a(href="#{Setting.theme_store_url}") 主题商店
+            %a(href="#{theme_store_url_with_port}") 主题商店
             挑选主题外观.
           %li
             =image_tag 'graphics/ov-urls.jpg'

@@ -5,58 +5,6 @@ h2. ShoqQi "!http://stillmaintained.com/saberma/shopqi.png!":http://stillmaintai
 
 "!https://secure.travis-ci.org/saberma/shopqi.png!":http://travis-ci.org/saberma/shopqi
 
-h3. 安装
-
-为了便于安装，ShopQi的开发环境将基于Vagrant虚拟工具
-关于vagrant的安装使用可参考 "http://saberma.me/linux/2011/03/03/vagrant-virtual-develop-enviroment.html":http://saberma.me/linux/2011/03/03/vagrant-virtual-develop-enviroment.html
-
-h3. 安装VirtualBox
-
-参考这里安装VirtualBox 4.x: "http://www.virtualbox.org/wiki/Downloads":http://www.virtualbox.org/wiki/Downloads
-
-h3. 安装Vagrant和PostgrelSQL客户端
-
-pre.
-sudo apt-get install postgresql-client libpq-dev
-gem install vagrant --no-ri --no-rdoc
-
-h3. 下载ShopQi虚拟镜像文件
-
-下载镜像文件(622M): "http://u.115.com/file/f11253dfb5":http://u.115.com/file/f11253dfb5
-假设下载地址为 @~/vagrant-package-shopqi-new.box@
-下载完成后执行
-
-pre. 
-vagrant box add lucid32-shopqi-new ~/vagrant-package-shopqi-new.box
-
-虚拟机默认安装以下组件:
-
-# Ubuntu 10.04(32bit)
-# Ruby 1.9.2
-# Ruby on Rails 3.0.6
-# unicorn 3.5.0
-# postgrel 0.8.4
-# redis 2.2.0rc2
-# coreseek(sphinx) 3.2.14
-
-h3. 下载源代码:
-
-pre. 
-git clone git://github.com/saberma/shopqi.git 
-cd shopqi
-
-h3. 创建虚拟机
-
-pre. 
-#require nfsd for share folder
-sudo apt-get install nfs-kernel-server
-vagrant up
-
-h2. 查看效果
-
-测试用户名密码都为admin@shopqi.com
-"登录 http://lvh.me:3000":http://lvh.me:3000
-
 h2. 开发人员
 
 saberma

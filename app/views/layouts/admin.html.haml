@@ -61,7 +61,7 @@
             %p.nav-manage.pb
               =link_to '主题管理', themes_path
             %p.more
-              =link_to '浏览外观', "#{Setting.theme_store_url}?shop_url=#{show_shop_url}"
+              =link_to '浏览外观', "#{theme_store_url_with_port}?shop_url=#{show_shop_url}"
               %span 访问外观商店
         %li#preferences-link
           #preferences-dropdown.nav-dropdown.dropdown.hide

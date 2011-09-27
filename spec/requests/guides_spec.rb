@@ -29,7 +29,7 @@ describe "Guides", js: true do
       guides.each_pair do |guide, tip|
         find_link(guide).click
         find('.guide-outer').visible?.should be_true
-        find('.guide-outer').has_content?(tip).should be_true
+        find('.guide-outer').should have_content(tip)
       end
 
     end
@@ -272,7 +272,7 @@ describe "Guides", js: true do
       has_content?('您已经启用商店，恭喜您').should be_true
     end
 
-    it "should be launch", focus: true do
+    it "should be launch" do
       shop.tasks[0,7].map{|t| t.update_attributes completed: true}
       visit '/admin'
       click_on '启用我的商店'

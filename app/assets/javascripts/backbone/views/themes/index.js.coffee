@@ -16,6 +16,10 @@ App.Views.Theme.Index = Backbone.View.extend
     new App.Views.Theme.List el: '#unpublished', collection: App.unpublished_themes
 
   upload: ->
+    if (App.published_themes.length + App.unpublished_themes.length) >= 8
+      $('.message').show()
+      error_msg '不能上传主题!最多只能安装8个主题!'
+      return false
     self = this
     unless @uploader
       @uploader = new qq.FileUploader

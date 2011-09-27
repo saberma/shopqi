@@ -21,16 +21,16 @@
         %li.logo
           %a{:href => "http://www.shopqi.com/"}
             =image_tag 'resources-nav/logo-shopqi.png'
-        %li=link_to '主题',"#{Setting.theme_store_url}"
+        %li=link_to '主题',"#{theme_store_url_with_port}"
         %li=link_to '支持','#'
         -#
           %li=link_to '论坛','#'
         %li.current
-          =link_to '百科',"#{Setting.wiki_url}"
+          =link_to '百科',"#{wiki_url_with_port}"
     / .resources-nav
     #header.clearfix
       .clearfix
-        %h1=link_to image_tag('skins/logo-documentation.png'),"#{Setting.wiki_url}"
+        %h1=link_to image_tag('skins/logo-documentation.png'),"#{wiki_url_with_port}"
         %ul.user-options
           %li#pt-anonlogin=link_to '登录','#'
         %ul.user-options
