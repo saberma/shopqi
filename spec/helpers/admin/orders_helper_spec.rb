@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 # Specs in this file have access to a helper object that includes
-# the CustomersHelper. For example:
+# the OrdersHelper. For example:
 #
-# describe CustomersHelper do
+# describe OrdersHelper do
 #   describe "string concat" do
 #     it "concats two strings with spaces" do
 #       helper.concat_strings("this","that").should == "this that"
 #     end
 #   end
 # end
-describe CustomersHelper do
+describe Admin::OrdersHelper do
 end
