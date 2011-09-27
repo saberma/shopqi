@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'zip/zip'
 require 'zip/zipfilesystem'
-class ThemesController < Admin::AppController
+class Admin::ThemesController < Admin::AppController
   prepend_before_filter :authenticate_user!, except: [:switch]
   layout 'admin'
 

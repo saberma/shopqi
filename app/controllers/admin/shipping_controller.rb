@@ -1,4 +1,4 @@
-class ShippingController < Admin::AppController
+class Admin::ShippingController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

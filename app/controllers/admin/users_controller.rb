@@ -1,5 +1,5 @@
 #encoding: utf-8
-class UsersController < Admin::AppController
+class Admin::UsersController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
   expose(:users){current_user.shop.users}

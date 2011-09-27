@@ -1,5 +1,5 @@
 # encoding: utf-8
-class LinkListsController < Admin::AppController
+class Admin::LinkListsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

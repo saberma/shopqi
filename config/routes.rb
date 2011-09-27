@@ -106,7 +106,7 @@ Shopqi::Application.routes.draw do
       post '/articles/:article_id/comments', to: 'articles#add_comment'
     end
 
-    scope "/admin" do # 用户后台管理
+    scope "/admin", module: :admin do # 用户后台管理
 
       match "/"                             , to: "home#dashboard"                      , as: :user_root # user_root_path为用户成功登录后的跳转地址
       match "/general_preferences"          , to: "shops#edit"

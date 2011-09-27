@@ -1,5 +1,5 @@
 #encoding: utf-8
-class PhotosController < Admin::AppController
+class Admin::PhotosController < Admin::AppController
   prepend_before_filter :authenticate_user!
   expose(:product)
   expose(:photos){ product.photos}

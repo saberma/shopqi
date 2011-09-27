@@ -1,4 +1,4 @@
-class KindeditorController < Admin::AppController
+class Admin::KindeditorController < Admin::AppController
   skip_before_filter :verify_authenticity_token
 
   #用于处理kindeditor图片上传

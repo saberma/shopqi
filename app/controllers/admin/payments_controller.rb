@@ -1,5 +1,5 @@
 #coding: utf-8
-class PaymentsController < Admin::AppController
+class Admin::PaymentsController < Admin::AppController
   layout 'admin'
   prepend_before_filter :authenticate_user!
   expose(:shop){ current_user.shop }

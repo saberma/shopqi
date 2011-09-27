@@ -1,5 +1,5 @@
 #encoding: utf-8
-class BlogsController < Admin::AppController
+class Admin::BlogsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

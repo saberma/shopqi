@@ -1,5 +1,5 @@
 #encoding: utf-8
-class HomeController < Admin::AppController
+class Admin::HomeController < Admin::AppController
   include HomeHelper
   prepend_before_filter :authenticate_user!
   layout 'admin'

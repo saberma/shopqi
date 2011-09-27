@@ -1,5 +1,5 @@
 # encoding: utf-8
-class CustomCollectionProductsController < Admin::AppController
+class Admin::CustomCollectionProductsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

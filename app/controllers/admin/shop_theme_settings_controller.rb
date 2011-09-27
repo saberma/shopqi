@@ -1,5 +1,5 @@
 # 主题配置
-class ShopThemeSettingsController < Admin::AppController
+class Admin::ShopThemeSettingsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
 

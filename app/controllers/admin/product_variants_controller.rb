@@ -1,5 +1,5 @@
 # encoding: utf-8
-class ProductVariantsController < Admin::AppController
+class Admin::ProductVariantsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   expose(:shop) { current_user.shop }
   expose(:products) { shop.products }

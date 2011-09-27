@@ -1,5 +1,5 @@
 #encoding: utf-8
-class AssetsController < Admin::AppController
+class Admin::AssetsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin', except: :edit
 
