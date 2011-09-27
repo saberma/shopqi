@@ -52,7 +52,7 @@
     %p.st
       =link_to "删除我的帐户(我知道这是无法恢复的)",user_path(current_user),method: :delete
 %hr/
-=render partial:"home/show_user"
+=render partial:"admin/home/show_user"
 :javascript
   App.init = function(){
     new App.Controllers.Users();
