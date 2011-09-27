@@ -6,7 +6,7 @@ module ShopsHelper
   end
 
   def is_home?
-    params[:controller] == 'home'
+    params[:controller] == 'admin/home'
   end
 
 end

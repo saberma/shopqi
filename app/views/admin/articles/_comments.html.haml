@@ -5,4 +5,4 @@
   -unless article.comments.blank?
     #comments
       %h4==文章#{article.title}的评论
-      =render partial:"comments/comment",locals:{blog:blog,article:article}
+      =render partial:"admin/comments/comment",locals:{blog:blog,article:article}

@@ -9,6 +9,6 @@
       %th{:width => "5%"} &nbsp;
   %tbody
     -articles = blog.articles
-    =render partial: 'articles/article' , collection: articles, locals: {blog: blog}
+    =render partial: 'admin/articles/article' , collection: articles, locals: {blog: blog}
     %tr.last-article
       %td{:colspan => "6"}=link_to "管理 #{blog.title}", blog_path(blog),class: 'view-all-articles'

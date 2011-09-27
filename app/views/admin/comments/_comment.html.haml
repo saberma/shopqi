@@ -10,7 +10,7 @@
   %tbody
     %tr.more-comments
       %td{:colspan => "3"}=link_to "管理所有评论", comments_path,class: 'view-all-comments'
-=render partial: 'comments/comment_template'
+=render partial: 'comment_template'
 :javascript
   App.init = function(){
     new App.Controllers.Comments();

@@ -30,4 +30,12 @@ Shopqi::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
 end
+#module ActiveAdmin
+#  class Application
+#    private
+#    def generate_stylesheets
+#    end
+#  end
+#end

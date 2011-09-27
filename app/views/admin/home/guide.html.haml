@@ -1,7 +1,7 @@
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
 #store-completion
-  =render "home/guide/#{@task.name}"
+  =render "admin/home/guide/#{@task.name}"
   #progress-bar=render 'progress_task'
   -unless @task.is_launch?
     .skip-setup

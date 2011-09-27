@@ -1,4 +1,15 @@
 AdminUsers =  YAML::load_file(Rails.root.join('config/admin_users.yml'))
+=begin
+module ActiveAdmin
+  class Reloader
+    def attach!
+      STDERR.puts ">>>>>>>>>>>>>>>>>>>   ATTACH!"
+      reloader_class.to_prepare do
+        STDERR.puts ">>>>>>>>>>>>>>>>>>>   RELOAD!"
+      end
+    end
+  end
+end
 ActiveAdmin.setup do |config|
 
   # == Site Title
@@ -102,3 +113,4 @@ ActiveAdmin.setup do |config|
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
 end
+=end

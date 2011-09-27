@@ -588,10 +588,10 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
 
   create_table "shop_themes", :force => true do |t|
     t.integer  "shop_id",                   :null => false
-    t.integer  "theme_id",                  :null => false
+    t.integer  "theme_id"
     t.string   "name",        :limit => 32, :null => false
     t.string   "role",        :limit => 16, :null => false
-    t.string   "load_preset", :limit => 16, :null => false
+    t.string   "load_preset", :limit => 16
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -96,7 +96,7 @@
     #indicator(style="z-index: 1000; position: absolute; width: 20px; height: 20px; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; display: none; top: 1236px; left: 591px; ")
       =image_tag 'spinner.gif', style: 'border=0'
     -unless is_home? or shop.guided
-      =render 'home/progress'
+      =render 'admin/home/progress'
 
     -if flash[:notice]
       :javascript
