@@ -1,4 +1,4 @@
-module EmailsHelper
+module Admin::EmailsHelper
   def subscribtion_title(s)
     user = s.user
     if user

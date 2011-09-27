@@ -1,6 +1,6 @@
 #encoding: utf-8
 class Theme::ThemesController < Theme::AppController
-  include ShopsHelper
+  include Admin::ShopsHelper
   prepend_before_filter :authenticate_shop!, only: [:apply, :logout]
   layout 'theme', only: [:index, :show, :download, :apply]
 
