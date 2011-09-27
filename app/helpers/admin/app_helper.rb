@@ -1,5 +1,5 @@
 # encoding: utf-8
-module Admin::ApplicationHelper
+module Admin::AppHelper
 
   #用于获取当前用户请求的商店
   def shop
