@@ -8,10 +8,6 @@ describe Theme do
 
   describe 'oauth2' do
 
-    it 'should get redirect_uri' do
-      Theme.redirect_uri.should eql "#{theme_store_url_with_port}/callback"
-    end
-
     it 'should get client_id' do
       Theme.client_id.should_not be_blank
     end

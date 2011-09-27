@@ -35,8 +35,12 @@ App.Views.Theme.Show = Backbone.View.extend
     unless btn.hasClass('disabledrow')
       @$('.duplicate-theme a').addClass('disabledrow')
       $.post "/admin/themes/#{@model.id}/duplicate", (data) ->
-        App.unpublished_themes.add data
         self.$('.duplicate-theme a').removeClass('disabledrow')
+        if data['exceed']
+          $('.message').show()
+          error_msg '操作不成功!最多只能安装8个主题!'
+        else
+          App.unpublished_themes.add data
     false
 
   destroy: ->

@@ -11,11 +11,13 @@ class ThemesController < ApplicationController
 
   begin 'api'
     def switch
-      authorization = OAuth2::Provider.access_token(nil, [], request)
-      if authorization.valid?
-        shop = authorization.owner
-        theme = Theme.find_by_handle params[:handle]
-        shop.theme.switch theme, params[:style_handle]
+      unless shop.themes.exceed? # 超出主题数则不更新
+        authorization = OAuth2::Provider.access_token(nil, [], request)
+        if authorization.valid?
+          shop = authorization.owner
+          theme = Theme.find_by_handle params[:handle]
+          shop.theme.switch theme, params[:style_handle]
+        end
       end
       render nothing: true
     end
@@ -32,6 +34,9 @@ class ThemesController < ApplicationController
     end
 
     def upload # 上传主题(只检查必须的文件，解压操作转入后台运行)
+      if shop.themes.exceed?
+        render json: {exceed: true} and return
+      end
       path = Rails.root.join 'tmp', 'themes', shop.id.to_s
       name = params[:qqfile]
       zip_path = File.join path, "t#{DateTime.now.to_i}-#{name}"
@@ -85,8 +90,12 @@ class ThemesController < ApplicationController
     end
 
     def duplicate # 复制主题
-      duplicate_theme = theme.duplicate
-      render json: duplicate_theme.to_json(except: [:created_at, :updated_at])
+      if shop.themes.exceed?
+        render json: {exceed: true}
+      else
+        duplicate_theme = theme.duplicate
+        render json: duplicate_theme.to_json(except: [:created_at, :updated_at])
+      end
     end
 
     def destroy # 删除
