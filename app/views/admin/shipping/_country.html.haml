@@ -7,8 +7,8 @@
     %th{:style => "width: 160px"} &nbsp;
     %th{:style => "width: 110px"} &nbsp;
     %th{:style => "width: 80px"} &nbsp;
-  =render partial: 'weight_based_shipping_rates/weight_based_shipping_rate', collection: country.weight_based_shipping_rates
-  =render partial: 'price_based_shipping_rates/price_based_shipping_rate', collection: country.price_based_shipping_rates
+  =render partial: 'admin/weight_based_shipping_rates/weight_based_shipping_rate', collection: country.weight_based_shipping_rates
+  =render partial: 'admin/price_based_shipping_rates/price_based_shipping_rate', collection: country.price_based_shipping_rates
   %tr(id="handle-form-#{country_id}")
     %td.new-rate-link.no-border.action-link{:colspan => "4"}
       %p.add.icon
