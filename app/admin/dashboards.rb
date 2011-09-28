@@ -1,3 +1,4 @@
+#encoding: utf-8
 ActiveAdmin::Dashboards.build do
 
   # Define your dashboard sections here. Each block will be
@@ -7,13 +8,13 @@ ActiveAdmin::Dashboards.build do
   # == Simple Dashboard Section
   # Here is an example of a simple dashboard section
   #
-  #   section "Recent Posts" do
-  #     ul do
-  #       Post.recent(5).collect do |post|
-  #         li link_to(post.title, admin_post_path(post))
-  #       end
-  #     end
-  #   end
+  section "最近的商店" do
+    ul do
+      Shop.where("created_at >= ?", 10.days.ago).collect do |shop|
+        li link_to(shop.name, active_admin_shop_path(shop))
+      end
+    end
+  end
 
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can

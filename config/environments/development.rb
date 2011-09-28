@@ -39,3 +39,14 @@ end
 #    end
 #  end
 #end
+#
+#module ActiveAdmin
+#  class Reloader
+#    def attach!
+#      reloader_class.to_prepare do
+#        #ActiveAdmin.application.unload!
+#        #Rails.application.reload_routes!
+#      end
+#    end
+#  end
+#end
