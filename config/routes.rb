@@ -308,8 +308,8 @@ Shopqi::Application.routes.draw do
   match '/media(/:dragonfly)', to: Dragonfly[:images]
   post '/kindeditor/upload_image'
 
-  #ActiveAdmin.routes(self)
+  ActiveAdmin.routes(self)
 
-  #devise_for :admin_users, ActiveAdmin::Devise.config
+  devise_for :admin_users, ActiveAdmin::Devise.config
 
 end

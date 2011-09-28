@@ -1,4 +1,3 @@
-=begin
 ActiveAdmin::Dashboards.build do
 
   # Define your dashboard sections here. Each block will be
@@ -37,4 +36,3 @@ ActiveAdmin::Dashboards.build do
   # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
 
 end
-=end
