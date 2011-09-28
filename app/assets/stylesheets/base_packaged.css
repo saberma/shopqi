@@ -173,7 +173,6 @@ ul.packaged-styles p a {height:25px;}
     #theme-grid {background: url('/assets/layout/bg-shelf.png') repeat-y;}
  #theme-download {text-align:center}
 #theme-download a {vertical-align:middle}
-}
 #theme-download a small {text-shadow:none}
 #theme-download .standard-button {margin-right:4px;}
 #theme-download small {color:#c0e7ff; font-weight:normal; text-transform:uppercase; font-size:11px; text-shadow:none;}
@@ -203,7 +202,7 @@ ul.packaged-styles p a {height:25px;}
 .purchase .price {font-size:25px; font-weight:bold; margin-bottom:7px; letter-spacing:-1px}
 .purchase .download span {font-family:georgia; font-style:italic; font-size:16px; vertical-align:middle}
 .purchase .download a:first-child {margin-right:5px;}
-.standard-button {color: #fff;background: #2f84c9 -moz-linear-gradient(top, #3084ca, #1b69a9); background: #2f84c9 -webkit-gradient(linear, left top, left bottom, from(#3084ca), to(#1b69a9));repeat-x; padding:13px 15px 10px 15px; -moz-border-radius:5px; border-top:solid #388cd3 1px; border-bottom:1px solid #2e7ec3 ; border-right: solid #2e7ec3 1px ;border-left: 1px solid #388cd3;-webkit-border-radius:5px; text-shadow: 1px 1px #666; font-size:16px; opacity:0.9; display:inline-block; cursor: pointer; -moz-box-shadow:1px 1px 0px #0f3354; -webkit-box-shadow:1px 1px 0px #0f3354;}
+.standard-button {color: #fff;background: #2f84c9 -moz-linear-gradient(top, #3084ca, #1b69a9); background: #2f84c9 -webkit-gradient(linear, left top, left bottom, from(#3084ca), to(#1b69a9)); padding:13px 15px 10px 15px; -moz-border-radius:5px; border-top:solid #388cd3 1px; border-bottom:1px solid #2e7ec3 ; border-right: solid #2e7ec3 1px ;border-left: 1px solid #388cd3;-webkit-border-radius:5px; text-shadow: 1px 1px #666; font-size:16px; opacity:0.9; display:inline-block; cursor: pointer; -moz-box-shadow:1px 1px 0px #0f3354; -webkit-box-shadow:1px 1px 0px #0f3354;}
 .standard-button:hover {opacity:1; text-decoration:none; background-position:0 -300px; background: -moz-linear-gradient(bottom, #3084ca, #1b69a9); background: -webkit-gradient(linear, left top, left bottom, to(#3084ca), from(#1b69a9)); border-top:1px solid #0b4678; border-left:1px solid #0b4678; border-right:1px solid #3483c6; border-bottom:1px solid #3483c6; -moz-box-shadow:none; -webkit-box-shadow:none;}
 .theme-screenshots ul {margin:0; padding:0}
 .theme-screenshots ul li {float:left; margin-bottom:18px; margin-left:0px; line-height:0; list-style:none; padding:0px; background: url('/assets/layout/bg-smallthumbnail-shadow.png') no-repeat; padding:1px 0 8px 1px}

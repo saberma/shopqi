@@ -179,7 +179,7 @@ a.btn { color: #3A3A3A; display: inline-block; font-weight:bold; padding: 4px 8p
   -moz-border-radius:     3px;
   -webkit-border-radius:  3px;
   border-radius:          3px; }
-#order_cancelled_title { padding-bottom; 0; }
+#order_cancelled_title { padding-bottom: 0; }
 #order_details { width: 600px; }
 #order_details, #order_notes { float: left; margin: 10px 0 0 30px; }
 #order_details .money { white-space: nowrap; }

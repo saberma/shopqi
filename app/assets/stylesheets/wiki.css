@@ -553,8 +553,8 @@ ul.homepage-intro li {  width:160px;  list-style:none; float:left; font-size:13p
 
 
 ul.homepage-intro li.designers {background:url('../assets/icon-brush.png') left 3px no-repeat; }
-ul.homepage-intro li.developers {  background:url('../assets/icon-wrench.png') left 3px no-repeat; ) }
-ul.homepage-intro li.owners {  background:url('../assets/icon-basket.png') left 3px no-repeat; ) }
+ul.homepage-intro li.developers {  background:url('../assets/icon-wrench.png') left 3px no-repeat; }
+ul.homepage-intro li.owners {  background:url('../assets/icon-basket.png') left 3px no-repeat; }
 
 
 ul.homepage-resources li.theme { background:url('../assets/icon-home-themes.png') left 4px no-repeat; }
