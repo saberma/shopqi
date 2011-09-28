@@ -286,7 +286,7 @@ ul#nav-primary ul.utilities li ul li a strong { display:block; color:#fff; font-
 
 
 /* this .frontpage-features2 goes with the dodo case video on nov 2010 */
-.frontpage-features2 { background:; margin-bottom: 20px;}
+.frontpage-features2 { background:none; margin-bottom: 20px;}
 .frontpage-features2 ul { width:110%;}
 .frontpage-features2 ul li { width:205px; float:left; padding: 0em; margin: 0 35px 0 0;}
 .frontpage-features2 ul li:first-child { margin-left:0px;}
@@ -513,7 +513,7 @@ ul.designer-list a:hover em { color:#5cb5ff; font-size:11px; font-weight:normal;
 .feature-list h3 img { margin:1px 4px 0 0; position:relative; top:1px; }
 .feature-list {margin-bottom:24px; border-bottom:1px solid #d9d9d9; padding:0 0 13px 0;}
 .feature-list h3 { margin: 0 0 10px 0;}
-.feature-list ul { margin:0px 0 0 0px; padding:0 0 0px 10px; border-bottom:1px solid #; float:left; }
+.feature-list ul { margin:0px 0 0 0px; padding:0 0 0px 10px; border-bottom:1px solid; float:left; }
 .feature-list ul:after { content:".";display:block;height:0;clear:both;visibility:hidden;}
 .feature-list ul li { float:left; width:307px; margin:0 15px 10px 0;background: url('../assets/icons/greybullet.gif?1250106533') no-repeat top left; padding:0 0 0 15px; list-style-type:none;}
 
@@ -1308,7 +1308,7 @@ a#fashion-btn:hover { background-position: 0 -64px;}
 #switch-bg{ position: absolute; z-index: 1; top: -1px; left: -1px; }
 /* Hacks. The width of the containing element is off in IEs +_+, clipping the image background: */
 /* for IE7: */ #switch-bg { *clip: rect(0 986px auto 1px); }
-/* for IE8: */ #switch-bg { clip: rect(0 986px auto 1px)\0/; }
+/* for IE8: */ #switch-bg { clip: rect(0 986px auto 1px); }
 
 #switch-header{ position: relative; z-index: 2; height: 150px; width: 650px; text-shadow: 0 2px 0 #fff; padding: 40px 0 0 0; }
 #switch-header h2{ margin: 0 0 12px 0; font-weight: bold; }
@@ -1390,7 +1390,7 @@ a#fashion-btn:hover { background-position: 0 -64px;}
 /* ============================== */
 
 .habla_window_div_position_floating_ie{ bottom:10px;position:absolute;right:10px; }
-.habla_window_div_base{ border:0 none !important;line-height:1;outline-color:#-moz-use-text-color;outline-style:none !important;outline-width:0;text-align:left;vertical-align:baseline;z-index:99999 !important;margin:0 !important;padding:0 !important;}
+.habla_window_div_base{ border:0 none !important;line-height:1;outline-color:-moz-use-text-color;outline-style:none !important;outline-width:0;text-align:left;vertical-align:baseline;z-index:99999 !important;margin:0 !important;padding:0 !important;}
 .habla_panel_border{ font: 11px/1.25em 'Lucida Grande','Lucida Sans Unicode',sans-serif; width:252px; }
 
 #habla_expanded_div{ border: solid 1px #ddd; background:#e8e8e8 url('../assets/chat/bg.png?1303744251') 0 0 repeat-x; }
