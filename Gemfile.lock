@@ -253,6 +253,13 @@ GEM
     rubyzip (0.9.4)
     sanitize (2.0.3)
       nokogiri (< 1.6, >= 1.4.4)
+    sass (3.1.7)
+    sass-rails (3.1.2)
+      actionpack (~> 3.1.0)
+      railties (~> 3.1.0)
+      sass (>= 3.1.4)
+      sprockets (~> 2.0.0)
+      tilt (~> 1.3.2)
     seedbank (0.0.7)
     selenium-webdriver (2.5.0)
       childprocess (>= 0.2.1)
@@ -358,6 +365,7 @@ DEPENDENCIES
   riddle
   rspec-rails
   rubyzip
+  sass-rails
   seedbank
   sentient_user
   settingslogic

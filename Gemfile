@@ -97,6 +97,7 @@ end
 # in production environments by default.
 # rake assets:precompile 部署到生产环境下执行
 group :assets do
+  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end
