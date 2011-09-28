@@ -1,7 +1,7 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.1.rc1'
 
 ##### 实体相关 #####
 gem 'pg'
@@ -68,7 +68,7 @@ group :development do
   gem 'guard-livereload' # 修改后台文件后，safari或chrome浏览器会自动刷新
   gem 'guard-rspec'
   gem 'guard-spork'
-  gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
+  #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
 end
 
@@ -76,7 +76,7 @@ group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
   gem "interactive_editor"
   # 编译coffee-script
-  gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
+  #gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
   gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
 end
 
