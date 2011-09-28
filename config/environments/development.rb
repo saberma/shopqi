@@ -32,21 +32,12 @@ Shopqi::Application.configure do
   config.assets.debug = true
 
 end
-#module ActiveAdmin
-#  class Application
-#    private
-#    def generate_stylesheets
-#    end
-#  end
-#end
 #
-#module ActiveAdmin
-#  class Reloader
-#    def attach!
-#      reloader_class.to_prepare do
-#        #ActiveAdmin.application.unload!
-#        #Rails.application.reload_routes!
-#      end
-#    end
-#  end
-#end
+#需要开发active_admin功能时，将
+#下面注释掉
+module ActiveAdmin
+  class Reloader
+    def attach!
+    end
+  end
+end
