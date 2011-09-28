@@ -76,8 +76,8 @@ group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
   gem "interactive_editor"
   # 编译coffee-script
-  #gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟，导致travi-ci timeout)
-  gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
+  gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟)
+  #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
 end
 
 group :test, :travis do

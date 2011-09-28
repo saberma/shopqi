@@ -1,15 +1,15 @@
 ###
-jquery.guide. The jQuery guide plugin
-
-Copyright (c) 2011 saberma
-http://www.shopqi.com
-
-Licensed under MIT
-http://www.opensource.org/licenses/mit-license.php
-
-Launch  : Aug 2011
-Version : 1.0.0
-Released: Tue 2nd Aug, 2011 - 00:00
+# jquery.guide. The jQuery guide plugin
+#
+# Copyright (c) 2011 saberma
+# http://www.shopqi.com
+#
+# Licensed under MIT
+# http://www.opensource.org/licenses/mit-license.php
+#
+# Launch  : Aug 2011
+# Version : 1.0.0
+# Released: Tue 2nd Aug, 2011 - 00:00
 ###
 (($) ->
   Guide = (element, content, position, animate) ->

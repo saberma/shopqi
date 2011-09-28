@@ -1,15 +1,15 @@
 ###
-jquery.blank_slate. The jQuery blank slate plugin
-
-Copyright (c) 2011 saberma
-http://www.shopqi.com
-
-Licensed under MIT
-http://www.opensource.org/licenses/mit-license.php
-
-Launch  : Aug 2011
-Version : 1.0.0
-Released: Tue 16th Aug, 2011 - 00:00
+# jquery.blank_slate. The jQuery blank slate plugin
+#
+# Copyright (c) 2011 saberma
+# http://www.shopqi.com
+#
+# Licensed under MIT
+# http://www.opensource.org/licenses/mit-license.php
+#
+# Launch  : Aug 2011
+# Version : 1.0.0
+# Released: Tue 16th Aug, 2011 - 00:00
 ###
 (($) ->
   BlankSlate = (element, options) ->
