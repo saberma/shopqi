@@ -1,28 +1,29 @@
 # encoding: utf-8
 # Read about factories at http://github.com/thoughtbot/factory_girl
-
-Factory.define :user do |u|
-  u.email 'admin@shopqi.com'
-  u.shop_attributes({
+FactoryGirl.define do
+  factory :user do
+    email 'admin@shopqi.com'
+    shop_attributes({
     name: '测试商店',
     domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}],
     themes_attributes: [{ theme_id: Theme.default.id }]
   })
-  u.password '666666'
-  u.password_confirmation '666666'
+    password '666666'
+    password_confirmation '666666'
 end
 
-Factory.define :user_admin, :parent => :user do |u|
-  u.email 'admin@shopqi.com'
-  u.name 'admin'
+  factory :user_admin, :parent => :user do
+    email 'admin@shopqi.com'
+    name 'admin'
 end
 
-Factory.define :user_saberma, :parent => :user_admin do |u|
-  u.email 'mahb45@gmail.com'
-  u.name 'saberma'
+  factory :user_saberma, :parent => :user_admin do
+    email 'mahb45@gmail.com'
+    name 'saberma'
 end
 
-Factory.define :user_liwh, :parent => :user_admin do |u|
-  u.email 'liwh87@gmail.com'
-  u.name 'liwh'
+  factory :user_liwh, :parent => :user_admin do
+    email 'liwh87@gmail.com'
+    name 'liwh'
+  end
 end

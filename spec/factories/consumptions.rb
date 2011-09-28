@@ -1,4 +1,6 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
-Factory.define :consumption do |f|
+FactoryGirl.define do
+  factory :consumption do
+  end
 end

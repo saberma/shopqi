@@ -1,10 +1,12 @@
 # encoding: utf-8
-Factory.define :page do |f|
-  f.title "MyString"
-  f.body_html "MyString"
-end
+FactoryGirl.define do
+  factory :page do
+    title "MyString"
+    body_html "MyString"
+  end
 
-Factory.define 'about-us', parent: :page do |f|
-  f.title "关于我们"
-  f.body_html "关于我们"
+  factory 'about-us', parent: :page do
+    title "关于我们"
+    body_html "关于我们"
+  end
 end
