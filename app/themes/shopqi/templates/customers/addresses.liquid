@@ -2,7 +2,7 @@
   <div class="action_link action_return note" id='return_to_account'><a href="/account">Return to Account page</a></div>
   <h2 class="title">Manage Account Address</h2>
   <div class="action_top">
-    <div id="action" class="action_link action_add note"><a href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">Add New Address</a></div>
+    <div id="action" class="action_link action_add note"><a href="#" onclick="ShopQi.CustomerAddress.toggleNewForm(); return false;">Add New Address</a></div>
   </div>
 </div>
 
@@ -61,7 +61,7 @@
     </table>
     <div class="action_bottom">
       <input class="btn" type="submit" value="Add Address" />
-      <span class="note"> or <a href="#" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">Cancel</a></span>
+      <span class="note"> or <a href="#" onclick="ShopQi.CustomerAddress.toggleNewForm(); return false;">Cancel</a></span>
     </div>
   {% endform %}
 </div>
@@ -141,7 +141,7 @@
         </table>
         <div class="action_bottom">
           <input class="btn" type="submit" value="Update Address" />
-          <span class="note"> or <a href="#" onclick="Shopify.CustomerAddress.toggleForm({{form.id}}); return false;">Cancel</a></span>
+          <span class="note"> or <a href="#" onclick="ShopQi.CustomerAddress.toggleForm({{form.id}}); return false;">Cancel</a></span>
         </div>        
       {% endform %}
     </div>
@@ -154,8 +154,8 @@
 
 <script type="text/javascript" charset="utf-8">
   // initialize observers on address selectors
-  new Shopify.CountryProvinceSelector('address_country_new', 'address_province_new', {hideElement: 'address_province_container_new'});  
+  new ShopQi.CountryProvinceSelector('address_country_new', 'address_province_new', {hideElement: 'address_province_container_new'});  
   {% for address in customer.addresses %}
-    new Shopify.CountryProvinceSelector('address_country_{{address.id}}', 'address_province_{{address.id}}', {hideElement: 'address_province_container_{{address.id}}'});
+    new ShopQi.CountryProvinceSelector('address_country_{{address.id}}', 'address_province_{{address.id}}', {hideElement: 'address_province_container_{{address.id}}'});
   {% endfor %}
 </script>

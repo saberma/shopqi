@@ -168,9 +168,9 @@
 		var selectCallback = function(variant, selector) {
 			if (variant && variant.available == true) {
 				$("input#add").removeClass("disabled").removeAttr("disabled");
-				$("h2#price span").html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}"));
+				$("h2#price span").html(ShopQi.formatMoney(variant.price, "{{ shop.money_format }}"));
 				if ($("h2#price del").length > 0) {
-					$("h2#price del").html(Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}"));
+					$("h2#price del").html(ShopQi.formatMoney(variant.compare_at_price, "{{ shop.money_format }}"));
 				};
 			} else {
 				$("input#add").addClass("disabled").attr("disabled", "disabled");
@@ -180,7 +180,7 @@
 			}
 		};
 		$(function() {
-			new Shopify.OptionSelectors("id", { product: {{ product | json }}, onVariantSelected: selectCallback });
+			new ShopQi.OptionSelectors("id", { product: {{ product | json }}, onVariantSelected: selectCallback });
 			// Using trick by Caroline Schnapp. See http://forums.shopqi.com/categories/2/posts/38738
 			{% if product.available %}
 			{% assign found_one_in_stock = false %}

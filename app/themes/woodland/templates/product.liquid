@@ -106,9 +106,9 @@ var selectCallback = function(variant, selector) {
   if (variant && variant.available == true) {
     // selected a valid variant
     jQuery('#purchase').removeClass('disabled').removeAttr('disabled');
-    jQuery('.price-field span').html(Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));
+    jQuery('.price-field span').html(ShopQi.formatMoney(variant.price, "{{shop.money_with_currency_format}}"));
     if (variant.compare_at_price > variant.price) {
-      jQuery('.price-field del').html(Shopify.formatMoney(variant.compare_at_price, "{{shop.money_with_currency_format}}"));
+      jQuery('.price-field del').html(ShopQi.formatMoney(variant.compare_at_price, "{{shop.money_with_currency_format}}"));
     }
     else {
       jQuery('.price-field del').empty();
@@ -126,7 +126,7 @@ var selectCallback = function(variant, selector) {
 // initialize multi selector for product
 {% if product.available and product.options.size > 1 and product.variants.size > 1 %}
 jQuery(document).ready(function() {
-  new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
+  new ShopQi.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
   $('#product-variants div').addClass("selector-wrapper");
   $('#product-variants div label').css("float","left");
   $('#product-variants div select').css("float","right");

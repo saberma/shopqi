@@ -40,7 +40,7 @@
       // selected a valid variant
       $('add').removeClassName('disabled'); // remove unavailable class from add-to-cart button
       $('add').disabled = false;           // reenable add-to-cart button
-      $('price-field').innerHTML = Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}");  // update price field
+      $('price-field').innerHTML = ShopQi.formatMoney(variant.price, "{{shop.money_with_currency_format}}");  // update price field
     } else {
       // variant doesn't exist
       $('add').addClassName('disabled');      // set add-to-cart button to unavailable class
@@ -51,7 +51,7 @@
 
   // initialize multi selector for product
   Event.observe(document, 'dom:loaded', function() {  
-    new Shopify.OptionSelectors("variants", { product: {{ product | json }}, onVariantSelected: selectCallback }); 
+    new ShopQi.OptionSelectors("variants", { product: {{ product | json }}, onVariantSelected: selectCallback }); 
   });
 // ]]>
 </script>

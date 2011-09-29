@@ -1,4 +1,4 @@
-/* Structure Shopify Theme v1.0 (jQuery 1.3.1 required). Copyright (c) Pixellent, LLC <http://www.pixellent.com>. */
+/* Structure ShopQi Theme v1.0 (jQuery 1.3.1 required). Copyright (c) Pixellent, LLC <http://www.pixellent.com>. */
 
 // Clear Inputs
 $.cleared = function(field) {
