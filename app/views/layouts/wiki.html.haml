@@ -13,6 +13,7 @@
     /[if IE 7]
       =stylesheet_link_tag 'gollum/ie7'
     = stylesheet_link_tag "resources-nav", "wiki", 'gollum/editor','gollum/gollum'
+    = javascript_include_tag 'jquery'
     =yield :gollum
     =csrf_meta_tag
   %body
@@ -55,14 +56,16 @@
               #searchBody.pBody
                 %form#searchform(action= "/search" method='get')
                   %div
-                    %input#searchInput{:accesskey => "f", :name => "q", :type => "text", :value => ""}/
+                    %input#searchInput(accesskey= "f" name="q" type= "text" value= "")
+                    %input( type="submit"  class="searchButton" id="mw-searchButton")
             #category-navigation
-              =raw sidebar.formatted_data
+              =raw sidebar.formatted_data if sidebar
         #content.col-9.last
           =yield
 :javascript
   $(document).ready(function(){
     $('#category-navigation h3').click(function(){
       $(this).next().toggle();
+      return false;
     })
   })

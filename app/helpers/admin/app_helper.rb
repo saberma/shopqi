@@ -16,7 +16,7 @@ module Admin::AppHelper
 
   def use_gollum
     content_for :gollum do
-      javascript_include_tag 'jquery', 'gollum','gollum.dialog','gollum.placeholder','editor/gollum.editor'
+      javascript_include_tag 'gollum','gollum.dialog','gollum.placeholder','editor/gollum.editor'
     end
   end
 
