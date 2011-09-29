@@ -28,7 +28,7 @@
           %span#spinner(style="display: none")=image_tag 'spinner.gif'
           %span(style="display: none")
             %select#domain_domain(name="domain[domain]")
-              %option(value="#{store_host_with_port}")=store_host_with_port
+              %option(value="#{Setting.store_host}")=Setting.store_host
           %span#myshopqi=store_host_with_port
           #preview-availability
             #ajax-notice(style="display:none;")
