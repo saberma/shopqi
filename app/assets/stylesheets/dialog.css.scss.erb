@@ -1,6 +1,6 @@
-@import "utility.css?2";
+@import "utility.css";
 
-@import "forms.css?2";
+@import "forms.css";
 
 body {
   margin: 0;
@@ -120,7 +120,7 @@ p {
   padding: 7px 0;
   margin: 0;
   height: 21px;
-  background: #9d9d9d url(../assets/admin/info-message-bg.jpg) repeat-x top left;
+  background: #9d9d9d url(<%= asset_path 'admin/info-message-bg.jpg' %>) repeat-x top left;
   position: relative;
   top: -20px;
   left: -20px;
@@ -142,7 +142,7 @@ p {
     font-weight: 700;
     border: 0; }
   &.system-error p {
-    background: transparent url(../assets/admin/icons/error.png) no-repeat 0 1px;
+    background: transparent url(<%= asset_path 'admin/icons/error.png' %>) no-repeat 0 1px;
     padding: 2px 0 2px 22px; } }
 
 ul {
@@ -194,9 +194,9 @@ ul {
     height: 20px;
     line-height: 20px; }
   &.open-id {
-    background: transparent url(/assets/admin/icons/openid-orange-grey.png) no-repeat 44px 10px;
+    background: transparent url(<%= asset_path 'admin/icons/openid-orange-grey.png' %>) no-repeat 44px 10px;
     &.hint {
-      background: transparent url(/assets/admin/icons/openid-orange-grey.png) no-repeat 44px 3px; } } }
+      background: transparent url(<%= asset_path 'admin/icons/openid-orange-grey.png' %>) no-repeat 44px 3px; } } }
 
 .tform td {
   line-height: 25px;
@@ -391,14 +391,14 @@ textarea.lform {
     width: 197px;
     padding-left: 3px;
     height: 32px;
-    background: transparent url('/assets/admin/write-arrow.jpg') no-repeat left 14px; }
+    background: transparent url(<%= asset_path 'admin/write-arrow.jpg' %>) no-repeat left 14px; }
   &.read {
     float: right;
     text-align: right;
     width: 197px;
     padding-right: 3px;
     height: 32px;
-    background: transparent url('/assets/admin/read-arrow.jpg') no-repeat right 14px; } }
+    background: transparent url(<%= asset_path 'admin/read-arrow.jpg' %>) no-repeat right 14px; } }
 
 #app-links-list {
   list-style: disc inside;

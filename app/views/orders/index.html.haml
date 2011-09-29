@@ -97,7 +97,7 @@
   %td
     %span(style="font-size: 11px" class="{{{financial_class}}}")
       {{{financial_status_name}}}
-      -#%img(alt="Time-small" src="/images/admin/icons/time-small.png" title="此订单授权支付即将过期")
+      -#=image_tag 'admin/icons/time-small.png', title: "此订单授权支付即将过期"
     {{#if closed_at}}
     =image_tag 'admin/icons/closed.gif', style: 'margin-top: 3px', title: '此订单已关闭'
     {{/if}}

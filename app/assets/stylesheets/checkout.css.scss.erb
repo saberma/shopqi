@@ -60,12 +60,12 @@ a {
   width: 776px;
   background-color: #fff;
   padding: 0 13px;
-  background: url('/assets/checkout/checkout-bg.gif') bottom left repeat-y; }
+  background: url(<%= asset_path 'checkout/checkout-bg.gif' %>) bottom left repeat-y; }
 
 #container.slim #main {
   width: 413px;
   padding: 0 15px;
-  background: url('/assets/checkout/checkout-bg-slim.gif') bottom left repeat-y; }
+  background: url(<%= asset_path 'checkout/checkout-bg-slim.gif' %>) bottom left repeat-y; }
 
 #content {
   padding: 10px; }
@@ -73,11 +73,11 @@ a {
 #header {
   width: 792px;
   padding: 8px 5px;
-  background: url('/assets/checkout/checkout-bg-top.gif') bottom left no-repeat; }
+  background: url(<%= asset_path 'checkout/checkout-bg-top.gif' %>) bottom left no-repeat; }
 
 #container.slim #header {
   width: 430px;
-  background: url('/assets/checkout/checkout-bg-top-slim.gif') bottom left no-repeat; }
+  background: url(<%= asset_path 'checkout/checkout-bg-top-slim.gif' %>) bottom left no-repeat; }
 
 #header h1 {
   padding-left: 10px; }
@@ -100,21 +100,21 @@ a {
   width: 792px;
   padding: 8px 5px;
   margin: 0 auto;
-  background: url('/assets/checkout/checkout-bg-bottom.gif') top center no-repeat;
+  background: url(<%= asset_path 'checkout/checkout-bg-bottom.gif' %>) top center no-repeat;
   text-align: center;
   color: #888;
   font-size: 80%; }
 
 #container.slim #footer {
   width: 430px;
-  background: url('/assets/checkout/checkout-bg-bottom-slim.gif') top center no-repeat; }
+  background: url(<%= asset_path 'checkout/checkout-bg-bottom-slim.gif' %>) top center no-repeat; }
 
 /*
  *=OVERVIEW
  */
 
 #overview {
-  background: #fffbe5 url('/assets/checkout/checkout-overview-bg.gif') top left repeat-x;
+  background: #fffbe5 url(<%= asset_path 'checkout/checkout-overview-bg.gif' %>) top left repeat-x;
   border-bottom: 1px solid #EFEBA5;
   padding: 10px;
   margin: 0;
@@ -554,9 +554,9 @@ a {
     border-top: 0;
     padding: 4px 10px 4px 25px; }
   &.more {
-    background: white url(/assets/admin/icons/textarea-more.gif) 2% 50% no-repeat; }
+    background: white url(<%= asset_path 'admin/icons/textarea-more.gif' %>) 2% 50% no-repeat; }
   &.less {
-    background: white url(/assets/admin/icons/textarea-less.gif) 2% 50% no-repeat; } }
+    background: white url(<%= asset_path 'admin/icons/textarea-less.gif' %>) 2% 50% no-repeat; } }
 
 .clearfix {
   &:after {

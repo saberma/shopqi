@@ -9,7 +9,7 @@
 	{{ "screen.css" | asset_url | stylesheet_tag }}
 	{{ "theme.css" | asset_url | stylesheet_tag }}
 	<!--[if lte IE 6]>{{ "ie6.css" | asset_url | stylesheet_tag }}<![endif]-->{% if template == "product" %}{% if product.available %}{% if product.variants.size > 1 %}
-	{{ "option_selection.js" | shopify_asset_url | script_tag }}{% endif %}{% endif %}{% endif %}
+	{{ "option_selection.js" | shopqi | script_tag }}{% endif %}{% endif %}{% endif %}
 	{{ "jquery-1-3-1.js" | asset_url | script_tag }}{% if template == "product" %}
 	{{ "jquery-slimbox-2-02.js" | asset_url | script_tag }}{% endif %}
 	{{ "jquery-theme-1-0.js" | asset_url | script_tag }}
@@ -181,7 +181,7 @@
 		};
 		$(function() {
 			new Shopify.OptionSelectors("id", { product: {{ product | json }}, onVariantSelected: selectCallback });
-			// Using trick by Caroline Schnapp. See http://forums.shopify.com/categories/2/posts/38738
+			// Using trick by Caroline Schnapp. See http://forums.shopqi.com/categories/2/posts/38738
 			{% if product.available %}
 			{% assign found_one_in_stock = false %}
 			{% for variant in product.variants %}

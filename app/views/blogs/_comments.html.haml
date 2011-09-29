@@ -37,4 +37,4 @@
                 %span#comment_19083422_actions
                   %a.action.btn{"data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19083422/spam", :loading => "var action = $('comment_19083422_actions'); action.update('marking as spam...'); action.addClassName('hint');", :rel => "nofollow", :title => "Spam this comment"} spam
                   %a.action{"data-confirm" => "Are you sure you want to delete this comment?", "data-method" => "post", "data-remote" => "true", :href => "/admin/comments/19083422/remove", :loading => "var action = $('comment_19083422_actions'); action.update('removing...'); action.addClassName('hint');", :rel => "nofollow", :title => "Remove this comment"}
-                    %img{:alt => "Trash", :src => "https://cdn.shopify.com/s/images/admin/icons/trash.gif?19b2f7c9ac918121a1eed4f4e75712320f420f18"}/
+                    =image_tag 'admin/icons/trash.gif', alt: '删除'

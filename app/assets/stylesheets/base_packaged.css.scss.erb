@@ -7,13 +7,13 @@ img {
   border: 0px; }
 
 html {
-  background: url('/assets/layout/bg-body.jpg'); }
+  background: url(<%= asset_path 'layout/bg-body.jpg' %>); }
 
 body {
   font-family: "helvetica", "arial", sans-serif;
   font-size: 13px;
   color: #3e3e3e;
-  background: url("/assets/layout/bg-white-radial.png") no-repeat scroll 0 0 transparent; }
+  background: url(<%= asset_path 'layout/bg-white-radial.png' %>) no-repeat scroll 0 0 transparent; }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
@@ -129,7 +129,7 @@ pre {
 .vig-left {
   width: 450px;
   height: 450px;
-  background: url('/assets/layout/vig-dark.png') no-repeat left bottom;
+  background: url(<%= asset_path 'layout/vig-dark.png' %>) no-repeat left bottom;
   position: fixed;
   top: 0px;
   right: 0px;
@@ -138,7 +138,7 @@ pre {
 .vig-right {
   width: 450px;
   height: 450px;
-  background: url('/assets/layout/vig-dark.png') no-repeat right bottom;
+  background: url(<%= asset_path 'layout/vig-dark.png' %>) no-repeat right bottom;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -151,7 +151,7 @@ pre {
     height: 50px;
     width: 315px;
     text-indent: -99999px;
-    background: url('/assets/logos/logo-themestore.png') no-repeat;
+    background: url(<%= asset_path 'logos/logo-themestore.png' %>) no-repeat;
     &:hover, &:focus {
       background-position: 0 -52px; } }
   ul {
@@ -173,7 +173,7 @@ pre {
           color: #1865a4; } } } } }
 
 #filter-bar {
-  background: url('/assets/layout/navbar.png') no-repeat;
+  background: url(<%= asset_path 'layout/navbar.png' %>) no-repeat;
   width: 925px;
   height: 52px;
   margin: 0 0 25px 0;
@@ -215,7 +215,7 @@ pre {
     padding-right: 20px;
     a {
       height: 32px;
-      background: url('/assets/buttons/bg-filterbar-right-pointed.png') no-repeat left top;
+      background: url(<%= asset_path 'buttons/bg-filterbar-right-pointed.png' %>) no-repeat left top;
       padding-left: 16px;
       display: block;
       margin-left: 0px;
@@ -226,7 +226,7 @@ pre {
         text-shadow: 1px 1px #D7D7D7;
         outline: none; }
       span {
-        background: url('/assets/buttons/bg-filterbar-right.png') no-repeat right top;
+        background: url(<%= asset_path 'buttons/bg-filterbar-right.png' %>) no-repeat right top;
         height: 25px;
         display: block;
         padding-right: 15px;
@@ -239,12 +239,12 @@ pre {
     list-style: none;
     line-height: 32px;
     height: 32px;
-    background: url('/assets/buttons/bg-filterbar-middle.png') repeat-x top;
+    background: url(<%= asset_path 'buttons/bg-filterbar-middle.png' %>) repeat-x top;
     &.last {
-      background: url('/assets/buttons/bg-filterbar-right.png') no-repeat right top;
+      background: url(<%= asset_path 'buttons/bg-filterbar-right.png' %>) no-repeat right top;
       padding: 0 3px 0 0; }
     &.first {
-      background: url('/assets/buttons/bg-filterbar-left.png') no-repeat left top;
+      background: url(<%= asset_path 'buttons/bg-filterbar-left.png' %>) no-repeat left top;
       padding: 0 0 0 5px; }
     &:hover {
       background-position: 0 -32px; }
@@ -291,13 +291,13 @@ pre {
       li {
         background: none;
         a {
-          background: url('/assets/buttons/bg-filterbar-right.png') no-repeat right top;
+          background: url(<%= asset_path 'buttons/bg-filterbar-right.png' %>) no-repeat right top;
           padding: 0 7px 20px 0;
           height: 12px;
           margin-top: 0px;
           border: 0;
           span {
-            background: url('/assets/buttons/bg-filterbar-left.png') no-repeat left top;
+            background: url(<%= asset_path 'buttons/bg-filterbar-left.png' %>) no-repeat left top;
             height: 32px;
             float: left;
             margin-left: -10px;
@@ -317,7 +317,7 @@ pre {
       height: 17px;
       width: 13px;
       float: right;
-      background: url('/assets/icons/icon-close.png') 9px 6px no-repeat;
+      background: url(<%= asset_path 'icons/icon-close.png' %>) 9px 6px no-repeat;
       &:hover {
         cursor: pointer;
         background-position: 9px -34px; } } }
@@ -352,13 +352,13 @@ pre {
       li {
         background: none;
         a {
-          background: url('/assets/buttons/bg-filterbar-right.png') no-repeat right top;
+          background: url(<%= asset_path 'buttons/bg-filterbar-right.png' %>) no-repeat right top;
           padding: 0 10px 20px 0;
           height: 12px;
           margin-top: 0px;
           border: 0;
           span {
-            background: url('/assets/buttons/bg-filterbar-left-drop.png') no-repeat left top;
+            background: url(<%= asset_path 'buttons/bg-filterbar-left-drop.png' %>) no-repeat left top;
             height: 32px;
             float: left;
             margin-left: -10px;
@@ -400,14 +400,14 @@ pre {
       height: 17px;
       width: 13px;
       float: right;
-      background: url('/assets/icons/icon-close.png') 9px 6px no-repeat;
+      background: url(<%= asset_path 'icons/icon-close.png' %>) 9px 6px no-repeat;
       &:hover {
         cursor: pointer;
         background-position: 9px -34px; } }
     ul ul.drop {
       display: none;
       height: auto;
-      background: #b3b3b3 url('/assets/layout/bg-megadropdown.png') repeat-x top;
+      background: #b3b3b3 url(<%= asset_path 'layout/bg-megadropdown.png' %>) repeat-x top;
       margin: 0px 0 0 0;
       padding: 10px 12px 12px 12px;
       width: 166px;
@@ -457,7 +457,7 @@ pre {
   li.close {
     margin-right: 20px; }
   .close a {
-    background: url('/assets/icons/icon-close.png') no-repeat center center transparent;
+    background: url(<%= asset_path 'icons/icon-close.png' %>) no-repeat center center transparent;
     z-index: 997;
     position: absolute;
     right: 6px;
@@ -481,7 +481,7 @@ ul.theme-thumbs {
 
 .theme-thumbs li {
   margin: 0 0 51px 0;
-  background: url('/assets/layout/bg-themethumb.png') no-repeat 0 -10px;
+  background: url(<%= asset_path 'layout/bg-themethumb.png' %>) no-repeat 0 -10px;
   display: block;
   height: 290px;
   width: 205px;
@@ -509,7 +509,7 @@ ul {
       position: absolute;
       bottom: 50px;
       left: -6px;
-      background: url('/assets/buttons/buttonbg-themedetails.png') no-repeat;
+      background: url(<%= asset_path 'buttons/buttonbg-themedetails.png' %>) no-repeat;
       height: 107px;
       width: 100%;
       padding: 15px 0px 10px 0px;
@@ -577,7 +577,7 @@ ul {
     margin-left: -7px;
     li {
       margin: 0 -3px 61px 2px;
-      background: url('/assets/layout/bg-themethumb-featured.png') no-repeat 0 -10px;
+      background: url(<%= asset_path 'layout/bg-themethumb-featured.png' %>) no-repeat 0 -10px;
       display: block;
       width: 293px;
       height: 374px;
@@ -588,7 +588,7 @@ ul {
       a {
         width: 288px;
         height: 382px; } } }
-  background: url('/assets/layout/bg-shelf.png') no-repeat 0 97px;
+  background: url(<%= asset_path 'layout/bg-shelf.png' %>) no-repeat 0 97px;
   ul.theme-thumbs a {
     &:hover p {
       display: block; }
@@ -599,7 +599,7 @@ ul {
       position: absolute;
       bottom: -66px;
       left: -11px;
-      background: url('/assets/buttons/buttonbg-themedetails-featured.png') no-repeat;
+      background: url(<%= asset_path 'buttons/buttonbg-themedetails-featured.png' %>) no-repeat;
       height: 140px;
       width: 100%;
       padding: 15px 0px 10px 0px;
@@ -738,7 +738,7 @@ ul {
   margin-right: 0px!important; }
 
 #theme-grid {
-  background: url('/assets/layout/bg-shelf.png') repeat-y; }
+  background: url(<%= asset_path 'layout/bg-shelf.png' %>) repeat-y; }
 
 #theme-download {
   text-align: center;
@@ -767,7 +767,7 @@ ul {
 
 #woothemes {
   display: none;
-  background: url('/assets/layout/bg-shelf.png') no-repeat 0 -115px;
+  background: url(<%= asset_path 'layout/bg-shelf.png' %>) no-repeat 0 -115px;
   min-height: 233px;
   img.ninja {
     float: left; }
@@ -894,12 +894,12 @@ ul {
     line-height: 0;
     list-style: none;
     padding: 0px;
-    background: url('/assets/layout/bg-smallthumbnail-shadow.png') no-repeat;
+    background: url(<%= asset_path 'layout/bg-smallthumbnail-shadow.png' %>) no-repeat;
     padding: 1px 0 8px 1px;
     &:hover {}
     &:first-child {
       margin: 0 25px 0 0;
-      background: url('/assets/layout/bg-bigthumbnail-shadow.png') no-repeat;
+      background: url(<%= asset_path 'layout/bg-bigthumbnail-shadow.png' %>) no-repeat;
       padding: 4px 3px 10px 4px; }
     img {} } }
 
@@ -1033,7 +1033,7 @@ ul {
   margin-bottom: 35px; }
 
 .shelf {
-  background: url('/assets/layout/bg-shelf.png') no-repeat 0 0px; }
+  background: url(<%= asset_path 'layout/bg-shelf.png' %>) no-repeat 0 0px; }
 
 .more-themes {
   h4 {
@@ -1156,7 +1156,7 @@ p.view-style-demo a {
         left: 0;
         width: 55px;
         height: 39px;
-        background: url('/assets/icons/icon-guidelines-badge.png');
+        background: url(<%= asset_path 'icons/icon-guidelines-badge.png' %>);
         text-align: center;
         display: block;
         font-family: georgia;
@@ -1175,7 +1175,7 @@ p.view-style-demo a {
   height: 517px;
   border-bottom: 1px solid #aaa;
   position: relative;
-  background: url('/assets/examples/preset-shelves.png') no-repeat;
+  background: url(<%= asset_path 'examples/preset-shelves.png' %>) no-repeat;
   margin-bottom: 40px;
   padding: 10px;
   h3 {
@@ -1254,7 +1254,7 @@ p.view-style-demo a {
     white-space: pre-line; }
   .intro {
     padding: 22px 32px;
-    background: url('/assets/layout/bg-paperfold-top.png') no-repeat;
+    background: url(<%= asset_path 'layout/bg-paperfold-top.png' %>) no-repeat;
     height: 138px;
     h2 {
       font-size: 28px;
@@ -1264,7 +1264,7 @@ p.view-style-demo a {
       padding-top: 20px;
       width: 482px; } }
   .bottom {
-    background: url('/assets/layout/bg-paperfold-bottom.png') no-repeat;
+    background: url(<%= asset_path 'layout/bg-paperfold-bottom.png' %>) no-repeat;
     height: 182px;
     position: relative;
     p {
@@ -1277,7 +1277,7 @@ p.view-style-demo a {
       font-style: italic; } }
   .content-block {
     padding: 26px 35px 0;
-    background: url('/assets/layout/bg-paper.png') repeat-y;
+    background: url(<%= asset_path 'layout/bg-paper.png' %>) repeat-y;
     min-height: 61px;
     width: 482px; } }
 
@@ -1285,11 +1285,11 @@ p.view-style-demo a {
   padding-top: 0; }
 
 .paper-wrapper .fold {
-  background: url('/assets/layout/bg-paperfold.png') no-repeat;
+  background: url(<%= asset_path 'layout/bg-paperfold.png' %>) no-repeat;
   height: 89px; }
 
 .submit-timeline ul {
-  background: url('/assets/layout/bg-timeline-bar.png') no-repeat center left;
+  background: url(<%= asset_path 'layout/bg-timeline-bar.png' %>) no-repeat center left;
   display: block;
   min-height: 100px;
   width: 120%;
@@ -1297,7 +1297,7 @@ p.view-style-demo a {
   padding: 0;
   li {
     float: left;
-    background: url('/assets/layout/bg-timeline-circle.png') bottom center no-repeat;
+    background: url(<%= asset_path 'layout/bg-timeline-circle.png' %>) bottom center no-repeat;
     padding-bottom: 36px;
     width: 286px;
     margin: 3px 35px 0 0;
@@ -1308,7 +1308,7 @@ p.view-style-demo a {
     font-size: 16px;
     &.current {
       float: left;
-      background: url('/assets/layout/bg-timeline-circlefilled.png') bottom center no-repeat;
+      background: url(<%= asset_path 'layout/bg-timeline-circlefilled.png' %>) bottom center no-repeat;
       padding-bottom: 36px;
       width: 286px;
       margin: 3px 35px 0 0;
@@ -1474,7 +1474,7 @@ ul.indv-theme-stats {
     margin-right: 15px;
     list-style-type: none;
     position: relative;
-    background: url('/assets/layout/bg-themethumb.png') no-repeat center center;
+    background: url(<%= asset_path 'layout/bg-themethumb.png' %>) no-repeat center center;
     padding: 20px 20px 20px 20px;
     width: 205px;
     height: 263px;

@@ -88,7 +88,7 @@ input.btn {
   border: 1px solid #bbb;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #aaa;
-  background: #dddddd url('../assets/admin/btns/bg.gif?1') top left repeat-x;
+  background: #dddddd url(<%= asset_path 'admin/btns/bg.gif' %>) top left repeat-x;
   padding: 4px 6px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -114,7 +114,7 @@ a {
     border: 1px solid #bbb;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #aaa;
-    background: #dddddd url('../assets/admin/btns/bg.gif?1') top left repeat-x;
+    background: #dddddd url(<%= asset_path 'admin/btns/bg.gif' %>) top left repeat-x;
     padding: 6px 8px;
     text-shadow: 0px 1px 1px #fff;
     color: #3a3a3a;
@@ -153,7 +153,7 @@ a {
 
 input.red-btn, a.red-btn {
   color: #fff;
-  background: #a6451f url('../assets/admin/btns/bg-red.gif') top left repeat-x;
+  background: #a6451f url(<%= asset_path 'admin/btns/bg-red.gif' %>) top left repeat-x;
   text-shadow: none;
   border-color: #863819; }
 
@@ -164,7 +164,7 @@ input.red-btn:hover, a.red-btn:hover {
 
 input.green-btn, a.green-btn {
   color: #1e2904;
-  background: #83b211 url('../assets/admin/btns/bg-green.gif') top left repeat-x;
+  background: #83b211 url(<%= asset_path 'admin/btns/bg-green.gif' %>) top left repeat-x;
   border-color: #6e960f; }
 
 input.green-btn:hover, a.green-btn:hover {
@@ -295,7 +295,7 @@ a.bottab {
 
 .shopqi-dialog-title {
   position: relative;
-  background: url("../assets/editor/toolbar-bg.png") repeat-x scroll left bottom #fafafa;
+  background: url(<%= asset_path 'editor/toolbar-bg.png' %>) repeat-x scroll left bottom #fafafa;
   border-bottom: 1px solid #bbb;
   color: #333;
   cursor: move;
@@ -317,7 +317,7 @@ a.bottab {
   display: block;
   float: left;
   text-indent: -9999px;
-  background: url(../assets/admin/icons/close.png) no-repeat 0px 0px;
+  background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px 0px;
   height: 24px;
   width: 24px;
   position: absolute;
@@ -326,16 +326,16 @@ a.bottab {
   top: 8px;
   cursor: pointer;
   &:hover {
-    background: url(../assets/admin/icons/close.png) no-repeat 0px -23px; }
+    background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px -23px; }
   &:active {
-    background: url(../assets/admin/icons/close.png) no-repeat 0px -46px; } }
+    background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px -46px; } }
 
 .closure-lightbox-placeholder {
   text-align: center;
   height: 50px;
   width: 50px;
   padding: 30px 130px;
-  background: url(../assets/spinner_big.gif) no-repeat center center; }
+  background: url(<%= asset_path 'spinner_big.gif' %>) no-repeat center center; }
 
 .shopqi-dialog-content .dialog-actions {
   padding: 5px 0 0 0; }

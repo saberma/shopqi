@@ -132,7 +132,7 @@ jQuery(document).ready(function() {
   $('#product-variants div select').css("float","right");
   $('#product-variants div ').addClass("clearfix");
   // Select first available variant to avoid 'Sold Out' or 'Unavailable' text on page load.
-  // Code by Caroline Hill. See http://forums.shopify.com/categories/2/posts/38738
+  // Code by Caroline Hill. See http://forums.shopqi.com/categories/2/posts/38738
   {% assign found_one_in_stock = false %}
   {% for variant in product.variants %}
     {% if variant.available and found_one_in_stock == false %}

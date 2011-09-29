@@ -33,7 +33,7 @@
     left: 0;
     width: 40px;
     height: 480px;
-    background-image: url('/assets/fancybox/fancybox.png'); } }
+    background-image: url(<%= asset_path 'fancybox/fancybox.png' %>); } }
 
 #fancybox-overlay {
   position: absolute;
@@ -90,7 +90,7 @@
   right: -15px;
   width: 30px;
   height: 30px;
-  background: transparent url('/assets/fancybox/fancybox.png') -40px 0px;
+  background: transparent url(<%= asset_path 'fancybox/fancybox.png' %>) -40px 0px;
   cursor: pointer;
   z-index: 1103;
   display: none; }
@@ -124,7 +124,7 @@
   width: 35%;
   cursor: pointer;
   outline: none;
-  background: transparent url('/assets/fancybox/blank.gif');
+  background: transparent url(<%= asset_path 'fancybox/blank.gif' %>);
   z-index: 1102;
   display: none; }
 
@@ -146,11 +146,11 @@
   display: block; }
 
 #fancybox-left-ico {
-  background-image: url('/assets/fancybox/fancybox.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox.png' %>);
   background-position: -40px -30px; }
 
 #fancybox-right-ico {
-  background-image: url('/assets/fancybox/fancybox.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox.png' %>);
   background-position: -40px -60px; }
 
 #fancybox-left:hover, #fancybox-right:hover {
@@ -177,50 +177,50 @@
   top: -20px;
   left: 0;
   width: 100%;
-  background-image: url('/assets/fancybox/fancybox-x.png'); }
+  background-image: url(<%= asset_path 'fancybox/fancybox-x.png' %>); }
 
 #fancybox-bg-ne {
   top: -20px;
   right: -20px;
-  background-image: url('/assets/fancybox/fancybox.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox.png' %>);
   background-position: -40px -162px; }
 
 #fancybox-bg-e {
   top: 0;
   right: -20px;
   height: 100%;
-  background-image: url('/assets/fancybox/fancybox-y.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox-y.png' %>);
   background-position: -20px 0px; }
 
 #fancybox-bg-se {
   bottom: -20px;
   right: -20px;
-  background-image: url('/assets/fancybox/fancybox.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox.png' %>);
   background-position: -40px -182px; }
 
 #fancybox-bg-s {
   bottom: -20px;
   left: 0;
   width: 100%;
-  background-image: url('/assets/fancybox/fancybox-x.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox-x.png' %>);
   background-position: 0px -20px; }
 
 #fancybox-bg-sw {
   bottom: -20px;
   left: -20px;
-  background-image: url('/assets/fancybox/fancybox.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox.png' %>);
   background-position: -40px -142px; }
 
 #fancybox-bg-w {
   top: 0;
   left: -20px;
   height: 100%;
-  background-image: url('/assets/fancybox/fancybox-y.png'); }
+  background-image: url(<%= asset_path 'fancybox/fancybox-y.png' %>); }
 
 #fancybox-bg-nw {
   top: -20px;
   left: -20px;
-  background-image: url('/assets/fancybox/fancybox.png');
+  background-image: url(<%= asset_path 'fancybox/fancybox.png' %>);
   background-position: -40px -122px; }
 
 #fancybox-title {
@@ -248,7 +248,7 @@
 
 #fancybox-title-over {
   padding: 10px;
-  background-image: url('/assets/fancybox/fancy_title_over.png');
+  background-image: url(<%= asset_path 'fancybox/fancy_title_over.png' %>);
   display: block; }
 
 .fancybox-title-float {
@@ -267,44 +267,44 @@
 
 #fancybox-title-float-left {
   padding: 0 0 0 15px;
-  background: url('/assets/fancybox/fancybox.png') -40px -90px no-repeat; }
+  background: url(<%= asset_path 'fancybox/fancybox.png' %>) -40px -90px no-repeat; }
 
 #fancybox-title-float-main {
   color: #FFF;
   line-height: 29px;
   font-weight: bold;
   padding: 0 0 3px 0;
-  background: url('/assets/fancybox/fancybox-x.png') 0px -40px; }
+  background: url(<%= asset_path 'fancybox/fancybox-x.png' %>) 0px -40px; }
 
 #fancybox-title-float-right {
   padding: 0 0 0 15px;
-  background: url('/assets/fancybox/fancybox.png') -55px -90px no-repeat; }
+  background: url(<%= asset_path 'fancybox/fancybox.png' %>) -55px -90px no-repeat; }
 
 /* IE6 */
 
 .fancybox-ie6 {
   #fancybox-close {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_close.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_close.png' %>, sizingMethod='scale'); }
   #fancybox-left-ico {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_nav_left.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_nav_left.png' %>, sizingMethod='scale'); }
   #fancybox-right-ico {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_nav_right.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_nav_right.png' %>, sizingMethod='scale'); }
   #fancybox-title-over {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_title_over.png', sizingMethod='scale');
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_title_over.png' %>, sizingMethod='scale');
     zoom: 1; }
   #fancybox-title-float-left {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_title_left.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_title_left.png' %>, sizingMethod='scale'); }
   #fancybox-title-float-main {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_title_main.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_title_main.png' %>, sizingMethod='scale'); }
   #fancybox-title-float-right {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_title_right.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_title_right.png' %>, sizingMethod='scale'); }
   #fancybox-bg-w, #fancybox-bg-e, #fancybox-left, #fancybox-right {
     height: expression(this.parentNode.clientHeight + "px"); } }
 
@@ -317,7 +317,7 @@
   top: expression((-20 + (document.documentElement.clientHeight ? document.documentElement.clientHeight/2 : document.body.clientHeight/2 ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop )) + 'px');
   div {
     background: transparent;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='fancybox/fancy_loading.png', sizingMethod='scale'); } }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_loading.png' %>, sizingMethod='scale'); } }
 
 /* IE6, IE7, IE8 */
 
@@ -325,18 +325,18 @@
   .fancybox-bg {
     background: transparent !important; }
   #fancybox-bg-n {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_n.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_n.png' %>, sizingMethod='scale'); }
   #fancybox-bg-ne {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_ne.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_ne.png' %>, sizingMethod='scale'); }
   #fancybox-bg-e {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_e.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_e.png' %>, sizingMethod='scale'); }
   #fancybox-bg-se {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_se.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_se.png' %>, sizingMethod='scale'); }
   #fancybox-bg-s {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_s.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_s.png' %>, sizingMethod='scale'); }
   #fancybox-bg-sw {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_sw.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_sw.png' %>, sizingMethod='scale'); }
   #fancybox-bg-w {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_w.png', sizingMethod='scale'); }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_w.png' %>, sizingMethod='scale'); }
   #fancybox-bg-nw {
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/fancybox/fancy_shadow_nw.png', sizingMethod='scale'); } }
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=<%= asset_path 'fancybox/fancy_shadow_nw.png' %>, sizingMethod='scale'); } }

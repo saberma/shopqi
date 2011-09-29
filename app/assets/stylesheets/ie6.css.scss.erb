@@ -77,47 +77,11 @@ input {
 /* weird ie6 doesn't show background*/
 
 #header {
-  background: #4aa30d url('../assets/background/bg-header-frontpage.gif?1273087967') top left repeat-x;
+  background: #4aa30d url(<%= asset_path 'background/bg-header-frontpage.gif' %>) top left repeat-x;
   &.frontpage.createbluegreen {
-    background: url('../assets/background/bg-bannergreentoblue.jpg?1273268734') repeat-x; } }
+    background: url(<%= asset_path 'background/bg-bannergreentoblue.jpg' %>) repeat-x; } }
 
 #subheader ul li {
   padding-left: 14px;
   img {
     display: none; } }
-
-/* ============ */
-/* = Lightbox = */
-/* ============ */
-
-#cboxTopLeft {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderTopLeft.png, sizingMethod='scale'); }
-
-#cboxTopCenter {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderTopCenter.png, sizingMethod='scale'); }
-
-#cboxTopRight {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderTopRight.png, sizingMethod='scale'); }
-
-#cboxBottomLeft {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderBottomLeft.png, sizingMethod='scale'); }
-
-#cboxBottomCenter {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderBottomCenter.png, sizingMethod='scale'); }
-
-#cboxBottomRight {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderBottomRight.png, sizingMethod='scale'); }
-
-#cboxMiddleLeft {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderMiddleLeft.png, sizingMethod='scale'); }
-
-#cboxMiddleRight {
-  background: transparent;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=assets/internet_explorer/borderMiddleRight.png, sizingMethod='scale'); }

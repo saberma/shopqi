@@ -288,13 +288,13 @@ ul {
   z-index: 9999; }
 
 #flashnotice {
-  background: #172830 url('../assets/admin/bubbles.gif') top left no-repeat;
+  background: #172830 url(<%= asset_path 'admin/bubbles.gif' %>) top left no-repeat;
   border-top: 3px solid #000;
   color: #fff;
   vertical-align: center; }
 
 #flasherrors {
-  background: #8a1111 url('../assets/admin/bubbles_error.gif') top left no-repeat;
+  background: #8a1111 url(<%= asset_path 'admin/bubbles_error.gif' %>) top left no-repeat;
   border-top: 3px solid #000;
   color: #fff; }
 
@@ -572,7 +572,7 @@ background: -webkit-linear-gradient(top, #f8f8f8 0%,#ececec 100%);
 }
 */
 
-/*a.btn { font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid #bbb; border-top: 1px solid #ccc; border-bottom: 1px solid #aaa; background: #ddd url('../assets/admin/btns/bg.gif?1') top left repeat-x; padding: 6px 8px; text-shadow: 0px 1px 1px #fff; color: #3a3a3a; text-decoration: none; border-radius:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }*/
+/*a.btn { font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid #bbb; border-top: 1px solid #ccc; border-bottom: 1px solid #aaa; background: #ddd url(<%= asset_path 'admin/btns/bg.gif' %>) top left repeat-x; padding: 6px 8px; text-shadow: 0px 1px 1px #fff; color: #3a3a3a; text-decoration: none; border-radius:5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }*/
 
 a {
   &.active {
@@ -654,7 +654,7 @@ a {
 
 input.red-btn, a.red-btn {
   color: #fff;
-  background: #a6451f url('../assets/admin/btns/bg-red.gif') top left repeat-x;
+  background: #a6451f url(<%= asset_path 'admin/btns/bg-red.gif' %>) top left repeat-x;
   text-shadow: none;
   border-color: #863819; }
 
@@ -665,7 +665,7 @@ input.red-btn:hover, a.red-btn:hover {
 
 input.green-btn, a.green-btn {
   color: #1e2904;
-  background: #83b211 url('../assets/admin/btns/bg-green.gif') top left repeat-x;
+  background: #83b211 url(<%= asset_path 'admin/btns/bg-green.gif' %>) top left repeat-x;
   border-color: #6e960f; }
 
 input.green-btn:hover, a.green-btn:hover {
@@ -796,7 +796,7 @@ a.bottab {
 
 .shopqi-dialog-title {
   position: relative;
-  background: url("../assets/editor/toolbar-bg.png") repeat-x scroll left bottom #fafafa;
+  background: url(<%= asset_path 'editor/toolbar-bg.png' %>) repeat-x scroll left bottom #fafafa;
   border-bottom: 1px solid #bbb;
   color: #333;
   cursor: move;
@@ -818,7 +818,7 @@ a.bottab {
   display: block;
   float: left;
   text-indent: -9999px;
-  background: url(../assets/admin/icons/close.png) no-repeat 0px 0px;
+  background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px 0px;
   height: 24px;
   width: 24px;
   position: absolute;
@@ -827,16 +827,16 @@ a.bottab {
   top: 8px;
   cursor: pointer;
   &:hover {
-    background: url(../assets/admin/icons/close.png) no-repeat 0px -23px; }
+    background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px -23px; }
   &:active {
-    background: url(../assets/admin/icons/close.png) no-repeat 0px -46px; } }
+    background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px -46px; } }
 
 .closure-lightbox-placeholder {
   text-align: center;
   height: 50px;
   width: 50px;
   padding: 30px 130px;
-  background: url(../assets/spinner_big.gif) no-repeat center center; }
+  background: url(<%= asset_path 'spinner_big.gif' %>) no-repeat center center; }
 
 .shopqi-dialog-content .dialog-actions {
   padding: 5px 0 0 0; }
@@ -856,7 +856,7 @@ body {
   margin: 0;
   font: 1em / 1.3em "Lucida Grande", Arial, Arial, sans-serif;
   color: #333;
-  background: #eef2e5 url("../assets/admin/bg.gif?1") repeat-x;
+  background: #eef2e5 url(<%= asset_path 'admin/bg.gif?1' %>) repeat-x;
   -webkit-text-size-adjust: none; }
 
 #container {
@@ -1104,7 +1104,7 @@ span.action a:hover, li.action a:hover {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -o-transition: all 0.2s ease-out; }
-  background: url(../assets/admin/blank-slate-heading-bg.png) no-repeat top left;
+  background: url(<%= asset_path 'admin/blank-slate-heading-bg.png' %>) no-repeat top left;
   width: 925px;
   .heading {
     text-align: center;
@@ -1151,7 +1151,7 @@ span.action a:hover, li.action a:hover {
       top: 0px;
       width: 100%;
       height: 100%;
-      background: url(../assets/1x1-transparent.gif); } }
+      background: url(<%= asset_path '1x1-transparent.gif' %>); } }
   .screenshot {
     position: relative;
     img {
@@ -1172,14 +1172,14 @@ span.action a:hover, li.action a:hover {
       -webkit-border-radius: 3px;
       border: none;
       border: 2px solid rgba(255, 255, 255, 0);
-      background: url(../assets/1x1-transparent.gif);
+      background: url(<%= asset_path '1x1-transparent.gif' %>);
       &:hover, &.active {
         border: 2px solid #5da3cd !important;
         z-index: 5 !important; } }
     .overlay-mask {
       position: absolute;
       z-index: 4;
-      background: url(../assets/admin/blank-slate-overlay.png);
+      background: url(<%= asset_path 'admin/blank-slate-overlay.png' %>);
       top: 0;
       left: 0;
       width: 0px;
@@ -1237,7 +1237,7 @@ span.action a:hover, li.action a:hover {
   width: 300px;
   top: 505px;
   left: 250px;
-  background: url(../assets/spinner_big.gif) center left no-repeat;
+  background: url(<%= asset_path 'spinner_big.gif' %>) center left no-repeat;
   color: #000;
   padding-left: 50px;
   font-size: 14pt;
@@ -1247,7 +1247,7 @@ span.action a:hover, li.action a:hover {
   -moz-opacity: 0.4;
   opacity: .40;
   filter: alpha(opacity = 40);
-  background: url(../assets/spinner_big.gif) center center no-repeat;
+  background: url(<%= asset_path 'spinner_big.gif' %>) center center no-repeat;
   margin-top: 20px;
   height: 32px; }
 
@@ -1367,7 +1367,7 @@ table#events {
       text-decoration: none; } } }
 
 .dashboard-section {
-  background: url('../assets/admin/section-gradient.gif') repeat-x top left;
+  background: url(<%= asset_path 'admin/section-gradient.gif' %>) repeat-x top left;
   margin-left: -32px;
   width: 900px;
   padding: 35px 30px;
@@ -1437,7 +1437,7 @@ div.announcement {
   &:hover {
     cursor: pointer; }
   span.arrow {
-    background: url('../assets/admin/icons/arrow-more-less.png') no-repeat center 11px;
+    background: url(<%= asset_path 'admin/icons/arrow-more-less.png' %>) no-repeat center 11px;
     padding: 6px 6px 6px 8px; } }
 
 #label-start, #label-end {
@@ -1466,7 +1466,7 @@ div.announcement {
     &#end-date {
       margin-left: 20px; } }
   div.white-arrow {
-    background: url('../assets/admin/white-arrow.png') no-repeat center top;
+    background: url(<%= asset_path 'admin/white-arrow.png' %>) no-repeat center top;
     width: 20px;
     height: 11px;
     margin: -31px 0 13px 182px; }
@@ -1593,7 +1593,7 @@ td {
   &.positive, &.negative {
     font-family: "helvetica neue", helvetica, arial;
     font-size: 13px;
-    background: url('../assets/admin/icons/plus-minus-arrows.gif') no-repeat;
+    background: url(<%= asset_path 'admin/icons/plus-minus-arrows.gif' %>) no-repeat;
     margin: 0 5px 0 10px;
     padding-left: 13px; }
   &.positive {
@@ -1679,7 +1679,7 @@ li {
   width: 419px;
   height: 210px;
   padding: 35px 30px;
-  background: url('../assets/admin/section-gradient.gif') repeat-x top left;
+  background: url(<%= asset_path 'admin/section-gradient.gif' %>) repeat-x top left;
   border-right: 1px solid #e0e0e0;
   float: left;
   margin-left: -32px;
@@ -1787,7 +1787,7 @@ li {
 .more-button {
   text-decoration: none;
   color: #777;
-  background: #f7f7f7 url('../assets/admin/icons/arrow-more-less.png') no-repeat;
+  background: #f7f7f7 url(<%= asset_path 'admin/icons/arrow-more-less.png' %>) no-repeat;
   background-position: center 18px;
   padding-bottom: 4px;
   font-size: 11px;
@@ -1799,7 +1799,7 @@ li {
   border-bottom: 7px solid #f7f7f7;
   &:hover {
     cursor: pointer;
-    background: #f0f0f0 url('../assets/admin/icons/arrow-more-less.png') no-repeat;
+    background: #f0f0f0 url(<%= asset_path 'admin/icons/arrow-more-less.png' %>) no-repeat;
     background-position: center 18px;
     border-bottom: 7px solid #f0f0f0; }
   &.less {
@@ -1893,7 +1893,7 @@ table#activity {
     padding: 28px 0 0 40px;
     width: 18px;
     span {
-      background-image: url('../assets/admin/icons/activity-feed-icons.png');
+      background-image: url(<%= asset_path 'admin/icons/activity-feed-icons.png' %>);
       background-repeat: no-repeat;
       height: 13px;
       width: 12px;
@@ -1927,7 +1927,7 @@ tr:hover a.pin-event {
   &.pinned:hover strong.eventPinned {
     display: none; }
   height: 16px;
-  background-image: url("../assets/admin/btns/bg-pin.png");
+  background-image: url(<%= asset_path 'admin/btns/bg-pin.png' %>);
   border-style: solid;
   border-width: 1px;
   padding: 0 5px;
@@ -1959,7 +1959,7 @@ a.pin-event.pinned {
   display: block;
   height: 13px;
   width: 125px;
-  background-image: url('../assets/admin/icons/pin-icons.png');
+  background-image: url(<%= asset_path 'admin/icons/pin-icons.png' %>);
   background-position: 100px -55px;
   background-repeat: no-repeat; }
 
@@ -1967,7 +1967,7 @@ tr:hover a.pin-event {
   &.pinned {
     border-color: #7aaa50 #7aaa50 #5b8d31 #7aaa50;
     text-shadow: 0 1px 0 #74ac44;
-    background-image: url("../assets/admin/btns/bg-pin.png");
+    background-image: url(<%= asset_path 'admin/btns/bg-pin.png' %>);
     background-position: 0 -16px;
     background-repeat: repeat-x;
     color: #fff;
@@ -1979,7 +1979,7 @@ tr:hover a.pin-event {
       color: #fff;
       width: 65px; } }
   span {
-    background-image: url('../assets/admin/icons/pin-icons.png');
+    background-image: url(<%= asset_path 'admin/icons/pin-icons.png' %>);
     height: 13px;
     width: 13px;
     background-repeat: no-repeat;
@@ -2011,14 +2011,14 @@ tr:hover a.pin-event {
     font-size: 11px;
     padding-top: 5px; }
   .loading {
-    background-image: url(../assets/spinner_big.gif); }
+    background-image: url(<%= asset_path 'spinner_big.gif' %>); }
   .error {
     &.tech {
-      background-image: url(../assets/admin/icons/icon-warning.png); }
+      background-image: url(<%= asset_path 'admin/icons/icon-warning.png' %>); }
     &.maintenance {
-      background-image: url(../assets/admin/icons/icon-tech.png); }
+      background-image: url(<%= asset_path 'admin/icons/icon-tech.png' %>); }
     &.temp {
-      background-image: url(../assets/admin/icons/icon-error.png); } } }
+      background-image: url(<%= asset_path 'admin/icons/icon-error.png' %>); } } }
 
 #report-center-stats.faded {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
@@ -2060,7 +2060,7 @@ tr:hover a.pin-event {
   text-align: center;
   border: 1px solid #eeeeee;
   .lock-icon {
-    background: url("../assets/admin/icons/lock-7x9.png") no-repeat left;
+    background: url(<%= asset_path 'admin/icons/lock-7x9.png' %>) no-repeat left;
     padding-left: 14px; }
   strong {
     font-size: 14px; } }
@@ -2124,7 +2124,7 @@ tr:hover a.pin-event {
         border-bottom: 1px solid #dddddd;
         background: #eee;
         .triangle {
-          background: no-repeat right top url(../assets/admin/icons/launch-triangles.png);
+          background: no-repeat right top url(<%= asset_path 'admin/icons/launch-triangles.png' %>);
           position: absolute;
           right: -17px;
           top: 0;
@@ -2159,7 +2159,7 @@ tr:hover a.pin-event {
           color: #315f16;
           background: #a4d459;
           .triangle {
-            background: url(../assets/admin/icons/launch-triangles.png) no-repeat right -45px;
+            background: url(<%= asset_path 'admin/icons/launch-triangles.png' %>) no-repeat right -45px;
             display: block;
             height: 38px;
             width: 18px;
@@ -2174,7 +2174,7 @@ tr:hover a.pin-event {
     background: #2c84cd;
     border-color: #206094;
     .triangle {
-      background: transparent url(../assets/admin/icons/launch-triangles.png) no-repeat right -90px; } }
+      background: transparent url(<%= asset_path 'admin/icons/launch-triangles.png' %>) no-repeat right -90px; } }
   ul li.completed.launch a {
     color: #505050;
     text-shadow: none;
@@ -2213,7 +2213,7 @@ tr:hover a.pin-event {
   ul li {
     &.incomplete {
       .icon {
-        background-image: url(../assets/admin/icons/progressbar-sprite.png);
+        background-image: url(<%= asset_path 'admin/icons/progressbar-sprite.png' %>);
         background-repeat: no-repeat;
         width: 20px;
         left: 27px;
@@ -2258,7 +2258,7 @@ tr:hover a.pin-event {
       &.launch .icon {
         background-image: none; } }
     &.completed .icon {
-      background-image: url(../assets/admin/icons/progressbar-sprite.png);
+      background-image: url(<%= asset_path 'admin/icons/progressbar-sprite.png' %>);
       background-repeat: no-repeat;
       width: 20px;
       left: 27px;
@@ -2357,13 +2357,13 @@ tr:hover a.pin-event {
 
 .guide-outer {
   &.left {
-    background: url(../assets/admin/icons/tooltip-arrow-right.png) right center no-repeat; }
+    background: url(<%= asset_path 'admin/icons/tooltip-arrow-right.png' %>) right center no-repeat; }
   &.right {
-    background: url(../assets/admin/icons/tooltip-arrow-left.png) left center no-repeat; }
+    background: url(<%= asset_path 'admin/icons/tooltip-arrow-left.png' %>) left center no-repeat; }
   &.below {
-    background: url(../assets/admin/icons/tooltip-arrow-top.png) center top no-repeat; }
+    background: url(<%= asset_path 'admin/icons/tooltip-arrow-top.png' %>) center top no-repeat; }
   &.above {
-    background: url(../assets/admin/icons/tooltip-arrow-bottom.png) center bottom no-repeat; }
+    background: url(<%= asset_path 'admin/icons/tooltip-arrow-bottom.png' %>) center bottom no-repeat; }
   div {
     padding: 0.5em 1em;
     background: #000;
@@ -2464,15 +2464,15 @@ tr:hover a.pin-event {
     .icon {
       height: 15px;
       width: 15px;
-      background: url(../assets/admin/icons/taskbar-checkbox.png);
+      background: url(<%= asset_path 'admin/icons/taskbar-checkbox.png' %>);
       display: block;
       position: absolute;
       left: 9px;
       top: 12px; } }
   .task-checked .icon {
-    background: url(../assets/admin/icons/taskbar-checkbox.png) 0 -22px; }
+    background: url(<%= asset_path 'admin/icons/taskbar-checkbox.png' %>) 0 -22px; }
   .pick-another-task a {
-    background: #dedede url("../assets/admin/btns/bg.gif") repeat-x;
+    background: #dedede url(<%= asset_path 'admin/btns/bg.gif' %>) repeat-x;
     color: #333;
     padding: 10px 13px 10px 13px;
     -moz-border-radius: 3px;
@@ -2577,12 +2577,12 @@ div.flash {
   font-size: 100%;
   color: #fff;
   &.notice {
-    background: #172830 url('../assets/admin/bubbles.gif') top left no-repeat;
+    background: #172830 url(<%= asset_path 'admin/bubbles.gif' %>) top left no-repeat;
     border-top: 3px solid #000;
     color: #fff;
     vertical-align: center; }
   &.errors {
-    background: #8a1111 url('../assets/admin/bubbles_error.gif') top left no-repeat;
+    background: #8a1111 url(<%= asset_path 'admin/bubbles_error.gif' %>) top left no-repeat;
     border-top: 3px solid #000;
     color: #fff; } }
 
@@ -2705,13 +2705,13 @@ table.prod {
   margin-top: 20px; }
 
 #blogs .blog {
-  background: url(../assets/admin/icons/blog.gif) 0 50% no-repeat;
+  background: url(<%= asset_path 'admin/icons/blog.gif' %>) 0 50% no-repeat;
   padding-left: 20px;
   font-size: 110%;
   display: inline; }
 
 #pages .page {
-  background: url(../assets/admin/icons/page.gif) 0 50% no-repeat;
+  background: url(<%= asset_path 'admin/icons/page.gif' %>) 0 50% no-repeat;
   padding-left: 20px;
   height: 22px;
   display: block; }
@@ -2775,7 +2775,7 @@ table.prod {
     font-size: 10px;
     display: block; }
   .view-all-comments {
-    background: url(../assets/admin/icons/comment.gif) 0 -1px no-repeat;
+    background: url(<%= asset_path 'admin/icons/comment.gif' %>) 0 -1px no-repeat;
     padding-left: 22px;
     font-weight: bold; }
   tr.spam {
@@ -2846,7 +2846,7 @@ table.articles-recent {
   .del {
     padding-right: 0; }
   .view-all-articles {
-    background: url(../assets/admin/icons/book.png) 0 -1px no-repeat;
+    background: url(<%= asset_path 'admin/icons/book.png' %>) 0 -1px no-repeat;
     padding-left: 22px;
     font-weight: bold; } }
 
@@ -3174,10 +3174,10 @@ div.coupon.hover {
   &.disabled .coupon {
     opacity: 0.6; }
   &.expired td {
-    background: url(../assets/admin/bg-stripes.png) !important; } }
+    background: url(<%= asset_path 'admin/bg-stripes.png' %>) !important; } }
 
 .discount-icon {
-  background: url(../assets/admin/icons/coupon.png) no-repeat left;
+  background: url(<%= asset_path 'admin/icons/coupon.png' %>) no-repeat left;
   padding-left: 20px; }
 
 /*for the actions area*/
@@ -3207,7 +3207,7 @@ div.coupon.hover {
     right: -10px;
     height: 27px;
     width: 27px;
-    background: url("../assets/admin/icons/coupon-delete.png");
+    background: url(<%= asset_path 'admin/icons/coupon-delete.png' %>);
     z-index: 5;
     text-indent: 999999px;
     display: block;
@@ -3285,7 +3285,7 @@ div.coupon.hover {
 /* *=ORDER PAGE */
 
 .failure {
-  background: url(../assets/admin/icons/alert.gif) top left no-repeat;
+  background: url(<%= asset_path 'admin/icons/alert.gif' %>) top left no-repeat;
   padding-left: 15px; }
 
 #order-table td {
@@ -3384,7 +3384,7 @@ div.tel {
   margin: 0 0 0 -5px;
   padding: 8px 0 0 47px;
   color: #53a60e;
-  background: url(../assets/admin/shipping-to-shopqi-hq.png) 0 0 no-repeat; }
+  background: url(<%= asset_path 'admin/shipping-to-shopqi-hq.png' %>) 0 0 no-repeat; }
 
 div {
   &.incomplete {
@@ -3475,15 +3475,15 @@ ul#note-attributes {
 
 .mail-sent {
   padding-left: 22px;
-  background: url('../assets/admin/icons/email-send.gif') center left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/email-send.gif' %>) center left no-repeat; }
 
 .payment-failure, .capture-failure, .authorization-failure {
   padding-left: 15px;
-  background: url('../assets/admin/icons/alert.gif') center left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/alert.gif' %>) center left no-repeat; }
 
 .payment-success, .capture-success {
   padding-left: 22px;
-  background: url('../assets/admin/icons/payment.gif') center left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment.gif' %>) center left no-repeat; }
 
 #cancel_order {
   width: 600px;
@@ -4062,7 +4062,7 @@ textarea.notes {
   top: 35px; }
 
 #auth-warning {
-  background: #fffbe5 url('../assets/admin/icons/time.gif') 1% 50% no-repeat;
+  background: #fffbe5 url(<%= asset_path 'admin/icons/time.gif' %>) 1% 50% no-repeat;
   padding-left: 40px;
   strong {
     background-color: #FFEE8F;
@@ -4124,7 +4124,7 @@ a.abandoned {
   h3 {
     margin-bottom: 7px; }
   .risk {
-    background: #fbeae4 url('../assets/admin/icons/warning-16.gif') 0% 50% no-repeat;
+    background: #fbeae4 url(<%= asset_path 'admin/icons/warning-16.gif' %>) 0% 50% no-repeat;
     padding-left: 22px;
     color: #9c5329 !important;
     border-bottom: 1px solid #ebc4ad;
@@ -4133,7 +4133,7 @@ a.abandoned {
     vertical-align: middle;
     margin: 3px 0; }
   .attention {
-    background: url('../assets/admin/icons/warning-16.gif') 0% 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/warning-16.gif' %>) 0% 50% no-repeat;
     padding-left: 22px;
     vertical-align: middle;
     margin: 3px 0; } }
@@ -4240,7 +4240,7 @@ a.abandoned {
   float: left;
   text-align: center;
   padding: 0 0 0 40px;
-  background: #fafafa url(../assets/spinner.gif) no-repeat 10px 6px;
+  background: #fafafa url(<%= asset_path 'spinner.gif' %>) no-repeat 10px 6px;
   line-height: 28px;
   color: #aaa;
   width: 156px;
@@ -4259,7 +4259,7 @@ a.abandoned {
   line-height: 52px;
   color: #fff;
   text-shadow: 0 0 1px #000;
-  background-image: url(../assets/1x1-transparent-black.png);
+  background-image: url(<%= asset_path '1x1-transparent-black.png' %>);
   border-radius: 40px;
   -moz-border-radius: 40px;
   -webkit-border-radius: 40px;
@@ -4286,20 +4286,20 @@ a.abandoned {
     height: 16px;
     a {
       &.skype {
-        background: transparent url(../assets/admin/icons/skype_16.png) no-repeat 2px top;
+        background: transparent url(<%= asset_path 'admin/icons/skype_16.png' %>) no-repeat 2px top;
         padding-left: 26px; }
       &.email {
-        background: transparent url(../assets/admin/icons/email.gif) no-repeat 3px 1px;
+        background: transparent url(<%= asset_path 'admin/icons/email.gif' %>) no-repeat 3px 1px;
         padding-left: 26px;
         margin-left: 15px; }
       &.details {
-        background: transparent url(../assets/admin/icons/user.gif) no-repeat left top;
+        background: transparent url(<%= asset_path 'admin/icons/user.gif' %>) no-repeat left top;
         padding-left: 26px;
         margin-left: 15px; } }
     .show-notes {
       display: inline;
       cursor: pointer;
-      background: transparent url(../assets/admin/icons/note.gif) no-repeat 5px top;
+      background: transparent url(<%= asset_path 'admin/icons/note.gif' %>) no-repeat 5px top;
       padding-left: 26px;
       margin-left: 15px; }
     a.cancel {
@@ -4352,7 +4352,7 @@ a.abandoned {
       width: 16px;
       float: right;
       text-decoration: none;
-      background: transparent url(../assets/admin/icons/information_saturated.gif) no-repeat 50px top;
+      background: transparent url(<%= asset_path 'admin/icons/information_saturated.gif' %>) no-repeat 50px top;
       text-indent: -9999px; }
     &.show-preview {
       background: #E6F0F5;
@@ -4360,7 +4360,7 @@ a.abandoned {
       a span.contact-details, &:hover a span.contact-details {
         opacity: 1; } }
     &:hover a span.contact-details {
-      background: transparent url(../assets/admin/icons/information_saturated.gif) no-repeat 5px top; } }
+      background: transparent url(<%= asset_path 'admin/icons/information_saturated.gif' %>) no-repeat 5px top; } }
   span.email a {
     color: #666; }
   .note img, .tag img {
@@ -4568,7 +4568,7 @@ a.abandoned {
     display: inline-block;
     margin-top: 45px;
     padding: 10px 0 10px 40px;
-    background: url(../assets/spinner_big.gif) center left no-repeat;
+    background: url(<%= asset_path 'spinner_big.gif' %>) center left no-repeat;
     font-size: 18px;
     color: #000; } }
 
@@ -4642,7 +4642,7 @@ a.abandoned {
       display: block;
       float: left;
       text-indent: -9999px;
-      background: transparent url(../assets/admin/icons/filter-x.png) no-repeat 5px 0px;
+      background: transparent url(<%= asset_path 'admin/icons/filter-x.png' %>) no-repeat 5px 0px;
       width: 16px; } } }
 
 #customer-search_filters .filter-tag {
@@ -4666,7 +4666,7 @@ a.abandoned {
     color: #fff;
     text-decoration: none;
     text-indent: -9999px;
-    background: transparent url(../assets/admin/icons/filter-x.png) no-repeat 2px -1px;
+    background: transparent url(<%= asset_path 'admin/icons/filter-x.png' %>) no-repeat 2px -1px;
     &:hover {
       text-decoration: underline; } }
   &:hover {
@@ -4713,7 +4713,7 @@ a#clear {
   width: 16px;
   height: 16px;
   text-indent: -9999px;
-  background: transparent url(../assets/admin/icons/clear.gif) no-repeat 0 0;
+  background: transparent url(<%= asset_path 'admin/icons/clear.gif' %>) no-repeat 0 0;
   margin: 0;
   padding: 0;
   outline: none;
@@ -4742,10 +4742,10 @@ a#clear {
   left: -100px; }
 
 #next .bg {
-  background: url('../assets/admin/icons/next-page.png') top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/next-page.png' %>) top left no-repeat; }
 
 #previous .bg {
-  background: url('../assets/admin/icons/prev-page.png') top right no-repeat; }
+  background: url(<%= asset_path 'admin/icons/prev-page.png' %>) top right no-repeat; }
 
 #next .bg, #previous .bg {
   position: absolute;
@@ -4909,7 +4909,7 @@ a#clear {
 
 .sortasc {
   background-color: #ddd !important;
-  background-image: url(../assets/internal/up.gif) !important;
+  background-image: url(<%= asset_path 'internal/up.gif' %>) !important;
   background-repeat: no-repeat !important;
   background-position: 90% center !important;
   border-bottom: 1px solid #ccc !important;
@@ -4917,7 +4917,7 @@ a#clear {
 
 .sortdesc {
   background-color: #eee !important;
-  background-image: url(../assets/internal/down.gif) !important;
+  background-image: url(<%= asset_path 'internal/down.gif' %>) !important;
   background-repeat: no-repeat !important;
   background-position: 90% center !important;
   border-bottom: 1px solid #ccc !important;
@@ -4996,7 +4996,7 @@ tr.hidden {
   border-bottom: 1px solid #ccc; }
 
 #image_list .featured {
-  background: url(../assets/admin/icons/featured.png) 0 0 no-repeat;
+  background: url(<%= asset_path 'admin/icons/featured.png' %>) 0 0 no-repeat;
   width: 70px;
   height: 54px;
   position: absolute;
@@ -5004,7 +5004,7 @@ tr.hidden {
   top: 0px; }
 
 * html #image_list .featured {
-  background: url(../assets/admin/icons/featured.gif) 0 0 no-repeat; }
+  background: url(<%= asset_path 'admin/icons/featured.gif' %>) 0 0 no-repeat; }
 
 #upload-area {
   padding: 1px 10px 4px 10px;
@@ -5023,7 +5023,7 @@ tr.hidden {
   .box2 {
     margin: 40px 0;
     font-size: 14px;
-    background: #fafafa url(../assets/admin/loading-bar.gif) 50% 39px no-repeat;
+    background: #fafafa url(<%= asset_path 'admin/loading-bar.gif' %>) 50% 39px no-repeat;
     color: #888;
     padding: 10px 15px 40px 15px;
     &.import-complete {
@@ -5042,13 +5042,13 @@ tr.hidden {
     li {
       padding: 0 0 20px 80px;
       &.manage-orders {
-        background: white url(../assets/admin/theme-import-icons.jpg) 0 18px no-repeat; }
+        background: white url(<%= asset_path 'admin/theme-import-icons.jpg' %>) 0 18px no-repeat; }
       &.shopqi-tips {
-        background: white url(../assets/admin/theme-import-icons.jpg) 0 -77px no-repeat; }
+        background: white url(<%= asset_path 'admin/theme-import-icons.jpg' %>) 0 -77px no-repeat; }
       &.app-store {
-        background: white url(../assets/admin/theme-import-icons.jpg) 0 -172px no-repeat; }
+        background: white url(<%= asset_path 'admin/theme-import-icons.jpg' %>) 0 -172px no-repeat; }
       &.iphone-app {
-        background: white url(../assets/admin/theme-import-icons.jpg) 0 -267px no-repeat; }
+        background: white url(<%= asset_path 'admin/theme-import-icons.jpg' %>) 0 -267px no-repeat; }
       h3 {
         margin-bottom: 0px; }
       p {
@@ -5086,7 +5086,7 @@ tr.hidden {
 
 .product-collection-list {
   margin: 5px 0 10px 10px;
-  list-style-image: url(../assets/admin/icons/greybullet.gif);
+  list-style-image: url(<%= asset_path 'admin/icons/greybullet.gif' %>);
   li {
     padding: 2px 4px 2px 1px;
     a {
@@ -5125,7 +5125,7 @@ tr.hidden {
   border: 1px solid #eee;
   border-bottom: 1px solid #ddd;
   border-top: none;
-  background: #fcfcfc url('../assets/admin/theme-bg.gif') bottom left repeat-x;
+  background: #fcfcfc url(<%= asset_path 'admin/theme-bg.gif' %>) bottom left repeat-x;
   padding-top: 20px;
   td {
     padding-bottom: 15px !important;
@@ -5360,7 +5360,7 @@ ul.tag-list {
     position: relative;
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
-    background: transparent url("../assets/admin/btns/bg-tags.png") top right no-repeat;
+    background: transparent url(<%= asset_path 'admin/btns/bg-tags.png' %>) top right no-repeat;
     padding: 6px 6px 7px 0px;
     color: #3c6186;
     margin-right: 11px; }
@@ -5369,7 +5369,7 @@ ul.tag-list {
     height: 100%;
     width: 11px;
     content: "";
-    background: transparent url("../assets/admin/btns/bg-tags.png") left -38px no-repeat;
+    background: transparent url(<%= asset_path 'admin/btns/bg-tags.png' %>) left -38px no-repeat;
     top: 0;
     left: -11px; }
   a {
@@ -5578,11 +5578,11 @@ div.option-selector-frame {
   padding-left: 30px; }
 
 #smart-collections td.collection {
-  background: url(../assets/admin/icons/smart-label.gif) no-repeat; }
+  background: url(<%= asset_path 'admin/icons/smart-label.gif' %>) no-repeat; }
 
 #custom-collections {
   td.collection {
-    background: url(../assets/admin/icons/tag.gif) 0 20% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/tag.gif' %>) 0 20% no-repeat; }
   h3 {
     margin-left: 10px;
     border-bottom: 1px solid #ccc;
@@ -5707,14 +5707,14 @@ div .products_for_collection .d {
     border-top: 1px solid #fff;
     &:hover {
       color: #000;
-      background: url(../assets/admin/icons/arrow-right.gif) 98% 12px no-repeat; } } }
+      background: url(<%= asset_path 'admin/icons/arrow-right.gif' %>) 98% 12px no-repeat; } } }
 
 .added a {
   color: #bbb;
-  background: url(../assets/admin/icons/check-desat.gif) center right no-repeat;
+  background: url(<%= asset_path 'admin/icons/check-desat.gif' %>) center right no-repeat;
   &:hover {
     color: #bbb;
-    background: url(../assets/admin/icons/check-desat.gif) center right no-repeat; } }
+    background: url(<%= asset_path 'admin/icons/check-desat.gif' %>) center right no-repeat; } }
 
 .small-collection {
   margin: 0 0 10px 0;
@@ -5776,7 +5776,7 @@ div .products_for_collection .d {
   position: relative; }
 
 #disk-amount {
-  background: #cccccc url(../assets/admin/gtile.gif) repeat-x;
+  background: #cccccc url(<%= asset_path 'admin/gtile.gif' %>) repeat-x;
   width: 1%;
   border: 1px solid #10d82c;
   height: 15px;
@@ -5855,46 +5855,46 @@ ul#invited-user-list {
     margin: 0; } }
 
 #cc-visa, .cc-visa {
-  background: url(../assets/admin/icons/payment/visa.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/visa.png' %>) top left no-repeat; }
 
 #cc-master, .cc-master {
-  background: url(../assets/admin/icons/payment/master.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/master.png' %>) top left no-repeat; }
 
 #cc-american_express, .cc-american_express {
-  background: url(../assets/admin/icons/payment/american_express.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/american_express.png' %>) top left no-repeat; }
 
 #cc-discover, .cc-discover {
-  background: url(../assets/admin/icons/payment/discover.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/discover.png' %>) top left no-repeat; }
 
 #cc-diners_club, .cc-diners_club {
-  background: url(../assets/admin/icons/payment/diners_club.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/diners_club.png' %>) top left no-repeat; }
 
 #cc-jcb, .cc-jcb {
-  background: url(../assets/admin/icons/payment/jcb.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/jcb.png' %>) top left no-repeat; }
 
 #cc-bogus, .cc-bogus {
-  background: url(../assets/admin/icons/payment/bogus.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/bogus.png' %>) top left no-repeat; }
 
 #cc-solo, .cc-solo {
-  background: url(../assets/admin/icons/payment/solo.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/solo.png' %>) top left no-repeat; }
 
 #cc-switch, .cc-switch {
-  background: url(../assets/admin/icons/payment/switch.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/switch.png' %>) top left no-repeat; }
 
 #cc-dankort, .cc-dankort {
-  background: url(../assets/admin/icons/payment/dankort.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/dankort.png' %>) top left no-repeat; }
 
 #cc-maestro, .cc-maestro {
-  background: url(../assets/admin/icons/payment/maestro.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/maestro.png' %>) top left no-repeat; }
 
 #cc-forbrugsforeningen, .cc-forbrugsforeningen {
-  background: url(../assets/admin/icons/payment/forbrugsforeningen.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/forbrugsforeningen.png' %>) top left no-repeat; }
 
 #cc-laser, .cc-laser {
-  background: url(../assets/admin/icons/payment/laser.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/laser.png' %>) top left no-repeat; }
 
 #cc-paypal, .cc-paypal {
-  background: url(../assets/admin/icons/payment/paypal.png) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/payment/paypal.png' %>) top left no-repeat; }
 
 .ccaccount li {
   padding-left: 50px !important;
@@ -5967,19 +5967,19 @@ img.b {
 
 div {
   &.css {
-    background: url(../assets/admin/icons/mimes/css.gif) 0 50% no-repeat !important; }
+    background: url(<%= asset_path 'admin/icons/mimes/css.gif' %>) 0 50% no-repeat !important; }
   &.js {
-    background: url(../assets/admin/icons/mimes/js.gif) 0 50% no-repeat !important; }
+    background: url(<%= asset_path 'admin/icons/mimes/js.gif' %>) 0 50% no-repeat !important; }
   &.pdf {
-    background: url(../assets/admin/icons/mimes/pdf.gif) 0 50% no-repeat !important; }
+    background: url(<%= asset_path 'admin/icons/mimes/pdf.gif' %>) 0 50% no-repeat !important; }
   &.png {
-    background: url(../assets/admin/icons/mimes/png.gif) 0 50% no-repeat !important; }
+    background: url(<%= asset_path 'admin/icons/mimes/png.gif' %>) 0 50% no-repeat !important; }
   &.gif {
-    background: url(../assets/admin/icons/mimes/gif.gif) 0 50% no-repeat !important; }
+    background: url(<%= asset_path 'admin/icons/mimes/gif.gif' %>) 0 50% no-repeat !important; }
   &.jpg {
-    background: url(../assets/admin/icons/mimes/jpg.gif) 0 50% no-repeat !important; }
+    background: url(<%= asset_path 'admin/icons/mimes/jpg.gif' %>) 0 50% no-repeat !important; }
   &.generic {
-    background: url(../assets/admin/icons/mimes/generic.gif) 0 50% no-repeat !important; } }
+    background: url(<%= asset_path 'admin/icons/mimes/generic.gif' %>) 0 50% no-repeat !important; } }
 
 span {
   &.translation_missing {
@@ -6124,7 +6124,7 @@ table#image-selector {
     border-bottom: 1px solid #e5e5e5;
     border-left: 1px solid #f5f5f5;
     border-right: 1px solid #f5f5f5;
-    background: #f5f5f5 url('../assets/admin/theme-bg.gif') top left repeat-x; } }
+    background: #f5f5f5 url(<%= asset_path 'admin/theme-bg.gif' %>) top left repeat-x; } }
 
 #theme-edit-announcement {
   margin: 0 0 30px;
@@ -6149,7 +6149,7 @@ table#image-selector {
       &:active, &:focus {
         outline: 0; } } }
   .section-header {
-    background: #aaaaaa url("../assets/admin/icons/mimes/folder.png") no-repeat 2% 50% !important;
+    background: #aaaaaa url(<%= asset_path 'admin/icons/mimes/folder.png' %>) no-repeat 2% 50% !important;
     color: #fff !important;
     font-weight: normal !important;
     margin-bottom: 0;
@@ -6164,7 +6164,7 @@ table#image-selector {
     margin-bottom: 30px; }
   .loading {
     padding-left: 22px;
-    background: url(../assets/spinner.gif) top left no-repeat;
+    background: url(<%= asset_path 'spinner.gif' %>) top left no-repeat;
     text-decoration: none;
     color: #999; } }
 
@@ -6183,7 +6183,7 @@ table#image-selector {
 #template-editor {
   height: 730px;
   &.loading .ace_scroller {
-    background: url('../assets/spinner_big.gif') 50% 50% no-repeat !important;
+    background: url(<%= asset_path 'spinner_big.gif' %>) 50% 50% no-repeat !important;
     -moz-opacity: 0.5;
     opacity: .50;
     filter: alpha(opacity = 50); } }
@@ -6205,9 +6205,9 @@ table#image-selector {
       margin: 0 0 1px 0;
       padding-left: 5px;
       border-bottom: 1px solid #ddd;
-      background: #eeeeee url('../assets/admin/icons/arrow-down.gif') 98% 10px no-repeat !important; }
+      background: #eeeeee url(<%= asset_path 'admin/icons/arrow-down.gif' %>) 98% 10px no-repeat !important; }
     &.collapsed {
-      background-image: url('../assets/admin/icons/arrow-right.gif') !important; }
+      background-image: url(<%= asset_path 'admin/icons/arrow-right.gif' %>) !important; }
     &.section-header:hover {
       background-color: #E6F0F5 !important;
       border-bottom-color: #CFDCE4 !important;
@@ -6279,7 +6279,7 @@ table#image-selector {
   padding: 2px 0px;
   a {
     font-size: 110%;
-    background: url(../assets/admin/icons/apply-theme.gif) center left no-repeat;
+    background: url(<%= asset_path 'admin/icons/apply-theme.gif' %>) center left no-repeat;
     padding: 3px 3px 3px 20px;
     height: 29px; } }
 
@@ -6371,7 +6371,7 @@ table#image-selector {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.65) url("../assets/admin/blank-slate-overlay.png");
+    background: rgba(255, 255, 255, 0.65) url(<%= asset_path 'admin/blank-slate-overlay.png' %>);
     text-align: center;
     font-size: 11px;
     line-height: 121px;
@@ -6413,19 +6413,19 @@ table#image-selector {
     margin-bottom: 3px;
     font-size: 11px; }
   &.theme-settings a {
-    background: url("../assets/admin/icons/theme-settings.png") no-repeat scroll left center transparent; }
+    background: url(<%= asset_path 'admin/icons/theme-settings.png' %>) no-repeat scroll left center transparent; }
   &.theme-editor a {
-    background: url("../assets/admin/icons/template-editor.png") no-repeat scroll left center transparent; }
+    background: url(<%= asset_path 'admin/icons/template-editor.png' %>) no-repeat scroll left center transparent; }
   &.publish-main a {
-    background: url("../assets/admin/icons/publish-main.png") no-repeat scroll left center transparent; }
+    background: url(<%= asset_path 'admin/icons/publish-main.png' %>) no-repeat scroll left center transparent; }
   &.publish-mobile a {
-    background: url("../assets/admin/icons/publish-mobile.png") no-repeat scroll left center transparent; }
+    background: url(<%= asset_path 'admin/icons/publish-mobile.png' %>) no-repeat scroll left center transparent; }
   &.unpublish-mobile a {
-    background: url("../assets/admin/icons/unpublish-mobile.png") no-repeat scroll left center transparent; }
+    background: url(<%= asset_path 'admin/icons/unpublish-mobile.png' %>) no-repeat scroll left center transparent; }
   &.duplicate-theme a {
-    background: url("../assets/admin/icons/duplicate-theme.png") no-repeat scroll left center transparent; }
+    background: url(<%= asset_path 'admin/icons/duplicate-theme.png' %>) no-repeat scroll left center transparent; }
   &.export-theme a {
-    background: url("../assets/admin/icons/download-theme.png") no-repeat scroll left center transparent; } }
+    background: url(<%= asset_path 'admin/icons/download-theme.png' %>) no-repeat scroll left center transparent; } }
 
 .theme > li span {
   &.main-theme {
@@ -6433,14 +6433,14 @@ table#image-selector {
     color: #666;
     display: block;
     float: left;
-    background: url("../assets/admin/icons/main-theme.png") no-repeat scroll left center transparent;
+    background: url(<%= asset_path 'admin/icons/main-theme.png' %>) no-repeat scroll left center transparent;
     padding-left: 23px; }
   &.mobile-theme {
     font-size: 11px;
     color: #666;
     display: block;
     float: left;
-    background: url("../assets/admin/icons/phone.png") no-repeat scroll 1px center transparent;
+    background: url(<%= asset_path 'admin/icons/phone.png' %>) no-repeat scroll 1px center transparent;
     padding-left: 23px; } }
 
 .asset {
@@ -6478,26 +6478,26 @@ li.file {
     display: block;
     padding: 3px 3px 3px 21px;
     text-shadow: 0 1px 1px #FFFFFF;
-    background: url(../assets/admin/icons/mimes/generic.png) center left no-repeat;
+    background: url(<%= asset_path 'admin/icons/mimes/generic.png' %>) center left no-repeat;
     text-decoration: none;
     color: #666; } }
 
 .file {
   a {
     &.asset-liquid {
-      background-image: url(../assets/admin/icons/mimes/liquid.png); }
+      background-image: url(<%= asset_path 'admin/icons/mimes/liquid.png' %>); }
     &.asset-css {
-      background-image: url(../assets/admin/icons/mimes/css.png); }
+      background-image: url(<%= asset_path 'admin/icons/mimes/css.png' %>); }
     &.asset-js {
-      background-image: url(../assets/admin/icons/mimes/js.png); }
+      background-image: url(<%= asset_path 'admin/icons/mimes/js.png' %>); }
     &.asset-html {
-      background-image: url(../assets/admin/icons/mimes/html.png); }
+      background-image: url(<%= asset_path 'admin/icons/mimes/html.png' %>); }
     &.asset-png, &.asset-gif, &.asset-jpg {
-      background-image: url(../assets/admin/icons/mimes/image.png); }
+      background-image: url(<%= asset_path 'admin/icons/mimes/image.png' %>); }
     &.asset-pdf {
-      background-image: url(../assets/admin/icons/mimes/pdf.png); }
+      background-image: url(<%= asset_path 'admin/icons/mimes/pdf.png' %>); }
     &.asset-zip {
-      background-image: url(../assets/admin/icons/mimes/generic.png); } }
+      background-image: url(<%= asset_path 'admin/icons/mimes/generic.png' %>); } }
   &.current-file {
     background: #fff;
     &:hover {
@@ -6535,7 +6535,7 @@ li.file {
 
 #current-asset {
   height: 100%;
-  background: #fafafa url(../assets/admin/icons/editor-bg.jpg) bottom left repeat-x;
+  background: #fafafa url(<%= asset_path 'admin/icons/editor-bg.jpg' %>) bottom left repeat-x;
   border: 1px solid #ccc;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #bbb;
@@ -6546,7 +6546,7 @@ li.file {
 #asset-details {
   height: 100px;
   padding: 10px 10px 30px 50px;
-  background: #fafafa url(../assets/admin/icons/editor-bg.jpg) bottom left repeat-x;
+  background: #fafafa url(<%= asset_path 'admin/icons/editor-bg.jpg' %>) bottom left repeat-x;
   h3 {
     font-size: 16px; }
   .btn {
@@ -6615,7 +6615,7 @@ li.file {
 .editlist-action {
   font-size: 80%;
   font-weight: normal;
-  background: url("../assets/admin/icons/edit-image.gif") no-repeat scroll 0 50% transparent; }
+  background: url(<%= asset_path 'admin/icons/edit-image.gif' %>) no-repeat scroll 0 50% transparent; }
 
 li.even, dt.even, dd.even {
   background-color: #FBFBFB; }
@@ -7048,7 +7048,7 @@ table.product-preview {
   position: relative; }
 
 #locale-amount {
-  background: #cccccc url(../assets/admin/gtile.gif) repeat-x;
+  background: #cccccc url(<%= asset_path 'admin/gtile.gif' %>) repeat-x;
   width: 1%;
   border: 1px solid #10d82c;
   height: 30px;
@@ -7201,13 +7201,13 @@ form#rate-test-form table td {
 /* *=PREFERENCES -> SHIPPING */
 
 .activation-gfx {
-  background: url(../assets/admin/icons/accept.png) top left no-repeat;
+  background: url(<%= asset_path 'admin/icons/accept.png' %>) top left no-repeat;
   height: 16px;
   width: 16px;
   margin: 0 auto; }
 
 .off {
-  background: url(../assets/admin/icons/cancel.png) top left no-repeat !important; }
+  background: url(<%= asset_path 'admin/icons/cancel.png' %>) top left no-repeat !important; }
 
 .shipping-country {
   padding: 5px 0 5px 20px;
@@ -7333,10 +7333,10 @@ td {
   border-bottom: 1px solid #aaa; }
 
 .weight-based {
-  background: url('../assets/admin/icons/package.gif') 10px 50% no-repeat; }
+  background: url(<%= asset_path 'admin/icons/package.gif' %>) 10px 50% no-repeat; }
 
 .price-based {
-  background: url('../assets/admin/icons/package_green.gif') 10px 50% no-repeat; }
+  background: url(<%= asset_path 'admin/icons/package_green.gif' %>) 10px 50% no-repeat; }
 
 .weight-based, .price-based {
   padding-left: 35px !important;
@@ -7349,13 +7349,13 @@ td {
   padding-left: 55px;
   padding-top: 5px;
   &.ups {
-    background: url('../assets/admin/carriers/ups_small.png') 10px 50% no-repeat; }
+    background: url(<%= asset_path 'admin/carriers/ups_small.png' %>) 10px 50% no-repeat; }
   &.usps {
-    background: url('../assets/admin/carriers/usps_small.png') 10px 50% no-repeat; }
+    background: url(<%= asset_path 'admin/carriers/usps_small.png' %>) 10px 50% no-repeat; }
   &.shipwire {
-    background: url('../assets/admin/carriers/shipwire_small.png') 10px 65% no-repeat; }
+    background: url(<%= asset_path 'admin/carriers/shipwire_small.png' %>) 10px 65% no-repeat; }
   &.fedex {
-    background: url('../assets/admin/carriers/fedex_small.png') 10px 65% no-repeat; } }
+    background: url(<%= asset_path 'admin/carriers/fedex_small.png' %>) 10px 65% no-repeat; } }
 
 .edit_carrier_shipping_rate_provider {
   margin-bottom: 10px;
@@ -7417,7 +7417,7 @@ ul#countries {
 .individual-tax-field {
   text-align: right;
   padding: 1px 16px 1px 1px !important;
-  background: url('../assets/admin/icons/percent.gif') center right no-repeat; }
+  background: url(<%= asset_path 'admin/icons/percent.gif' %>) center right no-repeat; }
 
 .country-icon {
   position: relative;
@@ -7459,7 +7459,7 @@ ul.opts {
 /* *=FEED */
 
 h3#feedwarn {
-  background: url(../assets/admin/icons/feed-warn.gif) 0 50% no-repeat;
+  background: url(<%= asset_path 'admin/icons/feed-warn.gif' %>) 0 50% no-repeat;
   padding-left: 19px;
   line-height: 170%; }
 
@@ -7509,7 +7509,7 @@ table {
 /* *=TOOLBOXES */
 
 .toolsa, .toolsb {
-  background: white url(../assets/admin/toolcornera.gif) no-repeat;
+  background: white url(<%= asset_path 'admin/toolcornera.gif' %>) no-repeat;
   left: -50px;
   top: 1px;
   position: absolute;
@@ -7526,7 +7526,7 @@ table {
   left: -60px; }
 
 .toolsb {
-  background: white url(../assets/admin/toolcornera.gif) no-repeat; }
+  background: white url(<%= asset_path 'admin/toolcornera.gif' %>) no-repeat; }
 
 .toolbox {
   position: relative; }
@@ -7542,10 +7542,10 @@ table {
 a {
   &.idel {
     padding-left: 15px;
-    background: white url(../assets/admin/icons/trash.gif) 0 50% no-repeat; }
+    background: white url(<%= asset_path 'admin/icons/trash.gif' %>) 0 50% no-repeat; }
   &.iedit {
     padding-left: 15px;
-    background: white url(../assets/admin/icons/edit.gif) 0 50% no-repeat; } }
+    background: white url(<%= asset_path 'admin/icons/edit.gif' %>) 0 50% no-repeat; } }
 
 .link-tools {
   top: auto;
@@ -7623,7 +7623,7 @@ span.num {
   color: #777; }
 
 .feed {
-  background: url(../assets/admin/icons/feed.gif) 0 50% no-repeat;
+  background: url(<%= asset_path 'admin/icons/feed.gif' %>) 0 50% no-repeat;
   padding-left: 15px; }
 
 .no-bottomborder td {
@@ -7704,7 +7704,7 @@ table#events .error {
     width: 125px;
     height: 12px;
     padding: 3px 0 4px 26px;
-    background: #555555 url('../assets/admin/icons/search-bg.gif') top left no-repeat;
+    background: #555555 url(<%= asset_path 'admin/icons/search-bg.gif' %>) top left no-repeat;
     color: #777;
     border-color: #222 #333 #444;
     border-style: solid;
@@ -7716,14 +7716,14 @@ table#events .error {
     &.unchanged {
       color: #eee; }
     &.navigating {
-      background: white url('../assets/admin/icons/check2.gif') 4px 1px no-repeat;
+      background: white url(<%= asset_path 'admin/icons/check2.gif' %>) 4px 1px no-repeat;
       color: #555;
       text-shadow: none;
       -webkit-box-shadow: 0px 0px 4px #fff;
       -moz-box-shadow: 0px 0px 4px  #fff;
       border: 1px solid #fff; }
     &:active, &:focus {
-      background: white url('../assets/admin/icons/search-bg-white.gif') top left no-repeat;
+      background: white url(<%= asset_path 'admin/icons/search-bg-white.gif' %>) top left no-repeat;
       color: #555;
       text-shadow: none;
       -webkit-box-shadow: 0px 0px 4px #fff;
@@ -7771,7 +7771,7 @@ table#events .error {
     width: 150px;
     height: 33px;
     color: #fff;
-    background: url('../assets/admin/icons/sku.png') top left no-repeat;
+    background: url(<%= asset_path 'admin/icons/sku.png' %>) top left no-repeat;
     .content {
       background: none;
       font-size: 9px;
@@ -7821,7 +7821,7 @@ table#events .error {
 /* Mail Settings page */
 
 .add-notification {
-  background: url("../assets/admin/icons/flag_yellow.png") no-repeat left;
+  background: url(<%= asset_path 'admin/icons/flag_yellow.png' %>) no-repeat left;
   padding: 2px 2px 2px 20px; }
 
 #email-templates li {
@@ -7851,7 +7851,7 @@ table#events .error {
       text-decoration: underline;
       padding: 0 0 0 23px;
       margin: 0 0 3px 0;
-      background: url("../assets/admin/icons/email_edit.png") no-repeat left; }
+      background: url(<%= asset_path 'admin/icons/email_edit.png' %>) no-repeat left; }
     em {
       font-weight: normal;
       color: #666;
@@ -8016,7 +8016,7 @@ ol#instructions li {
 
 #textile-header a {
   &.formatting-link {
-    background: url(../assets/admin/icons/information.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/information.gif' %>) 4px 50% no-repeat;
     padding-left: 25px !important; }
   border: 1px solid #eee;
   padding: 2px;
@@ -8037,7 +8037,7 @@ ol#instructions li {
 .preview-overlay {
   width: 100%;
   height: 500px;
-  background: white url(/assets/spinner_big.gif) center center no-repeat; }
+  background: white url(<%= asset_path 'spinner_big.gif' %>) center center no-repeat; }
 
 .preview-frame {
   width: 100%;
@@ -8112,7 +8112,7 @@ ol#instructions li {
       text-shadow: 0 1px 0 #fff;
       text-align: left;
       &.sortby {
-        background: url(../assets/admin/icons/tablesort-icon.png) no-repeat left 9px; } } }
+        background: url(<%= asset_path 'admin/icons/tablesort-icon.png' %>) no-repeat left 9px; } } }
   tr td {
     vertical-align: middle; }
   td {
@@ -8429,7 +8429,7 @@ ol#instructions li {
     border-bottom: 0px solid transparent; } }
 
 .nav-link {
-  background: url('../assets/admin/icons/down.gif') right 13px no-repeat;
+  background: url(<%= asset_path 'admin/icons/down.gif' %>) right 13px no-repeat;
   padding-right: 16px !important; }
 
 .nav-dropdown {
@@ -8465,7 +8465,7 @@ ol#instructions li {
   .more {
     border-top: 1px solid #d5d5d5;
     padding-left: 10px;
-    background: #f5f5f5 url("../assets/admin/icons/plus.gif") 12px 6px no-repeat;
+    background: #f5f5f5 url(<%= asset_path 'admin/icons/plus.gif' %>) 12px 6px no-repeat;
     a {
       padding-left: 22px !important; }
     span {
@@ -8482,7 +8482,7 @@ ol#instructions li {
     padding: 0 !important; } }
 
 .nav-manage {
-  background: #f5f5f5 url("../assets/admin/icons/cog.png") 10px 8px no-repeat;
+  background: #f5f5f5 url(<%= asset_path 'admin/icons/cog.png' %>) 10px 8px no-repeat;
   border-top: 1px solid #d5d5d5;
   border-bottom: 1px solid #D5D5D5;
   padding: 2px 10px; }
@@ -8491,10 +8491,10 @@ ol#instructions li {
   border-top: 1px solid #fff; }
 
 #nav-theme-settings {
-  background: url("../assets/admin/icons/theme-settings.png") center left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/theme-settings.png' %>) center left no-repeat; }
 
 #nav-template-editor {
-  background: url("../assets/admin/icons/template-editor.png") center left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/template-editor.png' %>) center left no-repeat; }
 
 #apps-dropdown li, #theme-dropdown li, #preferences-dropdown li {
   margin: 0 0 0 10px !important; }
@@ -8520,7 +8520,7 @@ ol#instructions li {
   width: 140px; }
 
 #theme-dropdown .more {
-  background: #f5f5f5 url("../assets/admin/icons/themestore.gif") 10px 5px no-repeat; }
+  background: #f5f5f5 url(<%= asset_path 'admin/icons/themestore.gif' %>) 10px 5px no-repeat; }
 
 #preferences-link .nav-dropdown {
   right: 10px; }
@@ -8661,218 +8661,218 @@ a {
     height: 15px;
     text-indent: -99999px; }
   &.trash {
-    background: url(../assets/admin/icons/trash.gif) 0 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/trash.gif' %>) 0 50% no-repeat; }
   &.check {
-    background: url(../assets/admin/icons/check.gif) 0 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/check.gif' %>) 0 50% no-repeat; }
   &.add {
-    background: url(../assets/admin/icons/add.gif) 5px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/add.gif' %>) 5px 50% no-repeat;
     padding-left: 30px; } }
 
 /* icon with labels */
 /* solo icon */
 
 p.add {
-  background: url(../assets/admin/icons/add.gif) 5px 50% no-repeat;
+  background: url(<%= asset_path 'admin/icons/add.gif' %>) 5px 50% no-repeat;
   padding-left: 30px; }
 
 a {
   &.addinput {
-    background: url(../assets/admin/icons/textarea-more.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/textarea-more.gif' %>) 0% 50% no-repeat; }
   &.delinput {
-    background: url(../assets/admin/icons/textarea-less.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/textarea-less.gif' %>) 0% 50% no-repeat; }
   &.reorder {
-    background: url(../assets/admin/icons/reorder.gif) 0 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/reorder.gif' %>) 0 50% no-repeat; }
   &.drag {
-    background: url(../assets/admin/icons/drag.gif) 0 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/drag.gif' %>) 0 50% no-repeat;
     width: 90px; }
   &.edit {
-    background: url(../assets/admin/icons/edit-image.gif) 0 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/edit-image.gif' %>) 0 50% no-repeat; }
   &.coupon {
-    background: url(../assets/admin/icons/coupon_add.gif) 0 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/coupon_add.gif' %>) 0 50% no-repeat; }
   &.addimage {
-    background: url(../assets/admin/icons/add-image.gif) 0 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/add-image.gif' %>) 0 50% no-repeat;
     padding-bottom: 1px; }
   &.user-chat {
-    background: url(../assets/admin/icons/user-chat.gif) 0 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/user-chat.gif' %>) 0 50% no-repeat;
     padding-bottom: 1px; }
   &.add-optimization {
-    background: url(../assets/admin/icons/layout.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/layout.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.google {
-    background: url(../assets/admin/icons/marketing/google.gif) 4px 0% no-repeat;
+    background: url(<%= asset_path 'admin/icons/marketing/google.gif' %>) 4px 0% no-repeat;
     padding-left: 25px;
     padding-bottom: 1px; }
   &.uploaded-files {
-    background: url(../assets/admin/icons/uploaded-files.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/uploaded-files.gif' %>) 0% 50% no-repeat; }
   &.diskspace {
-    background: url(../assets/admin/icons/diskspace.gif) 0% 50% no-repeat; } }
+    background: url(<%= asset_path 'admin/icons/diskspace.gif' %>) 0% 50% no-repeat; } }
 
 /* Sidebar, Action Link icons */
 
 li {
   &#themestore a {
-    background: url(../assets/admin/icons/themestore.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/themestore.gif' %>) 3% 50% no-repeat; }
   &#add-prod a {
-    background: url(../assets/admin/icons/add-product.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/add-product.gif' %>) 3% 50% no-repeat; }
   &#new-smt-lbl a {
-    background: url(../assets/admin/icons/smart-label.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/smart-label.gif' %>) 3% 50% no-repeat; }
   &#new-std-lbl a {
-    background: url(../assets/admin/icons/custom-label.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/custom-label.gif' %>) 3% 50% no-repeat; }
   &#new-article a {
-    background: url(../assets/admin/icons/book-edit.png) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/book-edit.png' %>) 3% 50% no-repeat; }
   &#view-tpls a {
-    background: url(../assets/admin/icons/layout.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/layout.gif' %>) 3% 50% no-repeat; }
   &#settings a {
-    background: url(../assets/admin/icons/settings.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/settings.gif' %>) 0% 50% no-repeat; }
   &#payment a {
-    background: url(../assets/admin/icons/payment.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/payment.gif' %>) 0% 50% no-repeat; }
   &#shipping a {
-    background: url(../assets/admin/icons/shipping.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/shipping.gif' %>) 0% 50% no-repeat; }
   &#fulfillment a {
-    background: url(../assets/admin/icons/fulfillment.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/fulfillment.gif' %>) 0% 50% no-repeat; }
   &#email a {
-    background: url(../assets/admin/icons/email.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/email.gif' %>) 0% 50% no-repeat; }
   &#network a {
-    background: url(../assets/admin/icons/brick_link.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/brick_link.gif' %>) 0% 50% no-repeat; }
   &#regions a {
-    background: url(../assets/admin/icons/regions.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/regions.gif' %>) 0% 50% no-repeat; }
   &#translations a {
-    background: url(../assets/admin/icons/translation.png) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/translation.png' %>) 0% 50% no-repeat; }
   &#feedback a {
-    background: url(../assets/admin/icons/comment.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/comment.gif' %>) 3% 50% no-repeat; }
   &#preferences a {
-    background: url(../assets/admin/icons/edit.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/edit.gif' %>) 3% 50% no-repeat; }
   &#support a {
-    background: url(../assets/admin/icons/user-chat.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/user-chat.gif' %>) 3% 50% no-repeat; }
   &#add-region a {
-    background: url(../assets/admin/icons/regions.gif) 1% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/regions.gif' %>) 1% 50% no-repeat; }
   &#email-send a {
-    background: url(../assets/admin/icons/email-send.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/email-send.gif' %>) 3% 50% no-repeat; }
   &#note a {
-    background: url(../assets/admin/icons/note.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/note.gif' %>) 0% 50% no-repeat; }
   &#print a {
-    background: url(../assets/admin/icons/print.gif) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/print.gif' %>) 0% 50% no-repeat; }
   &#check a {
-    background: url(../assets/admin/icons/check.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/check.gif' %>) 3% 50% no-repeat; }
   &#create-pg a {
-    background: url(../assets/admin/icons/layout.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/layout.gif' %>) 3% 50% no-repeat; }
   &#create-blog a {
-    background: url(../assets/admin/icons/book.png) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/book.png' %>) 3% 50% no-repeat; }
   &#create-article a {
-    background: url(../assets/admin/icons/book-edit.png) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/book-edit.png' %>) 3% 50% no-repeat; }
   &#create-page a {
-    background: url(../assets/admin/icons/page.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/page.gif' %>) 3% 50% no-repeat; }
   &#add-entry a {
-    background: url(../assets/admin/icons/add-entry.gif) 3% 50% no-repeat; } }
+    background: url(<%= asset_path 'admin/icons/add-entry.gif' %>) 3% 50% no-repeat; } }
 
 a.add-entry {
-  background: url(../assets/admin/icons/add-entry.gif) 3% 50% no-repeat; }
+  background: url(<%= asset_path 'admin/icons/add-entry.gif' %>) 3% 50% no-repeat; }
 
 li#edit-entry a, a#edit-entry {
-  background: url(../assets/admin/icons/edit-entry.gif) 3% 50% no-repeat; }
+  background: url(<%= asset_path 'admin/icons/edit-entry.gif' %>) 3% 50% no-repeat; }
 
 li {
   &#user a {
-    background: url(../assets/admin/icons/user.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/user.gif' %>) 3% 50% no-repeat; }
   &#lock a {
-    background: url(../assets/admin/icons/lock.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/lock.gif' %>) 3% 50% no-repeat; }
   &#locko a {
-    background: url(../assets/admin/icons/lock-open.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/lock-open.gif' %>) 3% 50% no-repeat; }
   &#new-menu a {
-    background: url(../assets/admin/icons/tab.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/tab.gif' %>) 3% 50% no-repeat; }
   &#add-link a {
-    background: url(../assets/admin/icons/link-add.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/link-add.gif' %>) 3% 50% no-repeat; }
   &#import-themes a {
-    background: url(../assets/admin/icons/import-themes.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/import-themes.gif' %>) 3% 50% no-repeat; }
   &#domain-add a {
-    background: url(../assets/admin/icons/domain.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/domain.gif' %>) 3% 50% no-repeat; }
   &#customer a {
-    background: url(../assets/admin/icons/add.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/add.gif' %>) 3% 50% no-repeat; }
   &#new-asset a {
-    background: url(../assets/admin/icons/page-add.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/page-add.gif' %>) 3% 50% no-repeat; }
   &#trash a {
-    background: url(../assets/admin/icons/trash.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/trash.gif' %>) 3% 50% no-repeat; }
   &#asset-gallery a {
-    background: url(../assets/admin/icons/import-themes.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/import-themes.gif' %>) 3% 50% no-repeat; }
   &#reorder a {
-    background: url(../assets/admin/icons/reorder.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/reorder.gif' %>) 3% 50% no-repeat; }
   &#deactive a {
-    background: url(../assets/admin/icons/closed.gif) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/closed.gif' %>) 3% 50% no-repeat; }
   &#cancel a {
-    background: url(../assets/admin/icons/cancel.png) 3% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/cancel.png' %>) 3% 50% no-repeat; }
   &#cancel-order a {
-    background: url(../assets/admin/icons/cancel-order.gif) 3% 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/cancel-order.gif' %>) 3% 50% no-repeat;
     padding-left: 20px !important; }
   &.user {
-    background: url(../assets/admin/icons/user.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/user.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.phone {
-    background: url(../assets/admin/icons/phone.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/phone.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.email {
-    background: url(../assets/admin/icons/email.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/email.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.product {
-    background: url(../assets/admin/icons/product.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/product.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; } }
 
 p {
   &.marketing {
-    background: url(../assets/admin/icons/check2.gif) 0px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/check2.gif' %>) 0px 50% no-repeat;
     padding-left: 20px;
     margin-top: 1px; }
   &.no-marketing {
-    background: url(../assets/admin/icons/alert2.png) 0px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/alert2.png' %>) 0px 50% no-repeat;
     padding-left: 20px;
     margin-top: 1px; } }
 
 li {
   &.liquid {
     a {
-      background: url(../assets/admin/icons/liquid.png) 0% 50% no-repeat;
+      background: url(<%= asset_path 'admin/icons/liquid.png' %>) 0% 50% no-repeat;
       padding-left: 22px; }
     margin: 4px 0; }
   &.asset-src {
     a {
-      background: url(../assets/admin/icons/asset-src.gif) 0% 0% no-repeat;
+      background: url(<%= asset_path 'admin/icons/asset-src.gif' %>) 0% 0% no-repeat;
       padding-left: 22px; }
     margin: 4px 0; }
   &.csv a {
-    background: url(../assets/admin/icons/csv.gif) 0% 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/csv.gif' %>) 0% 50% no-repeat;
     padding-left: 18px !important; }
   &.vcard a {
-    background: url(../assets/admin/icons/vcard.gif) 0% 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/vcard.gif' %>) 0% 50% no-repeat;
     padding-left: 18px !important; }
   &.no-icon a {
     padding-left: 3px !important; }
   &.small-icon a {
     padding-left: 16px !important; }
   &.order-cell-subscription {
-    background: url(../assets/admin/icons/phone.png) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/phone.png' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.webhook {
-    background: url(../assets/admin/icons/regions.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/regions.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.order-user-subscription {
-    background: url(../assets/admin/icons/user.gif) 4px 50% no-repeat;
+    background: url(<%= asset_path 'admin/icons/user.gif' %>) 4px 50% no-repeat;
     padding-left: 25px; }
   &.preview a {
-    background: url(../assets/admin/icons/preview.png) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/preview.png' %>) 0% 50% no-repeat; }
   &.settings a {
-    background: url("../assets/admin/icons/theme-settings.png") 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/theme-settings.png' %>) 0% 50% no-repeat; }
   &.template-editor a {
-    background: url("../assets/admin/icons/template-editor.png") 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/template-editor.png' %>) 0% 50% no-repeat; }
   &.publish a {
-    background: url(../assets/partner/icons/world_add.png) 0% 50% no-repeat;
+    background: url(<%= asset_path 'partner/icons/world_add.png' %>) 0% 50% no-repeat;
     padding-left: 18px !important; }
   &.publish-main a {
-    background: url(../assets/admin/icons/publish-main.png) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/publish-main.png' %>) 0% 50% no-repeat; }
   &.publish-mobile a {
-    background: url(../assets/admin/icons/publish-mobile.png) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/publish-mobile.png' %>) 0% 50% no-repeat; }
   &.unpublish-mobile a {
-    background: url(../assets/admin/icons/unpublish-mobile.png) 0% 50% no-repeat; }
+    background: url(<%= asset_path 'admin/icons/unpublish-mobile.png' %>) 0% 50% no-repeat; }
   &.rename a {
-    background: url(../assets/admin/icons/rename.png) 0% 50% no-repeat; } }
+    background: url(<%= asset_path 'admin/icons/rename.png' %>) 0% 50% no-repeat; } }
 
 /* themes */
 
@@ -8963,7 +8963,7 @@ li {
 
 .modal-dialog-title {
   position: relative;
-  background: #fafafa url(../assets/editor/toolbar-bg.png) repeat-x bottom left;
+  background: #fafafa url(<%= asset_path 'editor/toolbar-bg.png' %>) repeat-x bottom left;
   color: #333;
   padding: 10px 15px;
   font-size: 16px;
@@ -8978,7 +8978,7 @@ li {
   right: 15px;
   width: 24px;
   height: 24px;
-  background: url(../assets/admin/icons/close.png) no-repeat center;
+  background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat center;
   cursor: pointer; }
 
 .modal-dialog-content {
@@ -9013,7 +9013,7 @@ li {
     border: 1px solid #bbb;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #aaa;
-    background: #dddddd url('../assets/admin/btns/bg.gif?1') top left repeat-x;
+    background: #dddddd url(<%= asset_path 'admin/btns/bg.gif' %>) top left repeat-x;
     padding: 6px 8px;
     text-shadow: 0px 1px 1px #fff;
     color: #3a3a3a;
@@ -9133,7 +9133,7 @@ html>body .goog-inline-block {
   padding: 0;
   font: normal Tahoma, Arial, sans-serif;
   color: #000;
-  background: #dddddd url(../assets/editor/button-bg.gif) repeat-x top left;
+  background: #dddddd url(<%= asset_path 'editor/button-bg.gif' %>) repeat-x top left;
   text-decoration: none;
   list-style: none;
   vertical-align: middle;
@@ -9302,7 +9302,7 @@ html>body .goog-inline-block {
 
 .goog-option-selected {
   .goog-menuitem-checkbox, .goog-menuitem-icon {
-    background: transparent url(../assets/editor/check.gif) no-repeat center center; } }
+    background: transparent url(<%= asset_path 'editor/check.gif' %>) no-repeat center center; } }
 
 /* Keyboard shortcut ("accelerator") style. */
 
@@ -9370,12 +9370,12 @@ html>body .goog-inline-block {
   height: 1.1em; }
 
 .goog-tristatemenuitem-partially-checked {
-  background-image: url(../assets/editor/check-outline.gif);
+  background-image: url(<%= asset_path 'editor/check-outline.gif' %>);
   background-position: 4px 50%;
   background-repeat: no-repeat; }
 
 .goog-tristatemenuitem-fully-checked {
-  background-image: url(../assets/editor/check.gif);
+  background-image: url(<%= asset_path 'editor/check.gif' %>);
   background-position: 4px 50%;
   background-repeat: no-repeat; }
 
@@ -9434,7 +9434,7 @@ html>body .goog-inline-block {
   border: 1px solid #333;
   color: #fff;
   font-weight: bold;
-  background-image: url(../assets/editor/color-swatch-tick.gif);
+  background-image: url(<%= asset_path 'editor/color-swatch-tick.gif' %>);
   background-repeat: no-repeat;
   background-position: center center; }
 
@@ -9486,11 +9486,11 @@ html>body .goog-inline-block {
   background-color: #000; }
 
 .goog-hsv-palette-sm-hs-image, .goog-hsv-palette-sm-v-image, .goog-hsv-palette-sm-hs-handle, .goog-hsv-palette-sm-v-handle {
-  background-image: url(../assets/editor/palette/hsv-sprite-sm.png); }
+  background-image: url(<%= asset_path 'editor/palette/hsv-sprite-sm.png' %>); }
 
 .goog-hsv-palette-noalpha {
   .goog-hsv-palette-sm-hs-image, .goog-hsv-palette-sm-v-image, .goog-hsv-palette-sm-hs-handle, .goog-hsv-palette-sm-v-handle {
-    background-image: url(../assets/editor/palette/hsv-sprite-sm.gif); } }
+    background-image: url(<%= asset_path 'editor/palette/hsv-sprite-sm.gif' %>); } }
 
 .goog-hsv-palette-sm-hs-image {
   background-position: 0 0; }
@@ -9564,7 +9564,7 @@ html>body .goog-inline-block {
   margin: 0;
   border: 1px solid #fff;
   padding: 2px;
-  background: #fafafa url(../assets/editor/toolbar-bg.png) repeat-x bottom left;
+  background: #fafafa url(<%= asset_path 'editor/toolbar-bg.png' %>) repeat-x bottom left;
   cursor: default;
   outline: none;
   zoom: 1;
@@ -9852,7 +9852,7 @@ html>body .goog-inline-block {
 
 .goog-toolbar-menu-button-dropdown {
   width: 7px;
-  background: url(../assets/editor/toolbar_icons.gif) no-repeat -176px;
+  background: url(<%= asset_path 'editor/toolbar_icons.gif' %>) no-repeat -176px;
   vertical-align: middle; }
 
 /* * Styles used by goog.ui.ToolbarSeparatorRenderer. */
@@ -9932,7 +9932,7 @@ html>body .goog-inline-block {
 .tr-icon {
   width: 16px;
   height: 16px;
-  background: url(../assets/editor/editortoolbar.png) no-repeat;
+  background: url(<%= asset_path 'editor/editortoolbar.png' %>) no-repeat;
   vertical-align: middle; }
 
 .goog-color-menu-button-indicator .tr-icon {
@@ -9940,30 +9940,30 @@ html>body .goog-inline-block {
 
 .rich-toolbar {
   .tr-bold {
-    background: url(../assets/editor/text_bold.png); }
+    background: url(<%= asset_path 'editor/text_bold.png' %>); }
   .tr-italic {
-    background: url(../assets/editor/text_italic.png); }
+    background: url(<%= asset_path 'editor/text_italic.png' %>); }
   .tr-underline {
     background-position: -64px; }
   .tr-foreColor {
     height: 14px;
-    background: url(../assets/editor/color_swatch.png); }
+    background: url(<%= asset_path 'editor/color_swatch.png' %>); }
   .tr-link {
     font-weight: bold;
     color: #009;
     text-decoration: underline; }
   .tr-insertUnorderedList {
-    background: url(../assets/editor/text_list_bullets.png); }
+    background: url(<%= asset_path 'editor/text_list_bullets.png' %>); }
   .tr-insertOrderedList {
-    background: url(../assets/editor/text_list_numbers.png); }
+    background: url(<%= asset_path 'editor/text_list_numbers.png' %>); }
   .tr-justifyLeft {
-    background: url(../assets/editor/text_align_left.png); }
+    background: url(<%= asset_path 'editor/text_align_left.png' %>); }
   .tr-justifyCenter {
-    background: url(../assets/editor/text_align_center.png); }
+    background: url(<%= asset_path 'editor/text_align_center.png' %>); }
   .tr-justifyRight {
-    background: url(../assets/editor/text_align_right.png); }
+    background: url(<%= asset_path 'editor/text_align_right.png' %>); }
   .tr-removeFormat {
-    background: url(../assets/editor/resetformat.png); } }
+    background: url(<%= asset_path 'editor/resetformat.png' %>); } }
 
 .source-toolbar {
   height: 29px;
@@ -10041,27 +10041,27 @@ iframe.editor {
   width: 40px; }
 
 .insert_image {
-  background-image: url(../assets/editor/photo.png);
+  background-image: url(<%= asset_path 'editor/photo.png' %>);
   background-position: 4px 50%;
   background-repeat: no-repeat; }
 
 .insert_media {
-  background-image: url(../assets/editor/media.png);
+  background-image: url(<%= asset_path 'editor/media.png' %>);
   background-position: 4px 50%;
   background-repeat: no-repeat; }
 
 .insert_table {
-  background-image: url(../assets/editor/table.png);
+  background-image: url(<%= asset_path 'editor/table.png' %>);
   background-position: 4px 50%;
   background-repeat: no-repeat; }
 
 .insert_script {
-  background-image: url(../assets/editor/script.png);
+  background-image: url(<%= asset_path 'editor/script.png' %>);
   background-position: 4px 50%;
   background-repeat: no-repeat; }
 
 .tr-link {
-  background: url(../assets/editor/link.png); }
+  background: url(<%= asset_path 'editor/link.png' %>); }
 
 /* select editor menus */
 
@@ -10080,13 +10080,13 @@ iframe.editor {
 /* textile toolbar */
 
 #textile-formatguide-btn .format-icon {
-  background-image: url(../assets/editor/information.gif);
+  background-image: url(<%= asset_path 'editor/information.gif' %>);
   background-position: left 50%;
   width: 20px;
   background-repeat: no-repeat; }
 
 #textile-insertimage-btn .format-icon {
-  background-image: url(../assets/editor/photo.png);
+  background-image: url(<%= asset_path 'editor/photo.png' %>);
   background-position: left 50%;
   width: 20px;
   background-repeat: no-repeat; }
@@ -10152,13 +10152,13 @@ table.dialog {
       padding: 5px 5px 5px 24px; } } }
 
 #insertimage_file_btn {
-  background: url(../assets/editor/files.png) 4% 50% no-repeat; }
+  background: url(<%= asset_path 'editor/files.png' %>) 4% 50% no-repeat; }
 
 #insertimage_product_btn {
-  background: url(../assets/editor/photo.png) 4% 50% no-repeat; }
+  background: url(<%= asset_path 'editor/photo.png' %>) 4% 50% no-repeat; }
 
 #insertimage_url_btn {
-  background: url(../assets/editor/url.png) 4% 50% no-repeat; }
+  background: url(<%= asset_path 'editor/url.png' %>) 4% 50% no-repeat; }
 
 /* selected image preview */
 

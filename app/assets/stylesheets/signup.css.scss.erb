@@ -182,19 +182,19 @@ table#price-chart {
     &.heading {
       width: 198px; }
     &.basic {
-      background: url('../assets/signup/basic.jpg') no-repeat;
+      background: url(<%= asset_path 'signup/basic.jpg' %>) no-repeat;
       width: 174px;
       height: 208px; }
     &.professional {
-      background: url('../assets/signup/professional.jpg') no-repeat;
+      background: url(<%= asset_path 'signup/professional.jpg' %>) no-repeat;
       width: 174px;
       height: 208px; }
     &.business {
-      background: url('../assets/signup/business.jpg') no-repeat;
+      background: url(<%= asset_path 'signup/business.jpg' %>) no-repeat;
       width: 200px;
       height: 208px; }
     &.unlimited {
-      background: url('../assets/signup/unlimited.jpg') no-repeat;
+      background: url(<%= asset_path 'signup/unlimited.jpg' %>) no-repeat;
       width: 174px;
       height: 208px; }
     border-right: 1px solid #FFF;
@@ -217,20 +217,20 @@ table#price-chart {
     .table-col-0 {
       background: #e4f0d5; }
     .table-col-1 {
-      background: #d8ebd3 url('../assets/signup/col2-odd.gif') repeat-y top right; }
+      background: #d8ebd3 url(<%= asset_path 'signup/col2-odd.gif' %>) repeat-y top right; }
     .table-col-2 {
       background: #d3e5ec; }
     .table-col-3 {
-      background: #daeefb url('../assets/signup/col4-odd.gif') repeat-y top left; } }
+      background: #daeefb url(<%= asset_path 'signup/col4-odd.gif' %>) repeat-y top left; } }
   .even {
     .table-col-0 {
       background: #cbe1ab; }
     .table-col-1 {
-      background: #b1d7a7 url('../assets/signup/col2-even.gif') repeat-y top right; }
+      background: #b1d7a7 url(<%= asset_path 'signup/col2-even.gif' %>) repeat-y top right; }
     .table-col-2 {
       background: #a9cdd9; }
     .table-col-3 {
-      background: #b5ddf7 url('../assets/signup/col4-even.gif') repeat-y top left; } } }
+      background: #b5ddf7 url(<%= asset_path 'signup/col4-even.gif' %>) repeat-y top left; } } }
 
 /* =========== */
 /* = Form    = */
@@ -270,7 +270,7 @@ table#price-chart {
 
 #signup {
   .theme {
-    background: url(../assets/signup/theme-bg.png) top left no-repeat;
+    background: url(<%= asset_path 'signup/theme-bg.png' %>) top left no-repeat;
     width: 206px;
     height: 266px;
     padding: 8px 0 0 8px;
@@ -299,7 +299,7 @@ table#price-chart {
         display: block;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         width: 135px;
-        background: #dddddd url(../assets/signup/btn-next-bg.jpg) center right no-repeat;
+        background: #dddddd url(<%= asset_path 'signup/btn-next-bg.jpg' %>) center right no-repeat;
         margin: 20px auto;
         padding: 7px 24px 7px 12px;
         font-size: 14px;
@@ -312,7 +312,7 @@ table#price-chart {
   display: block;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 135px;
-  background: #dddddd url(../assets/signup/btn-next-bg.jpg) center right no-repeat;
+  background: #dddddd url(<%= asset_path 'signup/btn-next-bg.jpg' %>) center right no-repeat;
   margin: 20px auto;
   padding: 7px 24px 7px 12px;
   font-size: 14px;
@@ -325,7 +325,7 @@ table#price-chart {
   color: #3084CA; }
 
 #signup .themes .pick .next, #fancybox-title .next {
-  background: #dddddd url(../assets/signup/btn-next-bg2.jpg) center right no-repeat;
+  background: #dddddd url(<%= asset_path 'signup/btn-next-bg2.jpg' %>) center right no-repeat;
   color: #132002;
   border: 1px solid #C9E67C;
   border-top: 1px solid #fff; }
@@ -414,7 +414,7 @@ input.btn {
   border: 1px solid #bbb;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #aaa;
-  background: #dddddd url('../assets/admin/btns/bg.gif?1') top left repeat-x;
+  background: #dddddd url(<%= asset_path 'admin/btns/bg.gif' %>) top left repeat-x;
   padding: 4px 6px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -440,7 +440,7 @@ a {
     border: 1px solid #bbb;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #aaa;
-    background: #dddddd url('../assets/admin/btns/bg.gif?1') top left repeat-x;
+    background: #dddddd url(<%= asset_path 'admin/btns/bg.gif' %>) top left repeat-x;
     padding: 6px 8px;
     text-shadow: 0px 1px 1px #fff;
     color: #3a3a3a;

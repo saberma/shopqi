@@ -288,13 +288,13 @@ ul {
   z-index: 9999; }
 
 #flashnotice {
-  background: #172830 url('../assets/admin/bubbles.gif') top left no-repeat;
+  background: #172830 url(<%= asset_path 'admin/bubbles.gif' %>) top left no-repeat;
   border-top: 3px solid #000;
   color: #fff;
   vertical-align: center; }
 
 #flasherrors {
-  background: #8a1111 url('../assets/admin/bubbles_error.gif') top left no-repeat;
+  background: #8a1111 url(<%= asset_path 'admin/bubbles_error.gif' %>) top left no-repeat;
   border-top: 3px solid #000;
   color: #fff; }
 

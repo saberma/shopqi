@@ -35,7 +35,7 @@
   display: block;
   float: left;
   text-indent: -9999px;
-  background: url(/assets/admin/icons/close.png) no-repeat 0px 0px;
+  background: url(<%= asset_path 'admin/icons/close.png' %>) no-repeat 0px 0px;
   height: 24px;
   width: 24px;
   position: absolute;
@@ -114,7 +114,7 @@ textarea {
     bottom: 1px; } }
 
 .activation-gfx {
-  background: url(/assets/admin/icons/check.gif) top left no-repeat; }
+  background: url(<%= asset_path 'admin/icons/check.gif' %>) top left no-repeat; }
 
 /* dialog fixes */
 
@@ -219,7 +219,7 @@ a#current img {
   display: none; }
 
 .newtip .default {
-  background: url('/assets/admin/icons/sku.gif') top left no-repeat;
+  background: url(<%= asset_path 'admin/icons/sku.gif' %>) top left no-repeat;
   right: 110px; }
 
 #product div {

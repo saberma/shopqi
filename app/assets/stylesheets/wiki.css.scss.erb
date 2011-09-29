@@ -5,7 +5,7 @@
 body {
   font-family: helvetica, arial, serif;
   font-size: 14px;
-  background: white url('../assets/skins/bg-body.gif') repeat-x top;
+  background: white url(<%= asset_path 'skins/bg-body.gif' %>) repeat-x top;
   color: #000;
   margin: 0;
   padding: 0px 0 0 0; }
@@ -13,7 +13,7 @@ body {
 #wrapper {
   width: 925px;
   margin: auto;
-  background: url('../assets/skins/bg-content-papershadow.gif') no-repeat 0px 0px;
+  background: url(<%= asset_path 'skins/bg-content-papershadow.gif' %>) no-repeat 0px 0px;
   padding: 40px 35px 0 35px; }
 
 #container {
@@ -37,7 +37,7 @@ body {
         float: left;
         list-style: none;
         a {
-          background: #cbcbcb url('../assets/bg-tab-buttons.png') repeat-x bottom;
+          background: #cbcbcb url(<%= asset_path 'bg-tab-buttons.png' %>) repeat-x bottom;
           -moz-border-radius: 5px 5px 0px 0px;
           font-weight: bold;
           color: #fff;
@@ -85,12 +85,6 @@ body {
   h1 {
     padding: 0 0 7px 0;
     line-height: 1em; }
-  h2, #bodyContent h1 {
-    font-size: 25px;
-    border-bottom: 1px;
-    border-bottom: 1px solid #dddddd;
-    padding: 0 0 10px 0;
-    margin: 40px 0 15px 0; }
   h3 {
     font-size: 22px;
     font-weight: normal;
@@ -348,14 +342,6 @@ pre {
 span.subpages {
   display: block; }
 
-/* Some space under the headers in the content area */
-
-#bodyContent {
-  h1, h2 {
-    margin-bottom: .6em; }
-  h3, h4, h5 {
-    margin-bottom: .3em; } }
-
 /* user notification thing */
 
 .usermessage {
@@ -610,117 +596,6 @@ table.rimage {
   background-color: #f9f9f9;
   padding: 5px;
   font-size: 95%; }
-
-/*
-** edit views etc
-*/
-
-.special li {
-  line-height: 1.4em;
-  margin: 0;
-  padding: 0; }
-
-/*
-** keep the whitespace in front of the ^=,hides rule from konqueror
-** this is css3,the validator doesn't like it when validating as css2
-*/
-
-#bodyContent a {
-  &.external, &[href^="gopher://"] {} }
-
-.rtl #bodyContent a {
-  &.external, &[href^="gopher://"] {} }
-
-#bodyContent a[href^="mailto:"], .link-mailto {
-  background: url(mail_icon.gif) center right no-repeat;
-  padding: 0 18px; }
-
-#bodyContent a {
-  &[href^="news://"] {
-    background: url(news_icon.png) center right no-repeat;
-    padding: 0 18px; }
-  &[href^="ftp://"] {
-    background: url(file_icon.gif) center right no-repeat;
-    padding: 0 18px; } }
-
-.link-ftp {
-  background: url(file_icon.gif) center right no-repeat;
-  padding: 0 18px; }
-
-#bodyContent a {
-  &[href^="irc://"], &.extiw[href^="irc://"] {
-    background: url(discussionitem_icon.gif) center right no-repeat;
-    padding: 0 18px; } }
-
-.link-irc {
-  background: url(discussionitem_icon.gif) center right no-repeat;
-  padding: 0 18px; }
-
-#bodyContent a.external[href$=" {
-  &.ogg"], &.OGG"], &.mid"], &.MID"], &.midi"], &.MIDI"], &.mp3"], &.MP3"], &.wav"], &.WAV"], &.wma"], &.WMA"] {
-    background: url("audio.png") center right no-repeat;
-    padding: 0 13px; } }
-
-.link-audio {
-  background: url("audio.png") center right no-repeat;
-  padding: 0 13px; }
-
-#bodyContent a.external[href$=" {
-  &.ogm"], &.OGM"], &.avi"], &.AVI"], &.mpeg"], &.MPEG"], &.mpg"], &.MPG"] {
-    background: url("video.png") center right no-repeat;
-    padding: 0 13px; } }
-
-.link-video {
-  background: url("video.png") center right no-repeat;
-  padding: 0 13px; }
-
-#bodyContent a.external {
-  &[href$=" {
-    &.pdf"], &.PDF"] {
-      background: url("document.png") center right no-repeat;
-      padding: 0 12px; } }
-  &[href*=" {
-    &.pdf#"], &.PDF#"], &.pdf?"], &.PDF?"] {
-      background: url("document.png") center right no-repeat;
-      padding: 0 12px; } } }
-
-.link-document {
-  background: url("document.png") center right no-repeat;
-  padding: 0 12px; }
-
-/* for rtl wikis */
-
-.rtl {
-  #bodyContent a.external {
-    background-position: left;
-    padding-right: 0; }
-  a.feedlink {
-    background-position: right;
-    padding-right: 16px;
-    padding-left: 0; } }
-
-/* correction for ltr wikis */
-
-.ltr #bodyContent a.external {
-  padding-left: 0; }
-
-/* disable interwiki styling */
-
-#bodyContent {
-  a {
-    &.extiw {
-      color: #36b;
-      background: none;
-      padding: 0;
-      &:active {
-        color: #36b;
-        background: none;
-        padding: 0; } }
-    &.external {
-      color: #3084CA; } }
-  .plainlinks a {
-    background: none !important;
-    padding: 0 !important; } }
 
 /* this can be used in the content area to switch off
 special external link styling */
@@ -1431,7 +1306,7 @@ div#mw-search-interwiki-caption {
     text-transform: uppercase;
     font-size: 10.5px;
     padding-right: 12px;
-    background: url('../assets/icn-arrow.png') no-repeat center right;
+    background: url(<%= asset_path 'icn-arrow.png' %>) no-repeat center right;
     outline: none;
     font-weight: bold;
     &:hover {
@@ -1441,7 +1316,7 @@ div#mw-search-interwiki-caption {
 
 a.go-home {
   color: #FFF;
-  background: url('../assets/icn-home.png') no-repeat center left;
+  background: url(<%= asset_path 'icn-home.png' %>) no-repeat center left;
   padding-left: 18px;
   text-transform: uppercase;
   font-size: 11px;
@@ -1475,7 +1350,7 @@ a.go-home {
     a {
       padding: 10px 0 10px 17px;
       line-height: 1.5em;
-      background: url('../assets/skins/icon-arrow.png') no-repeat 4px 10px;
+      background: url(<%= asset_path 'skins/icon-arrow.png' %>) no-repeat 4px 10px;
       display: block;
       &:hover, &:focus {
         background-position: 4px -22px;
@@ -1516,7 +1391,7 @@ a.go-home {
     padding: 0px 10px 5px 10px; }
   &#searchform div {
     width: 100%;
-    background: url('../assets/skins/bg-search.png') no-repeat;
+    background: url(<%= asset_path 'skins/bg-search.png' %>) no-repeat;
     margin: 0 0 15px 0; }
   #searchBody {
     width: 182px;
@@ -1533,7 +1408,7 @@ input.searchButton {}
 #mw-searchButton {
   position: absolute;
   float: left;
-  background: url('../assets/skins/icn-search.png') no-repeat;
+  background: url(<%= asset_path 'skins/icn-search.png' %>) no-repeat;
   border: 0px;
   width: 15px;
   cursor: pointer;
@@ -1655,24 +1530,24 @@ ul {
       line-height: 1.4em;
       margin: 0 35px 25px 0;
       &.designers {
-        background: url('../assets/icon-brush.png') left 3px no-repeat; }
+        background: url(<%= asset_path 'icon-brush.png' %>) left 3px no-repeat; }
       &.developers {
-        background: url('../assets/icon-wrench.png') left 3px no-repeat; }
+        background: url(<%= asset_path 'icon-wrench.png' %>) left 3px no-repeat; }
       &.owners {
-        background: url('../assets/icon-basket.png') left 3px no-repeat; } } }
+        background: url(<%= asset_path 'icon-basket.png' %>) left 3px no-repeat; } } }
   &.homepage-resources li {
     &.theme {
-      background: url('../assets/icon-home-themes.png') left 4px no-repeat; }
+      background: url(<%= asset_path 'icon-home-themes.png' %>) left 4px no-repeat; }
     &.job {
-      background: url('../assets/icon-home-job.png') left 4px no-repeat; }
+      background: url(<%= asset_path 'icon-home-job.png' %>) left 4px no-repeat; }
     &.directory {
-      background: url('../assets/icon-home-directory.png') left 4px no-repeat; }
+      background: url(<%= asset_path 'icon-home-directory.png' %>) left 4px no-repeat; }
     &.app {
-      background: url('../assets/icon-home-apps.png') left 4px no-repeat; }
+      background: url(<%= asset_path 'icon-home-apps.png' %>) left 4px no-repeat; }
     &.promo {
-      background: url('../assets/icon-home-promo.png') left 4px no-repeat; }
+      background: url(<%= asset_path 'icon-home-promo.png' %>) left 4px no-repeat; }
     &.forums {
-      background: url('../assets/icon-home-forums.png') left 4px no-repeat; } } }
+      background: url(<%= asset_path 'icon-home-forums.png' %>) left 4px no-repeat; } } }
 
 h1[title="Main Page"] {
   display: none; }
@@ -1681,7 +1556,7 @@ h1[title="Main Page"] {
 
 .official-shopqi-logos img {
   border: 10px solid #eee;
-  background: url('../assets/bg-transparent.png') repeat;
+  background: url(<%= asset_path 'bg-transparent.png' %>) repeat;
   padding: 20px; }
 
 .hide {
