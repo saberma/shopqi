@@ -62,9 +62,9 @@ module KeyValues
   module Payment
     class Custom < KeyValues::Base
         self.data = [
-          {id: 1   ,name: '银行转账'},
-          {id: 2   ,name: '邮局汇款'},
-          {id: 3   ,name: '货到付款'}
+          {id: 1   ,name: '银行转账' , code: 'bank_transfer'},
+          {id: 2   ,name: '邮局汇款' , code: 'pos'},
+          {id: 3   ,name: '货到付款' , code: 'cod'}
         ]
     end
   end

@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Shop::AppController < ActionController::Base
-  include ShopsHelper
+  include Admin::ShopsHelper
   layout nil #默认不需要layout，使用liquid
   before_filter :force_domain # 域名管理中是否设置主域名重定向
   before_filter :password_protected # 设置了密码保护

@@ -6,6 +6,7 @@ gem 'rails', '3.1.1.rc1'
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise'
+gem 'activeadmin'
 
 #use unicorn as web server
 gem 'unicorn'
@@ -25,7 +26,7 @@ gem 'liquid' #模板语言
 gem "carrierwave"
 #查询
 #gem 'meta_where'
-gem 'meta_search'
+gem 'meta_search', '~> 1.1.1'
 gem 'squeel'
 
 #gem 'carmen'#地区
@@ -99,5 +100,6 @@ end
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
+  gem 'sass-rails'
   gem 'uglifier'
 end

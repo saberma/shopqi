@@ -1,0 +1,37 @@
+#sticky-progress.position-fixed
+  #launch-bar
+    #task-checkoff.hide.clearfix
+
+    #progress-bar-container
+      #progress-bar(style="display:none")=render 'admin/home/progress_task'
+/ #sticky-progress
+%script(id="checkoff-item" type="text/x-handlebars-template")
+  #task-meta
+    %strong {{{name}}}
+    %small 剩余 {{{incomplete_task_count}}} 个步骤
+  %p.desc
+  %ul
+    %li.task-completed
+      %a#complete-task-button(href="#")
+        我已经完成此步骤
+        %em.icon
+    %li.pick-another-task
+      %a#skip-task-button(href="#") 选择其他步骤
+%script(id="add_product-desc-item" type="text/x-handlebars-template")
+  您的商店至少要有一个商品! 点击
+  %a(data-guide-position="left" data-guide-target="#action-links li a[href='/admin/products/new']" data-guide-text="点击此处增加一个商品" href="#") 增加一个商品
+  开始录入商品信息.
+%script(id="customize_theme-desc-item" type="text/x-handlebars-template")
+  在此页面中修改您当前的主题，或者在
+  %a(href="#{theme_store_url_with_port}" target="_blank") ShopQi主题商店
+  中选择一个新的主题
+%script(id="add_content-desc-item" type="text/x-handlebars-template")
+  在此页面您可以为您的商店添加新的网页内容，或者修改已经存在的内容.
+%script(id="setup_payment_gateway-desc-item" type="text/x-handlebars-template")
+  支付网关用来从顾客那里接收货款.
+%script(id="setup_taxes-desc-item" type="text/x-handlebars-template")
+  在此页面确保您的商品所销售地区的税率设置是正确的.如果您的商品价格已经包含各种税率，则不需要设置。
+%script(id="setup_shipping-desc-item" type="text/x-handlebars-template")
+  在此页面您可以添加商品发送至任何地区的运费。
+%script(id="setup_domain-desc-item" type="text/x-handlebars-template")
+  在此页面您可以为您的商店绑定其他域名。例如 www.example.com 这样的顶级域名。

@@ -1,0 +1,8 @@
+-if blog.commentable == 'no'
+  %p.description.highlight(style="text-align: center")
+    ==此博客评论已被禁用，你可以#{link_to "启用评论",edit_blog_path(blog)}
+-else
+  -unless article.comments.blank?
+    #comments
+      %h4==文章#{article.title}的评论
+      =render partial:"admin/comments/comment",locals:{blog:blog,article:article}

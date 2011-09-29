@@ -30,4 +30,14 @@ Shopqi::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+end
+#
+#需要开发active_admin功能时，将
+#下面注释掉
+module ActiveAdmin
+  class Reloader
+    def attach!
+    end
+  end
 end

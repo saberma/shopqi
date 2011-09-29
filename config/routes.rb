@@ -106,7 +106,7 @@ Shopqi::Application.routes.draw do
       post '/articles/:article_id/comments', to: 'articles#add_comment'
     end
 
-    scope "/admin" do # 用户后台管理
+    scope "/admin", module: :admin do # 用户后台管理
 
       match "/"                             , to: "home#dashboard"                      , as: :user_root # user_root_path为用户成功登录后的跳转地址
       match "/general_preferences"          , to: "shops#edit"
@@ -119,7 +119,7 @@ Shopqi::Application.routes.draw do
       post "/dashboard/launch"              , to: "home#launch"                         , as: :launch
       post "/dashboard/skip_tutorial"       , to: "home#skip_tutorial"                  , as: :skip_tutorial
 
-      resources :shops, only: [:edit,:update]
+      resources :shops, only: [:update]
 
       resources :payments
 
@@ -282,29 +282,37 @@ Shopqi::Application.routes.draw do
 
   end
 
-  scope module: :shopqi do # 官网
-    root to: "home#page"
-    get '/faq'       , to: 'home#faq'     , as: :faq
-    scope "/tour" do # 功能演示
-      get '/'        , to: 'home#tour'    , as: :tour_intro
-      get '/store'   , to: 'home#store'   , as: :tour_store
-      get '/design'  , to: 'home#design'  , as: :tour_design
-      get '/security', to: 'home#security', as: :tour_security
-      get '/features', to: 'home#features', as: :tour_features
-    end
-    get '/signup'         , to: redirect('/services/signup')
-    get '/login'          , to: 'home#login'
-    scope "/services/signup" do
-      get '/'                    , to: 'home#signup'                               , as: :services_signup
-      devise_scope :user do
-        get "/new/:plan"         , to: "registrations#new"                         , as: :signup
-        get "/check_availability", to: "registrations#check_availability"
-        post "/user"             , to: "registrations#create"
-        post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
+  constraints(Domain::Shopqi) do
+    scope module: :shopqi do # 官网
+      root to: "home#page"
+      get '/faq'       , to: 'home#faq'     , as: :faq
+      scope "/tour" do # 功能演示
+        get '/'        , to: 'home#tour'    , as: :tour_intro
+        get '/store'   , to: 'home#store'   , as: :tour_store
+        get '/design'  , to: 'home#design'  , as: :tour_design
+        get '/security', to: 'home#security', as: :tour_security
+        get '/features', to: 'home#features', as: :tour_features
+      end
+      get '/signup'         , to: redirect('/services/signup')
+      get '/login'          , to: 'home#login'
+      scope "/services/signup" do
+        get '/'                    , to: 'home#signup'                               , as: :services_signup
+        devise_scope :user do
+          get "/new/:plan"         , to: "registrations#new"                         , as: :signup
+          get "/check_availability", to: "registrations#check_availability"
+          post "/user"             , to: "registrations#create"
+          post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
+        end
       end
     end
+
+    #官网后台管理
+    ActiveAdmin.routes(self)
+
+    devise_for :admin_users, ActiveAdmin::Devise.config
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]
   post '/kindeditor/upload_image'
+
 end

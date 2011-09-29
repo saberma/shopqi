@@ -1,5 +1,7 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
-Factory.define :theme do |f|
-  f.load_preset "MyString"
+FactoryGirl.define do
+  factory :theme do
+    load_preset "MyString"
+  end
 end

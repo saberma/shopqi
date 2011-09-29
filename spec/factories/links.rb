@@ -1,9 +1,10 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
-
-Factory.define :link do |f|
-  f.title "ShopQi"
-  f.link_type "http"
-  f.subject_handle nil
-  f.subject_params nil
-  f.url "http://shopqi.com"
+FactoryGirl.define do
+  factory :link do
+    title "ShopQi"
+    link_type "http"
+    subject_handle nil
+    subject_params nil
+    url "http://shopqi.com"
+    end
 end

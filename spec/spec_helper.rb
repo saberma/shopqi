@@ -50,6 +50,7 @@ Spork.each_run do
 
   # This code will be run each time you run your specs.
   RSpec.configure do |config|
+    config.include Factory::Syntax::Methods
     config.before(:suite) do
       DatabaseCleaner.strategy = :truncation, {:except => %w[themes]} #theme包含初始化数据，不清掉
       DatabaseCleaner.clean_with(:truncation, {:except => %w[themes]})

@@ -79,6 +79,18 @@ cn:
         email: 邮箱
         address: 详细地址
         order_number_format: 订单号格式
+        province: 省份
+        city: 城市
+        district: 地区
+        password: 密码
+        password_enabled: 商店密码启用
+        password_message: 提示信息
+        taxes_included: 税收是否包含在商品中
+        tax_shipping: 关税
+        customer_accounts: 顾客付款设置
+        guided: 是否完成指南任务
+        created_at: 创建时间
+        updated_at: 更新时间
       subscribe:
         address: 邮件地址
       blog:

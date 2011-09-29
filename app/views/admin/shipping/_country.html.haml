@@ -1,0 +1,78 @@
+-country_id = country.id
+%table.shipping-rates-table.data.st.ssb(cellpadding=0 cellspacing=0 id="shipping-rates-table-#{country_id}")
+  %tr(id="countryrow-#{country_id}")
+    %th(id="country-#{country_id}")
+      =image_tag("admin/countries/#{country.code.downcase}.gif",title: Carmen::country_name(country.code))
+      =Carmen::country_name(country.code)
+    %th{:style => "width: 160px"} &nbsp;
+    %th{:style => "width: 110px"} &nbsp;
+    %th{:style => "width: 80px"} &nbsp;
+  =render partial: 'admin/weight_based_shipping_rates/weight_based_shipping_rate', collection: country.weight_based_shipping_rates
+  =render partial: 'admin/price_based_shipping_rates/price_based_shipping_rate', collection: country.price_based_shipping_rates
+  %tr(id="handle-form-#{country_id}")
+    %td.new-rate-link.no-border.action-link{:colspan => "4"}
+      %p.add.icon
+        %span.action
+          %a{:href => "#", :onclick => "$('#new-promotional-rate-#{country_id}').hide();$('#new-promotional-rate-done-#{country_id}').hide();$('#new-standard-rate-#{country_id}').show();$('#new-standard-rate-done-#{country_id}').show();$('#standard-rate-name-new-#{country_id}').focus(); return false;", :style => "display: inline"} 新增基于重量的费用
+        |
+        %span.action
+          %a{:href => "#", :onclick => "$('#new-standard-rate-#{country_id}').hide();$('#new-standard-rate-done-#{country_id}').hide();$('#new-promotional-rate-#{country_id}').show();$('#new-promotional-rate-done-#{country_id}').show();$('#promotional-rate-name-new-#{country_id}').focus(); return false;", :style => "display: inline"} 新增基于价格的费用
+  %tr(style= "display:none" id="new-standard-rate-#{country_id}")
+    %td{:colspan => "4", :style => "padding:0"}
+      =form_for weight_based_shipping_rate , remote: true do |f|
+        =f.hidden_field :country_id, value: country_id
+        %table.new-rate-table
+          %tr
+            %td.new-rate.rate-name{:style => "padding-left: 10px"}
+              %label{:for => "standard-rate-name-new"} 名称
+              =f.text_field :name,maxlength: 255, style: 'width:100%',id:"weight_based_shipping_rate_name_#{country_id}"
+            %td.new-rate.rate-weight
+              %label{:for => "rate-weight-low-new"} 重量
+              =f.text_field :weight_low,maxlength: 3, class: 'r'
+              = succeed "-" do
+                %strong kg
+              =f.text_field :weight_high,maxlength: 3,  class: 'r'
+              %strong kg
+            %td.new-rate.rate-price
+              =f.label :price
+              %strong ¥
+              =f.text_field :price, class: 'r',size: 5
+              %strong RMB
+          %tr.no-lines(style= "display:none" id="new-standard-rate-done-#{country_id}")
+            %td.new-rate-done{:colspan => "3"}
+              =f.submit w('save')
+              =w('or')
+              %span.action
+                %a{:href => "#", :onclick => "$('#new-standard-rate-#{country_id}').hide();$('#new-standard-rate-done-#{country_id}').hide(); return false;"} 取消
+  %tr(style= "display:none" id="new-promotional-rate-#{country_id}")
+    %td{:colspan => "4", :style => "padding:0"}
+      =form_for price_based_shipping_rate, remote: true do |f|
+        =f.hidden_field :country_id, value: country_id
+        %table.new-rate-table
+          %tr
+            %td.new-rate.rate-name{:style => "padding-left: 10px"}
+              =f.label :name
+              =f.text_field :name, maxlength: 255, style: 'width:100%',id:"price_based_shipping_rate_name_#{country_id}"
+            %td.new-rate.rate-min-order-subtotal{:style => "width:220px;"}
+              %label 价格区间
+              %strong ¥
+              =f.text_field :min_order_subtotal, size: 5
+              %strong RMB
+              %span(style="" id="show-max-purchase-#{country_id}")
+                %a{:href => "#", :onclick => "$('#show-max-purchase-#{country_id}').hide();$('#edit-max-purchase-#{country_id}').show();$('#rate-max-order-subtotal-new-#{country_id}').focus();return false;"} 以上
+              %span(style = "display:none" id= "edit-max-purchase-#{country_id}")
+                \&mdash;
+                %strong ¥
+                =f.text_field :max_order_subtotal,class:'r',size: 5, onblur: "if($(this).val() == ''){ $('#edit-max-purchase-#{country_id}').hide();$('#show-max-purchase-#{country_id}').show()}"
+                %strong RMB
+            %td.new-rate.rate-price
+              =f.label :price
+              %strong ¥
+              =f.text_field :price,size: 5,class: 'r'
+              %strong RMB
+          %tr.no-lines(style= "display:none" id="new-promotional-rate-done-#{country_id}")
+            %td.new-rate-done{:colspan => "3"}
+              =f.submit w('save')
+              =w('or')
+              %span.action
+                %a{:href => "#", :onclick => "$('#new-promotional-rate-#{country_id}').hide();$('#new-promotional-rate-done-#{country_id}').hide(); return false;"} 取消

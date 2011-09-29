@@ -1,25 +1,26 @@
 # encoding: utf-8
 # Read about factories at http://github.com/thoughtbot/factory_girl
-
-Factory.define :product do |f|
-  f.variants_attributes [
+FactoryGirl.define do
+  factory :product do
+    variants_attributes [
     {price: 0.0, weight: 0.0}
   ]
-end
+  end
 
-Factory.define :iphone4, parent: :product do |f|
-  f.title "iphone4"
-  f.body_html "iphone 4是一款基于WCDMA制式的3G手机"
-  f.product_type "手机"
-  f.vendor "Apple"
-  f.variants_attributes [
+  factory :iphone4, parent: :product do
+    title "iphone4"
+    body_html "iphone 4是一款基于WCDMA制式的3G手机"
+    product_type "手机"
+    vendor "Apple"
+    variants_attributes [
     {price: 3000, weight: 2.9}
   ]
-end
+  end
 
-Factory.define :psp, parent: :product do |f|
-  f.title "psp"
-  f.body_html ""
-  f.product_type "游戏机"
-  f.vendor "Sony"
+  factory :psp, parent: :product do
+    title "psp"
+    body_html ""
+    product_type "游戏机"
+    vendor "Sony"
+  end
 end
