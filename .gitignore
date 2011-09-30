@@ -69,6 +69,8 @@ public/s/files
 
 #全文检索CoreSeek(sphinx)
 db/sphinx
+#全文检索Sunspot
+solr/data
 
 #redis
 dump.rdb
