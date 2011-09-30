@@ -57,7 +57,7 @@
                   %div
                     %input#searchInput{:accesskey => "f", :name => "q", :type => "text", :value => ""}/
             #category-navigation
-              =raw sidebar.formatted_data
+              =raw sidebar.formatted_data if sidebar
         #content.col-9.last
           =yield
 :javascript
