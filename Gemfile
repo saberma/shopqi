@@ -6,16 +6,13 @@ gem 'rails', '3.1.1.rc1'
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise'
+gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
 gem 'activeadmin'
 
 #use unicorn as web server
 gem 'unicorn'
 
 gem 'default_value_for'
-#gem 'thinking-sphinx', '2.0.5'
-#gem 'riddle', require: 'riddle/0.9.9' #sphinx无法获取CoreSeek版本
-##gem 'riddle', git: 'git://github.com/saberma/riddle.git', branch: 'patch-1' #修改无法找到版本号的问题
-#gem 'ts-resque-delta', '1.0.0', require: 'thinking_sphinx/deltas/resque_delta'
 gem 'sunspot_rails'
 
 gem 'active_hash' # 用于保存配置型(枚举)记录
@@ -99,8 +96,6 @@ end
 # in production environments by default.
 # rake assets:precompile 部署到生产环境下执行
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'sass-rails'
   gem 'uglifier'
 end
