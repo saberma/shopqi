@@ -47,6 +47,7 @@ gem "activemerchant" # 支付
 gem "activemerchant_patch_for_china"
 gem "httparty"
 gem "resque" # 后台任务
+gem "resque-retry" # 任务失败后自动重试(支持时间指数递增)
 gem "chinese_pinyin" # 汉字转拼音
 gem "nokogiri" # 解释模板config/settings.html
 gem "uuid" # 生成36位(或32位)唯一序列号
