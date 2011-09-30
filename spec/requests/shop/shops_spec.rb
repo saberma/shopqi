@@ -82,20 +82,14 @@ describe "Shop::Shops", js:true do
   describe "GET /search" do
 
     before(:each) do
-      ThinkingSphinx::Test.start
       iphone4
       visit '/'
       click_on '查询'
     end
 
-    after(:each) do
-      ThinkingSphinx::Test.stop
-    end
-
     it "should list blog article" do
       blog = shop.blogs.where(handle: 'news').first
       article = blog.articles.create title: '如何选购iphone'
-      ThinkingSphinx::Test.index 'article_delta'
       click_on '查询'
       fill_in 'q', with: '选购'
       click_on 'Search'
