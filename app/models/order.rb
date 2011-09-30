@@ -80,10 +80,10 @@ class Order < ActiveRecord::Base
   searchable do
     integer :shop_id, references: Shop
     text :name
-    text customer_name do
+    text :customer_name do
       customer.name
     end
-    text customer_email do
+    text :customer_email do
       customer.email
     end
   end

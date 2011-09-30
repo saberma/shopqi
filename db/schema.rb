@@ -63,13 +63,11 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
     t.boolean  "published",  :default => true
     t.integer  "user_id"
     t.string   "author"
-    t.boolean  "delta",      :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "articles", ["blog_id"], :name => "index_articles_on_blog_id"
-  add_index "articles", ["delta"], :name => "index_articles_on_delta"
 
   create_table "articles_tags", :id => false, :force => true do |t|
     t.integer "article_id", :null => false
@@ -81,10 +79,9 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
 
   create_table "blogs", :force => true do |t|
     t.integer  "shop_id"
-    t.string   "title",                         :null => false
+    t.string   "title",       :null => false
     t.string   "commentable"
-    t.string   "handle",                        :null => false
-    t.boolean  "delta",       :default => true, :null => false
+    t.string   "handle",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -401,26 +398,25 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
   add_index "order_transactions", ["order_id"], :name => "index_order_transactions_on_order_id"
 
   create_table "orders", :force => true do |t|
-    t.integer  "shop_id",                                                :null => false
+    t.integer  "shop_id",                                               :null => false
     t.integer  "customer_id"
-    t.string   "token",                  :limit => 32,                   :null => false
-    t.string   "name",                   :limit => 32,                   :null => false
-    t.integer  "number",                                                 :null => false
-    t.integer  "order_number",                                           :null => false
-    t.string   "status",                 :limit => 16,                   :null => false
-    t.string   "financial_status",       :limit => 16,                   :null => false
-    t.string   "fulfillment_status",     :limit => 16,                   :null => false
-    t.string   "email",                  :limit => 32,                   :null => false
+    t.string   "token",                  :limit => 32,                  :null => false
+    t.string   "name",                   :limit => 32,                  :null => false
+    t.integer  "number",                                                :null => false
+    t.integer  "order_number",                                          :null => false
+    t.string   "status",                 :limit => 16,                  :null => false
+    t.string   "financial_status",       :limit => 16,                  :null => false
+    t.string   "fulfillment_status",     :limit => 16,                  :null => false
+    t.string   "email",                  :limit => 32,                  :null => false
     t.string   "shipping_rate",          :limit => 32
     t.integer  "payment_id"
-    t.float    "total_line_items_price",                                 :null => false
-    t.float    "total_price",                                            :null => false
-    t.float    "tax_price",                            :default => 0.0,  :null => false
+    t.float    "total_line_items_price",                                :null => false
+    t.float    "total_price",                                           :null => false
+    t.float    "tax_price",                            :default => 0.0, :null => false
     t.string   "note"
     t.datetime "closed_at"
     t.string   "cancel_reason",          :limit => 16
     t.datetime "cancelled_at"
-    t.boolean  "delta",                                :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -435,12 +431,10 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
     t.boolean  "published",  :default => false
     t.string   "handle",                        :null => false
     t.text     "body_html"
-    t.boolean  "delta",      :default => true,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "pages", ["delta"], :name => "index_pages_on_delta"
   add_index "pages", ["shop_id"], :name => "index_pages_on_shop_id"
 
   create_table "payments", :force => true do |t|
@@ -514,12 +508,10 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
     t.text     "body_html"
     t.string   "product_type"
     t.string   "vendor"
-    t.boolean  "delta",        :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "products", ["delta"], :name => "index_products_on_delta"
   add_index "products", ["shop_id"], :name => "index_products_on_shop_id"
 
   create_table "products_tags", :id => false, :force => true do |t|
