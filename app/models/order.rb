@@ -77,12 +77,15 @@ class Order < ActiveRecord::Base
 
   scope :between, lambda{|d1,d2| where(:created_at.gte => d1, :created_at.lt => d2.tomorrow) }
 
-  define_index do
-    has :shop_id
-    indexes :name
-    indexes customer.name,  as: :customer_name
-    indexes customer.email,  as: :customer_email
-    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
+  searchable do
+    integer :shop_id, references: Shop
+    text :name
+    text customer_name do
+      customer.name
+    end
+    text customer_email do
+      customer.email
+    end
   end
 
   def status_name

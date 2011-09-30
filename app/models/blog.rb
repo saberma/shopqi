@@ -12,10 +12,9 @@ class Blog < ActiveRecord::Base
     commentable != 'no'
   end
 
-  define_index do
-    has :shop_id
-    indexes :title
-    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
+  searchable do
+    integer :shop_id, references: Shop
+    text :title
   end
 end
 
@@ -32,11 +31,9 @@ class Article < ActiveRecord::Base
   #垃圾评论
   has_many :spam_comments,class_name:"Comment",conditions:"comments.status = 'spam'"
 
-  define_index do
-    has :shop_id
-    indexes :title
-    indexes :body_html
-    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
+  searchable do
+    integer :shop_id, references: Shop
+    text :title, :body_html
   end
 
   # 标签
