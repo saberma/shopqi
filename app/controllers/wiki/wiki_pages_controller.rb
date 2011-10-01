@@ -155,7 +155,7 @@ class Wiki::WikiPagesController < Wiki::AppController
   private
 
   def commit_message
-    { :message => params[:message] , :name => "liwh" , :email => "liwh87@gmail.com"}
+    { :message => params[:message] }
   end
 
   def line_class(line)
