@@ -10,11 +10,8 @@
     %link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon")/
     %link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
     %title ShopQi Wiki
-    /[if IE 7]
-      =stylesheet_link_tag 'gollum/ie7'
-    = stylesheet_link_tag "resources-nav", "wiki", 'gollum/editor','gollum/gollum'
+    = stylesheet_link_tag "resources-nav", "wiki"
     = javascript_include_tag 'jquery'
-    =yield :gollum
     =csrf_meta_tag
   %body
     .resources-nav

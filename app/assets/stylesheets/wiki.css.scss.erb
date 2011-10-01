@@ -3,11 +3,13 @@
   padding: 0; }
 
 body {
-  font-family: helvetica, arial, serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   background: white url(<%= asset_path 'skins/bg-body.gif' %>) repeat-x top;
-  color: #000;
+  color: #404040;
   margin: 0;
+  font-weight: normal;
+  line-height: 18px;
   padding: 0px 0 0 0; }
 
 #wrapper {
@@ -1090,17 +1092,6 @@ ul#filetoc {
   list-style-type: none;
   padding-right: 2em; }
 
-input {
-  &#wpSummary {
-    width: 80%; }
-  &#wpSave, &#wpDiff {
-    margin-right: 0.33em; } }
-
-/* @bug 1714 */
-
-#wpSave {
-  font-weight: bold; }
-
 /* Classes for article validation */
 
 table {
@@ -1561,3 +1552,57 @@ h1[title="Main Page"] {
 
 .hide {
   display: none; }
+
+
+/*forms style*/
+input.span5, textarea.span5, select.span5 {
+  display: inline-block;
+  float: none;
+  width: 270px;
+  margin-left: 0;
+  line-height: 20px;
+  margin-botton: 10px;
+}
+
+input, textarea {
+  -webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s,box-shadow linear 0.2s;
+  -ms-transition: border linear 0.2s,box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s,box-shadow linear 0.2s;
+  transition: border linear 0.2s,box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+form .clearfix{margin-bottom:18px;zoom:1;}form .clearfix:before,form .clearfix:after{display:table;content:"";zoom:1;*display:inline;}
+form .clearfix:after{clear:both;}
+.compare{
+
+}
+.compare .data pre {
+  margin: 0;
+  padding: 0;
+  border: 0px;
+  font-size: 14px;
+  border-image: initial;
+}
+
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.compare .data tr td {
+  font-family: "Consolas", "Monaco", "Andale Mono", "Courier New", monospace;
+  line-height: 1.8em;
+}
+.compare .data td.line_numbers {
+  background: #f7f7f7;
+  border-right: 1px solid #999;
+  color: #999;
+  padding: 0 0 0 0.5em;
+}

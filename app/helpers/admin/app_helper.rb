@@ -14,12 +14,6 @@ module Admin::AppHelper
     link_to image_tag('admin/icons/trash.gif'), path, remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
   end
 
-  def use_gollum
-    content_for :gollum do
-      javascript_include_tag 'gollum','gollum.dialog','gollum.placeholder','editor/gollum.editor'
-    end
-  end
-
   def use_kindeditor
     content_for :kindeditor do
       javascript_include_tag("kindeditor/kindeditor-min","kindeditor/kindeditor_config")
