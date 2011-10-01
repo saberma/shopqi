@@ -19,7 +19,7 @@ Shopqi::Application.routes.draw do
       get '/', to: 'wiki_pages#index', as: :wiki_pages_index
       get '/active_admin', to: redirect('/')
       resources :wiki_pages, only:[:new,:create]
-      get '/pages', to: 'wiki_pages#pages'
+      get '/pages', to: 'wiki_pages#pages', as: :wiki_pages_all
       match '/search' ,to: 'wiki_pages#search'
       get '/history/:name', to: 'wiki_pages#history'
       get '/:name', to: 'wiki_pages#show'
