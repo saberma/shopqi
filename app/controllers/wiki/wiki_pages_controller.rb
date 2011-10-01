@@ -64,7 +64,7 @@ class Wiki::WikiPagesController < Wiki::AppController
     @name = "Preview"
     @page = wiki.preview_page(@name, params[:content], params[:format])
     @content  = @page.formatted_data
-    render :show
+    render text: @content, layout: true
   end
 
   def update
@@ -133,7 +133,7 @@ class Wiki::WikiPagesController < Wiki::AppController
         @page = page
         @name = name
         @content = page.formatted_data
-        render :show
+        render text: @content, layout: true
       else
         render text: '未找到该页面',layout: true
       end
@@ -142,7 +142,7 @@ class Wiki::WikiPagesController < Wiki::AppController
         @page = page
         @name = name
         @content = page.formatted_data
-        render :show
+        render text: @content, layout: true
       else
         @name = params[:name]
         self.action_name = 'new'
