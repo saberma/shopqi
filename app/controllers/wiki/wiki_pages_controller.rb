@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Wiki::WikiPagesController < Wiki::AppController
+  prepend_before_filter :authenticate_admin_user!, except: [:index,:show,:pages,:search]
   layout 'wiki'
   expose(:wiki){ WikiPage.wiki }
   expose(:sidebar){ wiki.page('sidebar') if wiki.page('sidebar')}

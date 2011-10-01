@@ -1,12 +1,4 @@
 AdminUsers =  YAML::load_file(Rails.root.join('config/admin_users.yml'))
-#module ActiveAdmin
-#  class Reloader
-#    def attach!
-#      reloader_class.to_prepare do
-#      end
-#    end
-#  end
-#end
 ActiveAdmin.setup do |config|
 
   # == Site Title

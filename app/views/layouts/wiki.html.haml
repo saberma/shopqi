@@ -30,19 +30,23 @@
       .clearfix
         %h1=link_to image_tag('skins/logo-documentation.png'),"#{wiki_url_with_port}"
         %ul.user-options
-          %li#pt-anonlogin=link_to '登录','#'
-        %ul.user-options
           %li#pt-anonlogin=link_to '页面列表', '/pages'
-        %ul.user-options
-          %li#pt-anonlogin=link_to '新增', new_wiki_page_path
-        -unless controller.action_name == 'new' || controller.action_name == 'preview'
+        -unless admin_user_signed_in?
           %ul.user-options
-            %li#pt-anonlogin=link_to '编辑',"/edit/#{@name}"
+            %li#pt-anonlogin=link_to '登录',new_admin_user_session_path
+        -if admin_user_signed_in?
           %ul.user-options
-            %form(action="/destroy/#{@name}" method="post")
-              %li#pt-anonlogin=link_to '删除',"javascript:;",onclick: "if (confirm('您确定要删除此页面?')){$(this).closest('form').submit();return true}else{ return false }"
+            %li#pt-anonlogin=link_to '退出登录',destroy_admin_user_session_path
           %ul.user-options
-            %li#pt-anonlogin=link_to '历史',"/history/#{@name}"
+            %li#pt-anonlogin=link_to '新增', new_wiki_page_path
+          -unless controller.action_name == 'new' || controller.action_name == 'preview' || !@name
+            %ul.user-options
+              %li#pt-anonlogin=link_to '编辑',"/edit/#{@name}"
+            %ul.user-options
+              %form(action="/destroy/#{@name}" method="post")
+                %li#pt-anonlogin=link_to '删除',"javascript:;",onclick: "if (confirm('您确定要删除此页面?')){$(this).closest('form').submit();return true}else{ return false }"
+            %ul.user-options
+              %li#pt-anonlogin=link_to '历史',"/history/#{@name}"
     #wrapper
       #container.clearfix
         #sidebar.col-3
