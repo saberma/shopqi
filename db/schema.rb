@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926131917) do
+ActiveRecord::Schema.define(:version => 20111001024945) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -667,6 +667,21 @@ ActiveRecord::Schema.define(:version => 20110926131917) do
   end
 
   add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
+
+  create_table "themes", :force => true do |t|
+    t.string "name",         :limit => 16
+    t.string "handle",       :limit => 16
+    t.string "style",        :limit => 16
+    t.string "style_handle", :limit => 16
+    t.string "role",         :limit => 16
+    t.float  "price"
+    t.string "color",        :limit => 8
+    t.string "desc"
+    t.string "shop",         :limit => 32
+    t.string "site",         :limit => 64
+    t.string "author",       :limit => 16
+    t.string "email",        :limit => 32
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "",   :null => false
