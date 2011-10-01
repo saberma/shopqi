@@ -3,11 +3,9 @@ class Page < ActiveRecord::Base
 
   validates_presence_of :title
 
-  define_index do
-    has :shop_id
-    indexes :title
-    indexes :body_html
-    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta
+  searchable do
+    integer :shop_id, references: Shop
+    text :title, :body_html
   end
 
   before_save do

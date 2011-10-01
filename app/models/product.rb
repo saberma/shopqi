@@ -30,17 +30,14 @@ class Product < ActiveRecord::Base
     end
   end
 
-  define_index do
-    has :shop_id #只能查询当前商店下的商品，查询时使用shop.products.search
-    indexes :title
-    indexes :body_html
-    indexes :product_type
-    indexes :vendor
-    indexes variants(:option1)
-    indexes variants(:option2)
-    indexes variants(:option3)
-    indexes variants(:sku)
-    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta #增量更新索引
+  searchable do
+    integer :shop_id, references: Shop
+    text :title, :body_html, :product_type, :vendor
+    text :variants_text do
+      variants.map do |variant|
+        [variant.option1, variant.option2, variant.option3, variant.sku]
+      end
+    end
   end
 
   before_create do
@@ -98,10 +95,6 @@ class ProductVariant < ActiveRecord::Base
 
   before_create do
     self.shop_id = self.product.shop_id
-  end
-
-  after_save do
-    product.update_attribute :delta, true #新增修改款式要更新商品的索引
   end
 
   def options

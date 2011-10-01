@@ -3,7 +3,7 @@ module ThemeExtracter
 
   @queue = "theme_extracter"
 
-  def self.perform(shop_id, theme_id, zip_path, addition_root_dir) # 解压
+  def self.perform(shop_id, theme_id, zip_path, addition_root_dir) # 用户上传主题文件后，转入后台解压
     shop = Shop.find(shop_id)
     shop_theme = shop.themes.find(theme_id)
     path = shop_theme.public_path

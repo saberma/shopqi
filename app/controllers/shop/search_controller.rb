@@ -7,7 +7,10 @@ class Shop::SearchController < Shop::AppController
     if params[:q].blank?
       nil
     else
-      ThinkingSphinx.search params[:q], classes: [Product, Article, Page], with: { shop_id: shop.id }
+      Sunspot.search(Product, Article, Page) do
+        keywords params[:q]
+        with :shop_id, shop.id
+      end.results
     end
   end
 

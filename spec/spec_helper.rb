@@ -12,8 +12,6 @@ Spork.prefork do
   require 'rspec/rails'
   require 'capybara/rspec'
   require 'capybara/rails'
-  require 'thinking_sphinx/test'
-  ThinkingSphinx::Test.init
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -55,6 +53,7 @@ Spork.each_run do
       DatabaseCleaner.strategy = :truncation, {:except => %w[themes]} #theme包含初始化数据，不清掉
       DatabaseCleaner.clean_with(:truncation, {:except => %w[themes]})
       FileUtils.mkdir_p(File.join(Rails.root, 'public', 's', 'files', Rails.env))
+      Sunspot.session = Sunspot::Rails::StubSessionProxy.new(Sunspot.session) # 取消与Sunspot的连接
     end
 
     config.after(:suite) do

@@ -10,7 +10,10 @@ class Admin::HomeController < Admin::AppController
     if params[:q].blank?
       nil
     else
-      ThinkingSphinx.search params[:q], classes: [Product,Order, Article, Page,Blog], with: { shop_id: shop.id }
+      Sunspot.search(Product, Order, Article, Page, Blog) do
+        keywords params[:q]
+        with :shop_id, shop.id
+      end.results
     end
   end
 
@@ -18,8 +21,15 @@ class Admin::HomeController < Admin::AppController
     if params[:term].blank?
       nil
     else
-      objs = ThinkingSphinx.search params[:term], classes: [Product, Article,Order, Page,Blog], with: { shop_id: shop.id },page: 1, per_page:10
-      objs.map{|obj|{kind: obj.class.to_s,title: obj.title, url: url_for_lookup(obj.class,obj)}}
+      objs = Sunspot.search(Product, Order, Article, Page, Blog) do
+        keywords params[:term]
+        with :shop_id, shop.id
+        paginate page: 1, per_page: 10
+      end.results
+      objs.map do |obj|
+        kind = I18n.t("activerecord.models.#{obj.class.to_s.downcase}")
+        { kind: kind, title: obj.title, url: url_for_lookup(obj.class,obj) }
+      end
     end
   end
 

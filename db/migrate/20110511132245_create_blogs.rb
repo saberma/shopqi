@@ -6,7 +6,6 @@ class CreateBlogs < ActiveRecord::Migration
       t.string :title, comment: '标题',null: false
       t.string :commentable, comment: '评论权限'
       t.string :handle, comment: '用于模板中的Permalink/Handle', null: false
-      t.boolean :delta    , comment: "ts全文检索增量更新标记"    , default: true, null: false
 
       t.timestamps
     end
@@ -18,7 +17,6 @@ class CreateBlogs < ActiveRecord::Migration
       t.boolean :published, comment: '是否可见'                  , default: true
       t.integer :user_id  , comment: '更新人'
       t.string :author    , comment: '作者'
-      t.boolean :delta    , comment: "ts全文检索增量更新标记"    , default: true, null: false
 
       t.timestamps
     end
@@ -35,7 +33,6 @@ class CreateBlogs < ActiveRecord::Migration
 
     add_index :blogs   , :shop_id
     add_index :articles, :blog_id
-    add_index :articles, :delta
     add_index :comments, :article_id
   end
 
