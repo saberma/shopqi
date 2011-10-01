@@ -1,4 +1,3 @@
-AdminUsers =  YAML::load_file(Rails.root.join('config/admin_users.yml'))
 #module ActiveAdmin
 #  class Reloader
 #    def attach!
