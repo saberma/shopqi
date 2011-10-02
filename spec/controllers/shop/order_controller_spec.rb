@@ -26,7 +26,7 @@ describe Shop::OrderController do
     Factory :payment, shop: shop
   end
 
-  let(:billing_address_attributes) { {name: 'ma',country_code: 'CN', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
+  let(:shipping_address_attributes) { {name: 'ma',country_code: 'CN', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
 
   context '#address' do
 
@@ -35,15 +35,14 @@ describe Shop::OrderController do
       response.should be_success
     end
 
-    it 'should copy the billding address' do
+    it 'should save the shipping address' do
       expect do
-        post :create, shop_id: shop.id, cart_token: cart.token, billing_is_shipping: true, order: {
+        post :create, shop_id: shop.id, cart_token: cart.token, order: {
           email: 'mahb45@gmail.com',
-          billing_address_attributes: billing_address_attributes
+          shipping_address_attributes: shipping_address_attributes
         }
         order = assigns['_resources']['order']
-        order.shipping_address.name.should eql order.billing_address.name
-        order.shipping_address.address1.should eql order.billing_address.address1
+        order.shipping_address.address1.should eql order.shipping_address.address1
         order.line_items.should_not be_empty
       end.should change(Order, :count).by(1)
     end

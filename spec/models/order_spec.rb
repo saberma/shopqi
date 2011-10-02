@@ -85,12 +85,12 @@ describe Order do
     it 'should validate email' do
       order.valid?.should be_false
       order.errors[:email].should_not be_nil
-      order.errors[:billing_address].should_not be_nil
+      order.errors[:shipping_address].should_not be_nil
     end
 
-    it 'should validate billing_address' do
-      order.update_attributes email: 'mahb45@gmail.com', billing_address_attributes: { name: '' }
-      order.errors['billing_address.name'].should_not be_empty
+    it 'should validate shipping_address' do
+      order.update_attributes email: 'mahb45@gmail.com', shipping_address_attributes: { name: '' }
+      order.errors['shipping_address.name'].should_not be_empty
     end
 
   end
@@ -104,10 +104,8 @@ describe Order do
     it 'should save address' do
       expect do
         expect do
-          expect do
-            order
-          end.should change(Order, :count).by(1)
-        end.should change(OrderBillingAddress, :count).by(1)
+          order
+        end.should change(Order, :count).by(1)
       end.should change(OrderShippingAddress, :count).by(1)
     end
 
