@@ -23,16 +23,13 @@ RegionUtils =
 $(document).ready ->
 
   #处理地址，级联操作税率
-  $('#order_billing_address_attributes_country_code,#order_shipping_address_attributes_country_code').each ->
+  $('#order_shipping_address_attributes_country_code').each ->
     $(this).change ->
-      checked = $('#shipping-toggle').attr('checked') is 'checked'
       country_code = $(this).val()
       if country_code isnt 'CN'
         $(this).closest('table').find('.region').parent().hide()
       else
         $(this).closest('table').find('.region').parent().show()
-      if $(this).attr('id') == 'order_billing_address_attributes_country_code' and !checked
-        return false
       action = $(this).closest('form').attr('action').replace(/create_order/i,'update_tax_price')
       $.post action, { country_code: country_code, shipping_same: checked }, (data) ->
         img = $("#cost :first-child")[0]
@@ -44,15 +41,15 @@ $(document).ready ->
         $('.spinner').hide()
 
   #/carts/xxx 页面处理货品地址和发单地址
-  $('#shipping-toggle').change ->
-    checked = $(this).attr('checked') is 'checked'
-    $('#shipping').toggle !checked
-    $('#shipping-same').toggle checked
-    if checked
-      $('#order_billing_address_attributes_country_code').change()
-    else
-      $('#order_shipping_address_attributes_country_code').change()
-  .change()
+  #$('#shipping-toggle').change ->
+  #  checked = $(this).attr('checked') is 'checked'
+  #  $('#shipping').toggle !checked
+  #  $('#shipping-same').toggle checked
+  #  if checked
+  #    $('#order_billing_address_attributes_country_code').change()
+  #  else
+  #    $('#order_shipping_address_attributes_country_code').change()
+  #.change()
 
   if $('#no-shipping-rates').size() > 0
     $('input#complete-purchase').attr 'disabled', true

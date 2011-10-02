@@ -2,7 +2,6 @@
 class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
   belongs_to :customer     , counter_cache: true    #顾客信息
-  has_one :billing_address , dependent: :destroy, class_name: 'OrderBillingAddress' #下单人信息
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress' #收货人信息
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem' #订单商品
   has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction' #支付记录
@@ -10,9 +9,8 @@ class Order < ActiveRecord::Base
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc #订单历史
   belongs_to  :payment        , class_name: 'Payment' #支付方式
 
-  attr_accessible :id, :email, :shipping_rate,  :note, :billing_address_attributes, :shipping_address_attributes, :cancel_reason, :total_weight
+  attr_accessible :id, :email, :shipping_rate,  :note, :shipping_address_attributes, :cancel_reason, :total_weight
 
-  accepts_nested_attributes_for :billing_address
   accepts_nested_attributes_for :shipping_address
 
   validates_presence_of :email, message: '此栏不能为空白'
@@ -182,39 +180,13 @@ class OrderFulfillment < ActiveRecord::Base
   end
 end
 
-# 发单人信息
-class OrderBillingAddress < ActiveRecord::Base
-  belongs_to :order
-  validates_presence_of :name,:country_code, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
-
-  def country
-    Country.where(code: country_code).first
-  end
-
-  def country_name
-    Carmen.country_name(country_code)
-  end
-
-  def province_name
-    District.get(self.province)
-  end
-
-  def city_name
-    District.get(self.city)
-  end
-
-  def district_name
-    District.get(self.district)
-  end
-end
-
 # 收货人信息
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
 
   def country
-    Country.where(code: country_code).first
+    order.shop.countries.where(code: country_code).first
   end
 
   def country_name

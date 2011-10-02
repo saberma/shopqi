@@ -56,21 +56,6 @@ class CreateOrders < ActiveRecord::Migration
       t.references :order_line_item  , comment: '所属订单商品', null: false
     end
 
-    #发单人信息
-    create_table :order_billing_addresses do |t|
-      t.references :order, comment: '所属订单', null: false
-      t.string :name     , comment: '姓名'    , null: false
-      t.string :company  , comment: '公司'    , limit: 64
-      t.string :country_code  , comment: '国家', limit: 10 , default: 'CN', null: false
-      t.string :province , comment: '地区(省)', limit: 64
-      t.string :city     , comment: '城市'    , limit: 64
-      t.string :district , comment: '区'      , limit: 64
-      t.string :address1 , comment: '地址'    , null: false
-      t.string :address2 , comment: '地址 续'
-      t.string :zip      , comment: '邮编'    , limit: 12
-      t.string :phone    , comment: '电话'    , limit: 64  , null: false, null: false
-    end
-
     #收货人信息
     create_table :order_shipping_addresses do |t|
       t.references :order, comment: '所属订单', null: false
@@ -97,7 +82,6 @@ class CreateOrders < ActiveRecord::Migration
     add_index :orders                             , :shop_id
     add_index :orders                             , :customer_id
     add_index :orders                             , :token                , unique: true
-    add_index :order_billing_addresses            , :order_id
     add_index :order_shipping_addresses           , :order_id
     add_index :order_line_items                   , :order_id
     add_index :order_transactions                 , :order_id
@@ -114,7 +98,6 @@ class CreateOrders < ActiveRecord::Migration
     drop_table :order_transactions
     drop_table :order_line_items
     drop_table :order_shipping_addresses
-    drop_table :order_billing_addresses
     drop_table :orders
   end
 end

@@ -66,14 +66,13 @@ class Shop::OrderController < Shop::AppController
     if cart.cart_hash.blank?
       render(action: 'error', layout: false) and return
     end
-    order.build_billing_address if order.billing_address.nil?
     order.build_shipping_address if order.shipping_address.nil?
   end
 
   # 提交订单: 填写完收货地址等就可以创建订单了
   def create
-    address #初始化billing_address,shipping_address
-    order.build_shipping_address(order.billing_address.attributes) if params[:billing_is_shipping]
+    address #初始化shipping_address
+    order.build_shipping_address(order.shipping_address.attributes)
     JSON(cart.cart_hash).each_pair do |variant_id, quantity| #保存已购买商品
       variant = shop.variants.find(variant_id)
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
@@ -82,7 +81,7 @@ class Shop::OrderController < Shop::AppController
     #增加默认的付款方式为支付宝
     order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
     #税率
-    order.tax_price = shop.taxes_included  ? 0.0 : cart_total_price * shop.countries.find_by_code(order.billing_address.country_code).tax_percentage/100
+    order.tax_price = shop.taxes_included  ? 0.0 : cart_total_price * shop.countries.find_by_code(order.shipping_address.country_code).tax_percentage/100
 
     if order.save
       redirect_to pay_order_path(shop_id: shop.id, token: order.token)

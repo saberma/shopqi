@@ -32,87 +32,49 @@
             =current_customer.email
             %span.sign-in-message
               ==不是#{current_customer.name}?
-              =link_to '用另一个账号登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
+              =link_to '用另一个账号登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}" )
         -else
           =f.text_field :email
           -if shop.customer_accounts_optional?
             %span.sign-in-message
               已经有账户了？
-              =link_to ' 现在就登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
+              =link_to ' 现在就登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}" )
       / begin addresses
       #addresses.group.clearfix
-        .gleft
-          %h3 发单地址
-          %table#billing.form(cellspacing="0" cellpadding="0")
-            -if current_customer
-              %tr#billing_address_selection.multiple_address_selection
-                %td(colspan=2)
-                  =select_tag :billing_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''])
-            =f.fields_for :billing_address do |b|
-              %tr
-                %td.lbl=b.label :name
-                %td=b.text_field :name, class: :short
-              %tr
-                %td.lbl=b.label :country_code
-                %td=b.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
-              %tr
-                %td.lbl
-                  %label(for='order_billing_address_attributes_province') 地区
-                %td.region
-                  =b.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
-                  =b.select :city, District.list(order.billing_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
-                  =b.select :district, District.list(order.billing_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
-              %tr
-                %td.lbl=b.label :address1
-                %td(style="width: 260px")=b.text_field :address1
-              %tr
-                %td.lbl=b.label :phone
-                %td=b.text_field :phone, class: :short
-              %tr
-                %td.lbl=b.label :zip
-                %td=b.text_field :zip, class: :short
-              %tr
-                %td.lbl=b.label :company
-                %td=b.text_field :company, class: :short
-            %tr#billing-is-shipping
-              %td(colspan="2")
-                %input#shipping-toggle(type="checkbox" name="billing_is_shipping" checked="checked" style="width: auto" tabindex="12")
-                %label(for="shipping-toggle") 将货品发送至发单地址
-        .gright
-          %h3 发货地址
-          #shipping-same.address-notification(style="display:none;")
-            %span 货品将会被发送至您的发单地址.
-          %table#shipping.form(cellspacing="0" cellpadding="0")
-            -if current_customer
-              %tr#shipping_address_selection.multiple_address_selection
-                %td(colspan=2)
-                  =select_tag :shipping_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''] )
-            =f.fields_for :shipping_address do |s|
-              %tr
-                %td.lbl=s.label :name
-                %td=s.text_field :name, class: :short
-              %tr
-                %td.lbl=s.label :country_code
-                %td=s.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
-              %tr
-                %td.lbl
-                  %label(for='order_shipping_address_attributes_province') 地区
-                %td.region
-                  =s.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
-                  =s.select :city, District.list(order.billing_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
-                  =s.select :district, District.list(order.billing_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
-              %tr
-                %td.lbl=s.label :address1
-                %td(style="width: 260px")=s.text_field :address1
-              %tr
-                %td.lbl=s.label :phone
-                %td=s.text_field :phone, class: :short
-              %tr
-                %td.lbl=s.label :zip
-                %td=s.text_field :zip, class: :short
-              %tr
-                %td.lbl=s.label :company
-                %td=s.text_field :company, class: :short
+        %h3 收货地址
+        #shipping-same.address-notification(style="display:none;")
+          %span 货品将会被发送至您的收货地址.
+        %table#shipping.form(cellspacing="0" cellpadding="0")
+          -if current_customer
+            %tr#shipping_address_selection.multiple_address_selection
+              %td(colspan=2)
+                =select_tag :shipping_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''] )
+          =f.fields_for :shipping_address do |s|
+            %tr
+              %td.lbl=s.label :name
+              %td=s.text_field :name, class: :short
+            %tr
+              %td.lbl=s.label :country_code
+              %td=s.select :country_code, countries.collect{|c|[Carmen.country_name(c.code),c.code]}
+            %tr
+              %td.lbl
+                %label(for='order_shipping_address_attributes_province') 地区
+              %td.region
+                =s.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
+                =s.select :city, District.list(order.shipping_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
+                =s.select :district, District.list(order.shipping_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
+            %tr
+              %td.lbl=s.label :address1
+              %td(style="width: 260px")=s.text_field :address1
+            %tr
+              %td.lbl=s.label :phone
+              %td=s.text_field :phone, class: :short
+            %tr
+              %td.lbl=s.label :zip
+              %td=s.text_field :zip, class: :short
+            %tr
+              %td.lbl=s.label :company
+              %td=s.text_field :company, class: :short
         %div(style="clear: both")
       / end addresses
       #buttons
