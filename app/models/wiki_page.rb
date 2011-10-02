@@ -7,7 +7,7 @@ class WikiPage
     end
 
     def relative_path
-      'public/wiki'
+      'data/wiki'
     end
 
     def wiki

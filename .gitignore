@@ -10,27 +10,12 @@ log/*
 logfile
 tmp/*
 tmp/**/*
-public/wiki
 
-#cucumber测试生成的临时文件
-capybara-*.html
-
-#自动生成的图片
-public/uploads
-public/images/logo/4*.png
-public/images/menu/4*.png
 #去掉precompile到生产环境的目录
 public/assets/**
 
 #上传的图片
-public/images/uploads/**
 public/system/dragonfly/**
-
-#去掉编译后的css文件(production环境下rails不处理静态文件)
-#public/stylesheets/compiled/**
-
-#不上传包含重要信息的文件
-config/initializers/payment.rb
 
 #不上传sphinx conf文件
 config/*.sphinx.conf
@@ -54,23 +39,13 @@ public/.DS_Store
 public/images/.DS_Store
 public/stylesheets/.DS_Store
 
-#coffeescript生成的js文件，减少git diff时的干扰，生产环境部署时再手动调用rake barista:brew
-public/javascripts/collections
-public/javascripts/views
-public/javascripts/models
-public/javascripts/controllers
-public/javascripts/plugins
-public/javascripts/*application.js
-public/javascripts/plugins.js
-public/javascripts/shop
-
 #主题
 public/s/files
 
-#全文检索CoreSeek(sphinx)
-db/sphinx
 #全文检索Sunspot
 solr/data
+# 运营的数据文件
+data/wiki
 
 #redis
 dump.rdb
