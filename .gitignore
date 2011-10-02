@@ -14,6 +14,8 @@ tmp/**/*
 #去掉precompile到生产环境的目录
 public/assets/**
 
+#自动生成的图片
+public/uploads
 #上传的图片
 public/system/dragonfly/**
 
@@ -46,6 +48,7 @@ public/s/files
 solr/data
 # 运营的数据文件
 data/wiki
+data/themes
 
 #redis
 dump.rdb

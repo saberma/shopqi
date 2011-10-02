@@ -2,6 +2,12 @@
 # 可选外观主题
 class Theme < ActiveRecord::Base
   COLOR = %w(red yellow green blue magenta white black grey)
+  mount_uploader :file, ThemeUploader
+
+  before_save do
+    self.handle = Pinyin.t(self.name, '-') if self.handle.blank?
+    self.style_handle = Pinyin.t(self.style, '-') if self.style_handle.blank?
+  end
 
   def self.default
     find_by_handle('Threadify')

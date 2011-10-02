@@ -16,17 +16,17 @@ ActiveRecord::Schema.define(:version => 20111001024945) do
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
     t.string   "resource_type", :null => false
-    t.integer  "author_id"
     t.string   "author_type"
+    t.integer  "author_id"
+    t.string   "namespace"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "namespace"
   end
 
   add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
+  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_active_admin_comments_on_resource_type_and_resource_id"
 
   create_table "activities", :force => true do |t|
     t.string   "operate"
@@ -669,18 +669,20 @@ ActiveRecord::Schema.define(:version => 20111001024945) do
   add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
 
   create_table "themes", :force => true do |t|
-    t.string "name",         :limit => 16
-    t.string "handle",       :limit => 16
-    t.string "style",        :limit => 16
-    t.string "style_handle", :limit => 16
-    t.string "role",         :limit => 16
-    t.float  "price"
-    t.string "color",        :limit => 8
-    t.string "desc"
-    t.string "shop",         :limit => 32
-    t.string "site",         :limit => 64
-    t.string "author",       :limit => 16
-    t.string "email",        :limit => 32
+    t.string  "name",         :limit => 16
+    t.string  "handle",       :limit => 16
+    t.string  "style",        :limit => 16
+    t.string  "style_handle", :limit => 16
+    t.string  "role",         :limit => 16
+    t.float   "price"
+    t.string  "color",        :limit => 8
+    t.string  "desc"
+    t.string  "shop",         :limit => 32
+    t.string  "site",         :limit => 64
+    t.string  "author",       :limit => 16
+    t.string  "email",        :limit => 32
+    t.boolean "published"
+    t.string  "file",         :limit => 64
   end
 
   create_table "users", :force => true do |t|

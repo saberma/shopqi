@@ -16,6 +16,7 @@ class CreateThemes < ActiveRecord::Migration
       t.string :author      , comment: "作者"            , limit: 16
       t.string :email       , comment: "作者Email"       , limit: 32
       t.boolean :published  , comment: "是否启用"
+      t.string :file        , comment: "对应的压缩文件"  , limit: 64
     end
   end
 

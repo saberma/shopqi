@@ -1,0 +1,5 @@
+此目录应该包含以下文件
+
+# themes 主题实体记录关联的压缩文件
+# wiki 百科帮助文档
+# public_s_files 链接到public/s/files，放置商店的主题文件及手动上传的商品图片
