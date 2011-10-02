@@ -8,10 +8,7 @@ defaults: &defaults
         body:  "尊敬的{{customer.name}}： \r\n   您好,恭喜您已经在{{shop_name}}商店订购商品成功!,订单号：{{order_number}}。{%
           if requires_shipping %} \r\n   收货人信息： {{ shipping_address.name}}： \r\n              {{
           shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}}
-          {{ shipping_address.address1}} {% endif %} \r\n   发单人信息： {{ billing_address.name
-          }}：\r\n              {{ billing_address.country }}{{ billing_address.province}}
-          {{ billing_address.city}} {{ billing_address.district}} {{ billing_address.address1}}
-          \r\n   订单商品明细： {% for line in line_items %} \r\n              {{ line.quantity
+          {{ shipping_address.address1}} {% endif %} \r\n   订单商品明细： {% for line in line_items %} \r\n              {{ line.quantity
           }} x {{ line.title }}  单价： {{ line.price | money }} {% endfor %}\r\n   订单总额：
           {{ total_price }}  | 商品总额： {{ total_line_items_price }}  | 发货方式及金额： {{ shipping_rate
           }}\r\n   付款方式： {{ gateway }}   \r\n   \r\n   订单商品发货后，我们将发送一封电子邮件给您，确认发货日期、发货内容和送货方式。\r\n\r\n
@@ -19,7 +16,7 @@ defaults: &defaults
         title: 您在{{shop_name}}的订单下单成功
 
       new_order_notify:
-        body:  "{{ shop_name }},\r\n\r\n{{ billing_address.name }} 新增了订单({{ date | date:
+        body:  "{{ shop_name }},\r\n\r\n{{ shipping_address.name }} 新增了订单({{ date | date:
           \"%b %d %I:%M%p\" }}). \r\n\r\n付款方式:\r\n  {{ gateway }}{% if requires_shipping
           %}\r\n\r\n发送方式: \r\n  {% for shipping_method in shipping_methods %}{{ shipping_method.title
           }}\r\n  {% endfor %}\r\n收货人信息:\r\n  {{ shipping_address.name }}\r\n  {{ shipping_address.country}}
@@ -27,10 +24,10 @@ defaults: &defaults
           {{ shipping_address.address1}} , {{ shipping_address.zip }}\r\n  {{ shipping_address.phone
           }}{% endif %}\r\n\r\n\r\n{% for line in line_items %}{{ line.quantity }}x {{line.title
           }}\t\t(sku: {{ line.sku }})\r\n{% endfor %}"
-        title:  '[{{shop_name}}] 订单 {{ name }} , {{ billing_address.name }}下单'
+        title:  '[{{shop_name}}] 订单 {{ name }} , {{ shipping_address.name }}下单'
 
       ship_confirm:
-        body:  "尊敬的{{ billing_address.name }},\r\n\r\n   您所订购的商品 已经发货了:\r\n\r\n   {%
+        body:  "尊敬的{{ shipping_address.name }},\r\n\r\n   您所订购的商品 已经发货了:\r\n\r\n   {%
           for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}\r\n
           \  {% endfor %}\r\n\r\n{% if requires_shipping %} 通过 {% if fulfillment.tracking_company
           %} {{ fulfillment.tracking_company }} {% endif %}发送到以下    地址:\r\n\r\n\r\n{%
@@ -40,7 +37,7 @@ defaults: &defaults
         title: 订单 {{ name }} 发货提醒
 
       ship_update:
-        body:  "尊敬的 {{ billing_address.name }},\r\n\r\n  您的订单号为{{ name }}的商品更改了运送信息：\r\n\r\n{%
+        body:  "尊敬的 {{ shipping_address.name }},\r\n\r\n  您的订单号为{{ name }}的商品更改了运送信息：\r\n\r\n{%
           for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}\r\n{%
           endfor %}\r\n\r\n 它们将通过{% if fulfillment.tracking_company %} {{ fulfillment.tracking_company
           }}{% endif %} 运送，运单号为 {{ fulfillment.tracking_number }}. 您可以通过下面链接查询：\r\n\r\n
@@ -48,7 +45,7 @@ defaults: &defaults
         title: 订单{{ name }} 运送方式更改提醒
 
       order_cancelled:
-        body:  "尊敬的 {{ billing_address.name }},\r\n\r\n  您的订单{{ name }}已取消！ 如果，您已付款，我们将会把款项返回给您！\r\n\r\n
+        body:  "尊敬的 {{ shipping_address.name }},\r\n\r\n  您的订单{{ name }}已取消！ 如果，您已付款，我们将会把款项返回给您！\r\n\r\n
           \ 如果，您有任何疑问，可以回复此邮件！\r\n  \r\n  欢迎您再次到{{ shop_name }}购物，祝您购物愉快！\r\n"
         title: 订单 {{ name }} 取消提醒
 
