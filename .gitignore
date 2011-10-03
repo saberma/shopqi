@@ -15,6 +15,9 @@ public/wiki
 #cucumber测试生成的临时文件
 capybara-*.html
 
+#forman启动的服务
+Procfile
+
 #自动生成的图片
 public/uploads
 public/images/logo/4*.png
