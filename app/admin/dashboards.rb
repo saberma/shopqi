@@ -9,7 +9,7 @@ ActiveAdmin::Dashboards.build do
   # Here is an example of a simple dashboard section
   #
   section "最近的商店" do
-    table_for Shop.order("created_at desc").limit(10),:i18n => Shop  do
+    table_for Shop.order("created_at desc").limit(10),i18n: Shop  do
       column :name do |shop|
         link_to shop.name, active_admin_shop_path(shop)
       end
