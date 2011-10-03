@@ -9,15 +9,15 @@ ActiveAdmin::Dashboards.build do
   # Here is an example of a simple dashboard section
   #
   section "最近的商店" do
-    table_for  Shop.order("created_at desc").limit(10) do
-      column I18n.t('activerecord.attributes.shop.name'),:name do |shop|
+    table_for Shop.order("created_at desc").limit(10),:i18n => Shop  do
+      column :name do |shop|
         link_to shop.name, active_admin_shop_path(shop)
       end
-      column I18n.t('activerecord.attributes.shop.password_enabled'),:password_enabled
-      column I18n.t('activerecord.attributes.shop.guided'), :guided
-      column I18n.t('activerecord.attributes.shop.deadline'),:deadline
-      column I18n.t('activerecord.attributes.shop.theme'),:theme
-      column I18n.t('activerecord.attributes.shop.created_at'),:created_at
+      column :password_enabled
+      column :guided
+      column :deadline
+      column :theme
+      column :created_at
     end
     strong {link_to '查看所有商店',active_admin_shops_path}
   end
