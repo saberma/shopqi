@@ -9,5 +9,6 @@ ActiveAdmin.register Shop do
      column :theme
      column :password_enabled
      column :created_at
+     default_actions
    end
 end
