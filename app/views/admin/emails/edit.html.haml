@@ -18,7 +18,7 @@
       在下面的模板中，只允许使用纯文本格式,
       = succeed "." do
         %a{:href => "#{wiki_url_with_port}/Email_Variable_Reference", :target => "wiki", :title => "Open Wiki in a new window"} 可用于邮件模板中的参数
-    =form_for email do |f|
+    =form_for email,html: {id: 'edit_email_form'} do |f|
       %dl
         %dt=f.label :title
         %dd=f.text_field :title,class:"big"
@@ -28,9 +28,7 @@
             %li#status-message
             %li#status-errorlist{:style => "font-weight: bold"}
           =f.text_area :body,rows:30,cols:90,class:'compile-ok',id:'source'
-          -#
-            .preview
-              %a{:href => "#", :onclick => "previewEmailTemplate(); return false;"} Preview plain text email
+          .preview=link_to '预览','#',id: 'preview_text'
       %h3 启用HTML模板
       %p
         HTML 邮件模板给你提供更多的格式选择，但是，你需要了解HTML的一些知识。您可以选择通过哪一种方式来渲染邮件。
@@ -46,9 +44,7 @@
               %li#status-message
               %li#status-errorlist{:style => "font-weight: bold"}
             %textarea#source.compile-ok{:cols => "90", :name => "email[body_html]", :rows => "30"}
-            -#
-              .preview
-                %a{:href => "#", :onclick => "previewHtmlEmailTemplate(); return false;"} Preview HTML email
+            .preview=link_to '预览','#',id: 'preview_html'
       %p.btns
         =f.submit w('save'),class: 'btn'
         =w('or')

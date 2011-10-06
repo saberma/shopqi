@@ -35,4 +35,11 @@ class Admin::EmailsController < Admin::AppController
   def unfollow
     subscribe.destroy
   end
+
+  def preview
+    @subject = Liquid::Template.parse(params[:email][:title]).render(KeyValues::DemoData.first.attributes[:order_1])
+    @body = Liquid::Template.parse(params[:email][:body]).render(KeyValues::DemoData.first.attributes[:order_1])
+    render action: 'preview',layout: false
+  end
+
 end

@@ -34,3 +34,18 @@ App.Controllers.Emails = Backbone.Controller.extend
         $('#order-notification-list').hide()
         $('#add-subscription-btn').show()
         false
+
+      #预览
+      Preview = (id)  ->
+        oldAction = $('#edit_email_form').attr('action')
+        $form = $($('#edit_email_form').get(0))
+        $form.attr('action', "/admin/notifications/#{id}")
+        $form.attr('target', '_blank')
+        $form.submit()
+        $form.attr('action', oldAction)
+        $form.removeAttr('target')
+        return false
+
+      $('.preview a').each ->
+        $(this).click ->
+          Preview($(this).attr('id'))

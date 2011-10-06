@@ -115,6 +115,7 @@ Shopqi::Application.routes.draw do
       match "/notifications"                , to: "emails#index"
       match "/notifications/subscribe"      , to: "emails#follow"
       match "/notifications/:id/unsubscribe", to: "emails#unfollow"                     , as: 'unfollow'
+      match "/notifications/preview_:view_type"   , to: 'emails#preview'
       match '/support'                      , to: redirect('http://support.shopqi.com/'), as: 'support'
       get '/lookup/query'                   , to: 'home#query'
       post "/dashboard/complete_task/:name" , to: "home#complete_task"                  , as: :complete_task
