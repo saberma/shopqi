@@ -93,6 +93,7 @@ Shopqi::Application.routes.draw do
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
+      get '/themes'                        , to: 'shops#themes'
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show', as: :product_show
       get '/collections'                   , to: 'collections#index'

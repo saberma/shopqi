@@ -3,6 +3,7 @@
 class Shop::ShopsController < Shop::AppController
   include Admin::ShopsHelper
   skip_before_filter :password_protected, only: :password
+  skip_before_filter :must_has_theme, only: :themes
 
   expose(:shop) do
     if params[:id]
@@ -68,4 +69,5 @@ class Shop::ShopsController < Shop::AppController
       end
     end
   end
+
 end

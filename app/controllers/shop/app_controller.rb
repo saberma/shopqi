@@ -4,10 +4,15 @@ class Shop::AppController < ActionController::Base
   layout nil #默认不需要layout，使用liquid
   before_filter :force_domain # 域名管理中是否设置主域名重定向
   before_filter :password_protected # 设置了密码保护
+  before_filter :must_has_theme # 必须存在主题
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   protected
+  def must_has_theme
+    redirect_to controller: :shops, action: :themes unless shop.theme
+  end
+
   def force_domain
     host = request.host
     shop_domain = ShopDomain.from(host)

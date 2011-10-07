@@ -54,10 +54,11 @@
               %span 访问应用商店
         %li#theme-link
           #theme-dropdown.nav-dropdown.dropdown.hide(style="right: 10px")
-            %h3 修改网店外观
-            %ul
-              %li#nav-theme-settings=link_to "外观设置", settings_theme_path(shop.theme)
-              %li#nav-template-editor=link_to "模板编辑器", theme_assets_path(shop.theme)
+            -if shop.theme
+              %h3 修改网店外观
+              %ul
+                %li#nav-theme-settings=link_to "外观设置", settings_theme_path(shop.theme)
+                %li#nav-template-editor=link_to "模板编辑器", theme_assets_path(shop.theme)
             %p.nav-manage.pb
               =link_to '主题管理', themes_path
             %p.more
