@@ -8,14 +8,14 @@ class CreateThemes < ActiveRecord::Migration
       t.string :style       , comment: "风格"              , limit: 16
       t.string :style_handle, comment: "风格handle"        , limit: 16
       t.string :role        , comment: "角色用途(main      , mobile    , unpublished, wait)", limit: 16
-      t.float :price        , comment: "价格"
+      t.float :price        , comment: "价格"              , default: 0
       t.string :color       , comment: "颜色"              , limit: 8
       t.string :desc        , comment: "描述"              , limit: 255
       t.string :shop        , comment: "demo网店的子域名"  , limit: 32
       t.string :site        , comment: "作者官网"          , limit: 64
       t.string :author      , comment: "作者"              , limit: 16
       t.string :email       , comment: "作者Email"         , limit: 32
-      t.boolean :published  , comment: "是否启用"
+      t.boolean :published  , comment: "是否启用"          , default: false
       t.string :file        , comment: "对应的压缩文件"    , limit: 64
       t.string :main        , comment: "截图(列表页面)"    , limit: 64
       t.string :collection  , comment: "集合截图(查看页面)", limit: 64

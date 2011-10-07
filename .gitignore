@@ -40,6 +40,7 @@ vendor/bundle
 public/.DS_Store
 public/images/.DS_Store
 public/stylesheets/.DS_Store
+public/s/theme
 
 #主题
 public/s/files

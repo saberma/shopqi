@@ -674,14 +674,14 @@ ActiveRecord::Schema.define(:version => 20111001024945) do
     t.string  "style",        :limit => 16
     t.string  "style_handle", :limit => 16
     t.string  "role",         :limit => 16
-    t.float   "price"
+    t.float   "price",                      :default => 0.0
     t.string  "color",        :limit => 8
     t.string  "desc"
     t.string  "shop",         :limit => 32
     t.string  "site",         :limit => 64
     t.string  "author",       :limit => 16
     t.string  "email",        :limit => 32
-    t.boolean "published"
+    t.boolean "published",                  :default => false
     t.string  "file",         :limit => 64
     t.string  "main",         :limit => 64
     t.string  "collection",   :limit => 64

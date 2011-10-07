@@ -34,6 +34,10 @@ class ThemeMainUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [285, 366]
   end
 
+  version :signup do
+    process :resize_to_fill => [198, 254]
+  end
+
   version :large do
     process :resize_to_fill => [380, 488]
   end

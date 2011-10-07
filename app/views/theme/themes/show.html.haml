@@ -40,13 +40,13 @@
   %ul
     %li
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/main/original.jpg")
-        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/main/large.jpg")
+        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/main/large_original.jpg")
     %li
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/collection/original.jpg")
-        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/collection/thumb.jpg")
+        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/collection/thumb_original.jpg")
     %li
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/product/original.jpg")
-        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb.jpg")
+        %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb_original.jpg")
 %script(id="styles-item" type="text/x-handlebars-template")
   %ul
     %h3 此主题包括 种风格
@@ -56,7 +56,7 @@
         %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}")
           %p
             %strong 风格: {{{style}}}
-          %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
+          %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium_original.jpg")
         {{#unless is_current}}
         %p.view-style-demo
           %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank") 查看示例  ›
@@ -80,7 +80,7 @@
         {{else}}
         %strong {{{name}}}
         {{/if}}
-      %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium.jpg")
+      %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium_original.jpg")
 
 :javascript
   App.theme = new App.Models.Theme(#{@theme_json});
