@@ -3,6 +3,9 @@
 class Theme < ActiveRecord::Base
   COLOR = %w(red yellow green blue magenta white black grey)
   mount_uploader :file, ThemeUploader
+  mount_uploader :main, ThemeMainUploader
+  mount_uploader :collection, ThemeCollectionUploader
+  mount_uploader :product, ThemeProductUploader
 
   before_save do
     self.handle = Pinyin.t(self.name, '-') if self.handle.blank?

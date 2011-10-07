@@ -28,6 +28,9 @@ ActiveAdmin.register Theme do
     end
     f.inputs "相关文件" do
       f.input :file, as: :file
+      f.input :main, as: :file
+      f.input :collection, as: :file
+      f.input :product, as: :file
     end
     f.buttons
   end

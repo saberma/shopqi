@@ -683,6 +683,9 @@ ActiveRecord::Schema.define(:version => 20111001024945) do
     t.string  "email",        :limit => 32
     t.boolean "published"
     t.string  "file",         :limit => 64
+    t.string  "main",         :limit => 64
+    t.string  "collection",   :limit => 64
+    t.string  "product",      :limit => 64
   end
 
   create_table "users", :force => true do |t|
