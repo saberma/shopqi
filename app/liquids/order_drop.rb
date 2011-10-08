@@ -51,7 +51,7 @@ class OrderDrop < Liquid::Drop
   end
 
   def fulfillment
-    OrderFulfillmentDrop.new @order.fulfillments.last
+    OrderFulfillmentDrop.new @order.fulfillments.last  if @order.fulfillments.last
   end
 
   def unfulfilled_line_items

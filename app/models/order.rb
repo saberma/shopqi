@@ -112,6 +112,10 @@ class Order < ActiveRecord::Base
     #支付记录
   end
 
+  def send_email(mail_type)
+    Resque.enqueue(ShopqiMailer, self.email ,self.id ,self.shop.emails.find_by_mail_type(mail_type).id )
+  end
+
 end
 
 # 订单商品

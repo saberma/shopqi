@@ -33,7 +33,7 @@ names.each do |name|
 
   phone = "139#{Random.new.rand(10000000..99999999)}"
   address_attrs = {name: name, address1: '311', phone: phone}.merge address
-  order_attrs = {email: email, billing_address_attributes: address_attrs, shipping_address_attributes: address_attrs}
+  order_attrs = {email: email,  shipping_address_attributes: address_attrs}
   Random.new.rand(1..5).times do
     order = shop.orders.build order_attrs
     variant = random_product(products).variants.first
