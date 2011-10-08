@@ -2,6 +2,7 @@ bundler_args: --without development test #rails-dev-boost: invalid byte sequence
 
 rvm:
   - 1.9.2
+  - 1.9.3
 
 script:
  - "cp config/alipay.yml.example config/alipay.yml 2>&1"
