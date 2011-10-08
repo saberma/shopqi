@@ -30,8 +30,8 @@ defaults: &defaults
         body:  "尊敬的{{ shipping_address.name }},\r\n\r\n   您所订购的商品 已经发货了:\r\n\r\n   {%
           for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}\r\n
           \  {% endfor %}\r\n\r\n{% if requires_shipping %} 通过 {% if fulfillment.tracking_company
-          %} {{ fulfillment.tracking_company }} {% endif %}发送到以下    地址:\r\n\r\n\r\n{%
-          if fulfillment.tracking_number %}\r\n 运单号为： {{ fulfillment.tracking_number }}.
+          %} {{ fulfillment.tracking_company }} {% endif %}发送到以下地址:\r\n  收货人信息: {{shipping_address.name}}:\r\n
+                       {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}}\r\n\r\n  {% if fulfillment.tracking_number %}\r\n 运单号为： {{ fulfillment.tracking_number }}.
           您可以通过下面的地址，查询您货物的运送状态 :\r\n\r\n{{ fulfillment.tracking_url }}\r\n\r\n{% endif
           %}{% endif %}\r\n\r\n  欢迎您再次到{{shop_name}}购物，祝您购物愉快！"
         title: 订单 {{ name }} 发货提醒

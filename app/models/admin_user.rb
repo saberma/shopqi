@@ -8,7 +8,7 @@ class AdminUser < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
   protected
-  def self.find_for_database_authentication(warden_conditions) # http://j.mp/ogzr2M 重载devise方法，校验域名
+  def self.find_for_database_authentication(warden_conditions) # 删除request key host校验
     conditions = warden_conditions.dup
     host = conditions.delete(:host)
     where(conditions).first

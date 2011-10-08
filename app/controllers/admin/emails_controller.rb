@@ -38,7 +38,11 @@ class Admin::EmailsController < Admin::AppController
 
   def preview
     @subject = Liquid::Template.parse(params[:email][:title]).render(KeyValues::DemoData.first.attributes[:order_1])
-    @body = Liquid::Template.parse(params[:email][:body]).render(KeyValues::DemoData.first.attributes[:order_1])
+    if params[:view_type] == 'text'
+      @body = Liquid::Template.parse(params[:email][:body]).render(KeyValues::DemoData.first.attributes[:order_1])
+    else
+      @body = Liquid::Template.parse(params[:email][:body_html]).render(KeyValues::DemoData.first.attributes[:order_1])
+    end
     render action: 'preview',layout: false
   end
 

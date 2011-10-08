@@ -30,6 +30,7 @@ class OrderDrop < Liquid::Drop
 
   #提交订单的顾客
   def customer
+    CustomerDrop.new @order.customer
   end
 
   def shop_name
@@ -50,9 +51,23 @@ class OrderDrop < Liquid::Drop
   end
 
   def fulfillment
+    OrderFulfillmentDrop.new @order.fulfillments.last
   end
 
   def unfulfilled_line_items
   end
+end
+
+#配送记录
+class OrderFulfillmentDrop < Liquid::Drop
+  def initialize(fulfillment)
+    @fulfillment = fulfillment
+  end
+  delegate :tracking_company, :tracking_number,:created_at,:updated_at, to: :@fulfillment
+
+  def line_items
+    @fulfillment.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
+  end
+
 end
 
