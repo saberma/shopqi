@@ -19,7 +19,7 @@ class Shop < ActiveRecord::Base
   has_many :carts                 , dependent: :destroy
   has_many :subscribes            , dependent: :destroy
   has_many :comments              , dependent: :destroy
-  has_many :themes                , dependent: :destroy                      , class_name: 'ShopTheme'
+  has_many :themes                , dependent: :destroy                      , class_name: 'ShopTheme', extend: ShopTheme::Extension
   has_many :oauth2_consumer_tokens, dependent: :destroy                      , class_name: 'OAuth2::Model::ConsumerToken'
 
   has_many :types                 , dependent: :destroy                      , class_name: 'ShopProductType'
@@ -29,7 +29,7 @@ class Shop < ActiveRecord::Base
   has_many :activities            , dependent: :destroy                      , order: 'created_at desc'
   has_many :payments              , dependent: :destroy
   has_many :tasks                 , dependent: :destroy                      , order: 'id asc', class_name: 'ShopTask'
-  has_many :policies              , dependent: :destroy                     ,  order: 'id asc', class_name: 'ShopPolicy'
+  has_many :policies              , dependent: :destroy                      , order: 'id asc', class_name: 'ShopPolicy'
   has_many :consumptions          , dependent: :destroy
 
   accepts_nested_attributes_for :domains, :themes, :policies
