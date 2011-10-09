@@ -75,6 +75,7 @@ class Admin::OrdersController < Admin::AppController
 
   def cancel
     order.update_attribute :status, :cancelled
+    order.send_email('order_cancelled') if params[:email]
     redirect_to orders_path
   end
 

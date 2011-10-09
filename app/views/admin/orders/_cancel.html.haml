@@ -7,7 +7,7 @@
           %strong.highlight-alt 不可恢复的
       %p.st.ssb
         %label(for="reason") 原因:
-        %select#reason(name="order[cancel_reason]")=options_for_select cancel_reasons
+        %select#reason(name="order[cancel_reason]")=options_for_select cancel_reasons.invert
       .pgroup
         %table#cancel-data.no-lines
           %tr
