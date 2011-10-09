@@ -144,7 +144,7 @@ Shopqi::Application.routes.draw do
         member do
           post :close  #关闭
           post :open   #重新打开
-          post :cancel #取消
+          put  :cancel #取消
           post :previous #上一订单
           post :next     #下一订单
         end
