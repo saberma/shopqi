@@ -70,4 +70,4 @@ orders:
     landing_site_ref:
     cancelled:
     cancelled_at:
-    cancel_reason: "已经购买"
+    cancel_reason: "顾客取消"

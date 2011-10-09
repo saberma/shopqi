@@ -22,7 +22,10 @@ class Admin::FulfillmentsController < Admin::AppController
   end
 
   def update
-    fulfillment.save
+    #若有更改则发送邮件
+    if fulfillment.changed? && fulfillment.save
+      order.send_email('ship_update') if params[:notify_customer] == 'true' #当选中通知顾客时，发送邮件
+    end
     render nothing: true
   end
 end

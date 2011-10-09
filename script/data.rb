@@ -36,10 +36,12 @@ names.each do |name|
   order_attrs = {email: email,  shipping_address_attributes: address_attrs}
   Random.new.rand(1..5).times do
     order = shop.orders.build order_attrs
-    variant = random_product(products).variants.first
-    price = Random.new.rand(10..50)
-    quantity = Random.new.rand(1..20)
-    order.line_items.build product_variant: variant, price: price, quantity: quantity
+    3.times do
+      variant = random_product(products).variants.first
+      price = Random.new.rand(10..50)
+      quantity = Random.new.rand(1..20)
+      order.line_items.build product_variant: variant, price: price, quantity: quantity
+    end
     order.save
     order.financial_status = :pending # 显示首次订单(订单有效)
     order.save

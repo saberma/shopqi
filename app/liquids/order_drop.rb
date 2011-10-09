@@ -46,8 +46,10 @@ class OrderDrop < Liquid::Drop
     AddressDrop.new @order.shipping_address
   end
 
+  #order关联的fulfillments按照更新时间排序，并且需为
+  #降序排列,下面方法获取的fulfillment就是最后更新的那个
   def fulfillment
-    OrderFulfillmentDrop.new @order.fulfillments.last  if @order.fulfillments.last
+    OrderFulfillmentDrop.new(@order.fulfillments.first)  if  @order.fulfillments.first
   end
 
   def unfulfilled_line_items

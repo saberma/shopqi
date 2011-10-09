@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress' #收货人信息
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem' #订单商品
   has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction' #支付记录
-  has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment' #配送记录
+  has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment', order: "updated_at desc " #配送记录
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory', order: :id.desc #订单历史
   belongs_to  :payment        , class_name: 'Payment' #支付方式
 
