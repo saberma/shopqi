@@ -18,7 +18,7 @@ App.Views.Order.Show.Fulfillment.Index = Backbone.View.extend
   save: ->
     self = this
     line_item_ids = _.map self.$('.fulfill:checked'), (checkbox) -> checkbox.value
-    attrs = 'shipped[]': line_item_ids, tracking_number: $('#manual_tracking_number').val(), tracking_company: $('#manual_tracking_company').val()
+    attrs = 'shipped[]': line_item_ids, tracking_number: $('#manual_tracking_number').val(), tracking_company: $('#manual_tracking_company').val(), notify_customer: $('#notify_customer').is(':checked')
     $.post "/admin/orders/#{App.order.id}/fulfillments/set", attrs, (data) ->
       _(App.order.get('line_items')).chain().select (line_item) ->
         _(line_item_ids).include("#{line_item.id}")
