@@ -1,4 +1,5 @@
 #关键配置文件(newrelic.yml无example，得自行从newrelic官网注册下载)
+config/database.yml
 config/sms.yml
 config/alipay.yml
 config/admin_users.yml
