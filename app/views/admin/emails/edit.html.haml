@@ -43,7 +43,7 @@
             %ul#status-log.nobull.field-with-errors{:style => "display:none; margin: 3px 3px 10px 3px;"}
               %li#status-message
               %li#status-errorlist{:style => "font-weight: bold"}
-            %textarea#source.compile-ok{:cols => "90", :name => "email[body_html]", :rows => "30"}
+            =f.text_area :body_html,rows:30,cols:90,class:'compile-ok',id:'source'
             .preview=link_to '预览','#',id: 'preview_html'
       %p.btns
         =f.submit w('save'),class: 'btn'

@@ -15,5 +15,9 @@ class OrderObserver < ActiveRecord::Observer
   def after_create(order)
     #发送客户确认邮件
     order.send_email("order_confirm")
+    #给网店管理者发送邮件
+    order.shop.subscribes.map(&:email_address).each do |email_address|
+      order.send_email("new_order_notify",email_address)
+    end
   end
 end

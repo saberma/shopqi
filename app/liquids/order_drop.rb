@@ -6,7 +6,7 @@ class OrderDrop < Liquid::Drop
     @order = order
   end
 
-  delegate :id, :name, :order_number, :shipping_rate, :payment, :total_price, :total_line_items_price, to: :@order
+  delegate :id, :name, :order_number, :shipping_rate, :payment, :total_price, :total_line_items_price,:cancelled_at, to: :@order
 
   def date
     @order.created_at
@@ -42,20 +42,29 @@ class OrderDrop < Liquid::Drop
     @order.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
   end
 
-  #def billing_address
-  #  AddressDrop.new @order.billing_address
-  #end
-
   def shipping_address
     AddressDrop.new @order.shipping_address
   end
 
+  #order关联的fulfillments按照更新时间排序，并且需为
+  #降序排列,下面方法获取的fulfillment就是最后更新的那个
   def fulfillment
-    OrderFulfillmentDrop.new @order.fulfillments.last  if @order.fulfillments.last
+    OrderFulfillmentDrop.new(@order.fulfillments.first)  if  @order.fulfillments.first
   end
 
   def unfulfilled_line_items
   end
+
+  #订单取消原因
+  def cancel_reason
+    KeyValues::Order::CancelReason.hash[@order.cancel_reason]
+  end
+
+  #如果订单已被取消，则返回true
+  def cancelled
+    @order.cancelled_at?
+  end
+
 end
 
 #配送记录
