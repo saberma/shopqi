@@ -146,7 +146,11 @@ class Wiki::WikiPagesController < Wiki::AppController
       else
         @name = params[:name]
         self.action_name = 'new'
-        render action: :new
+        if admin_user_signed_in?
+          render action: :new
+        else
+          render text: '没有找到对应的页面',layout: true
+        end
       end
     end
   end

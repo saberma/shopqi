@@ -20,7 +20,6 @@ App.Views.Comment.Show = Backbone.View.extend
         when 'published' then attrs['is_published'] = true
         when 'unapproved' then attrs['is_unapproved'] = true
       template = Handlebars.compile $('#show-comment-handle').html()
-      log template attrs
       self.$('.comment-actions').html template attrs
 
   render: ->
