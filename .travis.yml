@@ -7,7 +7,7 @@ script:
  - "cp config/alipay.yml.example config/alipay.yml 2>&1"
  - "cp config/sms.yml.example config/sms.yml 2>&1"
  - "cp config/admin_users.yml.example config/admin_users.yml 2>&1"
- - "cp config/database.yml.example config/database.yml.yml 2>&1"
+ - "cp config/database.yml.example config/database.yml 2>&1"
  - "bundle exec rake db:drop db:create db:migrate --trace 2>&1"
  - "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers" #except request
 
