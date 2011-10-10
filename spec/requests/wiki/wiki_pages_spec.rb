@@ -40,6 +40,7 @@ describe "Wiki::WikiPages", js: true do
       fill_in 'name'   , with: 'home'
       fill_in 'content', with: "h2. 内容"
       fill_in 'message', with: '新增首页'
+      select  'textile', from: 'format'
       click_on '保存'
 
       current_path.should == '/home'
@@ -63,6 +64,7 @@ describe "Wiki::WikiPages", js: true do
       fill_in 'name'   , with: 'side'
       fill_in 'content', with: "h2. 内容"
       fill_in 'message', with: '新增首页'
+      select  'textile', from: 'format'
       click_on '保存'
       click_link '页面列表'
       has_link?('side').should be_true
@@ -89,7 +91,6 @@ describe "Wiki::WikiPages", js: true do
       click_link '编辑'
       find_link('预览').click
       has_content?("内容").should be_true
-
 
     end
   end
