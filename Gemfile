@@ -70,6 +70,7 @@ group :development do
   gem 'guard-spork'
   #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
+  gem 'capistrano'
 end
 
 group :development, :test do
@@ -91,6 +92,10 @@ end
 group :development, :test, :travis do
   gem "factory_girl"
   gem "factory_girl_rails"
+end
+
+group :production do
+  gem 'therubyracer', require: nil # 预编译asset
 end
 
 # Gems used only for assets and not required
