@@ -18,4 +18,8 @@ describe ArticleDrop do
     article_drop.content.should eql '全场5折'
   end
 
+  it 'should get comments size' do
+    article_drop.comments_count.should eql 0
+  end
+
 end
