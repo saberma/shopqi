@@ -5,6 +5,7 @@ require 'shared_stuff'
 describe "Blogs" do
 
   include_context 'login admin'
+  let(:shop) { user_admin.shop }
 
   describe "GET /admin/blogs" do
 
@@ -36,6 +37,24 @@ describe "Blogs" do
       #修改文章
       select '隐藏', :from => 'article_published'
       page.should have_content('修改成功!')
+
+      #测试评论
+      #增加评论
+      blog = Blog.find_by_title('商品介绍')
+      article = blog.articles.first
+      Comment.create(article_id: article.id,shop_id: shop.id, status: 'spam',email: 'liwh87@gmail.com', body: '新评论内容', author: 'admin')
+      visit blog_article_path(blog,article)
+      within(:xpath, "//table[@id='comments-list']/tbody/tr")  do
+        has_content?("新评论内容").should be_true
+        has_link?("liwh87@gmail.com").should be_true
+        has_content?("不为垃圾评论").should be_true
+        find(".action.btn.approve").click
+        has_content?("垃圾评论").should be_true
+        has_no_content?('不为垃圾评论').should be_true
+        page.execute_script("window.confirm = function(msg) { return true; }")
+        find('.action.destroy').click
+        has_content?('新评论内容').should be_true
+      end
 
       #删除文章
       page.execute_script("window.confirm = function(msg) { return true; }")

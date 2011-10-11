@@ -21,7 +21,7 @@ class ArticleDrop < Liquid::Drop
   end
 
   def comments_count
-    @article.comments.size
+    comments.size
   end
 
 end
