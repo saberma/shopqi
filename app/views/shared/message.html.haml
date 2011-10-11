@@ -1,0 +1,11 @@
+#container
+  #dialog
+    .status
+      %p 您已退出登录。
+    %ul.full
+      %li
+        返回
+        =link_to '登录', new_user_session_path, title: '重新登录'
+      %li.last
+        返回
+        =link_to '网店', '/'

@@ -2,6 +2,8 @@ defaults: &defaults
   domain:
     host: lvh.me
     store_host: smackaho.st
+  wiki:
+    relative_path: 'public/wiki'
   templates:
     email:
       order_confirm:
@@ -72,6 +74,8 @@ development:
 
 test:
   <<: *defaults
+  wiki:
+    relative_path: 'public/wiki_test'
 
 production:
   <<: *defaults

@@ -12,4 +12,8 @@ class Users::SessionsController < Devise::SessionsController
     myshopqi = Shop.at(request.host).domains.myshopqi
     redirect_to "#{request.protocol}#{myshopqi.host}#{request.port_string}#{request.path}" if request.host != myshopqi.host
   end
+
+  def after_sign_out_path_for(resource)
+    home_message_path
+  end
 end

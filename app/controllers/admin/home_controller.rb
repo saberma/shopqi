@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Admin::HomeController < Admin::AppController
   include Admin::HomeHelper
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, except: [:message]
   layout 'admin'
 
   expose(:shop) { current_user.shop }
@@ -66,6 +66,10 @@ class Admin::HomeController < Admin::AppController
   }
 
   def index
+  end
+
+  def message
+    render template: 'shared/message', layout: 'application'
   end
 
   def dashboard # 网店管理首页
