@@ -19,6 +19,7 @@ describe OrderDrop do
 
     variant = "{{ order.shipping_rate }}"
     liquid(variant).should eql "#{order.shipping_rate}"
+
   end
 
   private

@@ -13,7 +13,7 @@ defaults: &defaults
           {{ shipping_address.address1}} {% endif %} \r\n   订单商品明细： {% for line in line_items %} \r\n              {{ line.quantity
           }} x {{ line.title }}  单价： {{ line.price | money }} {% endfor %}\r\n   订单总额：
           {{ total_price }}  | 商品总额： {{ total_line_items_price }}  | 发货方式及金额： {{ shipping_rate
-          }}\r\n   付款方式： {{ gateway }}   \r\n   \r\n   订单商品发货后，我们将发送一封电子邮件给您，确认发货日期、发货内容和送货方式。\r\n\r\n
+          }}\r\n   付款方式： {{ gateway }}   \r\n   \r\n   如果您尚未付款，请您尽快付款。订单商品发货后，我们将发送一封电子邮件给您，确认发货日期、发货内容和送货方式。\r\n\r\n
            欢迎您再次到{{shop_name}}购物，祝您购物愉快！"
         title: 您在{{shop_name}}的订单下单成功
 
