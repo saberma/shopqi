@@ -36,8 +36,16 @@ class Order < ActiveRecord::Base
     shipping_rate.gsub(/.+-/,'').to_f if shipping_rate
   end
 
+  def shipping_name
+    shipping_rate.scan(/(.+)-/).flatten[0] if shipping_rate
+  end
+
   def order_tax_price
     shop.taxes_included? ? 0.0  : self.tax_price
+  end
+
+  def gateway
+    payment.name ? payment.name : payment.payment_type.try(:name)  if payment
   end
 
   #订单商品总重量
@@ -114,6 +122,15 @@ class Order < ActiveRecord::Base
 
   def send_email(mail_type,email_address = self.email)
     Resque.enqueue(ShopqiMailer, email_address ,self.id ,self.shop.emails.find_by_mail_type(mail_type).id )
+  end
+
+  def send_email_when_order_forward
+    #发送客户确认邮件
+    send_email("order_confirm")
+    #给网店管理者发送邮件
+    shop.subscribes.map(&:email_address).each do |email_address|
+      send_email("new_order_notify",email_address)
+    end
   end
 
 end

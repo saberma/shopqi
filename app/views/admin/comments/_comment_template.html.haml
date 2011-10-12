@@ -17,24 +17,24 @@
     %span.comment-actions
       %span(id="comment_{{id}}_actions")
         {{#if is_unapproved}}
-        %a.action.btn.approve approve
+        %a.action.btn.approve 接收
         {{/if }}
         {{#if is_spam}}
-        %a.action.btn.approve not spam
+        %a.action.btn.approve 不为垃圾评论
         {{/if }}
         {{#if is_published}}
-        %a.action.btn.spam spam
+        %a.action.btn.spam 垃圾评论
         {{/if }}
         %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')
 %script(id="show-comment-handle" type="text/html")
   %span(id="comment_{{id}}_actions")
     {{#if is_unapproved}}
-    %a.action.btn.approve approve
+    %a.action.btn.approve 接收
     {{/if }}
     {{#if is_spam}}
-    %a.action.btn.approve not spam
+    %a.action.btn.approve 不为垃圾评论
     {{/if }}
     {{#if is_published}}
-    %a.action.btn.spam spam
+    %a.action.btn.spam 垃圾评论
     {{/if }}
     %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')

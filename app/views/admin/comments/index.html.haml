@@ -3,49 +3,25 @@
 #action-links
   %ul
 #table-filters.box2.sst.ssb
-  Showing
+  显示
   #comment-status-select.filter-select
-    %a#status-filter-link{:href => "#", :onclick => "; return false;"} all
+    %a#status-filter-link(href= "#")=search_label :status,'所有',status
     %ul.dropdown{:style => "display: none"}
       %li
-        %strong Comment Status
-      %li.current
-        %a{:href => "/admin/comments?status=all"} all
-      %li
-        %a{:href => "/admin/comments?status=spam"} spam
-      %li
-        %a{:href => "/admin/comments?status=unapproved"} unapproved
-      %li
-        %a{:href => "/admin/comments?status=published"} published
-      %li.filter-show-all
-        %a{:href => "/admin/comments"} show all
-  comments
-
-  from
+        %strong 评论状态
+      -status.each_pair do |code,name|
+        %li=link_to name,search_path(:comments_path,status_eq: code)
+      %li.filter-show-all=link_to '显示所有', search_path(:comments_path,status_eq: nil)
+  评论来自
   #blog-select.filter-select
-    %a#blog-filter-link{:href => "#", :onclick => "; return false;"} any
+    %a#blog-filter-link(href= "#")=search_label :blog_title,'所有'
     %ul.dropdown{:style => "display: none"}
       %li
-        %strong Blog
-      %li
-        %a{:href => "/admin/comments?blog=1111&amp;status=all"} 1111
-      %li
-        %a{:href => "/admin/comments?blog=aaa&amp;status=all"} aaa
-      %li
-        %a{:href => "/admin/comments?blog=aaa-1&amp;status=all"} aaa
-      %li
-        %a{:href => "/admin/comments?blog=aaaa&amp;status=all"} aaaa
-      %li
-        %a{:href => "/admin/comments?blog=ccc&amp;status=all"} ccc
-      %li
-        %a{:href => "/admin/comments?blog=fffff&amp;status=all"} fffff
-      %li
-        %a{:href => "/admin/comments?blog=introduction&amp;status=all"} introduction
-      %li
-        %a{:href => "/admin/comments?blog=wwww&amp;status=all"} wwww
-      %li.filter-show-all.current
-        %a{:href => "/admin/comments?status=all"} show all
-  blog
+        %strong 博客
+      -blogs.each do |blog|
+        %li=link_to blog.title, search_path(:comments_path,blog_title_eq: blog.title)
+      %li.filter-show-all=link_to '显示所有', search_path(:comments_path,blog_title_eq: nil)
+  博客
 #comments
   =form_for :comment,url: set_comments_path,id: 'batch-form' do |f|
     %div{:style => "height: 32px;"}

@@ -1,6 +1,8 @@
 # encoding: utf-8
 # 此文件用于批量生成顾客、订单等记录，方便截图演示
 # rails runner script/data.rb
+# 为防止产生大量的邮件，需从resque删除发送邮件的queue
+# 执行语句时，先关掉resque interval
 
 return unless Rails.env.development?
 

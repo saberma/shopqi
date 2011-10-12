@@ -37,6 +37,15 @@ module KeyValues
     ]
   end
 
+  #评论状态
+  class CommentState < KeyValues::Base
+    self.data = [
+      {id: 1, name: '垃圾的', code: 'spam'},
+      {id: 2, name: '未接收的'  , code: 'unapproved'},
+      {id: 3, name: '公开的'  , code: 'published'},
+    ]
+  end
+
 
   # 每页条数
   class PageSize < KeyValues::Base

@@ -12,8 +12,8 @@ class ArticleDrop < Liquid::Drop
 
   def comments
     @article.comments.map do |comment|
-      CommentDrop.new comment
-    end
+      CommentDrop.new comment unless comment.new_record?
+    end.compact
   end
 
   def url
@@ -21,7 +21,7 @@ class ArticleDrop < Liquid::Drop
   end
 
   def comments_count
-    @article.comments.size
+    comments.size
   end
 
 end

@@ -15,6 +15,7 @@ App.Controllers.Articles = Backbone.Controller.extend
       else
         $('#article-edit-link').html('返回')
       $('#article-show').toggle()
+      return false
 
     $('#status-filter-link').click ->
       $('#author-select > ul').hide()

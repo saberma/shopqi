@@ -71,6 +71,7 @@ group :development do
   #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
   gem 'capistrano'
+  gem "letter_opener", git: 'git://github.com/ryanb/letter_opener.git'
 end
 
 group :development, :test do

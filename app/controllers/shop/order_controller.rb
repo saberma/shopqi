@@ -95,6 +95,11 @@ class Shop::OrderController < Shop::AppController
   end
 
   def forward
+    if order
+      order.send_email_when_order_forward
+    else
+      render file: 'public/404.html',layout: false, status: 404
+    end
   end
 
   # 支付
@@ -105,6 +110,8 @@ class Shop::OrderController < Shop::AppController
       data = data.merge({error: 'shipping_rate', shipping_rate: params[:shipping_rate] }) if !include_shipping_rate
       data = data.merge({payment_error: true}) if !params[:order][:payment_id]
     else
+      params[:buyer_accepts_marketing] == 'true' ? order.customer.accepts_marketing = true : order.customer.accepts_marketing = false
+      order.customer.save
       order.financial_status = 'pending'
       order.payment = shop.payments.find(params[:order][:payment_id])
       order.save

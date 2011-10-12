@@ -2,7 +2,7 @@
 FactoryGirl.define do
   factory :blog do
     title '博客1'
-    commentable true
+    commentable 'no'
     handle 'blog1'
   end
 

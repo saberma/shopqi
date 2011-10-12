@@ -3,11 +3,16 @@ class Admin::CommentsController < Admin::AppController
   layout 'admin'
 
   expose(:shop){ current_user.shop}
+  expose(:blogs){ shop.blogs }
   expose(:blog)
   expose(:articles){ blog.articles }
   expose(:article)
   expose(:comments){
-    shop.comments
+    if params[:search]
+      shop.comments.metasearch(params[:search]).all
+    else
+      shop.comments
+    end
   }
   expose(:comment)
 
@@ -16,6 +21,7 @@ class Admin::CommentsController < Admin::AppController
       include:{ article: { only: [:id, :blog_id,:title]} }
     })
   }
+  expose(:status){ KeyValues::CommentState.hash}
 
   def set
     operation = params[:operation].to_sym

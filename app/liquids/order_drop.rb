@@ -6,10 +6,14 @@ class OrderDrop < Liquid::Drop
     @order = order
   end
 
-  delegate :id, :name, :order_number, :shipping_rate, :payment, :total_price, :total_line_items_price,:cancelled_at, to: :@order
+  delegate :id, :name, :order_number,:gateway, :shipping_rate,:shipping_name, :shipping_rate_price, :payment, :total_price, :total_line_items_price,:cancelled_at, to: :@order
 
   def date
     @order.created_at
+  end
+
+  def shipping_method
+    ShippingMethodDrop.new @order
   end
 
   #支付细节
@@ -78,5 +82,19 @@ class OrderFulfillmentDrop < Liquid::Drop
     @fulfillment.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
   end
 
+end
+
+class ShippingMethodDrop < Liquid::Drop
+  def initialize(order)
+    @order = order
+  end
+
+  def title
+    @order.shipping_name
+  end
+
+  def price
+    @order.shipping_rate_price
+  end
 end
 
