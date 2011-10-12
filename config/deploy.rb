@@ -30,19 +30,28 @@ depend :remote, :gem, "bundler", ">=1.0.21" # 可以通过 cap deploy:check 检�
 
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
-  #task :start do ; end
-  #task :stop do ; end
-  #task :restart, :roles => :app, :except => { :no_release => true } do
-  #  run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  #end
 
-  # scp -P 10000 config/{database,sms,alipay,admin_users}.yml deploy@188.188.188.188:/u/apps/shopqi/shared/config/
+  task :start do
+    run "cd #{current_path} ; bundle exec unicorn_rails -c config/unicorn.conf.rb -D"
+  end
+
+  task :stop do
+    run "kill -s QUIT `cat /tmp/unicorn.#{application}.pid`"
+  end
+
+  task :restart, roles: :app, except: { no_release: true } do
+    run "kill -s USR2 `cat /tmp/unicorn.#{application}.pid`"
+  end
+
+  # scp -P $CAP_PORT config/{database,sms,alipay,admin_users,unicorn}.yml $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
+  # scp -P $CAP_PORT config/unicorn.conf.rb $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
   desc "Symlink shared resources on each release"
   task :symlink_shared, roles: :app do
-    %w(database sms alipay admin_users).each do |secure_file|
-      run "ln -nfs #{shared_path}/config/#{secure_file}.yml #{release_path}/config/#{secure_file}.yml"
+    %w(database.yml sms.yml alipay.yml admin_users.yml unicorn.conf.rb).each do |secure_file|
+      run "ln -nfs #{shared_path}/config/#{secure_file} #{release_path}/config/#{secure_file}"
     end
   end
 
 end
-after 'deploy:update_code', 'deploy:symlink_shared'
+#after 'deploy:update_code', 'deploy:symlink_shared'
+before 'deploy:assets:precompile', 'deploy:symlink_shared'
