@@ -3,8 +3,7 @@ module Domain
 
   class Checkout
     def self.matches?(request)
-      subdomain = request.subdomain
-      subdomain.present? && subdomain == 'checkout'
+      request.host == "checkout.#{Setting.host}" #checkout.shopqi.com
     end
   end
 
