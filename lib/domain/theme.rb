@@ -3,8 +3,7 @@ module Domain
 
   class Theme
     def self.matches?(request)
-      subdomain = request.subdomain
-      subdomain.present? && subdomain == 'themes'
+      request.host == "themes.#{Setting.host}" #themes.shopqi.com
     end
   end
 

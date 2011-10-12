@@ -3,6 +3,8 @@ config/database.yml
 config/sms.yml
 config/alipay.yml
 config/admin_users.yml
+config/sunspot.yml
+config/unicorn.conf.rb
 config/newrelic.yml
 
 .bundle
@@ -42,7 +44,6 @@ config/*.sphinx.conf
 #vagrant
 .vagrant
 *.box
-config/unicorn.conf.rb
 
 .rvmrc
 

@@ -1,8 +1,7 @@
 module Domain
   class Wiki
     def self.matches?(request)
-      subdomain = request.subdomain
-      subdomain.present? && subdomain == 'wiki'
+      request.host == "wiki.#{Setting.host}" #wiki.shopqi.com
     end
   end
 end
