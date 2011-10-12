@@ -22,7 +22,7 @@
     .group-actions
       %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "新增"}
       或者
-      %a.editor-preview-link{:href => "#"} 预览
+      =link_to '取消',blog_path(blog)
 :javascript
   App.init = function(){
     new App.Controllers.Articles();
