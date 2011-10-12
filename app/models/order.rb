@@ -116,6 +116,7 @@ class Order < ActiveRecord::Base
 
   def pay!
     order.financial_status = 'paid'
+    order.send_email_when_order_forward
     #TODO
     #支付记录
   end
