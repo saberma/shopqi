@@ -10,6 +10,7 @@ App.Views.Comment.Show = Backbone.View.extend
   initialize: ->
     self = this
     this.render()
+
     @model.bind 'remove', (model) ->
       self.remove()
     @model.bind 'change:status', (model) ->
