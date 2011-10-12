@@ -95,6 +95,11 @@ class Shop::OrderController < Shop::AppController
   end
 
   def forward
+    if order
+      order.send_email_when_order_forward
+    else
+      render file: 'public/404.html',layout: false, status: 404
+    end
   end
 
   # 支付

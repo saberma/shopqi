@@ -21,8 +21,11 @@ orders:
     gateway: 支付宝
     financial_status: 已支付
     requires_shipping: true
-    shipping_method: EMS
-    shipping_price: 10
+    shipping_method:
+      title: EMS
+      price: 10
+    shipping_rate_price: 10
+    shipping_name: EMS
     shipping_rate: "EMS-10"
     total_line_items_price: 200
     shipping_address:

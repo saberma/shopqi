@@ -20,8 +20,8 @@ defaults: &defaults
       new_order_notify:
         body:  "{{ shop_name }},\r\n\r\n{{ shipping_address.name }} 新增了订单({{ date | date:
           \"%b %d %I:%M%p\" }}). \r\n\r\n付款方式:\r\n  {{ gateway }}{% if requires_shipping
-          %}\r\n\r\n发送方式: \r\n  {% for shipping_method in shipping_methods %}{{ shipping_method.title
-          }}\r\n  {% endfor %}\r\n收货人信息:\r\n  {{ shipping_address.name }}\r\n  {{ shipping_address.country}}
+          %}\r\n\r\n发送方式: \r\n  {{ shipping_method.title
+          }}\r\n  \r\n收货人信息:\r\n  {{ shipping_address.name }}\r\n  {{ shipping_address.country}}
           {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}}
           {{ shipping_address.address1}} , {{ shipping_address.zip }}\r\n  {{ shipping_address.phone
           }}{% endif %}\r\n\r\n\r\n{% for line in line_items %}{{ line.quantity }}x {{line.title
