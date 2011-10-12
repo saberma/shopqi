@@ -78,8 +78,6 @@ class Shop::OrderController < Shop::AppController
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
 
-    #增加默认的付款方式为支付宝
-    #order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
     #税率
     order.tax_price = shop.taxes_included  ? 0.0 : cart_total_price * shop.countries.find_by_code(order.shipping_address.country_code).tax_percentage/100
 
@@ -108,7 +106,7 @@ class Shop::OrderController < Shop::AppController
       data = data.merge({payment_error: true}) if !params[:order][:payment_id]
     else
       #若是已提交过的订单，则不做任何操作
-      unless order.payment.id?
+      if order.payment.nil?
         params[:buyer_accepts_marketing] == 'true' ? order.customer.accepts_marketing = true : order.customer.accepts_marketing = false
         order.customer.save
         order.financial_status = 'pending'
