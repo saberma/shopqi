@@ -28,6 +28,13 @@ GIT
       posix-spawn (~> 0.3.6)
 
 GIT
+  remote: git://github.com/ryanb/letter_opener.git
+  revision: 29b17fefe87b8fdc7ead987dbfabe355b59ff684
+  specs:
+    letter_opener (0.0.2)
+      launchy
+
+GIT
   remote: git://github.com/thedarkone/rails-dev-boost.git
   revision: 216de40f33fe794e19c492c283d69d4911cab741
   specs:
@@ -191,6 +198,8 @@ GEM
     kaminari (0.12.4)
       rails (>= 3.0.0)
     kgio (2.6.0)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     libv8 (3.3.10.2)
     liquid (2.2.2)
     macaddr (1.4.0)
@@ -397,6 +406,7 @@ DEPENDENCIES
   interactive_editor
   jquery-rails
   kaminari
+  letter_opener!
   liquid
   message_block
   meta_search (~> 1.1.1)
