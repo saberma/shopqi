@@ -23,7 +23,7 @@ class Admin::ArticlesController < Admin::AppController
     if article.save
       flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
       respond_to do |format|
-        format.html { redirect_to blog_article_path(blog,article) }
+        format.html { redirect_to blog_article_path(article.blog,article) }
         format.js { render :template => "shared/msg" }
       end
     end
