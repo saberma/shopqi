@@ -57,7 +57,7 @@
         #marketing-box.group.clearfix
           %h3 如果有更新就通知我
           %p.sst
-            %input#marketing(type="checkbox" name="buyer_accepts_marketing" checked="checked" value="true")
+            =check_box_tag 'buyer_accepts_marketing',true, order.customer.accepts_marketing
             %label(for="marketing" style="font-weight:normal") 我想接收关于新产品或促销以及其他更新的电子邮件.
       %table#buttons(border="0" cellspacing="0" cellpadding="0" style="height: 55px; width: 100%")
         %tr
