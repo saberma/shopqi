@@ -54,7 +54,7 @@ class Admin::HomeController < Admin::AppController
   }
 
   expose(:recent_orders){
-    shop.orders.limit(5).all
+    shop.orders.where("status = 'open' and financial_status != 'abandoned'").limit(5).all
   }
 
   expose(:recent_comments){
