@@ -54,7 +54,7 @@ class Admin::HomeController < Admin::AppController
   }
 
   expose(:recent_orders){
-    shop.orders.where("financial_status != 'abandoned'").limit(10).all #不显示放弃了的订单
+    shop.orders.where("financial_status != 'abandoned'").limit(10).all #仅不显示放弃了的订单
   }
 
   expose(:recent_comments){
