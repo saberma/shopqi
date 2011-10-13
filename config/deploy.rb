@@ -78,6 +78,6 @@ end
 
 #after 'deploy:update_code', 'deploy:symlink_shared'
 before 'deploy:assets:precompile', 'deploy:symlink_shared'
-after "deploy:stop"              , "resque:stop"
-after "deploy:start"             , "resque:start"
-after "deploy:restart"           , "resque:restart"
+before "deploy:stop"             , "resque:stop"
+before "deploy:start"            , "resque:start"
+before "deploy:restart"          , "resque:restart"
