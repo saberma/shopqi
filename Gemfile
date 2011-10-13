@@ -46,7 +46,9 @@ gem 'client_side_validations' #客户端校验
 gem "activemerchant" # 支付
 gem "activemerchant_patch_for_china"
 gem "httparty"
-gem "resque" # 后台任务
+#gem "resque" # 后台任务
+gem "resque", git: 'git://github.com/defunkt/resque.git' # 1.19.0之后的版本才支持后台运行
+gem "resque-scheduler", git: 'git://github.com/bvandenbos/resque-scheduler.git' # 最新版本才支持后台运行
 gem "resque-retry" # 任务失败后自动重试(支持时间指数递增)
 gem "chinese_pinyin" # 汉字转拼音
 gem "nokogiri" # 解释模板config/settings.html

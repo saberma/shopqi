@@ -13,7 +13,7 @@ set :rvm_type, :user                                     # Copy the exact line. 
 set :application, "shopqi"
 set :port, ENV['CAP_PORT']
 role :web, ENV['CAP_WEB_HOST']                          # Your HTTP server, Apache/etc
-role :app, ENV['CAP_APP_HOST']                          # This may be the same as your `Web` server
+role :app, ENV['CAP_APP_HOST'], jobs: true              # This may be the same as your `Web` server
 role :db,  ENV['CAP_DB_HOST'], primary: true            # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
@@ -53,5 +53,31 @@ namespace :deploy do
   end
 
 end
+
+namespace :resque do
+
+  desc "Start resque scheduler, workers"
+  task :start, roles: :app, only: { jobs: true } do
+    run "cd #{current_path}; PIDFILE=/tmp/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:scheduler"
+    run "cd #{current_path}; PIDFILE=/tmp/resque.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:work"
+  end
+
+  desc "Stop resque scheduler, workers"
+  task :stop, roles: :app, only: { jobs: true } do
+    run "kill -s QUIT `cat /tmp/resque.#{application}.pid`"
+    run "kill -s QUIT `cat /tmp/resque-scheduler.#{application}.pid`"
+  end
+
+  desc "Restart resque workers"
+  task :restart, roles: :app, only: { jobs: true } do
+    stop
+    start
+  end
+
+end
+
 #after 'deploy:update_code', 'deploy:symlink_shared'
 before 'deploy:assets:precompile', 'deploy:symlink_shared'
+after "deploy:stop"              , "resque:stop"
+after "deploy:start"             , "resque:start"
+after "deploy:restart"           , "resque:restart"

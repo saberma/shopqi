@@ -312,6 +312,9 @@ Shopqi::Application.routes.draw do
 
     #官网后台管理
     ActiveAdmin.routes(self)
+    authenticate :admin_user do # 管理员权限
+      mount Resque::Server.new, at: "/resque" # 查看后台任务执行情况
+    end
 
     devise_for :admin_users, ActiveAdmin::Devise.config
   end
