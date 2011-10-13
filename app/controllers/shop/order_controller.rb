@@ -78,8 +78,6 @@ class Shop::OrderController < Shop::AppController
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
 
-    #增加默认的付款方式为支付宝
-    order.payment = shop.payments.where(payment_type_id: KeyValues::PaymentType.first.id).first
     #税率
     order.tax_price = shop.taxes_included  ? 0.0 : cart_total_price * shop.countries.find_by_code(order.shipping_address.country_code).tax_percentage/100
 
@@ -92,14 +90,11 @@ class Shop::OrderController < Shop::AppController
 
   # 发货方式、付款方式Step2
   def pay
+    order.payment ||= shop.payments.first
   end
 
   def forward
-    if order
-      order.send_email_when_order_forward
-    else
-      render file: 'public/404.html',layout: false, status: 404
-    end
+    render file: 'public/404.html',layout: false, status: 404 unless order
   end
 
   # 支付
@@ -110,11 +105,15 @@ class Shop::OrderController < Shop::AppController
       data = data.merge({error: 'shipping_rate', shipping_rate: params[:shipping_rate] }) if !include_shipping_rate
       data = data.merge({payment_error: true}) if !params[:order][:payment_id]
     else
-      params[:buyer_accepts_marketing] == 'true' ? order.customer.accepts_marketing = true : order.customer.accepts_marketing = false
-      order.customer.save
-      order.financial_status = 'pending'
-      order.payment = shop.payments.find(params[:order][:payment_id])
-      order.save
+      #若是已提交过的订单，则不做任何操作
+      if order.payment.nil?
+        params[:buyer_accepts_marketing] == 'true' ? order.customer.accepts_marketing = true : order.customer.accepts_marketing = false
+        order.customer.save
+        order.financial_status = 'pending'
+        order.payment = shop.payments.find(params[:order][:payment_id])
+        order.save
+        order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
+      end
       data = {success: true, url: forward_order_path(params[:shop_id],params[:token])}
     end
     render json: data

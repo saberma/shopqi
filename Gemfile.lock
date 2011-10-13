@@ -33,7 +33,7 @@ GIT
 
 GIT
   remote: git://github.com/jim/carmen.git
-  revision: 00d3345e77fddd93713e27dcb3a46c868ff15520
+  revision: 1eecf3b41379badd5856293ac8873a1d6c84c178
   specs:
     carmen (0.2.7)
 
