@@ -13,7 +13,8 @@
 #=require jquery.blockUI
 #=require jquery.miniColors
 #=require fileuploader
-#=require plugins/jquery.guide
+#=require plugins/jquery.MultiFile
+#=require plugins/jquery.blank_slate
 #=require plugins/jquery.blank_slate
 #=require ./utils/utils
 #=require_self

@@ -20,12 +20,6 @@ module Admin::AppHelper
     end
   end
 
-  def use_javascripts(*args)
-    content_for :javascripts do
-      javascript_include_tag(*args)
-    end
-  end
-
   def dialog(title, &block) # 弹出窗口
     render 'shared/block', title: title, body: capture(&block)
   end

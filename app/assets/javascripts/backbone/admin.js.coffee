@@ -11,11 +11,18 @@
 #=require_tree ./views/themes
 #=require_tree ./views/domains
 #=require_tree ./views/assets
+#=require_tree ./views/comments
+#=require_tree ./views/payments
 #=require_tree ./controllers/orders
 #=require_tree ./controllers/customers
 #=require ./controllers/products
 #=require ./controllers/smart_collections
 #=require ./controllers/custom_collections
+#=require ./controllers/pages
+#=require ./controllers/users
+#=require ./controllers/comments
+#=require ./controllers/emails
+#=require ./controllers/articles
 
 window.App =
   Models: {}
