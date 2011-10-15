@@ -41,7 +41,7 @@ Shopqi::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( shopqi_application.js layout_shopqi.css shopqi_ie-signup )
+  config.assets.precompile += %w( shopqi_application.js shopqi_wiki_application.js layout_shopqi.css shopqi_ie-signup layout_shopqi_theme.css layout_shopqi_wiki )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
