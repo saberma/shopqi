@@ -4,17 +4,20 @@
 # It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 # the compiled file.
 #
-#=require jquery
+#=require jquery.min
 #=require jquery_ujs
-#=require jquery-ui
+#=require jquery-ui-1.8.14.custom.min
 #=require backbone_js
-#=require backbone/admin
 #=require plugins
 #=require rails.validations
 #=require jquery.blockUI
+#=require jquery.miniColors
+#=require fileuploader
 #=require plugins/jquery.guide
+#=require plugins/jquery.blank_slate
 #=require ./utils/utils
 #=require_self
+#=require backbone/admin
 
 #字符串
 @StringUtils =

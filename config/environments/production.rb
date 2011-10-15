@@ -35,13 +35,13 @@ Shopqi::Application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_assets = true
+  config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( shopqi_application.js shopqi_wiki_application.js layout_shopqi.css shopqi_ie-signup layout_shopqi_theme.css layout_shopqi_wiki )
+  config.assets.precompile += %w( shopqi_application.js shopqi_wiki_application.js admin_application.js layout_admin.css layout_admin_print.css layout_shopqi.css shopqi_ie-signup layout_shopqi_theme.css layout_shopqi_wiki )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

@@ -23,8 +23,12 @@ class SMS # 短信接口
     content += " 【ShopQi电子商务平台】" # 短信平台要求签名结尾
     config = YAML::load_file(Rails.root.join('config/sms.yml'))
     url = "http://#{config['smsapi']}/#{config['charset']}/interface/send_sms.aspx"
-    res = Net::HTTP.post_form(URI.parse(url), username: config['username'], password: config['password'], receiver: receiver, content: content)
-    res.body
+    begin
+      res = Net::HTTP.post_form(URI.parse(url), username: config['username'], password: config['password'], receiver: receiver, content: content)
+      res.body
+    rescue Exception => e
+      puts "发送短信错误!#{e}"
+    end
   end
 
 end
