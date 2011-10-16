@@ -18,7 +18,8 @@
       = stylesheet_link_tag "ie6"
     /[if IE 7]
       = stylesheet_link_tag "ie7"
-    =javascript_include_tag 'shopqi_application'
+    -unless action_name == 'page'
+      =javascript_include_tag 'shopqi_application'
     =yield :javascripts
     =csrf_meta_tag
   %body(style=@body_style)
