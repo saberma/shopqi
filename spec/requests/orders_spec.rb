@@ -152,14 +152,6 @@ describe "Orders", js: true do
           has_content?('深圳市').should be_true
           has_content?('南山区').should be_true
         end
-
-        within '#bill-addr' do
-          has_content?('13928452888').should be_true
-          has_content?('马海波').should be_true
-          has_content?('广东省').should be_true
-          has_content?('深圳市').should be_true
-          has_content?('南山区').should be_true
-        end
       end
 
       it "should list histories" do
