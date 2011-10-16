@@ -1,9 +1,10 @@
 !!!
-%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "content-type"}/
-    = stylesheet_link_tag 'dialog','message_block'
-    = javascript_include_tag 'jquery','rails.validations'
+    %meta(http-equiv="content-type" content="text/html; charset=UTF-8")
+    %link(href="#{image_path('favicon.png')}" rel="shortcut icon" type="image/x-icon")/
+    = stylesheet_link_tag :layout_application
+    = javascript_include_tag :application
     = csrf_meta_tag
     /[if IE 6]
       = stylesheet_link_tag "ie6"
