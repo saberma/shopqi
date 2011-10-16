@@ -1,6 +1,4 @@
 - use_kindeditor
-=content_for :javascripts do
-  =javascript_include_tag 'backbone/views/custom_collections/product', 'backbone/views/custom_collections/products', 'backbone/views/custom_collections/available_product', 'backbone/views/custom_collections/available_products', 'backbone/models/product', 'backbone/models/custom_collection_product','backbone/controllers/custom_collections'
 
 %h2#title= link_to custom_collection.title, "/collection/#{custom_collection.handle}", title: '在网店中查看此页面', target: '_blank'
 #action-links

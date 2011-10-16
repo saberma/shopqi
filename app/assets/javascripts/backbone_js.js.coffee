@@ -1,4 +1,4 @@
 #=require underscore-min
-#=require backbone
+#=require backbone-min
 #=require handlebars
 #=require backbone.rails

@@ -1,6 +1,3 @@
-=content_for :javascripts do
-  =javascript_include_tag 'backbone/models/order', 'backbone/views/orders/show/show', 'backbone/views/orders/show/transactions/index', 'backbone/views/orders/show/fulfillments/panel', 'backbone/views/orders/show/fulfillments/index', 'backbone/views/orders/show/fulfillments/edit', 'backbone/views/orders/show/line_items/index', 'backbone/views/orders/show/line_items/show', 'backbone/views/orders/show/histories/index', 'backbone/views/orders/show/histories/fulfillment', 'backbone/views/orders/show/note', 'backbone/controllers/orders/show'
-
 %h2#title
   =order.title
   %span#order-date=order.created_at.to_s(:with_year)

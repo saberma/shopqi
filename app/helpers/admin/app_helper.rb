@@ -16,13 +16,10 @@ module Admin::AppHelper
 
   def use_kindeditor
     content_for :kindeditor do
-      javascript_include_tag("kindeditor/kindeditor-min","kindeditor/kindeditor_config")
-    end
-  end
-
-  def use_javascripts(*args)
-    content_for :javascripts do
-      javascript_include_tag(*args)
+      %Q(
+        <script src="/javascripts/kindeditor/kindeditor.js?1" type="text/javascript"></script>
+        <script src="/javascripts/kindeditor/kindeditor_config.js?1" type="text/javascript"></script>
+      ).html_safe
     end
   end
 

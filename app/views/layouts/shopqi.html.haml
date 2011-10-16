@@ -4,18 +4,22 @@
     %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")/
     %meta(content="no" http-equiv="imagetoolbar")/
     %meta(content="true" name="MSSmartTagsPreventParsing")/
-    %meta(content="Hosted e-commerce with ShopQi the easy way to start your own online store." name="description")/
-    %meta(content="store shop ecommerce e-commerce sell online selling goods shopping cart design easy" name="keywords")/
+    %meta(content="基于ShopQi构建B2C网络，是您开启电子商务最便捷的选择" name="description")/
+    %meta(content="ShopQi B2C 独立网店 网上开店 在线销售 电子商务 购物车" name="keywords")/
     %meta(content="width=device-width initial-scale=1.0" name="viewport")/
-    %link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon")/
-    %link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed")/
+    %link(href="#{image_path('favicon.png')}" rel="shortcut icon" type="image/x-icon")/
+    %link(href="#{image_path('icons/apple-touch-icon.png')}" rel="apple-touch-icon-precomposed")/
     %title ShopQi &mdash; 最适合企业的电子商务平台 低成本构建网上商店 快速建立独立网店
-    = stylesheet_link_tag "master","mobile"
+    = stylesheet_link_tag "layout_shopqi"
     =yield :stylesheets
+    /[if IE]
+      = stylesheet_link_tag "shopqi_ie-signup"
     /[if IE 6]
       = stylesheet_link_tag "ie6"
     /[if IE 7]
       = stylesheet_link_tag "ie7"
+    -unless action_name == 'page'
+      =javascript_include_tag 'shopqi_application'
     =yield :javascripts
     =csrf_meta_tag
   %body(style=@body_style)
