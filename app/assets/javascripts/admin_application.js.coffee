@@ -16,7 +16,7 @@
 #=require fileuploader
 #=require plugins/jquery.guide
 #=require plugins/jquery.blank_slate
-#=require ./utils/utils
+#=require utils/utils
 #=require_self
 #=require backbone/admin
 

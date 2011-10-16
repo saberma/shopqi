@@ -1,12 +1,13 @@
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
 %head
-  %meta{:charset => "utf-8"}/
-  %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
-  %meta{:content => "no", "http-equiv" => "imagetoolbar"}/
-  %meta{:content => "true", :name => "MSSmartTagsPreventParsing"}/
+  %meta(http-equiv="content-type" content="text/html; charset=UTF-8")
+  %meta(http-equiv="imagetoolbar" content="no")
+  %meta(http-equiv="X-UA-Compatible" content="chrome=1")
+  %meta(name="MSSmartTagsPreventParsing" content="true")
   %title==#{shop.name}
-  =stylesheet_link_tag 'customer','message_block'
-  =javascript_include_tag 'jquery.min','shop/account','jquery_ujs'
+  =stylesheet_link_tag :layout_shop_admin
+  =javascript_include_tag :shop_admin_application
   =csrf_meta_tag
 %body
   #container
