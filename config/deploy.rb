@@ -52,6 +52,11 @@ namespace :deploy do
     end
   end
 
+  desc "Populates the Production Database"
+  task :seed do
+    run "cd #{release_path} ; bundle exec rake db:seed"
+  end
+
 end
 
 namespace :resque do
@@ -78,6 +83,8 @@ end
 
 #after 'deploy:update_code', 'deploy:symlink_shared'
 before 'deploy:assets:precompile', 'deploy:symlink_shared'
+after  'deploy:migrate'          , 'deploy:seed'
 before "deploy:stop"             , "resque:stop"
 before "deploy:start"            , "resque:start"
 before "deploy:restart"          , "resque:restart"
+# HOOK IMAGE http://j.mp/psRjx2

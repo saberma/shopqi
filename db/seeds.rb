@@ -1,4 +1,10 @@
 # encoding: utf-8
+############### 注意 ###############
+#                                  #
+#  放在这里的数据都要支持多次执行  #
+#  例如:新增操作执行前要判断未存在 #
+#                                  #
+############### 注意 ###############
 
 unless OAuth2::Model::Client.exists?(name: 'themes')
   redirect_uri = "http://themes.#{Setting.host}#{':4000' if development?}/callback"
