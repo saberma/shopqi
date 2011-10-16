@@ -1,7 +1,10 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'shared_stuff'
 
 describe "Shopqi::Home", js: true do
+
+  include_context 'use shopqi host'
 
   describe "GET /" do # 首页
 

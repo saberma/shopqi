@@ -16,3 +16,11 @@ shared_context 'login admin' do
 
   after(:each) { Capybara::Server.manual_host = nil }
 end
+
+shared_context 'use shopqi host' do # 访问 shopqi.com
+  before :each do
+    Capybara::Server.manual_host = Setting.host
+  end
+
+  after(:each) { Capybara::Server.manual_host = nil }
+end

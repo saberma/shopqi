@@ -1,7 +1,10 @@
 # encoding: utf-8
 require 'spec_helper'
+require 'shared_stuff'
 
 describe "Shopqi::Login", js: true do
+
+  include_context 'use shopqi host'
 
   let(:user_admin) {  Factory :user_admin }
 

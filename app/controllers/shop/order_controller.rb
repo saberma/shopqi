@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
+  include Admin::ShopsHelper
   layout 'shop/checkout'
 
   expose(:shop) { Shop.find(params[:shop_id]) }
@@ -161,7 +162,7 @@ class Shop::OrderController < Shop::AppController
 
   def verify_customer!(cart)
     if cart.shop.customer_accounts_required? and !cart.customer
-      redirect_to new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
+      redirect_to new_customer_session_url(checkout_url: "#{checkout_url_with_port}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
     end
   end
 

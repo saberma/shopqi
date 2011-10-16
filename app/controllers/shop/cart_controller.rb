@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Shop::CartController < Shop::AppController
+  include Admin::ShopsHelper
 
   expose(:shop) { Shop.at(request.host) }
 
@@ -29,12 +30,12 @@ class Shop::CartController < Shop::AppController
     else
       cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)
       if shop.customer_accounts_required?
-        Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}",  checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}"}
+        Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}",  checkout_url: "#{checkout_url_with_port}/carts/#{cart.shop_id}/#{cart.token}"}
         self.send :authenticate_customer!
         cart.customer = current_customer
         cart.save
       end
-      checkout_url = "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{shop.id}/#{cart.token}"
+      checkout_url = "#{checkout_url_with_port}/carts/#{shop.id}/#{cart.token}"
       redirect_to checkout_url
     end
   end
