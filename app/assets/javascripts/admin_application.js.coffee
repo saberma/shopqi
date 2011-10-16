@@ -12,9 +12,9 @@
 #=require rails.validations
 #=require jquery.blockUI
 #=require jquery.miniColors
+#=require jquery.MultiFile
 #=require fileuploader
-#=require plugins/jquery.MultiFile
-#=require plugins/jquery.blank_slate
+#=require plugins/jquery.guide
 #=require plugins/jquery.blank_slate
 #=require ./utils/utils
 #=require_self
