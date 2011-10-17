@@ -11,10 +11,10 @@ class Admin::ThemesController < Admin::AppController
 
   begin 'api'
     def switch
-      unless shop.themes.exceed? # 超出主题数则不更新
-        authorization = OAuth2::Provider.access_token(nil, [], request)
-        if authorization.valid?
-          shop = authorization.owner
+      authorization = OAuth2::Provider.access_token(nil, [], request)
+      shop = authorization.owner
+      if authorization.valid?
+        unless shop.themes.exceed? # 超出主题数则不更新
           theme = Theme.find_by_handle params[:handle]
           shop.theme.switch theme, params[:style_handle]
         end

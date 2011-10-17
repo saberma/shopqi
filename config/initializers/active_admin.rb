@@ -1,4 +1,11 @@
-AdminUsers =  YAML::load_file(Rails.root.join('config/admin_users.yml'))
+#module ActiveAdmin
+#  class Reloader
+#    def attach!
+#      reloader_class.to_prepare do
+#      end
+#    end
+#  end
+#end
 ActiveAdmin.setup do |config|
 
   # == Site Title
@@ -6,7 +13,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Shopqi"
+  config.site_title = "ShopQi"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.

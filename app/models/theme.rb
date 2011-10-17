@@ -1,8 +1,16 @@
 # encoding: utf-8
-# 可选外观主题(使用ActiveHash，以后增加记录直接加item，无须增加migration)
-class Theme < ActiveYaml::Base
+# 可选外观主题
+class Theme < ActiveRecord::Base
   COLOR = %w(red yellow green blue magenta white black grey)
-  set_root_path "#{Rails.root}/app/models"
+  mount_uploader :file, ThemeUploader
+  mount_uploader :main, ThemeMainUploader
+  mount_uploader :collection, ThemeCollectionUploader
+  mount_uploader :product, ThemeProductUploader
+
+  before_save do
+    self.handle = Pinyin.t(self.name, '-') if self.handle.blank?
+    self.style_handle = Pinyin.t(self.style, '-') if self.style_handle.blank?
+  end
 
   def self.default
     find_by_handle('Threadify')
@@ -21,6 +29,7 @@ class Theme < ActiveYaml::Base
     def self.client
       OAuth2::Model::ConsumerClient.where(name: 'themes').first
     end
+
   end
+
 end
-Theme.all # Fixed: NoMethodError: undefined method `find_by_name_and_style' for Theme:Class

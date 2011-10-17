@@ -2,15 +2,11 @@
 #include Rails.application.routes.url_helpers #在console中调用orders_path等
 Shopqi::Application.routes.draw do
 
-  begin 'oauth2'
-    get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
-    post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
-    match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
-  end
-
   scope "/api" do # 供oauth2调用
-    get '/me'            , to: 'shops#me'     , as: :api_me
-    post '/themes/switch', to: 'themes#switch'
+    scope module: :admin do
+      get '/me'            , to: 'shops#me'     , as: :api_me
+      post '/themes/switch', to: 'themes#switch'
+    end
   end
 
   constraints(Domain::Wiki) do # 百科文档
@@ -95,6 +91,7 @@ Shopqi::Application.routes.draw do
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
+      get '/themes'                        , to: 'shops#themes'
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show', as: :product_show
       get '/collections'                   , to: 'collections#index'
@@ -106,6 +103,16 @@ Shopqi::Application.routes.draw do
       get '/blogs/:handle/:id'             , to: 'articles#show'
       get '/blogs/:handle'                 , to: 'blogs#show'
       post '/articles/:article_id/comments', to: 'articles#add_comment'
+    end
+
+    scope module: :admin do # 用户后台管理
+
+      begin 'oauth2' # 授权认证
+        get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
+        post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
+        match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
+      end
+
     end
 
     scope "/admin", module: :admin do # 用户后台管理

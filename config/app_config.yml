@@ -3,7 +3,7 @@ defaults: &defaults
     host: lvh.me
     store_host: smackaho.st
   wiki:
-    relative_path: 'public/wiki'
+    relative_path: 'data/wiki'
   templates:
     email:
       order_confirm:
@@ -75,7 +75,7 @@ development:
 test:
   <<: *defaults
   wiki:
-    relative_path: 'public/wiki_test'
+    relative_path: 'data/wiki_test'
 
 production:
   <<: *defaults

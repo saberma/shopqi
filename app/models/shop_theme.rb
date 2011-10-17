@@ -109,19 +109,15 @@ class ShopThemeSetting < ActiveRecord::Base
 
     def theme
       @association.owner
-      #fix DEPRECATION
-      #proxy_owner
     end
   end
 end
 
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
-  extend ActiveHash::Associations::ActiveRecordExtensions
   REQUIRED_FILES = ["layout/theme.liquid","templates/index.liquid","templates/collection.liquid","templates/product.liquid","templates/cart.liquid","templates/search.liquid","templates/page.liquid","templates/blog.liquid","templates/article.liquid"]
 
   belongs_to :shop
-  belongs_to_active_hash :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
 
   default_value_for :role, :main # 默认为普通主题
@@ -144,8 +140,20 @@ class ShopTheme < ActiveRecord::Base
     end
   end
 
-  def self.exceed? # 超过8个主题
-    all.size >= 8
+  # 修改此模块内方法要记得重启服务
+  module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
+    def shop
+      @association.owner
+    end
+
+    def install(theme, style = nil)  # 安装主题
+      shop.theme.unpublish! if shop.theme
+      self.create theme_id: theme.id, load_preset: style, role: theme.role
+    end
+
+    def exceed? # 超过8个主题
+      self.size >= 8
+    end
   end
 
   def unpublish! # 取消发布

@@ -1,0 +1,6 @@
+此目录应该包含以下文件，方便统一备份data目录
+
+# themes 主题实体记录关联的压缩文件
+# public_s_theme 链接到public/s/theme，放置主题实体的示例图片
+# wiki 百科帮助文档
+# public_s_files 链接到public/s/files，放置商店的主题文件及手动上传的商品图片

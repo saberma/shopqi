@@ -4,6 +4,7 @@
 cn:
   activerecord:
     models:
+      theme: 主题
       user: 用户
       shop: 商店
       product: 商品
@@ -67,6 +68,24 @@ cn:
       page:
         title: 标题
         description: 描述
+      theme:
+        name: 名称
+        handle: 名称handle
+        style: 风格
+        style_handle: 风格handle
+        role: 角色
+        price: 价格
+        color: 颜色
+        desc: 描述
+        shop: demo网店的子域名
+        site: 作者官网
+        author: 作者
+        email: 作者Email
+        published: 是否启用
+        file: 主题压缩文件
+        main: 主题列表截图(500x642)
+        collection: 主题详情集合截图(850x600)
+        product: 主题详情商品截图(850x600)
       shop:
         permanent_domain: 二级域名
         name: 网店名
