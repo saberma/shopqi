@@ -220,7 +220,7 @@ GEM
     launchy (2.0.5)
       addressable (~> 2.2.6)
     libv8 (3.3.10.2)
-    liquid (2.2.2)
+    liquid (2.3.0)
     macaddr (1.4.0)
       systemu (~> 2.2.0)
     mail (2.3.0)
@@ -420,7 +420,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   letter_opener!
-  liquid
+  liquid (~> 2.3.0)
   message_block
   meta_search (~> 1.1.1)
   mini_magick
