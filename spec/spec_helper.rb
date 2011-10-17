@@ -62,6 +62,14 @@ Spork.each_run do
       FileUtils.rm_rf(File.join(Rails.root, 'public', 's', 'files', Rails.env))
     end
 
+    config.before('searchable') do #http://j.mp/quFhWM
+      Sunspot.session = Sunspot.session.original_session
+    end
+
+    config.after('searchable') do
+      Sunspot.session = Sunspot::Rails::StubSessionProxy.new(Sunspot.session) # 取消与Sunspot的连接
+    end
+
     config.before(:each) do
       # sentient_user
       Thread.current[:user] = nil
