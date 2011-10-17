@@ -79,6 +79,7 @@ describe "Shop::Shops", js:true do
   end
 
   # 查询
+  @searchable
   describe "GET /search" do
 
     before(:each) do
@@ -88,24 +89,32 @@ describe "Shop::Shops", js:true do
     end
 
     it "should list blog article" do
-      blog = shop.blogs.where(handle: 'news').first
-      article = blog.articles.create title: '如何选购iphone'
+      with_resque do
+        blog = shop.blogs.where(handle: 'news').first
+        article = blog.articles.create title: '如何选购iphone'
+      end
       click_on '查询'
       fill_in 'q', with: '选购'
       click_on 'Search'
-      page.should have_content(article.title)
+      within '.search-results' do
+        page.should have_content('如何选购iphone')
+      end
     end
 
     it "should list products" do
       fill_in 'q', with: iphone4.title
       click_on 'Search'
-      page.should have_content(iphone4.title)
+      within '.search-results' do
+        page.should have_content(iphone4.title)
+      end
     end
 
     it "should list page" do
       fill_in 'q', with: '关于'
       click_on 'Search'
-      page.should have_content('关于我们')
+      within '.search-results' do
+        page.should have_content('关于我们')
+      end
     end
 
   end
