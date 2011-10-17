@@ -3,12 +3,14 @@
 Shopqi::Application.routes.draw do
 
   begin 'oauth2'
-    get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
-    post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
-    match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
+    scope module: :admin do
+      get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
+      post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
+      match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
+    end
   end
 
-  scope "/api" do # 供oauth2调用
+  scope "/api", module: :admin do # 供oauth2调用
     get '/me'            , to: 'shops#me'     , as: :api_me
     post '/themes/switch', to: 'themes#switch'
   end

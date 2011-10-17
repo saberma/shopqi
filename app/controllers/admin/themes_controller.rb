@@ -11,7 +11,8 @@ class Admin::ThemesController < Admin::AppController
 
   begin 'api'
     def switch
-      unless shop.themes.exceed? # 超出主题数则不更新
+      shop = ShopDomain.find_by_host(request.host).try(:shop)
+      if shop && !shop.themes.exceed? # 超出主题数则不更新
         authorization = OAuth2::Provider.access_token(nil, [], request)
         if authorization.valid?
           shop = authorization.owner
