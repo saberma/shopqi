@@ -66,11 +66,5 @@ class Shop::SessionsController < Shop::AppController
     methods << :password if resource.respond_to?(:password)
     { :methods => methods, :only => [:password] }
   end
-
-  #private
-  #def get_host
-  #  params[:customer] ||= {}
-  #  params[:customer][:host] = request.host
-  #end
 end
 
