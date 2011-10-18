@@ -410,6 +410,7 @@ describe "Products", js: true do
 
   end
 
+  ##### 查看 #####
   describe "GET /products/id" do
 
     context "(with two products)" do
@@ -417,6 +418,35 @@ describe "Products", js: true do
       before :each do
         iphone4
         psp
+      end
+
+      describe '#photo' do
+
+        before :each do
+          visit product_path(iphone4)
+        end
+
+        it 'should be upload' do
+          find('#upload-label .show-upload-link').click # 上传按钮
+          attach_file 'add-file', Rails.root.join('spec', 'factories', 'data', 'products', 'iphone4.jpg')
+          page.should have_content('新增成功!')
+          within '#image_list' do
+            page.should have_xpath('./li[1]') # 显示图片
+          end
+        end
+
+        it 'should be destroy', focus: true do
+          find('#upload-label .show-upload-link').click # 上传按钮
+          attach_file 'add-file', Rails.root.join('spec', 'factories', 'data', 'products', 'iphone4.jpg')
+          page.execute_script("window.confirm = function(msg) { return true; }")
+          page.should have_css('#image_list')
+          within '#image_list' do
+            find('.image-delete').click
+          end
+          page.should have_content('删除成功!')
+          page.should have_no_css('#image_list')
+        end
+
       end
 
       describe '#edit' do

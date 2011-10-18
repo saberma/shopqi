@@ -45,7 +45,7 @@ App.Controllers.Products = Backbone.Controller.extend
     Utils.Tag.init 'product_tags_text'
 
     #显示上传图片的form
-    $('.show-upload-link').click ->
+    $('#upload-label .show-upload-link').click ->
       $(this).hide()
       $("#upload-area").toggle()
 
