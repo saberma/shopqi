@@ -10,7 +10,7 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
   #ActionView::Base.field_error_proc = proc { |input, instance| input }
   protected
   def force_domain # Users::SessionsController.force_domain()要保持一致
-    myshopqi = Shop.at( equest.host).domains.myshopqi
+    myshopqi = Shop.at( request.host).domains.myshopqi
     redirect_to "#{request.protocol}#{myshopqi.host}#{request.port_string}#{request.path}" if request.host != myshopqi.host
   end
 
