@@ -3,6 +3,7 @@ class Shop < ActiveRecord::Base
   include OAuth2::Model::ClientOwner
   include OAuth2::Model::ResourceOwner
   has_many :users                 , dependent: :destroy
+  has_many :applications          , dependent: :destroy
   has_many :domains               , dependent: :destroy                      , order: 'id asc', class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: 'id desc'
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
