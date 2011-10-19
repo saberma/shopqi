@@ -2,6 +2,7 @@
 class Shop < ActiveRecord::Base
   include OAuth2::Model::ClientOwner
   include OAuth2::Model::ResourceOwner
+  has_many :api_clients           , dependent: :destroy
   has_many :users                 , dependent: :destroy
   has_many :applications          , dependent: :destroy
   has_many :domains               , dependent: :destroy                      , order: 'id asc', class_name: 'ShopDomain'
