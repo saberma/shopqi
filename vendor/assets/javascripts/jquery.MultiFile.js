@@ -293,8 +293,8 @@
         var
          r = $('<li class="item"></li>'),
          v = String(slave.value || ''/*.attr('value)*/),
-         a = $("<img src='/images/admin/icons/attachment.png'/>"+'<span class="MultiFile-title" title="'+MultiFile.STRING.selected.replace('$file', v)+'">'+MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0])+'</span>'),
-         b = $('<a class="delete fr" href="#'+MultiFile.wrapID+'">'+"<img src='/images/admin/icons/trash.gif'/>"+'</a>');
+         a = $("<img src='/assets/admin/icons/attachment.png'/>"+'<span class="MultiFile-title" title="'+MultiFile.STRING.selected.replace('$file', v)+'">'+MultiFile.STRING.file.replace('$file', v.match(/[^\/\\]+$/gi)[0])+'</span>'),
+         b = $('<a class="delete fr" href="#'+MultiFile.wrapID+'">'+"<img src='/assets/admin/icons/trash.gif'/>"+'</a>');
 
         // Insert label
         MultiFile.list.append(

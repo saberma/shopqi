@@ -4,6 +4,8 @@
 # It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 # the compiled file.
 #
+# 其中的jquery.MultiFile插件有改动:/images路径换为/assets
+#
 #=require jquery.min
 #=require jquery_ujs
 #=require jquery-ui-1.8.14.custom.min
