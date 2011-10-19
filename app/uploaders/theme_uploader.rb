@@ -45,4 +45,12 @@ class ThemeUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  after :store, :unzip
+
+  def unzip(file) # 直接解压出目录，方便商店安装主题时，直接复制此目录
+    current_path = model.path
+    FileUtils.mkdir_p current_path
+    system("tar xjf #{self.path} -C #{current_path} --overwrite") # j参数指明处理 tar.bz2 压缩格式
+  end
+
 end

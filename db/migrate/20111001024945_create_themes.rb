@@ -3,11 +3,11 @@
 class CreateThemes < ActiveRecord::Migration
   def up
     create_table :themes do |t|
-      t.string :name        , comment: "名称"              , limit: 16
+      t.string :name        , comment: "名称"              , limit: 16     , null: false
       t.string :handle      , comment: "名称handle"        , limit: 16
-      t.string :style       , comment: "风格"              , limit: 16
+      t.string :style       , comment: "风格"              , limit: 16     , null: false
       t.string :style_handle, comment: "风格handle"        , limit: 16
-      t.string :role        , comment: "角色用途(main      , mobile    , unpublished, wait)", limit: 16
+      t.string :role        , comment: "角色用途(main      , mobile        , unpublished, wait)", limit: 16
       t.float :price        , comment: "价格"              , default: 0
       t.string :color       , comment: "颜色"              , limit: 8
       t.string :desc        , comment: "描述"              , limit: 255

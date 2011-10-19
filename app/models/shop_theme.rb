@@ -118,6 +118,7 @@ class ShopTheme < ActiveRecord::Base
   REQUIRED_FILES = ["layout/theme.liquid","templates/index.liquid","templates/collection.liquid","templates/product.liquid","templates/cart.liquid","templates/search.liquid","templates/page.liquid","templates/blog.liquid","templates/article.liquid"]
 
   belongs_to :shop
+  belongs_to :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
 
   default_value_for :role, :main # 默认为普通主题
@@ -131,7 +132,7 @@ class ShopTheme < ActiveRecord::Base
   after_create do
     if self.theme_id # 应用某个主题，而非手动上传主题
       repo = Grit::Repo.init public_path # 初始化为git repo
-      FileUtils.cp_r "#{app_path}/.", public_path
+      FileUtils.cp_r "#{theme.path}/.", public_path
       commit repo, '1'
       self.load_preset ||= config_settings['current'] # 初始化主题设置
       config_settings['presets'][self.load_preset].each_pair do |name, value|
@@ -168,11 +169,6 @@ class ShopTheme < ActiveRecord::Base
     self.role == 'unpublished'
   end
 
-  def switch(new_theme, style = nil) # 切换主题
-    self.unpublish!
-    self.shop.themes.create theme_id: new_theme.id, load_preset: style, role: new_theme.role
-  end
-
   def duplicate # 复制主题
     self.shop.themes.create theme_id: self.theme_id, name: "副本 #{self.name}", load_preset: self.load_preset, role: 'unpublished'
   end
@@ -184,16 +180,6 @@ class ShopTheme < ActiveRecord::Base
 
     def asset_relative_path(asset) # s/files/1/theme/1/assets/theme.liquid
       File.join files_relative_path, 'assets', asset
-    end
-  end
-
-  begin # 所属主题相关PATH(非当前theme)
-    def app_path
-      File.join Rails.root, 'app', 'themes', self.theme.handle.downcase
-    end
-
-    def shopqi_theme_path # app/themes/shopqi # 用于保存顾客登录等模板
-      File.join Rails.root, 'app', 'themes', 'shopqi'
     end
   end
 

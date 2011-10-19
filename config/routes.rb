@@ -5,7 +5,7 @@ Shopqi::Application.routes.draw do
   scope "/api" do # 供oauth2调用
     scope module: :admin do
       get '/me'            , to: 'shops#me'     , as: :api_me
-      post '/themes/switch', to: 'themes#switch'
+      post '/themes/install', to: 'themes#install'
     end
   end
 
@@ -91,7 +91,7 @@ Shopqi::Application.routes.draw do
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
-      get '/themes'                        , to: 'shops#themes'
+      get '/themes'                        , to: 'shops#themes' , as: :shop_themes_tip
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show', as: :product_show
       get '/collections'                   , to: 'collections#index'

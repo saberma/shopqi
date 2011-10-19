@@ -2,7 +2,7 @@
 require 'zip/zip'
 require 'zip/zipfilesystem'
 class Admin::ThemesController < Admin::AppController
-  prepend_before_filter :authenticate_user!, except: [:switch]
+  prepend_before_filter :authenticate_user!, except: [:install]
   layout 'admin'
 
   expose(:shop) { current_user.shop }
@@ -10,13 +10,13 @@ class Admin::ThemesController < Admin::AppController
   expose(:theme)
 
   begin 'api'
-    def switch
+    def install
       authorization = OAuth2::Provider.access_token(nil, [], request)
       shop = authorization.owner
       if authorization.valid?
         unless shop.themes.exceed? # 超出主题数则不更新
           theme = Theme.find_by_handle params[:handle]
-          shop.theme.switch theme, params[:style_handle]
+          shop.themes.install theme, params[:style_handle]
         end
       end
       render nothing: true

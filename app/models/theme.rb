@@ -2,18 +2,25 @@
 # 可选外观主题
 class Theme < ActiveRecord::Base
   COLOR = %w(red yellow green blue magenta white black grey)
-  mount_uploader :file, ThemeUploader
-  mount_uploader :main, ThemeMainUploader
+  mount_uploader :file      , ThemeUploader
+  mount_uploader :main      , ThemeMainUploader
   mount_uploader :collection, ThemeCollectionUploader
-  mount_uploader :product, ThemeProductUploader
+  mount_uploader :product   , ThemeProductUploader
 
-  before_save do
-    self.handle = Pinyin.t(self.name, '-') if self.handle.blank?
-    self.style_handle = Pinyin.t(self.style, '-') if self.style_handle.blank?
+  after_destroy do #删除对应的目录
+    FileUtils.rm_rf self.path
   end
 
   def self.default
     find_by_handle('Threadify')
+  end
+
+  def self.shopqi_theme_path # app/themes/shopqi # 用于保存顾客登录等模板
+    File.join Rails.root, 'app', 'themes', 'shopqi'
+  end
+
+  def path
+    File.join Rails.root, 'data', 'themes', self.id.to_s, 'current'
   end
 
   begin 'oauth2' # theme作为client，向provider请求认证时传递的返回跳转uri

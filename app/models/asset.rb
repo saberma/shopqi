@@ -53,7 +53,7 @@ class Asset
       File.join theme.public_path, safe(source_key)
     when :templates
       FileUtils.mkdir_p File.join(theme.public_path, 'templates', 'customers')
-      File.join theme.shopqi_theme_path, safe(key)
+      File.join Theme.shopqi_theme_path, safe(key)
     end
     path = File.join theme.public_path, safe(key)
     if source_path

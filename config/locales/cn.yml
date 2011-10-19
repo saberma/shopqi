@@ -83,9 +83,9 @@ cn:
         email: 作者Email
         published: 是否启用
         file: 主题压缩文件
-        main: 主题列表截图(500x642)
-        collection: 主题详情集合截图(850x600)
-        product: 主题详情商品截图(850x600)
+        main: 主题列表截图
+        collection: 主题详情集合截图
+        product: 主题详情商品截图
       shop:
         permanent_domain: 二级域名
         name: 网店名
