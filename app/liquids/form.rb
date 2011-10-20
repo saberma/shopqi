@@ -1,40 +1,24 @@
 class Form < Liquid::Block
+  Syntax = /(#{Liquid::VariableSignature}+)/
 
-  def initialize(tag_name,markup,tokens)
-    @model_name = markup
+  def initialize(tag_name, markup, tokens)
+    if markup =~ Syntax
+      @variable_name = $1
+      @attributes = {}
+    else
+      raise SyntaxError.new("Syntax Error in 'form' - Valid syntax: form [article]")
+    end
     super
   end
 
   def render(context)
-    @model_drop = context[@model_name] || nil
-    #@model = @model_drop.instance_variable_get "@#{@model_name}"
-    result = "<form method='post' action='/articles/#{@model_drop.id}/comments' id='article-#{@model_drop.id}-comment-form' class='comment-form'> "
-    result += get_form_body(context)
-    result += '</form>'
-  end
-
-  def get_form_body(context)
+    article = context[@variable_name]
     context.stack do
-      render_all(@nodelist, context) * ""
+      wrap_in_form(article, render_all(@nodelist, context))
     end
   end
 
-  def errors
-    @model = context['article'] || nil
-    get_errors(@model)
+  def wrap_in_form(article, input)
+    %Q{<form id="article-#{article.id}-comment-form" class="comment-form" method="post" action="/articles/#{article.id}/comments">\n#{input}\n</form>}
   end
-
-  def get_errors(model)
-    errors = []
-    model.errors.each do |attr,msg|
-      errors << attr
-    end
-    errors
-  end
-
-  def posted_successfully?
-    errors.blank?
-  end
-
 end
-
