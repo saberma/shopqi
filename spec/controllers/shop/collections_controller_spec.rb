@@ -77,13 +77,13 @@ describe Shop::CollectionsController do
     get 'index'
     response.body.should have_content('低价商品')
     get 'show',handle: 'low_price'
-    response.body.should_not have_content("We're really sorry")
+    response.body.should_not have_content("此页面不存在")
     smart_collection_low_price.update_attribute :published, false
     iphone4
     get 'index'
     response.body.should_not have_content('低价商品')
     get 'show',handle: 'low_price'
-    response.body.should have_content("We're really sorry")
+    response.body.should have_content("此页面不存在")
     response.body.should_not have_content('低价商品')
   end
 

@@ -13,7 +13,7 @@ describe Theme do
   end
 
   it 'should get the path' do
-    theme.app_path.should eql "#{Rails.root}/data/themes/#{theme.id}"
+    theme.path.should eql "#{Rails.root}/data/themes/#{theme.id}/current"
   end
 
   describe 'file' do
