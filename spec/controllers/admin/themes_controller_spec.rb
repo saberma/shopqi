@@ -5,6 +5,8 @@ describe Admin::ThemesController do
 
   let(:theme_dark) { Factory :theme_woodland_dark }
 
+  let(:theme_slate) { Factory :theme_woodland_slate }
+
   let(:user) { Factory(:user) }
 
   let(:shop) { user.shop }
@@ -19,11 +21,12 @@ describe Admin::ThemesController do
   context '#update' do # 发布主题
 
     it 'should be update' do
-      shop.themes.install theme_dark # 原主题会置为[未发布]状态
-      prettify_theme = shop.theme
-      put :update, id: theme.id, theme: { role: :main }
-      theme.reload.role.should eql 'main'
-      prettify_theme.reload.role.should eql 'unpublished'
+      dark_theme = shop.themes.install theme_dark
+      slate_theme = shop.themes.install theme_slate
+      dark_theme.reload.role.should eql 'unpublished' # 原主题会置为[未发布]状态
+      put :update, id: dark_theme.id, theme: { role: :main }
+      dark_theme.reload.role.should eql 'main'
+      slate_theme.reload.role.should eql 'unpublished'
     end
 
   end
@@ -31,6 +34,7 @@ describe Admin::ThemesController do
   context '#duplicate' do # 复制主题
 
     it 'should be duplicate' do
+      shop.themes.install theme_dark # 原主题会置为[未发布]状态
       expect do
         put :duplicate, id: theme.id
         JSON(response.body)['shop_theme']['role'].should eql 'unpublished'

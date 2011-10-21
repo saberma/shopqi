@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe UrlFilter do
 
+  let(:theme_dark) { Factory :theme_woodland_dark }
+
   let(:shop) { Factory(:user).shop }
 
   let(:theme) { shop.theme }
@@ -9,6 +11,7 @@ describe UrlFilter do
   let(:iphone4) { Factory :iphone4, shop: shop }
 
   it 'should get asset_url' do
+    shop.themes.install theme_dark
     variant = "{{ 'shop.css' | asset_url }}"
     params = { 'shop' => ShopDrop.new(shop) } # 不能使用 { shop: shop }，即key不能为symbol，否则会找不到shop对象
     Liquid::Template.parse(variant).render(params).should eql "/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/shop.css"

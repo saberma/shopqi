@@ -3,9 +3,15 @@ require 'spec_helper'
 
 describe Asset do
 
+  let(:theme_dark) { Factory :theme_woodland_dark }
+
   let(:shop) { Factory(:user).shop }
 
   let(:theme) { shop.theme }
+
+  before(:each) do
+    shop.themes.install theme_dark
+  end
 
   it 'should be list' do
     list = Asset.all(theme)

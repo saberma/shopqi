@@ -20,6 +20,7 @@ describe ShopTheme do
     end
 
     it 'should be duplicate' do
+      shop.themes.install theme_dark
       theme
       expect do
         duplicate_theme = theme.duplicate
@@ -30,6 +31,10 @@ describe ShopTheme do
   end
 
   describe ShopThemeSetting do
+
+    before(:each) do
+      shop.themes.install theme_dark
+    end
 
     describe 'settings.html' do
 
@@ -53,10 +58,12 @@ describe ShopTheme do
         end
 
         it 'should be destroy' do
-          theme.settings.destroy_preset 'original'
+          %w(dark-alder slate birchwood).each do |preset|
+            theme.settings.destroy_preset preset
+          end
           settings = theme.settings.as_json
           settings['current'].class.should eql Hash
-          theme.settings.where(name: 'use_logo_image').first.value.should eql 't'
+          theme.settings.where(name: 'use_logo_image').first.value.should eql 'f'
         end
 
         it 'should be save custom' do
@@ -80,13 +87,13 @@ describe ShopTheme do
     it 'should parse select element' do
       shop.themes.install theme_slate
       theme = shop.theme
-      settings = theme.config_settings['presets']['default']
-      settings['bg_image_y_position'].should eql 'top'
+      settings = theme.config_settings['presets']['birchwood']
+      settings['bg_image'].should eql 'bg-lightwood.jpg'
     end
 
     it 'should parse checkbox element' do
-      settings = theme.config_settings['presets']['original']
-      settings['use_logo_image'].should eql true
+      settings = theme.config_settings['presets']['birchwood']
+      settings['use_banner_image'].should eql true
     end
 
   end

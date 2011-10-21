@@ -3,8 +3,11 @@ require 'spec_helper'
 
 describe Shop::OrderController do
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   let(:shop) do
     model = Factory(:user).shop
+    model.themes.install theme
     model.update_attributes password_enabled: false
     model
   end

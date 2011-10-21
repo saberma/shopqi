@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Shop::CartController do
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   let(:shop) { Factory(:user).shop }
 
   let(:iphone4) { Factory :iphone4, shop: shop }
@@ -9,6 +11,7 @@ describe Shop::CartController do
   let(:variant) { iphone4.variants.first }
 
   before :each do
+    shop.themes.install theme
     request.host = "#{shop.primary_domain.host}"
     session = mock('session')
     session.stub!(:[], 'cart').and_return("#{variant.id}|1")

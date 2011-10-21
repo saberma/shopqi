@@ -2,8 +2,11 @@ require 'spec_helper'
 
 describe Shop::ProductsController do
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   let(:shop) do
     model = Factory(:user_admin).shop
+    model.themes.install theme
     model.update_attributes password_enabled: false
     model
   end
