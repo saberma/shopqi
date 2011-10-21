@@ -82,5 +82,6 @@ class Comment < ActiveRecord::Base
   belongs_to :article
   has_one    :blog, through: :article
   belongs_to :shop
-  validates_presence_of :body
+  validates_presence_of :body,:email,:author
+  validates :email, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }
 end

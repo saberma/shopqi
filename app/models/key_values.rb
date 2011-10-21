@@ -21,6 +21,15 @@ module KeyValues
     ]
   end
 
+  #评论状态
+  class CommentableType < KeyValues::Base
+    self.data = [
+      {id: 1, name: '禁用评论'              , code: 'no'},
+      {id: 2, name: '允许评论,需审核'       , code: 'moderate'},
+      {id: 3, name: '允许评论，并且自动发布', code: 'yes'},
+    ]
+  end
+
   class PolicyType < KeyValues::Base
     self.data = [
       {id: 1, name: '退款政策'},

@@ -13,6 +13,7 @@ class Admin::BlogsController < Admin::AppController
     end
   }
   expose(:status) { KeyValues::PublishState.hash }
+  expose(:commentable_types){ KeyValues::CommentableType.options}
   expose(:authors){
     blog.articles.select(:author).map(&:author).uniq
   }

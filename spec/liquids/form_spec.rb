@@ -14,7 +14,7 @@ describe Form do
   it 'should get the right form tag' do
     variant = "{% form article %}{% endform %}"
     assign = { 'article' => article_drop }
-    Liquid::Template.parse(variant).render(assign).should eql "<form id=\"article-#{article.id}-comment-form\" class=\"comment-form\" method=\"post\" action=\"/articles/#{article.id}/comments\">\n\n</form>"
+    Liquid::Template.parse(variant).render(assign).should eql "<form id=\"article-#{article.id}-comment-form\" class=\"comment-form\" method=\"post\" action=\"/blogs/#{article.blog.handle}/#{article.id}/comments\">\n\n</form>"
   end
 
 end

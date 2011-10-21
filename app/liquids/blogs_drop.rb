@@ -28,4 +28,8 @@ class BlogDrop < Liquid::Drop
     @blog.commentable != 'no'
   end
 
+  def moderated?
+    @blog.commentable == "moderate"
+  end
+
 end
