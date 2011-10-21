@@ -603,6 +603,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
     t.boolean  "taxes_included",                    :default => true
     t.boolean  "tax_shipping",                      :default => false
     t.string   "customer_accounts",                 :default => "optional"
+    t.string   "signup_source",       :limit => 32
     t.boolean  "guided",                            :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
