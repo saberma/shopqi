@@ -25,6 +25,6 @@ class Admin::PhotosController < Admin::AppController
     params[:photo].each_with_index do |id, index|
       product.photos.find(id).update_attributes :position => index
     end
-    render js: "markFeaturedImage()"
+    render js: "Utils.markFeaturedImage()"
   end
 end

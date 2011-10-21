@@ -153,7 +153,7 @@ GEM
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
     diff-lcs (1.1.3)
-    dragonfly (0.9.5)
+    dragonfly (0.9.8)
       rack
     em-websocket (0.3.1)
       addressable (>= 2.1.1)
@@ -258,7 +258,7 @@ GEM
     polyglot (0.3.2)
     posix-spawn (0.3.6)
     pr_geohash (1.0.0)
-    rack (1.3.4)
+    rack (1.3.5)
     rack-cache (1.1)
       rack (>= 0.4)
     rack-mount (0.8.3)
@@ -403,7 +403,7 @@ DEPENDENCIES
   decent_exposure
   default_value_for
   devise
-  dragonfly
+  dragonfly (~> 0.9.8)
   factory_girl
   factory_girl_rails
   gollum!
