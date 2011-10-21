@@ -4,12 +4,15 @@ require 'subdomain_capybara_server'
 
 describe "Shop::Shops", js:true do
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   #let(:user_admin) {  with_resque { Factory :user_admin } }
   let(:user_admin) {  Factory :user_admin }
 
   let(:shop) do
     model = user_admin.shop
     model.update_attributes password_enabled: false
+    model.themes.install theme
     model
   end
 
@@ -32,14 +35,12 @@ describe "Shop::Shops", js:true do
       visit '/'
       click_on product.title
       page.should have_content(product.body_html)
-      click_on 'Add to cart'
+      click_on '加入购物车'
       # 更新数量
-      within('#checkout') do
-        fill_in "updates_#{variant.id}", with: '2'
-      end
-      click_on 'Update'
+      fill_in "updates_#{variant.id}", with: '2'
+      find('form').click # 输入项失焦点触发更新事件
       find("#updates_#{variant.id}")[:value].should eql '2'
-      click_on 'Checkout'
+      click_on '结算'
       #收货人
       fill_in 'order[email]', with: 'mahb45@gmail.com'
       fill_in 'order[shipping_address_attributes][name]', with: '马海波'
@@ -78,9 +79,8 @@ describe "Shop::Shops", js:true do
 
   end
 
-  # 查询
-  @searchable
-  describe "GET /search" do
+  # 查询(需要启动全文检索服务) RAILS_ENV=test bundle exec rake sunspot:solr:run
+  describe "GET /search", searchable: true do
 
     before(:each) do
       iphone4
@@ -94,25 +94,25 @@ describe "Shop::Shops", js:true do
         article = blog.articles.create title: '如何选购iphone'
       end
       click_on '查询'
-      fill_in 'q', with: '选购'
-      click_on 'Search'
-      within '.search-results' do
+      within '#search' do
+        fill_in 'q', with: '选购'
+        click_on '查询'
         page.should have_content('如何选购iphone')
       end
     end
 
     it "should list products" do
-      fill_in 'q', with: iphone4.title
-      click_on 'Search'
-      within '.search-results' do
+      within '#search' do
+        fill_in 'q', with: iphone4.title
+        click_on '查询'
         page.should have_content(iphone4.title)
       end
     end
 
     it "should list page" do
-      fill_in 'q', with: '关于'
-      click_on 'Search'
-      within '.search-results' do
+      within '#search' do
+        fill_in 'q', with: '关于'
+        click_on '查询'
         page.should have_content('关于我们')
       end
     end

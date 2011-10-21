@@ -4,25 +4,26 @@ FactoryGirl.define do
   factory :user do
     email 'admin@shopqi.com'
     shop_attributes({
-    name: '测试商店',
-    domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}]
-  })
+      name: '测试商店',
+      domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}]
+    })
     password '666666'
     password_confirmation '666666'
-end
+  end
 
   factory :user_admin, :parent => :user do
     email 'admin@shopqi.com'
     name 'admin'
-end
+  end
 
   factory :user_saberma, :parent => :user_admin do
     email 'mahb45@gmail.com'
     name 'saberma'
-end
+  end
 
   factory :user_liwh, :parent => :user_admin do
     email 'liwh87@gmail.com'
     name 'liwh'
   end
+
 end
