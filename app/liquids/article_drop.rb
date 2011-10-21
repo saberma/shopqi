@@ -11,7 +11,7 @@ class ArticleDrop < Liquid::Drop
   end
 
   def comments
-    @article.comments.map do |comment|
+    @article.comments.where(:status => 'published').map do |comment|
       CommentDrop.new comment unless comment.new_record?
     end.compact
   end
@@ -22,6 +22,10 @@ class ArticleDrop < Liquid::Drop
 
   def comments_count
     comments.size
+  end
+
+  def blog
+    BlogDrop.new @article.blog
   end
 
 end

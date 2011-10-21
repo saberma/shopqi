@@ -100,9 +100,9 @@ Shopqi::Application.routes.draw do
       post '/cart/add'                     , to: 'cart#add'
       get '/cart'                          , to: 'cart#show'
       post '/cart'                         , to: 'cart#update'
-      get '/blogs/:handle/:id'             , to: 'articles#show'
       get '/blogs/:handle'                 , to: 'blogs#show'
-      post '/articles/:article_id/comments', to: 'articles#add_comment'
+      get '/blogs/:handle/:id'             , to: 'articles#show'
+      match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'
     end
 
     scope module: :admin do # 用户后台管理
@@ -119,6 +119,9 @@ Shopqi::Application.routes.draw do
 
       match "/"                             , to: "home#dashboard"                      , as: :user_root # user_root_path为用户成功登录后的跳转地址
       get '/message'                        , to: "home#message"                        , as: :home_message
+
+      resources :api_clients
+
       match "/general_preferences"          , to: "shops#edit"
       match "/notifications"                , to: "emails#index"
       match "/notifications/subscribe"      , to: "emails#follow"
