@@ -1,10 +1,11 @@
 class Admin::OauthController < Admin::AppController
-  prepend_before_filter :authenticate_user!, except: :access_token
+  prepend_before_filter :authenticate_user!, except: [:access_token,:authorize]
 
-  expose(:shop) { current_user.shop }
 
   def authorize # 返回authorize_code
-    @oauth2 = OAuth2::Provider.parse(shop, request)
+    Devise::FailureApp.default_url_options = { host: request.host}
+    self.send :authenticate_user!
+    @oauth2 = OAuth2::Provider.parse(current_user.shop, request)
     #response.headers = @oauth2.response_headers
     #response.status = @oauth2.response_status
     redirect_to @oauth2.redirect_uri  if @oauth2.redirect?
@@ -16,7 +17,7 @@ class Admin::OauthController < Admin::AppController
   end
 
   def allow
-    @auth = OAuth2::Provider::Authorization.new(shop, params)
+    @auth = OAuth2::Provider::Authorization.new(current_user.shop, params)
     if params['allow'] == '1'
       @auth.grant_access!
     else

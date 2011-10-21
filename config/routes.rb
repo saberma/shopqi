@@ -4,7 +4,7 @@ Shopqi::Application.routes.draw do
 
   scope "/api" do # 供oauth2调用
     scope module: :admin do
-      get '/me'            , to: 'shops#me'     , as: :api_me
+      get '/me'             , to: 'shops#me'      , as: :api_me
       post '/themes/install', to: 'themes#install'
     end
   end

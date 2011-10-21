@@ -20,7 +20,7 @@ gem 'kaminari' # 分页
 #用于处理图片(缩略图)
 gem 'dragonfly'
 gem 'rack-cache', require: 'rack/cache'
-gem 'liquid' #模板语言
+gem 'liquid','~> 2.3.0' #模板语言
 gem "carrierwave"
 #查询
 #gem 'meta_where'

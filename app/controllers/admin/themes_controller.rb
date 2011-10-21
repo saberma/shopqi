@@ -10,6 +10,7 @@ class Admin::ThemesController < Admin::AppController
   expose(:theme)
 
   begin 'api'
+
     def install
       authorization = OAuth2::Provider.access_token(nil, [], request)
       shop = authorization.owner
@@ -21,6 +22,7 @@ class Admin::ThemesController < Admin::AppController
       end
       render nothing: true
     end
+
   end
 
   begin 'admin' # 后台管理
