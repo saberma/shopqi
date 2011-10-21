@@ -6,6 +6,10 @@ describe "Shopqi::Registrations", js: true do
 
   include_context 'use shopqi host'
 
+  let(:theme_dark) { Factory :theme_woodland_dark }
+
+  let(:theme_slate) { Factory :theme_woodland_dark }
+
   let(:user_admin) {  Factory :user_admin }
 
   let(:shop) { user_admin.shop }
@@ -13,6 +17,8 @@ describe "Shopqi::Registrations", js: true do
   describe "GET /signup" do
 
     before(:each) do
+      theme_dark
+      theme_slate
       visit '/services/signup/new/basic'
     end
 
