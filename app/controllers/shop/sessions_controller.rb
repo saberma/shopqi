@@ -2,6 +2,7 @@
 class Shop::SessionsController < Shop::AppController
   #prepend_before_filter :require_no_authentication, :only => [:new, :create ] #去掉此句，以便用户能更改账号付账
   #before_filter :get_host, only: :create
+  skip_before_filter :must_has_theme
   include Devise::Controllers::InternalHelpers
   layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }

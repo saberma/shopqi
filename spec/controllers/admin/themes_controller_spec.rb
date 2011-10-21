@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Admin::ThemesController do
   include Devise::TestHelpers
 
+  let(:theme_dark) { Factory :theme_woodland_dark }
+
   let(:user) { Factory(:user) }
 
   let(:shop) { user.shop }
@@ -17,7 +19,7 @@ describe Admin::ThemesController do
   context '#update' do # 发布主题
 
     it 'should be update' do
-      theme.switch Theme.find_by_handle('Prettify') # 原主题会置为[未发布]状态
+      shop.themes.install theme_dark # 原主题会置为[未发布]状态
       prettify_theme = shop.theme
       put :update, id: theme.id, theme: { role: :main }
       theme.reload.role.should eql 'main'

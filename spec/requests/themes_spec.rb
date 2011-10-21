@@ -6,10 +6,15 @@ describe "Themes", js: true do
 
   include_context 'login admin'
 
-  let(:shop) do
-    model = user_admin.shop
-    model.update_attributes password_enabled: false
-    model
+  let(:theme) { Factory :theme_woodland_dark }
+
+  before :each do
+    shop.update_attributes password_enabled: false
+    shop.themes.install theme
+  end
+
+  after :each do
+    shop.destroy # 删除商店的同时会删除主题，触发主题删除对应的目录
   end
 
   describe "GET /admin/themes" do # 主题管理
@@ -70,7 +75,7 @@ describe "Themes", js: true do
 
       before(:each) do
         @theme = shop.theme
-        @new_theme = @theme.switch(Theme.find_by_handle('woodland')) # 加一个未发布的主题
+        @new_theme = shop.themes.install theme # 加一个未发布的主题
         visit themes_path
       end
 
@@ -106,11 +111,8 @@ describe "Themes", js: true do
 
     describe "upload" do # 上传
 
-      before(:each) do
-        visit themes_path
-      end
-
       it "should be upload" do # 删除
+        visit themes_path
         with_resque do
           click_on '上传一个主题'
           attach_file 'file', Rails.root.join('spec', 'factories', 'data', 'themes', 'woodland.zip')
@@ -130,18 +132,20 @@ describe "Themes", js: true do
 
   end
 
-  describe "GET /settings" do # theme = Threadify
+  describe "GET /settings" do # theme = woodland
 
     before(:each) do
       visit settings_theme_path(shop.theme)
     end
 
     it "should be index" do
-      find('#use_logo_image').visible?.should be_true # 只显示第一个fieldset
-      find('#use_feature_image').visible?.should be_false # 只显示第一个fieldset
+      find('#text_color').visible?.should be_true # 只显示第一个fieldset
+      find('#regular_font').visible?.should be_false # 只显示第一个fieldset
     end
 
     it "should show image" do
+      #all('.section-header').third.click # 展开图片fieldset
+      find('.section-header', text: '图片').click # 展开图片fieldset
       find('.closure-lightbox').click
       find('.shopqi-dialog').visible?.should be_true
       has_content?('logo.png').should be_true
@@ -149,25 +153,29 @@ describe "Themes", js: true do
 
     describe 'presets' do
 
+      before(:each) do
+        find('.section-header', text: '图片').click # 展开图片fieldset
+      end
+
       describe 'show' do
 
         it "should show current preset" do
-          find('#theme_load_preset').value.should eql 'original'
+          find('#theme_load_preset').value.should eql 'birchwood'
         end
 
         it "should set current settings" do # 配置项初始化为当前预设值
-          find('#use_logo_image')['checked'].should be_true
+          find('#use_banner_image')['checked'].should be_true
         end
 
         it "should switch preset" do # 配置项初始化为当前预设值
-          uncheck 'use_logo_image'
+          uncheck 'use_banner_image'
           check '将当前配置保存为预设'
           fill_in 'theme_save_preset_new', with: 'new_preset'
           click_on '保存配置'
           has_content?('保存成功!').should be_true
           find('#save-preset').visible?.should be_false
-          select 'original', from: 'theme_load_preset'
-          find('#use_logo_image')['checked'].should be_true
+          select 'birchwood', from: 'theme_load_preset'
+          find('#use_banner_image')['checked'].should be_true
         end
 
       end
@@ -175,20 +183,20 @@ describe "Themes", js: true do
       describe 'save' do
 
         it "should update exists preset" do # 更新预设
-          uncheck 'use_logo_image'
+          uncheck 'use_banner_image'
           check '将当前配置保存为预设'
-          select 'original', from: 'theme_save_preset_existing'
+          select 'birchwood', from: 'theme_save_preset_existing'
           find('#theme_save_preset_new_container').visible?.should be_false # 隐藏名称输入项
           click_on '保存配置'
           has_content?('保存成功!').should be_true
-          find('#theme_load_preset').value.should eql 'original'
+          find('#theme_load_preset').value.should eql 'birchwood'
           visit settings_theme_path(shop.theme) # 回显
-          find('#theme_load_preset').value.should eql 'original'
-          find('#use_logo_image')['checked'].should be_false
+          find('#theme_load_preset').value.should eql 'birchwood'
+          find('#use_banner_image')['checked'].should be_false
         end
 
         it "should add new preset" do # 保存新的预设
-          uncheck 'use_logo_image'
+          uncheck 'use_banner_image'
           check '将当前配置保存为预设'
           fill_in 'theme_save_preset_new', with: 'new_preset'
           click_on '保存配置'
@@ -197,12 +205,12 @@ describe "Themes", js: true do
           find('#theme_load_preset').value.should eql 'new_preset'
           visit settings_theme_path(shop.theme) # 回显
           find('#theme_load_preset').value.should eql 'new_preset'
-          find('#use_logo_image')['checked'].should be_false
+          find('#use_banner_image')['checked'].should be_false
         end
 
         it "should switch to customize" do # 切换至定制预设
-          find('#theme_load_preset').value.should eql 'original'
-          uncheck 'use_logo_image'
+          find('#theme_load_preset').value.should eql 'birchwood'
+          uncheck 'use_banner_image'
           find('#theme_load_preset').value.should be_blank
         end
 
@@ -225,8 +233,8 @@ describe "Themes", js: true do
       end
 
       it "should add fonts" do
-        find('.section-header', text: 'Fonts').click
-        find('#header_font').all('optgroup').size.should eql 3
+        find('.section-header', text: '字体').click
+        find('#regular_font').all('optgroup').size.should eql 3
       end
 
     end
@@ -511,10 +519,10 @@ describe "Themes", js: true do
         find(:xpath, './/li[1]').find('a').text.should eql '404.liquid'
       end
       within '#theme-snippets' do # 片段
-        find(:xpath, './/li[1]').find('a').text.should eql 'featured-products.liquid'
+        find(:xpath, './/li[1]').find('a').text.should eql 'recent-posts.liquid'
       end
       within '#theme-assets' do # 附件
-        find(:xpath, './/li[1]').find('a').text.should eql 'checkout.css.liquid'
+        find(:xpath, './/li[1]').find('a').text.should eql 'ie7.css'
       end
       within '#theme-config' do # 配置
         find(:xpath, './/li[1]').find('a').text.should eql 'settings.html'

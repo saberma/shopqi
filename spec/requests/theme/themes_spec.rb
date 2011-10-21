@@ -4,21 +4,28 @@ require 'subdomain_capybara_server'
 
 describe "Theme::Themes", js: true do # 主题商店
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   let(:user_admin) {  Factory :user_admin }
 
   let(:shop) { user_admin.shop }
 
-  before(:each) { Capybara::Server.manual_host = "themes.lvh.me" }
+  before(:each) do
+    theme
+    Capybara::Server.manual_host = "themes.lvh.me"
+  end
 
   after(:each) { Capybara::Server.manual_host = nil }
 
   describe "GET /theme" do # 主题详情
 
-    before(:each) { visit '/themes/Prettify/styles/default' }
+    before(:each) do
+      visit "/themes/#{theme.handle}/styles/#{theme.style_handle}"
+    end
 
     it "should be show" do
       within '#overview' do
-        has_content?('Prettify').should be_true
+        has_content?(theme.name).should be_true
         has_content?('ShopQi官方模板').should be_true
       end
     end
@@ -30,12 +37,15 @@ describe "Theme::Themes", js: true do # 主题商店
 
     describe "styles" do # 相关风格
 
+      let(:theme_slate) { Factory :theme_woodland_slate }
+
       it "should not be index" do
+        theme_slate
         find('#styles').text.should be_blank
       end
 
       it "should be index" do
-        visit '/themes/woodland/styles/slate'
+        visit "/themes/#{theme_slate.handle}/styles/#{theme_slate.style_handle}"
         all('#styles li').size.should_not eql 0
       end
 

@@ -25,7 +25,7 @@ describe "Shop::Shops", js:true do
 
   describe "GET /products" do # 首页
 
-    it "should show product" do
+    it "should show product", focus: true do
       payment
       product = iphone4
       variant = product.variants.first

@@ -2,12 +2,14 @@ require 'spec_helper'
 
 describe Shop::ShopsController do
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   let(:shop) { Factory(:user_admin).shop }
 
   let(:iphone4) { Factory.build(:iphone4) }
 
   before :each do
-    shop.theme.switch Theme.find_by_name('Prettify')
+    shop.themes.install theme
     request.host = "#{shop.primary_domain.host}"
   end
 

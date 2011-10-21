@@ -653,9 +653,9 @@ ActiveRecord::Schema.define(:version => 20111001024945) do
   add_index "tags", ["shop_id"], :name => "index_tags_on_shop_id"
 
   create_table "themes", :force => true do |t|
-    t.string  "name",         :limit => 16
+    t.string  "name",         :limit => 16,                    :null => false
     t.string  "handle",       :limit => 16
-    t.string  "style",        :limit => 16
+    t.string  "style",        :limit => 16,                    :null => false
     t.string  "style_handle", :limit => 16
     t.string  "role",         :limit => 16
     t.float   "price",                      :default => 0.0

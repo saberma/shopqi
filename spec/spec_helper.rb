@@ -53,8 +53,8 @@ Spork.each_run do
   RSpec.configure do |config|
     config.include Factory::Syntax::Methods
     config.before(:suite) do
-      DatabaseCleaner.strategy = :truncation, {:except => %w[themes]} #theme包含初始化数据，不清掉
-      DatabaseCleaner.clean_with(:truncation, {:except => %w[themes]})
+      DatabaseCleaner.strategy = :truncation #, {:except => %w[foo]} # 清除数据时排除某个表
+      DatabaseCleaner.clean_with :truncation #, {:except => %w[foo]}
       FileUtils.mkdir_p(File.join(Rails.root, 'public', 's', 'files', Rails.env))
       Sunspot.session = Sunspot::Rails::StubSessionProxy.new(Sunspot.session) # 取消与Sunspot的连接
     end

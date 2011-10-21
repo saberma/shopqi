@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe Shop::BlogsController do
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   let(:shop) do
     model = Factory(:user_admin).shop
     model.update_attributes password_enabled: false
@@ -13,7 +15,7 @@ describe Shop::BlogsController do
 
   before :each do
     request.host = "#{shop.primary_domain.host}"
-    shop.theme.switch Theme.find_by_handle('woodland')
+    shop.themes.install theme
   end
 
   it 'should be show' do

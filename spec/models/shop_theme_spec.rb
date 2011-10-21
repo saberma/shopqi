@@ -3,16 +3,19 @@ require 'spec_helper'
 
 describe ShopTheme do
 
+  let(:theme_dark) { Factory :theme_woodland_dark }
+
+  let(:theme_slate) { Factory :theme_woodland_slate }
+
   let(:shop) { Factory(:user).shop }
 
   let(:theme) { shop.theme }
 
   describe 'Theme' do
 
-    it 'should be switch' do
-      theme
+    it 'should be install' do
       expect do
-        theme.switch Theme.find_by_handle('Prettify')
+        shop.themes.install theme_dark
       end.should change(ShopTheme, :count).by(1)
     end
 
@@ -75,7 +78,7 @@ describe ShopTheme do
     end
 
     it 'should parse select element' do
-      theme.switch Theme.find_by_handle('Prettify')
+      shop.themes.install theme_slate
       theme = shop.theme
       settings = theme.config_settings['presets']['default']
       settings['bg_image_y_position'].should eql 'top'

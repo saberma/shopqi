@@ -12,7 +12,7 @@ class Theme < ActiveRecord::Base
   end
 
   def self.default
-    find_by_handle('Threadify')
+    self.first
   end
 
   def self.shopqi_theme_path # app/themes/shopqi # 用于保存顾客登录等模板

@@ -34,9 +34,9 @@ names.each do |name|
   phone = "139#{Random.new.rand(10000000..99999999)}"
   address_attrs = {name: name, address1: '311', phone: phone}.merge address
   order_attrs = {email: email,  shipping_address_attributes: address_attrs}
-  Random.new.rand(1..5).times do
+  Random.new.rand(1..3).times do # 生成订单
     order = shop.orders.build order_attrs
-    3.times do
+    3.times do # 订单商品
       variant = random_product(products).variants.first
       price = Random.new.rand(10..50)
       quantity = Random.new.rand(1..20)

@@ -109,7 +109,15 @@
 <fieldset>
     <legend>图片</legend>
     <table>
-    <tr>
+     <tr>
+       <td><label for="use_logo_image">自定义Logo标志?</label></td>
+       <td><input type="checkbox" id="use_logo_image" name="use_logo_image" value="1"/></td>
+     </tr>
+     <tr>
+      <td>Logo标志</td>
+      <td><input type="file" id="logo_image" name="logo.png" /></td>
+     </tr>
+     <tr>
        <td><label for="use_banner_image">自定义广告横幅:</label></td>
        <td><input type="checkbox" id="use_banner_image" name="use_banner_image" value="1" checked="checked"/></td>
      </tr>
@@ -122,14 +130,6 @@
       <td><input type="text" id="banner_url" name="banner_url" value="collections/all"/></td>
      </tr>
      <tr>
-       <td><label for="use_logo_image">自定义Logo标志?</label></td>
-       <td><input type="checkbox" id="use_logo_image" name="use_logo_image" value="1"/></td>
-     </tr>
-     <tr>
-      <td>Logo标志</td>
-      <td><input type="file" id="logo_image" name="logo.png" /></td>
-     </tr>
-    <tr>
       <td><label for="bg_image">选择您的背景图片</label></td>
       <td>
         <select name="bg_image" id="bg_image">
@@ -140,7 +140,7 @@
           <option value="nobg">不需要背景</option>
         </select>
       </td>
-    </tr>
+     </tr>
      <tr>
       <td>上传新的背景</td>
       <td><input type="file" id="background_image" name="background.jpg" /></td>

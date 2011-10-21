@@ -1,5 +1,6 @@
 class Shop::CustomerAddressesController < ApplicationController
   prepend_before_filter :authenticate_customer!
+  skip_before_filter :must_has_theme
   layout 'shop/admin'
 
   expose(:customer_addresses){

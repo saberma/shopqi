@@ -6,9 +6,12 @@ describe "Guides", js: true do
 
   include_context 'login admin'
 
+  let(:theme) { Factory :theme_woodland_dark }
+
   describe "Guide" do
 
     before(:each) do
+      shop.themes.install theme
       visit '/admin'
     end
 
@@ -16,7 +19,7 @@ describe "Guides", js: true do
       has_content?('下一步骤: 商品').should be_true
     end
 
-    it "should be guide" do
+    it "should be guide", focus: true do
       guides = {
         '添加商品' => '点击此处增加一个商品',
         '定制外观' => '点击此处修改您的主题外观',
@@ -71,6 +74,7 @@ describe "Guides", js: true do
     describe "Theme" do # 定制外观
 
       before(:each) do
+        shop.themes.install theme
         shop.tasks[0,1].map{|t| t.update_attributes completed: true}
         visit "/admin/themes/#{shop.theme.id}/settings"
       end
