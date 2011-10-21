@@ -3,14 +3,17 @@
 # shopqi用于测试新手入门，即不含任何商品、顾客信息，以 admin@shopqi.com 用户登录
 # myshopqi用于测试老用户，预含6件商品、2条顾客信息，以 admin@myshopqi.com 用户登录
 
+Theme.destroy_all
 Shop.destroy_all
+
+Factory :theme_woodland_dark
 
 domain = Setting.store_host
 shopqi = User.create!(
   shop_attributes: {
     name:"shopqi",
     domains_attributes: [{subdomain: 'shopqi', domain: domain}],
-    #themes_attributes: [{ theme_id: Theme.default.id }]
+    themes_attributes: [{ theme_id: Theme.default.id }]
   },
   email: "admin@shopqi.com",
   password: "666666",
@@ -21,7 +24,7 @@ myshopqi = User.create!(
   shop_attributes: {
     name:"myshopqi",
     domains_attributes: [{subdomain: 'myshopqi', domain: domain}],
-    #themes_attributes: [{ theme_id: Theme.default.id }]
+    themes_attributes: [{ theme_id: Theme.default.id }]
   },
   email: "admin@myshopqi.com",
   password: "666666",
