@@ -12,6 +12,10 @@ describe Theme do
     Theme.default.should_not be_nil
   end
 
+  it 'should get the path' do
+    theme.app_path.should eql "#{Rails.root}/data/themes/#{theme.id}"
+  end
+
   describe 'file' do
 
     it 'should be unzip', focus: true do # 上传的文件要解压至current目录

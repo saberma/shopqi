@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe ThemeObserver do
 
+  let(:theme_dark) { Factory :theme_woodland_dark }
+
   let(:shop) { Factory(:user).shop }
 
   let(:theme) { shop.theme }
@@ -9,6 +11,10 @@ describe ThemeObserver do
   let(:path) { File.join Rails.root, 'public', 's', 'files', Rails.env, shop.id.to_s, 'theme', theme.id.to_s }
 
   let(:layout_theme_path) { File.join path, 'layout', 'theme.liquid' }
+
+  before(:each) do
+    shop.themes.install theme_dark
+  end
 
   describe 'Files' do
 
@@ -32,10 +38,6 @@ describe ThemeObserver do
       theme.should_not be_nil
     end
 
-    it 'should get the app_theme' do
-      theme.app_path.should eql "#{Rails.root}/app/themes/#{Theme.default.name.downcase}"
-    end
-
     it 'should get the public_theme' do
       theme.public_path.should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}"
     end
@@ -43,8 +45,8 @@ describe ThemeObserver do
     it 'should get the asset_path' do
       theme.asset_path('stylesheet.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/stylesheet.css.liquid"
       File.exist?(theme.asset_path('stylesheet.css')).should be_true
-      theme.asset_path('ie.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/ie.css"
-      File.exist?(theme.asset_path('ie.css')).should be_true
+      theme.asset_path('ie7.css').should eql "#{Rails.root}/public/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/ie7.css"
+      File.exist?(theme.asset_path('ie7.css')).should be_true
     end
 
     it 'should get the layout_theme' do
@@ -60,9 +62,7 @@ describe ThemeObserver do
   describe ShopThemeSetting do
 
     it 'should be read from file' do
-      expect do
-        shop.theme.settings.should_not be_empty
-      end.should change(ShopTheme, :count)
+      shop.theme.settings.should_not be_empty
     end
 
   end
