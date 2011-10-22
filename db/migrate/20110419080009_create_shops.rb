@@ -25,7 +25,7 @@ class CreateShops < ActiveRecord::Migration
       t.boolean :taxes_included               , comment: "税收是否包含在商品中"          , default: true
       t.boolean :tax_shipping                 , comment: "是否要缴航运税"                , default: false
       t.string  :customer_accounts            , comment: "顾客付款设置"                  , default: 'optional'
-      t.string  :signup_source                , comment: "注册来源"                      , limit: 32
+      t.string  :signup_source                , comment: "注册来源"                      , limit: 16
       begin '辅助字段'
       t.boolean :guided                       , comment: "是否已完成指南任务"            , default: false
       end

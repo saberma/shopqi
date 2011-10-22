@@ -9,6 +9,8 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
     end.to_json
   end
 
+  expose(:signup_source_options) { KeyValues::Shop::SignupSource.options }
+
   def create
     data = {errors: {}}
     if params[:verify_code].to_i == session[:verify_code] or Rails.env.test? # 手机校验码(测试环境下不校验)

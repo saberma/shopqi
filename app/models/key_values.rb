@@ -66,6 +66,24 @@ module KeyValues
     ]
   end
 
+  module Shop # 商店
+
+    class SignupSource < KeyValues::Base # 注册来源
+      self.data = [
+        {id: 1, name: '我不确定'    , code: 'not_sure'    },
+        {id: 2, name: '其他公司介绍', code: 'from_company'},
+        {id: 3, name: '朋友介绍'    , code: 'from_frient' },
+        {id: 4, name: '博客'        , code: 'blog'        },
+        {id: 5, name: '搜索引擎'    , code: 'search'      },
+        {id: 6, name: '网络广告'    , code: 'web_ad'      },
+        {id: 7, name: '杂志广告'    , code: 'magazine_ad' },
+        {id: 8, name: '书籍'        , code: 'book'        },
+        {id: 9, name: '其他'        , code: 'other'       },
+      ]
+    end
+
+  end
+
   module Theme # 主题
 
     class Role < KeyValues::Base # 发布类型

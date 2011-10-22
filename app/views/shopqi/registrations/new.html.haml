@@ -58,15 +58,7 @@
             %p.note 让我们了解多一些，以便为您提供更好的服务.
           %label(for="signup_source") 您是从哪里得知ShopQi?
           %select#signup_source(name="shop[signup_source]")
-            %option(value="I am not sure") 我不确定
-            %option(value="Referral from a company") 其他公司介绍
-            %option(value="Referral from a friend") 朋友介绍
-            %option(value="Blog post") 博客
-            %option(value="Web search") 搜索引擎
-            %option(value="Web advertisement") 网络广告
-            %option(value="Magazine advertisement") 杂志广告
-            %option(value="Article online or in print") 书籍
-            %option(value="other") 其他
+            =options_for_select signup_source_options
         .clear
           %label.inlined(for="user_name") 姓名
           %input#user_name.input-text.full(name="user[name]" size="18" type="text")
