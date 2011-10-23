@@ -1,6 +1,0 @@
-<!-- START SUBNAV -->
-<div id="subnav">{% if linklists.sub-navigation.links.size > 0 %}{% for link in linklists.sub-navigation.links %}
-	<a href="{{ link.url }}"{% if link.url == collection.url %} class="active"{% endif %}>{{ link.title | escape }}</a>{% unless forloop.last %} <span>&#124;</span> {% endunless %}{% endfor %}{% else %}
-	<p><a href="/admin/links">Create a linklist</a> titled <strong>Sub-Navigation</strong> for links to show here.</p>{% endif %}
-</div>
-<!-- END SUBNAV -->
