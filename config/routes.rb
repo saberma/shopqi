@@ -307,8 +307,9 @@ Shopqi::Application.routes.draw do
         get '/security', to: 'home#security', as: :tour_security
         get '/features', to: 'home#features', as: :tour_features
       end
-      get '/signup'         , to: redirect('/services/signup')
-      get '/login'          , to: 'home#login'
+      get '/agreement', to: 'home#agreement'            , as: :agreement
+      get '/signup'   , to: redirect('/services/signup')
+      get '/login'    , to: 'home#login'
       scope "/services/signup" do
         get '/'                    , to: 'home#signup'                               , as: :services_signup
         devise_scope :user do
