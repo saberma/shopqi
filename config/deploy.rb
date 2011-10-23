@@ -45,11 +45,16 @@ namespace :deploy do
 
   # scp -P $CAP_PORT config/{database,sms,alipay,admin_users,unicorn}.yml $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
   # scp -P $CAP_PORT config/unicorn.conf.rb $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
-  desc "Symlink shared resources on each release"
+  desc "Symlink shared resources on each release" # 配置文件
   task :symlink_shared, roles: :app do
     %w(database.yml sms.yml alipay.yml admin_users.yml unicorn.conf.rb).each do |secure_file|
       run "ln -nfs #{shared_path}/config/#{secure_file} #{release_path}/config/#{secure_file}"
     end
+  end
+
+  desc "Symlink the data directory" # 数据存储目录
+  task :symlink_data, roles: :app do
+    run "mkdir -p #{shared_path}/data && ln -nfs #{shared_path}/data #{release_path}/data"
   end
 
   desc "Populates the Production Database"
@@ -58,19 +63,22 @@ namespace :deploy do
   end
 
 end
+before 'deploy:assets:precompile', 'deploy:symlink_shared'
+before 'deploy:assets:precompile', 'deploy:symlink_data'
+after  'deploy:migrate'          , 'deploy:seed'
 
-namespace :resque do
+namespace :resque do # 后台任务
 
   desc "Start resque scheduler, workers"
   task :start, roles: :app, only: { jobs: true } do
-    run "cd #{current_path}; PIDFILE=/tmp/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:scheduler"
     run "cd #{current_path}; PIDFILE=/tmp/resque.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:work"
+    run "cd #{current_path}; PIDFILE=/tmp/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:scheduler"
   end
 
   desc "Stop resque scheduler, workers"
   task :stop, roles: :app, only: { jobs: true } do
-    run "kill -s QUIT `cat /tmp/resque.#{application}.pid`"
     run "kill -s QUIT `cat /tmp/resque-scheduler.#{application}.pid`"
+    run "kill -s QUIT `cat /tmp/resque.#{application}.pid`"
   end
 
   desc "Restart resque workers"
@@ -80,11 +88,18 @@ namespace :resque do
   end
 
 end
-
-#after 'deploy:update_code', 'deploy:symlink_shared'
-before 'deploy:assets:precompile', 'deploy:symlink_shared'
-after  'deploy:migrate'          , 'deploy:seed'
 before "deploy:stop"             , "resque:stop"
 before "deploy:start"            , "resque:start"
 before "deploy:restart"          , "resque:restart"
+
+namespace :dragonfly do # 图片缓存
+
+  desc "Symlink the Rack::Cache files"
+  task :symlink, roles: [:app] do
+    run "mkdir -p #{shared_path}/tmp/dragonfly && ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly"
+  end
+
+end
+after 'deploy:update_code', 'dragonfly:symlink'
+
 # HOOK IMAGE http://j.mp/psRjx2
