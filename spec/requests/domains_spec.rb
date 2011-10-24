@@ -11,6 +11,9 @@ describe "Domains", js: true do
   describe "GET /domains" do
 
     before(:each) do
+      dns = mock('dns')
+      dns.stub!(:getresource).and_return("wrong.myshopoqi.com")
+      Resolv::DNS.stub(:new).and_return(dns)
       visit domains_path
     end
 
