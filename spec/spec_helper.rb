@@ -55,12 +55,7 @@ Spork.each_run do
     config.before(:suite) do
       DatabaseCleaner.strategy = :truncation #, {:except => %w[foo]} # 清除数据时排除某个表
       DatabaseCleaner.clean_with :truncation #, {:except => %w[foo]}
-      FileUtils.mkdir_p(File.join(Rails.root, 'public', 's', 'files', Rails.env))
       Sunspot.session = Sunspot::Rails::StubSessionProxy.new(Sunspot.session) # 取消与Sunspot的连接
-    end
-
-    config.after(:suite) do
-      FileUtils.rm_rf(File.join(Rails.root, 'public', 's', 'files', Rails.env))
     end
 
     config.before(:each, searchable: true) do #http://j.mp/quFhWM
@@ -72,6 +67,7 @@ Spork.each_run do
     end
 
     config.before(:each) do
+      FileUtils.mkdir_p(File.join(Rails.root, 'public', 's', 'files', Rails.env))
       # sentient_user
       Thread.current[:user] = nil
       DatabaseCleaner.start
@@ -81,6 +77,8 @@ Spork.each_run do
 
     config.after(:each) do
       DatabaseCleaner.clean
+      FileUtils.rm_rf(File.join(Rails.root, 'public', 's', 'files', Rails.env))
+      FileUtils.rm_rf(File.join(Rails.root, 'data', 'shops', Rails.env))
       #CarrierWave.clean_cached_files!
     end
   end

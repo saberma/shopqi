@@ -20,7 +20,7 @@ class Asset
 
   # 返回文件列表
   def self.all(theme)
-    repo = Grit::Repo.new theme.public_path
+    repo = Grit::Repo.new theme.path
     master = repo.tree
     master.trees.inject({}) do |result, tree|
       result[tree.name] = []
@@ -50,12 +50,12 @@ class Asset
     kind, name = key.split('/', 2) # 最多分成2个数组元素
     source_path = case kind.to_sym
     when :layout
-      File.join theme.public_path, safe(source_key)
+      File.join theme.path, safe(source_key)
     when :templates
-      FileUtils.mkdir_p File.join(theme.public_path, 'templates', 'customers')
+      FileUtils.mkdir_p File.join(theme.path, 'templates', 'customers')
       File.join Theme.shopqi_theme_path, safe(key)
     end
-    path = File.join theme.public_path, safe(key)
+    path = File.join theme.path, safe(key)
     if source_path
       FileUtils.cp source_path, path
     elsif file
@@ -63,41 +63,41 @@ class Asset
     else # snippets没有蓝本
       FileUtils.touch path
     end
-    repo = Grit::Repo.new theme.public_path
+    repo = Grit::Repo.new theme.path
     theme.commit repo, '1'
     self.new theme, key, name
   end
 
   def self.update(theme, key, content) # 保存文件内容
-    File.open(File.join(theme.public_path, safe(key)), 'w') {|f| f.write content }
-    repo = Grit::Repo.new theme.public_path
+    File.open(File.join(theme.path, safe(key)), 'w') {|f| f.write content }
+    repo = Grit::Repo.new theme.path
     message = commits(theme, key).size + 1
     theme.commit repo, message
   end
 
   def self.rename(theme, key, new_key) # 重命名
-    Dir.chdir theme.public_path do
+    Dir.chdir theme.path do
       FileUtils.mv safe(key), safe(new_key)
-      repo = Grit::Repo.new theme.public_path
+      repo = Grit::Repo.new theme.path
       theme.commit repo, '1'
     end
   end
 
   def self.value(theme, tree_id, key) # 返回文件内容
-    repo = Grit::Repo.new theme.public_path
+    repo = Grit::Repo.new theme.path
     tree = repo.tree(tree_id)
     blob = tree./ safe(key)
     blob.data
   end
 
   def self.destroy(theme, key) # 删除文件
-    File.delete File.join(theme.public_path, safe(key))
-    repo = Grit::Repo.new theme.public_path
+    File.delete File.join(theme.path, safe(key))
+    repo = Grit::Repo.new theme.path
     theme.commit repo, "delete #{key}"
   end
 
   def self.commits(theme, key) # 返回文件版本
-    repo = Grit::Repo.new theme.public_path
+    repo = Grit::Repo.new theme.path
     repo.log('master', safe(key))
   end
 

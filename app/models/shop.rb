@@ -88,7 +88,7 @@ class Shop < ActiveRecord::Base
   end
 
   def path # 商店相关的文件(主题)存放路径 /data/shops/1
-    Rails.root.join 'data', 'shops', self.id.to_s
+    Rails.root.join 'data', 'shops', test_dir, self.id.to_s
   end
 
   after_destroy do
