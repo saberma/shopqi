@@ -26,17 +26,17 @@ describe Asset do
 
     it 'should save layout' do # 指明蓝本
       Asset.create theme, 'layout/admin.liquid', 'layout/theme.liquid'
-      File.exists?(File.join(theme.public_path, 'layout/admin.liquid')).should be_true
+      File.exists?(File.join(theme.path, 'layout/admin.liquid')).should be_true
     end
 
     it 'should save template' do # 蓝本在app/themes/shopqi中
       Asset.create theme, 'templates/customers/login.liquid'
-      File.exists?(File.join(theme.public_path, 'templates/customers/login.liquid')).should be_true
+      File.exists?(File.join(theme.path, 'templates/customers/login.liquid')).should be_true
     end
 
     it 'should save snippet' do # 不需要蓝本
       Asset.create theme, 'snippets/hot-products.liquid'
-      File.exists?(File.join(theme.public_path, 'snippets/hot-products.liquid')).should be_true
+      File.exists?(File.join(theme.path, 'snippets/hot-products.liquid')).should be_true
     end
 
   end
