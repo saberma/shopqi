@@ -12,7 +12,7 @@
 #faq p {
   margin-bottom: 20px; }
 
-.loginarea form {
+.loginarea form { /* 调整登录页面 */
   label {
     font-weight: bold;
     color: black;
@@ -23,6 +23,33 @@
     background-color: white;
     padding: 3px;
     font-size: 14px; } }
+
+.imgreplacement { /* 图片替换文字(文字隐藏) http://j.mp/qRhwk1 http://j.mp/qdddWA */
+  display: -moz-inline-box;
+  display: inline-block;
+  background: transparent none 0 0 no-repeat;
+  text-indent: -3000px;
+  font: 0/0 Arial;
+  overflow: hidden;
+  color: rgba(255,255,255,0);
+  vertical-align: bottom; }
+
+#nav-primary-phone {
+  line-height: 56px;
+  color: #a3a3a3;
+  margin-right: 10px;
+
+  .phone-400 {
+    width: 110px;
+    height: 37px;
+    line-height: 37px;
+    background: url(<%=asset_path('banners/400-phone.gif')%>) top right no-repeat; } }
+
+.phone {
+  width: 70px;
+  height: 14px;
+  line-height: 14px;
+  background: url(<%=asset_path('banners/phone.gif')%>) top right no-repeat; }
 
 #agreement { /* 服务条款 */
   width: 600px }

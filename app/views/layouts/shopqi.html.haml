@@ -29,7 +29,9 @@
           %a(href="/")
           %a.logo-shopqi(href="/")=image_tag 'logos/shopqi_bag.gif'
           %ul#nav-primary
-            %li(style='line-height:56px; color: #a3a3a3; margin-right: 10px') 服务热线 400-676-7720
+            %li#nav-primary-phone
+              服务热线
+              %span.imgreplacement.phone-400 400-6767-888
             %li(class=@current_tour)=link_to '特色演示', tour_intro_path
             -#
               %li
@@ -88,6 +90,6 @@
               %ul
                 %li
                   =image_tag 'admin/icons/phone16.gif', height: 12, width: 12
-                  0755-26002041
+                  %span.imgreplacement.phone 0755-26008888
           #copyright.center.clear
             %p © 2011 shopqi.com All Rights Reserved | ShopQi - 电子商务平台.
