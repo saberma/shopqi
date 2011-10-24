@@ -18,7 +18,7 @@ gem 'sunspot_rails'
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'kaminari' # 分页
 #用于处理图片(缩略图)
-gem 'dragonfly'
+gem 'dragonfly', ' ~> 0.9.8'
 gem 'rack-cache', require: 'rack/cache'
 gem 'liquid','~> 2.3.0' #模板语言
 gem "carrierwave"

@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: git://github.com/defunkt/resque.git
-  revision: 4499a39ebe0abdde07d6e01bcd4484c967ad193e
+  revision: 7bc421a98272e31c6accbd2f8b17af5586b775cb
   specs:
     resque (1.19.0)
       multi_json (~> 1.0)
@@ -19,14 +19,14 @@ GIT
 
 GIT
   remote: git://github.com/github/gollum.git
-  revision: e8df272729f45c3b905419e9b0f5ab724a995eba
+  revision: 39e06e48bd19d78a9ae58b98ad45738daab62249
   specs:
     gollum (1.3.1)
-      albino (~> 1.3.2)
       github-markup (>= 0.4.0, < 1.0.0)
       grit (~> 2.4.1)
       mustache (>= 0.11.2, < 1.0.0)
       nokogiri (~> 1.4)
+      pygments.rb (~> 0.2.0)
       redcarpet
       sanitize (~> 2.0.0)
       sinatra (~> 1.0)
@@ -110,11 +110,10 @@ GEM
     activesupport (3.1.1)
       multi_json (~> 1.0)
     addressable (2.2.6)
-    albino (1.3.3)
-      posix-spawn (>= 0.3.6)
     arel (2.2.1)
     awesome_print (0.4.0)
     bcrypt-ruby (3.0.1)
+    blankslate (2.1.2.4)
     braintree (2.11.0)
       builder (>= 2.0.0)
     builder (3.0.0)
@@ -153,7 +152,7 @@ GEM
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
     diff-lcs (1.1.3)
-    dragonfly (0.9.5)
+    dragonfly (0.9.8)
       rack
     em-websocket (0.3.1)
       addressable (>= 2.1.1)
@@ -258,7 +257,9 @@ GEM
     polyglot (0.3.2)
     posix-spawn (0.3.6)
     pr_geohash (1.0.0)
-    rack (1.3.4)
+    pygments.rb (0.2.3)
+      rubypython (>= 0.5.1)
+    rack (1.3.5)
     rack-cache (1.1)
       rack (>= 0.4)
     rack-mount (0.8.3)
@@ -315,6 +316,9 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.6.0)
+    rubypython (0.5.3)
+      blankslate (>= 2.1.2.3)
+      ffi (~> 1.0.7)
     rubyzip (0.9.4)
     rufus-scheduler (2.0.11)
       tzinfo (>= 0.3.23)
@@ -403,7 +407,7 @@ DEPENDENCIES
   decent_exposure
   default_value_for
   devise
-  dragonfly
+  dragonfly (~> 0.9.8)
   factory_girl
   factory_girl_rails
   gollum!

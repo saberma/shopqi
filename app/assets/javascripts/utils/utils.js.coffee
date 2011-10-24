@@ -84,3 +84,7 @@ namespace 'Utils', (exports) ->
       $("html:not(:animated),body:not(:animated)").animate {
         scrollTop: destination-20
       }, 1000
+
+  exports.markFeaturedImage = ->
+    $('.featured').remove()
+    $('ul li:first-child').append("<div class='featured'></div>")

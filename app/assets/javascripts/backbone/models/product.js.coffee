@@ -50,10 +50,6 @@ App.Models.Product = Backbone.Model.extend
     collection.detect (model) ->
       model.attributes.product_id == self.id
 
-  markFeaturedImage = ->
-    $('.featured').remove()
-    $('ul li:first-child').append("<div class='featured'></div>")
-
 # 商品选项
 App.Models.ProductOption = Backbone.Model.extend
   name: 'product_option'
