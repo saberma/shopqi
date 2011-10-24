@@ -26,7 +26,7 @@ describe "Products", js: true do
 
       context "(without types and vendors)" do
 
-        it "should be validate" do
+        it "should be validate", focus: true do
           visit new_product_path
           #显示新增类型、生产商
           find_field('product[product_type]').visible?.should be_true
@@ -55,6 +55,7 @@ describe "Products", js: true do
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
+          page.should have_content('新增商品成功!')
           shop.products.all.size.should eql 1
         end
 
@@ -435,7 +436,7 @@ describe "Products", js: true do
           end
         end
 
-        it 'should be destroy', focus: true do
+        it 'should be destroy' do
           find('#upload-label .show-upload-link').click # 上传按钮
           attach_file 'add-file', Rails.root.join('spec', 'factories', 'data', 'products', 'iphone4.jpg')
           page.execute_script("window.confirm = function(msg) { return true; }")
