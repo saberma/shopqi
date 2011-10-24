@@ -5,12 +5,12 @@ class ShopThemeSetting < ActiveRecord::Base
 
   # 修改此模块内方法要记得重启服务
   module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
-    def html_path  # public/s/files/1/theme/1/config/settings.html
-      File.join theme.public_path, 'config', 'settings.html'
+    def html_path  # data/shops/1/theme/1/config/settings.html
+      File.join theme.path, 'config', 'settings.html'
     end
 
-    def data_path # public/s/files/1/theme/1/config/settings_data.json
-      File.join theme.public_path, 'config', 'settings_data.json'
+    def data_path # data/shops/1/theme/1/config/settings_data.json
+      File.join theme.path, 'config', 'settings_data.json'
     end
 
     def as_json
@@ -48,7 +48,7 @@ class ShopThemeSetting < ActiveRecord::Base
       doc = Nokogiri::HTML(File.open(html_path), nil, 'utf-8') #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
       doc.css("input[type='file']").each do |file| # 上传文件
         name = file['name']
-        url = "/#{theme.files_relative_path}/assets/#{name}"
+        url = theme.asset_url(name)
         td = file.parent
         builder = Nokogiri::HTML::Builder.new do
           table.widget(cellspacing: 0) {
@@ -131,13 +131,15 @@ class ShopTheme < ActiveRecord::Base
 
   after_create do
     if self.theme_id # 应用某个主题，而非手动上传主题
-      repo = Grit::Repo.init public_path # 初始化为git repo
-      FileUtils.cp_r "#{theme.path}/.", public_path
+      repo = Grit::Repo.init path # 初始化为git repo
+      FileUtils.cp_r "#{theme.path}/.", path
       commit repo, '1'
       self.load_preset ||= config_settings['current'] # 初始化主题设置
       config_settings['presets'][self.load_preset].each_pair do |name, value|
         self.settings.create name: name, value: value
       end
+      FileUtils.mkdir_p public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
+      FileUtils.ln_s File.join(path, 'assets'), File.join(public_path, 'assets')
     end
   end
 
@@ -178,55 +180,66 @@ class ShopTheme < ActiveRecord::Base
       File.join 's', 'files', test_dir, self.shop_id.to_s, 'theme', self.id.to_s
     end
 
-    def asset_relative_path(asset) # s/files/1/theme/1/assets/theme.liquid
+    def asset_relative_path(asset) # s/files/1/theme/1/assets/checkout.css
       File.join files_relative_path, 'assets', asset
     end
   end
 
+  begin # 当前theme所在URL
+    def asset_url(name) # s/files/1/theme/1/assets/checkout.css
+      "/#{self.asset_relative_path(name)}"
+    end
+  end
+
   begin # 当前theme所在PATH
+    def path # data/shops/1/themes/1
+      File.join shop.path, 'themes', self.id.to_s
+    end
+
     def public_path # public/s/files/1/theme/1
       File.join Rails.root, 'public', files_relative_path
     end
 
-    def config_settings_path # public/s/files/1/config/settings.html
-      File.join public_path, 'config', 'settings.html'
+    def config_settings_path # data/shops/1/themes/1/config/settings.html
+      File.join path, 'config', 'settings.html'
     end
 
-    def config_settings_data_path # public/s/files/1/config/settings_data.json
-      File.join public_path, 'config', 'settings_data.json'
+    def config_settings_data_path # data/shops/1/themes/1/config/settings_data.json
+      File.join path, 'config', 'settings_data.json'
     end
 
     def config_settings
       JSON(File.read(config_settings_data_path))
     end
 
-    def asset_path(asset) # public/s/files/1/theme/1/assets/checkout.css.liquid
+    def asset_path(asset) # data/shops/1/themes/1/assets/checkout.css.liquid
       asset_liquid = "#{asset}.liquid"
-      path = File.join public_path, 'assets', asset_liquid
-      if File.exist?(path) #存在liquid文件，则解释liquid
-        path
+      liquid_path = File.join path, 'assets', asset_liquid
+      if File.exist?(liquid_path) #存在liquid文件，则解释liquid
+        liquid_path
       else
-        File.join public_path, 'assets', asset
+        File.join path, 'assets', asset
       end
     end
 
-    def layout_theme_path # public/s/files/1/theme/1/layout/theme.liquid
-      File.join public_path, 'layout', 'theme.liquid'
+    def layout_theme_path # data/shops/1/theme/1/layout/theme.liquid
+      File.join path, 'layout', 'theme.liquid'
     end
 
-    def template_path(template) # public/s/files/1/theme/1/templates/products.liquid
-      File.join public_path, 'templates', "#{template}.liquid"
+    def template_path(template) # data/shops/1/theme/1/templates/products.liquid
+      File.join path, 'templates', "#{template}.liquid"
     end
   end
 
   def commit(repo, message) # 提交
-    Dir.chdir public_path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
+    Dir.chdir path do # 必须切换当前目录，否则报错: fatal: 'path' is outside repository
       repo.add '.'
       repo.commit_all message
     end
   end
 
   after_destroy do #删除对应的目录
+    FileUtils.rm_rf self.path
     FileUtils.rm_rf self.public_path
   end
 end

@@ -6,8 +6,8 @@ module ThemeExtracter
   def self.perform(shop_id, theme_id, zip_path, addition_root_dir) # 用户上传主题文件后，转入后台解压
     shop = Shop.find(shop_id)
     shop_theme = shop.themes.find(theme_id)
-    path = shop_theme.public_path
-    repo = Grit::Repo.init shop_theme.public_path # 初始化为git repo
+    path = shop_theme.path
+    repo = Grit::Repo.init path # 初始化为git repo
     begin
       Zip::ZipFile::open(zip_path) do |zf|
         addition_regexp = Regexp.new("^#{addition_root_dir}/")
@@ -27,6 +27,8 @@ module ThemeExtracter
     shop_theme.config_settings['presets'][shop_theme.load_preset].each_pair do |name, value|
       shop_theme.settings.create name: name, value: value
     end
+    FileUtils.mkdir_p shop_theme.public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
+    FileUtils.ln_s File.join(path, 'assets'), File.join(shop_theme.public_path, 'assets')
     shop_theme.unpublish!
   end
 

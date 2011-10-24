@@ -13,7 +13,7 @@ class Asset
     else
       extensions = name.split('.')[1]
       if !extensions.blank? and %w(jpg gif png jpeg).include? extensions
-        "/#{theme.asset_relative_path(name)}"
+        theme.asset_url(name)
       end
     end
   end

@@ -87,6 +87,14 @@ class Shop < ActiveRecord::Base
     !self.deadline.past?
   end
 
+  def path # 商店相关的文件(主题)存放路径 /data/shops/1
+    Rails.root.join 'data', 'shops', self.id.to_s
+  end
+
+  after_destroy do
+    FileUtils.rm_rf self.path # 删除对应的目录
+  end
+
   protected
   def init_valid_date
     self.deadline = Date.today.next_day(30)

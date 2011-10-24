@@ -2,7 +2,7 @@ module UrlFilter
 
   def asset_url(input)
     shop = @context['shop'] #ShopDrop
-    "/#{shop.asset_path(input)}"
+    shop.asset_url(input)
   end
 
   def global_asset_url(input)

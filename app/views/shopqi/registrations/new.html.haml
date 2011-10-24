@@ -103,7 +103,7 @@
               %input#shop_terms_and_conditions(style="display: inline; margin-bottom: 0" type="checkbox" value="1")
               %label#terms-and-conditions-label(for="shop_terms_and_conditions")
                 我已经阅读并同意
-                %a(href="#") 服务条款
+                %a#agreement_link(href="/agreement" target="_blank") 服务条款
         %p.btns(style="margin-bottom: 0; clear: left")
           %input(name="shop[plan]" type="hidden" value="#{params[:plan]}")
           %input(name="ref" type="hidden" value="")

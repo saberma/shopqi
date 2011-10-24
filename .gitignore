@@ -56,3 +56,5 @@ data
 
 #redis
 dump.rdb
+resque.pid
+resque_scheduler.pid
