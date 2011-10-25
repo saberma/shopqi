@@ -1,7 +1,7 @@
 .clearfix
   =text_field_tag 'name',@name,class: 'span5'
 .clearfix
-  =select_tag 'format',options_for_select(['textile','markdown']),class: 'span5'
+  =select_tag 'format',options_for_select(['textile','markdown'],@format),class: 'span5'
 .clearfix
   =text_area_tag 'content', @content,rows: 25
 .clearfix
