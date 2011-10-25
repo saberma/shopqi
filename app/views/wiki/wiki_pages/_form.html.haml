@@ -1,23 +1,10 @@
 .clearfix
   =text_field_tag 'name',@name,class: 'span5'
 .clearfix
-  =select_tag 'format',options_for_select(['textile','markdown']),class: 'span5'
+  =select_tag 'format',options_for_select(['textile','markdown'],@format),class: 'span5'
 .clearfix
   =text_area_tag 'content', @content,rows: 25
 .clearfix
   =text_field_tag 'message',@message,class: 'span5',placeholder: '关于改变的信息(可选的)'
 %input{:title => "保存当前改变", :type => "submit", :value => "保存"}/
-=link_to '预览','#',id:'preview'
-:javascript
-  $(document).ready(function(){
-    $('#preview').click(function(){
-      var oldAction = $('#gollum-form').attr('action');
-      var $form = $($('#gollum-form').get(0));
-      $form.attr('action', '/preview');
-      $form.attr('target', '_blank');
-      $form.submit();
-      $form.attr('action', oldAction);
-      $form.removeAttr('target');
-      return false;
-    })
-  })
+=link_to '预览','#',id:'preview-content'
