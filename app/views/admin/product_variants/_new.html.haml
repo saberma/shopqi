@@ -47,7 +47,8 @@
             %td.secondary-header
               %label(for="product_variant_requires_shipping") 要求收货地址
             %td
-              %input.requires_shipping(name='product_variant[requires_shipping]' type='checkbox' checked='checked')
+              %input(name="product_variant[requires_shipping]" type="hidden" value="0")
+              %input.requires_shipping(name='product_variant[requires_shipping]' type='checkbox' checked='checked' value="1")
               %span.hint 服务性质或者数字之类的商品不需要勾选
           %tr.no-border
             %td.secondary-header
