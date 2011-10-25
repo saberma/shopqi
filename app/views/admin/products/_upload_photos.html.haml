@@ -7,7 +7,7 @@
     -product.photos.each_with_index do |photo,index|
       %li(id="photo_#{photo.id}")
         .product_image
-          =link_to image_tag(photo.small),photo.product_image.url
+          =link_to image_tag(photo.small, class: 'closure-lightbox'), photo.large
         = link_to image_tag('admin/icons/trash.gif'), product_photo_path(product,photo), method: :delete, confirm: '您确定要删除此张图片吗?', title: '删除它', class: 'image-delete',remote: true
         =image_tag 'admin/icons/drag_handle.gif', :alt => '拖动排序', :class => "image-drag"
         -if index == 0

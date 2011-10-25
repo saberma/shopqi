@@ -5,7 +5,7 @@ describe PaginateFilter do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:collection) { CustomCollection.new(title: '所有商品', products: shop.products) }
+  let(:collection) { shop.custom_collections.create(title: '所有商品', products: shop.products) }
 
   let(:collection_drop) { CollectionDrop.new(collection) }
 
