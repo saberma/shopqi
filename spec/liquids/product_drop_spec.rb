@@ -59,6 +59,12 @@ describe ProductDrop do
       product_drop.options.first.as_json.should eql result
     end
 
+    it 'should get label', focus: true do
+      result = '标题'
+      variant = "{{ product.options.first }}"
+      liquid(variant, {'product' => ProductDrop.new(iphone4)}).should eql result
+    end
+
   end
 
   private

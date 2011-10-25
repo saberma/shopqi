@@ -77,4 +77,8 @@ class ProductOptionDrop < Liquid::Drop
     @option.name
   end
 
+  def to_s
+    @option.name
+  end
+
 end
