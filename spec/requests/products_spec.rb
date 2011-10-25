@@ -26,7 +26,7 @@ describe "Products", js: true do
 
       context "(without types and vendors)" do
 
-        it "should be validate", focus: true do
+        it "should be validate" do
           visit new_product_path
           #显示新增类型、生产商
           find_field('product[product_type]').visible?.should be_true
@@ -570,22 +570,26 @@ describe "Products", js: true do
         end
 
         # 款式
-        describe 'varaint' do
+        describe 'variant' do
+
+          before(:each) { visit product_path(iphone4) }
 
           it 'should be validate' do
-            visit product_path(iphone4)
             find('#new-variant-link a').click
             within '#new-variant' do
               click_on '保存'
-              has_content?('基本选项标题 不能为空!').should be_true #必填校验
+              page.should have_content('基本选项标题 不能为空!') #必填校验
+              page.should have_content('价格 不能为空!')
+              page.should have_content('重量 不能为空!')
               fill_in 'product_variant[option1]', with: '默认标题'
+              fill_in 'product_variant[price]', with: '100'
+              fill_in 'product_variant[weight]', with: '1'
               click_on '保存'
               has_content?('基本选项 已经存在!').should be_true #唯一性校验
             end
           end
 
           it 'should be edit' do
-            visit product_path(iphone4)
             within :xpath, "//ul[@id='variants-list']/li[1]" do
               find('.option-1').text.should eql '默认标题'
               click_link '修改'
@@ -606,11 +610,11 @@ describe "Products", js: true do
           end
 
           it 'should be add' do
-            visit product_path(iphone4)
-
             find('#new-variant-link a').click
             within '#new-variant' do
               fill_in 'product_variant[option1]', with: '最新上市'
+              fill_in 'product_variant[price]', with: '100'
+              fill_in 'product_variant[weight]', with: '1'
               click_on '保存'
             end
 
@@ -623,12 +627,23 @@ describe "Products", js: true do
             has_content?('新增成功!').should be_true
           end
 
-          it 'should update product options' do
-            visit product_path(iphone4)
-
+          it 'should be add without weight' do # issue#205,新增时不勾选"要求收货地址"
             find('#new-variant-link a').click
             within '#new-variant' do
               fill_in 'product_variant[option1]', with: '最新上市'
+              fill_in 'product_variant[price]', with: '100'
+              uncheck 'product_variant[requires_shipping]'# 要求收货地址
+              click_on '保存'
+            end
+            page.should have_content('新增成功!')
+          end
+
+          it 'should update product options' do
+            find('#new-variant-link a').click
+            within '#new-variant' do
+              fill_in 'product_variant[option1]', with: '最新上市'
+              fill_in 'product_variant[price]', with: '100'
+              fill_in 'product_variant[weight]', with: '1'
               click_on '保存'
             end
 
@@ -639,11 +654,9 @@ describe "Products", js: true do
             has_no_xpath?("//tr[contains(@class, 'edit-option')][2]").should be_true # Bug: 不应该新增重复的选项输入项
           end
 
-          # 批量操作
-          describe '(batch)' do
+          describe '(batch)' do # 批量操作
 
             it 'should change price' do
-              visit product_path(iphone4)
               check('默认标题')
               within('#product-controls') do
                 has_content?('已选中 1 个款式').should be_true
@@ -663,7 +676,6 @@ describe "Products", js: true do
             end
 
             it 'should be copy' do
-              visit product_path(iphone4)
               check('默认标题')
               within('#product-controls') do
                 select '…使用另一个标题', from: 'product-select'
@@ -676,11 +688,12 @@ describe "Products", js: true do
             end
 
             it 'should be delete' do
-              visit product_path(iphone4)
               # 新增款式，两个以上才能执行删除操作
               find('#new-variant-link a').click
               within '#new-variant' do
                 fill_in 'product_variant[option1]', with: '最新上市'
+                fill_in 'product_variant[price]', with: '100'
+                fill_in 'product_variant[weight]', with: '1'
                 click_on '保存'
               end
               check('默认标题')
