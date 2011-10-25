@@ -17,8 +17,8 @@ App.Views.Product.Show.Index = Backbone.View.extend
     new App.Views.ProductOption.Index collection: @model.options
     # 款式
     new App.Views.Product.Show.Variant.Index collection: App.product_variants
-    @model.bind 'change:title', (model) ->
-      $('#product_title > a').text model.attributes.title
+    @model.bind 'change:title', (model) -> $('#product_title > a').text(model.attributes.title)
+    @model.bind 'change:handle', (model) -> $('#product_title > a').attr('href', "/products/#{model.attributes.handle}")
     # 修改商品选项后要重新渲染所有款式
     @model.bind 'change:options', (model) ->
       i = 0
