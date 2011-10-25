@@ -11,8 +11,7 @@ class CustomCollection < ActiveRecord::Base
   end
 
   before_save do
-    self.handle = Pinyin.t(self.title) if self.handle.blank?
-    self.handle = Handle.make_valid(shop.custom_collections, self.handle)
+    Handle.make_valid(shop.custom_collections, self)
   end
 
   #默认排序

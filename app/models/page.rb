@@ -9,7 +9,6 @@ class Page < ActiveRecord::Base
   end
 
   before_save do
-    self.handle = Pinyin.t(self.title) if self.handle.blank?
-    self.handle = Handle.make_valid(shop.pages, self.handle)
+    Handle.make_valid(shop.pages, self)
   end
 end

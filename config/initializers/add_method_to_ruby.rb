@@ -18,14 +18,17 @@ end
 module Handle
 
   # @collection shop.products
-  def self.make_valid(collection, handle) # 确保handle唯一，替换空格为横杠(-)
-    unique_handle = handle.strip.gsub /\s+/, '-'
+  def self.make_valid(collection, model) # 确保handle唯一，替换空格为横杠(-)
+    model.handle = Pinyin.t(model.title) if model.handle.blank?
+    unique_handle = model.handle.strip.gsub /\s+/, '-'
     number = 1
-    while collection.exists?(handle: unique_handle)
+    condition = {}
+    condition[:id.not_eq] = model.id unless model.new_record?
+    while collection.exists?(condition.merge(handle: unique_handle))
       unique_handle = "#{unique_handle}-#{number}"
       number += 1
     end
-    unique_handle
+    model.handle = unique_handle
   end
 
 end

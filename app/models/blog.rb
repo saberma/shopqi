@@ -5,8 +5,7 @@ class Blog < ActiveRecord::Base
   validates_presence_of :title
 
   before_save do
-    self.handle = Pinyin.t(self.title) if self.handle.blank? # 新增时初始化handle
-    self.handle = Handle.make_valid(shop.blogs, self.handle)
+    Handle.make_valid(shop.blogs, self)
   end
 
   def comments_enabled?

@@ -7,8 +7,7 @@ class LinkList < ActiveRecord::Base
 
   before_save do
     self.title = self.title.blank? ? '未命名' : self.title
-    self.handle = Pinyin.t(self.title) if self.handle.blank?
-    self.handle = Handle.make_valid(shop.link_lists, self.handle)
+    Handle.make_valid(shop.link_lists, self)
   end
 end
 
