@@ -62,11 +62,21 @@
             #category-navigation
               =raw sidebar.formatted_data if sidebar
         #content.col-9.last
-          =yield
+          =preserve yield
 :javascript
   $(document).ready(function(){
     $('#category-navigation h3').click(function(){
       $(this).next().toggle();
+      return false;
+    })
+    $('#preview-content').click(function(){
+      var oldAction = $('#gollum-form').attr('action');
+      var $form = $($('#gollum-form').get(0));
+      $form.attr('action', '/preview');
+      $form.attr('target', '_blank');
+      $form.submit();
+      $form.attr('action', oldAction);
+      $form.removeAttr('target');
       return false;
     })
   })
