@@ -8,7 +8,8 @@ class SmartCollection < ActiveRecord::Base
   accepts_nested_attributes_for :rules, allow_destroy: true
 
   before_save do
-    self.handle = Pinyin.t(self.title, '-') if self.handle.blank? # 新增时初始化handle
+    self.handle = Pinyin.t(self.title) if self.handle.blank? # 新增时初始化handle
+    self.handle = Handle.make_valid(shop.smart_collections, self.handle)
     set_default_order
   end
 

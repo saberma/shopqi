@@ -52,7 +52,8 @@ class Product < ActiveRecord::Base
   end
 
   before_save do
-    self.handle = Pinyin.t(self.title, '-') if self.handle.blank?
+    self.handle = Pinyin.t(self.title) if self.handle.blank?
+    self.handle = Handle.make_valid(shop.products, self.handle)
     # 新增的选项默认值要设置到所有款式中
     self.options.reject{|option| option.marked_for_destruction?}.each_with_index do |option, index|
       next if option.value.blank?
@@ -85,6 +86,7 @@ class Product < ActiveRecord::Base
       self.tags << tag
     end
   end
+
 end
 
 #商品款式

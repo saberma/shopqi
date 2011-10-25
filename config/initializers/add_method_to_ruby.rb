@@ -15,6 +15,21 @@ module LiquidDropHelper
 
 end
 
+module Handle
+
+  # @collection shop.products
+  def self.make_valid(collection, handle) # 确保handle唯一，替换空格为横杠(-)
+    unique_handle = handle.strip.gsub /\s+/, '-'
+    number = 1
+    while collection.exists?(handle: unique_handle)
+      unique_handle = "#{unique_handle}-#{number}"
+      number += 1
+    end
+    unique_handle
+  end
+
+end
+
 Liquid::Drop.send :include , LiquidDropHelper
 
 Carmen.default_locale = :cn

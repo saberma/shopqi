@@ -12,9 +12,16 @@ describe Product do
     context '(without handle)' do
 
       it 'should save handle' do
-        product = shop.products.create title: 'iphone手机', product_type: '智能手机', vendor: 'Apple'
+        product = shop.products.create title: 'iphone 手机', product_type: '智能手机', vendor: 'Apple'
         product.handle.should eql 'iphone-shou-ji'
       end
+
+      it 'should save unique handle' do
+        shop.products.create title: 'iphone 手机', product_type: '智能手机', vendor: 'Apple'
+        product = shop.products.create title: 'iphone 手机', product_type: '智能手机', vendor: 'Apple'
+        product.handle.should eql 'iphone-shou-ji-1'
+      end
+
     end
 
     context '(with handle)' do
@@ -22,6 +29,12 @@ describe Product do
       it 'should save handle' do
         product = shop.products.create title: 'iphone手机', handle: 'iphone', product_type: '手机', vendor: 'Apple'
         product.handle.should eql 'iphone'
+      end
+
+      it 'should save unique handle' do
+        shop.products.create title: 'iphone手机', handle: 'iphone', product_type: '手机', vendor: 'Apple'
+        product = shop.products.create title: 'iphone手机', handle: 'iphone', product_type: '手机', vendor: 'Apple'
+        product.handle.should eql 'iphone-1'
       end
 
     end
