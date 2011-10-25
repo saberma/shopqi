@@ -7,7 +7,7 @@
           #errorExplanation.errorExplanation
             %ul
         %p.sb
-          %span.note.highlight-alt 您的顾客选择此款式后会看到以下信息:
+          %span.note.highlight-alt 您的顾客可以通过以下选项选择此款式:
           {{#each_with_index options}}
           .new-variant-option
             %label(for="product_variant_option{{index_plus}}" class="option-{{index_plus}}") {{item.attributes.name}}

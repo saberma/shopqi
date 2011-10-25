@@ -92,10 +92,14 @@ end
 class ProductVariant < ActiveRecord::Base
   belongs_to :shop #冗余字段，前台商店下订单时使用
   belongs_to :product
-  validates_presence_of :price, :weight
 
   before_create do
     self.shop_id = self.product.shop_id
+  end
+
+  before_save do
+    self.price ||= 0.0 # 价格、重量一定要有默认值
+    self.weight ||= 0.0
   end
 
   def options
