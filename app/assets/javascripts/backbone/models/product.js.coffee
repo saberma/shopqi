@@ -76,13 +76,12 @@ App.Models.ProductVariant = Backbone.Model.extend
         result = result and variant.attributes[attr] is attrs[attr]
       result
     if exists then error["基本选项"] = "已经存在!"
+    error["价格"] = "不能为空!" unless attrs["price"] # 价格、重量
+    error["重量"] = "不能为空!" unless attrs["weight"]
     if _(error).size() is 0
       return
     else
       error
-
-
-
 
 App.Collections.AvailableProducts = Backbone.Collection.extend
   model: App.Models.Product
