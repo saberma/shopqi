@@ -13,8 +13,11 @@ class Admin::PagesController < Admin::AppController
   expose(:comments){ shop.comments }
 
   def create
-    page.save
-    redirect_to page_path(page)
+    if page.save
+      redirect_to page_path(page)
+    else
+      render action: 'new'
+    end
   end
 
   def update

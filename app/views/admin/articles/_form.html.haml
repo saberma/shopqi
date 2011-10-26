@@ -3,7 +3,7 @@
 %dt=f.label :title
 %dd=f.text_field :title,class:"big"
 %dt 发表文章在
-%dd=f.select :blog_id,blogs.collect{|b|[b.title,b.id]}
+%dd=f.select :blog_id, shop.blogs.reload.collect{|b|[b.title,b.id]}
 %dt.sst=f.label :body_html
 %dd{:style => "margin-bottom: 0"}=f.text_area :body_html,id:"kindeditor",style:  "width: 895px; height: 282px;"
 %dt.sst=f.label :tags
