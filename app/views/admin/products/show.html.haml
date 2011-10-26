@@ -269,6 +269,9 @@
     {{#each_with_index options}}
     %option(id="dup-option-{{index_plus}}" disabled="disabled" value="duplicate-{{index_plus}}") &hellip;使用另一个{{{item.attributes.name}}}
     {{/each_with_index}}
+%script(id="product-image-item" type="text/x-handlebars-template")
+  =dialog '{{{title}}}' do
+    %img(src="{{{url}}}")
 
 :javascript
   App.init = function(){

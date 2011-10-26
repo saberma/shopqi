@@ -5,6 +5,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
     "click #action-links a.edit-btn": "toggleEdit"
     "click #action-links a.dup-btn": "duplicate"
     "click #new-variant-link p": "newVariant"
+    "click .closure-lightbox": 'show' # 显示图片
 
   initialize: ->
     Handlebars.registerHelper 'option_value', (context, block) -> # 获取款式中的option1,option2,option3等值，外围对options进行迭代，在handlebars中只能使用额外的helper实现
@@ -50,4 +51,10 @@ App.Views.Product.Show.Index = Backbone.View.extend
     $('#new-variant-link').hide()
     $('#new-variant').show()
     Utils.Effect.scrollTo('#new-variant')
+    false
+
+  show: (e) ->
+    template = Handlebars.compile $('#product-image-item').html()
+    url = $(e.target).closest('a').attr('href')
+    $.blockUI message: template(title: '商品图片', url: url)
     false
