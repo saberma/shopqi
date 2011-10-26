@@ -31,6 +31,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
             attr["option#{i}"] = option.attributes.value
             variant.set attr, silent: true
       new App.Views.Product.Show.Variant.Index collection: App.product_variants
+      $('#new-variant .cancel').click() # 如果新增款式表单已经显示,会显示旧的商品选项. issue#209
 
   toggleEdit: ->
     $('#product-edit').toggle()
