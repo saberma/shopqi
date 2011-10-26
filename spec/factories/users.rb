@@ -5,6 +5,7 @@ FactoryGirl.define do
     email 'admin@shopqi.com'
     shop_attributes({
       name: '测试商店',
+      email: 'admin@shopqi.com'
       domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}]
     })
     password '666666'

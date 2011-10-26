@@ -12,6 +12,7 @@ domain = Setting.store_host
 shopqi = User.create!(
   shop_attributes: {
     name:"shopqi",
+    email: 'admin@shopqi.com'
     domains_attributes: [{subdomain: 'shopqi', domain: domain}],
     themes_attributes: [{ theme_id: Theme.default.id }]
   },
@@ -23,6 +24,7 @@ shopqi = User.create!(
 myshopqi = User.create!(
   shop_attributes: {
     name:"myshopqi",
+    email: 'admin@myshopqi.com'
     domains_attributes: [{subdomain: 'myshopqi', domain: domain}],
     themes_attributes: [{ theme_id: Theme.default.id }]
   },
