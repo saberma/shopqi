@@ -5,64 +5,32 @@ class ProductVariantDrop < Liquid::Drop
     @variant = variant
   end
 
-  def id
-    @variant.id
-  end
+  delegate :id, :price, :compare_at_price, :weight, :inventory_management, :inventory_quantity, :sku, :option1, :option2, :option3, :options, :requires_shipping, to: :@variant
 
   def title
     @variant.options.join(' / ')
-  end
-
-  def price
-    @variant.price
-  end
-
-  def compare_at_price
-    @variant.compare_at_price
   end
 
   def available
     true
   end
 
-  def inventory_management
-    @variant.inventory_management
-  end
-
-  def inventory_quantity
-    @variant.inventory_quantity
-  end
-
-  def weight
-    @variant.weight
-  end
-
-  def sku
-    @variant.sku
-  end
-
-  def option1
-    @variant.option1
-  end
-
-  def option2
-    @variant.option2
-  end
-
-  def option3
-    @variant.option3
-  end
-
-  def options
-    @variant.options
-  end
-
-  def requires_shipping
-    @variant.requires_shipping
-  end
-
   #def taxable
   #  @variant.taxable
   #end
+
+  def as_json(options = nil)
+    {
+      id: id,
+      option1: option1,
+      option2: option2,
+      option3: option3,
+      title: title,
+      price: price,
+      compare_at_price: compare_at_price,
+      weight: weight,
+      sku: sku,
+    }
+  end
 
 end
