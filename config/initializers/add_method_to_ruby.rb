@@ -1,3 +1,4 @@
+#encoding: utf-8
 module LiquidDropHelper
 
   #由于liquid的hash只能是'key' => value形式
@@ -57,3 +58,12 @@ Carmen.default_locale = :cn
 #  end
 #
 #end
+
+#用于邮件校验
+class EmailFormatValidator < ActiveModel::EachValidator
+  def validate_each(object, attribute, value)
+    unless value =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+      object.errors[attribute] << (options[:message] || "格式不对")
+    end
+  end
+end

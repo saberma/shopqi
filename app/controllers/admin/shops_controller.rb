@@ -9,16 +9,19 @@ class Admin::ShopsController < Admin::AppController
     if params[:shop][:order_number_format] && !params[:shop][:order_number_format].include?('{{number}}')
       params[:shop][:order_number_format] = '#{{number}}'
     end
-    shop.update_attributes(params[:shop])
-    respond_to do |format|
-      format.js   {render nothing: true}
-      format.html {
-        unless params[:shop][:policies_attributes]
-          redirect_to general_preferences_path, notice: notice_msg
-        else
-          redirect_to payments_path, notice: notice_msg
-        end
-      }
+    if shop.update_attributes(params[:shop])
+      respond_to do |format|
+        format.js   {render nothing: true}
+        format.html {
+          unless params[:shop][:policies_attributes]
+            redirect_to general_preferences_path, notice: notice_msg
+          else
+            redirect_to payments_path, notice: notice_msg
+          end
+        }
+      end
+    else
+      render action: 'edit',layout: 'admin'
     end
   end
 

@@ -122,7 +122,7 @@ class Order < ActiveRecord::Base
   end
 
   def send_email(mail_type,email_address = self.email)
-    Resque.enqueue(ShopqiMailer, email_address ,self.id ,self.shop.emails.find_by_mail_type(mail_type).id )
+    Resque.enqueue(ShopqiMailer, email_address ,self.id ,self.shop.emails.find_by_mail_type(mail_type).id, self.shop.id )
   end
 
   def send_email_when_order_forward
