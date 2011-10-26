@@ -26,19 +26,19 @@
       %td
         %label(for="variant_price") 销售价格
         %br
-        %input.st(name='product_variant[price]' type='text' size=8)
+        %input.st(name='product_variant[price]' value='{{price}}' type='text' size=8)
         元
       %td
         %label(for="variant_compare_at_price")
           市场价
           %span.note (非必填)
         %br
-        %input.st(name='product_variant[compare_at_price]' type='text' size=8 style='width: 80px')
+        %input.st(name='product_variant[compare_at_price]' value='{{compare_at_price}}' type='text' size=8 style='width: 80px')
         元
       %td
         %label(for="variant_weight") 重量
         %br
-        %input.st.requires_shipping_relate(name='product_variant[weight]' type='text' size=8 style='width: 40px')
+        %input.st.requires_shipping_relate(name='product_variant[weight]' value='{{weight}}' type='text' size=8 style='width: 40px')
         kg
     %tr.no-border
       %td(colspan="4")

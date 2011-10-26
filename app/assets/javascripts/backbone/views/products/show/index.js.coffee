@@ -4,7 +4,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
   events:
     "click #action-links a.edit-btn": "toggleEdit"
     "click #action-links a.dup-btn": "duplicate"
-    "click #new-variant-link p": "newVariant"
+    "click #new-variant-link p": "newVariant" # 新增款式
     "click .closure-lightbox": 'show' # 显示图片
 
   initialize: ->
@@ -31,6 +31,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
             attr["option#{i}"] = option.attributes.value
             variant.set attr, silent: true
       new App.Views.Product.Show.Variant.Index collection: App.product_variants
+      $('#new-variant .cancel').click() # 如果新增款式表单已经显示,会显示旧的商品选项. issue#209
 
   toggleEdit: ->
     $('#product-edit').toggle()
@@ -46,7 +47,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
       , "json"
     false
 
-  newVariant: ->
+  newVariant: -> # 新增款式
     new App.Views.Product.Show.Variant.New()
     $('#new-variant-link').hide()
     $('#new-variant').show()

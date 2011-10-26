@@ -18,8 +18,11 @@ class Admin::SmartCollectionsController < Admin::AppController
   end
 
   def create
-    smart_collection.save
-    redirect_to smart_collection_path(smart_collection)
+    if smart_collection.save
+      redirect_to smart_collection_path(smart_collection)
+    else
+      render action: :new
+    end
   end
 
   def update

@@ -6,7 +6,7 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
-  delegate :id, :title,:vendor,:tags, to: :@product
+  delegate :id, :handle, :title,:vendor,:tags, to: :@product
 
   def variants
     @product.variants.map do |variant|
@@ -52,6 +52,17 @@ class ProductDrop < Liquid::Drop
 
   def featured_image
     @product.photos.first
+  end
+
+  def as_json(options = nil)
+    {
+      id: id,
+      handle: handle,
+      title: title,
+      available: available,
+      options: @product.options.map(&:name),
+      variants: variants.as_json,
+    }
   end
 end
 

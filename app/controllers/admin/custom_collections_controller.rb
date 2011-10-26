@@ -16,8 +16,11 @@ class Admin::CustomCollectionsController < Admin::AppController
   end
 
   def create
-    custom_collection.save
-    redirect_to custom_collection_path(custom_collection)
+    if custom_collection.save
+      redirect_to custom_collection_path(custom_collection)
+    else
+      render action: :new
+    end
   end
 
   def update

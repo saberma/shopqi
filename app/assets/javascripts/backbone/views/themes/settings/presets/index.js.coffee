@@ -13,11 +13,11 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
 
   render: ->
     self = this
-    _(settings.presets).each (value, name) -> self.collection.add name: name, value: value
-    if _.isString settings.current
-      $('#theme_load_preset').val(settings.current)
+    _(settings_json.presets).each (value, name) -> self.collection.add name: name, value: value
+    if _.isString settings_json.current
+      $('#theme_load_preset').val(settings_json.current)
     else
-      @loadSettings settings.current
+      @loadSettings settings_json.current
     $('#theme_load_preset').change()
 
   load: -> # 加载预设至右边配置项
