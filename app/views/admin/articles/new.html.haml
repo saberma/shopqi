@@ -1,5 +1,4 @@
 - use_kindeditor
-
 %h2#title=w('new.article')
 #action-links
   %ul
@@ -10,7 +9,7 @@
         =link_to '取消',pages_path
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
-#preview.group.sst.ssb.textile{:style => "display:none;"}
+#preview.group.sst.ssb.textile(style= "display:none;")
   %h2 预览
   %h4#preview-title
   #preview-body
@@ -22,7 +21,10 @@
     .group-actions
       %input#submit-article-btn.btn{:name => "commit", :type => "submit", :value => "新增"}
       或者
-      =link_to '取消',blog_path(blog)
+      -if blog.id
+        =link_to '取消',blog_path(blog)
+      -else
+        =link_to '取消',pages_path
 :javascript
   App.init = function(){
     new App.Controllers.Articles();
