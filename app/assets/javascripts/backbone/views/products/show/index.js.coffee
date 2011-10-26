@@ -4,7 +4,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
   events:
     "click #action-links a.edit-btn": "toggleEdit"
     "click #action-links a.dup-btn": "duplicate"
-    "click #new-variant-link p": "newVariant"
+    "click #new-variant-link p": "newVariant" # 新增款式
     "click .closure-lightbox": 'show' # 显示图片
 
   initialize: ->
@@ -46,7 +46,7 @@ App.Views.Product.Show.Index = Backbone.View.extend
       , "json"
     false
 
-  newVariant: ->
+  newVariant: -> # 新增款式
     new App.Views.Product.Show.Variant.New()
     $('#new-variant-link').hide()
     $('#new-variant').show()
