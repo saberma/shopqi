@@ -4,6 +4,7 @@ class Admin::ShopsController < Admin::AppController
   layout 'admin', only: :edit
 
   expose(:shop) { current_user.shop }
+  expose(:currentcy_options) { KeyValues::Shop::Currency.options }
 
   def update
     if params[:shop][:order_number_format] && !params[:shop][:order_number_format].include?('{{number}}')

@@ -140,6 +140,15 @@ $(document).ready ->
     else
       val = '#1234'
     $('#order-number-format-example').html val
+  # [一般设置]-[币种]
+  $('#currentcy_format').click ->
+    $('#money_format_content').toggle()
+    false
+  $('#general-settings .has_example').keyup ->
+    value = $(this).val() || '29.95'
+    value = value.replace /{{amount}}/, '29.95'
+    value = value.replace /{{amount_no_decimals}}/, '30'
+    $(this).next('.note').html value
 
   $('#q').autocomplete({
     source: '/admin/lookup/query',

@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ShopDrop < Liquid::Drop
 
   def initialize(shop, theme = nil)
@@ -5,20 +6,13 @@ class ShopDrop < Liquid::Drop
     @theme = theme || shop.theme
   end
 
-  def id
-    @shop.id
-  end
-
-  def name
-    @shop.name
-  end
+  delegate :id, :name, :money_with_currency_format, to: :@shop
 
   def url
     @shop.primary_domain.url
   end
 
-  # UrlFilter调用
-  def asset_url(asset)
+  def asset_url(asset) # UrlFilter调用
     @theme.asset_url(asset)
   end
 

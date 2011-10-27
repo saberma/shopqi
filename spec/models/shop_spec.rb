@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Shop do
@@ -11,6 +12,14 @@ describe Shop do
     it 'should from host' do
       host = "shopqi#{Setting.store_host}"
       Shop.at(host).should_not be_nil
+    end
+
+    it 'should init format', focus: true do
+      shop.currency.should eql 'CNY'
+      shop.money_with_currency_format.should eql '&#165;{{amount}} 元'
+      shop.money_format.should eql '&#165;{{amount}}'
+      shop.money_with_currency_in_emails_format.should eql '¥{{amount}} 元'
+      shop.money_in_emails_format.should eql '¥{{amount}}'
     end
 
   end

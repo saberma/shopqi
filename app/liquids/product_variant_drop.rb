@@ -25,6 +25,7 @@ class ProductVariantDrop < Liquid::Drop
       option1: option1,
       option2: option2,
       option3: option3,
+      available: available,
       title: title,
       price: price,
       compare_at_price: compare_at_price,

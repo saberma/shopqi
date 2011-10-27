@@ -585,26 +585,31 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
   add_index "shop_themes", ["shop_id"], :name => "index_shop_themes_on_shop_id"
 
   create_table "shops", :force => true do |t|
-    t.string   "name",                :limit => 16
-    t.string   "phone",               :limit => 16
-    t.string   "plan",                :limit => 16, :default => "basic"
+    t.string   "name",                                 :limit => 16
+    t.string   "phone",                                :limit => 16
+    t.string   "plan",                                 :limit => 16, :default => "basic"
     t.date     "deadline"
-    t.string   "province",            :limit => 8
-    t.string   "city",                :limit => 8
-    t.string   "district",            :limit => 8
-    t.string   "zip_code",            :limit => 16
-    t.string   "address",             :limit => 32
-    t.string   "email",               :limit => 64
-    t.string   "password",            :limit => 64
-    t.boolean  "password_enabled",                  :default => false
+    t.string   "province",                             :limit => 8
+    t.string   "city",                                 :limit => 8
+    t.string   "district",                             :limit => 8
+    t.string   "zip_code",                             :limit => 16
+    t.string   "address",                              :limit => 32
+    t.string   "email",                                :limit => 64
+    t.string   "password",                             :limit => 64
+    t.boolean  "password_enabled",                                   :default => false
     t.string   "password_message"
-    t.integer  "orders_count",                      :default => 0
-    t.string   "order_number_format", :limit => 32, :default => "\#{{number}}"
-    t.boolean  "taxes_included",                    :default => true
-    t.boolean  "tax_shipping",                      :default => false
-    t.string   "customer_accounts",                 :default => "optional"
-    t.string   "signup_source",       :limit => 16
-    t.boolean  "guided",                            :default => false
+    t.string   "currency",                             :limit => 3
+    t.string   "money_with_currency_format",           :limit => 32
+    t.string   "money_format",                         :limit => 32
+    t.string   "money_with_currency_in_emails_format", :limit => 32
+    t.string   "money_in_emails_format",               :limit => 32
+    t.integer  "orders_count",                                       :default => 0
+    t.string   "order_number_format",                  :limit => 32, :default => "\#{{number}}"
+    t.boolean  "taxes_included",                                     :default => true
+    t.boolean  "tax_shipping",                                       :default => false
+    t.string   "customer_accounts",                                  :default => "optional"
+    t.string   "signup_source",                        :limit => 16
+    t.boolean  "guided",                                             :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

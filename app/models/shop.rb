@@ -38,7 +38,11 @@ class Shop < ActiveRecord::Base
   attr_readonly :orders_count
   validates_presence_of :name
 
-  before_create :init_valid_date
+  before_create :init_valid_date, :init_currency
+
+  before_update do
+    self.set_currency_format if currency_changed? # 修改币种，则更新相应格式(如果用户同时修改格式，则会被覆盖)
+  end
 
   def self.at(domain) # 域名
     ShopDomain.from(domain).shop
@@ -98,6 +102,19 @@ class Shop < ActiveRecord::Base
   protected
   def init_valid_date
     self.deadline = Date.today.next_day(30)
+  end
+
+  def init_currency
+    self.currency ||= 'CNY' # 初始化为人民币
+    set_currency_format
+  end
+
+  def set_currency_format # 设置币种显示格式
+    data = KeyValues::Shop::Currency.find_by_code(currency)
+    self.money_with_currency_format           = data.html_unit
+    self.money_format                         = data.html
+    self.money_with_currency_in_emails_format = data.email_unit
+    self.money_in_emails_format               = data.email
   end
 
 end

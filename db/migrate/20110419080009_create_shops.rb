@@ -3,31 +3,38 @@
 class CreateShops < ActiveRecord::Migration
   def self.up
     create_table :shops do |t|
-      t.string :name                          , comment: "名称"                          , limit: 16
-      t.string :phone                         , comment: "商店电话"                      , limit: 16
-      t.string :plan                          , comment: "价格方案"                      , limit: 16,   default: 'basic'
-      t.date   :deadline                      , comment: "到期时间"
-      t.string :province                      , comment: "省份"                          , limit: 8
-      t.string :city                          , comment: "城市"                          , limit: 8
-      t.string :district                      , comment: "地区"                          , limit: 8
-      t.string :zip_code                      , comment: "邮政编码"                      , limit: 16
-      t.string :address                       , comment: "详细地址"                      , limit: 32
+      t.string :name                                , comment: "名称"                          , limit: 16
+      t.string :phone                               , comment: "商店电话"                      , limit: 16
+      t.string :plan                                , comment: "价格方案"                      , limit: 16             , default: 'basic'
+      t.date   :deadline                            , comment: "到期时间"
+      t.string :province                            , comment: "省份"                          , limit: 8
+      t.string :city                                , comment: "城市"                          , limit: 8
+      t.string :district                            , comment: "地区"                          , limit: 8
+      t.string :zip_code                            , comment: "邮政编码"                      , limit: 16
+      t.string :address                             , comment: "详细地址"                      , limit: 32
       begin '一般设置，发送邮件时显示发件方'
-      t.string :email                         , comment: "商店邮箱"                      , limit: 64
+      t.string :email                               , comment: "商店邮箱"                      , limit: 64
       end
       begin '维护过程可以设置商店需要密码访问'
-      t.string :password                      , comment: "密码"                          , limit: 64
-      t.boolean :password_enabled             , comment: "是否让密码生效"                , default: false
-      t.string :password_message              , comment: "提供给用户看的信息"            , limit: 255
+      t.string :password                            , comment: "密码"                          , limit: 64
+      t.boolean :password_enabled                   , comment: "是否让密码生效"                , default: false
+      t.string :password_message                    , comment: "提供给用户看的信息"            , limit: 255
       end
-      t.integer :orders_count                 , comment: "缓存订单数，用于生成订单顺序号", default: 0
-      t.string  :order_number_format          , comment: "订单格式化规则"                , default: '#{{number}}', limit: 32
-      t.boolean :taxes_included               , comment: "税收是否包含在商品中"          , default: true
-      t.boolean :tax_shipping                 , comment: "是否要缴航运税"                , default: false
-      t.string  :customer_accounts            , comment: "顾客付款设置"                  , default: 'optional'
-      t.string  :signup_source                , comment: "注册来源"                      , limit: 16
+      begin '维护过程可以设置商店需要密码访问'
+      t.string :currency                            , comment: "币种"                          , limit: 3
+      t.string :money_with_currency_format          , comment: "带单位网页格式"                , limit: 32
+      t.string :money_format                        , comment: "网页格式"                      , limit: 32
+      t.string :money_with_currency_in_emails_format, comment: "带单位邮件格式"                , limit: 32
+      t.string :money_in_emails_format              , comment: "邮件格式"                      , limit: 32
+      end
+      t.integer :orders_count                       , comment: "缓存订单数，用于生成订单顺序号", default: 0
+      t.string  :order_number_format                , comment: "订单格式化规则"                , default: '#{{number}}', limit: 32
+      t.boolean :taxes_included                     , comment: "税收是否包含在商品中"          , default: true
+      t.boolean :tax_shipping                       , comment: "是否要缴航运税"                , default: false
+      t.string  :customer_accounts                  , comment: "顾客付款设置"                  , default: 'optional'
+      t.string  :signup_source                      , comment: "注册来源"                      , limit: 16
       begin '辅助字段'
-      t.boolean :guided                       , comment: "是否已完成指南任务"            , default: false
+      t.boolean :guided                             , comment: "是否已完成指南任务"            , default: false
       end
       t.timestamps
     end

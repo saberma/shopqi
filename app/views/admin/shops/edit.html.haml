@@ -50,6 +50,30 @@
           %p.note.sb#order-number-format-notes(style="display:none") 您可以在此处改变您订单编号的格式，其中{{number}}是占位符,将被订单号取代。
           =f.text_field :order_number_format,style:'display:none'
           %span#order-number-format-example #1234
+        %dt
+          %label(for="shop_currency") 币种
+          %small
+            %a#currentcy_format(href="#")> 自定义显示格式
+        %dd
+          =f.select :currency, currentcy_options
+          #money_format_content.hide
+            %p.sst 您可以修改币种在商店前台的显示格式.其中{{amount}}和{{amount_no_decimals}}是占位符,将被实际的币值取代.
+            %p.st
+              =f.text_field :money_with_currency_format, class: :has_example
+              %span.note 网页显示,包含单位:
+              %span#shop_money_with_currency_format_example.note ¥29.95 元
+            %p.st
+              =f.text_field :money_format, class: :has_example
+              %span.note 网页显示,不包含单位:
+              %span#shop_money_format_example.note ¥29.95
+            %p.st
+              =f.text_field :money_with_currency_in_emails_format, class: :has_example
+              %span.note 邮件显示,包含单位:
+              %span#shop_money_with_currency_in_emails_format_example.note ¥29.95 元
+            %p.st
+              =f.text_field :money_in_emails_format, class: :has_example
+              %span.note 邮件显示,不包含单位:
+              %span#shop_money_in_emails_format_example.note ¥29.95
     %h3 安全
     %p.hint.sb
       您可以为您的商店增加密码，这样，当用户访问您的商店的时候，就需要输入这个密码。这个功能在您维护或者处理你的商店信息的时候是非常有用的。或者您是一个批发商，只卖到特定的客户群，这也是非常有用的。

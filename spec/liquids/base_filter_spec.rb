@@ -28,6 +28,7 @@ describe BaseFilter do
           'option1' => '默认标题',
           'option2' => nil,
           'option3' => nil,
+          'available' => true,
           'title' => '默认标题',
           'price' => variant.price,
           'compare_at_price' => variant.compare_at_price,
