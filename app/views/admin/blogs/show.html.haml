@@ -1,5 +1,5 @@
 %h2#title
-  =link_to blog.title,blog_path(blog)
+  =link_to blog.title, "/blogs/#{blog.handle}", target: :_blank
 #action-links
   %ul
     %li#add-entry.icon

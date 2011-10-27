@@ -1,7 +1,7 @@
 -use_kindeditor
 
 %h2#title
-  =link_to "#{blog.title} - #{article.title}","#"
+  =link_to "#{blog.title} - #{article.title}", "/blogs/#{blog.handle}/#{article.id}", target: :_blank
 #action-links
   %ul
     %li.no-icon
