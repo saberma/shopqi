@@ -52,7 +52,7 @@ public/s/files
 #全文检索Sunspot
 solr/data
 # 运营的数据文件(统一将需要备份的数据都放在此目录:themes,wiki,dragonfly)
-data
+data/*
 
 #redis
 dump.rdb

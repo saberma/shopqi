@@ -3,9 +3,19 @@ FactoryGirl.define do
 
   factory :theme do
     after_create { |theme|
-      zip_path = Rails.root.join 'spec', 'factories', 'data', 'themes', 'woodland.tar.bz2'
+      path = Rails.root.join 'spec', 'factories', 'data', 'themes'
+      zip_path = File.join path, 'woodland.tar.bz2'
+      screenshot_main_path = File.join path, 'main.jpg'
+      screenshot_collection_path = File.join path, 'collection.jpg'
+      screenshot_product_path = File.join path, 'product.jpg'
       @uploader = ThemeUploader.new(theme, :file)
       @uploader.store!(File.open(zip_path))
+      @main_uploader = ThemeMainUploader.new(theme, :main)
+      @main_uploader.store!(File.open(screenshot_main_path))
+      @collection_uploader = ThemeCollectionUploader.new(theme, :collection)
+      @collection_uploader.store!(File.open(screenshot_collection_path))
+      @product_uploader = ThemeProductUploader.new(theme, :product)
+      @product_uploader.store!(File.open(screenshot_product_path))
     }
   end
 
