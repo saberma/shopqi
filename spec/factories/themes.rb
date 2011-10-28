@@ -8,14 +8,11 @@ FactoryGirl.define do
       screenshot_main_path = File.join path, 'main.jpg'
       screenshot_collection_path = File.join path, 'collection.jpg'
       screenshot_product_path = File.join path, 'product.jpg'
-      @uploader = ThemeUploader.new(theme, :file)
-      @uploader.store!(File.open(zip_path))
-      @main_uploader = ThemeMainUploader.new(theme, :main)
-      @main_uploader.store!(File.open(screenshot_main_path))
-      @collection_uploader = ThemeCollectionUploader.new(theme, :collection)
-      @collection_uploader.store!(File.open(screenshot_collection_path))
-      @product_uploader = ThemeProductUploader.new(theme, :product)
-      @product_uploader.store!(File.open(screenshot_product_path))
+      theme.file = File.open(zip_path)
+      theme.main = File.open(screenshot_main_path)
+      theme.collection = File.open(screenshot_collection_path)
+      theme.product = File.open(screenshot_product_path)
+      theme.save
     }
   end
 
@@ -30,16 +27,16 @@ FactoryGirl.define do
     email 'support@shopqi.com'
   end
 
+  factory :theme_woodland_slate, parent: :theme_woodland do
+    style '石板'
+    style_handle 'slate'
+  end
+
   factory :theme_woodland_dark, parent: :theme_woodland do
     style '黑桤木'
     style_handle 'dark-alder'
     price 0
     color 'grey'
-  end
-
-  factory :theme_woodland_slate, parent: :theme_woodland do
-    style '石板'
-    style_handle 'slate'
   end
 
 end

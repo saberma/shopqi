@@ -6,14 +6,14 @@
 Theme.destroy_all
 Shop.destroy_all
 
-Factory :theme_woodland_dark
+Factory :theme_woodland_slate
 
 domain = Setting.store_host
 shopqi = User.create!(
   shop_attributes: {
     name:"shopqi",
     domains_attributes: [{subdomain: 'shopqi', domain: domain}],
-    themes_attributes: [{ theme_id: Theme.default.id }]
+    themes_attributes: [{ theme_id: Theme.default.id, load_preset: Theme.default.style_handle }]
   },
   email: "admin@shopqi.com",
   password: "666666",
@@ -24,7 +24,7 @@ myshopqi = User.create!(
   shop_attributes: {
     name:"myshopqi",
     domains_attributes: [{subdomain: 'myshopqi', domain: domain}],
-    themes_attributes: [{ theme_id: Theme.default.id }]
+    themes_attributes: [{ theme_id: Theme.default.id, load_preset: Theme.default.style_handle }]
   },
   email: "admin@myshopqi.com",
   password: "666666",
