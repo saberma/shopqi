@@ -13,10 +13,11 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
 
   def create
     data = {errors: {}}
-    if params[:verify_code].to_i == session[:verify_code] or Rails.env.test? # 手机校验码(测试环境下不校验)
+    if params[:verify_code].to_i == session[:verify_code] or Rails.env.test?  # 手机校验码(测试环境下不校验)
       session[:verify_code] = nil
       build_resource
       resource.shop.themes.first.theme_id ||= Theme.default.id
+      resource.shop.email = resource.email #商店默认邮箱为注册时用户邮箱
       if resource.save
         data[:token] = resource.authentication_token
       else

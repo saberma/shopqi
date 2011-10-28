@@ -37,7 +37,8 @@ class Shop < ActiveRecord::Base
 
   accepts_nested_attributes_for :domains, :themes, :policies
   attr_readonly :orders_count
-  validates_presence_of :name
+  validates_presence_of :name,:email
+  validates :email, email_format: true
 
   before_create :init_valid_date, :init_currency
 

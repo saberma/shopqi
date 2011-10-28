@@ -6,6 +6,7 @@ config/admin_users.yml
 config/sunspot.yml
 config/unicorn.conf.rb
 config/newrelic.yml
+config/express.yml
 
 .bundle
 db/*.sqlite3

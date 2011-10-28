@@ -12,6 +12,7 @@ describe User do
             attrs = {
               shop_attributes: {
                 name: "测试商店",
+                email: 'mahb45@gmail.com',
                 domains_attributes:
                   [{subdomain: "china", domain: ".myshopqi.com"}],
                 province: "110000",
