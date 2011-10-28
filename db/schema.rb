@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
   end
 
   create_table "kindeditors", :force => true do |t|
+    t.integer  "shop_id",              :null => false
     t.string   "kindeditor_image_uid"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,7 +1,12 @@
 #encoding: utf-8
 #用于处理富文本编辑
 class Kindeditor < ActiveRecord::Base
-  image_accessor :kindeditor_image
+  belongs_to :shop
+  image_accessor :kindeditor_image do
+    storage_path{ |image|
+      "#{self.shop.id}/kindeditors/#{image.basename}_#{rand(1000)}.#{image.format}" # data/shops/1/kindeditors/foo_45.jpg
+    }
+  end
 
   validates_size_of :kindeditor_image, maximum: 8000.kilobytes
 

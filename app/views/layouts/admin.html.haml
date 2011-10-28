@@ -7,6 +7,8 @@
     %meta(name="MSSmartTagsPreventParsing" content="true")
     %link(href="#{image_path('favicon.png')}" rel="shortcut icon" type="image/x-icon")/
     %title 后台管理
+    -# csrf要放在kindeditor_config.js之前
+    = csrf_meta_tag
     = stylesheet_link_tag :layout_admin
     = stylesheet_link_tag :layout_admin_print, media: :print
     /[if lt IE 7 ]
@@ -15,7 +17,6 @@
     = javascript_include_tag :admin_application
     =yield :kindeditor
     =yield :javascripts
-    = csrf_meta_tag
   %body
     #ajax-notice.hide
       %div

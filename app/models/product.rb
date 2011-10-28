@@ -134,7 +134,11 @@ class Photo < ActiveRecord::Base
   belongs_to :product
   default_scope order: 'position asc'
 
-  image_accessor :product_image
+  image_accessor :product_image do
+    storage_path{ |image|
+      "#{self.product.shop.id}/products/#{self.product.id}/#{image.basename}_#{rand(1000)}.#{image.format}" # data/shops/1/products/1/foo_45.jpg
+    }
+  end
 
   validates_size_of :product_image, maximum: 8000.kilobytes
 
