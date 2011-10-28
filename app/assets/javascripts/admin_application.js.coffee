@@ -140,6 +140,7 @@ $(document).ready ->
     else
       val = '#1234'
     $('#order-number-format-example').html val
+  .keyup()
   # [一般设置]-[币种]
   $('#currentcy_format').click ->
     $('#money_format_content').toggle()
@@ -148,7 +149,8 @@ $(document).ready ->
     value = $(this).val() || '29.95'
     value = value.replace /{{amount}}/, '29.95'
     value = value.replace /{{amount_no_decimals}}/, '30'
-    $(this).next('.note').html value
+    $("##{$(this).attr('id')}_example").html value
+  .keyup()
 
   $('#q').autocomplete({
     source: '/admin/lookup/query',

@@ -19,7 +19,7 @@ describe ShopDrop do
 
   it 'should get money format' do
     variant = "{{ shop.money_with_currency_format }}"
-    liquid(variant).should eql "{{amount}} 元"
+    liquid(variant).should eql "&#165;{{amount}} 元"
   end
 
   private
