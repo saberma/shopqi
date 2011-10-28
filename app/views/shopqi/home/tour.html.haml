@@ -75,7 +75,7 @@
           %p 您也可以使用淘宝物流的仓库服务。
       / .col-3
       .col-6.poloroid.last
-        %a.single.cboxelement(href="#{asset_path('/images/graphics/tour-orderpage-big.jpg')}")
+        %a.single.cboxelement(href="#{asset_path('graphics/tour-orderpage-big.jpg')}")
           =image_tag 'graphics/tour-orderpage.jpg'
           %em 在ShopQi的后台管理中您可以看到每个订单的详细信息
       / .col-6
@@ -150,23 +150,24 @@
             %strong 没有隐性费用
             %br/
             我们不会以带宽或者安装为由，增加额外的费用.
-          %li
-            =image_tag 'graphics/ov-subsite.jpg'
-            %strong 使用已有网站
-            %br/
-            您可以在已有网站上使用ShopQi(作为子域)，为网站增加商务功能.
-          %li
-            =image_tag 'graphics/ov-creditcards.jpg'
-            %strong 支持信用卡.
-            %br/
-            顾客可以使用Visa, Mastercard等等。
-          %li
-            =image_tag 'graphics/ov-themestore.jpg'
-            %strong 主题商店
-            %br/
-            没有设计师也没关系，可以前往
-            %a(href="#{theme_store_url_with_port}") 主题商店
-            挑选主题外观.
+          -#
+            %li
+              =image_tag 'graphics/ov-subsite.jpg'
+              %strong 使用已有网站
+              %br/
+              您可以在已有网站上使用ShopQi(作为子域)，为网站增加商务功能.
+            %li
+              =image_tag 'graphics/ov-creditcards.jpg'
+              %strong 支持信用卡.
+              %br/
+              顾客可以使用Visa, Mastercard等等。
+            %li
+              =image_tag 'graphics/ov-themestore.jpg'
+              %strong 主题商店
+              %br/
+              没有设计师也没关系，可以前往
+              %a(href="#{theme_store_url_with_port}") 主题商店
+              挑选主题外观.
           %li
             =image_tag 'graphics/ov-urls.jpg'
             %strong 使用您自己的域名
