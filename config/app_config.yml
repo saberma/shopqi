@@ -1,7 +1,6 @@
 defaults: &defaults
   domain:
     host: lvh.me
-    store_host: smackaho.st
   wiki:
     relative_path: 'data/wiki'
   templates:
@@ -70,7 +69,6 @@ development:
   <<: *defaults
   domain:
     host: lvh.me
-    store_host: smackaho.st
 
 test:
   <<: *defaults
@@ -80,8 +78,8 @@ test:
 production:
   <<: *defaults
   domain:
+    #host: lvh.me
     host: shopqi.com
-    store_host: myshopqi.com # 如果使用同一域名，a.shopqi.com可以放置恶意代码，b用户一旦访问，a用户就可以获取到b用户的cookie登录信息
 
 travis:
   <<: *defaults

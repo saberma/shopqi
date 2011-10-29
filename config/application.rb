@@ -79,11 +79,6 @@ module Shopqi
                                       ## because it already inserts Rack::Cache in production
     config.middleware.insert_after 'Rack::Cache', 'Dragonfly::Middleware', :images
 
-    config.middleware.use Rack::SSL, exclude: lambda {|env|
-      host = env['SERVER_NAME']
-      path = env['PATH_INFO']
-      host.end_with?(".#{Setting.store_host}") and !path.start_with?('/admin') # 访问商店
-    }
     #config.middleware.use ::Rack::PerftoolsProfiler, :default_printer => 'gif', :bundler => true, :mode => :walltime # 开发环境下性能测试
   end
 end
