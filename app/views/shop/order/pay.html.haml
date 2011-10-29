@@ -65,7 +65,7 @@
             %input#complete-purchase(name="commit" type="submit" value="购买")
             %small#cancel-purchase
               或
-              %a(href="#{shop.primary_domain.url}") 取消，然后返回商店
+              %a(href="#{shop.primary_domain.url}#{request.port_string}") 取消，然后返回商店
           %td(style="text-align:right;vertical-align:bottom")
             %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'
 
