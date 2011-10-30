@@ -12,6 +12,11 @@ App.Views.Product.Index.Index = Backbone.View.extend
     _.bindAll this, 'render'
     this.render()
     $.guide $('#add-prod a'), '点击此处增加一个商品', 'left' if @collection.length is 0
+    $('#product-container').delegate '.variant-list-item', 'mouseover mouseout', (event) -> # 鼠标移至款式时，显示sku
+      if event.type is 'mouseover'
+        $('.variant-tip', this).show()
+      else if event.type is 'mouseout'
+        $('.variant-tip', this).hide()
 
   render: ->
     _(@collection.models).each (model) ->
