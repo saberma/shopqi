@@ -97,8 +97,13 @@ class Shop < ActiveRecord::Base
     Rails.root.join 'data', 'shops', test_dir, self.id.to_s
   end
 
-  after_destroy do
-    FileUtils.rm_rf self.path # 删除对应的目录
+  def public_path # 允许外部访问的商店相关文件(主题)存放路径 /public/s/files/1
+    Rails.root.join 'public', 's', 'files', test_dir, self.id.to_s
+  end
+
+  after_destroy do # 删除对应的目录
+    FileUtils.rm_rf self.path
+    FileUtils.rm_rf self.public_path
   end
 
   protected

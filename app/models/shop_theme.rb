@@ -205,7 +205,7 @@ class ShopTheme < ActiveRecord::Base
     end
 
     def public_path # public/s/files/1/theme/1
-      File.join Rails.root, 'public', files_relative_path
+      File.join shop.public_path, 'theme', self.id.to_s
     end
 
     def config_settings_path # data/shops/1/themes/1/config/settings.html
