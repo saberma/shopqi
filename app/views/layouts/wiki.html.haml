@@ -9,7 +9,7 @@
     %meta(content="width=device-width initial-scale=1.0" name="viewport")/
     %link(href="#{image_path('favicon.png')}" rel="shortcut icon" type="image/x-icon")/
     %link(href="#{image_path('icons/apple-touch-icon.png')}" rel="apple-touch-icon-precomposed")/
-    %title ShopQi Wiki
+    %title ShopQi 百科文档
     = stylesheet_link_tag "layout_shopqi_wiki"
     = javascript_include_tag 'shopqi_wiki_application'
     =csrf_meta_tag
@@ -19,12 +19,10 @@
         %li.logo
           %a{:href => "http://www.shopqi.com/"}
             =image_tag 'resources-nav/logo-shopqi.png'
-        %li=link_to '主题',"#{theme_store_url_with_port}"
-        %li=link_to '支持','#'
+        %li=link_to '主题外观',"#{theme_store_url_with_port}"
         -#
           %li=link_to '论坛','#'
-        %li.current
-          =link_to '百科',"#{wiki_url_with_port}"
+        %li.current=link_to '百科',"#{wiki_url_with_port}"
     / .resources-nav
     #header.clearfix
       .clearfix

@@ -73,23 +73,29 @@
             .col-3
               %h3 功能
               %ul
-                %li
-                  %a(href="#") 概览
+                %li=link_to "ShopQi简介", tour_intro_path
+                %li=link_to "运行您的商店", tour_store_path
+                %li=link_to "定制主题外观", tour_design_path
+                %li=link_to "托管服务&安全", tour_security_path
+                %li=link_to "特色列表", tour_features_path
             .col-3
               %h3 资源
               %ul
-                %li
-                  %a(href="#") ShopQi百科
+                %li=link_to "百科文档", wiki_url_with_port
+                %li=link_to "主题商店", theme_store_url_with_port
             .col-3
               %h3 ShopQi
               %ul
-                %li
-                  %a(href="http://blog.shopqi.com/") 博客
+                %li=link_to '关于我们', about_path
+                %li=link_to '服务条款', agreement_path, target: :_blank
             .col-3.contact-us.last
               %h3 联系我们
               %ul
                 %li
                   =image_tag 'admin/icons/phone16.gif', height: 12, width: 12
                   %span.imgreplacement.phone 0755-26008888
+                %li
+                  =image_tag 'admin/icons/email.gif', height: 12, width: 12
+                  =link_to 'admin@shopqi.com', 'mailto:admin@shopqi.com'
           #copyright.center.clear
-            %p © 2011 shopqi.com All Rights Reserved | ShopQi - 电子商务平台.
+            %p © 2011 shopqi.com All Rights Reserved | ShopQi - 索奇电子商务平台.

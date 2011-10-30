@@ -301,6 +301,7 @@ Shopqi::Application.routes.draw do
     scope module: :shopqi do # 官网
       root to: "home#page"
       get '/faq'       , to: 'home#faq'     , as: :faq
+      get '/about'     , to: 'home#about'   , as: :about
       scope "/tour" do # 功能演示
         get '/'        , to: 'home#tour'    , as: :tour_intro
         get '/store'   , to: 'home#store'   , as: :tour_store
