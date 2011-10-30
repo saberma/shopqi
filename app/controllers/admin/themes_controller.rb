@@ -16,8 +16,8 @@ class Admin::ThemesController < Admin::AppController
       shop = authorization.owner
       if authorization.valid?
         unless shop.themes.exceed? # 超出主题数则不更新
-          theme = Theme.find_by_handle params[:handle]
-          shop.themes.install theme, params[:style_handle]
+          theme = Theme.where(handle: params[:handle], style: params[:style_handle]).first
+          shop.themes.install theme
         end
       end
       render nothing: true

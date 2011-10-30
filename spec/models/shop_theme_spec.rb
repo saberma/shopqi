@@ -58,7 +58,7 @@ describe ShopTheme do
         end
 
         it 'should be destroy' do
-          %w(dark-alder slate birchwood).each do |preset|
+          %w(黑桤木 石板 桦木).each do |preset|
             theme.settings.destroy_preset preset
           end
           settings = theme.settings.as_json

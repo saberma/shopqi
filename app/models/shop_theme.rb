@@ -157,9 +157,9 @@ class ShopTheme < ActiveRecord::Base
       @association.owner
     end
 
-    def install(theme, style = nil)  # 安装主题
+    def install(theme)  # 安装主题
       shop.theme.unpublish! if shop.theme
-      self.create theme_id: theme.id, load_preset: style, role: theme.role
+      self.create theme_id: theme.id, role: theme.role
     end
 
     def exceed? # 超过8个主题
