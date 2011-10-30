@@ -92,7 +92,7 @@ describe ShopTheme do
     end
 
     it 'should parse checkbox element' do
-      settings = theme.config_settings['presets']['birchwood']
+      settings = theme.config_settings['presets']['桦木']
       settings['use_banner_image'].should eql true
     end
 
