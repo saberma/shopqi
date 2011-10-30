@@ -90,10 +90,12 @@
             %label.inlined(for="user_phone") 手机
             %input#user_phone.input-text.large(name="user[phone]" size="18" type="text")
           %span#user_phone_hint.hint(style='display:none') 请输入正确的手机号码
-          %span
-            %input#check_phone(type="button" value="获取验证码")
-        %label.inlined(for="phone_verify_code") 手机验证码
-        %input#phone_verify_code.input-text.large(name="verify_code" size="26" type="text")
+          -if is_registered?
+            %span
+              %input#check_phone(type="button" value="获取验证码")
+        -if is_registered?
+          %label.inlined(for="phone_verify_code") 手机验证码
+          %input#phone_verify_code.input-text.large(name="verify_code" size="26" type="text")
       .block.cl
         %h3 服务条款
         %dl
