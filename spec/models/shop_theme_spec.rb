@@ -87,7 +87,7 @@ describe ShopTheme do
     it 'should parse select element' do
       shop.themes.install theme_slate
       theme = shop.theme
-      settings = theme.config_settings['presets']['birchwood']
+      settings = theme.config_settings['presets']['桦木']
       settings['bg_image'].should eql 'bg-lightwood.jpg'
     end
 

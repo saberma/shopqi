@@ -22,7 +22,7 @@ describe SettingsDrop do
 
   it 'should get boolean value' do
     variant = "{% if settings.use_logo_image %}logo.png{% endif %}"
-    result = ''
+    result = 'logo.png'
     Liquid::Template.parse(variant).render(assign).should eql result
   end
 
