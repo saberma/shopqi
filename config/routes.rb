@@ -73,6 +73,41 @@ Shopqi::Application.routes.draw do
     match '/s/files/test/:id/theme/:theme_id/assets/:file.:format', to: 'shops#asset' #测试中使用
   end
 
+  constraints(Domain::Shopqi) do
+    scope module: :shopqi do # 官网
+      root to: "home#page"
+      get '/faq'       , to: 'home#faq'     , as: :faq
+      get '/about'     , to: 'home#about'   , as: :about
+      scope "/tour" do # 功能演示
+        get '/'        , to: 'home#tour'    , as: :tour_intro
+        get '/store'   , to: 'home#store'   , as: :tour_store
+        get '/design'  , to: 'home#design'  , as: :tour_design
+        get '/security', to: 'home#security', as: :tour_security
+        get '/features', to: 'home#features', as: :tour_features
+      end
+      get '/agreement', to: 'home#agreement'            , as: :agreement
+      get '/signup'   , to: redirect('/services/signup')
+      get '/login'    , to: 'home#login'
+      scope "/services/signup" do
+        get '/'                    , to: 'home#signup'                               , as: :services_signup
+        devise_scope :user do
+          get "/new/:plan"         , to: "registrations#new"                         , as: :signup
+          get "/check_availability", to: "registrations#check_availability"
+          post "/user"             , to: "registrations#create"
+          post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
+        end
+      end
+    end
+
+    #官网后台管理
+    ActiveAdmin.routes(self)
+    authenticate :admin_user do # 管理员权限
+      mount Resque::Server.new, at: "/resque" # 查看后台任务执行情况
+    end
+
+    devise_for :admin_users, ActiveAdmin::Devise.config
+  end
+
   constraints(Domain::Store) do
 
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
@@ -295,41 +330,6 @@ Shopqi::Application.routes.draw do
 
     end
 
-  end
-
-  constraints(Domain::Shopqi) do
-    scope module: :shopqi do # 官网
-      root to: "home#page"
-      get '/faq'       , to: 'home#faq'     , as: :faq
-      get '/about'     , to: 'home#about'   , as: :about
-      scope "/tour" do # 功能演示
-        get '/'        , to: 'home#tour'    , as: :tour_intro
-        get '/store'   , to: 'home#store'   , as: :tour_store
-        get '/design'  , to: 'home#design'  , as: :tour_design
-        get '/security', to: 'home#security', as: :tour_security
-        get '/features', to: 'home#features', as: :tour_features
-      end
-      get '/agreement', to: 'home#agreement'            , as: :agreement
-      get '/signup'   , to: redirect('/services/signup')
-      get '/login'    , to: 'home#login'
-      scope "/services/signup" do
-        get '/'                    , to: 'home#signup'                               , as: :services_signup
-        devise_scope :user do
-          get "/new/:plan"         , to: "registrations#new"                         , as: :signup
-          get "/check_availability", to: "registrations#check_availability"
-          post "/user"             , to: "registrations#create"
-          post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
-        end
-      end
-    end
-
-    #官网后台管理
-    ActiveAdmin.routes(self)
-    authenticate :admin_user do # 管理员权限
-      mount Resque::Server.new, at: "/resque" # 查看后台任务执行情况
-    end
-
-    devise_for :admin_users, ActiveAdmin::Devise.config
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]

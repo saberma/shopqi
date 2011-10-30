@@ -74,7 +74,7 @@ class CreateShops < ActiveRecord::Migration
 
     create_table :shop_theme_settings do |t| #商店外观主题设置
       t.references :shop_theme, comment: '所属主题', null: false
-      t.string :name          , comment: '名称'    , null: false, limit: 32
+      t.string :name          , comment: '名称'    , null: false, limit: 64
       t.string :value         , comment: '值'      , limit: 128
       t.timestamps
     end
