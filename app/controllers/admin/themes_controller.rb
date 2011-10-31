@@ -79,6 +79,10 @@ class Admin::ThemesController < Admin::AppController
       render json: {id: shop_theme.id, name: shop_theme.name}
     end
 
+    def current # 当前主题的模板编辑器
+      redirect_to theme_assets_path(shop.theme)
+    end
+
     def update # 发布主题
       shop.theme.unpublish!
       theme.save
