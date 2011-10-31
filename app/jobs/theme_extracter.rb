@@ -3,16 +3,18 @@ module ThemeExtracter
 
   @queue = "theme_extracter"
 
-  def self.perform(shop_id, theme_id, zip_path, addition_root_dir) # 用户上传主题文件后，转入后台解压
+  def self.perform(shop_id, theme_id, zip_path) # 用户上传主题文件后，转入后台解压
     shop = Shop.find(shop_id)
     shop_theme = shop.themes.find(theme_id)
     path = shop_theme.path
     shop_theme.create_repo do
       begin
         Zip::ZipFile::open(zip_path) do |zf|
-          addition_regexp = Regexp.new("^#{addition_root_dir}/")
           zf.each do |e|
-            file_name = addition_root_dir.blank? ?  e.name : e.name.sub(addition_regexp, '')
+            file_name = e.name
+            match = ShopTheme::ZIP_DIRECTORIES.match(file_name) # 去掉多余的顶层目录
+            next unless match
+            file_name = file_name.sub ShopTheme::ZIP_DIRECTORIES, match[1]
             fpath = File.join(path, file_name)
             FileUtils.mkdir_p File.dirname(fpath)
             zf.extract e, fpath

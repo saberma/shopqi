@@ -37,27 +37,29 @@ class Admin::ThemesController < Admin::AppController
 
     def upload # 上传主题(只检查必须的文件，解压操作转入后台运行)
       if shop.themes.exceed?
+        request.raw_post # fixed: 需要先接收数据，否则浏览器直接显示上传被cancle，无法获取返回的json数据
         render json: {exceed: true} and return
       end
       path = Rails.root.join 'tmp', 'themes', shop.id.to_s
       name = params[:qqfile]
       zip_path = File.join path, "t#{DateTime.now.to_i}-#{name}"
       name = name[0, name.rindex('.')] # 去掉文件后缀
+      name = name[0, 32] # 最多32位
       FileUtils.mkdir_p path
       File.open(zip_path, 'wb') {|f| f.write(request.raw_post) }
       files = []
-      addition_root_dir = '' # 兼容额外的一级目录
       begin
         Zip::ZipFile::open(zip_path) do |zf|
-          root_dirs = zf.dir.entries('.')
-          addition_root_dir = root_dirs.first if root_dirs.size == 1 and !%w(layout templates).include?(root_dirs.first)
-          addition_regexp = Regexp.new("^#{addition_root_dir}/")
           zf.each do |e|
-            file_name = addition_root_dir.blank? ?  e.name : e.name.sub(addition_regexp, '')
+            file_name = e.name
+            match = ShopTheme::ZIP_DIRECTORIES.match(file_name) # 去掉多余的顶层目录
+            next unless match
+            file_name = file_name.sub ShopTheme::ZIP_DIRECTORIES, match[1]
             files << file_name unless file_name.blank? or file_name.end_with?('/')
           end
         end
-      rescue
+      rescue => e
+        puts e
         render json: {error_type: true} and return # 上传非zip文件，提示错误直接返回
       end
 
@@ -73,7 +75,7 @@ class Admin::ThemesController < Admin::AppController
       end
 
       shop_theme = shop.themes.create name: name, role: 'wait' # 等待解压主题文件
-      Resque.enqueue(ThemeExtracter, shop.id, shop_theme.id, zip_path, addition_root_dir)
+      Resque.enqueue(ThemeExtracter, shop.id, shop_theme.id, zip_path)
       render json: {id: shop_theme.id, name: shop_theme.name}
     end
 

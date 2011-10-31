@@ -116,6 +116,7 @@ end
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
   REQUIRED_FILES = ["layout/theme.liquid","templates/index.liquid","templates/collection.liquid","templates/product.liquid","templates/cart.liquid","templates/search.liquid","templates/page.liquid","templates/blog.liquid","templates/article.liquid"]
+  ZIP_DIRECTORIES = /^.*(layout|templates|assets|snippets|config)/ # 上传压缩必须的目录
 
   belongs_to :shop
   belongs_to :theme
