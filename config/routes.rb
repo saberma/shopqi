@@ -9,6 +9,7 @@ Shopqi::Application.routes.draw do
     end
   end
 
+
   constraints(Domain::Wiki) do # 百科文档
     devise_for :admin_users, ActiveAdmin::Devise.config
     scope module: :wiki do
@@ -74,6 +75,10 @@ Shopqi::Application.routes.draw do
   end
 
   constraints(Domain::Store) do
+
+    namespace :api do
+      resources :customers
+    end
 
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
 

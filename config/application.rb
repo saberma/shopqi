@@ -70,6 +70,10 @@ module Shopqi
     #enable the asset pipline
     config.assets.enabled = true
 
+    #diable automatic stylesheet/javascript generation
+    config.generators.stylesheets = false
+    config.generators.javascripts = false
+
     config.middleware.insert 0, 'Rack::Cache', {
       :verbose     => true,
       :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"),
