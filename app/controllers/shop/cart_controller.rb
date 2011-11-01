@@ -20,12 +20,19 @@ class Shop::CartController < Shop::AppController
 
   def update
     cart_hash = cookie_cart_hash
-    params[:updates].each_pair do |variant_id, quantity|
-      cart_hash[variant_id] = quantity.to_i
+    updates = params[:updates] # 款式数量
+    if updates.is_a? Hash # 支持两种参数格式
+      updates.each_pair do |variant_id, quantity|
+        cart_hash[variant_id] = quantity.to_i
+      end
+    elsif updates.is_a? Array
+      updates.each_with_index do |quantity, index|
+        variant_id = cart_hash.keys[index]
+        cart_hash[variant_id] = quantity.to_i
+      end
     end
     save_cookie_cart(cart_hash)
     if params[:checkout].blank?
-
       redirect_to cart_path
     else
       cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)

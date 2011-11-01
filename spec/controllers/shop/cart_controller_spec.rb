@@ -19,6 +19,11 @@ describe Shop::CartController do
     controller.stub!(:session).and_return(session)
   end
 
+  it 'should be update', focus: true do
+    post :update, shop_id: shop.id, updates: [1]
+    response.should be_redirect
+  end
+
   it 'should be checkout' do
     expect do
       post :update, shop_id: shop.id, updates: {}, checkout: :checkout
