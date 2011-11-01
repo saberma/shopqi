@@ -8,9 +8,10 @@
   =form_for blog,html:{id:"new_blog",class:"new_blog"} do |f|
     =message_block on:[:blog]
     %dl
-      %dt.nst
-        =f.label :title
-      %dd=f.text_field :title, class:[:big,:sb]
+      %dt.nst=f.label :title
+      %dd
+        =f.text_field :title, class:[:big,:sb]
+        =f.hidden_field :handle
       %dt 评论
       %dd.choice
         %select#blog_commentable{:name => "blog[commentable]"}
@@ -19,7 +20,7 @@
           %option{:value => "yes"} 允许评论,并且自动发布
     %p.btns{:style => "margin:0"}
       %input.btn{:name => "commit", :type => "submit", :value => "新增"}/
-      or
+      或者
       =link_to '返回', pages_path
 / end div.main
 / end div.container

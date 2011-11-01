@@ -9,7 +9,9 @@
     .group-fields
       %dl
         %dt.top=f.label :title
-        %dd=f.text_field :title, class: :big
+        %dd
+          =f.text_field :title, class: :big
+          =f.hidden_field :handle
         %dt
           =f.label :body_html
           %span.note=w('optional')
