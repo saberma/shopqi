@@ -5,7 +5,8 @@ class CollectionsDrop < Liquid::Drop
   end
 
   def before_method(handle) #相当于method_missing
-    CollectionDrop.new(@shop.custom_collections.where(published: true, handle: handle).first)  || CollectionDrop.new(@shop.smart_collections.where(published: true, handle: handle).first)
+    collection = @shop.custom_collections.where(published: true, handle: handle).first || @shop.smart_collections.where(published: true, handle: handle).first || @shop.custom_collections.new
+    CollectionDrop.new(collection)
   end
 
   def all

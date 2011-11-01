@@ -14,7 +14,7 @@ class ThemeProductUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "s/theme/screenshots/#{model.id}/#{mounted_as}"
+    File.join Rails.root, 'data', 'public_s', 'theme', 'screenshots', model.id.to_s, mounted_as.to_s
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

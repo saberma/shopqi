@@ -9,7 +9,7 @@ describe ShopDrop do
 
   it 'should get url' do
     variant = "{{ shop.url }}"
-    liquid(variant).should eql "http://shopqi.smackaho.st"
+    liquid(variant).should eql "http://shopqi.lvh.me"
   end
 
   #it 'should get asset_url' do

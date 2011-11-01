@@ -38,24 +38,16 @@
       %td.table-col-3 免费
     %tr.even
       %td 最多商品款式数量(SKU)
-      %td.table-col-0.basic
-        %span.special 100
-      %td.table-col-1.professional
-        %span.special 2,500
-      %td.table-col-2.business
-        %span.special 10,000
-      %td.table-col-3.unlimited
-        %span.special 不限
+      -plan_types.each_with_index do |plan_type, index|
+        %td(class="table-col-#{index} #{plan_type.code}")
+          %span.special=plan_type.skus
     %tr.odd
       %td 存储空间
-      %td.table-col-0.basic
-        %span.special 100 MB
-      %td.table-col-1.professional
-        %span.special 500 MB
-      %td.table-col-2.business
-        %span.special 1000 MB
-      %td.table-col-3.unlimited
-        %span.special 不限
+      -plan_types.each_with_index do |plan_type, index|
+        %td(class="table-col-#{index} #{plan_type.code}")
+          %span.special
+            =plan_type.storage
+            ='MB' unless plan_type.storage == '不限'
     %tr.even
       %td 包含所有电子商务核心功能(绑定域名,SSL保护,统计等)
       %td.table-col-0
@@ -88,7 +80,7 @@
           打电话至(1.888.746.7439)
           %span#chat-on2.chat-on(style="display:none")
           %span#chat-off2
-      %p.notes.center 您可以随时修改您的价格方案
+      %p.notes.center 您可以随时修改您的价格方案，如需高级定制功能请来电联系
     / .highlight-box-wrapper
   / .col-12 highlight-box
   #signup-faq.col-12.clearfix

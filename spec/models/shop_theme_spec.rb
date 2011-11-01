@@ -58,7 +58,7 @@ describe ShopTheme do
         end
 
         it 'should be destroy' do
-          %w(dark-alder slate birchwood).each do |preset|
+          %w(黑桤木 石板 桦木).each do |preset|
             theme.settings.destroy_preset preset
           end
           settings = theme.settings.as_json
@@ -87,12 +87,12 @@ describe ShopTheme do
     it 'should parse select element' do
       shop.themes.install theme_slate
       theme = shop.theme
-      settings = theme.config_settings['presets']['birchwood']
+      settings = theme.config_settings['presets']['桦木']
       settings['bg_image'].should eql 'bg-lightwood.jpg'
     end
 
     it 'should parse checkbox element' do
-      settings = theme.config_settings['presets']['birchwood']
+      settings = theme.config_settings['presets']['桦木']
       settings['use_banner_image'].should eql true
     end
 

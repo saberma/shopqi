@@ -8,4 +8,4 @@ App.Views.Theme.Themes.Show.Style = Backbone.View.extend
 
   render: ->
     template = Handlebars.compile $('#styles-item').html()
-    $(@el).html template styles: App.styles_json
+    $(@el).html template styles: App.styles_json, style_size: App.styles_json.length

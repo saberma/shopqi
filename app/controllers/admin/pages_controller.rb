@@ -31,5 +31,8 @@ class Admin::PagesController < Admin::AppController
 
   def destroy
     page.destroy
+    respond_to do |format|
+      format.js { render template: "admin/pages/destroy" }
+    end
   end
 end

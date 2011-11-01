@@ -23,6 +23,6 @@ def env_is(env)
   Rails.env == env
 end
 
-def test_dir #测试目录与其他环境分开,不干扰，用于保存主题文件
-  %w(test travis).include?(Rails.env) ? Rails.env : ''
+def test_dir #除生产环境外，其他环境都加上环境目录,避免干扰，用于保存主题文件
+  production? ? '' : Rails.env
 end

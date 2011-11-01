@@ -107,7 +107,7 @@ describe "Shopqi::Registrations", js: true do
       it "should be valid" do
         fill_in 'domain[subdomain]', with: 'apple'
         within '#domain-available' do
-          has_content?('恭喜，apple.smackaho.st 可以使用').should be_true
+          has_content?('恭喜，apple.lvh.me 可以使用').should be_true
         end
       end
 
@@ -115,7 +115,7 @@ describe "Shopqi::Registrations", js: true do
         subdomain = shop.primary_domain.subdomain
         fill_in 'domain[subdomain]', with: subdomain
         within '#domain-available' do
-          has_content?("抱歉，#{subdomain}.smackaho.st 已经 被使用了").should be_true
+          has_content?("抱歉，#{subdomain}.lvh.me 已经 被使用了").should be_true
         end
       end
 

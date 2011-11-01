@@ -116,6 +116,7 @@ end
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
   REQUIRED_FILES = ["layout/theme.liquid","templates/index.liquid","templates/collection.liquid","templates/product.liquid","templates/cart.liquid","templates/search.liquid","templates/page.liquid","templates/blog.liquid","templates/article.liquid"]
+  ZIP_DIRECTORIES = /^.*(layout|templates|assets|snippets|config)/ # 上传压缩必须的目录
 
   belongs_to :shop
   belongs_to :theme
@@ -131,16 +132,24 @@ class ShopTheme < ActiveRecord::Base
 
   after_create do
     if self.theme_id # 应用某个主题，而非手动上传主题
-      repo = Grit::Repo.init path # 初始化为git repo
-      FileUtils.cp_r "#{theme.path}/.", path
-      commit repo, '1'
-      self.load_preset ||= config_settings['current'] # 初始化主题设置
-      config_settings['presets'][self.load_preset].each_pair do |name, value|
-        self.settings.create name: name, value: value
+      self.create_repo do
+        FileUtils.cp_r "#{self.theme.path}/.", path
       end
-      FileUtils.mkdir_p public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
-      FileUtils.ln_s File.join(path, 'assets'), File.join(public_path, 'assets')
     end
+  end
+
+  def create_repo # 初始化git版本控制，链接asset目录至public
+    repo = Grit::Repo.init path
+    yield # 复制或解压主题文件
+    commit repo, '1'
+    self.load_preset ||= config_settings['current'] # 初始化主题设置
+    config_settings['presets'][self.load_preset].each_pair do |name, value|
+      self.settings.create name: name, value: value
+    end
+    FileUtils.mkdir_p public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
+    public_asset_path = File.join(public_path, 'assets')
+    FileUtils.rm_rf public_asset_path # fixed: ln_s发现目录存在时，会在目录下新增目录，导致循环
+    FileUtils.ln_s File.join(path, 'assets'), public_asset_path
   end
 
   # 修改此模块内方法要记得重启服务
@@ -149,9 +158,9 @@ class ShopTheme < ActiveRecord::Base
       @association.owner
     end
 
-    def install(theme, style = nil)  # 安装主题
+    def install(theme)  # 安装主题
       shop.theme.unpublish! if shop.theme
-      self.create theme_id: theme.id, load_preset: style, role: theme.role
+      self.create theme_id: theme.id, role: theme.role
     end
 
     def exceed? # 超过8个主题
@@ -197,7 +206,7 @@ class ShopTheme < ActiveRecord::Base
     end
 
     def public_path # public/s/files/1/theme/1
-      File.join Rails.root, 'public', files_relative_path
+      File.join shop.public_path, 'theme', self.id.to_s
     end
 
     def config_settings_path # data/shops/1/themes/1/config/settings.html

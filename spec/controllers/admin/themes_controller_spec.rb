@@ -43,7 +43,7 @@ describe Admin::ThemesController do
 
   end
 
-  context '#upload', focus: true do # 上传主题
+  context '#upload' do # 上传主题
 
     let(:zip_path) { Rails.root.join('spec', 'factories', 'data', 'themes') }
 
@@ -94,7 +94,15 @@ describe Admin::ThemesController do
 
     end
 
-    it 'should be upload' do
+    describe 'more than 8 themes' do # 不能超过8个主题
+
+      it 'should be forbid' do
+        8.times {|i| shop.themes.create name: "theme_#{i}" }
+        raw_attach_file File.join(zip_path, 'woodland-missing-templates-index.zip')
+        post :upload, qqfile: 'woodland.zip'
+        JSON(response.body)['exceed'].should eql true
+      end
+
     end
 
   end

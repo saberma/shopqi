@@ -43,6 +43,7 @@ class Shop::AppController < ActionController::Base
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
+      blogs_drop = BlogsDrop.new(shop)
       powered_by_link = "<a href='#{url_with_port}' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>ShopQi电子商务平台提供安全保护</a>"
       unless template_extra_object.key?('content_for_layout')
         content_for_layout = Liquid::Template.parse(File.read(theme.template_path(template))).render(template_assign(template_extra_object))
@@ -56,6 +57,7 @@ class Shop::AppController < ActionController::Base
         'template' => template,
         'linklists' => linklists_drop,
         'pages' => pages_drop,
+        'blogs' => blogs_drop,
         'collections' => collections_drop,
         'content_for_header' => '',
         'content_for_layout' => content_for_layout,

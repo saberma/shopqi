@@ -40,7 +40,7 @@ class Admin::BlogsController < Admin::AppController
   def destroy
     blog.destroy
     respond_to do |format|
-      format.js { render template: "pages/destroy" }
+      format.js { render template: "admin/pages/destroy" }
     end
   end
 end

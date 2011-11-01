@@ -2,7 +2,7 @@ class Setting < Settingslogic
   source "#{Rails.root}/config/app_config.yml"
   namespace Rails.env
 
-  begin '.shopqi.com'
+  begin 'shopqi.com'
 
     def self.host # shopqi.com
       Setting.domain.host
@@ -13,7 +13,7 @@ class Setting < Settingslogic
   begin '.myshopqi.com'
 
     def self.store_host # .myshopqi.com
-      ".#{Setting.domain.store_host}"
+      ".#{self.host}"
     end
 
   end

@@ -40,6 +40,9 @@ App.Views.Theme.Index = Backbone.View.extend
             error_msg("上传失败，请确定上传的文件类型为zip压缩格式", 5000)
           else if responseJSON['missing']
             error_msg("上传失败，缺少 #{responseJSON['missing']}", 5000)
+          else if responseJSON['exceed'] # 超过个数限制(注意要计算解压失败后的theme记录role=wait，这些记录不会在页面中显示)
+            $('.message').show()
+            error_msg '不能上传主题!最多只能安装8个主题!'
           else if responseJSON['id'] # 上传成功，校验通过
             self.cancel()
             $('#theme-progress-bar').show()

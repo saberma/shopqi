@@ -6,7 +6,7 @@ describe "Themes", js: true do
 
   include_context 'login admin'
 
-  let(:theme) { Factory :theme_woodland_dark }
+  let(:theme) { Factory :theme_woodland_slate }
 
   before :each do
     shop.update_attributes password_enabled: false
@@ -160,7 +160,7 @@ describe "Themes", js: true do
       describe 'show' do
 
         it "should show current preset" do
-          find('#theme_load_preset').value.should eql 'birchwood'
+          find('#theme_load_preset').value.should eql '石板'
         end
 
         it "should set current settings" do # 配置项初始化为当前预设值
@@ -174,7 +174,7 @@ describe "Themes", js: true do
           click_on '保存配置'
           has_content?('保存成功!').should be_true
           find('#save-preset').visible?.should be_false
-          select 'birchwood', from: 'theme_load_preset'
+          select '石板', from: 'theme_load_preset'
           find('#use_banner_image')['checked'].should be_true
         end
 
@@ -185,13 +185,13 @@ describe "Themes", js: true do
         it "should update exists preset" do # 更新预设
           uncheck 'use_banner_image'
           check '将当前配置保存为预设'
-          select 'birchwood', from: 'theme_save_preset_existing'
+          select '石板', from: 'theme_save_preset_existing'
           find('#theme_save_preset_new_container').visible?.should be_false # 隐藏名称输入项
           click_on '保存配置'
           has_content?('保存成功!').should be_true
-          find('#theme_load_preset').value.should eql 'birchwood'
+          find('#theme_load_preset').value.should eql '石板'
           visit settings_theme_path(shop.theme) # 回显
-          find('#theme_load_preset').value.should eql 'birchwood'
+          find('#theme_load_preset').value.should eql '石板'
           find('#use_banner_image')['checked'].should be_false
         end
 
@@ -209,7 +209,7 @@ describe "Themes", js: true do
         end
 
         it "should switch to customize" do # 切换至定制预设
-          find('#theme_load_preset').value.should eql 'birchwood'
+          find('#theme_load_preset').value.should eql '石板'
           uncheck 'use_banner_image'
           find('#theme_load_preset').value.should be_blank
         end

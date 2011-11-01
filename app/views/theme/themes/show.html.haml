@@ -15,6 +15,9 @@
 
 %script(id="overview-item" type="text/x-handlebars-template")
   %h1 {{{name}}}
+  %p.style-name
+    风格:
+    %strong {{{style}}}
   %p.summary {{{desc}}}
   .purchase
     .clearfix
@@ -49,7 +52,7 @@
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb_original.jpg")
 %script(id="styles-item" type="text/x-handlebars-template")
   %ul
-    %h3 此主题包括 种风格
+    %h3 此主题包括 {{{style_size}}} 种风格
     %ul.theme-thumbs.packaged-styles
       {{#each styles}}
       %li

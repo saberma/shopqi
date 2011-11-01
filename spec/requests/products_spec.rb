@@ -577,6 +577,8 @@ describe "Products", js: true do
           it 'should be validate' do
             find('#new-variant-link a').click
             within '#new-variant' do
+              fill_in 'product_variant[price]', with: ''
+              fill_in 'product_variant[weight]', with: ''
               click_on '保存'
               page.should have_content('基本选项标题 不能为空!') #必填校验
               page.should have_content('价格 不能为空!')

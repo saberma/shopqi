@@ -16,14 +16,27 @@ describe BlogsDrop do
 
   describe BlogDrop do
 
-    it 'should get articles' do
-      text = "{{ blogs.news.articles | size }}"
-      Liquid::Template.parse(text).render(assign).should eql '0'
+    context 'exist' do
+
+      it 'should get articles' do
+        text = "{{ blogs.news.articles | size }}"
+        Liquid::Template.parse(text).render(assign).should eql '0'
+      end
+
+      it 'should get the comment enable true for blog articles' do
+        text = "{{ blog.comments_enabled? }}"
+        Liquid::Template.parse(text).render(assign).should eql "false"
+      end
+
     end
 
-    it 'should get the comment enable true for blog articles' do
-      text = "{{ blog.comments_enabled? }}"
-      Liquid::Template.parse(text).render(assign).should eql "false"
+    context 'missing' do # 不存在记录
+
+      it 'should get articles' do
+        text = "{{ blogs.noexist.articles.size }}"
+        Liquid::Template.parse(text).render(assign).should eql '0'
+      end
+
     end
 
   end

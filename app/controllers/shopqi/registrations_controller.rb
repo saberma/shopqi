@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Shopqi::RegistrationsController < Devise::RegistrationsController
+  include Shopqi::HomeHelper
   skip_before_filter :force_domain # 不需要重定向
   layout 'shopqi'
 
@@ -13,12 +14,13 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
 
   def create
     data = {errors: {}}
-    if params[:verify_code].to_i == session[:verify_code] or Rails.env.test?  # 手机校验码(测试环境下不校验)
+    if is_code_valid? # 手机校验码(测试环境下不校验)
       session[:verify_code] = nil
       build_resource
       resource.shop.themes.first.theme_id ||= Theme.default.id
       resource.shop.email = resource.email #商店默认邮箱为注册时用户邮箱
       if resource.save
+        Rails.cache.write(registered_cache_key, true, expires_in: 24.hours) # 避免重复注册
         data[:token] = resource.authentication_token
       else
         data[:errors] = resource.errors
@@ -39,5 +41,10 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
     content = "您好!您的手机验证码为:#{session[:verify_code]}"
     SMS.safe_send receiver, content, request.remote_ip
     render nothing: true
+  end
+
+  private
+  def is_code_valid? # 开发环境，或者还没有注册过的，则不需要校验码
+    Rails.env.test? or !is_registered? or params[:verify_code].to_i == session[:verify_code]
   end
 end
