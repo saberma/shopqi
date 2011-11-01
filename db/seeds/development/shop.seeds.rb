@@ -14,7 +14,7 @@ shopqi = User.create!(
     name:"shopqi",
     email: 'admin@shopqi.com',
     domains_attributes: [{subdomain: 'shopqi', domain: domain}],
-    themes_attributes: [{ theme_id: Theme.default.id, load_preset: Theme.default.style_handle }]
+    themes_attributes: [{ theme_id: Theme.default.id }]
   },
   email: "admin@shopqi.com",
   password: "666666",
@@ -26,7 +26,7 @@ myshopqi = User.create!(
     name:"myshopqi",
     email: 'admin@myshopqi.com',
     domains_attributes: [{subdomain: 'myshopqi', domain: domain}],
-    themes_attributes: [{ theme_id: Theme.default.id, load_preset: Theme.default.style_handle }]
+    themes_attributes: [{ theme_id: Theme.default.id}]
   },
   email: "admin@myshopqi.com",
   password: "666666",
