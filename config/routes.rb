@@ -277,6 +277,7 @@ Shopqi::Application.routes.draw do
           end
         end
       end
+      get '/links' => redirect('/admin/link_lists') # 商店模板中使用
 
       resources :custom_collections, except: :edit do
         resources :custom_collection_products, path: :products, as: :products, except: [:index, :new, :edit, :update] do
@@ -310,6 +311,7 @@ Shopqi::Application.routes.draw do
         collection do
           post :upload     # 上传主题
           get  :current    # 当前主题的模板编辑器
+          get  :settings   # 当前主题的外观设置
         end
         member do
           get  :background_queue_status  # 检查主题解压状态

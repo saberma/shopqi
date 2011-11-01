@@ -5,7 +5,8 @@ class BlogsDrop < Liquid::Drop
   end
 
   def before_method(handle) #相当于method_missing
-    BlogDrop.new @shop.blogs.where(handle: handle).first
+    blog = @shop.blogs.where(handle: handle).first || @shop.blogs.new
+    BlogDrop.new blog
   end
 
 end

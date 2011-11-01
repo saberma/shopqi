@@ -47,57 +47,70 @@ describe CollectionsDrop do
 
   describe CollectionDrop do
 
-    let(:collection) { Factory(:custom_collection, shop: shop) }
+    context 'exist' do
 
-    let(:collection_drop) { CollectionDrop.new collection }
+      let(:collection) { Factory(:custom_collection, shop: shop) }
 
-    it 'should get title' do
-      variant = "{{ collection.title }}"
-      result = collection.title
-      Liquid::Template.parse(variant).render('collection' => collection_drop).should eql result
+      let(:collection_drop) { CollectionDrop.new collection }
+
+      it 'should get title' do
+        variant = "{{ collection.title }}"
+        result = collection.title
+        Liquid::Template.parse(variant).render('collection' => collection_drop).should eql result
+      end
+
+      it 'should get description' do
+        variant = "{{ collection.description }}"
+        result = collection.body_html
+        Liquid::Template.parse(variant).render('collection' => collection_drop).should eql result
+      end
+
+      it "should get all types" do
+        frontpage_collection
+        iphone4
+        variant = "{% for product_type in collection.all_types %}{{ product_type }}{% endfor %}"
+        result = '手机'
+        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
+      end
+
+      it "should get all vendors" do
+        iphone4
+        variant = "{% for vendor in collection.all_vendors %}{{ vendor }}{% endfor %}"
+        result = 'Apple'
+        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
+      end
+
+      it "should get all products count and all tags" do
+        frontpage_collection
+        iphone4.tags_text = '手机，电脑'
+        psp.tags_text = '电脑，游戏机'
+        iphone4.save
+        psp.save
+        variant = "{{ collection.all_products_count }} {{ collection.all_tags}}"
+        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '2 手机,电脑,游戏机'
+      end
+
+      it "should get products count and tags" do
+        frontpage_collection
+        iphone4
+        psp
+        iphone4.tags_text = '手机,电脑'
+        psp.tags_text = '电脑,游戏机'
+        iphone4.save
+        psp.save
+        variant = "{% paginate collection.products by 1 %}{{ collection.products_count }} {{ collection.tags}}{% endpaginate %}"
+        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 手机,电脑'
+      end
+
     end
 
-    it 'should get description' do
-      variant = "{{ collection.description }}"
-      result = collection.body_html
-      Liquid::Template.parse(variant).render('collection' => collection_drop).should eql result
-    end
+    context 'missing' do
 
-    it "should get all types" do
-      frontpage_collection
-      iphone4
-      variant = "{% for product_type in collection.all_types %}{{ product_type }}{% endfor %}"
-      result = '手机'
-      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
-    end
+      it 'should get products', focus: true do
+        variant = "{{ collections.noexist.products.size }}"
+        Liquid::Template.parse(variant).render('collections' => CollectionsDrop.new(shop)).should eql '0'
+      end
 
-    it "should get all vendors" do
-      iphone4
-      variant = "{% for vendor in collection.all_vendors %}{{ vendor }}{% endfor %}"
-      result = 'Apple'
-      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql result
-    end
-
-    it "should get all products count and all tags" do
-      frontpage_collection
-      iphone4.tags_text = '手机，电脑'
-      psp.tags_text = '电脑，游戏机'
-      iphone4.save
-      psp.save
-      variant = "{{ collection.all_products_count }} {{ collection.all_tags}}"
-      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '2 手机,电脑,游戏机'
-    end
-
-    it "should get products count and tags" do
-      frontpage_collection
-      iphone4
-      psp
-      iphone4.tags_text = '手机,电脑'
-      psp.tags_text = '电脑,游戏机'
-      iphone4.save
-      psp.save
-      variant = "{% paginate collection.products by 1 %}{{ collection.products_count }} {{ collection.tags}}{% endpaginate %}"
-      Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 手机,电脑'
     end
 
   end

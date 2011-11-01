@@ -83,6 +83,10 @@ class Admin::ThemesController < Admin::AppController
       redirect_to theme_assets_path(shop.theme)
     end
 
+    def settings # 当前主题的外观设置
+      redirect_to settings_theme_path(shop.theme)
+    end
+
     def update # 发布主题
       shop.theme.unpublish!
       theme.save

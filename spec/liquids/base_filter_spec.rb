@@ -5,6 +5,8 @@ describe BaseFilter do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:shop_drop) { ShopDrop.new shop }
+
   let(:iphone4) { Factory :iphone4, shop: shop }
 
   let(:product_drop) { ProductDrop.new iphone4 }
@@ -36,6 +38,31 @@ describe BaseFilter do
           'sku' => variant.sku
         },
       ]
+    end
+
+  end
+
+  context '#money' do
+
+    it 'should get money', focus: true do
+      variant = "{{ price | money }}"
+      assign = { 'price' => 18.8, 'shop' => shop_drop }
+      result = Liquid::Template.parse(variant).render(assign)
+      result.should eql "&#165;18.8"
+    end
+
+    it 'should get money with currency', focus: true do
+      variant = "{{ price | money_with_currency }}"
+      assign = { 'price' => 18.8, 'shop' => shop_drop }
+      result = Liquid::Template.parse(variant).render(assign)
+      result.should eql "&#165;18.8 元"
+    end
+
+    it 'should get money without currency' do
+      variant = "{{ price | money_without_currency }}"
+      assign = { 'price' => 18.8 }
+      result = Liquid::Template.parse(variant).render(assign)
+      result.should eql '18.8'
     end
 
   end

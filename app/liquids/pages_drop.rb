@@ -5,7 +5,8 @@ class PagesDrop < Liquid::Drop
   end
 
   def before_method(handle) #相当于method_missing
-    PageDrop.new @shop.pages.where(handle: handle).first
+    page = @shop.pages.where(handle: handle).first || @shop.pages.new
+    PageDrop.new page
   end
 
 end

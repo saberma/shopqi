@@ -6,7 +6,8 @@ class LinkListsDrop < Liquid::Drop
   end
 
   def before_method(handle) #相当于method_missing
-    LinkListDrop.new @shop.link_lists.where(handle: handle).first
+    link = @shop.link_lists.where(handle: handle).first || @shop.link_lists.new
+    LinkListDrop.new link
   end
 
 end
