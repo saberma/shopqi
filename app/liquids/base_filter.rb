@@ -4,6 +4,10 @@ module BaseFilter #扩展标准filter http://j.mp/v8XGFK
     object.to_json
   end
 
+  def pluralize(input, singular, plural) # input为奇数返回singular, 否则plural
+    input == 1 ? singular : plural
+  end
+
   def money(object) # ¥19.00
     shop = @context['shop'] #ShopDrop
     format = shop.money_format
