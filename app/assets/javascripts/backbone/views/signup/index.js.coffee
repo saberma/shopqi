@@ -75,7 +75,7 @@ App.Views.Signup.Index = Backbone.View.extend
     _(check_list).each (msg, key) ->
       errors[key] = msg if $("##{key}").val() is ''
     if _.isEmpty errors
-      empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone', 'phone_verify_code']
+      empty_check_list = ['user_name', 'shop_province', 'shop_city', 'shop_district', 'shop_address', 'shop_zipcode', 'shop_phone', 'user_email', 'user_password', 'user_password_confirmation', 'user_phone']
       _(empty_check_list).each (key) ->
         if $("##{key}").val() is ''
           text = switch $("##{key}")[0].type

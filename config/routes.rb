@@ -94,7 +94,7 @@ Shopqi::Application.routes.draw do
         devise_scope :user do
           get "/new/:plan"         , to: "registrations#new"                         , as: :signup
           get "/check_availability", to: "registrations#check_availability"
-          post "/user"             , to: "registrations#create"
+          post "/user"             , to: "registrations#create"                      , as: :signup_user
           post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
         end
       end

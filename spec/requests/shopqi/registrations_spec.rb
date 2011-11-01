@@ -39,7 +39,6 @@ describe "Shopqi::Registrations", js: true do
         fill_in '密码'             , with: '666666'
         fill_in '确认密码'         , with: '666666'
         fill_in '手机'             , with: '13928452841'
-        fill_in '手机验证码'       , with: '8888'
         check 'shop_terms_and_conditions' # 服务条款
         click_on '创建我的ShopQi商店'
         sleep 5 # 等待后台保存shop对象
@@ -50,7 +49,14 @@ describe "Shopqi::Registrations", js: true do
 
     describe "verify code" do
 
-      before(:each) { SMS.stub!(:safe_send) } # 测试环境不要发短信
+      before(:each) do
+        SMS.stub!(:safe_send) # 测试环境不要发短信
+        Rails.cache.write("registered_127.0.0.1", true, expires_in: 24.hours) # 避免重复注册
+      end
+
+      after(:each) do
+        Rails.cache.delete("registered_127.0.0.1")
+      end
 
       it "should require phone" do
         click_on '获取验证码'
@@ -142,7 +148,6 @@ describe "Shopqi::Registrations", js: true do
         has_content?('密码 不能为空').should be_true
         has_content?('确认密码 不能为空').should be_true
         has_content?('手机 不能为空').should be_true
-        has_content?('手机验证码 不能为空').should be_true
         has_content?('请您先阅读并接受服务条款').should be_true
       end
 
