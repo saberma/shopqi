@@ -49,20 +49,24 @@ class ShopThemeSetting < ActiveRecord::Base
       doc.css("input[type='file']").each do |file| # 上传文件
         name = file['name']
         url = theme.asset_url(name)
+        exists = File.exist? File.join(theme.path, 'assets', name) # 是否已经上传了图片
         td = file.parent
         builder = Nokogiri::HTML::Builder.new do
           table.widget(cellspacing: 0) {
             tr {
               td {
                 div(name: name, class: :file) } } # 使用ajax后台上传
-            tr {
-              td {
-                div.asset {
-                  div(class: 'asset-image') {
-                    a(class: 'closure-lightbox', href: url) {
-                      img(src: '/assets/admin/icons/mimes/png.gif') } }
-                  span.note {
-                    a(class: 'closure-lightbox', href: url) { text name } } } } } }
+            if exists # 已经上传图片，显示图片预览
+              tr {
+                td {
+                  div.asset {
+                    div(class: 'asset-image') {
+                      a(class: 'closure-lightbox', href: url) {
+                        img(src: '/assets/admin/icons/mimes/png.gif') } }
+                    span.note {
+                      a(class: 'closure-lightbox', href: url) { text name } } } } }
+            end
+          }
         end
         td.inner_html = builder.doc.inner_html
       end
