@@ -3,7 +3,7 @@ class SearchDrop < Liquid::Drop
   extend ActiveSupport::Memoizable
 
   def initialize(results, terms)
-    @results = results
+    @results = results || []
     @terms = terms
   end
 
