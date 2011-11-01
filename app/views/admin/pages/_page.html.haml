@@ -1,6 +1,6 @@
 %tr(class="#{cycle(:odd, :even)}")
   %td
-    =link_to page.title, page_path(page), :title => "handle: #{page.title}"
+    =link_to page.title, page_path(page), title: "固定链接: #{page.handle}"
     -if page.published?
       %span.status-hidden 隐藏
   %td.date=page.updated_at.to_s(:db)
