@@ -27,8 +27,8 @@ module Liquid
     class Include
 
       def render_with_file_system(context) # 修正: 商店首页(woodland主题)错误This liquid context does not allow includes
-        shop = context['shop'].instance_variable_get('@shop')
-        context.registers[:file_system] = Liquid::SnippetFileSystem.new(File.join(shop.theme.path, 'snippets'))
+        theme = context['shop'].instance_variable_get('@theme')
+        context.registers[:file_system] = Liquid::SnippetFileSystem.new(File.join(theme.path, 'snippets'))
         render_without_file_system(context)
       end
 

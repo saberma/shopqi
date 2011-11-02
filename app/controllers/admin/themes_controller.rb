@@ -88,7 +88,7 @@ class Admin::ThemesController < Admin::AppController
     end
 
     def update # 发布主题
-      shop.theme.unpublish!
+      shop.theme.unpublish! if shop.theme
       theme.save
       render nothing: true
     end
