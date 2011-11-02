@@ -35,7 +35,7 @@ class Shop::CartController < Shop::AppController
     if params[:checkout].blank? and params['checkout.x'].blank? # 支持按钮提交和图片提交两种方式
       redirect_to cart_path
     else
-      cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)
+      cart = shop.carts.update_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)
       if shop.customer_accounts_required?
         Devise::FailureApp.default_url_options = { host: "#{shop.primary_domain.host}#{request.port_string}",  checkout_url: "#{checkout_url_with_port}/carts/#{cart.shop_id}/#{cart.token}"}
         self.send :authenticate_customer!

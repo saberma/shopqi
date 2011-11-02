@@ -42,7 +42,7 @@ describe Shop::CartController do
         end.should change(Cart, :count).by(1)
       end
 
-      it 'should be submit by image', focus: true do
+      it 'should be submit by image' do
         expect do
           post :update, shop_id: shop.id, updates: {}, 'checkout.x' => 88
         end.should change(Cart, :count).by(1)

@@ -8,7 +8,13 @@ class Cart < ActiveRecord::Base
     self.token = UUID.generate(:compact)
   end
 
-  def self.find_or_create(condition, attrs)
-    where(condition).first || create(attrs.merge(condition))
+  def self.update_or_create(condition, attrs)
+    cart = where(condition).first
+    if cart
+      cart.update_attributes attrs
+    else
+      cart = create(attrs.merge(condition))
+    end
+    cart
   end
 end
