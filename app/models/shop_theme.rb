@@ -147,8 +147,11 @@ class ShopTheme < ActiveRecord::Base
     yield # 复制或解压主题文件
     commit repo, '1'
     self.load_preset ||= config_settings['current'] # 初始化主题设置
-    config_settings['presets'][self.load_preset].each_pair do |name, value|
-      self.settings.create name: name, value: value
+    presets = config_settings['presets']
+    if presets and presets.has_key?(self.load_preset) # 用户上传的settings_data.json可能不存在预设
+      presets[self.load_preset].each_pair do |name, value|
+        self.settings.create name: name, value: value
+      end
     end
     FileUtils.mkdir_p public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
     public_asset_path = File.join(public_path, 'assets')

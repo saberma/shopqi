@@ -565,7 +565,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
 
   create_table "shop_theme_settings", :force => true do |t|
     t.integer  "shop_theme_id",                :null => false
-    t.string   "name",          :limit => 32,  :null => false
+    t.string   "name",          :limit => 64,  :null => false
     t.string   "value",         :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"

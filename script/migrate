@@ -1,5 +1,6 @@
 #!/bin/bash
 # make sure unicorn is down
+# 如果只是要重新加载数据结构，使用这个脚本；如果要删除data,public/s/files,public/s/theme等初始目录，使用bundle exec rake shopqi:bootstrap
 bundle exec rake db:drop
 bundle exec rake db:drop RAILS_ENV=test
 

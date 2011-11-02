@@ -2,8 +2,8 @@
 #class Shop::ShopsController < Shop::ApplicationController #warning: toplevel constant ApplicationController referenced by
 class Shop::ShopsController < Shop::AppController
   include Admin::ShopsHelper
-  skip_before_filter :password_protected, only: :password
-  skip_before_filter :must_has_theme, only: :themes
+  skip_before_filter :password_protected, only: [:password, :themes]
+  skip_before_filter :must_has_theme, only: [:password, :themes]
 
   expose(:shop) do
     if params[:id]
