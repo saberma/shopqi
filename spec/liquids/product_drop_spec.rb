@@ -49,7 +49,7 @@ describe ProductDrop do
     photo.product_image = Rails.root.join('app/assets/images/avatar.jpg')
     photo.save!
     variant = "{{ product.images | size }}"
-    liquid(variant, {'product' => ProductDrop.new(iphone4)}).should eql '1'
+    liquid(variant).should eql '1'
   end
 
   describe ProductOptionDrop do
@@ -62,7 +62,23 @@ describe ProductDrop do
     it 'should get label', focus: true do
       result = '标题'
       variant = "{{ product.options.first }}"
-      liquid(variant, {'product' => ProductDrop.new(iphone4)}).should eql result
+      liquid(variant).should eql result
+    end
+
+  end
+
+  describe 'compare_at_price', focus: true do
+
+    it 'should get max' do
+      result = '3500.0'
+      variant = "{{ product.compare_at_price_max }}"
+      liquid(variant).should eql result
+    end
+
+    it 'should get min' do
+      result = '3500.0'
+      variant = "{{ product.compare_at_price_min }}"
+      liquid(variant).should eql result
     end
 
   end

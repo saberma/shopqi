@@ -13,7 +13,7 @@ FactoryGirl.define do
     product_type "手机"
     vendor "Apple"
     variants_attributes [
-    {price: 3000, weight: 2.9}
+    {price: 3000, compare_at_price: 3500, weight: 2.9}
   ]
   end
 
