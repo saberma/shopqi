@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Shop::AppController < ActionController::Base
   include Admin::ShopsHelper
+  include Shop::ShopsHelper
   layout nil #默认不需要layout，使用liquid
   before_filter :force_domain # 域名管理中是否设置主域名重定向
   before_filter :password_protected # 设置了密码保护
@@ -35,11 +36,6 @@ class Shop::AppController < ActionController::Base
       session[:preview_theme_id] = params[:preview_theme_id]
       redirect_to preview_theme_id: nil and return
     end
-  end
-
-  def theme # 支持主题预览
-    id = session[:preview_theme_id]
-    (!id.blank? && shop.themes.exists?(id) && shop.themes.find(id)) || shop.theme
   end
 
   begin 'liquid'
