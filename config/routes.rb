@@ -136,6 +136,7 @@ Shopqi::Application.routes.draw do
       post '/cart/add'                     , to: 'cart#add'
       get '/cart'                          , to: 'cart#show'
       post '/cart'                         , to: 'cart#update'
+      get '/cart/change/:variant_id'       , to: 'cart#change' # quantity=0一般用于删除
       get '/blogs/:handle'                 , to: 'blogs#show'
       get '/blogs/:handle/:id'             , to: 'articles#show'
       match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'

@@ -47,4 +47,11 @@ class Shop::CartController < Shop::AppController
     end
   end
 
+  def change # 修改某个款式的购买数量 quantity=0 时移除
+    cart_hash = cookie_cart_hash
+    cart_hash[params[:variant_id]] = params[:quantity].to_i
+    save_cookie_cart(cart_hash)
+    redirect_to cart_path
+  end
+
 end

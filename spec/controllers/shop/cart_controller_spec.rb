@@ -19,8 +19,13 @@ describe Shop::CartController do
     controller.stub!(:session).and_return(session)
   end
 
-  it 'should be update', focus: true do
+  it 'should be update' do
     post :update, shop_id: shop.id, updates: [1]
+    response.should be_redirect
+  end
+
+  it 'should be change' do # 一般用于删除
+    get :change, variant_id: variant.id, quantity: 0
     response.should be_redirect
   end
 
