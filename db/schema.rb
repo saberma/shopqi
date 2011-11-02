@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111019053647) do
+ActiveRecord::Schema.define(:version => 20111102080145) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -61,6 +61,15 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
     t.string   "password",      :limit => 32
     t.string   "shared_secret", :limit => 32
     t.string   "title",         :limit => 36
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "applications", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "name"
+    t.string   "client_id",     :limit => 40
+    t.string   "client_secret", :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -565,7 +574,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
 
   create_table "shop_theme_settings", :force => true do |t|
     t.integer  "shop_theme_id",                :null => false
-    t.string   "name",          :limit => 32,  :null => false
+    t.string   "name",          :limit => 64,  :null => false
     t.string   "value",         :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"
