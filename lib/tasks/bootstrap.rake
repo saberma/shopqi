@@ -7,6 +7,7 @@ namespace :shopqi do
   task :bootstrap do
     unless Rails.env == 'production' # 防止生产环境下执行
       FileUtils.rm_rf Rails.root.join('data')
+      FileUtils.rm_rf Rails.root.join('public', 's', 'files')
       asset_files = Rails.root.join('data', 'public_s', 'files') # 用于保存主题附件(此目录的文件链接至data/shops中的主题)
       screenshot_files = Rails.root.join('data', 'public_s', 'theme', 'screenshots') # 用于保存主题截图
       public_asset_files = Rails.root.join('public', 's', 'files')

@@ -32,7 +32,7 @@ class Shop::CartController < Shop::AppController
       end
     end
     save_cookie_cart(cart_hash)
-    if params[:checkout].blank?
+    if params[:checkout].blank? and params['checkout.x'].blank? # 支持按钮提交和图片提交两种方式
       redirect_to cart_path
     else
       cart = shop.carts.find_or_create({session_id: request.session_options[:id]}, cart_hash: cart_hash.to_json)

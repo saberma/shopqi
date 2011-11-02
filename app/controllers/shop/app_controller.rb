@@ -31,7 +31,7 @@ class Shop::AppController < ActionController::Base
 
   def theme # 支持主题预览
     id = session[:preview_theme_id]
-    (!id.blank? && shop.themes.find(id)) || shop.theme
+    (!id.blank? && shop.themes.exists?(id) && shop.themes.find(id)) || shop.theme
   end
 
   begin 'liquid'
@@ -115,7 +115,11 @@ class Shop::AppController < ActionController::Base
       session['cart'] = '' if session['cart'].nil?
       # 格式: variant_id|quantity;variant_id|quantity
       cart = session['cart'].split(';').map {|item| item.split('|')}
-      Hash[*cart.flatten]
+      result = Hash[*cart.flatten]
+      result.delete_if do |variant_id| # 款式已经被删除，但顾客浏览器的cookie还存在id
+        !shop.variants.exists?(variant_id)
+      end
+      result
     end
 
     def save_cookie_cart(cart_hash)

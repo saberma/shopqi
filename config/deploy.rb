@@ -71,8 +71,8 @@ namespace :resque do # 后台任务
 
   desc "Start resque scheduler, workers"
   task :start, roles: :app, only: { jobs: true } do
-    run "cd #{current_path}; PIDFILE=/tmp/resque.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:work"
-    run "cd #{current_path}; PIDFILE=/tmp/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:scheduler"
+    run "cd #{current_path}; PIDFILE=/tmp/resque.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index bundle exec rake resque:work"
+    run "cd #{current_path}; PIDFILE=/tmp/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index bundle exec rake resque:scheduler"
   end
 
   desc "Stop resque scheduler, workers"
