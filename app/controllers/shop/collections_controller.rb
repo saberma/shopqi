@@ -7,7 +7,7 @@ class Shop::CollectionsController < Shop::AppController
     path = Rails.root.join 'app/views/shop/collections/collections.liquid'
     collection_view = Liquid::Template.parse(File.read(path)).render('collections' => CollectionsDrop.new(shop) )
     assign = template_assign('content_for_layout' => collection_view)
-    html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign('', assign))
     render text: html
   end
 
@@ -27,9 +27,9 @@ class Shop::CollectionsController < Shop::AppController
     assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q])
     #若不存在集合，则显示404页面
     if collection.nil?
-      html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('404', assign))
+      html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
     else
-      html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('collection', assign))
+      html = Liquid::Template.parse(layout_content).render(shop_assign('collection', assign))
     end
     render text: html
   end

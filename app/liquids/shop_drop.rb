@@ -7,6 +7,7 @@ class ShopDrop < Liquid::Drop
   end
 
   delegate :id, :name, :money_with_currency_format, :money_format, :money_with_currency_in_emails_format, :money_in_emails_format, to: :@shop
+  delegate :id, :name, to: :@theme, prefix: :theme # 主题预览脚本使用
 
   def url
     @shop.primary_domain.url
