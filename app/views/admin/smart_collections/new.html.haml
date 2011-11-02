@@ -9,7 +9,9 @@
     %dl
       %dt.top
         %label 标题
-      %dd=f.text_field :title, class: :big
+      %dd
+        =f.text_field :title, class: :big
+        =f.hidden_field :handle
       %dt
         %label 描述
         %span.note (非必填)

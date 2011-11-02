@@ -46,6 +46,18 @@ class ProductDrop < Liquid::Drop
     @product.variants.map(&:price).min
   end
 
+  def price_min
+    price
+  end
+
+  def compare_at_price_max
+    @product.variants.map(&:compare_at_price).max
+  end
+
+  def compare_at_price_min
+    @product.variants.map(&:compare_at_price).min
+  end
+
   def description
     @product.body_html
   end

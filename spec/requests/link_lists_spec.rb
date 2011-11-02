@@ -104,6 +104,21 @@ describe "LinkLists", js: true do
         end
       end
 
+      it "should update handle", focus: true do # 可以修改非默认链接记录的固定链接(handle) issues#217
+        shop.link_lists.create title: '子菜单'
+        visit link_lists_path
+        within '#menus' do
+          within :xpath, './li[3]' do
+            click_on '修改链接列表'
+            fill_in 'link_list[handle]', with: 'sub-navigation'
+            click_on '保存'
+            within '.section-header' do
+              find('span:first')['title'].should eql '固定链接: sub-navigation'
+            end
+          end
+        end
+      end
+
       it "should be destroy" do # 删除
         click_on '新增链接列表'
         within '#add-menu' do

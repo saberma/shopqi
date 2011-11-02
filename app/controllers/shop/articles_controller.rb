@@ -8,7 +8,7 @@ class Shop::ArticlesController < Shop::AppController
     BlogsDrop
     posted_successfully = article.comments.find_by_id(params[:comment_id]).nil?
     assign = template_assign('article' => ArticleDrop.new(article), 'blog' => BlogDrop.new(blog)).merge('posted_successfully' => !posted_successfully)
-    html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('article', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign('article', assign))
     render text: html
   end
 
@@ -26,7 +26,7 @@ class Shop::ArticlesController < Shop::AppController
     else
       BlogsDrop
       assign = template_assign('article' => ArticleDrop.new(article), 'blog' => BlogDrop.new(blog), 'comment' => CommentDrop.new(comment))
-      html = Liquid::Template.parse(File.read(theme.layout_theme_path)).render(shop_assign('article', assign))
+      html = Liquid::Template.parse(layout_content).render(shop_assign('article', assign))
       render text: html
     end
   end

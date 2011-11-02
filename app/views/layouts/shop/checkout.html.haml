@@ -9,7 +9,8 @@
     =stylesheet_link_tag :layout_checkout
     /[if lt IE 7]
       =stylesheet_link_tag "ie-checkout"
-    %link(href="#{shop.theme.asset_url('checkout.css')}" media="screen" rel="stylesheet" type="text/css")
+    -if checkout_css_exists?
+      %link(href="#{theme.asset_url('checkout.css')}" media="screen" rel="stylesheet" type="text/css")
     = javascript_include_tag :checkout_application
   %body
     #info-bar

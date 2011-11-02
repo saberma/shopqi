@@ -25,8 +25,11 @@ class Shop::OrderController < Shop::AppController
 
   expose(:cart_line_items) do
     JSON(cart.cart_hash).inject({}) do |result, (variant_id, quantity)|
-      variant = shop.variants.find(variant_id)
-      result[variant] = quantity
+      begin
+        variant = shop.variants.find(variant_id)
+        result[variant] = quantity
+      rescue ActiveRecord::RecordNotFound # 款式已经被删除
+      end
       result
     end
   end
@@ -75,8 +78,11 @@ class Shop::OrderController < Shop::AppController
     address #初始化shipping_address
     order.build_shipping_address(order.shipping_address.attributes)
     JSON(cart.cart_hash).each_pair do |variant_id, quantity| #保存已购买商品
-      variant = shop.variants.find(variant_id)
-      order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
+      begin
+        variant = shop.variants.find(variant_id)
+        order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
+      rescue ActiveRecord::RecordNotFound # 款式已被删除
+      end
     end
 
     #税率

@@ -15,7 +15,7 @@
         %dl
           %dt=f.label :title
           %dd=f.text_field :title, class: [:big, :sb]
-          %dt#edit-handle-label(style="font-size:85%") 链接/处理
+          %dt#edit-handle-label(style="font-size:85%") 固定链接
           %dd#edit-handle.ssb
             %span.note==#{shop.primary_domain.url}/pages/
             =f.text_field :handle, style: 'width: 175px'

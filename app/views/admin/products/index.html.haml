@@ -102,7 +102,7 @@
       %img(src="{{{index_photo}}}")
   %td(style="padding-left: 3px; vertical-align: middle;")
     %p
-      %a(href="/admin/products/{{{id}}}" title=" handle: {{{handle}}}") {{{title}}}
+      %a(href="/admin/products/{{{id}}}" title="固定链接: {{{handle}}}") {{{title}}}
       %span(class="status-hidden {{#if published}}hide{{/if}}" style="margin:0") 隐藏
     %p.list-product-type {{{product_type}}}
     %p.list-vendor {{{vendor}}}
@@ -127,7 +127,7 @@
         %br/
         .variant-tip.newtip.hide
           .default
-            .content {{#if sku}} {{sku}} {{else}} '没有SKU' {{/if}}
+            .content {{#if sku}}{{sku}}{{else}}没有SKU{{/if}}
       {{/each}}
   %td.list-total(style="text-align: center; vertical-align: middle;")
     %span(style="font-size: 18px") {{{quantity_sum}}}

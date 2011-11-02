@@ -1,10 +1,12 @@
 # encoding: utf-8
 class Shop::AppController < ActionController::Base
   include Admin::ShopsHelper
+  include Shop::ShopsHelper
   layout nil #默认不需要layout，使用liquid
   before_filter :force_domain # 域名管理中是否设置主域名重定向
   before_filter :password_protected # 设置了密码保护
   before_filter :must_has_theme # 必须存在主题
+  before_filter :remove_preview_theme_query_string # url去掉preview_theme_id
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
@@ -29,9 +31,11 @@ class Shop::AppController < ActionController::Base
     end
   end
 
-  def theme # 支持主题预览
-    id = session[:preview_theme_id]
-    (!id.blank? && shop.themes.find(id)) || shop.theme
+  def remove_preview_theme_query_string
+    if params[:preview_theme_id] # 预览主题
+      session[:preview_theme_id] = params[:preview_theme_id]
+      redirect_to preview_theme_id: nil and return
+    end
   end
 
   begin 'liquid'
@@ -115,12 +119,32 @@ class Shop::AppController < ActionController::Base
       session['cart'] = '' if session['cart'].nil?
       # 格式: variant_id|quantity;variant_id|quantity
       cart = session['cart'].split(';').map {|item| item.split('|')}
-      Hash[*cart.flatten]
+      result = Hash[*cart.flatten]
+      result.delete_if do |variant_id| # 款式已经被删除，但顾客浏览器的cookie还存在id
+        !shop.variants.exists?(variant_id)
+      end
+      result
     end
 
     def save_cookie_cart(cart_hash)
       cart_hash.delete_if {|key, value| value.to_i.zero?}
       session['cart'] = cart_hash.to_a.map{|item| item.join('|')}.join(';')
+    end
+
+  end
+
+  begin 'script' # 加入网页的脚本(统计、预览主题提示等)
+
+    def layout_content
+      content = File.read(theme.layout_theme_path)
+      unless session[:preview_theme_id].blank?
+        theme_controls_path = Rails.root.join 'app', 'views', 'shop', 'snippets', 'theme-controls.liquid'
+        theme_controls_content = Rails.cache.fetch "shopqi_snippets_theme_controls" do
+          File.read(theme_controls_path)
+        end
+        content.sub! '</head>', theme_controls_content
+      end
+      content
     end
 
   end

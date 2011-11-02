@@ -32,9 +32,10 @@ App.Views.LinkList.Edit = Backbone.View.extend
         subject_handle: handle
         subject_params: $("input[name='subject_params']", this).val()
         url: url
-    this.model._changed = true #修正:只修改link item时也要触发change事件，更新列表
-    this.model.save {
-        title: this.$("input[name='link_list[title]']").val()
+    @model._changed = true #修正:只修改link item时也要触发change事件，更新列表
+    @model.save {
+        title: @$("input[name='link_list[title]']").val(),
+        handle: @$("input[name='link_list[handle]']").val(),
       },
       success: (model, resp) ->
         msg '修改成功!'

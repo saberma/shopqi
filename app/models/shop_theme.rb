@@ -49,20 +49,24 @@ class ShopThemeSetting < ActiveRecord::Base
       doc.css("input[type='file']").each do |file| # 上传文件
         name = file['name']
         url = theme.asset_url(name)
+        exists = File.exist? File.join(theme.path, 'assets', name) # 是否已经上传了图片
         td = file.parent
         builder = Nokogiri::HTML::Builder.new do
           table.widget(cellspacing: 0) {
             tr {
               td {
                 div(name: name, class: :file) } } # 使用ajax后台上传
-            tr {
-              td {
-                div.asset {
-                  div(class: 'asset-image') {
-                    a(class: 'closure-lightbox', href: url) {
-                      img(src: '/assets/admin/icons/mimes/png.gif') } }
-                  span.note {
-                    a(class: 'closure-lightbox', href: url) { text name } } } } } }
+            if exists # 已经上传图片，显示图片预览
+              tr {
+                td {
+                  div.asset {
+                    div(class: 'asset-image') {
+                      a(class: 'closure-lightbox', href: url) {
+                        img(src: '/assets/admin/icons/mimes/png.gif') } }
+                    span.note {
+                      a(class: 'closure-lightbox', href: url) { text name } } } } }
+            end
+          }
         end
         td.inner_html = builder.doc.inner_html
       end
@@ -143,8 +147,11 @@ class ShopTheme < ActiveRecord::Base
     yield # 复制或解压主题文件
     commit repo, '1'
     self.load_preset ||= config_settings['current'] # 初始化主题设置
-    config_settings['presets'][self.load_preset].each_pair do |name, value|
-      self.settings.create name: name, value: value
+    presets = config_settings['presets']
+    if presets and presets.has_key?(self.load_preset) # 用户上传的settings_data.json可能不存在预设
+      presets[self.load_preset].each_pair do |name, value|
+        self.settings.create name: name, value: value
+      end
     end
     FileUtils.mkdir_p public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
     public_asset_path = File.join(public_path, 'assets')

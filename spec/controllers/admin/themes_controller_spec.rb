@@ -107,4 +107,19 @@ describe Admin::ThemesController do
 
   end
 
+  context '#api' do # 安装主题
+
+    it 'should be install', focus: true do # issues#228
+      authorization = mock('authorization')
+      authorization.stub!(:owner).and_return(shop)
+      authorization.stub!(:valid?).and_return(true)
+      OAuth2::Provider.stub!(:access_token).and_return(authorization)
+      expect do
+        post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle
+        response.should be_success
+      end.should change(ShopTheme, :count).by(1)
+    end
+
+  end
+
 end

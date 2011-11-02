@@ -16,7 +16,7 @@ describe "Users" do
 
       page.execute_script("window.confirm = function(msg) { return true; }")
       find('.del').click
-      page.should_not have_content('testss@gmail.com')
+      page.should have_no_content('testss@gmail.com')
 
       click_on '修改'
       fill_in 'user[name]', with: 'liwhh'

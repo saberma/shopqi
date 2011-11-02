@@ -42,6 +42,22 @@ describe BaseFilter do
 
   end
 
+  context '#pluralize' do
+
+    it 'should get singular' do
+      variant = "{{ 1 | pluralize: 'comment', 'comments' }}"
+      result = Liquid::Template.parse(variant).render({})
+      result.should eql "comment"
+    end
+
+    it 'should get pluralize' do
+      variant = "{{ 3 | pluralize: 'comment', 'comments' }}"
+      result = Liquid::Template.parse(variant).render({})
+      result.should eql "comments"
+    end
+
+  end
+
   context '#money' do
 
     it 'should get money', focus: true do

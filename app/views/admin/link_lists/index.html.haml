@@ -37,7 +37,7 @@
         |
         %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
         {{/unless}}
-      %span(title="handle: {{{handle}}}") {{{title}}}
+      %span(title="固定链接: {{{handle}}}") {{{title}}}
       %span.hint {{#if system_default}}这是默认链接列表，不能删除.{{/if}}
     .none_link_list.hint.padding(style="{{#unless is_empty_links}}display: none{{/unless}}") 此链接列表还没有加入任何链接
     .link-header.st.sl.sr(style="{{#if is_empty_links}}display: none{{/if}}")
@@ -89,7 +89,7 @@
         %dd
           %input.big.sb(name="link_list[title]" size="30" type="text" value="{{{title}}}")
         %dt
-          固定链接/句柄
+          固定链接
           %span.note
             (
             %a(href="#{wiki_url_with_port}/Handle" target="_blank")> 这是什么?
@@ -97,7 +97,7 @@
         %dd
           {{#if system_default}}
           %input(disabled="disabled" name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
-          %span.hint 默认链接列表的句柄是不能修改的
+          %span.hint 默认链接列表的固定链接是不能修改的
           {{else}}
           %input(name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
           {{/if}}

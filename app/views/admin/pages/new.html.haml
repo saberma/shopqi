@@ -7,17 +7,10 @@
   =form_for page do |f|
     #page-form.group-fields
       %dl
-        %dt
-          %label(for="page_title") 标题
-        %dd=f.text_field :title, class: [:big, :sb]
-        %dt#edit-handle-label(style="display:none; font-size:85%") Permalink/Handle
-        %dd#edit-handle.ssb(style="display:none;")
-          %span.note==#{show_shop_url}/pages/
-          =f.text_field :handle, style: 'width: 175px'
-          %span.note
-            (
-            %a(href="#{wiki_url_with_port}/Handle" target="_blank")> what's this?
-            )
+        %dt=f.label :title
+        %dd
+          =f.text_field :title, class: [:big, :sb]
+          =f.hidden_field :handle
         %dt
           %label(for="page_body_html") 编写您的页面
         %dd(style="margin-bottom:0")=f.text_area :body_html, id: 'kindeditor'
