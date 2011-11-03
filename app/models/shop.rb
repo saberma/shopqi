@@ -93,12 +93,36 @@ class Shop < ActiveRecord::Base
     !self.deadline.past?
   end
 
-  def path # 商店相关的文件(主题)存放路径 /data/shops/1
-    Rails.root.join 'data', 'shops', test_dir, self.id.to_s
+  begin 'path'
+
+    def path # 商店相关的文件(主题)存放路径 /data/shops/1
+      Rails.root.join 'data', 'shops', test_dir, self.id.to_s
+    end
+
+    def public_path # 允许外部访问的商店相关文件(主题)存放路径 /public/s/files/1
+      Rails.root.join 'public', 's', 'files', test_dir, self.id.to_s
+    end
+
   end
 
-  def public_path # 允许外部访问的商店相关文件(主题)存放路径 /public/s/files/1
-    Rails.root.join 'public', 's', 'files', test_dir, self.id.to_s
+  begin 'format money' # 传入金额，返回格式化后的金额
+
+    def format_money_with_currency(money)
+      self.money_with_currency_format.gsub('{{amount}}', money.to_s).gsub('{{amount}}', money.round.to_s)
+    end
+
+    def format_money(money)
+      self.money_format.gsub('{{amount}}', money.to_s).gsub('{{amount}}', money.round.to_s)
+    end
+
+    def format_money_with_currency_in_emails(money)
+      self.money_with_currency_in_emails_format.gsub('{{amount}}', money.to_s).gsub('{{amount}}', money.round.to_s)
+    end
+
+    def format_money_in_emails(money)
+      self.money_in_emails_format.gsub('{{amount}}', money.to_s).gsub('{{amount}}', money.round.to_s)
+    end
+
   end
 
   after_destroy do # 删除对应的目录

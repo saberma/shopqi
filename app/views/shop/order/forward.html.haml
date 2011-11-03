@@ -18,6 +18,7 @@
         %p==#{order.payment.message}
         %p 我们将会发送收据到您的电子邮箱中 请保留以作为您的纪录.
         %p 感谢您的惠顾 .
+        .actions=link_to "返回#{shop.name}",show_shop_url
       -else
         =render 'confirm_pay'
 
