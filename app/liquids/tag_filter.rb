@@ -16,4 +16,12 @@ module TagFilter
     "<a href='#{url}'>#{input}</a>"
   end
 
+  def link_to_type(input)
+    "<a title=#{input} href='/collections/types?q=#{input}'>#{input}</a>"
+  end
+
+  def link_to_vendor(input)
+    "<a title=#{input} href='/collections/vendors?q=#{input}'>#{input}</a>"
+  end
+
 end

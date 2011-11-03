@@ -205,7 +205,7 @@ class ShopTheme < ActiveRecord::Base
 
   begin # 当前theme所在URL
     def asset_url(name) # s/files/1/theme/1/assets/checkout.css
-      "/#{self.asset_relative_path(name)}"
+      "/#{self.asset_relative_path(name)}?#{File.mtime(self.asset_path(name)).to_i}"
     end
   end
 

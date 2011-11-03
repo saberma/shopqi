@@ -6,23 +6,21 @@ module UrlFilter
   end
 
   def global_asset_url(input)
-    "/s/global/#{input}"
+    add_mtime "s/global/#{input}"
   end
 
   def shopqi_asset_url(input)
-    "/s/shopqi/#{input}"
+    add_mtime "s/shopqi/#{input}"
   end
 
   def product_img_url(photo, size)
-    photo ? photo.version(size) : "/assets/admin/no-image-#{size}.gif"
+    url = photo ? photo.version(size) : "/assets/admin/no-image-#{size}.gif"
+    "#{ActionController::Base.asset_host}#{url}"
   end
 
-  def link_to_type(input)
-    "<a title=#{input} href='/collections/types?q=#{input}'>#{input}</a>"
-  end
-
-  def link_to_vendor(input)
-    "<a title=#{input} href='/collections/vendors?q=#{input}'>#{input}</a>"
+  private
+  def add_mtime(input) # 加入修改时间querysting
+    "#{ActionController::Base.asset_host}/#{input}?#{File.mtime(Rails.root.join('public', input)).to_i}"
   end
 
 end
