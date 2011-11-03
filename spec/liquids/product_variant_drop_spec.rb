@@ -24,7 +24,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get compare_at_price' do
-    variant_drop.compare_at_price.should be_nil
+    variant_drop.compare_at_price.should eql 3500.0
   end
 
   it 'should get available' do
