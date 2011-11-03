@@ -1,4 +1,4 @@
-class Api::ShopsController < ApplicationController
+class Api::ShopsController < Api::AppController
   expose(:shop){ Shop.at(request.host) }
 
   def index
