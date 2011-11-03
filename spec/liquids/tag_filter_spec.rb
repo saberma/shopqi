@@ -28,4 +28,16 @@ describe TagFilter do
     Liquid::Template.parse(variant).render('link' => link).should eql "<a href='/search'>查询</a>"
   end
 
+  it "should get type url" do
+    variant = "{{ product.type | link_to_type}}"
+    result = "<a title=#{iphone4.product_type} href='/collections/types?q=#{iphone4.product_type}'>#{iphone4.product_type}</a>"
+    Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql result
+  end
+
+  it "should get vendor url" do
+    variant = "{{ vendor | link_to_vendor}}"
+    result = "<a title=Cola href='/collections/vendors?q=Cola'>Cola</a>"
+    Liquid::Template.parse(variant).render('vendor' => 'Cola').should eql result
+  end
+
 end
