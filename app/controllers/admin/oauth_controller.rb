@@ -8,7 +8,7 @@ class Admin::OauthController < Admin::AppController
     @oauth2 = OAuth2::Provider.parse(current_user.shop, request)
     #response.headers = @oauth2.response_headers
     #response.status = @oauth2.response_status
-    redirect_to @oauth2.redirect_uri  if @oauth2.redirect?
+    redirect_to @oauth2.redirect_uri  if @oauth2.valid?
   end
 
   def access_token # 返回access_token
