@@ -35,14 +35,20 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
         messages:
           typeError: "{file} 文件格式不正确. 只能上传 {extensions} 格式的图片.",
         onSubmit: (id, file_name) ->
-          name = $(this.element).attr('name')
+          name = $(@element).attr('name')
+          max_width = $(@element).attr('data-max-width')
+          max_height = $(@element).attr('data-max-height')
+          text = "正在上传..."
+          text = "#{text} 限制宽高为#{max_width}x#{max_height}" if max_width and max_height
+          msg text
           $('#indicator').show()
           $(document).mousemove window.moveIndicator
           csrf_token = $('meta[name=csrf-token]').attr('content')
           csrf_param = $('meta[name=csrf-param]').attr('content')
-          this.params = key: "assets/#{name}", name: name
+          this.params = key: "assets/#{name}", name: name, max_width: max_width, max_height: max_height
           this.params[csrf_param] = csrf_token
         onComplete: (id, file_name, responseJSON)->
+          msg '上传成功!'
           $('#indicator').hide()
           $(document).unbind 'mousemove'
     $('.qq-upload-list').hide() # 不显示上传文件列表

@@ -59,7 +59,11 @@ class Asset
     if source_path
       FileUtils.cp source_path, path
     elsif file
-      File.open(path, 'wb') {|f| f.write(file) }
+      if file.is_a?(MiniMagick::Image) # 在外观设置中上传的图片可能要限制大小
+        file.write path
+      else
+        File.open(path, 'wb') {|f| f.write(file) }
+      end
     else # snippets没有蓝本
       FileUtils.touch path
     end

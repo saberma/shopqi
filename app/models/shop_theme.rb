@@ -48,6 +48,8 @@ class ShopThemeSetting < ActiveRecord::Base
       doc = Nokogiri::HTML(File.open(html_path), nil, 'utf-8') #http://nokogiri.org/tutorials/modifying_an_html_xml_document.html
       doc.css("input[type='file']").each do |file| # 上传文件
         name = file['name']
+        max_width = file['data-max-width'] # 限制图片宽高
+        max_height = file['data-max-height']
         url = theme.asset_url(name)
         exists = File.exist? File.join(theme.path, 'assets', name) # 是否已经上传了图片
         td = file.parent
@@ -55,7 +57,7 @@ class ShopThemeSetting < ActiveRecord::Base
           table.widget(cellspacing: 0) {
             tr {
               td {
-                div(name: name, class: :file) } } # 使用ajax后台上传
+                div(name: name, class: :file, 'data-max-width' => max_width, 'data-max-height' => max_height) } } # 使用ajax后台上传
             if exists # 已经上传图片，显示图片预览
               tr {
                 td {

@@ -21,7 +21,14 @@ class Admin::AssetsController < Admin::AppController
   end
 
   def upload # 上传asset附件
-    asset = Asset.create theme, params[:key], nil, request.body.read
+    image = request.body.read
+    max_width = params['max_width']
+    max_height = params['max_height']
+    unless max_width.blank? or max_height.blank? # 限制宽高
+      image = MiniMagick::Image.read(image)
+      image.resize "#{max_width}x#{max_height}"
+    end
+    asset = Asset.create theme, params[:key], nil, image
     render json: asset.to_json
   end
 
