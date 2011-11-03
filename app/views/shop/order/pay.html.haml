@@ -34,7 +34,7 @@
             %p 请选择您需要的发货方式.
             %p.sst
               %select#shipping-rates(name="order[shipping_rate]")
-                =options_for_select shipping_rates.collect{|s|["#{s.name}-¥#{s.price}","#{s.name}-#{s.price}"]}, order.shipping_rate
+                =options_for_select shipping_rates.collect{|s|["#{s.name}-#{shop.format_money_in_emails(s.price)}",s.shipping_rate]}, order.shipping_rate
           -else
             %p#no-shipping-rates 对不起，由于本店暂时没有为该地区设置发货方式，所以，将不能发往该地区
       -unless shipping_rates.blank?

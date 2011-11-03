@@ -14,12 +14,23 @@ describe Shop do
       Shop.at(host).should_not be_nil
     end
 
-    it 'should init format', focus: true do
-      shop.currency.should eql 'CNY'
-      shop.money_with_currency_format.should eql '&#165;{{amount}} 元'
-      shop.money_format.should eql '&#165;{{amount}}'
-      shop.money_with_currency_in_emails_format.should eql '¥{{amount}} 元'
-      shop.money_in_emails_format.should eql '¥{{amount}}'
+    describe 'money' do # 币种
+
+      it 'should init format' do
+        shop.currency.should eql 'CNY'
+        shop.money_with_currency_format.should eql '&#165;{{amount}} 元'
+        shop.money_format.should eql '&#165;{{amount}}'
+        shop.money_with_currency_in_emails_format.should eql '¥{{amount}} 元'
+        shop.money_in_emails_format.should eql '¥{{amount}}'
+      end
+
+      it 'should format money', focus: true do # 传入金额，返回格式化后的金额
+        shop.format_money_with_currency(19.95).should eql '&#165;19.95 元'
+        shop.format_money(19.95).should eql '&#165;19.95'
+        shop.format_money_with_currency_in_emails(19.95).should eql '¥19.95 元'
+        shop.format_money_in_emails(19.95).should eql '¥19.95'
+      end
+
     end
 
   end

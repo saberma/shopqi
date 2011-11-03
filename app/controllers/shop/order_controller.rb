@@ -107,7 +107,7 @@ class Shop::OrderController < Shop::AppController
   # 支付
   def commit
     data = {}
-    include_shipping_rate = shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:order][:shipping_rate]
+    include_shipping_rate = shipping_rates.map(&:shipping_rate).include? params[:order][:shipping_rate]
     if !include_shipping_rate || !params[:order][:payment_id]
       data = data.merge({error: 'shipping_rate', shipping_rate: params[:shipping_rate] }) if !include_shipping_rate
       data = data.merge({payment_error: true}) if !params[:order][:payment_id]
@@ -139,7 +139,7 @@ class Shop::OrderController < Shop::AppController
 
   def update_total_price
     #处理更新快递方式
-    if !shipping_rates.map{|s|"#{s.name}-#{s.price}"}.include? params[:shipping_rate]
+    if !shipping_rates.map(&:shipping_rates).include? params[:shipping_rate]
       data = {error: 'shipping_rate', shipping_rate: params[:shipping_rate] }
     else
       order.shipping_rate = params[:shipping_rate]
