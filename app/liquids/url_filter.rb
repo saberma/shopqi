@@ -2,7 +2,7 @@ module UrlFilter
 
   def asset_url(input)
     shop = @context['shop'] #ShopDrop
-    shop.asset_url(input)
+    "#{ActionController::Base.asset_host}#{shop.asset_url(input)}"
   end
 
   def global_asset_url(input)

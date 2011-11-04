@@ -5,6 +5,8 @@ describe TagFilter do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:iphone4) { Factory :iphone4, shop: shop }
+
   let(:link_list) { Factory :link_list, shop: shop }
 
   it 'should get stylesheet_tag' do

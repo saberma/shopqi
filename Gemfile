@@ -55,12 +55,12 @@ gem "nokogiri" # 解释模板config/settings.html
 gem "uuid" # 生成36位(或32位)唯一序列号
 gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
-gem 'grit', git: 'git://github.com/mojombo/grit.git' # 主题版本控制(每个商店主题都是一个git repository)
+gem 'grit', git: 'git://github.com/mojombo/grit.git' # 主题版本控制(每个商店主题都是一个git repository) # 2.4.1版本存在此问题 http://j.mp/uoEKw1
 gem 'oauth2' # 提供访问oauth provider的客户端访问接口,服务端(Provider)使用http://j.mp/nCZiUj, 代码放在 lib/oauth2
 #gem 'newrelic_rpm' # 性能监控(模板编辑器中的layout/theme.liquid也会被注入script,暂时不使用此gem)
 gem "jquery-rails"
 gem 'rubyzip' # 解压缩用户上传的主题zip文件
-gem 'gollum', git: 'git://github.com/github/gollum.git'  #用于wiki系统
+gem 'gollum', git: 'git://github.com/github/gollum.git'  #用于wiki系统，1.3.1需要安装Pygments http://j.mp/uHMN1L，开发版本使用payments.rb，但有waring提示'did not have a valid gemspec'
 gem 'RedCloth'
 
 group :development do

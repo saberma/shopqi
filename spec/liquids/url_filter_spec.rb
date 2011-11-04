@@ -24,7 +24,7 @@ describe UrlFilter do
     Liquid::Template.parse(variant).render(params).should eql "#{asset_host}/s/files/#{Rails.env}/#{shop.id}/theme/#{theme.id}/assets/ie7.css?8888"
   end
 
-  it 'should get global_asset_url', focus: true do
+  it 'should get global_asset_url' do
     variant = "{{ 'textile.css' | global_asset_url }}"
     Liquid::Template.parse(variant).render.should eql "#{asset_host}/s/global/textile.css?8888"
   end
