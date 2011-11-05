@@ -50,7 +50,6 @@ class ShopThemeSetting < ActiveRecord::Base
         name = file['name']
         max_width = file['data-max-width'] # 限制图片宽高
         max_height = file['data-max-height']
-        url = theme.asset_url(name)
         exists = File.exist? File.join(theme.path, 'assets', name) # 是否已经上传了图片
         td = file.parent
         builder = Nokogiri::HTML::Builder.new do
@@ -59,6 +58,7 @@ class ShopThemeSetting < ActiveRecord::Base
               td {
                 div(name: name, class: :file, 'data-max-width' => max_width, 'data-max-height' => max_height) } } # 使用ajax后台上传
             if exists # 已经上传图片，显示图片预览
+              url = theme.asset_url(name)
               tr {
                 td {
                   div.asset {

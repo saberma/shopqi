@@ -66,7 +66,7 @@ class ShopObserver < ActiveRecord::Observer
     client = OAuth2::Model::Client.find_by_client_id(Theme.client_id)
     author = shop.oauth2_authorizations.build client: client
     #author = OAuth2::Model::Authorization.new owner: shop, client: client
-    author.access_token = OAuth2::Model::Authorization.create_access_token
+    author.access_token = OAuth2::Model::Authorization.create_access_token # expires_at为nil，永不过期
     author.save
     shop.oauth2_consumer_tokens.create client_id: client.client_id, access_token: author.access_token
   end
