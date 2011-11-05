@@ -1,5 +1,5 @@
 class Api::AppController < ActionController::Base # API接口
-  layout nil #默认不需要layout，使用liquid
+  layout nil #api不需要layout,只产生json和xml格式
   before_filter :authenticate
   before_filter :login_or_oauth_required
 
