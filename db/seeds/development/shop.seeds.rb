@@ -67,4 +67,11 @@ myshopqi.customer_groups.create [
   { name: '多次消费'    , query: 'orders_count_gt:1:订单数 大于:1' }                               ,
 ]
 
+#默认api_client,用于测试shopqi_api
+myshopqi.api_clients.create(
+  api_key:  "a"*32,
+  password: "b"*32,
+  shared_secret: "c"*32
+)
+
 myshopqi.launch!
