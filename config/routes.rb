@@ -153,6 +153,7 @@ Shopqi::Application.routes.draw do
       begin 'oauth2' # 授权认证
         get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
         post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
+        post '/oauth/token'       , to: 'oauth#access_token', as: :token
         match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
       end
       post '/kindeditor/upload_image', to: 'kindeditor#upload_image'

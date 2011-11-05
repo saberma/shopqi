@@ -117,4 +117,5 @@ class Theme::ThemesController < Theme::AppController
   def authenticate_shop! # 必须通过认证
     redirect_to theme_path(handle: handle, style_handle: style_handle) unless permanent_domain
   end
+
 end

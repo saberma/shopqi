@@ -5,10 +5,10 @@ class Api::AppController < ActionController::Base # API接口
 
   protected
   def authenticate
-   # myshopqi = Shop.at( request.host)
-   # authenticate_or_request_with_http_basic do |username, password|
-   #   myshopqi.api_clients.exists?(api_key: username,password: password)
-   # end
+    myshopqi = Shop.at( request.host)
+    authenticate_or_request_with_http_basic do |username, password|
+      myshopqi.api_clients.exists?(api_key: username,password: password)
+    end
   end
 
   def login_or_oauth_required
