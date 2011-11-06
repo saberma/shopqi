@@ -122,14 +122,6 @@ module OAuth2
           @error_description = "Unknown client ID #{@params[CLIENT_ID]}"
         end
 
-        if @client and !@params[REDIRECT_URI]
-          @params[REDIRECT_URI] = @client.redirect_uri
-        end
-
-        if @client and !@params[RESPONSE_TYPE]
-          @params[RESPONSE_TYPE] = 'code'
-        end
-
         REQUIRED_PARAMS.each do |param|
           next if @params.has_key?(param)
           @error = INVALID_REQUEST
