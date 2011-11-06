@@ -100,6 +100,7 @@ class ProductVariant < ActiveRecord::Base
   before_save do
     self.price ||= 0.0 # 价格、重量一定要有默认值
     self.weight ||= 0.0
+    product.update_attributes price: self.price if !product.price or product.price > self.price # 商品冗余最小价格，方便集合排序
   end
 
   def options

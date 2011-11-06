@@ -501,6 +501,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
     t.string   "title",                          :null => false
     t.boolean  "published",    :default => true
     t.text     "body_html"
+    t.float    "price"
     t.string   "product_type"
     t.string   "vendor"
     t.datetime "created_at"

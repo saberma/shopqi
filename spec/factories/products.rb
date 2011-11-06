@@ -13,8 +13,8 @@ FactoryGirl.define do
     product_type "手机"
     vendor "Apple"
     variants_attributes [
-    {price: 3000, compare_at_price: 3500, weight: 2.9}
-  ]
+      {price: 3000, compare_at_price: 3500, weight: 2.9}
+    ]
   end
 
   factory :psp, parent: :product do
@@ -22,5 +22,8 @@ FactoryGirl.define do
     body_html ""
     product_type "游戏机"
     vendor "Sony"
+    variants_attributes [
+      {price: 1000, compare_at_price: 1500, weight: 2.8}
+    ]
   end
 end

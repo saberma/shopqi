@@ -6,7 +6,7 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
-  delegate :id, :handle, :title,:vendor,:tags, to: :@product
+  delegate :id, :handle, :title, :price, :vendor, :tags, to: :@product
 
   def variants
     @product.variants.map do |variant|
@@ -40,10 +40,6 @@ class ProductDrop < Liquid::Drop
 
   def type
     @product.product_type
-  end
-
-  def price
-    @product.variants.map(&:price).min
   end
 
   def price_min
