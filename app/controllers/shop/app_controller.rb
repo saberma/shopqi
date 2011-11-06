@@ -40,34 +40,23 @@ class Shop::AppController < ActionController::Base
 
   begin 'liquid'
 
-    # 渲染layout时的hash
-    def shop_assign(template = 'index', template_extra_object = {})
-      shop_drop = ShopDrop.new(shop, theme)
-      settings_drop = SettingsDrop.new(theme)
-      linklists_drop = LinkListsDrop.new(shop)
-      collections_drop = CollectionsDrop.new(shop)
-      pages_drop = PagesDrop.new(shop)
-      blogs_drop = BlogsDrop.new(shop)
-      powered_by_link = "<a href='#{url_with_port}' target='_blank' title='应用ShopQi电子商务平台创建您的网上商店'>ShopQi电子商务平台提供安全保护</a>"
+    def shop_assign(template = 'index', template_extra_object = {}) # 渲染layout时的hash
+      powered_by_link = Rails.cache.fetch "shopqi_snippets_powered_by_link" do
+        content = File.read(Rails.root.join('app', 'views', 'shop', 'snippets', 'powered_by_link.liquid'))
+        Liquid::Template.parse(content).render('url_with_port'=>url_with_port)
+      end
       unless template_extra_object.key?('content_for_layout')
         content_for_layout = Liquid::Template.parse(File.read(theme.template_path(template))).render(template_assign(template_extra_object))
       else
         content_for_layout = template_extra_object['content_for_layout']
       end
       {
-        'shop' => shop_drop,
-        'cart' => cart_drop,
-        'settings' => settings_drop,
         'template' => template,
-        'linklists' => linklists_drop,
-        'pages' => pages_drop,
-        'blogs' => blogs_drop,
-        'collections' => collections_drop,
         'content_for_header' => '',
         'content_for_layout' => content_for_layout,
         'powered_by_link' => powered_by_link,
         'page_title' =>  get_current_page_title(template,template_extra_object)
-      }
+      }.merge template_extra_object # layout也需要product变量，显示description
     end
 
     # 渲染附件asset时的hash
@@ -79,14 +68,16 @@ class Shop::AppController < ActionController::Base
     end
 
     # 渲染template时的hash
-    def template_assign(extra_assign)
+    def template_assign(extra_assign = {})
       shop_drop = ShopDrop.new(shop, theme)
       settings_drop = SettingsDrop.new(theme)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)
+      pages_drop = PagesDrop.new(shop)
       blogs_drop = BlogsDrop.new(shop)
       {
         'shop' => shop_drop,
+        'cart' => cart_drop,
         'settings' => settings_drop,
         'linklists' => linklists_drop,
         'blogs' => blogs_drop,

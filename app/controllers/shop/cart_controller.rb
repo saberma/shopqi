@@ -13,8 +13,8 @@ class Shop::CartController < Shop::AppController
 
   def show
     cart_hash = cookie_cart_hash
-    template_assign = { 'cart' => cart_drop }
-    html = Liquid::Template.parse(layout_content).render(shop_assign('cart', template_assign))
+    assign = template_assign()
+    html = Liquid::Template.parse(layout_content).render(shop_assign('cart', assign))
     render text: html
   end
 

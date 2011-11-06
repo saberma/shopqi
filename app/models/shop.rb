@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Shop < ActiveRecord::Base
-  include OAuth2::Model::ClientOwner
+  #include OAuth2::Model::ClientOwner # Client所属者不应该是Shop，要放置于以后开发的Partner类
   include OAuth2::Model::ResourceOwner
   has_many :api_clients           , dependent: :destroy
   has_many :users                 , dependent: :destroy
