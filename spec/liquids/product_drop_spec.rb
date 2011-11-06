@@ -44,12 +44,24 @@ describe ProductDrop do
     liquid(variant).should eql '1'
   end
 
-  it 'should get images' do
-    photo = iphone4.photos.build
-    photo.product_image = Rails.root.join('app/assets/images/avatar.jpg')
-    photo.save!
-    variant = "{{ product.images | size }}"
-    liquid(variant).should eql '1'
+  describe ProductImageDrop do
+
+    before(:each) do
+      photo = iphone4.photos.build
+      photo.product_image = Rails.root.join('spec/factories/data/products/iphone4.jpg')
+      photo.save!
+    end
+
+    it 'should get images' do
+      variant = "{{ product.images | size }}"
+      liquid(variant).should eql '1'
+    end
+
+    it 'should get featured_image', focus: true do
+      variant = "{{ product.featured_image | product_img_url: 'thumb' }}"
+      liquid(variant).should eql iphone4.index_photo
+    end
+
   end
 
   describe ProductOptionDrop do
@@ -59,7 +71,7 @@ describe ProductDrop do
       product_drop.options.first.as_json.should eql result
     end
 
-    it 'should get label', focus: true do
+    it 'should get label' do
       result = '标题'
       variant = "{{ product.options.first }}"
       liquid(variant).should eql result
@@ -67,7 +79,7 @@ describe ProductDrop do
 
   end
 
-  describe 'compare_at_price', focus: true do
+  describe 'compare_at_price' do
 
     it 'should get max' do
       result = '3500.0'

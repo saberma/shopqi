@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   end
 
   def photo(version = :icon)
-    unless photos.blank?
+    unless photos.empty?
       photos.first.send(version)
     else
       "/assets/admin/no-image-#{version}.gif"

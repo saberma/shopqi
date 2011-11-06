@@ -59,7 +59,7 @@ class ProductDrop < Liquid::Drop
   end
 
   def featured_image
-    @product.photos.first
+    ProductImageDrop.new @product.photos.first
   end
 
   def as_json(options = nil)
@@ -80,7 +80,7 @@ class ProductImageDrop < Liquid::Drop
     @image = image
   end
 
-  def version(size) #相当于method_missing
+  def version(size)
     @image.send(size)
   end
 
