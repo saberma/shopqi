@@ -18,8 +18,6 @@ module OAuth2
 
       before_create :generate_credentials
 
-      after_create  :generate_consumer_client
-
       def self.create_client_id
         OAuth2.generate_id do |client_id|
           count(:conditions => {:client_id => client_id}).zero?
@@ -49,10 +47,6 @@ module OAuth2
       def generate_credentials
         self.client_id = self.class.create_client_id
         self.client_secret = OAuth2.random_string
-      end
-
-      def generate_consumer_client
-        ConsumerClient.create name: self.name, client_id: self.client_id, client_secret: self.client_secret
       end
 
     end
