@@ -34,6 +34,16 @@ describe ProductDrop do
     liquid(variant).should eql 'true'
   end
 
+  it 'should get price_varies' do
+    variant = "{{ product.price_varies }}"
+    liquid(variant).should eql 'false'
+  end
+
+  it 'should get compare_at_price_varies' do
+    variant = "{{ product.compare_at_price_varies }}"
+    liquid(variant).should eql 'false'
+  end
+
   it 'should get variants' do
     variant = "{{ product.variants | size }}"
     liquid(variant).should eql '1'
@@ -57,7 +67,7 @@ describe ProductDrop do
       liquid(variant).should eql '1'
     end
 
-    it 'should get featured_image', focus: true do
+    it 'should get featured_image' do
       variant = "{{ product.featured_image | product_img_url: 'thumb' }}"
       liquid(variant).should eql iphone4.index_photo
     end

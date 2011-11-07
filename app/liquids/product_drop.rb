@@ -38,17 +38,29 @@ class ProductDrop < Liquid::Drop
     @product.product_type
   end
 
+  def price_varies
+    @product.variants.map(&:price).uniq.size > 1
+  end
+  memoize :price_varies
+
   def price_min
     price
   end
 
+  def compare_at_price_varies
+    @product.variants.map(&:compare_at_price).uniq.size > 1
+  end
+  memoize :compare_at_price_varies
+
   def compare_at_price_max
     @product.variants.map(&:compare_at_price).max
   end
+  memoize :compare_at_price_max
 
   def compare_at_price_min
     @product.variants.map(&:compare_at_price).min
   end
+  memoize :compare_at_price_min
 
   def description
     @product.body_html
