@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Shop::ProductsController do
@@ -21,6 +22,22 @@ describe Shop::ProductsController do
     get 'show', handle: iphone4.handle
     response.should be_success
     response.body.should have_content('iphone')
+  end
+
+  context 'js' do
+
+    it 'should be get', focus: true do # 获取product json
+      get 'show', handle: iphone4.handle, format: :js
+      response.should be_success
+      json = JSON(response.body)
+      json.should_not be_empty
+      %w(id handle title available).each do |attr|
+        json[attr].should eql iphone4.send(attr)
+      end
+      json['options'].should eql ['标题']
+      json['variants'].should_not be_empty
+    end
+
   end
 
 end

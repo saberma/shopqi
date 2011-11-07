@@ -39,6 +39,12 @@ describe Product do
 
     end
 
+    it 'should has price', focus: true do
+      product = shop.products.create title: 'iphone 手机', product_type: '智能手机', vendor: 'Apple'
+      variant = product.variants.first
+      product.reload.price.should eql variant.price
+    end
+
   end
 
   describe 'Option' do

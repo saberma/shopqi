@@ -6,16 +6,26 @@ class Shop::CartController < Shop::AppController
 
   def add
     cart_hash = cookie_cart_hash
-    cart_hash[params[:id]] = cart_hash[params[:id]].to_i + 1
+    id = params[:id] # variant.id
+    quantity = params[:quantity] ? params[:quantity].to_i : 1
+    cart_hash[id] = cart_hash[id].to_i + quantity
     save_cookie_cart(cart_hash)
-    redirect_to cart_path
+    respond_to do |format|
+      format.html { redirect_to cart_path }
+      format.js   { render json: SessionLineItem.new(id, quantity, shop) }
+    end
   end
 
   def show
-    cart_hash = cookie_cart_hash
-    template_assign = { 'cart' => cart_drop }
-    html = Liquid::Template.parse(layout_content).render(shop_assign('cart', template_assign))
-    render text: html
+    respond_to do |format|
+      format.html {
+        cart_hash = cookie_cart_hash
+        assign = template_assign()
+        html = Liquid::Template.parse(layout_content).render(shop_assign('cart', assign))
+        render text: html
+      }
+      format.js { render json: SessionCart.new(cookie_cart_hash, shop) }
+    end
   end
 
   def update
@@ -49,9 +59,21 @@ class Shop::CartController < Shop::AppController
 
   def change # 修改某个款式的购买数量 quantity=0 时移除
     cart_hash = cookie_cart_hash
-    cart_hash[params[:variant_id]] = params[:quantity].to_i
+    id = params[:variant_id] || params[:id]
+    cart_hash[id] = params[:quantity].to_i
     save_cookie_cart(cart_hash)
-    redirect_to cart_path
+    respond_to do |format|
+      format.html { redirect_to cart_path }
+      format.js   { render json: SessionCart.new(cookie_cart_hash, shop) }
+    end
+  end
+
+  def clear # 清空购物车
+    session['cart'] = nil
+    respond_to do |format|
+      format.html { redirect_to '/' }
+      format.js   { render json: SessionCart.new({}, shop) }
+    end
   end
 
 end

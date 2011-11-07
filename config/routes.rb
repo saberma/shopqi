@@ -144,6 +144,8 @@ Shopqi::Application.routes.draw do
       get '/cart'                          , to: 'cart#show'
       post '/cart'                         , to: 'cart#update'
       get '/cart/change/:variant_id'       , to: 'cart#change' # quantity=0一般用于删除
+      post '/cart/change'                  , to: 'cart#change' # ajax修改款式数量
+      post '/cart/clear'                   , to: 'cart#clear' # 清空购物车
       get '/blogs/:handle'                 , to: 'blogs#show'
       get '/blogs/:handle/:id'             , to: 'articles#show'
       match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'

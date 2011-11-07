@@ -43,9 +43,11 @@ class Admin::CustomCollectionsController < Admin::AppController
 
   #更新排序
   def update_order
-    custom_collection.save
-    custom_collection.ordered_products.each_with_index do |product, index|
-      product.update_attribute :position, index
+    CustomCollection.transaction do
+      custom_collection.save
+      @collection_products = custom_collection.ordered_products.each_with_index do |custom_collection_product, index|
+        custom_collection_product.update_attribute :position, index
+      end
     end
     flash.now[:notice] = '重新排序成功!'
   end

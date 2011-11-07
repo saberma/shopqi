@@ -46,7 +46,7 @@ class Asset
     end
   end
 
-  def self.create(theme, key, source_key = nil, file = nil) # 新增文件
+  def self.create(theme, key, source_key = nil, file = nil) # 新增文件(source_key只在复制layout时使用)
     kind, name = key.split('/', 2) # 最多分成2个数组元素
     source_path = case kind.to_sym
     when :layout

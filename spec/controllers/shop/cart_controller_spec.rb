@@ -4,7 +4,11 @@ describe Shop::CartController do
 
   let(:theme) { Factory :theme_woodland_dark }
 
-  let(:shop) { Factory(:user).shop }
+  let(:shop) do
+    model = Factory(:user_admin).shop
+    model.update_attributes password_enabled: false
+    model
+  end
 
   let(:iphone4) { Factory :iphone4, shop: shop }
 
@@ -66,6 +70,90 @@ describe Shop::CartController do
     it 'should not be show' do
       get :show
       response.body.should_not include "Liquid error: Couldn't find ProductVariant with id=#{un_exist_variant_id}"
+    end
+
+  end
+
+  context 'js', focus: true do
+
+    it 'should be add' do # 商品加入购物车
+      post :add, id: variant.id, quantity: 2, format: :js
+      response.should be_success
+      json = JSON(response.body)
+      asset_line_item(json, variant)
+    end
+
+    it 'should be show' do # 返回购物车信息
+      post :add, id: variant.id, quantity: 2, format: :js
+      get :show, format: :js
+      response.should be_success
+      json = JSON(response.body)
+      asset_cart(json, variant)
+    end
+
+    it 'should be change' do # 修改购物车款式数量
+      post :add, id: variant.id, quantity: 1, format: :js
+      post :change, id: variant.id, quantity: 2,  format: :js
+      response.should be_success
+      json = JSON(response.body)
+      asset_cart(json, variant)
+    end
+
+    it 'should be clear' do # 清空购物车
+      post :add, id: variant.id, quantity: 1, format: :js
+      post :clear,  format: :js
+      response.should be_success
+      json = JSON(response.body)
+      json.should_not be_empty
+      {
+        requires_shipping: false,
+        total_price: 0,
+        attributes: nil,
+        item_count: 0,
+        note: nil,
+        total_weight: 0
+      }.each_pair do |key, value|
+        json[key.to_s].should eql value
+      end
+    end
+
+    private
+    def asset_cart(cart, variant)
+      cart.should_not be_empty
+      {
+        requires_shipping: true,
+        total_price: 6000.0,
+        attributes: nil,
+        item_count: 1,
+        note: nil,
+        total_weight: 5.8
+      }.each_pair do |key, value|
+        cart[key.to_s].should eql value
+      end
+      item = cart['items'].first
+      asset_line_item(item, variant)
+    end
+
+    def asset_line_item(item, variant)
+      product = variant.product
+      item.should_not be_empty
+      {
+        handle: product.handle,
+        line_price: 6000.0,
+        requires_shipping: true,
+        price: 3000.0,
+        title: 'iphone4',
+        url: "/products/#{product.handle}",
+        quantity: 2,
+        id: variant.id,
+        grams: 5.8,
+        sku: variant.sku,
+        vendor: product.vendor,
+        image: product.index_photo,
+        variant_id: variant.id,
+      }.each_pair do |key, value|
+        item[key.to_s].should eql value
+      end
     end
 
   end
