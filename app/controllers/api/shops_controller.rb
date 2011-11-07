@@ -4,4 +4,5 @@ class Api::ShopsController < Api::AppController
   def index
     render json: shop
   end
+
 end

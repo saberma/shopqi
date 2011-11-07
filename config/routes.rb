@@ -114,7 +114,8 @@ Shopqi::Application.routes.draw do
 
     namespace :api do
       resources :customers
-      resources :shops
+      resources :shops, only: :index
+      resources :products
     end
 
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
