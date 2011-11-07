@@ -11,6 +11,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :bio,comment:"用户介绍"
       t.boolean :receive_announcements,comment:"是否接收网店邮件信息",default: true
       t.references :shop
+      t.string :avatar_image_uid
 
       #增加用户权限
       t.boolean :admin, default: true
