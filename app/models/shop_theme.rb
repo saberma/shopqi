@@ -99,7 +99,73 @@ class ShopThemeSetting < ActiveRecord::Base
         end
         element.inner_html = builder.doc.at_css('div').inner_html
       end
+      doc.css("select.collection").each do |element| # 集合
+        builder = Nokogiri::HTML::Builder.new do
+          div {
+            option(value: nil) { text '无' }
+            option(value: nil, disabled: true) { text '---' }
+            self.theme.shop.collections.each do |collection|
+              option(value: collection.handle) { text collection.title }
+            end
+          }
+        end
+        element.inner_html = builder.doc.at_css('div').inner_html
+      end
+      doc.css("select.blog").each do |element| # 博客
+        builder = Nokogiri::HTML::Builder.new do
+          div {
+            option(value: nil) { text '无' }
+            option(value: nil, disabled: true) { text '---' }
+            self.theme.shop.blogs.each do |blog|
+              option(value: blog.handle) { text blog.title }
+            end
+          }
+        end
+        element.inner_html = builder.doc.at_css('div').inner_html
+      end
+      doc.css("select.page").each do |element| # 页面
+        builder = Nokogiri::HTML::Builder.new do
+          div {
+            option(value: nil) { text '无' }
+            option(value: nil, disabled: true) { text '---' }
+            self.theme.shop.pages.each do |page|
+              option(value: page.handle) { text page.title }
+            end
+          }
+        end
+        element.inner_html = builder.doc.at_css('div').inner_html
+      end
+      doc.css("select.linklist").each do |element| # 链接列表
+        builder = Nokogiri::HTML::Builder.new do
+          div {
+            option(value: nil) { text '无' }
+            option(value: nil, disabled: true) { text '---' }
+            self.theme.shop.link_lists.each do |link_list|
+              option(value: link_list.handle) { text link_list.title }
+            end
+          }
+        end
+        element.inner_html = builder.doc.at_css('div').inner_html
+      end
+      snippets_path = File.join(self.theme.path, 'snippets')
+      snippets_doc = doc.css("select.snippet")
+      if File.exists?(snippets_path) and !snippets_doc.empty?
+        snippets = Dir[File.join(snippets_path, '*')].map {|file| File.basename(file, ".liquid")}
+        snippets_doc.each do |element| # 片段
+          builder = Nokogiri::HTML::Builder.new do
+            div {
+              option(value: nil) { text '无' }
+              option(value: nil, disabled: true) { text '---' }
+              snippets.each do |snippet|
+                option(value: snippet) { text snippet }
+              end
+            }
+          end
+          element.inner_html = builder.doc.at_css('div').inner_html
+        end
+      end
       doc.css("input, select, textarea").each do |element| # 改名
+        element['id'] ||= element['name'] # 一定要有id，对应settings_data.json
         element['name'] = "settings[#{element['name']}]"
       end
       doc.inner_html

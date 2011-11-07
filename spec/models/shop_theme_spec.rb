@@ -46,6 +46,42 @@ describe ShopTheme do
         transform.should include 'Monospace' # 字体选项
       end
 
+      describe 'class', focus: true do # 根据class的值转换为实际的链接列表选项等
+
+        before(:each) do
+          settings_html_path = Rails.root.join("spec/factories/data/themes/settings_with_class.html")
+          Asset.create(theme, 'config/settings.html', nil, File.read(settings_html_path))
+        end
+
+        let(:transform) { theme.settings.transform }
+
+        it 'should list collections' do
+          transform.should include '首页商品'
+        end
+
+        it 'should list blogs' do
+          transform.should include '最新动态'
+        end
+
+        it 'should list pages' do
+          transform.should include '关于我们'
+          transform.should include '欢迎'
+        end
+
+        it 'should list linklists' do
+          transform.should include '主菜单'
+          transform.should include '页脚'
+        end
+
+        it 'should list snippets' do
+          transform.should_not include 'recent-posts.liquid'
+          transform.should_not include 'sidebar-navigation.liquid'
+          transform.should include 'recent-posts'
+          transform.should include 'sidebar-navigation'
+        end
+
+      end
+
       describe 'preset' do #保存更新预设
 
         it 'should be save' do
