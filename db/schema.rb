@@ -705,6 +705,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
     t.text     "bio"
     t.boolean  "receive_announcements",                :default => true
     t.integer  "shop_id"
+    t.string   "avatar_image_uid"
     t.boolean  "admin",                                :default => true
     t.string   "authentication_token"
     t.datetime "created_at"

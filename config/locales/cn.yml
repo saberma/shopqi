@@ -19,6 +19,7 @@ cn:
       user:
         name: 姓名
         phone: 电话
+        avatar_image: 头像信息
         bio: 个人介绍
         email: 邮箱
         current_password: 当前密码

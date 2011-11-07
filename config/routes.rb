@@ -9,6 +9,7 @@ Shopqi::Application.routes.draw do
     end
   end
 
+
   constraints(Domain::Wiki) do # 百科文档
     devise_for :admin_users, ActiveAdmin::Devise.config
     scope module: :wiki do
@@ -111,6 +112,11 @@ Shopqi::Application.routes.draw do
 
   constraints(Domain::Store) do
 
+    namespace :api do
+      resources :customers
+      resources :shops
+    end
+
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
 
     scope module: :shop do # 前台商店
@@ -149,6 +155,7 @@ Shopqi::Application.routes.draw do
       begin 'oauth2' # 授权认证
         get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
         post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
+        post '/oauth/token'       , to: 'oauth#access_token', as: :token
         match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
       end
       post '/kindeditor/upload_image', to: 'kindeditor#upload_image'

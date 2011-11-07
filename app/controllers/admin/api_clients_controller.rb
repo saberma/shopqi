@@ -10,7 +10,6 @@ class Admin::ApiClientsController < Admin::AppController
 
   def create
     api_client = shop.api_clients.create
-    p api_client
     render json: api_client.to_json
   end
 

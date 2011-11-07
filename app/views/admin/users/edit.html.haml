@@ -4,12 +4,15 @@
 =render partial:"shared/noscript"
 =render partial:"shared/upgrade_ie"
 %div
-  =form_for user do |f|
+  =form_for user,html: {multipart: true} do |f|
     =message_block on:[user]
     %h4 个人信息
     %dl.group.sst.group-fields
       %dt=f.label :name
       %dd=f.text_field :name
+      %dt=f.label :avatar_image
+      %dd=image_tag user.avatar_image.thumb('100x100').url if user.avatar_image_uid
+      %dd=f.file_field :avatar_image
       %dt
         =f.label :phone
         %span.hint (可选的)
@@ -23,7 +26,7 @@
       %dt=f.label :email
       %dd=f.text_field :email
       %dt.toggle=f.label :password
-      %dd.toggle=f.password_field :password
+      %dd.toggle=f.password_field :password,value: ""
       %dt.toggle=f.label :password_confirmation
       %dd.toggle=f.password_field :password_confirmation
     %h4 联系

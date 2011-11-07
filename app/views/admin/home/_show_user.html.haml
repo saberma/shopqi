@@ -1,11 +1,9 @@
 %script(id="user-details-area" type="text/html")
   =dialog '{{ name }}' do
     .user
-      .fr
-        %img#gravatar(height="50" src="/assets/avatar.jpg"  width="50")
       %p.st
         %span.label.fl 邮箱:
-        %a(href="mailto:{{email}}") {{ email }}
+        %a(href="mailto:{{email}}") {{{ email }}}
       %p
         %span.label.fl 电话:
         {{ phone }}

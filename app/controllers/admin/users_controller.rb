@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::AppController
   layout 'admin'
   expose(:users){current_user.shop.users}
   expose(:user)
-  expose(:user_json){ {name: user.name,email:user.email,is_current_user:current_user.id == user.id,id:user.id }.to_json}
+  expose(:user_json){ {name: user.name,email:user.email,is_current_user:current_user.id == user.id,id:user.id}.to_json}
 
   def update
     #若没填密码，则不需要更新密码

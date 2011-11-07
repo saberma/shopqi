@@ -37,6 +37,9 @@
     %tr
       %td.l 共享密钥
       %td {{{ shared_secret }}}
+    %tr
+      %td.l URL格式
+      %td https://apikey:password@hostname/api/resource.xml
 :javascript
   App.api_clients = new App.Collections.ApiClients();
   App.api_clients.refresh(#{api_clients_json});
