@@ -88,7 +88,38 @@ describe Shop::CartController do
       get :show, format: :js
       response.should be_success
       json = JSON(response.body)
+      asset_cart(json, variant)
+    end
+
+    it 'should be change' do # 修改购物车款式数量
+      post :add, id: variant.id, quantity: 1, format: :js
+      post :change, id: variant.id, quantity: 2,  format: :js
+      response.should be_success
+      json = JSON(response.body)
+      asset_cart(json, variant)
+    end
+
+    it 'should be clear' do # 清空购物车
+      post :add, id: variant.id, quantity: 1, format: :js
+      post :clear,  format: :js
+      response.should be_success
+      json = JSON(response.body)
       json.should_not be_empty
+      {
+        requires_shipping: false,
+        total_price: 0,
+        attributes: nil,
+        item_count: 0,
+        note: nil,
+        total_weight: 0
+      }.each_pair do |key, value|
+        json[key.to_s].should eql value
+      end
+    end
+
+    private
+    def asset_cart(cart, variant)
+      cart.should_not be_empty
       {
         requires_shipping: true,
         total_price: 6000.0,
@@ -97,13 +128,12 @@ describe Shop::CartController do
         note: nil,
         total_weight: 5.8
       }.each_pair do |key, value|
-        json[key.to_s].should eql value
+        cart[key.to_s].should eql value
       end
-      item = json['items'].first
+      item = cart['items'].first
       asset_line_item(item, variant)
     end
 
-    private
     def asset_line_item(item, variant)
       product = variant.product
       item.should_not be_empty
