@@ -14,8 +14,7 @@ class SessionCart # Session购物车
 
   def items
     @cart_hash.map do |variant_id, quantity|
-      variant = @shop.variants.find(variant_id)
-      SessionLineItem.new variant, quantity
+      SessionLineItem.new variant_id, quantity, @shop
     end
   end
   memoize :items
@@ -59,8 +58,8 @@ end
 class SessionLineItem # Session购物车中商品款式
   extend ActiveSupport::Memoizable
 
-  def initialize(variant, quantity)
-    @variant = variant
+  def initialize(variant_id, quantity, shop)
+    @variant = shop.variants.find(variant_id)
     @quantity = quantity.to_i
     @product = @variant.product
   end

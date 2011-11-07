@@ -74,35 +74,56 @@ describe Shop::CartController do
 
   end
 
-  context 'js' do
+  context 'js', focus: true do
 
-    it 'should be add', focus: true do # 商品加入购物车
+    it 'should be add' do # 商品加入购物车
       post :add, id: variant.id, quantity: 2, format: :js
       response.should be_success
       json = JSON(response.body)
+      asset_line_item(json, variant)
+    end
+
+    it 'should be show' do # 返回购物车信息
+      post :add, id: variant.id, quantity: 2, format: :js
+      get :show, format: :js
+      response.should be_success
+      json = JSON(response.body)
       json.should_not be_empty
-      json['requires_shipping'].should eql true
-      json['total_price'].should eql 6000.0
-      json['attributes'].should eql nil
-      json['item_count'].should eql 1
-      json['note'].should eql nil
-      json['total_weight'].should eql 5.8
+      {
+        requires_shipping: true,
+        total_price: 6000.0,
+        attributes: nil,
+        item_count: 1,
+        note: nil,
+        total_weight: 5.8
+      }.each_pair do |key, value|
+        json[key.to_s].should eql value
+      end
+      item = json['items'].first
+      asset_line_item(item, variant)
+    end
+
+    private
+    def asset_line_item(item, variant)
       product = variant.product
-      items = json['items'].first
-      items.should_not be_empty
-      items['handle'].should eql product.handle
-      items['line_price'].should eql 6000.0
-      items['requires_shipping'].should eql true
-      items['price'].should eql 3000.0
-      items['title'].should eql 'iphone4'
-      items['url'].should eql "/products/#{product.handle}"
-      items['quantity'].should eql 2
-      items['id'].should eql variant.id
-      items['grams'].should eql 5.8
-      items['sku'].should eql variant.sku
-      items['vendor'].should eql product.vendor
-      items['image'].should eql product.index_photo
-      items['variant_id'].should eql variant.id
+      item.should_not be_empty
+      {
+        handle: product.handle,
+        line_price: 6000.0,
+        requires_shipping: true,
+        price: 3000.0,
+        title: 'iphone4',
+        url: "/products/#{product.handle}",
+        quantity: 2,
+        id: variant.id,
+        grams: 5.8,
+        sku: variant.sku,
+        vendor: product.vendor,
+        image: product.index_photo,
+        variant_id: variant.id,
+      }.each_pair do |key, value|
+        item[key.to_s].should eql value
+      end
     end
 
   end

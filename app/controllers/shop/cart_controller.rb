@@ -15,16 +15,23 @@ class Shop::CartController < Shop::AppController
         redirect_to cart_path
       }
       format.js {
-        render json: SessionCart.new(cookie_cart_hash, shop)
+        render json: SessionLineItem.new(id, quantity, shop)
       }
     end
   end
 
   def show
-    cart_hash = cookie_cart_hash
-    assign = template_assign()
-    html = Liquid::Template.parse(layout_content).render(shop_assign('cart', assign))
-    render text: html
+    respond_to do |format|
+      format.html {
+        cart_hash = cookie_cart_hash
+        assign = template_assign()
+        html = Liquid::Template.parse(layout_content).render(shop_assign('cart', assign))
+        render text: html
+      }
+      format.js {
+        render json: SessionCart.new(cookie_cart_hash, shop)
+      }
+    end
   end
 
   def update
