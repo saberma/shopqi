@@ -1,8 +1,12 @@
 class Api::ShopsController < Api::AppController
-  expose(:shop){ Shop.at(request.host) }
+  before_filter :access_dennied, except: [:index]
 
-  def index
-    render json: shop
+  private
+  def parent
+    nil
   end
 
+  def collection
+    Shop.at(request.host)
+  end
 end

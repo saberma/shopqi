@@ -113,8 +113,8 @@ Shopqi::Application.routes.draw do
   constraints(Domain::Store) do
 
     namespace :api do
+      get '/shop' , to: "shops#index"
       resources :customers
-      resources :shops, only: :index
       resources :products
     end
 
