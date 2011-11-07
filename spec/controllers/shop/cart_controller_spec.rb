@@ -4,7 +4,11 @@ describe Shop::CartController do
 
   let(:theme) { Factory :theme_woodland_dark }
 
-  let(:shop) { Factory(:user).shop }
+  let(:shop) do
+    model = Factory(:user_admin).shop
+    model.update_attributes password_enabled: false
+    model
+  end
 
   let(:iphone4) { Factory :iphone4, shop: shop }
 
@@ -66,6 +70,39 @@ describe Shop::CartController do
     it 'should not be show' do
       get :show
       response.body.should_not include "Liquid error: Couldn't find ProductVariant with id=#{un_exist_variant_id}"
+    end
+
+  end
+
+  context 'js' do
+
+    it 'should be add', focus: true do # 商品加入购物车
+      post :add, id: variant.id, quantity: 2, format: :js
+      response.should be_success
+      json = JSON(response.body)
+      json.should_not be_empty
+      json['requires_shipping'].should eql true
+      json['total_price'].should eql 6000.0
+      json['attributes'].should eql nil
+      json['item_count'].should eql 1
+      json['note'].should eql nil
+      json['total_weight'].should eql 5.8
+      product = variant.product
+      items = json['items'].first
+      items.should_not be_empty
+      items['handle'].should eql product.handle
+      items['line_price'].should eql 6000.0
+      items['requires_shipping'].should eql true
+      items['price'].should eql 3000.0
+      items['title'].should eql 'iphone4'
+      items['url'].should eql "/products/#{product.handle}"
+      items['quantity'].should eql 2
+      items['id'].should eql variant.id
+      items['grams'].should eql 5.8
+      items['sku'].should eql variant.sku
+      items['vendor'].should eql product.vendor
+      items['image'].should eql product.index_photo
+      items['variant_id'].should eql variant.id
     end
 
   end

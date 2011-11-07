@@ -86,6 +86,25 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def available
+    self.published
+  end
+
+  begin 'shop' # 只供商店调用的json
+
+    def shop_as_json(options = nil) # 不能以as_json，会与后台管理的to_json冲突(options同名)
+      {
+        id: self.id,
+        handle: self.handle,
+        title: self.title,
+        available: self.available,
+        options: self.options.map(&:name),
+        variants: self.variants.map(&:shop_as_json),
+      }
+    end
+
+  end
+
 end
 
 #商品款式
@@ -100,7 +119,8 @@ class ProductVariant < ActiveRecord::Base
   before_save do
     self.price ||= 0.0 # 价格、重量一定要有默认值
     self.weight ||= 0.0
-    self.product.update_attributes price: self.product.variants.map(&:price).min # 商品冗余最小价格，方便集合排序
+    min_price = self.product.variants.map(&:price).min || self.price
+    self.product.update_attributes price: min_price # 商品冗余最小价格，方便集合排序
   end
 
   def options
@@ -109,6 +129,34 @@ class ProductVariant < ActiveRecord::Base
 
   def inventory_policy_name
     KeyValues::Product::Inventory::Policy.find_by_code(inventory_policy).name
+  end
+
+  def title
+    self.options.join(' / ')
+  end
+
+  def available
+    true
+  end
+
+
+  begin 'shop' # 只供商店调用的json
+
+    def shop_as_json(options = nil)
+      {
+        id: self.id,
+        option1: self.option1,
+        option2: self.option2,
+        option3: self.option3,
+        available: self.available,
+        title: self.title,
+        price: self.price,
+        compare_at_price: self.compare_at_price,
+        weight: self.weight,
+        sku: self.sku,
+      }
+    end
+
   end
 end
 

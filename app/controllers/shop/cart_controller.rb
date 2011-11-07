@@ -6,9 +6,18 @@ class Shop::CartController < Shop::AppController
 
   def add
     cart_hash = cookie_cart_hash
-    cart_hash[params[:id]] = cart_hash[params[:id]].to_i + 1
+    id = params[:id] # variant.id
+    quantity = params[:quantity] ? params[:quantity].to_i : 1
+    cart_hash[id] = cart_hash[id].to_i + quantity
     save_cookie_cart(cart_hash)
-    redirect_to cart_path
+    respond_to do |format|
+      format.html {
+        redirect_to cart_path
+      }
+      format.js {
+        render json: SessionCart.new(cookie_cart_hash, shop)
+      }
+    end
   end
 
   def show

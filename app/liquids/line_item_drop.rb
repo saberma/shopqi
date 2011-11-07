@@ -1,58 +1,21 @@
 #encoding: utf-8
 class LineItemDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
-  def initialize(variant, quantity)
-    @variant = variant
-    @quantity = quantity.to_i
+  def initialize(session_line_item)
+    @session_line_item = session_line_item
   end
 
-  def id
-    @variant.id
-  end
+  delegate :id, :title, :line_price, :price, :quantity, :sku, :grams, :requires_shipping, :vendor, to: :@session_line_item
 
   def variant
-    ProductVariantDrop.new @variant
+    ProductVariantDrop.new(@session_line_item.variant)
   end
+  memoize :variant
 
   def product
-    ProductDrop.new @variant.product
+    ProductDrop.new(@session_line_item.product)
   end
-
-  def title
-    return product.title if product.variants.size == 1
-    "#{product.title} - #{@variant.options.join('/')}"
-  end
-
-  def price
-    @variant.price
-  end
-
-  def line_price
-    quantity * price
-  end
-
-  def quantity
-    @quantity
-  end
-
-  def grams
-    @variant.weight
-  end
-
-  def sku
-    @variant.sku
-  end
-
-  def vendor
-    product.vendor
-  end
-
-  def requires_shipping
-    @variant.requires_shipping
-  end
-
-
-  #def tax
-  #end
+  memoize :product
 
 end

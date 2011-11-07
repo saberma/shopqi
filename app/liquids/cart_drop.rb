@@ -1,49 +1,24 @@
 #encoding: utf-8
 class CartDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   def initialize(cart_hash = {})
     @cart_hash = cart_hash #Hash{variant_id: quantity}
   end
 
-  def item_count
-    @cart_hash.size
-    #@cart_hash.values.map(&:to_i).sum
+  delegate :item_count, :requires_shipping, :total_price, :total_weight, :note, :attributes, to: :session_cart
+
+  def session_cart
+    shop = @context['shop'].instance_variable_get('@shop')
+    @session_cart = SessionCart.new(@cart_hash, shop)
   end
+  memoize :session_cart
 
   def items
-    shop = @context['shop'].instance_variable_get('@shop')
-    @items ||= @cart_hash.map do |item|
-      variant_id = item.first
-      quantity = item.second
-      variant = shop.variants.find(variant_id)
-      LineItemDrop.new variant, quantity
+    session_cart.items.map do |session_line_item|
+      LineItemDrop.new session_line_item
     end
   end
-
-  # 只要有一个款式需要收货，则购物车需要收货地址
-  def requires_shipping
-    @items.any? do |line_item_drop|
-      line_item_drop.variant.requires_shipping
-    end
-  end
-
-  def total_price
-    items.map do |line_item_drop|
-      variant = line_item_drop.variant
-      line_item_drop.quantity * variant.price
-    end.sum
-  end
-
-  def total_weight
-    items.map do |line_item_drop|
-      line_item_drop.variant.weight
-    end.sum
-  end
-
-  def note
-  end
-
-  def attributes
-  end
+  memoize :items
 
 end

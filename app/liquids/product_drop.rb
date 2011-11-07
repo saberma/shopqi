@@ -6,7 +6,7 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
-  delegate :id, :handle, :title, :price, :vendor, :tags, to: :@product
+  delegate :id, :handle, :title, :price, :available, :vendor, :tags, to: :@product
 
   def variants
     @product.variants.map do |variant|
@@ -28,10 +28,6 @@ class ProductDrop < Liquid::Drop
     end
   end
   memoize :images
-
-  def available
-    @product.published
-  end
 
   def url
     #Rails.application.routes.url_helpers.product_path(@product)
@@ -63,14 +59,7 @@ class ProductDrop < Liquid::Drop
   end
 
   def as_json(options = nil)
-    {
-      id: id,
-      handle: handle,
-      title: title,
-      available: available,
-      options: @product.options.map(&:name),
-      variants: variants.as_json,
-    }
+    @product.shop_as_json
   end
 end
 

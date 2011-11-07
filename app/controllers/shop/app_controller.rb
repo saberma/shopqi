@@ -106,7 +106,7 @@ class Shop::AppController < ActionController::Base
 
   begin 'cart'
 
-    def cookie_cart_hash
+    def cookie_cart_hash # {variant_id: quantity}
       session['cart'] = '' if session['cart'].nil?
       # 格式: variant_id|quantity;variant_id|quantity
       cart = session['cart'].split(';').map {|item| item.split('|')}
