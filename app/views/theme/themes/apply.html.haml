@@ -4,10 +4,20 @@
   =render 'shop'
 
 .message-box
-  %h2 您的主题正在更换...
-  %p
-    完成主题更换可能需要一两分钟的时间。您可以检查
-    %a(href="#{shop_url}") 您的商店
-    看看是否已经更新为新的主题或者返回
-    =succeed "." do
-      %a(href="/") 主题商店
+  -if @result['error']
+    %h2 安装主题不成功
+    %p
+      =@result['error']
+      您可以前往商店
+      %a(href="#{shop_url}/admin/themes") 主题管理
+      或者返回
+      =succeed "." do
+        %a(href="/") 主题商店
+  -else
+    %h2 您的主题正在更换...
+    %p
+      完成主题更换可能需要一两分钟的时间。您可以检查
+      %a(href="#{shop_url}") 您的商店
+      看看是否已经更新为新的主题或者返回
+      =succeed "." do
+        %a(href="/") 主题商店

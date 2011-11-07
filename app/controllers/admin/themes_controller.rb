@@ -15,12 +15,16 @@ class Admin::ThemesController < Admin::AppController
       authorization = OAuth2::Provider.access_token(nil, [], request)
       shop = authorization.owner
       if authorization.valid?
-        unless shop.themes.exceed? # 超出主题数则不更新
+        if shop.themes.exceed? # 超出主题数则不更新
+          render json: {error: '商店的主题总数不能超过8个，请删除不再使用的主题!'} and return
+        else
           theme = Theme.where(handle: params[:handle], style_handle: params[:style_handle]).first
           shop.themes.install theme
         end
+      else
+        render json: {error: '认证错误!'} and return
       end
-      render nothing: true
+      render json: {} # 安装成功
     end
 
   end
