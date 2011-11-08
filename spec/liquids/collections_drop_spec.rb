@@ -13,9 +13,24 @@ describe CollectionsDrop do
 
   let(:psp) { Factory :psp, shop: shop, collections: [frontpage_collection] }
 
-  context 'frontpage' do
+  let(:collections_drop) { CollectionsDrop.new(shop) }
 
-    let(:collections_drop) { CollectionsDrop.new(shop) }
+  it "should get all collection" do
+    smart_collection_low_price
+    iphone4
+    collections_drop.all.size.should eql 2
+    template = "{% for collection in collections.all %}<span>{{ collection.products.size}}</span>{% endfor %}"
+    result = "<span>1</span><span>0</span>"
+    Liquid::Template.parse(template).render('collections' => collections_drop).should eql result
+  end
+
+  it "should iterate collection", focus: true do
+    template = "{% for collection in collections %}<span>{{ collection.title }}</span>{% endfor %}"
+    result = "<span>首页商品</span>"
+    Liquid::Template.parse(template).render('collections' => collections_drop).should eql result
+  end
+
+  context 'frontpage' do
 
     it 'should get handle' do
       variant = "{{collections.frontpage.handle}}"
@@ -32,15 +47,6 @@ describe CollectionsDrop do
       variant = "{% if collections.frontpage.products.size == 0 %}<span>没有商品</span>{% endif %}"
       result = "<span>没有商品</span>"
       Liquid::Template.parse(variant).render('collections' => collections_drop).should eql result
-    end
-
-    it "should get all collection" do
-      smart_collection_low_price
-      iphone4
-      collections_drop.all.size.should eql 2
-      template = "{% for collection in collections.all %}<span>{{ collection.products.size}}</span>{% endfor %}"
-      result = "<span>1</span><span>0</span>"
-      Liquid::Template.parse(template).render('collections' => collections_drop).should eql result
     end
 
   end
@@ -106,7 +112,7 @@ describe CollectionsDrop do
 
     context 'missing' do
 
-      it 'should get products', focus: true do
+      it 'should get products' do
         variant = "{{ collections.noexist.products.size }}"
         Liquid::Template.parse(variant).render('collections' => CollectionsDrop.new(shop)).should eql '0'
       end

@@ -5,6 +5,16 @@ describe LinkListsDrop do
 
   let(:shop) { Factory(:user).shop }
 
+  describe LinkListDrop do
+
+    it 'should get the title', focus: true do
+      variant = "{{ linklists.main-menu.title }}"
+      result = "主菜单"
+      Liquid::Template.parse(variant).render('linklists' => LinkListsDrop.new(shop)).should eql result
+    end
+
+  end
+
   describe LinkDrop do
 
     context 'exist' do
