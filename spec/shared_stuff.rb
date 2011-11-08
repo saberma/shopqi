@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'subdomain_capybara_server'
 
-shared_context 'login admin' do 
+shared_context 'login admin' do
   let(:user_admin) { Factory :user_admin }
 
   let(:shop) { user_admin.shop }
@@ -23,4 +23,17 @@ shared_context 'use shopqi host' do # 访问 shopqi.com
   end
 
   after(:each) { Capybara::Server.manual_host = nil }
+end
+
+shared_examples "api_examples_index" do
+  before(:each) do
+    request.host = "#{shop.primary_domain.host}"
+    session[:shop] = shop.to_json
+  end
+
+  it "should get #index" do
+    get :index, format: :json
+    response.should be_success
+  end
+
 end
