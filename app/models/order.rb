@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
   default_value_for :fulfillment_status, 'unshipped'
 
   before_create do
-    self.token = UUID.generate(:compact)
+    self.token ||= UUID.generate(:compact) # 普通情况下token与cart的token一致，方便订单提交后清空购物车
     self.number = shop.orders.size + 1
     self.order_number = self.number + 1000 # 1001比0001给顾客感觉更好
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s

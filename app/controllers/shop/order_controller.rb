@@ -13,7 +13,9 @@ class Shop::OrderController < Shop::AppController
       o.update_attributes(params[:order]) if params[:order]
       o
     else
-      orders.build(params[:order])
+      o = orders.build(params[:order])
+      o.token = cart.token # 普通情况下token与cart的token一致，方便订单提交后清空购物车
+      o
     end
   end
 
@@ -119,6 +121,7 @@ class Shop::OrderController < Shop::AppController
         order.financial_status = 'pending'
         order.payment = shop.payments.find(params[:order][:payment_id])
         order.save
+        shop.carts.where(token: order.token).first.try(:destroy) # 删除购物车实体
         order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
       end
       data = {success: true, url: forward_order_path(params[:shop_id],params[:token])}
