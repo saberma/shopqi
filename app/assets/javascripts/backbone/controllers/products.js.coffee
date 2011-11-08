@@ -41,8 +41,7 @@ App.Controllers.Products = Backbone.Controller.extend
         inventory_management_relate.show()
     $("select.inventory_management").change()
 
-    #标签
-    Utils.Tag.init 'product_tags_text'
+    Utils.Tag.init 'product_tags_text' #标签(新增、修改商品时)
 
     #显示上传图片的form
     $('#upload-label .show-upload-link').click ->
