@@ -20,6 +20,7 @@ describe ProductDrop do
   end
 
   it 'should get price' do
+    iphone4.reload
     variant = "{{ product.price }}"
     liquid(variant).should eql "3000.0"
   end
