@@ -113,8 +113,9 @@ Shopqi::Application.routes.draw do
   constraints(Domain::Store) do
 
     namespace :api do
+      get '/shop' , to: "shops#index"
       resources :customers
-      resources :shops
+      resources :products
     end
 
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
