@@ -49,6 +49,7 @@ class Admin::ThemesController < Admin::AppController
       zip_path = File.join path, "t#{DateTime.now.to_i}-#{name}"
       name = name[0, name.rindex('.')] # 去掉文件后缀
       name = name[0, 32] # 最多32位
+      name = Asset.safe(name) # 过滤文件名
       FileUtils.mkdir_p path
       File.open(zip_path, 'wb') {|f| f.write(request.raw_post) }
       files = []

@@ -41,4 +41,16 @@ describe Asset do
 
   end
 
+  context '#safe' do
+
+    it 'should be same' do
+      Asset.safe('layouts/theme.liquid').should eql 'layouts/theme.liquid'
+    end
+
+    it 'should be same' do
+      Asset.safe('layouts/theme.liquid').should eql 'layouts/theme.liquid'
+    end
+
+  end
+
 end

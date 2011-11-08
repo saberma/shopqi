@@ -4,7 +4,6 @@ class Asset
 
   attr_accessor :key, :name, :url
 
-
   def initialize(theme, key, name, url = nil)
     @key = key
     @name = name
@@ -46,16 +45,21 @@ class Asset
     end
   end
 
-  def self.create(theme, key, source_key = nil, file = nil) # 新增文件(source_key只在复制layout时使用)
+  # 新增文件
+  # @key, 如:layout/theme.liquid
+  # @source_key, 只在复制layout时使用
+  def self.create(theme, key, source_key = nil, file = nil)
+    key = safe(key)
+    source_key = safe(source_key)
     kind, name = key.split('/', 2) # 最多分成2个数组元素
     source_path = case kind.to_sym
     when :layout
-      File.join theme.path, safe(source_key)
+      File.join theme.path, source_key
     when :templates
       FileUtils.mkdir_p File.join(theme.path, 'templates', 'customers')
-      File.join Theme.shopqi_theme_path, safe(key)
+      File.join Theme.shopqi_theme_path, key
     end
-    path = File.join theme.path, safe(key)
+    path = File.join theme.path, key
     if source_path
       FileUtils.cp source_path, path
     elsif file
@@ -73,39 +77,50 @@ class Asset
   end
 
   def self.update(theme, key, content) # 保存文件内容
-    File.open(File.join(theme.path, safe(key)), 'w') {|f| f.write content }
+    key = safe(key)
+    File.open(File.join(theme.path, key), 'w') {|f| f.write content }
     repo = Grit::Repo.new theme.path
     message = commits(theme, key).size + 1
     theme.commit repo, message
   end
 
   def self.rename(theme, key, new_key) # 重命名
+    key = safe(key)
+    new_key = safe(new_key)
     Dir.chdir theme.path do
-      FileUtils.mv safe(key), safe(new_key)
+      FileUtils.mv key, new_key
       repo = Grit::Repo.new theme.path
       theme.commit repo, '1'
     end
   end
 
   def self.value(theme, tree_id, key) # 返回文件内容
+    key = safe(key)
     repo = Grit::Repo.new theme.path
     tree = repo.tree(tree_id)
-    blob = tree./ safe(key)
+    blob = tree./ key
     blob.data
   end
 
   def self.destroy(theme, key) # 删除文件
-    File.delete File.join(theme.path, safe(key))
+    key = safe(key)
+    File.delete File.join(theme.path, key)
     repo = Grit::Repo.new theme.path
     theme.commit repo, "delete #{key}"
   end
 
   def self.commits(theme, key) # 返回文件版本
+    key = safe(key)
     repo = Grit::Repo.new theme.path
-    repo.log('master', safe(key))
+    repo.log('master', key)
   end
 
-  def self.safe(key) # 安全性考虑:避免相对路径
-    key.gsub /\.\./, ''
+  def self.safe(key) # 安全性考虑，过滤上传文件名称
+    key = key.gsub /\.\./, '' # 避免相对路径
+    key = key.gsub '\\', '/' # work-around for IE
+    key = key.gsub /[^a-zA-Z0-9\/\.\-\+_]/, '_'
+    key = "unnamed" if key.size == 0
+    key.mb_chars.to_s
   end
+
 end
