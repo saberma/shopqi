@@ -6,6 +6,18 @@ namespace :shopqi do
   desc "Run all bootstrapping tasks"
   task :bootstrap do
     unless Rails.env == 'production' # 防止生产环境下执行
+      secret_files = %w(
+        config/initializers/secret_token.rb
+      )
+      secret_files.each do |file|
+        path = Rails.root.join(file)
+        unless File.exists?(path)
+          source_path = Rails.root.join("#{file}.example")
+          "复制配置文件:#{source_path} => #{path}"
+          FileUtils.cp source_path, path
+        end
+      end
+
       FileUtils.rm_rf Rails.root.join('data')
       FileUtils.rm_rf Rails.root.join('public', 's', 'files')
       FileUtils.rm_rf Rails.root.join('public', 's', 'theme')

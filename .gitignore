@@ -7,6 +7,7 @@ config/sunspot.yml
 config/unicorn.conf.rb
 config/newrelic.yml
 config/express.yml
+config/initializers/secret_token.rb
 
 .bundle
 db/*.sqlite3

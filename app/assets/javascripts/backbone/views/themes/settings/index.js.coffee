@@ -57,8 +57,15 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
 
   save: ->
     self = this
-    attrs = _.reduce $('form').serializeArray(), (result, obj) ->
-      result[obj.name] = obj.value
+    attrs = _.reduce $('form :input'), (result, obj) ->
+      obj = $(obj)
+      value = switch obj.attr('type')
+        when 'checkbox'
+          obj.attr('checked') is 'checked'
+        else
+          obj.val()
+      name = obj.attr('name')
+      result[name] = value unless name is 'file'
       result
     , {_method: 'put'}
     $.post "/admin/themes/#{theme_id}/settings", attrs, (data) ->

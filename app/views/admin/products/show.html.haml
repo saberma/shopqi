@@ -114,7 +114,7 @@
           %th.section-header 标签
         %tr
           %td(style="padding: 15px 10px;")
-            %ul#tags
+            %ul.tag-list
               {{#each tags}}
               %li
                 %span.list-box {{this}}
@@ -197,7 +197,7 @@
           =text_field_tag :tags_text, '{{{tags_text}}}', size: 50, id: :product_tags_text
         %dd.sst
           %p.note(style="clear: both") 最近使用过的标签，单击增加.
-          %ul#tag-list.nobull.st
+          %ul#tag-list.tag-list
             -tags.each do |tag|
               %li
                 %a(href="#")=tag.name

@@ -18,6 +18,8 @@ class LinkListDrop < Liquid::Drop
     @link_list = link_list
   end
 
+  delegate :title, to: :@link_list
+
   def links
     @link_list.links.map do |link|
       LinkDrop.new link
@@ -32,12 +34,6 @@ class LinkDrop < Liquid::Drop
     @link = link
   end
 
-  def title
-    @link.title
-  end
-
-  def url
-    @link.url
-  end
+  delegate :title, :url, to: :@link
 
 end

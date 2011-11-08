@@ -24,7 +24,7 @@ class ShopThemeSetting < ActiveRecord::Base
       doc = Nokogiri::HTML(File.read(html_path))
       doc.css("input[type='checkbox']").each do |element| # 转化为boolean值
         name = element['name'].to_sym
-        data[name] = (data[name] == '1')
+        data[name] = %w(1 on true).include?(data[name])
       end
       if preset.blank? # 定制的直接保存在current根节点
         settings['current'] = data
@@ -71,13 +71,6 @@ class ShopThemeSetting < ActiveRecord::Base
           }
         end
         td.inner_html = builder.doc.inner_html
-      end
-      doc.css("input[type='checkbox']").each do |element| # 复选框加false值隐藏域
-        hidden = Nokogiri::XML::Node.new 'input', doc
-        hidden['name'] = element['name']
-        hidden['type'] = 'hidden'
-        hidden['value'] = '0'
-        element.before hidden
       end
       doc.css("select.font").each do |element| # 字体
         builder = Nokogiri::HTML::Builder.new do

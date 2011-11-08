@@ -1,4 +1,5 @@
 class CollectionsDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   def initialize(shop)
     @shop = shop
@@ -10,9 +11,14 @@ class CollectionsDrop < Liquid::Drop
   end
 
   def all
-    @collections ||= @shop.collections.map do |collection|
+    @shop.collections.map do |collection|
       CollectionDrop.new collection
     end
+  end
+  memoize :all
+
+  def each(&block) # 对象支持直接迭代
+    all.each(&block)
   end
 
 end

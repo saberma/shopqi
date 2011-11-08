@@ -42,7 +42,6 @@ describe ShopTheme do
         transform = theme.settings.transform
         transform.should include 'asset-image'
         transform.should include 'settings'
-        transform.should include 'hidden' # 复选框未选中时的值
         transform.should include 'Monospace' # 字体选项
       end
 

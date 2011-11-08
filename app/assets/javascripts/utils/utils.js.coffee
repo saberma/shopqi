@@ -57,8 +57,8 @@ namespace 'Utils', (exports) ->
   #标签
   exports.Tag =
     init: (tags_text_id = 'tags_text', tag_list_id = 'tag-list')->
-      tag_items = $("##{tag_list_id} a")
       text_field = $("##{tags_text_id}")
+      tag_items = $("##{tag_list_id} a")
       tag_items.click ->
         $(this).toggleClass('active-tag')
         tags = StringUtils.to_a(text_field.val())

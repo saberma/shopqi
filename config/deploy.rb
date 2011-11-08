@@ -45,11 +45,13 @@ namespace :deploy do
 
   # scp -P $CAP_PORT config/{database,sms,alipay,admin_users,unicorn}.yml $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
   # scp -P $CAP_PORT config/unicorn.conf.rb $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
+  # scp -P $CAP_PORT config/initializers/secret_token.rb $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/initializers/
   desc "Symlink shared resources on each release" # 配置文件
   task :symlink_shared, roles: :app do
     %w(database.yml sms.yml alipay.yml admin_users.yml unicorn.conf.rb).each do |secure_file|
       run "ln -nfs #{shared_path}/config/#{secure_file} #{release_path}/config/#{secure_file}"
     end
+    run "ln -nfs #{shared_path}/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
   end
 
   desc "Symlink the data directory" # 数据存储目录
