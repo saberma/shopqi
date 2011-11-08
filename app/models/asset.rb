@@ -50,7 +50,7 @@ class Asset
   # @source_key, 只在复制layout时使用
   def self.create(theme, key, source_key = nil, file = nil)
     key = safe(key)
-    source_key = safe(source_key)
+    source_key = safe(source_key) if source_key
     kind, name = key.split('/', 2) # 最多分成2个数组元素
     source_path = case kind.to_sym
     when :layout
