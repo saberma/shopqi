@@ -5,35 +5,35 @@ class Shop::CartController < Shop::AppController
   expose(:shop) { Shop.at(request.host) }
 
   def add
-    cart_hash = cookie_cart_hash
     id = params[:id] # variant.id
     quantity = params[:quantity] ? params[:quantity].to_i : 1
-    cart_hash[id] = cart_hash[id].to_i + quantity
-    save_cookie_cart(cart_hash)
+    quantity = get_line_item(id).to_i + quantity
+    save_line_item id, quantity
     respond_to do |format|
       format.html { redirect_to cart_path }
-      format.js   { render json: SessionLineItem.new(id, quantity, shop) }
+      format.js   {
+        SessionCart # SessionLineItem类所在文件
+        render json: SessionLineItem.new(id, quantity, shop)
+      }
     end
   end
 
   def show
     respond_to do |format|
       format.html {
-        cart_hash = cookie_cart_hash
-        assign = template_assign()
-        html = Liquid::Template.parse(layout_content).render(shop_assign('cart', assign))
+        html = Liquid::Template.parse(layout_content).render(shop_assign('cart', template_assign))
         render text: html
       }
-      format.js { render json: SessionCart.new(cookie_cart_hash, shop) }
+      format.js { render json: SessionCart.new(session_cart_hash, shop) }
     end
   end
 
   def update
-    cart_hash = cookie_cart_hash
+    cart_hash = session_cart_hash
     updates = params[:updates] # 款式数量
     if updates.is_a? Hash # 支持两种参数格式
       updates.each_pair do |variant_id, quantity|
-        cart_hash[variant_id] = quantity.to_i
+        save_line_item variant_id, quantity.to_i
       end
     elsif updates.is_a? Array
       updates.each_with_index do |quantity, index|
@@ -41,7 +41,6 @@ class Shop::CartController < Shop::AppController
         cart_hash[variant_id] = quantity.to_i
       end
     end
-    save_cookie_cart(cart_hash)
     if params[:checkout].blank? and params['checkout.x'].blank? # 支持按钮提交和图片提交两种方式
       redirect_to cart_path
     else
@@ -58,22 +57,37 @@ class Shop::CartController < Shop::AppController
   end
 
   def change # 修改某个款式的购买数量 quantity=0 时移除
-    cart_hash = cookie_cart_hash
     id = params[:variant_id] || params[:id]
-    cart_hash[id] = params[:quantity].to_i
-    save_cookie_cart(cart_hash)
+    save_line_item id, params[:quantity].to_i
     respond_to do |format|
       format.html { redirect_to cart_path }
-      format.js   { render json: SessionCart.new(cookie_cart_hash, shop) }
+      format.js   { render json: SessionCart.new(session_cart_hash, shop) }
     end
   end
 
   def clear # 清空购物车
-    session['cart'] = nil
+    clear_cart
     respond_to do |format|
       format.html { redirect_to '/' }
       format.js   { render json: SessionCart.new({}, shop) }
     end
+  end
+
+  private
+  def save_line_item(variant_id, quantity)
+    if quantity.zero?
+      Resque.redis.hdel cart_key, variant_id
+    else
+      Resque.redis.hset cart_key, variant_id, quantity
+    end
+  end
+
+  def get_line_item(variant_id)
+    Resque.redis.hget(cart_key, variant_id) || 0
+  end
+
+  def clear_cart
+    Resque.redis.del cart_key
   end
 
 end

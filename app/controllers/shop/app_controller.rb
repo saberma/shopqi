@@ -86,7 +86,7 @@ class Shop::AppController < ActionController::Base
     end
 
     def cart_drop
-      CartDrop.new(cookie_cart_hash)
+      CartDrop.new(session_cart_hash)
     end
 
     def get_current_page_title(template,template_extra_object)
@@ -106,20 +106,17 @@ class Shop::AppController < ActionController::Base
 
   begin 'cart'
 
-    def cookie_cart_hash # {variant_id: quantity}
-      session['cart'] = '' if session['cart'].nil?
-      # 格式: variant_id|quantity;variant_id|quantity
-      cart = session['cart'].split(';').map {|item| item.split('|')}
-      result = Hash[*cart.flatten]
-      result.delete_if do |variant_id| # 款式已经被删除，但顾客浏览器的cookie还存在id
-        !shop.variants.exists?(variant_id)
-      end
-      result
+    def cart_key # 存储在redis中的cart
+      Cart.key(shop, request.session_options[:id])
     end
 
-    def save_cookie_cart(cart_hash)
-      cart_hash.delete_if {|key, value| value.to_i.zero?}
-      session['cart'] = cart_hash.to_a.map{|item| item.join('|')}.join(';')
+    def session_cart_hash # {variant_id: quantity}
+      cart = Resque.redis.hgetall cart_key
+      cart.inject({}) do |result, (key, value)| # 注意,redis获取的value为字符串
+        result[key.to_sym] = value.to_i if shop.variants.exists?(value.to_i) # 款式已经被删除，但顾客浏览器的cookie还存在id
+        result
+      end
+      cart
     end
 
   end

@@ -8,6 +8,14 @@ class Cart < ActiveRecord::Base
     self.token = UUID.generate(:compact)
   end
 
+  before_destroy do # 清空浏览器session购物车
+    Resque.redis.del self.class.key(self.shop, self.session_id)
+  end
+
+  def self.key(shop, session_id)
+    "cart_#{shop.id}_#{session_id}"
+  end
+
   def self.update_or_create(condition, attrs)
     cart = where(condition).first
     if cart

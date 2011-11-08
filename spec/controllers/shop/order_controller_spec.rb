@@ -25,7 +25,7 @@ describe Shop::OrderController do
     o
   end
 
-  let(:payment) do
+  let(:payment) do # 支付方式
     Factory :payment, shop: shop
   end
 
@@ -35,7 +35,7 @@ describe Shop::OrderController do
 
     context 'exist vairant' do # 款式仍然存在
 
-      it 'should be show', focus1: true do
+      it 'should be show' do
         get :address, shop_id: shop.id, cart_token: cart.token
         response.should be_success
       end
@@ -60,7 +60,7 @@ describe Shop::OrderController do
 
       let(:un_exist_variant_id) { 8888 }
 
-      it 'should be show', focus: true do
+      it 'should be show' do
         invalid_cart = Factory :cart, shop: shop, cart_hash: %Q({"#{un_exist_variant_id}":1})
         expect do
           get :address, shop_id: shop.id, cart_token: invalid_cart.token
@@ -94,6 +94,24 @@ describe Shop::OrderController do
         order.shipping_rate.should eql '普通快递-10.0'
         order.payment_id.should eql payment.id
       end.should_not change(Order, :count)
+    end
+
+  end
+
+  context '#commit' do # 提交订单
+
+    describe '#cart' do
+
+      it 'should be destroy', focus: true do # 购物车会被删除
+        post :create, shop_id: shop.id, cart_token: cart.token, order: {
+          email: 'mahb45@gmail.com',
+          shipping_address_attributes: shipping_address_attributes
+        }
+        expect do
+          post :commit, shop_id: shop.id, token: cart.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
+        end.should change(Cart, :count).by(-1)
+      end
+
     end
 
   end
