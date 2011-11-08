@@ -302,7 +302,7 @@ GEM
     resque_spec (0.7.0)
       resque (>= 1.15.0)
       rspec (>= 2.5.0)
-    rsolr (0.12.1)
+    rsolr (1.0.2)
       builder (>= 2.1.2)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
@@ -356,13 +356,14 @@ GEM
       activesupport (~> 3.0)
       polyamorous (~> 0.5.0)
     subexec (0.1.0)
-    sunspot (1.2.1)
+    sunspot (1.3.0.rc6)
       escape (= 0.0.4)
       pr_geohash (~> 1.0)
-      rsolr (= 0.12.1)
-    sunspot_rails (1.2.1)
+      rsolr (= 1.0.2)
+    sunspot_rails (1.3.0.rc6)
       nokogiri
-      sunspot (= 1.2.1)
+      sunspot (= 1.3.0.rc6)
+    sunspot_solr (1.3.0.rc6)
     systemu (2.4.0)
     therubyracer (0.9.4)
       libv8 (~> 3.3.10)
@@ -449,7 +450,8 @@ DEPENDENCIES
   settingslogic
   spork
   squeel
-  sunspot_rails
+  sunspot_rails (~> 1.3.0.rc6)
+  sunspot_solr
   therubyracer
   uglifier
   unicorn

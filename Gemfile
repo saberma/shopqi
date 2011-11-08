@@ -13,7 +13,7 @@ gem 'activeadmin', ' ~> 0.3.3'
 gem 'unicorn'
 
 gem 'default_value_for'
-gem 'sunspot_rails'
+gem 'sunspot_rails',  "~> 1.3.0.rc6"
 
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'kaminari' # 分页
@@ -79,6 +79,7 @@ end
 group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
   gem "interactive_editor"
+  gem 'sunspot_solr'
   # 编译coffee-script
   gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟)
   #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
