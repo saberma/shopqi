@@ -4,24 +4,27 @@ class Api::AppController < ActionController::Base # API接口
   before_filter :check_oauth_authorization
   before_filter :load_resource
 
-  respond_to :json
+  respond_to :json,:xml
 
   def index
     respond_with(@collection) do |format|
-      format.json { render :json => @collection.to_json(collection_serialization_options) }
+      format.json { render json: @collection.to_json(collection_serialization_options) }
+      format.xml  { render  xml: @collection.to_xml(collection_serialization_options) }
     end
   end
 
   def show
     respond_with(@object) do |format|
-      format.json { render :json => @object.to_json(object_serialization_options) }
+      format.json { render json: @object.to_json(object_serialization_options) }
+      format.xml { render  xml:  @object.to_xml(object_serialization_options) }
     end
   end
 
   def update
     if @object.update_attributes(params[object_name])
       respond_with(@object) do |format|
-        format.json { render :json => @object.to_json(object_serialization_options) }
+        format.json { render json: @object.to_json(object_serialization_options) }
+        format.xml { render  xml:  @object.to_xml(object_serialization_options) }
       end
     else
       respond_with(@object.errors,status: 422)
@@ -31,7 +34,8 @@ class Api::AppController < ActionController::Base # API接口
   def create
     if @object.save
       respond_with(@object) do |format|
-        format.json { render :json => @object.to_json(object_serialization_options) }
+        format.json { render json: @object.to_json(object_serialization_options) }
+        format.xml { render xml: @object.to_xml(object_serialization_options) }
       end
     else
       respond_with(@object.errors,status: 422)
