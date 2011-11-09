@@ -19,4 +19,4 @@
         =f.submit '注册', class:'btn'
         %span.note
           =w('or')
-          =link_to '返回商店','#'
+          %a(href="#{shop.primary_domain.url}#{request.port_string}") 取消，然后返回商店
