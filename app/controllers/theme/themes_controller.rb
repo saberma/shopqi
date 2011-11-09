@@ -9,7 +9,7 @@ class Theme::ThemesController < Theme::AppController
   expose(:shop_host) { URI.parse(shop_url).host }
   expose(:handle) { session[:handle] || params[:handle] }
   expose(:style_handle) { session[:style_handle] || params[:style_handle] }
-  expose(:theme) { Theme.find_by_handle_and_style_handle(params[:handle], params[:style_handle]) }
+  expose(:theme) { Theme.where(handle: params[:handle], style_handle: params[:style_handle]).first }
 
   begin 'store'
 
@@ -25,8 +25,8 @@ class Theme::ThemesController < Theme::AppController
       session[:handle] = params[:handle]
       session[:style_handle] = params[:style_handle]
       @theme_json = theme.attributes.to_json
-      styles = Theme.find_all_by_handle(params[:handle])
-      others = Theme.find_all_by_author(theme.author).take(4)
+      styles = Theme.where(handle: params[:handle])
+      others = Theme.where(author: theme.author).take(4)
       @styles_json = styles.inject([]) do |result, theme|
         result << theme.attributes; result
       end.to_json
@@ -87,10 +87,13 @@ class Theme::ThemesController < Theme::AppController
       session[:q] = request.query_string
       price = params[:price]
       color = params[:color]
-      themes =  Theme.all.dup # 一定要复制
-      themes.select! {|t| t.price == 0} if price == 'free'
-      themes.reject! {|t| t.price == 0} if price == 'paid'
-      themes.select! {|t| t.color == color} unless color.blank?
+      themes =  Theme.order(:position.asc)
+      themes = if price == 'free'
+        themes.where(:price.eq => 0)
+      else price == 'paid'
+        themes.where(:price.not_eq => 0)
+      end
+      themes = themes.where(color: color) unless color.blank?
       themes_json = themes.inject([]) do |result, theme|
         result << { theme: theme.attributes }; result
       end.to_json

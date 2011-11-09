@@ -20,6 +20,7 @@ class CreateThemes < ActiveRecord::Migration
       t.string :main        , comment: "截图(列表页面)"    , limit: 64
       t.string :collection  , comment: "集合截图(查看页面)", limit: 64
       t.string :product     , comment: "商品截图(查看页面)", limit: 64
+      t.integer :position   , comment: "排序"              , default: 0
     end
   end
 

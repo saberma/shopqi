@@ -83,6 +83,7 @@ cn:
         author: 作者
         email: 作者Email
         published: 是否启用
+        position: 排序序号
         file: 主题压缩文件
         main: 主题列表截图
         collection: 主题详情集合截图

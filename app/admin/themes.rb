@@ -13,6 +13,7 @@ ActiveAdmin.register Theme do
   form html: { :enctype => "multipart/form-data" } do |f|
     f.inputs "基本信息" do
       f.input :published
+      f.input :position
       f.input :name
       f.input :handle
       f.input :style
