@@ -10,6 +10,7 @@ App.Views.LinkList.Links.New = Backbone.View.extend
     self = this
     @link_list = @options.link_list
     @model = new App.Models.Link link_list_id: @link_list.id
+    @link_list.links.unbind 'add' # 修改后新增出现重复记录 issues#243
     @link_list.links.bind 'add', (model, collection) ->
       msg "新增链接#{model.get('title')}到#{self.link_list.get('title')}列表成功."
       self.cancel()
@@ -21,7 +22,7 @@ App.Views.LinkList.Links.New = Backbone.View.extend
 
   save: ->
     self = this
-    position = @link_list.links.length
+    position = @link_list.links.length + 1
     @link_list.links.create
       position: position
       title: @$("input[name='title']").val()

@@ -113,10 +113,9 @@ class Shop::AppController < ActionController::Base
     def session_cart_hash # {variant_id: quantity}
       cart = Resque.redis.hgetall cart_key
       cart.inject({}) do |result, (key, value)| # 注意,redis获取的value为字符串
-        result[key.to_sym] = value.to_i if shop.variants.exists?(value.to_i) # 款式已经被删除，但顾客浏览器的cookie还存在id
+        result[key.to_i] = value.to_i if shop.variants.exists?(key.to_i) # 款式已经被删除，但顾客浏览器的cookie还存在id
         result
       end
-      cart
     end
 
   end

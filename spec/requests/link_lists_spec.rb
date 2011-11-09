@@ -104,7 +104,7 @@ describe "LinkLists", js: true do
         end
       end
 
-      it "should update handle", focus: true do # 可以修改非默认链接记录的固定链接(handle) issues#217
+      it "should update handle" do # 可以修改非默认链接记录的固定链接(handle) issues#217
         shop.link_lists.create title: '子菜单'
         visit link_lists_path
         within '#menus' do
@@ -138,24 +138,46 @@ describe "LinkLists", js: true do
 
     describe "Link" do
 
-      it "should be add" do # 新增
-        within '#menus' do
-          within :xpath, './li[1]' do
-            click_on '新增链接'
-            fill_in 'title', with: '查询'
-            select '查询页面'
-            find_field('subject_handle').visible?.should be_false
-            find_field('subject_params').visible?.should be_false
-            find_field('url').visible?.should be_false
-            click_on '新增链接'
-            within '.links' do # 链接记录
-              within :xpath, './li[4]' do
-                find('.link-title').text.should eql '查询'
-                find('.link-url').text.should eql '/search'
+      context 'add' do
+
+        it "should be success" do # 新增
+          within '#menus' do
+            within :xpath, './li[1]' do
+              click_on '新增链接'
+              fill_in 'title', with: '查询'
+              select '查询页面'
+              find_field('subject_handle').visible?.should be_false
+              find_field('subject_params').visible?.should be_false
+              find_field('url').visible?.should be_false
+              click_on '新增链接'
+              within '.links' do # 链接记录
+                within :xpath, './li[4]' do
+                  find('.link-title').text.should eql '查询'
+                  find('.link-url').text.should eql '/search'
+                end
               end
             end
           end
         end
+
+        it "should not add multi-links after edit", focus: true do # 修改后新增不能显示多条重复的链接 issues#243
+          within '#menus' do
+            within :xpath, './li[1]' do
+              click_on '修改链接列表'
+              click_on '保存'
+              click_on '新增链接'
+              fill_in 'title', with: '购物指南'
+              click_on '新增链接'
+              links_size = all('.links li').size
+              within '.links' do # 链接记录
+                page.should have_xpath("./li[#{links_size+1}]")
+                page.should have_no_xpath("./li[#{links_size+2}]")
+                page.should have_no_xpath("./li[#{links_size+3}]")
+              end
+            end
+          end
+        end
+
       end
 
       it "should be destroy" do # 删除
