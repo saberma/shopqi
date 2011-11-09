@@ -44,12 +44,12 @@ describe SearchDrop do
       liquid(variant).should eql result
     end
 
-    it 'should get featured_image' do
+    it 'should get featured_image', focus: true do
       photo = iphone4.photos.build
       photo.product_image = Rails.root.join('app/assets/images/avatar.jpg')
       photo.save!
       variant = "{% for item in search.results %}{{ item.featured_image | product_img_url: 'thumb' }}{% endfor %}"
-      liquid(variant).should_not be_blank
+      liquid(variant).should eql iphone4.index_photo
     end
 
   end

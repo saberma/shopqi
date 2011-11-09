@@ -42,7 +42,8 @@ class SearchItemDrop < Liquid::Drop
 
   def featured_image
     if @item.respond_to?(:photos)
-      @item.photos.first
+      index_photo = @item.photos.first
+      ProductImageDrop.new index_photo if index_photo
     end
   end
 
