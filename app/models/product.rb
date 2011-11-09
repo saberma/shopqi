@@ -207,6 +207,10 @@ class Photo < ActiveRecord::Base
   #显示在产品列表的缩略图(icon)
   #后台管理商品详情(small)
   versions pico: '16x16#', icon: '32x32#', thumb: '50x50#', small:'100x100#', compact: '160x160#', medium: '240x240#', large: '480x480#', grande: '600x600#', original: '1024x1024#'
+
+  def to_liquid
+    ProductImageDrop.new self
+  end
 end
 
 CustomCollection
