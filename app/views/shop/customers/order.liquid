@@ -1,3 +1,5 @@
+{% layout settings.customer_layout %}
+
 <div id="admin_header">
   <div class="action_link action_return note" id='return_to_store'><a href="/account">Return to Account page</a></div>
 
@@ -14,18 +16,32 @@
 <div class="note order_date">Placed on {{ order.created_at | date: "%B %d, %Y %I:%M%p" }}</div>
 
 <div id="order_address" class="group">
-  <div id="order_shipping">
-    <h5 class="order_section_title">Shipping Address</h5>
-    <p><span class="note">Fulfillment Status: </span><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></p>
+  <div id="order_payment">
+    <h5 class="order_section_title">Billing Address</h5>
+    <p><span class="note">Payment Status:</span> <span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></p>
     <div class="address note">
-      <p>{{ order.shipping_address.name }}</p>
-      <p>{{ order.shipping_address.company }}</p>
-      <p>{{ order.shipping_address.street }}</p>
-      <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
-      <p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
-      <p>{{ order.shipping_address.phone }}</p>
+      <p>{{ order.billing_address.name }}</p>
+      <p>{{ order.billing_address.company }}</p>
+      <p>{{ order.billing_address.street }}</p>
+      <p>{{ order.billing_address.city }}, {{ order.billing_address.province }}</p>
+      <p>{{ order.billing_address.country }} {{ order.billing_address.zip }}</p>
+      <p>{{ order.billing_address.phone }}</p>
     </div>
   </div>
+  {% if order.shipping_address %}
+    <div id="order_shipping">
+      <h5 class="order_section_title">Shipping Address</h5>
+      <p><span class="note">Fulfillment Status:</span> <span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></p>
+      <div class="address note">
+        <p>{{ order.shipping_address.name }}</p>
+        <p>{{ order.shipping_address.company }}</p>
+        <p>{{ order.shipping_address.street }}</p>
+        <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
+        <p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
+        <p>{{ order.shipping_address.phone }}</p>
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 <table id="order_details">
@@ -42,7 +58,7 @@
     {% for line_item in order.line_items %}
     <tr id="{{ line_item.id }}" class="{% cycle 'odd', 'even' %}">
       <td class="product">
-        {{ line_item.title | link_to: line_item.product.url }}
+        {{ line_item.title | link_to: line_item.product.url }} 
         {% if line_item.fulfillment %}
           <div class="note">
             Fulfilled {{ line_item.fulfillment.created_at | date: "%b %d" }}
@@ -58,30 +74,30 @@
       <td class="total money">{{ line_item.quantity | times: line_item.price | money }}</td>
     </tr>
     {% endfor %}
-  </tbody>
+  </tbody>  
   <tfoot>
     <tr class="order_summary note">
       <td class="label" colspan="4">Subtotal:</td>
       <td class="total money">{{ order.subtotal_price | money }}</td>
-    </tr>
-
+    </tr>   
+    
     {% for shipping_method in order.shipping_methods %}
     <tr class="order_summary note">
       <td class="label" colspan="4">Shipping ({{ shipping_method.title }}):</td>
       <td class="total money">{{ shipping_method.price | money }}</td>
     </tr>
     {% endfor %}
-
+    
     {% for tax_line in order.tax_lines %}
       <tr class="order_summary note">
         <td class="label" colspan="4">Tax ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%):</td>
         <td class="total money">{{ tax_line.price | money }}</td>
       </tr>
-    {% endfor %}
-
+    {% endfor %}    
+            
     <tr class="order_summary order_total">
       <td class="label" colspan="4">Total:</td>
       <td class="total money">{{ order.total_price | money }} {{ order.currency }}</td>
-    </tr>
-  </tfoot>
+    </tr>   
+  </tfoot>  
 </table>
