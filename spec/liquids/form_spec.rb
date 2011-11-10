@@ -28,9 +28,9 @@ describe Form do
     let(:customer_drop) { CustomerDrop.new customer }
 
     it 'should show login from', focus: true do
-      variant = "{% form 'customer_login' %}{% endform %}"
+      variant = "{% form 'customer_login' %} {{ form.errors | default_errors }} {% if form.password_needed %}password{% endif %} {% endform %}"
       assign = { 'customer' => customer_drop }
-      result = "<form id=\"customer_login\" method=\"post\" action=\"/accounts/login\">\n\n</form>"
+      result = "<form id=\"customer_login\" method=\"post\" action=\"/account/login\">\n  password \n</form>"
       Liquid::Template.parse(variant).render(assign).should eql result
     end
 

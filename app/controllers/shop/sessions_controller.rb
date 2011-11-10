@@ -11,14 +11,19 @@ class Shop::SessionsController < Shop::AppController
   include Shop::OrderHelper
   skip_before_filter :must_has_theme
   prepend_before_filter :allow_params_authentication!, only: :create
-  layout 'shop/admin'
+  #layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
 
   # GET /resource/sign_in
   def new
     resource = build_resource
     clean_up_passwords(resource)
-    respond_with_navigational(resource, stub_options(resource)){ render_with_scope :new }
+    path = Rails.root.join 'app/views/shop/customers/login.liquid'
+    assign = template_assign('customer' => CustomerDrop.new(resource))
+    liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
+    assign.merge!('content_for_layout' => liquid_view)
+    html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+    render text: html
   end
 
   # POST /resource/sign_in
@@ -35,8 +40,7 @@ class Shop::SessionsController < Shop::AppController
     resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
     set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
-    #用于增加购物车与顾客之间的关联
-    if checkout_url
+    if checkout_url #用于增加购物车与顾客之间的关联
       token = checkout_url.gsub(/.+\//,'')
       if cart = Cart.find_by_token(token) and !params[:guest].present?
        cart.customer = resource

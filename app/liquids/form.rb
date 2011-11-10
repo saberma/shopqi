@@ -25,10 +25,12 @@ class Form < Liquid::Block
   def render_customer_login_form(context, customer) # 登录表单
     context.stack do
       context['form'] = {
+        'errors' => context['customer.errors'],
+        'password_needed' => true,
       }
       input = render_all(@nodelist, context)
-      action = "/accounts/login"
-      %Q{<form id="customer_login" method="post" action="/accounts/login">\n#{input}\n</form>}
+      action = "/account/login"
+      %Q{<form id="customer_login" method="post" action="#{action}">\n#{input}\n</form>}
     end
   end
 

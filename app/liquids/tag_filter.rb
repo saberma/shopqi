@@ -1,3 +1,4 @@
+# encoding: utf-8
 module TagFilter
 
   def stylesheet_tag(input)
@@ -22,6 +23,18 @@ module TagFilter
 
   def link_to_vendor(input)
     "<a title=#{input} href='/collections/vendors?q=#{input}'>#{input}</a>"
+  end
+
+  def default_errors(errors) # 错误提示(暂不支持顾客登录失败提示)
+    text = ''
+    if errors and !errors.empty?
+      text += '<div class="errors"><ul>'
+      errors.each do |attribute, errors_array|
+        text += "<li> #{attribute}#{errors_array} </li>"
+      end
+      text += "</ul></div>"
+    end
+    text
   end
 
 end
