@@ -75,6 +75,7 @@ class Shop::CartController < Shop::AppController
 
   private
   def save_line_item(variant_id, quantity)
+    session['cart'] = true # 只为了让浏览器生成session issues#248
     if quantity.zero?
       Resque.redis.hdel cart_key, variant_id
     else

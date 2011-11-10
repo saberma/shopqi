@@ -17,6 +17,17 @@ describe "Orders", js: true do
     click_on '加入购物车'
   end
 
+  ##### 结算 #####
+  describe "Cart" do
+
+    it 'should show order address page' do # issues#248
+      visit "/cart"
+      click_on '结算'
+      page.should have_content('创建您的订单') # 显示结算页面
+    end
+
+  end
+
   ##### 顾客登录 #####
   describe "Customers" do
 
