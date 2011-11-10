@@ -92,10 +92,10 @@ class Theme::ThemesController < Theme::AppController
       price = params[:price]
       color = params[:color]
       themes =  Theme.order(:position.asc)
-      themes = if price == 'free'
-        themes.where(:price.eq => 0)
-      else price == 'paid'
-        themes.where(:price.not_eq => 0)
+      if price == 'free'
+        themes = themes.where(:price.eq => 0)
+      elsif price == 'paid'
+        themes = themes.where(:price.not_eq => 0)
       end
       themes = themes.where(color: color) unless color.blank?
       themes_json = themes.inject([]) do |result, theme|
