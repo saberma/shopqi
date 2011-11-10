@@ -7,8 +7,10 @@
 class Shop::SessionsController < Shop::AppController
   #prepend_before_filter :require_no_authentication, :only => [:new, :create ] #去掉此句，以便用户能更改账号付账
   #before_filter :get_host, only: :create
-  skip_before_filter :must_has_theme
   include Devise::Controllers::InternalHelpers
+  include Shop::OrderHelper
+  skip_before_filter :must_has_theme
+  prepend_before_filter :allow_params_authentication!, only: :create
   layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
 
@@ -73,9 +75,5 @@ class Shop::SessionsController < Shop::AppController
     { :methods => methods, :only => [:password] }
   end
 
-  private
-  def checkout_url
-    session['customer_return_to'] || params['checkout_url'] # 1. 顾客结算时未跳转至checkout子域名，使用session；2. 否则发现cart未关联顾客时，使用checkout_url参数
-  end
 end
 

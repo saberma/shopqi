@@ -3,8 +3,7 @@ module Shop::OrderHelper
     if cart
       "#{request.protocol}checkout.#{Setting.host}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}"
     else
-      # 与app/controllers/shop/sessions_controller.rb保持一致，在顾客登录页面中使用
-      session['customer_return_to'] || params['checkout_url']
+      session['customer_return_to'] || params['checkout_url'] # 1. 顾客结算时未跳转至checkout子域名，使用session；2. 否则发现cart未关联顾客时，使用checkout_url参数
     end
   end
 end

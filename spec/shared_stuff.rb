@@ -17,6 +17,26 @@ shared_context 'login admin' do
   after(:each) { Capybara::Server.manual_host = nil }
 end
 
+shared_context 'use shop' do # 访问 shopqi.com
+
+  let(:theme) { Factory :theme_woodland_dark }
+
+  let(:user_admin) {  Factory :user_admin }
+
+  let(:shop) do
+    model = user_admin.shop
+    model.update_attributes password_enabled: false
+    model.themes.install theme
+    model
+  end
+
+  before :each do
+    Capybara::Server.manual_host = shop.primary_domain.host
+  end
+
+  after(:each) { Capybara::Server.manual_host = nil }
+end
+
 shared_context 'use shopqi host' do # 访问 shopqi.com
   before :each do
     Capybara::Server.manual_host = Setting.host

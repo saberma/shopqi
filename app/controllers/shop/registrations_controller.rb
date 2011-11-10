@@ -4,6 +4,7 @@ class Shop::RegistrationsController < Shop::AppController
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy]
   skip_before_filter :must_has_theme
   include Devise::Controllers::InternalHelpers
+  include Shop::OrderHelper
   layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
 
@@ -23,7 +24,16 @@ class Shop::RegistrationsController < Shop::AppController
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)
-        respond_with resource, :location => redirect_location(resource_name, resource)
+        if checkout_url # 跳转到结算页面
+          token = checkout_url.gsub(/.+\//,'')
+          if cart = Cart.find_by_token(token)
+           cart.customer = resource
+           cart.save!
+          end
+          redirect_to checkout_url and return
+        else
+          respond_with resource, :location => redirect_location(resource_name, resource)
+        end
       else
         set_flash_message :notice, :inactive_signed_up, :reason => inactive_reason(resource) if is_navigational_format?
         expire_session_data_after_sign_in!

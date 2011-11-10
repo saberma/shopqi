@@ -131,7 +131,7 @@ describe "Shop::Shops", js:true do
   end
 
   # 商品列表
-  describe "GET /collections/all" do # TODO:安装ruby1.9.3rc2 # SEE:https://github.com/saberma/shopqi/issues/180
+  describe "GET /collections/all" do
 
     it "should list products!" do
       iphone4

@@ -107,7 +107,7 @@ class Shop::AppController < ActionController::Base
   begin 'cart'
 
     def cart_key # 存储在redis中的cart
-      Cart.key(shop, request.session_options[:id])
+      Cart.key(shop, session_id)
     end
 
     def session_cart_hash # {variant_id: quantity}
