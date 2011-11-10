@@ -1,8 +1,0 @@
-%tr(class="#{cycle(:odd,:even)}")
-  %td=link_to order.title, account_show_order_path(order.token)
-  %td.note=I18n.l order.created_at, format: :serial
-  %td
-    %span(class="status_#{order.financial_status}")=order.financial_status_name
-  %td
-    %span(class="status_#{order.fulfillment_status}")=order.fulfillment_status_name
-  %td.total.money==¥ #{order.total_price}

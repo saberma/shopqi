@@ -1,44 +1,35 @@
 {% layout settings.customer_layout %}
 
 <div id="admin_header">
-  <div class="action_link action_return note" id='return_to_store'><a href="/account">Return to Account page</a></div>
+  <div class="action_link action_return note"><a href="/account">返回帐号页面</a></div>
 
-  <h2 class="title">Order {{ order.name }}</h2>
+  <h2 class="title">订单 {{ order.name }}</h2>
 </div>
 
 {% if order.cancelled %}
 <div id="order_cancelled" class="flash notice">
-  <h5 id="order_cancelled_title">Order Cancelled <span class="note">on {{ order.cancelled_at | date: "%B %d, %Y %I:%M%p" }}</span></h5>
+  <h5 id="order_cancelled_title">订单<span class="note">已于 {{ order.cancelled_at | date: "%Y年%m月%d日 %I:%M" }}</span></h5>
   <span class="note">{{ order.cancel_reason }}</span>
 </div>
 {% endif %}
 
-<div class="note order_date">Placed on {{ order.created_at | date: "%B %d, %Y %I:%M%p" }}</div>
+<div class="note order_date">下单时间: {{ order.created_at | date: "%Y年%m月%d日 %I:%M" }}</div>
 
 <div id="order_address" class="group">
   <div id="order_payment">
-    <h5 class="order_section_title">Billing Address</h5>
-    <p><span class="note">Payment Status:</span> <span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></p>
-    <div class="address note">
-      <p>{{ order.billing_address.name }}</p>
-      <p>{{ order.billing_address.company }}</p>
-      <p>{{ order.billing_address.street }}</p>
-      <p>{{ order.billing_address.city }}, {{ order.billing_address.province }}</p>
-      <p>{{ order.billing_address.country }} {{ order.billing_address.zip }}</p>
-      <p>{{ order.billing_address.phone }}</p>
-    </div>
+    <p><span class="note">支付状态:</span> <span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></p>
   </div>
   {% if order.shipping_address %}
     <div id="order_shipping">
-      <h5 class="order_section_title">Shipping Address</h5>
-      <p><span class="note">Fulfillment Status:</span> <span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></p>
+      <h5 class="order_section_title">收货地址</h5>
+      <p><span class="note">配送状态:</span> <span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></p>
       <div class="address note">
-        <p>{{ order.shipping_address.name }}</p>
         <p>{{ order.shipping_address.company }}</p>
-        <p>{{ order.shipping_address.street }}</p>
-        <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
-        <p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
+        <p>{{ order.shipping_address.name }}</p>
         <p>{{ order.shipping_address.phone }}</p>
+        <p>{{ order.shipping_address.street }}</p>
+        <p>{{ order.shipping_address.country }} {{ order.shipping_address.province }} {{ order.shipping_address.city }}</p>
+        <p>{{ order.shipping_address.zip }}</p>
       </div>
     </div>
   {% endif %}
@@ -47,11 +38,11 @@
 <table id="order_details">
   <thead>
     <tr>
-      <th>Product</th>
+      <th>商品</th>
       <th>SKU</th>
-      <th>Price</th>
-      <th class="center">Quantity</th>
-      <th class="total">Total</th>
+      <th>价格</th>
+      <th class="center">数量</th>
+      <th class="total">金额</th>
     </tr>
   </thead>
   <tbody>
@@ -61,7 +52,7 @@
         {{ line_item.title | link_to: line_item.product.url }} 
         {% if line_item.fulfillment %}
           <div class="note">
-            Fulfilled {{ line_item.fulfillment.created_at | date: "%b %d" }}
+            发货于 {{ line_item.fulfillment.created_at | date: "%Y %m" }}
             {% if line_item.fulfillment.tracking_number %}
               <a href="{{ line_item.fulfillment.tracking_url }}">{{ line_item.fulfillment.tracking_company }} #{{ line_item.fulfillment.tracking_number}}</a>
             {% endif %}
@@ -77,7 +68,7 @@
   </tbody>  
   <tfoot>
     <tr class="order_summary note">
-      <td class="label" colspan="4">Subtotal:</td>
+      <td class="label" colspan="4">金额:</td>
       <td class="total money">{{ order.subtotal_price | money }}</td>
     </tr>   
     
@@ -90,13 +81,13 @@
     
     {% for tax_line in order.tax_lines %}
       <tr class="order_summary note">
-        <td class="label" colspan="4">Tax ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%):</td>
+        <td class="label" colspan="4">税费 ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%):</td>
         <td class="total money">{{ tax_line.price | money }}</td>
       </tr>
     {% endfor %}    
             
     <tr class="order_summary order_total">
-      <td class="label" colspan="4">Total:</td>
+      <td class="label" colspan="4">总金额:</td>
       <td class="total money">{{ order.total_price | money }} {{ order.currency }}</td>
     </tr>   
   </tfoot>  

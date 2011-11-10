@@ -1,8 +1,8 @@
 {% layout settings.customer_layout %}
 
 <div id="admin_header">
-  <div class="action_link action_return note" id='return_to_store'><a href="{{ shop.url }}">Return to Store</a></div>
-  <h2 class="title">Account Details and Order History</h2>
+  <div class="action_link action_return note" id='return_to_store'><a href="{{ shop.url }}">返回商店</a></div>
+  <h2 class="title">账号信息 以及 订单信息</h2>
 </div>
 
 <div id="customer_sidebar">
@@ -11,15 +11,15 @@
     <p class="email note">{{ customer.email }}</p>
     <div class="address note">
       {% if customer.default_address != nil %}
+        <p>{{ customer.default_address.phone }}</p>
+        <p>{{customer.default_address.country}} {{customer.default_address.province_code}} {{ customer.default_address.city}}</p>
         <p>{{ customer.default_address.address1 }}</p>
         {% if customer.default_address.address2 != "" %}
           <p>{{ customer.default_address.address2 }}</p>
         {% endif %}
-        <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
         <p>{{ customer.default_address.zip}}</p>
-        <p>{{ customer.default_address.phone }}</p>
       {% endif %}
-      <a id="view_address" href="/account/addresses">View Addresses ({{ customer.addresses_count }})</a>
+      <a id="view_address" href="/account/addresses">查看地址簿({{ customer.addresses_count }})</a>
     </div>
 
   </div>
@@ -30,18 +30,18 @@
   <table>
     <thead>
       <tr>
-        <th class="order_number">Order</th>
-        <th class="date">Date</th>
-        <th class="payment_status">Payment Status</th>
-        <th class="fulfillment_status">Fulfillment Status</th>
-        <th class="total">Total</th>
+        <th class="order_number">订单</th>
+        <th class="date">日期</th>
+        <th class="payment_status">支付状态</th>
+        <th class="fulfillment_status">配送状态</th>
+        <th class="total">总金额</th>
       </tr>
     </thead>
     <tbody>
       {% for order in customer.orders %}
       <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
         <td>{{ order.name | link_to: order.customer_url }}</td>
-        <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
+        <td><span class="note">{{ order.created_at | date: "%Y年%m月%d日" }}</span></td>
         <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
         <td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
         <td><span class="total money">{{ order.total_price | money }}</span></td>
@@ -50,6 +50,6 @@
     </tbody>
   </table>
   {% else %}
-    <p>You haven't placed any orders yet.</p>
+    <p>您还没有提交任何订单.</p>
   {% endif %}
 </div>

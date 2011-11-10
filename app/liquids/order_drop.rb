@@ -1,12 +1,13 @@
 #encoding: utf-8
 #订单关联的liquid属性
+SessionCart
 class OrderDrop < Liquid::Drop
 
   def initialize(order)
     @order = order
   end
 
-  delegate :id, :name, :order_number,:gateway, :shipping_rate,:shipping_name, :shipping_rate_price, :payment, :total_price, :total_line_items_price,:cancelled_at, to: :@order
+  delegate :id, :name, :order_number,:gateway, :shipping_rate,:shipping_name, :shipping_rate_price, :payment, :total_price, :total_line_items_price,:cancelled_at, :created_at, to: :@order
 
   def date
     @order.created_at
@@ -43,7 +44,10 @@ class OrderDrop < Liquid::Drop
 
 
   def line_items
-    @order.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
+    @order.line_items.map do |line_item|
+      session_line_item = SessionLineItem.new line_item.product_variant_id, line_item.quantity, @order.shop
+      LineItemDrop.new(session_line_item)
+    end
   end
 
   def shipping_address
@@ -69,6 +73,22 @@ class OrderDrop < Liquid::Drop
     @order.cancelled_at?
   end
 
+  def financial_status
+    @order.financial_status_name
+  end
+
+  def fulfillment_status
+    @order.fulfillment_status_name
+  end
+
+  def customer_url
+    "/account/orders/#{@order.token}"
+  end
+
+  def subtotal_price
+    @order.total_line_items_price
+  end
+
 end
 
 #配送记录
@@ -79,7 +99,10 @@ class OrderFulfillmentDrop < Liquid::Drop
   delegate :tracking_company, :tracking_number,:created_at,:updated_at, to: :@fulfillment
 
   def line_items
-    @fulfillment.line_items.map{|v| LineItemDrop.new(v.product_variant, v.quantity) }
+    @fulfillment.line_items.map do |line_item|
+      session_line_item = SessionLineItem.new line_item.product_variant_id, line_item.quantity, @order.shop
+      LineItemDrop.new(session_line_item)
+    end
   end
 
 end
