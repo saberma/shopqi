@@ -24,12 +24,15 @@ describe "Blogs" do
       select '允许评论,需审核', from: 'blog_commentable'
       click_on '保存'
 
-      #新增文章
+      #新增文章(title为nil时)
       click_on '新增文章'
       page.execute_script("$.fn.off = true")
-      fill_in 'article[title]', with: '新品上市'
       find('#kindeditor').visible?.should be false
+      click_on '新增'
+      page.should_not have_content('新增成功')
+      page.should have_content('不能为空')
 
+      fill_in 'article[title]', with: '新品上市'
       click_on '新增'
       page.should have_content('新增成功')
       page.should have_content('新品上市')
@@ -43,7 +46,10 @@ describe "Blogs" do
       blog = Blog.find_by_title('商品介绍')
       article = blog.articles.first
       Comment.create(article_id: article.id,shop_id: shop.id, status: 'spam',email: 'liwh87@gmail.com', body: '新评论内容', author: 'admin')
+      blog.reload
+
       visit blog_article_path(blog,article)
+
       within(:xpath, "//table[@id='comments-list']/tbody/tr")  do
         has_content?("新评论内容").should be_true
         has_link?("liwh87@gmail.com").should be_true
