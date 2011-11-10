@@ -30,6 +30,7 @@ class Article < ActiveRecord::Base
   has_many :unapproved_comments,class_name:"Comment",conditions:"comments.status = 'pending'"
   #垃圾评论
   has_many :spam_comments,class_name:"Comment",conditions:"comments.status = 'spam'"
+  validates_presence_of :title
 
   searchable do
     integer :shop_id, references: Shop

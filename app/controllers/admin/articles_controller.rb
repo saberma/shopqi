@@ -15,6 +15,8 @@ class Admin::ArticlesController < Admin::AppController
     if article.save
       flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
       redirect_to blog_article_path(blog,article)
+    else
+      render action: 'new'
     end
   end
 

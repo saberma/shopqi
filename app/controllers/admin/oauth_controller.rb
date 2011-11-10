@@ -1,10 +1,8 @@
 class Admin::OauthController < Admin::AppController
-  prepend_before_filter :authenticate_user!, except: [:access_token,:authorize]
+  prepend_before_filter :authenticate_user!, except: [:access_token]
 
 
   def authorize # 返回authorize_code
-    Devise::FailureApp.default_url_options = { host: request.host}
-    self.send :authenticate_user!
     @oauth2 = OAuth2::Provider.parse(current_user.shop, request)
     #response.headers = @oauth2.response_headers
     #response.status = @oauth2.response_status

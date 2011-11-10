@@ -87,4 +87,4 @@ namespace 'Utils', (exports) ->
 
   exports.markFeaturedImage = ->
     $('.featured').remove()
-    $('ul li:first-child').append("<div class='featured'></div>")
+    $('div#image-show-area ul li:first-child').append("<div class='featured'></div>")
