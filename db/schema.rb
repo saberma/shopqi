@@ -688,6 +688,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
     t.string  "main",         :limit => 64
     t.string  "collection",   :limit => 64
     t.string  "product",      :limit => 64
+    t.integer "position",                   :default => 0
   end
 
   create_table "users", :force => true do |t|
