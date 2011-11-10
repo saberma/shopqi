@@ -2,9 +2,14 @@ require "spec_helper"
 
 describe ThemeMailer do
 
-  let(:shop) { Factory(:user).shop }
-
-  let(:theme) { shop.theme }
+  let(:user_admin) { Factory(:user_admin) }
+  let(:theme) { Factory :theme_woodland_dark }
+  let(:shop) do
+      model = user_admin.shop
+      model.update_attributes password_enabled: false
+      model.themes.install theme
+      model
+    end
 
   it 'should be export' do
     with_resque do
