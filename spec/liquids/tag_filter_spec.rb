@@ -42,4 +42,17 @@ describe TagFilter do
     Liquid::Template.parse(variant).render('vendor' => 'Cola').should eql result
   end
 
+  it "should get vendor url" do
+    variant = "{{ vendor | link_to_vendor}}"
+    result = "<a title=Cola href='/collections/vendors?q=Cola'>Cola</a>"
+    Liquid::Template.parse(variant).render('vendor' => 'Cola').should eql result
+  end
+
+  it "should get errors", focus: true do
+    variant = "{{ errors | default_errors}}"
+    errors = { email: '不能为空' }
+    result = '<div class="errors"><ul><li> email不能为空 </li></ul></div>'
+    Liquid::Template.parse(variant).render('errors' => errors).should eql result
+  end
+
 end

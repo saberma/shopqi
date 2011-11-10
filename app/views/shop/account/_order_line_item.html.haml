@@ -1,7 +1,0 @@
-%tr(class="#{cycle(:odd,:even)}")
-  %td.product
-    =link_to order_line_item.product_variant.product.title,product_show_path(order_line_item.product_variant.product.handle)
-  %td.sku.note=order_line_item.sku
-  %td.money==¥#{order_line_item.price}
-  %td.quantity.cente=order_line_item.quantity
-  %td.total.money==¥#{order_line_item.price * order_line_item.quantity}

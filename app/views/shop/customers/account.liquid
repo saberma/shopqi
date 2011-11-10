@@ -1,0 +1,55 @@
+{% layout settings.customer_layout %}
+
+<div id="admin_header">
+  <div class="action_link action_return note" id='return_to_store'><a href="{{ shop.url }}">返回商店</a></div>
+  <h2 class="title">账号信息 以及 订单信息</h2>
+</div>
+
+<div id="customer_sidebar">
+  <div id="customer_detail" class="group">
+    <h5 class="name">{{ customer.name }}</h5>
+    <p class="email note">{{ customer.email }}</p>
+    <div class="address note">
+      {% if customer.default_address != nil %}
+        <p>{{ customer.default_address.phone }}</p>
+        <p>{{customer.default_address.country}} {{customer.default_address.province_code}} {{ customer.default_address.city}}</p>
+        <p>{{ customer.default_address.address1 }}</p>
+        {% if customer.default_address.address2 != "" %}
+          <p>{{ customer.default_address.address2 }}</p>
+        {% endif %}
+        <p>{{ customer.default_address.zip}}</p>
+      {% endif %}
+      <a id="view_address" href="/account/addresses">查看地址簿({{ customer.addresses_count }})</a>
+    </div>
+
+  </div>
+</div>
+
+<div id="customer_orders">
+  {% if customer.orders.size != 0 %}
+  <table>
+    <thead>
+      <tr>
+        <th class="order_number">订单</th>
+        <th class="date">日期</th>
+        <th class="payment_status">支付状态</th>
+        <th class="fulfillment_status">配送状态</th>
+        <th class="total">总金额</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in customer.orders %}
+      <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+        <td>{{ order.name | link_to: order.customer_url }}</td>
+        <td><span class="note">{{ order.created_at | date: "%Y年%m月%d日" }}</span></td>
+        <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
+        <td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
+        <td><span class="total money">{{ order.total_price | money }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>您还没有提交任何订单.</p>
+  {% endif %}
+</div>

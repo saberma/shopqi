@@ -124,6 +124,7 @@ Shopqi::Application.routes.draw do
       scope '/account' do
         devise_for :customer do
           get '/login'                     , to: 'sessions#new'
+          post '/login'                    , to: 'sessions#create'
           get '/signup'                    , to: 'registrations#new'
           get '/logout'                    , to: 'sessions#destroy'
         end

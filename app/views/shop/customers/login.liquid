@@ -1,0 +1,96 @@
+{% layout settings.customer_layout %}
+
+<div id="template">
+  <div id="customer">
+    <div class="template_header">
+      <h2 class="title">顾客登录</h2>
+    </div>
+
+    {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+
+      <div id="login_email" class="clearfix large_form">
+        <label for="customer_email" class="login">Email地址</label>
+        <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" />
+      </div>
+
+      {% if form.password_needed %}
+
+        {% comment %}
+          登录
+        {% endcomment %}
+
+        <div id="login_password" class="clearfix large_form">
+          <label for="customer_password" class="login">密码</label>
+          <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+          <div id="forgot_password">
+            <a href="#" onclick="showRecoverPasswordForm()">忘记密码?</a>
+          </div>
+        </div>
+
+      {% endif %}
+
+      <div class="action_bottom">
+        <input class="btn" type="submit" value="登录" />
+        <span class="note">或者 <a href="{{ shop.url }}">返回商店</a></span>
+      </div>
+    {% endform %}
+  </div>
+
+  {% comment %}
+    忘记密码
+  {% endcomment %}
+
+  <div id="recover-password" style='display:none'>
+    <div class="template_header">
+      <h2 class="title">忘记密码</h2>
+      <p class="note">我们将发送重置密码的链接地址到您的email地址.</p>
+    </div>
+
+    {% form 'recover_customer_password' %}
+      {{ form.errors | default_errors }}
+
+      <div id="recover_email" class="clearfix large_form">
+        <label for="email" class="large">Email地址</label>
+        <input type="email" value="" size="30" name="email" id="recover-email" class="large" />
+      </div>
+      <div class="action_bottom">
+        <input class="btn" type="submit" value="提交" />
+        <span class="note">或者 <a href="#" onclick="hideRecoverPasswordForm()">取消</a></span>
+      </div>
+    {% endform %}
+  </div>
+
+
+  {% comment %}
+    此表单只在结算时显示.
+  {% endcomment %}
+
+  {% if shop.checkout.guest_login %}
+  <div id="guest">
+    <div class="template_header">
+      <h3 class="title">以游客身份访问</h3>
+    </div>
+    {% form 'guest_login' %}
+      <input class="btn" type="submit" value="继续以游客身份访问" />
+    {% endform %}
+  </div>
+  {% endif %}
+</div>
+
+
+<script type="text/javascript">
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'inline-block';
+    document.getElementById('customer').style.display='none';
+    return false;
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('customer').style.display = 'inline-block';
+    return false;
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+</script>

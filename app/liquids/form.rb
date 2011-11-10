@@ -12,7 +12,29 @@ class Form < Liquid::Block
   end
 
   def render(context)
-    article = context[@variable_name]
+    if @variable_name == 'customer_login'
+      object = context['customer']
+      render_customer_login_form context, object
+    elsif @variable_name == 'article'
+      object = context[@variable_name]
+      render_article_form context, object
+    end
+  end
+
+  private
+  def render_customer_login_form(context, customer) # 登录表单
+    context.stack do
+      context['form'] = {
+        'errors' => context['customer.errors'],
+        'password_needed' => true,
+      }
+      input = render_all(@nodelist, context)
+      action = "/account/login"
+      %Q{<form id="customer_login" method="post" action="#{action}">\n#{input}\n</form>}
+    end
+  end
+
+  def render_article_form(context, article) # 发表评论表单
     context.stack do
       context['form'] = {
         'posted_successfully?' => context['posted_successfully'],
@@ -21,12 +43,10 @@ class Form < Liquid::Block
         'email'  => context['comment.email'],
         'body'   => context['comment.body']
       }
-      wrap_in_form(article, render_all(@nodelist, context))
+      input = render_all(@nodelist, context)
+      action = "/blogs/#{article.blog.handle}/#{article.id}/comments"
+      %Q{<form id="article-#{article.id}-comment-form" class="comment-form" method="post" action="#{action}">\n#{input}\n</form>}
     end
   end
 
-  def wrap_in_form(article, input)
-    action = "/blogs/#{article.blog.handle}/#{article.id}/comments"
-    %Q{<form id="article-#{article.id}-comment-form" class="comment-form" method="post" action="#{action}">\n#{input}\n</form>}
-  end
 end

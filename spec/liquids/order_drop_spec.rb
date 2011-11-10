@@ -19,7 +19,26 @@ describe OrderDrop do
 
     variant = "{{ order.shipping_rate }}"
     liquid(variant).should eql "#{order.shipping_rate}"
+  end
 
+  it 'should get financial_status' do
+    variant = "{{ order.financial_status }}"
+    liquid(variant).should eql "#{order.financial_status_name}"
+  end
+
+  it 'should get fulfillment_status' do
+    variant = "{{ order.fulfillment_status }}"
+    liquid(variant).should eql "#{order.fulfillment_status_name}"
+  end
+
+  it 'should get customer_url' do
+    variant = "{{ order.customer_url }}"
+    liquid(variant).should eql "/account/orders/#{order.token}"
+  end
+
+  it 'should get subtotal_price' do
+    variant = "{{ order.subtotal_price }}"
+    liquid(variant).should eql "#{order.total_line_items_price}"
   end
 
   private
