@@ -5,7 +5,11 @@ class Theme::ThemesController < Theme::AppController
   layout 'theme', only: [:index, :show, :download, :apply]
 
   expose(:permanent_domain) { session[:shop] }
-  expose(:shop_url) { session[:shop_url] }
+  expose(:shop_url) do
+    if session[:shop_url]
+      url_with_protocol(session[:shop_url])
+    end
+  end
   expose(:shop_host) { URI.parse(shop_url).host }
   expose(:handle) { session[:handle] || params[:handle] }
   expose(:style_handle) { session[:style_handle] || params[:style_handle] }

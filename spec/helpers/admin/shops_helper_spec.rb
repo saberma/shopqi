@@ -11,4 +11,11 @@ require 'spec_helper'
 #   end
 # end
 describe Admin::ShopsHelper do
+  describe 'it should return result' do
+    it "should get the expect result" do
+      url_with_protocol("myshopqi.lvh.me:4000").should eql "http://myshopqi.lvh.me:4000"
+      url_with_protocol("http://myshopqi.lvh.me:4000").should eql "http://myshopqi.lvh.me:4000"
+      url_with_protocol("https://myshopqi.lvh.me:4000").should eql "https://myshopqi.lvh.me:4000"
+    end
+  end
 end

@@ -1,7 +1,7 @@
 module Admin::ShopsHelper
 
   #用于获得当前请求商店的地址
-  def show_shop_url
+  def show_shop_url # http://shopqi.com:4000
     "#{shop.primary_domain.url}#{request.port_string}"
   end
 
@@ -12,19 +12,19 @@ module Admin::ShopsHelper
     end
 
     def url_with_port # http://shopqi.com:4000
-      "http://#{host_with_port}"
+      "#{url_protocol}#{host_with_port}"
     end
 
     def theme_store_url_with_port # http://themes.shopqi.com:4000
-      "http://themes.#{host_with_port}"
+      "#{url_protocol}themes.#{host_with_port}"
     end
 
     def wiki_url_with_port # http://wiki.shopqi.com:4000
-      "http://wiki.#{host_with_port}"
+      "#{url_protocol}wiki.#{host_with_port}"
     end
 
     def checkout_url_with_port # http://checkout.shopqi.com:4000 #TODO: 要修改为https协议
-      "http://checkout.#{host_with_port}"
+      "#{url_protocol}checkout.#{host_with_port}"
     end
 
   end
@@ -39,6 +39,19 @@ module Admin::ShopsHelper
 
   def is_home?
     params[:controller] == 'admin/home'
+  end
+
+  private
+  def url_protocol
+    Rails.env == "production"  ? "https://" : "http://"
+  end
+
+  def url_with_protocol(url)
+    if url =~ /^http:\/\/|^https:\/\//
+      url
+    else
+      "#{url_protocol}#{url}"
+    end
   end
 
 end
