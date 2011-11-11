@@ -43,8 +43,8 @@ class Shop::SessionsController < Shop::AppController
     if checkout_url #用于增加购物车与顾客之间的关联
       token = checkout_url.gsub(/.+\//,'')
       if cart = Cart.find_by_token(token) and !params[:guest].present?
-       cart.customer = resource
-       cart.save!
+        cart.customer = resource
+        cart.save!
       end
       redirect_to checkout_url and return
     else

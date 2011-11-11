@@ -44,11 +44,13 @@ class Shop::CartController < Shop::AppController
     if params[:checkout].blank? and params['checkout.x'].blank? # 支持按钮提交和图片提交两种方式
       redirect_to cart_path
     else
-      cart = shop.carts.update_or_create({session_id: session_id}, cart_hash: cart_hash.to_json)
+      cart = shop.carts.update_or_create({session_id: cart_session_id}, cart_hash: cart_hash.to_json)
       checkout_url = "#{checkout_url_with_port}/carts/#{shop.id}/#{cart.token}"
       if shop.customer_accounts_required?
         session['customer_return_to'] = checkout_url
         self.send :authenticate_customer!
+      end
+      if current_customer
         cart.customer = current_customer
         cart.save
       end
@@ -75,7 +77,6 @@ class Shop::CartController < Shop::AppController
 
   private
   def save_line_item(variant_id, quantity)
-    session['cart'] = true # 只为了让浏览器生成session issues#248
     if quantity.zero?
       Resque.redis.hdel cart_key, variant_id
     else

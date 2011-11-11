@@ -109,7 +109,7 @@ class Shop::AppController < ActionController::Base
   begin 'cart'
 
     def cart_key # 存储在redis中的cart
-      Cart.key(shop, session_id)
+      Cart.key(shop, cart_session_id)
     end
 
     def session_cart_hash # {variant_id: quantity}
@@ -138,8 +138,8 @@ class Shop::AppController < ActionController::Base
 
   end
 
-  def session_id # 获取当前请求的session id
-    request.session_options[:id]
+  def cart_session_id # 获取当前请求的session id
+    session['cart_session_id'] ||= request.session_options[:id]
   end
 
   def after_sign_in_path_for(resource)
