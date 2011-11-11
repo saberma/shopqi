@@ -18,7 +18,7 @@ class Shop::SessionsController < Shop::AppController
   def new
     resource = build_resource
     clean_up_passwords(resource)
-    path = Rails.root.join 'app/views/shop/customers/login.liquid'
+    path = Rails.root.join 'app/views/shop/templates/customers/login.liquid'
     assign = template_assign('customer' => CustomerDrop.new(resource))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)

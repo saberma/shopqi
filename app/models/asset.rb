@@ -57,7 +57,7 @@ class Asset
       File.join theme.path, source_key
     when :templates
       FileUtils.mkdir_p File.join(theme.path, 'templates', 'customers')
-      File.join Theme.shopqi_theme_path, key
+      File.join Rails.root, 'app', 'views', 'shop', key
     end
     path = File.join theme.path, key
     if source_path

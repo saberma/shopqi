@@ -15,10 +15,6 @@ class Theme < ActiveRecord::Base
     self.first
   end
 
-  def self.shopqi_theme_path # app/themes/shopqi # 用于保存顾客登录等模板
-    File.join Rails.root, 'app', 'themes', 'shopqi'
-  end
-
   def path
     File.join Rails.root, 'data', 'themes', self.id.to_s, 'current'
   end

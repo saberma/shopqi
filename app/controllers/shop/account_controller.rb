@@ -13,7 +13,7 @@ class Shop::AccountController < Shop::AppController
   end
 
   def index
-    path = Rails.root.join 'app/views/shop/customers/account.liquid'
+    path = Rails.root.join 'app/views/shop/templates/customers/account.liquid'
     assign = template_assign('customer' => CustomerDrop.new(current_customer))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
@@ -22,7 +22,7 @@ class Shop::AccountController < Shop::AppController
   end
 
   def show_order
-    path = Rails.root.join 'app/views/shop/customers/order.liquid'
+    path = Rails.root.join 'app/views/shop/templates/customers/order.liquid'
     assign = template_assign('order' => OrderDrop.new(order))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
