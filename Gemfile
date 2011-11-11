@@ -100,6 +100,7 @@ end
 
 group :production do
   gem 'therubyracer', require: nil # 预编译asset
+  gem 'memcache-client'
 end
 
 # Gems used only for assets and not required

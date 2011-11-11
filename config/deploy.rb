@@ -43,7 +43,7 @@ namespace :deploy do
     run "kill -s USR2 `cat /tmp/unicorn.#{application}.pid`"
   end
 
-  # scp -P $CAP_PORT config/{database,sms,alipay,admin_users,unicorn}.yml $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
+  # scp -P $CAP_PORT config/{database,sms,alipay,admin_users}.yml $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
   # scp -P $CAP_PORT config/unicorn.conf.rb $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
   # scp -P $CAP_PORT config/initializers/secret_token.rb $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/initializers/
   desc "Symlink shared resources on each release" # 配置文件

@@ -226,6 +226,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcache-client (1.8.5)
     message_block (1.0.4)
       rails (>= 3.0.0)
     meta_search (1.1.1)
@@ -428,6 +429,7 @@ DEPENDENCIES
   kaminari
   letter_opener!
   liquid (~> 2.3.0)
+  memcache-client
   message_block
   meta_search (~> 1.1.1)
   mini_magick
