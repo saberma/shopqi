@@ -142,7 +142,7 @@ class Shop::OrderController < Shop::AppController
 
   def update_total_price
     #处理更新快递方式
-    if !shipping_rates.map(&:shipping_rates).include? params[:shipping_rate]
+    if !shipping_rates.map(&:shipping_rate).include? params[:shipping_rate]
       data = {error: 'shipping_rate', shipping_rate: params[:shipping_rate] }
     else
       order.shipping_rate = params[:shipping_rate]
