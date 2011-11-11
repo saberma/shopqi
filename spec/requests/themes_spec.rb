@@ -286,6 +286,7 @@ describe "Themes", js: true do
       describe 'snippets' do
 
         it "should be save" do
+          page.should have_css('#theme-snippets')
           within '#theme-snippets' do # 片段
             has_content?('hot-products.liquid').should be_false
           end

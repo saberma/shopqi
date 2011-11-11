@@ -60,7 +60,7 @@ describe "Orders", js: true do
         order.update_attribute :financial_status, :pending # 假设顾客已经提交订单
       end
 
-      it "should save fulfillment" do #支持分批发货
+      it "should save fulfillment", focus: true do #支持分批发货
         visit order_path(order)
         click_on '发货'
         within '#unshipped-goods' do

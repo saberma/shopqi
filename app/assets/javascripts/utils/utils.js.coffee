@@ -40,6 +40,7 @@ namespace 'Utils', (exports) ->
         # @date 如2011-11-11T11:49:13+08:00
         # return: 2011/11/11 11:49:13
         ie_date_format: (date) ->
+          return date if _.isDate(date) # 已经为Date类型则直接返回(假如订单发货时间)
           date = date.replace /-/g, '/'
           date = date.replace /T/, ' '
           date.replace /\+.+/, ''

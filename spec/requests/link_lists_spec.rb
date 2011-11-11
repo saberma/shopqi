@@ -112,8 +112,13 @@ describe "LinkLists", js: true do
             click_on '修改链接列表'
             fill_in 'link_list[handle]', with: 'sub-navigation'
             click_on '保存'
+          end
+        end
+        page.should have_content('修改成功!')
+        within '#menus' do
+          within :xpath, './li[3]' do
             within '.section-header' do
-              find('span:first')['title'].should eql '固定链接: sub-navigation'
+              find('span:first')['title'].should have_content('固定链接: sub-navigation')
             end
           end
         end
@@ -160,15 +165,15 @@ describe "LinkLists", js: true do
           end
         end
 
-        it "should not add multi-links after edit", focus: true do # 修改后新增不能显示多条重复的链接 issues#243
+        it "should not add multi-links after edit" do # 修改后新增不能显示多条重复的链接 issues#243
           within '#menus' do
             within :xpath, './li[1]' do
+              links_size = all('.links li').size
               click_on '修改链接列表'
               click_on '保存'
               click_on '新增链接'
               fill_in 'title', with: '购物指南'
               click_on '新增链接'
-              links_size = all('.links li').size
               within '.links' do # 链接记录
                 page.should have_xpath("./li[#{links_size+1}]")
                 page.should have_no_xpath("./li[#{links_size+2}]")

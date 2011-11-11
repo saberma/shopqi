@@ -33,7 +33,9 @@ describe "Orders", js: true do
       visit "/account/login"
       fill_in 'customer[email]'                , with: 'mahb45@gmail.com'
       fill_in 'customer[password]'             , with: '666666'
-      click_on '登录'
+      within '#customer' do # 商店顶端还有一个登录链接，避免冲突
+        click_on '登录'
+      end
       page.should have_content('购物车 (1)') # 购物车商品仍然保留
     end
 
@@ -59,16 +61,21 @@ describe "Orders", js: true do
     #  page.should have_content('创建您的订单') # 跳转回结算页面
     #end
 
-    it 'should be sign in' do
+    it 'should be sign in', focus: true do
       customer_saberma # 已有顾客
       visit "/cart"
       click_on '结算'
       page.should have_content('顾客登录') # 跳转至登录页面
       fill_in 'customer[email]'                , with: 'mahb45@gmail.com'
       fill_in 'customer[password]'             , with: '666666'
-      click_on '登录'
+      within '#customer' do # 商店顶端还有一个登录链接，避免冲突
+        click_on '登录'
+      end
       page.should have_content('创建您的订单') # 跳转回结算页面
       page.should have_content('mahb45@gmail.com') # 回显已经登录的顾客信息
+      within '#cost' do
+        page.should have_content('3000.0') # 计算金额
+      end
     end
 
   end

@@ -33,7 +33,9 @@ describe "Shop::Customers", js: true do
 
       fill_in 'customer[email]', with: customer_liwh.email
       fill_in 'customer[password]', with: '666666'
-      click_on '登录'
+      within '#customer' do # 商店顶端还有一个登录链接，避免冲突
+        click_on '登录'
+      end
       within '#customer_detail' do
         has_content?('李卫辉').should be_true
         has_content?('广东省').should be_true
