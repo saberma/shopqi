@@ -150,6 +150,7 @@ Shopqi::Application.routes.draw do
       get '/blogs/:handle'                 , to: 'blogs#show'
       get '/blogs/:handle/:id'             , to: 'articles#show'
       match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'
+      match '/:unkown'                     , to: 'shops#unkown'
     end
 
     scope module: :admin do # 用户后台管理

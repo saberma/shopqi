@@ -7,6 +7,7 @@ class Shop::AppController < ActionController::Base
   before_filter :password_protected # 设置了密码保护
   before_filter :must_has_theme # 必须存在主题
   before_filter :remove_preview_theme_query_string # url去掉preview_theme_id
+  rescue_from StandardError, with: :show_errors
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
@@ -140,6 +141,12 @@ class Shop::AppController < ActionController::Base
 
   def cart_session_id # 获取当前请求的session id
     session['cart_session_id'] ||= request.session_options[:id]
+  end
+
+  def show_errors # 出错显示404页面
+    assign = template_assign
+    html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
+    render text: html
   end
 
   def after_sign_in_path_for(resource)

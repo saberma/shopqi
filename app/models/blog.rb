@@ -76,6 +76,10 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def self.show(id)
+    self.where(id: id, published: true).first
+  end
+
 end
 
 #文章评论

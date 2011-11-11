@@ -19,6 +19,10 @@ class Shop::ShopsController < Shop::AppController
     render text: html
   end
 
+  def unkown
+    raise '404'
+  end
+
   # 附件
   def asset
     asset = "#{params[:file]}.#{params[:format]}" # style.css

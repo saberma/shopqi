@@ -3,7 +3,7 @@ class Shop::PagesController < Shop::AppController
 
   expose(:shop) { Shop.at(request.host) }
 
-  expose(:page) { shop.pages.where(handle: params[:handle]).first }
+  expose(:page) { shop.pages.show(params[:handle]) }
 
   def show
     PagesDrop

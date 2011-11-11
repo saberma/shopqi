@@ -11,4 +11,9 @@ class Page < ActiveRecord::Base
   before_save do
     Handle.make_valid(shop.pages, self)
   end
+
+  def self.show(handle)
+    self.where(handle: handle, published: true).first
+  end
+
 end

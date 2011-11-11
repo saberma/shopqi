@@ -3,7 +3,8 @@ class Shop::ArticlesController < Shop::AppController
   expose(:shop) { Shop.at(request.host) }
   expose(:blog){ shop.blogs.where(handle: params[:handle]).first }
   expose(:articles){ blog.articles }
-  expose(:article){ Article.find(params[:article_id] || params[:id])}
+  expose(:article){ Article.show(params[:article_id] || params[:id])}
+
   def show
     BlogsDrop
     posted_successfully = article.comments.find_by_id(params[:comment_id]).nil?
