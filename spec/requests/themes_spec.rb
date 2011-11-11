@@ -519,7 +519,7 @@ describe "Themes", js: true do
         find(:xpath, './/li[1]').find('a').text.should eql '404.liquid'
       end
       within '#theme-snippets' do # 片段
-        find(:xpath, './/li[1]').find('a').text.should eql 'recent-posts.liquid'
+        find(:xpath, './/li[1]').find('a').text.should eql 'customer-links.liquid'
       end
       within '#theme-assets' do # 附件
         find(:xpath, './/li[1]').find('a').text.should eql 'ie7.css'

@@ -46,18 +46,18 @@ describe "Orders", js: true do
       shop.update_attributes customer_accounts: :required # 要求用户注册
     end
 
-    it 'should be sign up' do
-      visit "/cart"
-      click_on '结算'
-      page.should have_content('顾客登录') # 跳转至登录页面
-      click_on '注册账号'
-      fill_in 'customer[name]'                 , with: '马海波'
-      fill_in 'customer[email]'                , with: 'mahb45@gmail.com'
-      fill_in 'customer[password]'             , with: '666666'
-      fill_in 'customer[password_confirmation]', with: '666666'
-      click_on '注册'
-      page.should have_content('创建您的订单') # 跳转回结算页面
-    end
+    #it 'should be sign up' do # 暂时没有注册流程，提交订单后才有注册
+    #  visit "/cart"
+    #  click_on '结算'
+    #  page.should have_content('顾客登录') # 跳转至登录页面
+    #  click_on '注册账号'
+    #  fill_in 'customer[name]'                 , with: '马海波'
+    #  fill_in 'customer[email]'                , with: 'mahb45@gmail.com'
+    #  fill_in 'customer[password]'             , with: '666666'
+    #  fill_in 'customer[password_confirmation]', with: '666666'
+    #  click_on '注册'
+    #  page.should have_content('创建您的订单') # 跳转回结算页面
+    #end
 
     it 'should be sign in' do
       customer_saberma # 已有顾客

@@ -10,7 +10,7 @@ class CustomerDrop < Liquid::Drop
 
   def default_address
     address =  @customer.addresses.where(default_address: true).first ||  @customer.addresses.first
-    CustomerAddressDrop.new address
+    CustomerAddressDrop.new address if address
   end
 
   def addresses_count
@@ -47,6 +47,10 @@ class CustomerAddressDrop < Liquid::Drop
 
   def city
     @address.city_name
+  end
+
+  def district
+    @address.district_name
   end
 
 end

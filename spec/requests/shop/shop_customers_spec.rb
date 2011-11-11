@@ -1,15 +1,12 @@
 #encoding: utf-8
 require 'spec_helper'
+require 'shared_stuff'
 require 'subdomain_capybara_server'
 
 describe "Shop::Customers", js: true do
 
-  let(:user_admin) {  Factory :user_admin }
-  let(:shop) do
-    s = user_admin.shop
-    s.update_attributes password_enabled: false
-    s
-  end
+  include_context 'use shop'
+
   let(:iphone4) { Factory :iphone4, shop: shop }
   let(:iphone4_variant) { iphone4.variants.first }
   let(:customer_liwh) { Factory :customer_liwh, shop: shop }
@@ -46,7 +43,7 @@ describe "Shop::Customers", js: true do
       end
 
       within '#customer_orders' do
-        has_content?('订单 #1001').should be_true
+        has_content?('#1001').should be_true
         has_content?('放弃').should be_true
         has_content?('未发货').should be_true
       end
