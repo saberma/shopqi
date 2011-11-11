@@ -80,6 +80,7 @@ class Shop::CartController < Shop::AppController
       Resque.redis.hdel cart_key, variant_id
     else
       Resque.redis.hset cart_key, variant_id, quantity
+      Resque.redis.expire cart_key, 1209600 # 2个星期后过期，60 * 60 * 24 * 14
     end
   end
 
