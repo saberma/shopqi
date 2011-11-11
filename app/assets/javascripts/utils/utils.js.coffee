@@ -25,7 +25,9 @@ namespace 'Utils', (exports) ->
               select.val(value).change() if value # 级联回显
       #日期
   exports.Date =
+        # @date 如2011-11-11T11:49:13+08:00
         to_s: (date, format='yyyy-MM-dd HH:mm:ss') ->
+          date = @ie_date_format date
           date = new Date(date)
           text = format.replace /yyyy/, date.getFullYear()
           text = text.replace /MM/, this.prefix(date.getMonth() + 1)
@@ -33,6 +35,14 @@ namespace 'Utils', (exports) ->
           text = text.replace /HH/, this.prefix(date.getHours())
           text = text.replace /mm/, this.prefix(date.getMinutes())
           text.replace /ss/, this.prefix(date.getSeconds())
+
+        # IE的datetime只支持MM/dd/yyyy hh:mm:ss tt # http://j.mp/sRaYCa
+        # @date 如2011-11-11T11:49:13+08:00
+        # return: 2011/11/11 11:49:13
+        ie_date_format: (date) ->
+          date = date.replace /-/g, '/'
+          date = date.replace /T/, ' '
+          date.replace /\+.+/, ''
 
         formatDate: (date) ->
           this.to_s date, 'yyyy-MM-dd'

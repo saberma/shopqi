@@ -31,8 +31,9 @@
           %li=link_to "退出登录", destroy_user_session_path
           %li
             %a(href="/admin/account") 帐号
-          %li
-            %a(href="/admin/support" data-popup="true") 帮助
+          -#
+            %li
+              %a(href="/admin/support" data-popup="true") 帮助
           %li(style="padding-top: 2px")
             #search
               %form#admin-lookup-form(action="/admin/lookup/query" method="get")
@@ -44,6 +45,7 @@
           %li=link_to image_tag('admin/icons/home.gif'), user_root_path, id: is_home? && :current
           -menus.each do |menu|
             %li=link_to menu[:label], menu[:url], id: current(menu)
+          %li=link_to '市场营销', '#', onclick: "javascript:msg('即将上线...');return false;"
     #container.clearfix
       %ul#secondary
         %li#apps-link
@@ -51,9 +53,9 @@
             %h3 未安装应用
             %ul
               %li
-            %p.nav-manage=link_to '管理应用', "javascript:msg('即将上线...')"
+            %p.nav-manage=link_to '管理应用', "#", onclick: "javascript:msg('即将上线...');return false;"
             %p.more
-              =link_to '获取更多应用', "javascript:msg('即将上线...')"
+              =link_to '获取更多应用', "#", onclick: "javascript:msg('即将上线...');return false;"
               %span 访问应用商店
         %li#theme-link
           #theme-dropdown.nav-dropdown.dropdown.hide(style="right: 10px")

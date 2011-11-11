@@ -11,7 +11,8 @@ App.Views.Order.Show.History.Index = Backbone.View.extend
     #按日期分组 {date: [history]}
     histories = {}
     _(App.order.get('histories')).each (history) ->
-      created_at = new Date(history.created_at)
+      ie_date_format = Utils.Date.ie_date_format history.created_at
+      created_at = new Date(ie_date_format)
       date = "#{created_at.getFullYear()}-#{created_at.getMonth()}-#{created_at.getDate()}"
       histories[date] = [] unless histories[date]
       history.created_at = "#{created_at.getHours()}:#{created_at.getMinutes()}"
