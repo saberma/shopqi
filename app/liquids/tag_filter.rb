@@ -25,6 +25,18 @@ module TagFilter
     "<a title=#{input} href='/collections/vendors?q=#{input}'>#{input}</a>"
   end
 
+  begin 'customer'
+
+    def customer_login_link(input)
+      "<a href='/account/login' id='customer_login_link'>#{input}</a>"
+    end
+
+    def customer_logout_link(input)
+      "<a href='/account/logout' id='customer_logout_link'>#{input}</a>"
+    end
+
+  end
+
   def default_errors(errors) # 错误提示(暂不支持顾客登录失败提示)
     text = ''
     if errors and !errors.empty?

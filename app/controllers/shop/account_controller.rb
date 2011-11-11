@@ -14,7 +14,7 @@ class Shop::AccountController < Shop::AppController
 
   def index
     path = Rails.root.join 'app/views/shop/templates/customers/account.liquid'
-    assign = template_assign('customer' => CustomerDrop.new(current_customer))
+    assign = template_assign()
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
     html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))

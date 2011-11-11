@@ -17,6 +17,10 @@ class CustomerDrop < Liquid::Drop
     @customer.addresses.size
   end
 
+  def first_name
+    @customer.name
+  end
+
   def orders
     @customer.orders.map do |order|
       OrderDrop.new  order

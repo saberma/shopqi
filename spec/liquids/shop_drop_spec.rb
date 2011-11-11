@@ -22,6 +22,11 @@ describe ShopDrop do
     liquid(variant).should eql "&#165;{{amount}} 元"
   end
 
+  it 'should get customer_accounts_enabled' do # 启用顾客功能
+    variant = "{{ shop.customer_accounts_enabled }}"
+    liquid(variant).should eql "true"
+  end
+
   private
   def liquid(variant, assign = {'shop' => shop_drop})
     Liquid::Template.parse(variant).render(assign)

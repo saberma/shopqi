@@ -17,4 +17,8 @@ class ShopDrop < Liquid::Drop
     @theme.asset_url(asset)
   end
 
+  def customer_accounts_enabled # 启用顾客功能
+    !@shop.customer_accounts.blank?
+  end
+
 end

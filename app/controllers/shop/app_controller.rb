@@ -75,14 +75,16 @@ class Shop::AppController < ActionController::Base
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
       blogs_drop = BlogsDrop.new(shop)
-      {
+      drops = {
         'shop' => shop_drop,
         'cart' => cart_drop,
         'settings' => settings_drop,
         'linklists' => linklists_drop,
         'blogs' => blogs_drop,
-        'collections' => collections_drop
-      }.merge(extra_assign)
+        'collections' => collections_drop,
+      }
+      drops['customer'] = CustomerDrop.new(current_customer) if current_customer
+      drops.merge(extra_assign)
     end
 
     def cart_drop

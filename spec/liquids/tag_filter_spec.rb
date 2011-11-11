@@ -48,11 +48,27 @@ describe TagFilter do
     Liquid::Template.parse(variant).render('vendor' => 'Cola').should eql result
   end
 
-  it "should get errors", focus: true do
+  it "should get errors" do
     variant = "{{ errors | default_errors}}"
     errors = { email: '不能为空' }
     result = '<div class="errors"><ul><li> email不能为空 </li></ul></div>'
     Liquid::Template.parse(variant).render('errors' => errors).should eql result
+  end
+
+  describe CustomerDrop do
+
+    it "should get customer_login_link" do
+      variant = '{{ "登录" | customer_login_link }}'
+      result = "<a href='/account/login' id='customer_login_link'>登录</a>"
+      Liquid::Template.parse(variant).render().should eql result
+    end
+
+    it "should get customer_logout_link" do
+      variant = '{{ "退出" | customer_logout_link }}'
+      result = "<a href='/account/logout' id='customer_logout_link'>退出</a>"
+      Liquid::Template.parse(variant).render().should eql result
+    end
+
   end
 
 end
