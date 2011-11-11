@@ -84,14 +84,7 @@
         =yield
     #footer
       %ul
-        %li
-          %a(href="/community" target='_blank') 论坛
-        %li
-          %a(href="http://blog.shopqi.com/" target='_blank') 博客
-        %li
-          %a(href="#") 服务条款
-        %li
-          %a(href="#") 隐私声明
+        %li=link_to '服务条款', "#{url_with_port}#{agreement_path}", target: :_blank
     #dialog-overlay.hide
     #dialog-content.hide
     #flasherrors.hide
