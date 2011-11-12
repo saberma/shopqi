@@ -70,9 +70,9 @@ Shopqi::Application.routes.draw do
   match '/district/:id', to: 'district#list' # 地区选择(创建订单页面)
   #match '/s/files/:id/theme/assets/:asset', to: 'shops#asset', # :asset参数值为style.css(包含.号)，rspec报No route matches
   scope module: :shop do
-    match '/s/files/:id/theme/:theme_id/assets/:file.:format'     , to: 'shops#asset'
+    match '/s/files/:id/theme/:theme_id/assets/:file.:format'            , to: 'shops#asset'
     match '/s/files/development/:id/theme/:theme_id/assets/:file.:format', to: 'shops#asset' #开发中使用
-    match '/s/files/test/:id/theme/:theme_id/assets/:file.:format', to: 'shops#asset' #测试中使用
+    match '/s/files/test/:id/theme/:theme_id/assets/:file.:format'       , to: 'shops#asset' #测试中使用
   end
 
   constraints(Domain::Shopqi) do
