@@ -12,10 +12,15 @@ Shopqi::Application.configure do
   # Specifies the header that your server uses for sending files
   #config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
-  config.middleware.use Rack::SSL, exclude: lambda {|env|
+  config.middleware.use Rack::SSL, exclude: lambda {|env| # 测试用例:spec/controllers/shop/shops_controller_spec.rb
     host = env['SERVER_NAME']
     path = env['PATH_INFO']
     host.end_with?(Setting.store_host) and !path.start_with?('/admin') # 访问商店 apple.lvh.me
+    if host.end_with?(Setting.store_host)
+      not_admin = !path.start_with?('/admin')
+      return (not_admin and !(Regexp.new("(www|themes|wiki|app|checkout)#{Setting.store_host}") =~ host))
+    end
+    false
   }
 
   # For nginx:
