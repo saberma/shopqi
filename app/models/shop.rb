@@ -153,7 +153,7 @@ class ShopDomain < ActiveRecord::Base # 域名
   belongs_to :shop
 
   #域名须为3到20位数字和字母组成的，且唯一
-  validates :subdomain, presence: true, length: 3..32        , format: {with:  /\A([a-z0-9])*\Z/ }, unless: "domain.blank?"
+  validates :subdomain, presence: true, length: 3..32        , format: {with:  /^([a-z0-9\-])*$/ }, unless: "domain.blank?"
   validates :host     , presence: true, length: {maximum: 64}, uniqueness: {scope: :shop_id}
 
   before_validation do

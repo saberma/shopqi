@@ -39,7 +39,11 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
     receiver = params[:phone]
     session[:verify_code] ||= Random.new.rand(1000..9999)
     content = "您好!您的手机验证码为:#{session[:verify_code]}"
-    SMS.safe_send receiver, content, request.remote_ip
+    if development?
+      puts content # 开发时直接将验证码显示在后台
+    else
+      SMS.safe_send receiver, content, request.remote_ip
+    end
     render nothing: true
   end
 
