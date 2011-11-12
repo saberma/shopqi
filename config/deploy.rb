@@ -57,6 +57,10 @@ namespace :deploy do
   desc "Symlink the data directory" # 数据存储目录
   task :symlink_data, roles: :app do
     run "mkdir -p #{shared_path}/data && ln -nfs #{shared_path}/data #{release_path}/data"
+    run "mkdir -p #{shared_path}/data/public_s/files"
+    run "mkdir -p #{shared_path}/data/public_s/theme"
+    run "ln -nfs #{shared_path}/data/public_s/files #{release_path}/public/s/files"
+    run "ln -nfs #{shared_path}/data/public_s/theme #{release_path}/public/s/theme"
   end
 
   desc "Populates the Production Database"

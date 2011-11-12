@@ -150,7 +150,6 @@ Shopqi::Application.routes.draw do
       get '/blogs/:handle'                 , to: 'blogs#show'
       get '/blogs/:handle/:id'             , to: 'articles#show'
       match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'
-      match '/:unkown'                     , to: 'shops#unkown'
     end
 
     scope module: :admin do # 用户后台管理
@@ -350,5 +349,11 @@ Shopqi::Application.routes.draw do
   end
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]
+
+  constraints(Domain::Store) do
+    scope module: :shop do # 前台商店
+      match '/:unkown'                     , to: 'shops#unkown' # 访问商店不存在的页面时显示404，一定要放在route最后面
+    end
+  end
 
 end
