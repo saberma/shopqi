@@ -45,7 +45,7 @@ Shopqi::Application.configure do
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # 指定域名，否则访问themes子域名后,再访问wiki子域名时附件需要重新下载
-  config.action_controller.asset_host = "http://cdn.shopqi.com"
+  config.action_controller.asset_host = "https://cdn.shopqi.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w(
