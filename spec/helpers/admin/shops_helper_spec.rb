@@ -12,8 +12,13 @@ require 'spec_helper'
 # end
 describe Admin::ShopsHelper do
   describe 'it should return result' do
+    before(:each) do
+      request.stub(:port_string).and_return(":4000")
+    end
     it "should get the expect result" do
       url_with_protocol("myshopqi.lvh.me:4000").should eql "http://myshopqi.lvh.me:4000"
+      url_with_protocol("myshopqi").should eql "http://myshopqi.lvh.me:4000"
+      url_with_protocol("").should eql ""
       url_with_protocol("http://myshopqi.lvh.me:4000").should eql "http://myshopqi.lvh.me:4000"
       url_with_protocol("https://myshopqi.lvh.me:4000").should eql "https://myshopqi.lvh.me:4000"
     end
