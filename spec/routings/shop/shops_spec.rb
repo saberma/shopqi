@@ -21,7 +21,8 @@ describe 'shop::shops' do
 
     { get: "http://aa.lvh.me:4000/aaaa"}.should route_to(
       controller: "shopqi/home",
-      action: "no_shop"
+      action: "no_shop",
+      any: "aaaa"
     )
   end
 
