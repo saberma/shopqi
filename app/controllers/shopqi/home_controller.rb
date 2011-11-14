@@ -7,4 +7,8 @@ class Shopqi::HomeController < Shopqi::AppController # 官网首页
     render layout: nil
   end
 
+  def no_shop
+    render template: 'shared/no_shop',layout: nil
+  end
+
 end
