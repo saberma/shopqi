@@ -24,9 +24,11 @@
       %p.price {{{budget}}}
       %p.download
         %a.standard-button.login(href="/themes/{{{handle}}}/styles/{{{style_handle}}}/download") 获取主题
+        {{#if has_shop}}
         或者
         %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank")
           %span 查看示例 &rsaquo;
+        {{/if}}
   %ul.theme-details
     %li
       此主题由
@@ -61,8 +63,10 @@
             %strong 风格: {{{style}}}
           %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium_original.jpg")
         {{#unless is_current}}
+        {{#if has_shop}}
         %p.view-style-demo
           %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank") 查看示例  ›
+        {{/if}}
         {{/unless}}
       {{/each}}
 %script(id="more-designer-item" type="text/x-handlebars-template")

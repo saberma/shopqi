@@ -23,16 +23,26 @@ describe "Theme::Themes", js: true do # 主题商店
       visit "/themes/#{theme.handle}/styles/#{theme.style_handle}"
     end
 
-    it "should be show" do
-      within '#overview' do
-        has_content?(theme.name).should be_true
-        has_content?('ShopQi官方模板').should be_true
-      end
-    end
+    describe "show" do # 查看
 
-    it "should show photos" do
-      find('#screenshots .fancy-box').click
-      find('#fancybox-wrap').visible?.should be_true
+      it "should be success", focus: true do
+        within '#overview' do
+          page.should have_content(theme.name)
+          page.should have_content('ShopQi官方模板')
+          page.should have_content('查看示例')
+        end
+        theme.update_attributes! shop: '' # 无示例
+        visit "/themes/#{theme.handle}/styles/#{theme.style_handle}"
+        within '#overview' do
+          page.should have_no_content('查看示例')
+        end
+      end
+
+      it "should show photos" do
+        find('#screenshots .fancy-box').click
+        find('#fancybox-wrap').visible?.should be_true
+      end
+
     end
 
     describe "styles" do # 相关风格

@@ -21,6 +21,7 @@ App.Views.Theme.Themes.Show.Index = Backbone.View.extend
   render: ->
     template = Handlebars.compile $('#overview-item').html()
     attrs = @model.clone_attributes()
+    attrs['has_shop'] = (@model.get('shop') isnt '')
     $('#overview').html template attrs
     template = Handlebars.compile $('#screenshots-item').html()
     $('#screenshots').html template id: @model.id
