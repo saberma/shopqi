@@ -115,6 +115,7 @@ Shopqi::Application.routes.draw do
       get '/shop' , to: "shops#index"
       resources :customers
       resources :products
+      resources :blogs
     end
 
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录

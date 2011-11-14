@@ -6,7 +6,7 @@ class Api::ProductsController < Api::AppController
   end
 
   def object_serialization_options
-    { include: [ :variants,:options]}
+    collection_serialization_options
   end
 
 end
