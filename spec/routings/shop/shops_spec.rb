@@ -24,6 +24,12 @@ describe 'shop::shops' do
       action: "no_shop",
       any: "aaaa"
     )
+
+    { get: "http://lvh.me:4000/aaaa"}.should route_to(
+      controller: "shopqi/home",
+      action: "no_page",
+      any: "aaaa"
+    )
   end
 
 end

@@ -363,4 +363,10 @@ Shopqi::Application.routes.draw do
     end
   end
 
+  constraints(Domain::Shopqi) do
+    scope module: :shopqi do
+      match '/*any'   ,to: "home#no_page"
+    end
+  end
+
 end
