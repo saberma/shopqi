@@ -18,8 +18,7 @@
     .resources-nav
       %ul
         %li.logo
-          %a{:href => "http://www.shopqi.com/"}
-            =image_tag 'resources-nav/logo-shopqi.png'
+          %a{href: url_with_port, style: "filter:none"}=image_tag 'resources-nav/logo-shopqi.png'
         %li=link_to '主题外观',"#{theme_store_url_with_port}"
         -#
           %li=link_to '论坛','#'

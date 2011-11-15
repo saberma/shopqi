@@ -7,15 +7,15 @@
     = stylesheet_link_tag "layout_shopqi_theme"
     = javascript_include_tag :shopqi_application
     /[if lt IE 8]
-      = stylesheet_link_tag 'ie7'
+      = stylesheet_link_tag 'ie7-themes'
     /[if IE]
-      = stylesheet_link_tag 'ie'
+      = stylesheet_link_tag 'ie-themes'
     =render 'shared/google'
   %body
     .resources-nav
       %ul
         %li.logo
-          %a{href: url_with_port}=image_tag 'resources-nav/logo-shopqi.png'
+          %a{href: url_with_port, style: "filter:none"}=image_tag 'resources-nav/logo-shopqi.png'
         -#
           %li
             %a(href="#" title="ShopQi App Store") 应用

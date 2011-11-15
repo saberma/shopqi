@@ -57,7 +57,7 @@ Shopqi::Application.configure do
     shopqi_application.js shopqi_wiki_application.js admin_application.js
     layout_application.css layout_admin.css layout_admin_print.css layout_shopqi.css
     shopqi_ie-signup.css layout_shopqi_theme.css active_admin.css layout_shopqi_wiki.css
-    ie6.css ie7.css ie-checkout.css ie.css
+    ie6.css ie7.css ie-checkout.css ie.css ie-themes.css ie7-themes.css
   )
 
   # Disable delivery errors, bad email addresses will be ignored
