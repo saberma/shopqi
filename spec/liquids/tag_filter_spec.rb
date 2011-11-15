@@ -63,6 +63,12 @@ describe TagFilter do
       Liquid::Template.parse(variant).render().should eql result
     end
 
+    it "should get customer_regist_link" do
+      variant = '{{ "注册" | customer_regist_link }}'
+      result = "<a href='/account/sign_up' id='customer_regist_link'>注册</a>"
+      Liquid::Template.parse(variant).render().should eql result
+    end
+
     it "should get customer_logout_link" do
       variant = '{{ "退出" | customer_logout_link }}'
       result = "<a href='/account/logout' id='customer_logout_link'>退出</a>"

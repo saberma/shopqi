@@ -31,6 +31,10 @@ module TagFilter
       "<a href='/account/login' id='customer_login_link'>#{input}</a>"
     end
 
+    def customer_regist_link(input)
+      "<a href='/account/sign_up' id='customer_regist_link'>#{input}</a>"
+    end
+
     def customer_logout_link(input)
       "<a href='/account/logout' id='customer_logout_link'>#{input}</a>"
     end
