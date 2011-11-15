@@ -115,6 +115,8 @@ Shopqi::Application.routes.draw do
       get '/shop' , to: "shops#index"
       resources :customers
       resources :products
+      resources :blogs
+      resources :orders
     end
 
     devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
@@ -349,9 +351,22 @@ Shopqi::Application.routes.draw do
 
   match '/media(/:dragonfly)', to: Dragonfly[:images]
 
+  constraints(Domain::NoStore) do
+    scope module: :shopqi do # 用于处理商店不存在的情况
+      match '/'                , to: 'home#no_shop'
+      match '/*any'            , to: 'home#no_shop'
+    end
+  end
+
   constraints(Domain::Store) do
     scope module: :shop do # 前台商店
       match '/:unkown'                     , to: 'shops#unkown' # 访问商店不存在的页面时显示404，一定要放在route最后面
+    end
+  end
+
+  constraints(Domain::Shopqi) do
+    scope module: :shopqi do
+      match '/*any'   ,to: "home#no_page"
     end
   end
 

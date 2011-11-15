@@ -47,8 +47,14 @@ module Admin::ShopsHelper
   end
 
   def url_with_protocol(url)
-    if url =~ /^http:\/\/|^https:\/\//
+    if url == ""
       url
+    elsif url =~ /^(http:\/\/|^https:\/\/)([a-z0-9\-])*$/
+      "#{url}.#{host_with_port}"
+    elsif url =~ /^http:\/\/|^https:\/\//
+      url
+    elsif url =~ /^([a-z0-9\-])*$/
+      "#{url_protocol}#{url}.#{host_with_port}"
     else
       "#{url_protocol}#{url}"
     end

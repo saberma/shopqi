@@ -1,0 +1,74 @@
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %title 商店未找到
+    :css
+      body {
+        margin: 0;
+        text-align: center;
+        font: 1em/1.3em "Lucida Grande", Arial, Arial, sans-serif;
+        background-color: #efefef ;
+       }
+      div.outer {
+        font-size: 75%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 400px;
+        height: 300px;
+        margin-left: -200px;
+        margin-top: -150px;
+      }
+      .dialog {
+        padding: 0;
+          background-color: white;
+          border-top: 1px solid #ddd;
+          border-right: 1px solid #ccc;
+          border-left: 1px solid #ddd;
+          border-bottom: 1px solid #ccc;
+        }
+          div.error {
+            margin-left: 0px;
+              padding-left: 3px;
+                border-left: 2px solid #aaa;
+                  overflow: auto;
+                    background: #eee;
+                      }
+        h1 {
+          font-size: 100%;
+          background: #000;
+          color: white;
+          margin: 0;
+          padding: 5px 10px;
+        }
+        .block {
+          text-align: left;
+          width: 300px;
+          margin: 0 auto;
+          margin-top: 2em;
+        }
+        h1 span {
+          float: right;
+            font-size: 75%;
+          color: #666;
+        }
+  %body
+    .outer
+      .dialog{:style => "text-align: center;"}
+        %h1
+          %span> 404
+          该商店不存在
+        .block
+          %p
+            您要查找的商店不存在，您想
+            = succeed "?" do
+              %a{:href => "https://www.shopqi.com"} 创建它吗
+        .block
+          %p
+            返回
+            %a{:href => "#", :onclick => "history.back(); return false;"} 上一页
+        .block
+          %p/
+        %center
+          %a{:href => "https://www.shopqi.com"} 索奇电子商务公司

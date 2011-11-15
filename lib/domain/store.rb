@@ -8,4 +8,11 @@ module Domain
     end
   end
 
+  class NoStore
+    def self.matches?(request)
+      host = request.host
+      !ShopDomain.exists?(host: host) && !request.subdomain.blank?
+    end
+  end
+
 end

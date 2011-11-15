@@ -15,6 +15,12 @@ class Form < Liquid::Block
     if @variable_name == 'customer_login'
       object = context['customer']
       render_customer_login_form context, object
+    elsif @variable_name == 'recover_customer_password'
+      object = context['customer']
+      render_recover_customer_password context,object
+    elsif @variable_name == 'reset_customer_password'
+      object = context['customer']
+      render_reset_customer_password context,object
     elsif @variable_name == 'article'
       object = context[@variable_name]
       render_article_form context, object
@@ -31,6 +37,30 @@ class Form < Liquid::Block
       input = render_all(@nodelist, context)
       action = "/account/login"
       %Q{<form id="customer_login" method="post" action="#{action}">\n#{input}\n</form>}
+    end
+  end
+
+  def render_recover_customer_password(context,customer)
+    context.stack do
+      context['form'] = {
+        'errors' => context['customer.errors'],
+      }
+      input = render_all(@nodelist, context)
+      action = "/account/customer/password"
+      %Q{<form id="recover_customer_password" method="post" action="#{action}">\n#{input}\n</form>}
+    end
+  end
+
+  def render_reset_customer_password(context,customer)
+    context.stack do
+      context['form'] = {
+        'errors' => context['customer.errors'],
+        'email'  => context['customer.email'],
+        'reset_password_token' => context['customer.reset_password_token']
+      }
+      input = render_all(@nodelist, context)
+      action = "/account/customer/password"
+      %Q{<form id="reset_customer_password" method="post" action="#{action}">\n#{input}\n</form>}
     end
   end
 
