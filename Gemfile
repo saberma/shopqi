@@ -6,8 +6,8 @@ gem 'rails', '3.1.1'
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise', '~> 1.4.9'
-gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
-gem 'activeadmin', ' ~> 0.3.3'
+gem "sass-rails" # 放在assets分组会报错 http://j.mp/oj7y6K
+gem 'activeadmin'
 
 #use unicorn as web server
 gem 'unicorn'
