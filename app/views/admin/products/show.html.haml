@@ -10,6 +10,15 @@
     %li.no-icon
       = link_to image_tag('admin/icons/trash.gif'), product_path(product), method: :delete, confirm: '您确定要删除此商品吗?', title: '删除它', class: :del
 
+#duplicate-product.group.hide
+  .group-fields
+    %label.sb(for="duplicate_product_title" style="display:block;") 请输入新商品的标题
+    %input#duplicate_product_title(name="product[title]" size="30" type="text")
+  .group-actions
+    %input#duplicate_product_submit.btn(name="commit" type="submit" value="复制商品")
+      或者
+      %a.cancel(href="#") 取消
+
 =form_for product, url: duplicate_product_path(product), method: :post, html: {id: 'new_product'} do |f|
   =hidden_field_tag 'new_product[title]'
 .st
