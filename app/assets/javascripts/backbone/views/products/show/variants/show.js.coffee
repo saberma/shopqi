@@ -3,7 +3,6 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
 
   events:
     "submit form": "save"
-    "click .selector": "updateList"
     "click .edit-btn": "edit"
     "click .cancel": "cancel"
 
@@ -61,9 +60,6 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     @$("input.requires_shipping").change()
     @$("select.inventory_management").val(@model.attributes.inventory_management).change()
     @$("input[name='product_variant[inventory_policy]'][value='#{@model.attributes.inventory_policy}']").attr('checked', true)
-
-  # 显示或隐藏操作面板
-  updateList: ->
 
   edit: ->
     $('#row-head').css opacity: 0.5

@@ -2,7 +2,7 @@ App.Views.Comment.Show = Backbone.View.extend
   tagName: 'tr'
 
   events:
-    "click .selector": 'select'
+    "change .selector": 'select'
     "click .destroy" : 'destroy'
     "click .spam"    : 'spam'
     "click .approve" : 'approve'

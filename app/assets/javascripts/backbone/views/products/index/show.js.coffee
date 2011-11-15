@@ -2,7 +2,7 @@ App.Views.Product.Index.Show = Backbone.View.extend
   tagName: 'tr'
 
   events:
-    "click .selector": 'select'
+    "change .selector": 'select'
 
   initialize: ->
     self = this

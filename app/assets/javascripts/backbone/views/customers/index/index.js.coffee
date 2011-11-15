@@ -4,7 +4,7 @@ App.Views.Customer.Index.Index = Backbone.View.extend
   events:
     "change .selector": 'changeCustomerCheckbox'
     "change #customer-select": 'changeCustomerSelect'
-    "click #select-all": 'selectAll'
+    "change #select-all": 'selectAll'
 
   initialize: ->
     self = this

@@ -4,7 +4,8 @@ App.Views.Product.Index.Index = Backbone.View.extend
   events:
     "change .selector": 'changeProductCheckbox'
     "change #product-select": 'changeProductSelect'
-    "click #select-all": 'selectAll'
+    "change #select-all": 'selectAll'
+    "click label img": 'click_label_img' # 修正ie无法点击图片label选中复选框的问题
 
   initialize: ->
     self = this
@@ -24,8 +25,8 @@ App.Views.Product.Index.Index = Backbone.View.extend
 
   # 商品复选框全选操作
   selectAll: ->
-    this.$('.selector').attr 'checked', (@$('#select-all').attr('checked') is 'checked')
-    this.changeProductCheckbox()
+    @$('.selector').attr 'checked', (@$('#select-all').attr('checked') is 'checked')
+    @changeProductCheckbox()
 
   # 商品复选框操作
   changeProductCheckbox: ->
@@ -60,3 +61,8 @@ App.Views.Product.Index.Index = Backbone.View.extend
       msg "批量#{msg_text}成功!"
     $('#product-select').val('')
     false
+
+  click_label_img: (event) ->
+    if $.browser.msie
+      id = $(event.currentTarget).parent('label').attr('for')
+      $("##{id}").click().change() if id?
