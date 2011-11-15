@@ -1,0 +1,36 @@
+{% layout settings.customer_layout %}
+
+<div id="template">
+    <div class="template_header">
+      <h2 class="title">新用户注册</h2>
+    </div>
+
+    {% form 'regist_new_customer' %}
+      {{ form.errors | default_errors }}
+
+      <div id="login_name" class="clearfix large_form">
+        <label class="large" for="customer_name">姓名</label>
+        <input type="text" value="" name="customer[name]" id="customer_name" class="large" size="16" />
+      </div>
+
+      <div class='clearfix large_form' id='login_email'>
+         <label class="large" for="customer_email">邮箱</label>
+         <input class="large" id="customer_email" name="customer[email]" size="16" type="text" value="" />
+      </div>
+      <div class='clearfix large_form' id='login_password'>
+         <label class="large" for="customer_password">密码</label>
+         <input class="large" id="customer_password" name="customer[password]" size="16" type="password" value=""/>
+       </div>
+      <div class='clearfix large_form' id='login_password'>
+         <label class="large" for="customer_password_confirmation">确认密码</label>
+         <input class="large" id="customer_password_confirmation" name="customer[password_confirmation]" size="16" type="password" />
+     </div>
+      <div class="action_bottom">
+        <input class="btn" type="submit" value="注册" />
+        <span class='note'>
+          或者
+          <a href='http://myshopqi.lvh.me:4000'>取消，然后返回商店</a>
+        </span>
+      </div>
+    {% endform %}
+</div>

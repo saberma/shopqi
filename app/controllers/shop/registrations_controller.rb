@@ -5,14 +5,20 @@ class Shop::RegistrationsController < Shop::AppController
   skip_before_filter :must_has_theme
   include Devise::Controllers::InternalHelpers
   include Shop::OrderHelper
-  layout 'shop/admin'
+  #layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
 
 
   # GET /resource/sign_up
   def new
     resource = build_resource({})
-    render_with_scope :new
+    path = Rails.root.join 'app/views/shop/templates/customers/registrations.liquid'
+    assign = template_assign()
+    liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
+    assign.merge!('content_for_layout' => liquid_view)
+    html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+    render text: html
+    #render_with_scope :new
   end
 
   # POST /resource
@@ -41,7 +47,13 @@ class Shop::RegistrationsController < Shop::AppController
       end
     else
       clean_up_passwords(resource)
-      render_with_scope :new
+      #render_with_scope :new
+      path = Rails.root.join 'app/views/shop/templates/customers/registrations.liquid'
+      assign = template_assign()
+      liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
+      assign.merge!('content_for_layout' => liquid_view)
+      html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+      render text: html
     end
   end
 
