@@ -19,7 +19,9 @@ class Shop::PasswordsController  < Shop::AppController
       set_flash_message(:notice, :send_instructions) if is_navigational_format?
       respond_with({}, :location => after_sending_reset_password_instructions_path_for(resource_name))
     else
-      respond_with_navigational(resource){ render_with_scope :new }
+      #respond_with_navigational(resource){ render_with_scope :new }
+      flash[:notice] = resource.errors.full_messages
+      redirect_to '/account/login#recover'
     end
   end
 

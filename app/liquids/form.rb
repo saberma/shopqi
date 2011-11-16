@@ -46,7 +46,7 @@ class Form < Liquid::Block
   def render_recover_customer_password_form(context,customer)
     context.stack do
       context['form'] = {
-        'errors' => context['customer.errors'],
+        'errors' => context['recover_errors'],
       }
       input = render_all(@nodelist, context)
       action = "/account/customer/password"
