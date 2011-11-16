@@ -4,7 +4,7 @@ App.Views.Order.Index.Index = Backbone.View.extend
   events:
     "change .selector": 'changeOrderCheckbox'
     "change #order-select": 'changeOrderSelect'
-    "click #select-all": 'selectAll'
+    "change #select-all": 'selectAll'
 
   initialize: ->
     self = this

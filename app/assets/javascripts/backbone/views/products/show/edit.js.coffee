@@ -23,6 +23,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
         _destroy: model.view.$("input[name='product[options_attributes][][_destroy]']").val()
     @model._changed = true #修正:只修改option item时也要触发change事件，更新列表
     @model.unset 'photos', silent: true # 有图片会报错"ActiveRecord::AssociationTypeMismatch (Photo)"，图片不是用bb处理，暂时unset
+    KE.sync 'kindeditor' # issues#271
     @model.save {
         title: @$("input[name='title']").val(),
         handle: @$("input[name='handle']").val(),

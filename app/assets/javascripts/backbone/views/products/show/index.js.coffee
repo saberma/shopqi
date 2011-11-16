@@ -3,7 +3,9 @@ App.Views.Product.Show.Index = Backbone.View.extend
 
   events:
     "click #action-links a.edit-btn": "toggleEdit"
-    "click #action-links a.dup-btn": "duplicate"
+    "click #action-links a.dup-btn": "showDuplicate"
+    "click #duplicate_product_submit": "duplicate"
+    "click #duplicate-product .cancel": "duplicateCancel"
     "click #new-variant-link p": "newVariant" # 新增款式
     "click .closure-lightbox": 'show' # 显示图片
 
@@ -39,12 +41,21 @@ App.Views.Product.Show.Index = Backbone.View.extend
     $('#product').toggle()
     false
 
-  duplicate: ->
-    title = prompt('请输入新商品的标题', "复制 #{@model.attributes.title}")
+  showDuplicate: -> # 显示复制表单
+    $('#duplicate-product').show()
+    $('#duplicate_product_title').val("复制 #{@model.get('title')}").focus()
+    false
+
+  duplicate: -> # 复制
+    title = $('#duplicate_product_title').val()
     if title
       $.post "/admin/products/#{@model.id}/duplicate", new_title: title, (data) ->
         window.location = "/admin/products/#{data.id}"
       , "json"
+    false
+
+  duplicateCancel: -> # 取消复制
+    $('#duplicate-product').hide()
     false
 
   newVariant: -> # 新增款式

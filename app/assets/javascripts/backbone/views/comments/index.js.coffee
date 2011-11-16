@@ -4,7 +4,7 @@ App.Views.Comment.Index = Backbone.View.extend
   events:
     "change .selector": 'changeCommentCheckbox'
     "change #comment_bulk_action": 'changeCommentSelect'
-    "click #select-all": 'selectAll'
+    "change #select-all": 'selectAll'
 
   initialize: ->
     self = this

@@ -5,7 +5,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
   events:
     "change .selector": 'changeProductCheckbox'
     "change #product-select": 'changeProductSelect'
-    "click #select-all": 'selectAll'
+    "change #select-all": 'selectAll'
     "click #new-value .cancel": 'cancelUpdate'
     "submit form#batch-form": "saveBatchForm"
 

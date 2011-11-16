@@ -2,7 +2,7 @@ App.Views.Customer.Index.Show = Backbone.View.extend
   tagName: 'tr'
 
   events:
-    "click .selector": 'select'
+    "change .selector": 'select'
     "click .contact-details": 'message'
     "click .display_message": 'nop'
 

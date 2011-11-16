@@ -421,6 +421,30 @@ describe "Products", js: true do
         psp
       end
 
+      describe '#duplicate' do # 复制商品
+
+        before :each do
+          visit product_path(iphone4)
+          click_on '复制此商品'
+        end
+
+        it 'should be success' do
+          within '#duplicate-product' do
+            click_on '复制商品'
+          end
+          page.should have_content("复制 #{iphone4.title}")
+        end
+
+        it 'should be cancel' do
+          find('#duplicate-product').visible?.should be_true
+          within '#duplicate-product' do
+            click_on '取消'
+          end
+          find('#duplicate-product').visible?.should be_false
+        end
+
+      end
+
       describe '#photo' do
 
         before :each do

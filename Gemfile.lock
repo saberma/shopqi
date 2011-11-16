@@ -327,7 +327,7 @@ GEM
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
     sass (3.1.10)
-    sass-rails (3.1.2)
+    sass-rails (3.1.4)
       actionpack (~> 3.1.0)
       railties (~> 3.1.0)
       sass (>= 3.1.4)
@@ -396,7 +396,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   active_hash
-  activeadmin (~> 0.3.3)
+  activeadmin
   activemerchant
   activemerchant_patch_for_china
   awesome_print
