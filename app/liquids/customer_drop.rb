@@ -28,7 +28,8 @@ class CustomerDrop < Liquid::Drop
   end
 
   def errors
-    @customer.errors.messages.stringify_keys if @customer.errors
+    #@customer.errors.messages.stringify_keys if @customer.errors
+    @customer.errors.full_messages if @customer.errors
   end
 
 end

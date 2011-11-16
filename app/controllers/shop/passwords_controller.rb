@@ -13,6 +13,7 @@ class Shop::PasswordsController  < Shop::AppController
 
   # POST /resource/password
   def create
+    resource_class.reset_password_within = 0.days #设置发送重置密码邮件为每次都发送
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
 
     if successful_and_sane?(resource)
