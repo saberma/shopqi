@@ -41,12 +41,19 @@ module TagFilter
 
   end
 
+  #TODO 支持i18n
   def default_errors(errors) # 错误提示(暂不支持顾客登录失败提示)
     text = ''
     if errors and !errors.empty?
       text += '<div class="errors"><ul>'
       errors.each do |attribute, errors_array|
-        text += "<li> #{attribute}#{errors_array} </li>"
+        if errors_array.is_a?(Array)
+          errors_array.each do |errors_content|
+            text += "<li> #{attribute} #{errors_content} </li>"
+          end
+        else
+          text += "<li> #{attribute} #{errors_array} </li>"
+        end
       end
       text += "</ul></div>"
     end

@@ -49,7 +49,7 @@ class Shop::RegistrationsController < Shop::AppController
       clean_up_passwords(resource)
       #render_with_scope :new
       path = Rails.root.join 'app/views/shop/templates/customers/registrations.liquid'
-      assign = template_assign()
+      assign = template_assign('customer' => CustomerDrop.new(resource))
       liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
       assign.merge!('content_for_layout' => liquid_view)
       html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
