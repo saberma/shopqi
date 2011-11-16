@@ -186,4 +186,5 @@ Devise.setup do |config|
   #config.warden do |manager|
   #  manager.failure_app = CustomFailure
   #end
+  #config.reset_password_within = 0.days
 end

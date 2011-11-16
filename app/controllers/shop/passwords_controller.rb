@@ -13,7 +13,6 @@ class Shop::PasswordsController  < Shop::AppController
 
   # POST /resource/password
   def create
-    resource_class.reset_password_within = 0.days #设置发送重置密码邮件为每次都发送
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
 
     if successful_and_sane?(resource)
@@ -29,7 +28,7 @@ class Shop::PasswordsController  < Shop::AppController
     self.resource = resource_class.new
     resource.reset_password_token = params[:reset_password_token]
     path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid'
-    assign = template_assign('customers' => CustomerDrop.new(resource))
+    assign = template_assign('customer' => CustomerDrop.new(resource))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
     html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
