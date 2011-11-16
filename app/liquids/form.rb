@@ -34,7 +34,7 @@ class Form < Liquid::Block
   def render_customer_login_form(context, customer) # 登录表单
     context.stack do
       context['form'] = {
-        'errors' => context['customer.errors'],
+        'errors' => context['errors'],
         'password_needed' => true,
       }
       input = render_all(@nodelist, context)

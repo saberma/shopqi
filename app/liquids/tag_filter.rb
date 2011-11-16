@@ -41,7 +41,7 @@ module TagFilter
 
   end
 
-  def default_errors(errors) # 错误提示(暂不支持顾客登录失败提示)
+  def default_errors(errors) # 错误提示
     text = ''
     if errors and !errors.empty?
       text += '<div class="errors"><ul>'
@@ -50,6 +50,8 @@ module TagFilter
         errors.each do |error_message|
           text += "<li> #{error_message} </li>"
         end
+      elsif errors.is_a?(String)
+        text += "<li> #{errors} </li>"
       else
         errors.each do |attribute, errors_array|
           if errors_array.is_a?(Array)
