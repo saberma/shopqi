@@ -19,7 +19,8 @@ ActiveAdmin::Dashboards.build do
       column :theme
       column :created_at
     end
-    strong {link_to '查看所有商店',active_admin_shops_path}
+    strong { link_to '查看所有商店', active_admin_shops_path }
+    strong { link_to '查看系统状态', state_active_admin_shops_path }
   end
 
   # == Render Partial Section

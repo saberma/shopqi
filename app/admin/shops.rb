@@ -15,4 +15,8 @@ ActiveAdmin.register Shop do
      column :created_at
      default_actions
    end
+
+   collection_action :state do
+     @theme = Theme.first
+   end
 end
