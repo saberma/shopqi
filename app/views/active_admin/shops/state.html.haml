@@ -1,21 +1,44 @@
 :css
-  dt, dd {
-    float: left;
+  h2 {
+    clear: both
+  }
+  table {
+    width: 550px;
+  }
+  td.title {
+    width: 200px;
+  }
+  td.state {
+    width: 300px;
+  }
+  td.view {
+    width: 50px;
   }
 
 %p 此页面统一放置各个常用功能点在生产环境下容易出错的功能，方便检查
 
+%h2 Git
+%table
+  %td.title commit提交
+  %td.state
+    -if @git
+      %span.status.ok 正常
+    -else
+      %span 无法提交，导致商店后台模板编辑器未能显示文件
+  %td.view
+
+
 %h2 主题商店
-%dl
-  %dt 截图
-  %dd
+%table
+  %td.title 截图
+  %td.state
     -if @theme
       =image_tag "/s/theme/screenshots/#{@theme.id}/main/medium_original.jpg", onload:"success(this)", onerror:"fail(this)"
       %span.status.ok.hide 正常
       %span.status.error.hide 出错，nginx没有解析静态文件
     -else
       %span 没有主题，请先上传主题记录
-  %dd=link_to '查看', theme_store_url_with_port, target: :_blank
+  %td.view=link_to '查看', theme_store_url_with_port, target: :_blank
 
 :javascript
   success = function(target){

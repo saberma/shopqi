@@ -17,6 +17,22 @@ ActiveAdmin.register Shop do
    end
 
    collection_action :state do
-     @theme = Theme.first
+     begin 'git'
+       path = File.join '/', 'tmp', 'test_git'
+       config = File.join path, 'config'
+       readme = File.join config, 'README'
+       repo = Grit::Repo.init path
+       FileUtils.mkdir config
+       FileUtils.touch readme
+       Dir.chdir path do
+         repo.add '.'
+         repo.commit_all 'just for test'
+       end
+       @git = (repo.tree.trees.size > 0)
+       FileUtils.rm_rf path
+     end
+     begin 'theme'
+       @theme = Theme.first
+     end
    end
 end
