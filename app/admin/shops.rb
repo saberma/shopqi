@@ -17,7 +17,12 @@ ActiveAdmin.register Shop do
    end
 
    collection_action :state do
-     begin 'git'
+     begin 'libxml2' # issues#274
+       html_path = Rails.root.join "spec/factories/data/themes/settings_with_class.html"
+       settings = Nokogiri::HTML(File.open(html_path), nil, 'utf-8').inner_html
+       @libxml2 = !settings.blank?
+     end
+     begin 'git' # issues#274
        path = File.join '/', 'tmp', 'test_git'
        config = File.join path, 'config'
        readme = File.join config, 'README'

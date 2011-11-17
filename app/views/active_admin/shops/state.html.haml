@@ -3,19 +3,45 @@
     clear: both
   }
   table {
-    width: 550px;
+    width: 750px;
   }
   td.title {
     width: 200px;
   }
   td.state {
-    width: 300px;
+    width: 100px;
+  }
+  td.desc {
+    width: 400px;
   }
   td.view {
     width: 50px;
   }
 
+:javascript
+  success = function(target){
+    $(target).hide().next('.ok').show();
+  }
+
+  fail = function(target){
+    $(target).hide().next('.error').show();
+  }
+
 %p 此页面统一放置各个常用功能点在生产环境下容易出错的功能，方便检查
+
+%h2 Libxml2
+%table
+  %td.title 版本是否正确
+  %td.state
+    -if @libxml2
+      %span.status.ok 正常
+    -else
+      %span.status.error 出错
+  %td.desc
+    2.6.26存在bug无法解析html(http://j.mp/v6CXbf)，导致商店后台外观设置未能配置项，需要升级libxml2版本
+    %br/
+    可通过命令查看版本 bundle exec nokogiri -v 或者  rpm -q libxml2
+  %td.view
 
 %h2 Git
 %table
@@ -24,7 +50,13 @@
     -if @git
       %span.status.ok 正常
     -else
-      %span 无法提交，导致商店后台模板编辑器未能显示文件
+      %span.status.error 出错
+  %td.desc
+    无法提交，导致商店后台模板编辑器未能显示文件，要运行以下命令
+    %br/
+    git config --global user.email "you@example.com"
+    %br/
+    git config --global user.name "Your Name"
   %td.view
 
 
@@ -35,16 +67,8 @@
     -if @theme
       =image_tag "/s/theme/screenshots/#{@theme.id}/main/medium_original.jpg", onload:"success(this)", onerror:"fail(this)"
       %span.status.ok.hide 正常
-      %span.status.error.hide 出错，nginx没有解析静态文件
+      %span.status.error.hide 出错
     -else
       %span 没有主题，请先上传主题记录
+  %td.desc nginx没有解析静态文件
   %td.view=link_to '查看', theme_store_url_with_port, target: :_blank
-
-:javascript
-  success = function(target){
-    $(target).hide().next('.ok').show();
-  }
-
-  fail = function(target){
-    $(target).hide().next('.error').show();
-  }
