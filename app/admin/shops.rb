@@ -1,5 +1,6 @@
 #encoding: utf-8
 ActiveAdmin.register Shop do
+
    index do
      column :id
      column :name
@@ -36,8 +37,17 @@ ActiveAdmin.register Shop do
        @git = (repo.tree.trees.size > 0)
        FileUtils.rm_rf path
      end
-     begin 'theme'
+     begin 'theme' # 主题商店
        @theme = Theme.first
+     end
+     begin 'shop' # 商店
+       @shop_global_js = "#{ActionController::Base.asset_host}/s/global/jquery/1.5.2/jquery.js"
+       @shop_shopqi_js = "#{ActionController::Base.asset_host}/s/shopqi/option_selection.js"
+       @shop = Shop.where(email: 'admin@shopqi.com', :id.lt => 10).first
+       theme = @shop.themes.where(name: '乔木林地').first
+       @shop_shop_css = "#{ActionController::Base.asset_host}#{theme.asset_url('stylesheet.css')}"
+       @shop_shop_js = "#{ActionController::Base.asset_host}#{theme.asset_url('fancybox.js')}"
+       @shop_product_photo = @shop.products.first.index_photo
      end
    end
 end

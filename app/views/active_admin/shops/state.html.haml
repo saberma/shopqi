@@ -19,56 +19,117 @@
   }
 
 :javascript
-  success = function(target){
-    $(target).hide().next('.ok').show();
-  }
-
-  fail = function(target){
-    $(target).hide().next('.error').show();
-  }
+  check404 = function(target, url){
+    $.ajax({
+      url: url,
+      cache: false,
+      success: function(){
+        $('<span/>').addClass('status ok').text('正常').prependTo($(target))
+      },
+      error: function(){
+        $('<span/>').addClass('status error').text('出错').prependTo($(target))
+      }
+    });
+  };
 
 %p 此页面统一放置各个常用功能点在生产环境下容易出错的功能，方便检查
+%table
+  %tr
+    %td.title 分类
+    %td.state 状态
+    %td.desc 出错时的相应描述
+    %td.view 操作
 
 %h2 Libxml2
 %table
-  %td.title 版本是否正确
-  %td.state
-    -if @libxml2
-      %span.status.ok 正常
-    -else
-      %span.status.error 出错
-  %td.desc
-    2.6.26存在bug无法解析html(http://j.mp/v6CXbf)，导致商店后台外观设置未能配置项，需要升级libxml2版本
-    %br/
-    可通过命令查看版本 bundle exec nokogiri -v 或者  rpm -q libxml2
-  %td.view
+  %tr
+    %td.title 版本是否正确
+    %td.state
+      -if @libxml2
+        %span.status.ok 正常
+      -else
+        %span.status.error 出错
+    %td.desc
+      2.6.26存在bug无法解析html(http://j.mp/v6CXbf)，导致商店后台外观设置未能配置项，需要升级libxml2版本
+      %br/
+      可通过命令查看版本 bundle exec nokogiri -v 或者  rpm -q libxml2
+    %td.view
 
 %h2 Git
 %table
-  %td.title commit提交
-  %td.state
-    -if @git
-      %span.status.ok 正常
-    -else
-      %span.status.error 出错
-  %td.desc
-    无法提交，导致商店后台模板编辑器未能显示文件，要运行以下命令
-    %br/
-    git config --global user.email "you@example.com"
-    %br/
-    git config --global user.name "Your Name"
-  %td.view
+  %tr
+    %td.title commit提交
+    %td.state
+      -if @git
+        %span.status.ok 正常
+      -else
+        %span.status.error 出错
+    %td.desc
+      无法提交，导致商店后台模板编辑器未能显示文件，要运行以下命令
+      %br/
+      git config --global user.email "you@example.com"
+      %br/
+      git config --global user.name "Your Name"
+    %td.view
 
 
 %h2 主题商店
 %table
-  %td.title 截图
-  %td.state
-    -if @theme
-      =image_tag "/s/theme/screenshots/#{@theme.id}/main/medium_original.jpg", onload:"success(this)", onerror:"fail(this)"
-      %span.status.ok.hide 正常
-      %span.status.error.hide 出错
+  %tr
+    %td.title 截图
+    %td#theme_screenshot.state
+      -if @theme
+        :javascript
+          check404('#theme_screenshot', '#{image_path("/s/theme/screenshots/#{@theme.id}/main/medium_original.jpg")}');
+      -else
+        %span 没有主题，请先上传主题记录
+    %td.desc nginx没有解析静态文件 /s/theme/screenshots/1/main/medium_original.jpg
+    %td.view=link_to '查看', theme_store_url_with_port, target: :_blank
+
+%h2 商店
+%table
+  %tr
+    %td.title 是否能加载全局js工具
+    %td#shop_global_js.state
+      :javascript
+        check404('#shop_global_js', '#{@shop_global_js}');
+    %td.desc nginx没有解析静态文件 /s/global/jquery/1.5.2/jquery.js
+    %td.view
+  %tr
+    %td.title 是否能加载全局商店专用js
+    %td#shop_shopqi_js.state
+      :javascript
+        check404('#shop_shopqi_js', '#{@shop_shopqi_js}');
+    %td.desc nginx没有解析静态文件 /s/shopqi/option_selection.js
+    %td.view
+  -if @shop
+    %tr
+      %td.title 是否能加载商店主题的css文件
+      %td#shop_shop_css.state
+        :javascript
+          check404('#shop_shop_css', '#{@shop_shop_css}');
+      %td.desc nginx没有解析静态文件 /s/files/1/theme/1/assets/stylesheet.css
+      %td.view
+    %tr
+      %td.title 是否能加载商店主题的js文件
+      %td#shop_shop_js.state
+        :javascript
+          check404('#shop_shop_js', '#{@shop_shop_js}');
+      %td.desc nginx没有解析静态文件 /s/files/1/theme/1/assets/fancybox.js
+      %td.view
+    -if @shop_product_photo =~ /media/
+      %tr
+        %td.title 是否能显示商店图片
+        %td#shop_product_photo.state
+          :javascript
+            check404('#shop_product_photo', '#{@shop_product_photo}');
+        %td.desc dragonfly缩小图片过程可能出错，原因可能是ImageMagick版本过低(convert: invalid argument for option `50x50^^': -resize')，可以查看shared/log/unicorn.stderr.log出错日志
+        %td.view
     -else
-      %span 没有主题，请先上传主题记录
-  %td.desc nginx没有解析静态文件
-  %td.view=link_to '查看', theme_store_url_with_port, target: :_blank
+      %tr
+        %td.status.warn(colspan=3)
+          商店的商品没有上传图片
+          =link_to "访问", "#{@shop.primary_domain.url}#{request.port_string}", target: :_blank
+  -else
+    %tr
+      %td.status.warn(colspan=4) 还没有商店，注册商店后才能检查商店的css,js附件是否正常加载
