@@ -1,8 +1,12 @@
 class Form < Liquid::Block
   Syntax = /(#{Liquid::VariableSignature}+)/
+  ComplexSyntax = /(#{Liquid::QuotedFragment}+)\s*,\s*(\S*)/
 
   def initialize(tag_name, markup, tokens)
-    if markup =~ Syntax
+    if markup =~ ComplexSyntax
+      @type = $2
+      @variable_name = lambda do ;$1 =~ Syntax ; $1 end.call
+    elsif markup =~ Syntax
       @variable_name = $1
       @attributes = {}
     else
@@ -24,6 +28,9 @@ class Form < Liquid::Block
     elsif @variable_name == 'regist_new_customer'
       object = context['customer']
       render_regist_customer_form context,object
+    elsif @variable_name == 'customer_address'
+      object = context['address']
+      render_address_form context,object,@type
     elsif @variable_name == 'article'
       object = context[@variable_name]
       render_article_form context, object
@@ -74,7 +81,7 @@ class Form < Liquid::Block
       }
       input = render_all(@nodelist, context)
       action = "/account/customer"
-      %Q{<form id="regis_new_customer" method="post" action="#{action}">\n#{input}\n</form>}
+      %Q{<form id="regist_new_customer" method="post" action="#{action}">\n#{input}\n</form>}
     end
   end
 
@@ -90,6 +97,23 @@ class Form < Liquid::Block
       input = render_all(@nodelist, context)
       action = "/blogs/#{article.blog.handle}/#{article.id}/comments"
       %Q{<form id="article-#{article.id}-comment-form" class="comment-form" method="post" action="#{action}">\n#{input}\n</form>}
+    end
+  end
+
+  #TODO 需重构
+  def render_address_form(context,address,type)
+    context.stack do
+      context['form'] = {
+        'errors' => context['customer_address.errors'],
+      }
+      input = render_all(@nodelist, context)
+      if type == 'customer.new_address'
+        action = "/account/addresses"
+        %Q{<form id="add_address" class="customer_address edit_address" method="post" action="#{action}">\n#{input}\n</form>}
+      else
+        action = "/account/addresses/#{address.id}"
+        %Q{<form id="address_form_#{address.id}" class="customer_address edit_address" method="post" action="#{action}">\n<input name="_method" type="hidden" value="put" />\n#{input}\n</form>}
+      end
     end
   end
 

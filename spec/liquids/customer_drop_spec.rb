@@ -34,6 +34,11 @@ describe CustomerDrop do
     liquid(variant).should eql "#{customer.orders.size}"
   end
 
+  it "should get addresses" do
+    variant = "{{ customer.addresses | size }}"
+    liquid(variant).should eql "#{customer.addresses.size}"
+  end
+
   describe CustomerAddressDrop do
 
     it 'should get country' do
@@ -75,7 +80,7 @@ describe CustomerDrop do
       variant = "{{ customer.orders | size }}"
       liquid(variant).should eql "#{customer.orders.size}"
     end
-    
+
   end
 
   private
