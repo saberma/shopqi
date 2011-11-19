@@ -100,11 +100,19 @@ class Form < Liquid::Block
     end
   end
 
-  #TODO 需重构
   def render_address_form(context,address,type)
     context.stack do
       context['form'] = {
-        'errors' => context['customer_address.errors'],
+        'errors' => context['address.errors'],
+        'id' => context['address.id']  ,
+        'name' => context['address.name']  ,
+        'company' => context['address.company']  ,
+        'address1' => context['address.address1']  ,
+        'city' => context['address.city']  ,
+        'country' => context['address.country']  ,
+        'province' => context['address.province']  ,
+        'phone' => context['address.phone']  ,
+        'set_as_default_checkbox' => context['address.set_as_default_checkbox']  ,
       }
       input = render_all(@nodelist, context)
       if type == 'customer.new_address'

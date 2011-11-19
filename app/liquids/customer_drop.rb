@@ -67,4 +67,8 @@ class CustomerAddressDrop < Liquid::Drop
     @address.district_name
   end
 
+  def set_as_default_checkbox
+    %Q{<input type="checkbox" id="address_default_address_#{@address.id}" name="address[default_address]" value="#{@address.default_address}">}
+  end
+
 end
