@@ -6,7 +6,7 @@ class CustomerDrop < Liquid::Drop
     @customer = customer
   end
 
-  delegate :email, :name, to: :@customer
+  delegate :email, :name,:reset_password_token, to: :@customer
 
   def default_address
     address =  @customer.addresses.where(default_address: true).first ||  @customer.addresses.first
@@ -25,6 +25,11 @@ class CustomerDrop < Liquid::Drop
     @customer.orders.map do |order|
       OrderDrop.new  order
     end
+  end
+
+  def errors
+    #@customer.errors.messages.stringify_keys if @customer.errors
+    @customer.errors.full_messages if @customer.errors
   end
 
 end

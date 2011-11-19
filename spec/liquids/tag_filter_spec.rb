@@ -50,8 +50,11 @@ describe TagFilter do
 
   it "should get errors" do
     variant = "{{ errors | default_errors}}"
+    errors = { email: ['不能为空','格式不正确'] }
+    result = '<div class="errors"><ul><li> email 不能为空 </li><li> email 格式不正确 </li></ul></div>'
+    Liquid::Template.parse(variant).render('errors' => errors).should eql result
     errors = { email: '不能为空' }
-    result = '<div class="errors"><ul><li> email不能为空 </li></ul></div>'
+    result = '<div class="errors"><ul><li> email 不能为空 </li></ul></div>'
     Liquid::Template.parse(variant).render('errors' => errors).should eql result
   end
 
@@ -60,6 +63,12 @@ describe TagFilter do
     it "should get customer_login_link" do
       variant = '{{ "登录" | customer_login_link }}'
       result = "<a href='/account/login' id='customer_login_link'>登录</a>"
+      Liquid::Template.parse(variant).render().should eql result
+    end
+
+    it "should get customer_regist_link" do
+      variant = '{{ "注册" | customer_regist_link }}'
+      result = "<a href='/account/sign_up' id='customer_regist_link'>注册</a>"
       Liquid::Template.parse(variant).render().should eql result
     end
 

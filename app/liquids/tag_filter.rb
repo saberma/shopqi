@@ -31,18 +31,37 @@ module TagFilter
       "<a href='/account/login' id='customer_login_link'>#{input}</a>"
     end
 
+    def customer_regist_link(input)
+      "<a href='/account/sign_up' id='customer_regist_link'>#{input}</a>"
+    end
+
     def customer_logout_link(input)
       "<a href='/account/logout' id='customer_logout_link'>#{input}</a>"
     end
 
   end
 
-  def default_errors(errors) # 错误提示(暂不支持顾客登录失败提示)
+  def default_errors(errors) # 错误提示
     text = ''
     if errors and !errors.empty?
       text += '<div class="errors"><ul>'
-      errors.each do |attribute, errors_array|
-        text += "<li> #{attribute}#{errors_array} </li>"
+      #用于支持显示当errors,为一数组的形式时
+      if errors.is_a?(Array)
+        errors.each do |error_message|
+          text += "<li> #{error_message} </li>"
+        end
+      elsif errors.is_a?(String)
+        text += "<li> #{errors} </li>"
+      else
+        errors.each do |attribute, errors_array|
+          if errors_array.is_a?(Array)
+            errors_array.each do |errors_content|
+              text += "<li> #{attribute} #{errors_content} </li>"
+            end
+          else
+            text += "<li> #{attribute} #{errors_array} </li>"
+          end
+        end
       end
       text += "</ul></div>"
     end

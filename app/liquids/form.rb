@@ -17,10 +17,13 @@ class Form < Liquid::Block
       render_customer_login_form context, object
     elsif @variable_name == 'recover_customer_password'
       object = context['customer']
-      render_recover_customer_password context,object
+      render_recover_customer_password_form context,object
     elsif @variable_name == 'reset_customer_password'
       object = context['customer']
-      render_reset_customer_password context,object
+      render_reset_customer_password_form context,object
+    elsif @variable_name == 'regist_new_customer'
+      object = context['customer']
+      render_regist_customer_form context,object
     elsif @variable_name == 'article'
       object = context[@variable_name]
       render_article_form context, object
@@ -31,7 +34,7 @@ class Form < Liquid::Block
   def render_customer_login_form(context, customer) # 登录表单
     context.stack do
       context['form'] = {
-        'errors' => context['customer.errors'],
+        'errors' => context['errors'],
         'password_needed' => true,
       }
       input = render_all(@nodelist, context)
@@ -40,10 +43,10 @@ class Form < Liquid::Block
     end
   end
 
-  def render_recover_customer_password(context,customer)
+  def render_recover_customer_password_form(context,customer)
     context.stack do
       context['form'] = {
-        'errors' => context['customer.errors'],
+        'errors' => context['recover_errors'],
       }
       input = render_all(@nodelist, context)
       action = "/account/customer/password"
@@ -51,7 +54,7 @@ class Form < Liquid::Block
     end
   end
 
-  def render_reset_customer_password(context,customer)
+  def render_reset_customer_password_form(context,customer)
     context.stack do
       context['form'] = {
         'errors' => context['customer.errors'],
@@ -61,6 +64,17 @@ class Form < Liquid::Block
       input = render_all(@nodelist, context)
       action = "/account/customer/password"
       %Q{<form id="reset_customer_password" method="post" action="#{action}">\n#{input}\n</form>}
+    end
+  end
+
+  def render_regist_customer_form(context,customer)
+    context.stack do
+      context['form'] = {
+        'errors' => context['customer.errors'],
+      }
+      input = render_all(@nodelist, context)
+      action = "/account/customer"
+      %Q{<form id="regis_new_customer" method="post" action="#{action}">\n#{input}\n</form>}
     end
   end
 
