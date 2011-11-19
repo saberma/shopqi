@@ -39,11 +39,27 @@ describe CustomerDrop do
     liquid(variant).should eql "#{customer.addresses.size}"
   end
 
+
   describe CustomerAddressDrop do
 
     it 'should get country' do
       variant = "{{ customer.default_address.country }}"
       liquid(variant).should eql "中国"
+    end
+
+    it "should get detail address" ,focus: true do
+      variant = "{{ customer.default_address.detail_address }}"
+      liquid(variant).should eql "中国 广东省深圳市南山区311"
+    end
+
+    it "should get  address name" ,focus: true do
+      variant = "{{ customer.default_address.name }}"
+      liquid(variant).should eql "马海波"
+    end
+
+    it "should get  address company" ,focus: true do
+      variant = "{{ customer.default_address.company }}"
+      liquid(variant).should eql "ShopQi"
     end
 
     it 'should get province_code' do

@@ -29,7 +29,7 @@ class Form < Liquid::Block
       object = context['customer']
       render_regist_customer_form context,object
     elsif @variable_name == 'customer_address'
-      object = context['address']
+      object = context[@type]
       render_address_form context,object,@type
     elsif @variable_name == 'article'
       object = context[@variable_name]
@@ -102,6 +102,7 @@ class Form < Liquid::Block
 
   def render_address_form(context,address,type)
     context.stack do
+      context['address'] = address
       context['form'] = {
         'errors' => context['address.errors'],
         'id' => context['address.id']  ,
@@ -111,8 +112,9 @@ class Form < Liquid::Block
         'city' => context['address.city']  ,
         'country' => context['address.country']  ,
         'province' => context['address.province']  ,
-        'phone' => context['address.phone']  ,
+        'phone' => context['address.phone'] ,
         'set_as_default_checkbox' => context['address.set_as_default_checkbox']  ,
+        'province_option_tags' => context['address.province_option_tags']
       }
       input = render_all(@nodelist, context)
       if type == 'customer.new_address'

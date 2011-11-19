@@ -24,8 +24,8 @@ class CustomerDrop < Liquid::Drop
 
   def addresses
     @customer.addresses.map do |address|
-      CustomerAddressDrop.new address
-    end
+      CustomerAddressDrop.new address if address.id?
+    end.compact
   end
   memoize :addresses
 
@@ -35,6 +35,10 @@ class CustomerDrop < Liquid::Drop
     end
   end
   memoize :orders
+
+  def new_address
+    CustomerAddressDrop.new @customer.addresses.new
+  end
 
   def errors
     #@customer.errors.messages.stringify_keys if @customer.errors
@@ -49,7 +53,7 @@ class CustomerAddressDrop < Liquid::Drop
     @address = address
   end
 
-  delegate :id,:zip, :phone, :address1, :address2, to: :@address
+  delegate :id,:name,:company,:zip, :phone, :address1, :address2,:detail_address,:default_address, to: :@address
 
   def country
     @address.country_name
@@ -68,7 +72,14 @@ class CustomerAddressDrop < Liquid::Drop
   end
 
   def set_as_default_checkbox
-    %Q{<input type="checkbox" id="address_default_address_#{@address.id}" name="address[default_address]" value="#{@address.default_address}">}
+    checked = @address.default_address ? "checked" : ""
+    %Q{<input name="address[default_address]" type="hidden" value="0">
+      <input type="checkbox" id="address_default_address_#{@address.id}" name="address[default_address]" value="1" #{checked} >
+    }
+  end
+
+  def province_option_tags
+    @address.province_option_tags
   end
 
 end
