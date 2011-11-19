@@ -3,10 +3,18 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :token_authenticatable,
-         :recoverable, :rememberable, :trackable,:validatable
+         :recoverable, :rememberable, :trackable
+         #, :validatable # 校验要限制在shop范围下，因此不能使用devise自带校验 issue#287
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :id, :email, :password, :password_confirmation, :remember_me,:name, :shop_attributes,:phone, :bio,  :receive_announcements,:avatar_image
+
+  validates_presence_of   :email
+  validates :email, uniqueness: {scope: :shop_id}, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }, if: :email_changed?
+
+  validates_presence_of     :password, if: :password_required?
+  validates_confirmation_of :password, if: :password_required?
+  validates_length_of       :password, within: 6..20, allow_blank: true
 
   belongs_to :shop
   has_many :articles, dependent: :destroy
@@ -42,6 +50,10 @@ class User < ActiveRecord::Base
     host = conditions.delete(:host)
     shop_domain = ShopDomain.from(host)
     where(conditions).where(shop_id: shop_domain.shop_id).first
+  end
+
+  def password_required? # copy from devise
+    !persisted? || !password.nil? || !password_confirmation.nil?
   end
 
 end
