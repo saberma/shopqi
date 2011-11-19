@@ -3,10 +3,10 @@
     clear: both
   }
   table {
-    width: 750px;
+    width: 800px;
   }
   td.title {
-    width: 200px;
+    width: 250px;
   }
   td.state {
     width: 100px;
@@ -39,6 +39,45 @@
     %td.state 状态
     %td.desc 出错时的相应描述
     %td.view 操作
+
+%h2 服务器
+%table
+  %tr
+    %td.title 是否能连接到Redis服务器
+    %td#server_redis.state
+      -if @server_redis
+        %span.status.ok 正常
+      -else
+        %span.status.error 出错
+    %td.desc Redis可能未启动
+    %td.view
+  %tr
+    %td.title 是否能连接到Sunspot服务器
+    %td#server_sunspot.state
+      -if @server_sunspot
+        %span.status.ok 正常
+      -else
+        %span.status.error 出错
+    %td.desc Sunspot可能未启动
+    %td.view=link_to '查看', "#{Sunspot.config.solr.url}/admin", target: :_blank
+  %tr
+    %td.title Solr服务器是否支持utf-8编码(Get)
+    %td#server_solr.state
+      -if @server_solr_get
+        %span.status.ok 正常
+      -else
+        %span.status.error 出错
+    %td.desc Solr容器不支持utf-8编码会导致无法查询中文关键字；下载solr压缩包，使用example/exampledocs/test_utf8.sh测试；推荐使用jetty7作为solr服务器，tomcat5,6,7都存在编码问题
+    %td.view=link_to '下载', "http://www.apache.org/dyn/closer.cgi/lucene/solr/", target: :_blank
+  %tr
+    %td.title Solr服务器是否支持utf-8编码(Post)
+    %td#server_solr.state
+      -if @server_solr_post
+        %span.status.ok 正常
+      -else
+        %span.status.error 出错
+    %td.desc 同上(Get方式)
+    %td.view
 
 %h2 Libxml2
 %table

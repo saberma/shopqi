@@ -49,5 +49,31 @@ ActiveAdmin.register Shop do
        @shop_shop_js = "#{ActionController::Base.asset_host}#{theme.asset_url('fancybox.js')}"
        @shop_product_photo = @shop.products.first.index_photo
      end
+     begin 'server' # 服务器
+       begin
+         @server_redis = Resque.redis.ping
+       rescue => e
+         puts "Redis Server Error:#{e}"
+       end
+       begin
+         id = @shop.id
+         @server_sunspot = Sunspot.search(Page) do
+           keywords '关于'
+           with :shop_id, id
+         end.results
+       rescue => e
+         puts "Sunspot Server Error:#{e}"
+       end
+       begin
+         keywords = 'héllo'
+         url = "#{Sunspot.config.solr.url}/select?q=#{URI.escape(keywords)}&params=explicit&wt=json"
+         response_keywords = JSON(HTTParty.get(url).body)['responseHeader']['params']['q']
+         @server_solr_get = (keywords == response_keywords)
+         response_keywords = JSON(HTTParty.post(url).body)['responseHeader']['params']['q']
+         @server_solr_post = (keywords == response_keywords)
+       rescue => e
+         puts "Solr Server UTF-8 Error:#{e}"
+       end
+     end
    end
 end
