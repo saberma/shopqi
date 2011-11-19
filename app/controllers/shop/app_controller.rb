@@ -146,7 +146,7 @@ class Shop::AppController < ActionController::Base
   def show_errors # 出错显示404页面
     assign = template_assign
     html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
-    render text: html
+    render text: html, status: 404
   end
 
 
