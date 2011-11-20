@@ -56,3 +56,4 @@ class SearchItemDrop < Liquid::Drop
   end
 
 end
+ProductDrop # 修正开发环境服务启动时访问商店查询页面会报Liquid error: uninitialized constant SearchItemDrop::ProductImageDrop
