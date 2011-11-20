@@ -124,15 +124,18 @@ class CustomerAddress < ActiveRecord::Base
   end
 
   def province_option_tags
-    options_for_select District.list,self.province
+    arr = [["--省份--"]]
+    options_for_select (arr +  District.list),self.province
   end
 
   def city_option_tags
-    options_for_select District.list(self.province),self.city
+    arr = [["--城市--"]]
+    options_for_select arr + District.list(self.province),self.city
   end
 
   def district_option_tags
-    options_for_select District.list(self.city),self.district
+    arr = [["--地区--"]]
+    options_for_select arr + District.list(self.city),self.district
   end
 
   def detail_address

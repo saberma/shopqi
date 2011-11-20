@@ -114,7 +114,9 @@ class Form < Liquid::Block
         'province' => context['address.province']  ,
         'phone' => context['address.phone'] ,
         'set_as_default_checkbox' => context['address.set_as_default_checkbox']  ,
-        'province_option_tags' => context['address.province_option_tags']
+        'province_option_tags' => context['address.province_option_tags'],
+        'city_option_tags' => context['address.city_option_tags'],
+        'district_option_tags' => context['address.district_option_tags'],
       }
       input = render_all(@nodelist, context)
       if type == 'customer.new_address'

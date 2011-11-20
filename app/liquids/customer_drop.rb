@@ -82,4 +82,12 @@ class CustomerAddressDrop < Liquid::Drop
     @address.province_option_tags
   end
 
+  def city_option_tags
+    @address.city_option_tags
+  end
+
+  def district_option_tags
+    @address.district_option_tags
+  end
+
 end
