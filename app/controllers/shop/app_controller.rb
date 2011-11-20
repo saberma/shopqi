@@ -7,7 +7,7 @@ class Shop::AppController < ActionController::Base
   before_filter :password_protected # 设置了密码保护
   before_filter :must_has_theme # 必须存在主题
   before_filter :remove_preview_theme_query_string # url去掉preview_theme_id
-  rescue_from StandardError, with: :show_errors
+  #rescue_from StandardError, with: :show_errors
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 

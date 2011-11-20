@@ -1,6 +1,7 @@
 #encoding: utf-8
 #订单关联的liquid属性
 class CustomerDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   def initialize(customer)
     @customer = customer
@@ -21,10 +22,22 @@ class CustomerDrop < Liquid::Drop
     @customer.name
   end
 
+  def addresses
+    @customer.addresses.map do |address|
+      CustomerAddressDrop.new address if address.id?
+    end.compact
+  end
+  memoize :addresses
+
   def orders
     @customer.orders.map do |order|
       OrderDrop.new  order
     end
+  end
+  memoize :orders
+
+  def new_address
+    CustomerAddressDrop.new @customer.addresses.new
   end
 
   def errors
@@ -40,7 +53,7 @@ class CustomerAddressDrop < Liquid::Drop
     @address = address
   end
 
-  delegate :zip, :phone, :address1, :address2, to: :@address
+  delegate :id,:name,:company,:zip, :phone, :address1, :address2,:detail_address,:default_address, to: :@address
 
   def country
     @address.country_name
@@ -56,6 +69,17 @@ class CustomerAddressDrop < Liquid::Drop
 
   def district
     @address.district_name
+  end
+
+  def set_as_default_checkbox
+    checked = @address.default_address ? "checked" : ""
+    %Q{<input name="address[default_address]" type="hidden" value="0">
+      <input type="checkbox" id="address_default_address_#{@address.id}" name="address[default_address]" value="1" #{checked} >
+    }
+  end
+
+  def province_option_tags
+    @address.province_option_tags
   end
 
 end

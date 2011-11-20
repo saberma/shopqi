@@ -101,6 +101,7 @@ end
 
 class CustomerAddress < ActiveRecord::Base
   belongs_to :customer
+  include ActionView::Helpers::FormOptionsHelper
 
   before_create do
     self.name = self.customer.name if self.name.blank?
@@ -122,9 +123,22 @@ class CustomerAddress < ActiveRecord::Base
     District.get(self.district)
   end
 
+  def province_option_tags
+    options_for_select District.list,self.province
+  end
+
+  def city_option_tags
+    options_for_select District.list(self.province),self.city
+  end
+
+  def district_option_tags
+    options_for_select District.list(self.city),self.district
+  end
+
   def detail_address
     "#{country_name} #{province_name}#{city_name}#{district_name}#{address1}".gsub(/市县/,'市').gsub(/市辖区/,'')
   end
+
 end
 
 class CustomerTag < ActiveRecord::Base

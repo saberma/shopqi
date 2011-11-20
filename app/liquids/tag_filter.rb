@@ -39,6 +39,14 @@ module TagFilter
       "<a href='/account/logout' id='customer_logout_link'>#{input}</a>"
     end
 
+    def edit_customer_address_link(title,id)
+      %Q{<span class="action_link action_edit"><a href="#" onclick="ShopQi.CustomerAddress.toggleForm(#{id});return false">#{title}</a></span>}
+    end
+
+    def delete_customer_address_link(title,id)
+      %Q{<a href="#" onclick="ShopQi.CustomerAddress.destroy(#{id});return false">#{title}</a>}
+    end
+
   end
 
   def default_errors(errors) # 错误提示

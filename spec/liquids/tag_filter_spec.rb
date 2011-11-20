@@ -78,6 +78,17 @@ describe TagFilter do
       Liquid::Template.parse(variant).render().should eql result
     end
 
+    it "should get customer edit address link",focus: true do
+      variant = '{{ "编辑" | edit_customer_address_link: 1 }}'
+      result = %Q{<span class="action_link action_edit"><a href="#" onclick="ShopQi.CustomerAddress.toggleForm(1);return false">编辑</a></span>}
+      Liquid::Template.parse(variant).render().should eql result
+    end
+
+    it "should get customer delete address link",focus: true do
+      variant = '{{ "删除" | delete_customer_address_link: 1 }}'
+      result = %Q{<a href="#" onclick="ShopQi.CustomerAddress.destroy(1);return false">删除</a>}
+      Liquid::Template.parse(variant).render().should eql result
+    end
   end
 
 end
