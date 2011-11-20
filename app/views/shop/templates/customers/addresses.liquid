@@ -19,7 +19,7 @@
       <tr>
         <td class="label"><label for="address_country_new">国家</label></td>
         <td class="value">
-          <select id="address_country_new" name="address[country_code]" >{{ country_option_tags }}</select>
+          <select id="address_country_new" name="address[country_code]" disabled="disabled" >{{ country_option_tags }}</select>
         </td>
       </tr>
       <tr>
@@ -94,7 +94,7 @@
           <tr>
             <td class="label"><label for="address_country_{{form.id}}">国家</label></td>
             <td class="value">
-              <select id="address_country_{{form.id}}" name="address[country_code]" >{{ country_option_tags }}</select>
+              <select id="address_country_{{form.id}}" name="address[country_code]" disabled="disabled" >{{ country_option_tags }}</select>
             </td>
           </tr>
           <tr>
