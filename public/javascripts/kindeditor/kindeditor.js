@@ -2942,7 +2942,7 @@ KE.create = function(id, mode) {
 		KE.history.add(id, KE.g[id].minChangeSize);
 	});
 	if (KE.browser.IE) KE.readonly(id, false);
-	if (KE.browser.IE && KE.browser.VERSION < 8) KE.blur(id);
+	//if (KE.browser.IE && KE.browser.VERSION < 8) KE.blur(id); //后台管理商品详情会提示'控件不可见',issues#294
 	KE.util.setFullHtml(id, srcTextarea.value);
 	KE.history.add(id, 0);
 	if (mode > 0) KE.util.focus(id);
