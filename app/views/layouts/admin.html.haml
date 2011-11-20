@@ -13,6 +13,8 @@
     = stylesheet_link_tag :layout_admin_print, media: :print
     /[if lt IE 7 ]
       = stylesheet_link_tag 'ie'
+    /[if lt IE 8]
+      = stylesheet_link_tag 'ie-admin'
     =yield :stylesheets
     = javascript_include_tag :admin_application
     =yield :kindeditor
