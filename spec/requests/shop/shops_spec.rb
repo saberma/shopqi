@@ -28,7 +28,7 @@ describe "Shop::Shops", js:true do
 
   describe "GET /products" do # 首页
 
-    it "should show product", focus: true do
+    it "should show product" do
       payment
       product = iphone4
       variant = product.variants.first
@@ -75,6 +75,12 @@ describe "Shop::Shops", js:true do
       fill_in 'password', with: shop.password
       click_on '提交'
       page.should have_content('关于我们')
+    end
+
+    it "should redirect to unavailable page",focus: true do  # 密码保护
+      shop.update_attributes deadline: Date.new(2001,01,01)
+      visit '/'
+      page.should have_content "过期"
     end
 
   end

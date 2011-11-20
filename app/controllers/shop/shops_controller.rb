@@ -4,6 +4,7 @@ class Shop::ShopsController < Shop::AppController
   include Admin::ShopsHelper
   skip_before_filter :password_protected, only: [:password, :themes, :asset]
   skip_before_filter :must_has_theme, only: [:password, :themes, :asset]
+  skip_before_filter :check_shop_avaliable, only: [:unavailable]
 
   expose(:shop) do
     if params[:id]
@@ -40,6 +41,9 @@ class Shop::ShopsController < Shop::AppController
         flash[:error] = '密码不正确，请重试.'
       end
     end
+  end
+
+  def unavailable # 提示商店已过期，暂时无法访问
   end
 
 end

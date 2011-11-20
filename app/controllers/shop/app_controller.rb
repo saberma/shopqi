@@ -4,6 +4,7 @@ class Shop::AppController < ActionController::Base
   include Shop::ShopsHelper
   layout nil #默认不需要layout，使用liquid
   before_filter :force_domain # 域名管理中是否设置主域名重定向
+  before_filter :check_shop_avaliable # 判断网店是否已过期
   before_filter :password_protected # 设置了密码保护
   before_filter :must_has_theme # 必须存在主题
   before_filter :remove_preview_theme_query_string # url去掉preview_theme_id
@@ -12,8 +13,12 @@ class Shop::AppController < ActionController::Base
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   protected
+  def check_shop_avaliable
+    redirect_to controller: :shops, action: :unavailable and return unless shop.available?
+  end
+
   def must_has_theme
-    redirect_to controller: :shops, action: :themes unless shop.theme
+    redirect_to controller: :shops, action: :themes and return  unless shop.theme
   end
 
   def force_domain
@@ -22,13 +27,13 @@ class Shop::AppController < ActionController::Base
     return unless shop_domain # 排除checkout页面
     primary = shop_domain.shop.primary_domain
     if primary.force_domain and host != primary.host  # 重定向
-      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}"
+      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}" and return
     end
   end
 
   def password_protected
     if shop.password_enabled and !session['storefront_digest']
-      redirect_to controller: :shops, action: :password
+      redirect_to controller: :shops, action: :password and return
     end
   end
 
