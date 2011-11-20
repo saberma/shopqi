@@ -727,9 +727,9 @@ describe "Products", js: true do
                 page.execute_script("window.confirm = function(msg) { return true; }")
                 select '删除', from: 'product-select'
               end
-              has_content?('批量删除成功!').should be_true
-              find('#product-controls').visible?.should be_false
-              has_no_xpath?("//ul[@id='variants-list']/li[2]").should be_true
+              page.should have_content('批量删除成功!')
+              find('#product-controls').should_not be_visible
+              page.should have_no_xpath("//ul[@id='variants-list']/li[2]")
             end
 
           end

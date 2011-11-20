@@ -18,10 +18,10 @@ class Customer < ActiveRecord::Base
   before_create :ensure_authentication_token # 生成login token，只使用一次
   validates_presence_of :name, :email
   validates_presence_of :password, if: :password_required?
-  validates :email, uniqueness: {scope: :shop_id}, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }
-  validates :password, confirmation: true, length: 6..20, if: :password_required?
+  validates :email, uniqueness: {scope: :shop_id}, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }, allow_blank: true
+  validates :password, confirmation: true, length: 6..20, allow_blank: true, if: :password_required?
 
-  validates :name, length: 2..10
+  validates :name, length: 2..10, allow_blank: true
 
   # 标签
   attr_accessor :tags_text

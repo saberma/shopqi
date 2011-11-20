@@ -57,17 +57,13 @@ describe "Shop::Customers", js: true do
 
     end
 
-    it "should can registe a new customer " do
+    it "should can registe a new customer" do
       visit new_customer_registration_path
       click_on '注册'
-      within '#login_name' do
-        page.should have_content('不能为空')
-      end
-      within '#login_email' do
-        page.should have_content('不能为空')
-      end
-      within '#login_password' do
-        page.should have_content('不能为空')
+      within '.errors' do
+        page.should have_content('姓名 不能为空')
+        page.should have_content('邮箱 不能为空')
+        page.should have_content('密码 不能为空')
       end
 
       fill_in 'customer[name]', with: '李卫辉'
@@ -79,43 +75,43 @@ describe "Shop::Customers", js: true do
 
       current_path.should == '/account/index'
       click_link '查看地址簿(0)'
-      page.should have_content('管理地址簿')
-      find('#add_address').visible? == false
+      page.should have_content('管理地址')
+      find('#add_address').should_not be_visible
       click_link '增加新地址'
-      find('#add_address').visible? == true
-      fill_in 'customer_address[name]', with: '李卫辉'
-      select '中国', form: 'customer_address[country_code]'
-      select '广东省', form: 'customer_address[province]'
-      select '深圳市', form: 'customer_address[city]'
-      select '南山区', form: 'customer_address[district]'
-      fill_in 'customer_address[address1]', with: '深港产学研基地'
-      fill_in 'customer_address[phone]', with: '13751042627'
-      fill_in 'customer_address[zip]', with: '444333'
-      fill_in 'customer_address[company]', with: 'shopqi'
-      click_on '保存'
-
-      find('#add_address').visible? == false
-
-      within '#address_tables' do
-        has_content?('收货人: 李卫辉').should be_true
-        has_content?('详细地址: 中国 广东省深圳市南山区深港产学研基地').should be_true
-        has_content?('邮政编码: 444333').should be_true
-        has_content?('电话号码: 13751042627').should be_true
-        has_content?('公司: shopqi').should be_true
+      find('#add_address').should be_visible
+      within '#add_address' do
+        fill_in 'address[name]', with: '李卫辉'
+        select '中国', form: 'address[country_code]'
+        select '广东省', form: 'address[province]'
+        select '深圳市', form: 'address[city]'
+        select '南山区', form: 'address[district]'
+        fill_in 'address[address1]', with: '深港产学研基地'
+        fill_in 'address[phone]', with: '13751042627'
+        fill_in 'address[zip]', with: '518000'
+        fill_in 'address[company]', with: 'shopqi'
+        click_on '增加新地址'
       end
 
-      find('#edit_address_1').visible?.should be_false
+      find('#add_address').should_not be_visible
+
+      within '#address_tables' do
+        page.should have_content('收货人: 李卫辉')
+        page.should have_content('详细地址: 中国 广东省深圳市南山区深港产学研基地')
+        page.should have_content('邮政编码: 518000')
+        page.should have_content('公司: shopqi')
+      end
+
+      find('#edit_address_1').should_not be_visible
       click_link '编辑'
-      find('#edit_address_1').visible?.should be_true
-      check 'customer_address_default_address'
-      click_on '保存'
-      find('#edit_address_1').visible?.should be_false
+      find('#edit_address_1').should be_visible
+      check 'address[default_address]'
+      click_on '更新地址'
+      find('#edit_address_1').should_not be_visible
       page.should have_content('默认地址')
 
       page.execute_script("window.confirm = function(msg) { return true; }")
       click_link '删除'
       page.should_not have_content('详细地址')
-
     end
   end
 end
