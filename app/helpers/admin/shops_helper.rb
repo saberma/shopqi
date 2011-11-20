@@ -41,7 +41,7 @@ module Admin::ShopsHelper
     params[:controller] == 'admin/home'
   end
 
-  private
+  protected
   def url_protocol
     Rails.env == "production"  ? "https://" : "http://"
   end

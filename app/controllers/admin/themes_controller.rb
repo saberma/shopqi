@@ -42,16 +42,17 @@ class Admin::ThemesController < Admin::AppController
     def upload # 上传主题(只检查必须的文件，解压操作转入后台运行)
       if shop.themes.exceed?
         request.raw_post # fixed: 需要先接收数据，否则浏览器直接显示上传被cancle，无法获取返回的json数据
-        render json: {exceed: true} and return
+        render text: {exceed: true}.to_json and return
       end
       path = Rails.root.join 'tmp', 'themes', shop.id.to_s
-      name = params[:qqfile]
+      qqfile = QqFile.new params[:qqfile], request
+      name = qqfile.name
       zip_path = File.join path, "t#{DateTime.now.to_i}-#{name}"
       name = name[0, name.rindex('.')] # 去掉文件后缀
       name = name[0, 32] # 最多32位
       name = Asset.safe(name) # 过滤文件名
       FileUtils.mkdir_p path
-      File.open(zip_path, 'wb') {|f| f.write(request.raw_post) }
+      File.open(zip_path, 'wb') {|f| f.write(qqfile.body) }
       files = []
       begin
         Zip::ZipFile::open(zip_path) do |zf|
@@ -65,7 +66,7 @@ class Admin::ThemesController < Admin::AppController
         end
       rescue => e
         puts e
-        render json: {error_type: true} and return # 上传非zip文件，提示错误直接返回
+        render text: {error_type: true}.to_json and return # 上传非zip文件，提示错误直接返回
       end
 
       missing = nil
@@ -76,12 +77,12 @@ class Admin::ThemesController < Admin::AppController
       end
 
       unless missing.blank?
-        render json: {missing: missing} and return
+        render text: {missing: missing}.to_json and return
       end
 
       shop_theme = shop.themes.create name: name, role: 'wait' # 等待解压主题文件
       Resque.enqueue(ThemeExtracter, shop.id, shop_theme.id, zip_path)
-      render json: {id: shop_theme.id, name: shop_theme.name}
+      render text: {id: shop_theme.id, name: shop_theme.name}.to_json
     end
 
     def current # 当前主题的模板编辑器

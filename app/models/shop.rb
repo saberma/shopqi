@@ -3,19 +3,19 @@ class Shop < ActiveRecord::Base
   #include OAuth2::Model::ClientOwner # Client所属者不应该是Shop，要放置于以后开发的Partner类
   include OAuth2::Model::ResourceOwner
   has_many :api_clients           , dependent: :destroy
-  has_many :users                 , dependent: :destroy
+  has_many :users                 , dependent: :destroy                      , order: 'id asc'
   has_many :domains               , dependent: :destroy                      , order: 'id asc', class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: 'id desc'
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
   has_many :link_lists            , dependent: :destroy                      , order: 'id asc'
-  has_many :pages                 , dependent: :destroy
-  has_many :blogs                 , dependent: :destroy
-  has_many :smart_collections     , dependent: :destroy
-  has_many :custom_collections    , dependent: :destroy
+  has_many :pages                 , dependent: :destroy                      , order: 'id desc'
+  has_many :blogs                 , dependent: :destroy                      , order: 'id desc'
+  has_many :smart_collections     , dependent: :destroy                      , order: 'id desc'
+  has_many :custom_collections    , dependent: :destroy                      , order: 'id desc'
   has_many :tags                  , dependent: :destroy
   has_many :orders                , dependent: :destroy                      , order: 'id desc'
   has_many :customers             , dependent: :destroy                      , order: 'id asc'
-  has_many :customer_groups       , dependent: :destroy
+  has_many :customer_groups       , dependent: :destroy                      , order: 'id asc'
   has_many :customer_tags         , dependent: :destroy
   has_many :carts                 , dependent: :destroy
   has_many :subscribes            , dependent: :destroy

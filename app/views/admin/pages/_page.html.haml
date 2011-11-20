@@ -1,7 +1,7 @@
 %tr(class="#{cycle(:odd, :even)}")
   %td
     =link_to page.title, page_path(page), title: "固定链接: #{page.handle}"
-    -if page.published?
+    -unless page.published?
       %span.status-hidden 隐藏
   %td.date=page.updated_at.to_s(:db)
   %td(style="text-align: center")=link_to image_tag('admin/icons/trash.gif'), page_path(page), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del

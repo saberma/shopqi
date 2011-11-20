@@ -7,7 +7,7 @@ class ShopObserver < ActiveRecord::Observer
     frontpage_collection = shop.custom_collections.create title: '首页商品', handle: 'frontpage'
 
     # 页面
-    welcome_page = shop.pages.create title: '欢迎', handle: 'frontpage', body_html: %q{
+    welcome_page = shop.pages.create title: '欢迎', handle: 'frontpage', published: true, body_html: %q{
 <p><strong>恭喜！您已成功发布网上商店！</strong></p
 
 <p>这是您的网店首页，当您的顾客进入网店时将看到这里的内容。您可以重新修改此内容。</p>
@@ -16,7 +16,7 @@ class ShopObserver < ActiveRecord::Observer
 
 <p>ShopQi团队。</p>
     }
-    about_us_page = shop.pages.create title: '关于我们', handle: 'about-us', body_html: %q{
+    about_us_page = shop.pages.create title: '关于我们', handle: 'about-us', published: true, body_html: %q{
 <p>商店的<strong>关于我们</strong>页面是非常重要的，因此顾客将通过访问此页面来了解您的商店。此页面的内容可以包括以下部分：</p>
 <ul>
 <li>介绍您的公司</li>

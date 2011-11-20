@@ -51,7 +51,7 @@ describe Shopqi::HomeController do
     it "should show no shop" do
       request.host = "http://aaa.lvh.me:4000"
       get :no_shop
-      response.should be_success
+      response.status.should eql 404
       response.should render_template("shared/no_shop")
     end
 

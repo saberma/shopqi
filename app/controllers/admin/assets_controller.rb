@@ -21,7 +21,8 @@ class Admin::AssetsController < Admin::AppController
   end
 
   def upload # 上传asset附件
-    image = request.body.read
+    qqfile = QqFile.new params[:qqfile], request
+    image = qqfile.body
     max_width = params['max_width']
     max_height = params['max_height']
     unless max_width.blank? or max_height.blank? # 限制宽高
@@ -29,7 +30,7 @@ class Admin::AssetsController < Admin::AppController
       image.resize "#{max_width}x#{max_height}"
     end
     asset = Asset.create theme, params[:key], nil, image
-    render json: asset.to_json
+    render text: asset.to_json
   end
 
   def update # 更新主题文件

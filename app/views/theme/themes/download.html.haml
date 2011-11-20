@@ -11,11 +11,12 @@
         安装并发布为我的商店的普通主题
         %br/
         %small 您当前的普通主题将修改为未发布状态
-      或者
-      %a(href="/themes/#{handle}/styles/#{style_handle}/download_file" onclick="alert('暂时不支持此功能');return false") 以.zip格式下载此主题
+      -#
+        或者
+        %a(href="/themes/#{handle}/styles/#{style_handle}/download_file" onclick="alert('暂时不支持此功能');return false") 以.zip格式下载此主题
   %p.hint(style="text-align: center; margin-top: 30px;")
     选择以上任一操作表明您
     %br/
     已经阅读并同意
     = succeed "." do
-      %a(href="http://checkout.shopqi.com/legal/terms.html#themes") ShopQi的服务协议
+      %a(href="#{url_with_port}#{agreement_path}#themes") ShopQi的服务协议

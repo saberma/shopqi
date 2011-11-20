@@ -105,11 +105,21 @@ describe Admin::ThemesController do
 
     end
 
+    describe 'ie', focus: true do # 支持ie浏览器上传
+
+      it 'should be success' do
+        post :upload, qqfile: Rack::Test::UploadedFile.new(File.join(zip_path, 'woodland.zip'))
+        response.should be_success
+        response.content_type.should eql 'text/html' # context_type不为'text/html'时，ie会将json作为文件下载
+      end
+
+    end
+
   end
 
   context '#api' do # 安装主题
 
-    it 'should be install', focus: true do # issues#228
+    it 'should be install' do # issues#228
       authorization = mock('authorization')
       authorization.stub!(:owner).and_return(shop)
       authorization.stub!(:valid?).and_return(true)
