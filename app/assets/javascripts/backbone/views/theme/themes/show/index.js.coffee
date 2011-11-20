@@ -12,6 +12,7 @@ App.Views.Theme.Themes.Show.Index = Backbone.View.extend
           false # 不弹出窗口
         else if data is 'from_admin' # 后台管理中进入主题商店，则不需要显示登录窗口
           form = document.createElement("form")
+          document.body.appendChild(form)
           form.setAttribute("action", "/themes/login/authenticate")
           form.setAttribute("method", "post")
           form.submit()
