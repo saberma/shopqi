@@ -139,6 +139,7 @@ Shopqi::Application.routes.draw do
       end
       match '/'                            , to: 'shops#show'
       match '/password'                    , to: 'shops#password'
+      get   '/unavailable'                 , to: 'shops#unavailable'
       get '/themes'                        , to: 'shops#themes' , as: :shop_themes_tip
       get '/search'                        , to: 'search#show'
       get '/products/:handle'              , to: 'products#show', as: :product_show

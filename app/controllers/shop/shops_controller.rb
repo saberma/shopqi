@@ -4,6 +4,7 @@ class Shop::ShopsController < Shop::AppController
   include Admin::ShopsHelper
   skip_before_filter :password_protected, only: [:password, :themes, :asset, :robots]
   skip_before_filter :must_has_theme, only: [:password, :themes, :asset, :robots]
+  skip_before_filter :check_shop_avaliable, only: [:unavailable, :robots]
 
   expose(:shop) do
     if params[:id]
@@ -45,6 +46,9 @@ class Shop::ShopsController < Shop::AppController
   def robots
     robots = File.read(Rails.root.join("public/robots/shop_robots.txt"))
     render text: robots, layout: false, content_type: "text/plain"
+  end
+
+  def unavailable # 提示商店已过期，暂时无法访问
   end
 
 end
