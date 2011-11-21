@@ -2,8 +2,8 @@
 #class Shop::ShopsController < Shop::ApplicationController #warning: toplevel constant ApplicationController referenced by
 class Shop::ShopsController < Shop::AppController
   include Admin::ShopsHelper
-  skip_before_filter :password_protected, only: [:password, :themes, :asset]
-  skip_before_filter :must_has_theme, only: [:password, :themes, :asset]
+  skip_before_filter :password_protected, only: [:password, :themes, :asset, :robots]
+  skip_before_filter :must_has_theme, only: [:password, :themes, :asset, :robots]
 
   expose(:shop) do
     if params[:id]
@@ -40,6 +40,11 @@ class Shop::ShopsController < Shop::AppController
         flash[:error] = '密码不正确，请重试.'
       end
     end
+  end
+
+  def robots
+    robots = File.read(Rails.root.join("public/robots/shop_robots.txt"))
+    render text: robots, layout: false, content_type: "text/plain"
   end
 
 end

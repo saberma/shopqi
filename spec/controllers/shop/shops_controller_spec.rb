@@ -67,7 +67,17 @@ describe Shop::ShopsController do
 
   end
 
-  context 'https', focus: true do # 不检查控制器，只测试https路由判断
+  describe 'robots' do
+
+    it "should be show", focus: true do
+      get :robots
+      response.should be_success
+      response.body.should include 'Disallow'
+    end
+
+  end
+
+  context 'https' do # 不检查控制器，只测试https路由判断
 
     it 'should get https route' do # 官网、商店后台管理、商店结算
       https?('lvh.me').should be_true

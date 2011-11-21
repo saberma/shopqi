@@ -15,4 +15,9 @@ class Shopqi::HomeController < Shopqi::AppController # 官网首页
     render status: 404
   end
 
+  def robots
+    robots = File.read(Rails.root.join("public/robots/shopqi_robots.txt"))
+    render text: robots, layout: false, content_type: "text/plain"
+  end
+
 end

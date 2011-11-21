@@ -13,21 +13,22 @@ Shopqi::Application.routes.draw do
   constraints(Domain::Wiki) do # 百科文档
     devise_for :admin_users, ActiveAdmin::Devise.config
     scope module: :wiki do
-      get '/', to: 'wiki_pages#index', as: :wiki_pages_index
-      get '/active_admin', to: redirect('/')
-      resources :wiki_pages, only:[:new,:create]
-      get '/pages', to: 'wiki_pages#pages', as: :wiki_pages_all
-      match '/search' ,to: 'wiki_pages#search'
-      get '/history/:name', to: 'wiki_pages#history'
-      get '/:name', to: 'wiki_pages#show'
-      post '/destroy/:name', to: 'wiki_pages#destroy'
-      get '/edit/:name', to: 'wiki_pages#edit'
-      post '/compare/:name', to: 'wiki_pages#compare'
+      get '/'                         , to: 'wiki_pages#index'           , as: :wiki_pages_index
+      get '/active_admin'             , to: redirect('/')
+      resources :wiki_pages           , only:[:new                       , :create]
+      get '/pages'                    , to: 'wiki_pages#pages'           , as: :wiki_pages_all
+      match '/search'                 , to: 'wiki_pages#search'
+      get '/history/:name'            , to: 'wiki_pages#history'
+      get '/robots.txt'               , to: 'wiki_pages#robots'
+      get '/:name'                    , to: 'wiki_pages#show'
+      post '/destroy/:name'           , to: 'wiki_pages#destroy'
+      get '/edit/:name'               , to: 'wiki_pages#edit'
+      post '/compare/:name'           , to: 'wiki_pages#compare'
       get '/compare/:name/:sha1/:sha2', to: 'wiki_pages#compare_versions'
       post '/revert/:name/:sha1/:sha2', to: 'wiki_pages#revert'
-      get '/:name/:sha', to: 'wiki_pages#show'
-      post '/update', to: 'wiki_pages#update', as: :update_page
-      post '/preview', to: 'wiki_pages#preview'
+      get '/:name/:sha'               , to: 'wiki_pages#show'
+      post '/update'                  , to: 'wiki_pages#update'          , as: :update_page
+      post '/preview'                 , to: 'wiki_pages#preview'
     end
   end
 
@@ -44,6 +45,7 @@ Shopqi::Application.routes.draw do
         get '/:handle/styles/:style_handle/download', to: 'themes#download'    , as: :theme_download
         match '/:handle/styles/:style_handle/apply' , to: 'themes#apply'
       end
+      get '/robots.txt'                             , to: 'themes#robots'
 
       begin 'client' # 作为oauth client
         get '/callback', to: redirect('/themes/get_shop')
@@ -98,6 +100,7 @@ Shopqi::Application.routes.draw do
           post "/verify_code"      , to: "registrations#verify_code" # 获取手机校验码
         end
       end
+      get '/robots.txt', to: 'home#robots'
     end
 
     #官网后台管理
@@ -151,6 +154,7 @@ Shopqi::Application.routes.draw do
       get '/blogs/:handle'                 , to: 'blogs#show'
       get '/blogs/:handle/:id'             , to: 'articles#show'
       match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'
+      get '/robots.txt'                    , to: 'shops#robots'
     end
 
     scope module: :admin do # 用户后台管理

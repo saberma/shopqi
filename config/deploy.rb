@@ -109,4 +109,20 @@ namespace :dragonfly do # 图片缓存
 end
 after 'deploy:update_code', 'dragonfly:symlink'
 
+namespace :sitemaps do # 搜索引擎网站地图
+
+  desc "Symlink the sitemaps directory"
+  task :symlink, roles: :app do
+    run "mkdir -p #{shared_path}/sitemaps && ln -nfs #{shared_path}/sitemaps #{release_path}/public/sitemaps"
+  end
+
+  desc "Refresh sitemaps"
+  task :refresh_sitemaps do
+    run "cd #{current_path} && bundle exec rake sitemap:refresh:no_ping"
+  end
+
+end
+after 'deploy:update_code', 'sitemaps:symlink'
+after 'deploy'            , 'sitemaps:refresh_sitemaps'
+
 # HOOK IMAGE http://j.mp/psRjx2

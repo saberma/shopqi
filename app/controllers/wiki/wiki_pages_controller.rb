@@ -1,6 +1,6 @@
 #encoding: utf-8
 class Wiki::WikiPagesController < Wiki::AppController
-  prepend_before_filter :authenticate_admin_user!, except: [:index,:show,:pages,:search]
+  prepend_before_filter :authenticate_admin_user!, except: [:index, :show, :pages, :search, :robots]
   layout 'wiki'
   expose(:wiki){ WikiPage.wiki }
   expose(:sidebar){ wiki.page('sidebar') if wiki.page('sidebar')}
@@ -126,6 +126,11 @@ class Wiki::WikiPagesController < Wiki::AppController
     end
   end
 
+  def robots
+    robots = File.read(Rails.root.join("public/robots/wiki_robots.txt"))
+    render text: robots, layout: false, content_type: "text/plain"
+  end
+
   protected
   def show_page_or_file(name,sha)
     if sha
@@ -154,7 +159,6 @@ class Wiki::WikiPagesController < Wiki::AppController
       end
     end
   end
-
 
   private
 
