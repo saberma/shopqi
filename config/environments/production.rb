@@ -13,6 +13,7 @@ Shopqi::Application.configure do
   #config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   config.middleware.use Rack::SSL, exclude: lambda {|env| # 测试用例:spec/controllers/shop/shops_controller_spec.rb
+    return true if env['HTTP_USER_AGENT'] =~ /(bot|crawl|spider)/i # 搜索引擎不使用https协议
     host = env['SERVER_NAME']
     path = env['PATH_INFO']
     host.end_with?(Setting.store_host) and !path.start_with?('/admin') # 访问商店 apple.lvh.me
