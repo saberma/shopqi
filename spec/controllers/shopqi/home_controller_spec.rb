@@ -57,4 +57,14 @@ describe Shopqi::HomeController do
 
   end
 
+  describe 'robots' do
+
+    it "should be show", focus: true do
+      get :robots
+      response.should be_success
+      response.body.should include 'Sitemap'
+    end
+
+  end
+
 end

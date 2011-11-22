@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Wiki::WikiPagesController do
+describe Theme::ThemesController do
 
   describe 'robots' do
 
