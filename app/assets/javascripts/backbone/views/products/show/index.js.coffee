@@ -48,6 +48,10 @@ App.Views.Product.Show.Index = Backbone.View.extend
 
   duplicate: -> # 复制
     title = $('#duplicate_product_title').val()
+    flag = App.current_sku_size >= App.shop_sku_size
+    if flag
+      error_msg '商品唯一标识符超过商店限制'
+      return
     if title
       $.post "/admin/products/#{@model.id}/duplicate", new_title: title, (data) ->
         window.location = "/admin/products/#{data.id}"

@@ -28,7 +28,9 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
     if @model.set attrs
       App.product_variants.create attrs,
         error: ->
-          error_msg 'SKU超出使用限制，无法增加'
+          error_msg '商品唯一标识符超出使用限制，无法增加'
+        success: (model,resp) ->
+          App.current_sku_size = parseInt(App.current_sku_size) + 1
     false
 
   cancel: ->

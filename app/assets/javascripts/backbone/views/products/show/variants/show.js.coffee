@@ -32,7 +32,6 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
       self.remove()
     # 校验
     @model.bind 'error', (model, error)->
-      log error
       errors = _(error).map (err, key) ->
         "#{key} #{err}"
       .join(' ')
@@ -45,8 +44,6 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
         self.render()
         msg '修改成功!'
         self.cancel()
-      error: ->
-        error_msg 'SKU超出使用限制，无法修改'
     false
 
   render: ->

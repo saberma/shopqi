@@ -32,6 +32,8 @@ class Admin::ProductsController < Admin::AppController
   expose(:publish_states) { KeyValues::PublishState.options }
   expose(:photos){ product.photos }
   expose(:photo){ Photo.new }
+  expose(:current_sku_size){ shop.variants.size }
+  expose(:shop_sku_size){ shop.plan_type.skus }
 
   def index
     @products_json = products.to_json({include: [:variants, :options], except: [:created_at, :updated_at],methods:[:index_photo]})
