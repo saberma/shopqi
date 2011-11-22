@@ -40,4 +40,8 @@ describe Shop::ProductsController do
 
   end
 
+  it "should not create new product" do
+
+  end
+
 end

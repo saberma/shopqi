@@ -61,6 +61,7 @@
                       元
                   %tr
                     %td(colspan="3")
+                      =hidden_field_tag 'product[variants_attributes][][shop_id]',shop.id
                       -#check_box包含hidden require_shipping，会产生多个variant
                       -#=v.check_box :requires_shipping, class: :requires_shipping, id: :variant_requires_shipping
                       =check_box_tag 'product[variants_attributes][][requires_shipping]', 1, product.variants.first.requires_shipping, id: :variant_requires_shipping, class: :requires_shipping

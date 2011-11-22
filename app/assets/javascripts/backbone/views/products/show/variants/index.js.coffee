@@ -22,7 +22,9 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
       attrs['id'] = null
       index = operation.match(/duplicate-(\d)/)[1]
       attrs["option#{index}"] = new_value
-      App.product_variants.create attrs
+      App.product_variants.create attrs,
+        error: ->
+          error_msg "SKU超出使用限制"
       @$('#product-select').val('').change()
     else
       $.post "/admin/products/#{App.product.id}/variants/set", operation: operation, new_value: new_value, 'variants[]': checked_variant_ids, ->
@@ -96,6 +98,8 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
         cycle = if index % 2 == 0 then 'odd' else 'even'
         not_cycle = if index % 2 != 0 then 'odd' else 'even'
         model.view.$('.inventory-row').addClass(cycle).removeClass(not_cycle)
+  check_skus_limited: ->
+    $.get '/admin/check_skus_size'
 
   render: ->
     new App.Views.Product.Show.Variant.QuickSelect collection: @collection

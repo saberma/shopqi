@@ -26,6 +26,11 @@ class Admin::ShopsController < Admin::AppController
     end
   end
 
+  def check_skus_size
+    flag = shop.variants.size >= shop.plan_type.skus
+    render json: {error: flag}
+  end
+
   begin 'api'
     def me
       authorization = OAuth2::Provider.access_token(nil, [], request)

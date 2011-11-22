@@ -26,7 +26,9 @@ App.Views.Product.Show.Variant.New = Backbone.View.extend
   save: ->
     attrs = Utils.Form.to_h @$('form')
     if @model.set attrs
-      App.product_variants.create attrs
+      App.product_variants.create attrs,
+        error: ->
+          error_msg 'SKU超出使用限制，无法增加'
     false
 
   cancel: ->

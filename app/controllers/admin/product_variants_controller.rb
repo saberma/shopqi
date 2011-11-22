@@ -9,13 +9,19 @@ class Admin::ProductVariantsController < Admin::AppController
   expose(:product_variant_json) { product_variant.to_json except: [ :created_at, :updated_at ] }
 
   def create
-    product_variant.save
-    render json: product_variant_json
+    if product_variant.save
+      render json: product_variant_json
+    else
+      render nothing: true
+    end
   end
 
   def update
-    product_variant.save
-    render json: product_variant_json
+    if product_variant.save
+      render json: product_variant_json
+    else
+      render nothing: true
+    end
   end
 
   # 批量修改
@@ -25,7 +31,8 @@ class Admin::ProductVariantsController < Admin::AppController
     if operation.to_sym == :destroy
       product_variants.find(ids).map(&:destroy)
     else
-      product_variants.where(id:ids).update_all operation => params[:new_value]
+      #product_variants.where(id:ids).update_all operation => params[:new_value]
+      product_variants.update(ids,operation => params[:new_value])
     end
     render nothing: true
   end

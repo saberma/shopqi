@@ -111,6 +111,7 @@ end
 class ProductVariant < ActiveRecord::Base
   belongs_to :shop #冗余字段，前台商店下订单时使用
   belongs_to :product
+  validates_with SkuValidator
 
   before_create do
     self.shop_id = self.product.shop_id
@@ -211,3 +212,4 @@ class Photo < ActiveRecord::Base
 end
 
 CustomCollection
+
