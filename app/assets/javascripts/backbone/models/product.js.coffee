@@ -81,7 +81,7 @@ App.Models.ProductVariant = Backbone.Model.extend
 
     #验证SKU是否超过限制
     if App.current_sku_size >= App.shop_sku_size
-      error['商品SKU'] = "超过商店限制"
+      error['商品SKU'] = "超过商店限制!"
 
     if _(error).size() is 0
       return

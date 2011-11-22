@@ -33,7 +33,9 @@ describe Admin::ProductVariantsController do
         response.should be_success
       end.should change(ProductVariant, :count).by(0)
     end
+  end
 
+  context '#create' do
     it "should update variant " ,focus: true do # issue#284
       iphone4
       variant = iphone4.variants.first
