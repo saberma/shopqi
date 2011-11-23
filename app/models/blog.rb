@@ -1,6 +1,6 @@
 #encoding: utf-8
 class Blog < ActiveRecord::Base
-  has_many :articles, dependent: :destroy
+  has_many :articles, dependent: :destroy, order: 'id desc'
   belongs_to :shop
   validates_presence_of :title
 

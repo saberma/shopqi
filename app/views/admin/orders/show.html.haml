@@ -113,7 +113,7 @@
                   通过
                   %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
                     %option(value="ems") EMS
-                    %option(value="other") Other
+                    %option(value="other") 其他
           .btns(style="background: none")
             .sb
               %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")
@@ -162,7 +162,7 @@
     %p.instruction.r 您还未收到此订单的款项
     {{/if}}
   %h3 支付方式
-  %p 货到付款
+  %p {{gateway}}
 %script(id="order-history-table-item" type="text/x-handlebars-template")
   {{#loop}}
   %tr.log-date

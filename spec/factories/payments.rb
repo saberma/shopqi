@@ -8,7 +8,8 @@ FactoryGirl.define do
 
   factory :payment_alipay, parent: :payment do
     message  ""
-    name  "支付宝"
+    name ''
+    payment_type_id 1 # KeyValues::PaymentType 支付宝
     key UUID.generate(:compact)
     partner '2398072190767748'
     account 'mahb45@gmail.com'

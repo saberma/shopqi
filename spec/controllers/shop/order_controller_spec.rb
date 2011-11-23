@@ -130,13 +130,16 @@ describe Shop::OrderController do
 
     context 'trade status is TRADE_FINISHED' do # 交易完成
 
-      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED' } }
+      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
 
       it 'should change order financial_status to paid' do
         order.financial_status_pending?.should be_true
-        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-        response.body.should eql 'success'
-        order.reload.financial_status_paid?.should be_true
+        expect do
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.body.should eql 'success'
+          order.reload.financial_status_paid?.should be_true
+        end.should change(OrderTransaction, :count).by(1)
+        order.transactions.amount.should eql order.total_price
       end
 
       it 'should be retry' do # 要支持重复请求
@@ -154,7 +157,7 @@ describe Shop::OrderController do
 
     context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
 
-      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY' } }
+      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY', total_fee: order.total_price } }
 
       it 'should remain order financial status' do
         order.financial_status_pending?.should be_true
@@ -177,11 +180,13 @@ describe Shop::OrderController do
 
     context 'trade status is TRADE_SUCCESS' do # 交易完成
 
-      let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: 0.0 } }
+      let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
 
       it 'should change order financial_status to paid', f: true do
-        get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-        response.should be_success
+        expect do
+          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.should be_success
+        end.should_not change(OrderTransaction, :count)
         order.reload.financial_status_paid?.should be_true
       end
 
@@ -190,8 +195,10 @@ describe Shop::OrderController do
         order.save
         get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
         response.should be_success
-        get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-        response.should be_success
+        expect do
+          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.should be_success
+        end.should_not change(OrderTransaction, :count)
         order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
       end
 

@@ -45,7 +45,7 @@ class Order < ActiveRecord::Base
   end
 
   def gateway
-    payment.name ? payment.name : payment.payment_type.try(:name)  if payment
+    payment.name.blank? ? payment.payment_type.try(:name) : payment.name if payment
   end
 
   #订单商品总重量
@@ -126,12 +126,9 @@ class Order < ActiveRecord::Base
     "订单 #{name}"
   end
 
-  def pay!
-    self.financial_status = 'paid'
-    self.save
+  def pay!(amount)
+    self.transactions.create kind: :capture, amount: amount
     self.send_email_when_order_forward
-    #TODO
-    #支付记录
   end
 
   def send_email(mail_type,email_address = self.email)
@@ -190,11 +187,12 @@ class OrderTransaction < ActiveRecord::Base
   belongs_to :order
 
   before_create do
-    self.amount = order.total_price #非信用卡,手动接收款项
+    self.amount ||= order.total_price #非信用卡,手动接收款项
   end
 
   after_create do
-    self.order.update_attribute :financial_status, :paid
+    amount_sum = self.order.transactions.map(&:amount).sum
+    self.order.update_attribute :financial_status, :paid if amount_sum >= self.order.total_price
     self.order.histories.create body: "我们已经成功接收款项"
   end
 end
