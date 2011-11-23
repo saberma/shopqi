@@ -80,10 +80,8 @@ App.Models.ProductVariant = Backbone.Model.extend
     error["重量"] = "不能为空!" unless attrs["weight"] isnt ''
 
     #验证SKU是否超过限制
-    window.a = false
-    $.get '/admin/check_skus_size', (data) ->
-      window.a = true
-    log window.a
+    if App.current_sku_size >= App.shop_sku_size
+      error['商品SKU'] = "超过商店限制!"
 
     if _(error).size() is 0
       return

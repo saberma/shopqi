@@ -20,9 +20,11 @@ describe Admin::ProductsController do
     it "should create new product" do
       attrs = iphone4.attributes
       attrs.delete('shop_id')
-      post :create ,:product => attrs
-      response.should be_redirect
-      flash[:notice].should == "新增商品成功!"
+      expect do
+        post :create ,:product => attrs
+        response.should be_redirect
+        flash[:notice].should == "新增商品成功!"
+      end.should change(Product,:count).by(1)
     end
 
   end

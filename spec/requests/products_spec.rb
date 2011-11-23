@@ -435,6 +435,17 @@ describe "Products", js: true do
           page.should have_content("复制 #{iphone4.title}")
         end
 
+        it 'should not duplication a new product' ,focus: true do #如果sku超过限制，则不能复制商品 #282
+          shop.plan_type.stub!(:skus).and_return(shop.variants.size)
+          visit product_path(iphone4) #重新加载一遍页面
+          click_on '复制此商品'
+          within '#duplicate-product' do
+            click_on '复制商品'
+          end
+          page.should_not have_content("复制 #{iphone4.title}")
+          current_path.should eql product_path(iphone4)
+        end
+
         it 'should be cancel' do
           find('#duplicate-product').visible?.should be_true
           within '#duplicate-product' do
@@ -599,6 +610,8 @@ describe "Products", js: true do
           before(:each) { visit product_path(iphone4) }
 
           it 'should be validate' do
+            shop.plan_type.stub!(:skus).and_return(shop.variants.size)
+            visit product_path(iphone4) #重新加载一遍页面
             find('#new-variant-link a').click
             within '#new-variant' do
               fill_in 'product_variant[price]', with: ''
@@ -607,6 +620,7 @@ describe "Products", js: true do
               page.should have_content('基本选项标题 不能为空!') #必填校验
               page.should have_content('价格 不能为空!')
               page.should have_content('重量 不能为空!')
+              page.should have_content('商品SKU 超过商店限制!')
               fill_in 'product_variant[option1]', with: '默认标题'
               fill_in 'product_variant[price]', with: '100'
               fill_in 'product_variant[weight]', with: '1'

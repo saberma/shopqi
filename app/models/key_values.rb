@@ -120,7 +120,7 @@ module KeyValues
           {id: 1   ,name:'旗舰版'  , code: 'unlimited'   , skus: '不限' , storage: '不限', price: 2998},
           {id: 2   ,name:'企业版'  , code: 'business'    , skus: 10000  , storage: 1000  , price: 898 },
           {id: 3   ,name:'专业版'  , code: 'professional', skus: 2500   , storage: 500   , price: 498 },
-          {id: 4   ,name:'基础版'  , code: 'basic'       , skus: 1      , storage: 100   , price: 298 },
+          {id: 4   ,name:'基础版'  , code: 'basic'       , skus: 100    , storage: 100   , price: 298 },
         ]
     end
   end

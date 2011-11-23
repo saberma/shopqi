@@ -400,6 +400,7 @@ describe "Customers", js: true do
             find(:xpath, './td[4]').text.should eql '广东省深圳市南山区'
             find(:xpath, './td[5]').text.should eql '20' #消费金额
             find(:xpath, './td[6]').text.should eql '1' #订单数
+
             find(:xpath, './td[7]').text.should eql "#1001 #{Date.today.to_s(:month_and_day)}" #最近订单
           end
         end
