@@ -160,4 +160,3 @@ class Shop::AppController < ActionController::Base
   end
 
 end
-

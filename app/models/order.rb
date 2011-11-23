@@ -68,7 +68,7 @@ class Order < ActiveRecord::Base
         self.histories.create body: '订单被取消.原因:#{cancel_reason_name}'
       end
     end
-    if financial_status_changed? and financial_status.to_sym == :pending # 一旦进入此待支付状态则需要更新顾客消费总金额
+    if financial_status_changed? and financial_status_pending? # 一旦进入此待支付状态则需要更新顾客消费总金额
       self.customer.increment! :total_spent, self.total_price
     end
   end
@@ -94,6 +94,18 @@ class Order < ActiveRecord::Base
     end
   end
 
+  begin 'financial_status'
+
+    def financial_status_pending? # 待支付?
+      self.financial_status.to_sym == :pending
+    end
+
+    def financial_status_paid? # 已支付?
+      self.financial_status.to_sym == :paid
+    end
+
+  end
+
   def status_name
     KeyValues::Order::Status.find_by_code(status).name
   end
@@ -115,8 +127,9 @@ class Order < ActiveRecord::Base
   end
 
   def pay!
-    order.financial_status = 'paid'
-    order.send_email_when_order_forward
+    self.financial_status = 'paid'
+    self.save
+    self.send_email_when_order_forward
     #TODO
     #支付记录
   end

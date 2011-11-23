@@ -54,6 +54,13 @@ GIT
       launchy
 
 GIT
+  remote: git://github.com/saberma/activemerchant_patch_for_china.git
+  revision: f123fed4687a0583b089f4417ea38b7c8a1bdeff
+  specs:
+    activemerchant_patch_for_china (0.1.6)
+      activemerchant (>= 1.4.2)
+
+GIT
   remote: git://github.com/thedarkone/rails-dev-boost.git
   revision: 216de40f33fe794e19c492c283d69d4911cab741
   specs:
@@ -93,8 +100,6 @@ GEM
       braintree (>= 2.0.0)
       builder (>= 2.0.0)
       json (>= 1.5.1)
-    activemerchant_patch_for_china (0.1.6)
-      activemerchant (>= 1.4.2)
     activemodel (3.1.1)
       activesupport (= 3.1.1)
       builder (~> 3.0.0)
@@ -399,7 +404,7 @@ DEPENDENCIES
   active_hash
   activeadmin
   activemerchant
-  activemerchant_patch_for_china
+  activemerchant_patch_for_china!
   awesome_print
   capistrano
   capybara (~> 1.1.0)

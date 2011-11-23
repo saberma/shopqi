@@ -29,6 +29,10 @@ describe Shop::OrderController do
     Factory :payment, shop: shop
   end
 
+  let(:payment_alipay) do # 支付方式:支付宝
+    Factory :payment_alipay, shop: shop
+  end
+
   let(:shipping_address_attributes) { {name: 'ma',country_code: 'CN', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
 
   context '#address' do
@@ -102,7 +106,7 @@ describe Shop::OrderController do
 
     describe '#cart' do
 
-      it 'should be destroy', focus: true do # 购物车会被删除
+      it 'should be destroy' do # 购物车会被删除
         post :create, shop_id: shop.id, cart_token: cart.token, order: {
           email: 'mahb45@gmail.com',
           shipping_address_attributes: shipping_address_attributes
@@ -116,4 +120,58 @@ describe Shop::OrderController do
 
   end
 
+  context '#notify', focus: true do # 支付宝从后台发送通过
+
+    before do
+      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id }
+      order.reload
+      controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
+    end
+
+    context 'trade status is TRADE_FINISHED' do # 交易完成
+
+      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED' } }
+
+      it 'should change order financial_status to paid', f: true do
+        controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
+        order.financial_status_pending?.should be_true
+        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.body.should eql 'success'
+        order.reload.financial_status_paid?.should be_true
+      end
+
+      it 'should be retry' do # 要支持重复请求
+        order.reload
+        order.financial_status = :abandoned
+        order.save
+        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.body.should eql 'success'
+        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.body.should eql 'success'
+        order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+      end
+
+    end
+
+    context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
+
+      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY' } }
+
+      it 'should remain order financial status' do
+        order.financial_status_pending?.should be_true
+        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.body.should eql 'success'
+        order.reload.financial_status_pending?.should be_true
+      end
+
+    end
+
+  end
+
+end
+
+private
+def sign(attrs, key)
+  md5_string = attrs.sort.map {|s| "#{s[0]}=#{s[1]}"}
+  Digest::MD5.hexdigest(md5_string.join("&") + key)
 end
