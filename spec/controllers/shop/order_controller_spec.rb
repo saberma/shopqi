@@ -120,7 +120,7 @@ describe Shop::OrderController do
 
   end
 
-  context '#notify', focus: true do # 支付宝从后台发送通过
+  context '#notify' do # 支付宝从后台发送通过
 
     before do
       post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id }
@@ -132,8 +132,7 @@ describe Shop::OrderController do
 
       let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED' } }
 
-      it 'should change order financial_status to paid', f: true do
-        controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
+      it 'should change order financial_status to paid' do
         order.financial_status_pending?.should be_true
         post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
         response.body.should eql 'success'
@@ -162,6 +161,38 @@ describe Shop::OrderController do
         post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
         response.body.should eql 'success'
         order.reload.financial_status_pending?.should be_true
+      end
+
+    end
+
+  end
+
+  context '#done', focus: true do # 支付宝直接跳转回商店(支付成功后才会返回)
+
+    before do
+      order.financial_status = 'pending'
+      order.payment = payment_alipay
+      order.save
+    end
+
+    context 'trade status is TRADE_SUCCESS' do # 交易完成
+
+      let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: 0.0 } }
+
+      it 'should change order financial_status to paid', f: true do
+        get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.should be_success
+        order.reload.financial_status_paid?.should be_true
+      end
+
+      it 'should be retry' do # 要支持重复请求
+        order.financial_status = :abandoned
+        order.save
+        get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.should be_success
+        get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        response.should be_success
+        order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
       end
 
     end
