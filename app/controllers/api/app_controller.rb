@@ -1,5 +1,7 @@
+#encoding: utf-8
 class Api::AppController < ActionController::Base # API接口
   layout nil #api不需要layout,只产生json和xml格式
+  before_filter :check_shop_access_enabled
   before_filter :check_http_authorization
   before_filter :check_oauth_authorization
   before_filter :load_resource
@@ -165,4 +167,12 @@ class Api::AppController < ActionController::Base # API接口
   def access_dennied
     render text: 'Access Dennied', status: 401
   end
+
+  def check_shop_access_enabled
+    shop = Shop.at(request.host)
+    if !shop.access_enabled
+      render text: '您访问的商店不存在', status: 401
+    end
+  end
+
 end

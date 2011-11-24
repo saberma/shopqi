@@ -2,6 +2,7 @@
 class Admin::HomeController < Admin::AppController
   include Admin::HomeHelper
   prepend_before_filter :authenticate_user!, except: [:message]
+  skip_before_filter :check_shop_access_enabled, only: :message
   layout 'admin'
 
   expose(:shop) { current_user.shop }

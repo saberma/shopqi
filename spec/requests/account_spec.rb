@@ -21,6 +21,10 @@ describe "Account" do
 
         page.should have_content('成功删除')
         DeleteShop.should have_scheduled(Shop.first.id)
+
+        visit account_index_path
+        page.should have_content('该商店不存在')
+
       end
     end
   end

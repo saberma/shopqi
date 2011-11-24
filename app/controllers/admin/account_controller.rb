@@ -53,6 +53,7 @@ class Admin::AccountController < Admin::AppController
     if shop.phone
       SMS.safe_send phone, content, request.remote_ip #给商店拥有者发送短信
     end
+    shop.update_attribute(:access_enabled,false)
     Resque.enqueue_in(90.days, DeleteShop, shop.id)
     flash[:alert] = "您的商店已成功删除！"
     redirect_to home_message_path
