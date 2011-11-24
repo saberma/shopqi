@@ -59,7 +59,7 @@ ActiveAdmin.register Shop do
        theme = @shop.themes.where(name: '乔木林地').first
        @shop_shop_css = "#{ActionController::Base.asset_host}#{theme.asset_url('stylesheet.css')}"
        @shop_shop_js = "#{ActionController::Base.asset_host}#{theme.asset_url('fancybox.js')}"
-       @shop_product_photo = @shop.products.first.index_photo
+       @shop_product_photo = @shop.products.first.try(:index_photo)
      end
      begin 'server' # 服务器
        begin
