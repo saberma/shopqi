@@ -2,9 +2,11 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 FactoryGirl.define do
   factory :product do
+    product_type "手机"
+    vendor "Apple"
     variants_attributes [
     {price: 0.0, weight: 0.0}
-  ]
+   ]
   end
 
   factory :iphone4, parent: :product do

@@ -20,7 +20,7 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch(%r{^app/observers/.+\.rb})
 end
 
-guard 'rspec', :cli => "--fail-fast --drb" do
+guard 'rspec', :cli => "--fail-fast --drb --tag f" do #只跑tag为f的测试，这样就不会造成改一个单元测试的地方，要跑整个file的测试
   watch(%r{^spec/.+_spec\.rb})
   watch(%r{^lib/(.+)\.rb})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb') { "spec" }

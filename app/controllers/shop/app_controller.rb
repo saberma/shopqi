@@ -95,6 +95,7 @@ class Shop::AppController < ActionController::Base
         'linklists' => linklists_drop,
         'blogs' => blogs_drop,
         'collections' => collections_drop,
+        'current_page' => params[:page],
       }
       drops['customer'] = CustomerDrop.new(current_customer) if current_customer
       drops.merge(extra_assign)
