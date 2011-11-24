@@ -171,7 +171,6 @@ Shopqi::Application.routes.draw do
     end
 
     scope "/admin", module: :admin do # 用户后台管理
-      get '/check_skus_size'                , to: "shops#check_skus_size"
       match "/"                             , to: "home#dashboard"                      , as: :user_root # user_root_path为用户成功登录后的跳转地址
       get '/message'                        , to: "home#message"                        , as: :home_message
 
@@ -284,6 +283,8 @@ Shopqi::Application.routes.draw do
           post :change_ownership
           post :notify
           post :confirm_plan
+          get  :cancel
+          delete :destroy
         end
       end
 

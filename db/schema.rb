@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111019053647) do
+ActiveRecord::Schema.define(:version => 20111123084300) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -97,6 +97,13 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
   end
 
   add_index "blogs", ["shop_id"], :name => "index_blogs_on_shop_id"
+
+  create_table "cancel_reasons", :force => true do |t|
+    t.string   "selection"
+    t.string   "detailed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "carts", :force => true do |t|
     t.integer  "shop_id",                   :null => false
@@ -614,6 +621,7 @@ ActiveRecord::Schema.define(:version => 20111019053647) do
     t.boolean  "guided",                                             :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "access_enabled",                                     :default => true
   end
 
   create_table "smart_collection_products", :force => true do |t|

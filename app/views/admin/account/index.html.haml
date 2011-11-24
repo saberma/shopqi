@@ -49,7 +49,7 @@
     %h4 想要关闭你的商店?
     %p.note 一旦你的帐户退出了,你商店的一切将被永久删除
     %p.st
-      =link_to "删除我的帐户(我知道这是无法恢复的)",user_path(current_user),method: :delete
+      =link_to "删除我的帐户(我知道这是无法恢复的)",cancel_account_index_path,class: 'btn'
 %hr/
 =render partial:"admin/home/show_user"
 :javascript

@@ -218,3 +218,6 @@ class ShopTask < ActiveRecord::Base #新手指引任务
     name == 'launch'
   end
 end
+
+class CancelReason < ActiveRecord::Base
+end

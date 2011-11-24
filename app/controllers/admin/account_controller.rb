@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Admin::AccountController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout :determine_layout
@@ -9,6 +10,8 @@ class Admin::AccountController < Admin::AppController
   expose(:plan_type){KeyValues::Plan::Type.find_by_code(params[:code])}
   expose(:current_plan_type){ shop.plan_type }
   expose(:skus_size){ shop.variants.size }
+  expose(:cancel_reason)
+  expose(:cancel_reason_options){ KeyValues::CancelReason.options }
 
   def change_ownership
     if params[:user]
@@ -40,9 +43,24 @@ class Admin::AccountController < Admin::AppController
     end
   end
 
+  def cancel #删除账户页面
+  end
+
+  def destroy
+    cancel_reason.save  #保存反馈信息
+    content  ="您好！您的商店已经关闭，感谢您一直以来对我们的支持。谢谢。"
+    phone = shop.users.where(admin: true).first.phone
+    if shop.phone
+      SMS.safe_send phone, content, request.remote_ip #给商店拥有者发送短信
+    end
+    Resque.enqueue_in(90.days, DeleteShop, shop.id)
+    flash[:alert] = "您的商店已成功删除！"
+    redirect_to home_message_path
+  end
+
   protected
   def determine_layout
-    %w(confirm_plan change_plan).include?(action_name) ? "application" : "admin"
+    %w(confirm_plan change_plan cancel).include?(action_name) ? "application" : "admin"
   end
 
   private
