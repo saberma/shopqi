@@ -26,6 +26,10 @@ describe "Orders", js: true do
     o
   end
 
+  let(:payment_alipay) do # 支付方式:支付宝
+    Factory :payment_alipay, shop: shop
+  end
+
   before :each do
     order
   end
@@ -60,7 +64,7 @@ describe "Orders", js: true do
         order.update_attribute :financial_status, :pending # 假设顾客已经提交订单
       end
 
-      it "should save fulfillment", focus: true do #支持分批发货
+      it "should save fulfillment" do #支持分批发货
         visit order_path(order)
         click_on '发货'
         within '#unshipped-goods' do
@@ -96,7 +100,13 @@ describe "Orders", js: true do
       end
 
       it "should accept payment" do
+        order.financial_status = 'pending'
+        order.payment = payment_alipay
+        order.save
         visit order_path(order)
+        within '#order-status' do
+          page.should have_content('在线支付-支付宝')
+        end
         click_on '已收到款项'
         within '#order-status' do
           has_content?('已支付').should be_true

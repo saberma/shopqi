@@ -38,7 +38,6 @@ describe Order do
       expect do
         transaction
       end.should change(OrderTransaction, :count).by(1)
-      order.reload.financial_status.should eql 'paid'
     end
 
     it 'should save history' do
@@ -46,6 +45,26 @@ describe Order do
       expect do
         transaction
       end.should change(OrderHistory, :count).by(1)
+    end
+
+    context 'enough amount', focus: true do # 完整支付
+
+      it 'should change order financial_status to paid' do
+        transaction
+        order.reload.financial_status_paid?.should be_true
+      end
+
+    end
+
+    context 'no enough amount', focus: true do # 部分支付
+
+      let(:transaction) { order.transactions.create kind: :capture, amount: 1 }
+
+      it 'should not change order financial_status' do
+        transaction
+        order.reload.financial_status_paid?.should_not be_true
+      end
+
     end
 
   end

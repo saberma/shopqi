@@ -1,6 +1,10 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
   include Admin::ShopsHelper
+  skip_before_filter :password_protected  , only: [:notify, :done]
+  skip_before_filter :must_has_theme      , only: [:notify, :done]
+  skip_before_filter :check_shop_avaliable, only: [:notify, :done]
+
   layout 'shop/checkout'
 
   expose(:shop) { Shop.find(params[:shop_id]) }
@@ -129,15 +133,30 @@ class Shop::OrderController < Shop::AppController
     render json: data
   end
 
-  def notify
-    notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
-    if notification.acknowledge && valid?(notification)
+  begin 'from pay gateway'
+
+    def notify # 此action只供支付网关(支付宝)服务器的外部通知接口使用，通知我们订单支付状态(notify_url)
+      notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
       @order = Order.find_by_token(notification.out_trade_no)
-      @order.pay! if notification.status == "TRADE_FINISHED"
-      render :text => "success"
-    else
-      render :text => "fail"
+      if @order and notification.acknowledge(@order.payment.key) and valid?(notification, @order.payment.partner)
+        @order.pay!(notification.total_fee) if notification.complete? and @order.financial_status_pending? # 要支持重复请求
+        render text: "success"
+      else
+        render text: "fail"
+      end
     end
+
+    def done # 支付后从浏览器前台直接返回(return_url)
+      pay_return = ActiveMerchant::Billing::Integrations::Alipay::Return.new(request.query_string)
+      @order = Order.find_by_token(pay_return.order)
+      @_resources = { shop: @order.shop } # checkout.haml中expose的shop
+      if @order
+        @order.pay!(pay_return.amount) if @order.financial_status_pending? # 要支持重复请求
+      else
+        raise pay_return.message
+      end
+    end
+
   end
 
   def update_total_price
@@ -175,10 +194,9 @@ class Shop::OrderController < Shop::AppController
     end
   end
 
-  private
-  def valid?(notification)
-    url = "http://notify.alipay.com/trade/notify_query.do"
-    result = HTTParty.get(url, :query => {:partner => ActiveMerchant::Billing::Integrations::Alipay::ACCOUNT, :notify_id => notification.notify_id}).body
+  def valid?(notification, partner) # 注意:支付宝的notify_id只在一分钟内才有效
+    url = "https://www.alipay.com/cooperate/gateway.do?service=notify_verify"
+    result = HTTParty.get(url, query: {partner: partner, notify_id: notification.notify_id}).body
     result == 'true'
   end
 

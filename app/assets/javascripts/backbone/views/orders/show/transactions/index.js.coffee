@@ -9,12 +9,14 @@ App.Views.Order.Show.Transaction.Index = Backbone.View.extend
     this.render()
 
   render: ->
-    amounts = _(App.order.get('transactions')).map (transaction) -> transaction.amount
+    order = App.order
+    amounts = _(order.get('transactions')).map (transaction) -> transaction.amount
     amount_sum = _.reduce amounts, (memo, amount) ->
       memo + amount
     , 0
     template = Handlebars.compile $('#order-status-item').html()
-    $(@el).html template payed: (App.order.get('transactions').length != 0 and amount_sum >= App.order.get('total_price'))
+    payed = (order.get('transactions').length != 0 and amount_sum >= order.get('total_price'))
+    $(@el).html template payed: payed, gateway: order.get('gateway')
 
   save: ->
     self = this

@@ -5,12 +5,12 @@
   - service.total_fee order.total_price
   - service.seller email: payment.account
   - service.notify_url notify_order_url
-  - service.return_url show_shop_url
+  - service.return_url done_order_url
   - service.charset "utf-8"
   - service.service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER
   - service.payment_type 1
   - service.subject '商品付款'
-  - service.sign
+  - service.sign payment.key
 .actions
   = button_to_function "确认支付", "$('#payment-form > div').remove();$('#payment-form').submit()",class:'btn'
   =w('or')
