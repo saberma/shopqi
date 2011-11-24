@@ -12,6 +12,7 @@ class BlogsDrop < Liquid::Drop
 end
 
 class BlogDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   delegate :title, :handle, to: :@blog
 
@@ -24,6 +25,7 @@ class BlogDrop < Liquid::Drop
       ArticleDrop.new article
     end
   end
+  memoize :articles
 
   def comments_enabled?
     @blog.commentable != 'no'
