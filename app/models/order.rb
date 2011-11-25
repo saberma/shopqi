@@ -237,6 +237,10 @@ class OrderShippingAddress < ActiveRecord::Base
   def district_name
     District.get(self.district)
   end
+
+  def info # 获取地址详情
+    "#{province_name}#{city_name}#{district_name}#{address1}#{address2}"
+  end
 end
 
 # 订单历史

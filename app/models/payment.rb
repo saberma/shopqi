@@ -12,8 +12,24 @@ class Payment < ActiveRecord::Base
     KeyValues::PaymentType.find(self.payment_type_id)
   end
 
-  def service_name # 支付接口类型
-    KeyValues::Payment::Alipay::Service.find_by_code(self.service).name
+  begin 'alipay' # 支付宝
+
+    def service_name # 支付接口类型
+      KeyValues::Payment::Alipay::Service.find_by_code(self.service).name
+    end
+
+    def direct? # 即时到帐
+      self.service == ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER
+    end
+
+    def escrow? # 担保交易
+      self.service == ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_PARTNER_TRADE_BY_BUYER
+    end
+
+    def dualfun? # 双功能收款
+      self.service == ActiveMerchant::Billing::Integrations::Alipay::Helper::TRADE_CREATE_BY_BUYER
+    end
+
   end
 
 end
