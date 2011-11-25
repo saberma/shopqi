@@ -35,7 +35,7 @@
           .fr
             =link_to_delete payment_path(payment_alipay)
           当前正在使用:
-          %strong 支付宝及时到帐服务
+          %strong==支付宝#{payment_alipay.service_name}服务
           %span.warn
             =link_to w('edit'),'#',id:'alipay_edit'
       %dd#account_payment_provider.nsb.alipay-properties{:style => "display:none;border-top: 1px solid #ddd;"}
@@ -56,6 +56,10 @@
                     =f.label :key
                     %p.credential
                       =f.password_field :key ,size: 30, autocomplete: 'off'
+                  .sb
+                    =f.label :service
+                    %p.credential
+                      =f.select :service, service_types
                 %td.provider-info
                   %div
                     %p.note

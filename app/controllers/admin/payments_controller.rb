@@ -12,6 +12,7 @@ class Admin::PaymentsController < Admin::AppController
   expose(:custom_payments){ Payment.where(payment_type_id: nil).all }
   expose(:selected_custom_types){ custom_payments.map{|c|[c.name,c.name]} }
   expose(:custom_types){ all_custom_types - selected_custom_types }
+  expose(:service_types){ KeyValues::Payment::Alipay::Service.options }
 
   def index
     if shop.policies.empty?
@@ -25,7 +26,6 @@ class Admin::PaymentsController < Admin::AppController
     #处理支付宝部分
     if params[:payment][:payment_type_id]
       payment_alipay.attributes = params[:payment]
-      payment_alipay.save
       if payment_alipay.save
         redirect_to payments_path,  notice: notice_msg
       else
@@ -40,7 +40,7 @@ class Admin::PaymentsController < Admin::AppController
   end
 
   def update
-    payment.attributes = params[:payment]
+    payment.key = payment.key_was if payment.key_changed? and payment.key.blank? # key为密码型，不回显，更新时可不需要输入
     if payment.save
       respond_to do |format|
         format.html { redirect_to payments_path,  notice: notice_msg }

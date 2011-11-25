@@ -37,6 +37,7 @@ cn:
         remark: 备注
         key: 交易安全校验码
         account: 账号
+        service: 接口类型
         number: 序号
         apply: 申请
         name: 方式
