@@ -4,6 +4,10 @@ class Payment < ActiveRecord::Base
   validates_presence_of :name, if: Proc.new{|p| !p.payment_type_id?}
   #default_scope order('created_at')
 
+  before_validation do
+    self.key = self.key_was if self.key_changed? and self.key.blank? # key为密码型，不回显，更新时可不需要输入
+  end
+
   def payment_type
     KeyValues::PaymentType.find(self.payment_type_id)
   end

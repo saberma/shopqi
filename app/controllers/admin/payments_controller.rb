@@ -40,7 +40,6 @@ class Admin::PaymentsController < Admin::AppController
   end
 
   def update
-    payment.key = payment.key_was if payment.key_changed? and payment.key.blank? # key为密码型，不回显，更新时可不需要输入
     if payment.save
       respond_to do |format|
         format.html { redirect_to payments_path,  notice: notice_msg }
