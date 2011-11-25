@@ -22,7 +22,6 @@ gem 'dragonfly', ' ~> 0.9.8'
 gem 'rack-cache', require: 'rack/cache'
 gem 'liquid','~> 2.3.0' #模板语言
 gem "carrierwave"
-gem 'cancan' #权限控制
 #查询
 #gem 'meta_where'
 gem 'meta_search', '~> 1.1.1'
