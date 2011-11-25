@@ -3,6 +3,7 @@ class Shop::AppController < ActionController::Base
   include Admin::ShopsHelper
   include Shop::ShopsHelper
   layout nil #默认不需要layout，使用liquid
+  before_filter :check_shop_access_enabled
   before_filter :force_domain # 域名管理中是否设置主域名重定向
   before_filter :check_shop_avaliable # 判断网店是否已过期
   before_filter :password_protected # 设置了密码保护
@@ -13,6 +14,12 @@ class Shop::AppController < ActionController::Base
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   protected
+  def check_shop_access_enabled
+    shop = Shop.at(request.host)
+    if !shop.access_enabled
+      render template: 'shared/no_shop', status: 404, layout: nil
+    end
+  end
   def check_shop_avaliable
     redirect_to controller: :shops, action: :unavailable and return unless shop.available?
   end
@@ -81,6 +88,7 @@ class Shop::AppController < ActionController::Base
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
       blogs_drop = BlogsDrop.new(shop)
+      ap params[:page]
       drops = {
         'shop' => shop_drop,
         'cart' => cart_drop,
@@ -88,6 +96,7 @@ class Shop::AppController < ActionController::Base
         'linklists' => linklists_drop,
         'blogs' => blogs_drop,
         'collections' => collections_drop,
+        'current_page' => params[:page],
       }
       drops['customer'] = CustomerDrop.new(current_customer) if current_customer
       drops.merge(extra_assign)

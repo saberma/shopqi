@@ -12,9 +12,21 @@ ActiveAdmin.register Shop do
      column "商店地址" do |shop|
        link_to "访问","#{shop.primary_domain.url}#{request.port_string}",target:"_blank"
      end
+     column "商店恢复" do |shop|
+       unless shop.access_enabled
+         link_to "恢复商店",restore_active_admin_shop_path(shop),method: :put
+       end
+     end
      column :password_enabled
      column :created_at
      default_actions
+   end
+
+   member_action :restore, method: :put do
+     shop = Shop.find(params[:id])
+     shop.update_attribute(:access_enabled,true)
+     Resque.remove_delayed(DeleteShop, shop.id)
+     redirect_to active_admin_shop_path(shop), notice: '商店已恢复'
    end
 
    collection_action :state do
@@ -47,7 +59,7 @@ ActiveAdmin.register Shop do
        theme = @shop.themes.where(name: '乔木林地').first
        @shop_shop_css = "#{ActionController::Base.asset_host}#{theme.asset_url('stylesheet.css')}"
        @shop_shop_js = "#{ActionController::Base.asset_host}#{theme.asset_url('fancybox.js')}"
-       @shop_product_photo = @shop.products.first.index_photo
+       @shop_product_photo = @shop.products.first.try(:index_photo)
      end
      begin 'server' # 服务器
        begin

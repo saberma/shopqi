@@ -77,7 +77,7 @@ describe "Shop::Shops", js:true do
       page.should have_content('关于我们')
     end
 
-    it "should redirect to unavailable page",focus: true do  # 密码保护
+    it "should redirect to unavailable page" do  # 密码保护
       shop.update_attributes deadline: Date.new(2001,01,01)
       visit '/'
       page.should have_content "过期"
@@ -121,6 +121,27 @@ describe "Shop::Shops", js:true do
         click_on '查询'
         page.should have_content('关于我们')
       end
+    end
+
+    it "should paginate the seach results"  do
+
+      with_resque do
+        1.upto(11).each do |n|
+          shop.products.create(title: "示例商品#{n}",vendor: '苹果', product_type: '电子产品')
+        end
+      end
+
+      within '#search' do
+        fill_in 'q', with: '示例'
+        click_on '查询'
+        page.should_not have_content('示例商品11')
+        page.should have_link('1')
+        page.should have_link('2')
+        click_link '2'
+        page.should have_content('示例商品11')
+
+      end
+
     end
 
   end
