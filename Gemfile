@@ -30,7 +30,7 @@ gem 'squeel'
 #gem 'carmen'#地区
 gem 'carmen', git: "git://github.com/jim/carmen.git"
 gem 'seedbank' # 分离出各个环境下的seed
-gem 'gravtastic' #gravtastic头像服务
+#gem 'gravtastic' #gravtastic头像服务,现在没有这服务了
 
 ##### 控制器相关 #####
 gem 'decent_exposure'
