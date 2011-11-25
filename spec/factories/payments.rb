@@ -13,5 +13,6 @@ FactoryGirl.define do
     key UUID.generate(:compact)
     partner '2398072190767748'
     account 'mahb45@gmail.com'
+    service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER # 即时到帐
   end
 end

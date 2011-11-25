@@ -142,6 +142,7 @@ module KeyValues
   end
 
   module Payment
+
     class Custom < KeyValues::Base
         self.data = [
           {id: 1   ,name: '银行转账' , code: 'bank_transfer'},
@@ -149,6 +150,19 @@ module KeyValues
           {id: 3   ,name: '货到付款' , code: 'cod'}
         ]
     end
+
+    module Alipay
+
+      class Service < KeyValues::Base # 支付接口
+        self.data = [
+          {id: 1, name: '即时到帐'  , code: ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER     },
+          {id: 2, name: '担保交易'  , code: ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_PARTNER_TRADE_BY_BUYER },
+          {id: 3, name: '双功能收款', code: ActiveMerchant::Billing::Integrations::Alipay::Helper::TRADE_CREATE_BY_BUYER         }
+        ]
+      end
+
+    end
+
   end
 
   module Plan
