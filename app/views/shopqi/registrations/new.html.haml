@@ -74,8 +74,9 @@
           %span
             %label.inlined(for="shop_zip_code") 邮编
             %input#shop_zip_code.input-text.small(name="shop[zip_code]" size="16" type="text")/
-        %label.inlined(for="shop_phone") 电话
-        %input#shop_phone.input-text.large(name="shop[phone]" size="18" type="text")/
+        %span
+          %label.inlined(for="shop_phone") 电话
+          %input#shop_phone.input-text.large(name="shop[phone]" size="18" type="text")/
         %h4 您的登录信息
         %label.inlined(for="user_email") Email地址
         %input#user_email.input-text.large(name="user[email]" size="26" type="text")/
@@ -94,8 +95,9 @@
             %span
               %input#check_phone(type="button" value="获取验证码")
         -if is_registered?
-          %label.inlined(for="phone_verify_code") 手机验证码
-          %input#phone_verify_code.input-text.large(name="verify_code" size="26" type="text")
+          %span
+            %label.inlined(for="phone_verify_code") 手机验证码
+            %input#phone_verify_code.input-text.large(name="verify_code" size="26" type="text")
       .block.cl
         %h3 服务条款
         %dl
