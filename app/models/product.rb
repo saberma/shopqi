@@ -120,8 +120,16 @@ class ProductVariant < ActiveRecord::Base
   before_save do
     self.price ||= 0.0 # 价格、重量一定要有默认值
     self.weight ||= 0.0
+  end
+
+  after_save do
     min_price = self.product.variants.map(&:price).min || self.price
     self.product.update_attributes price: min_price # 商品冗余最小价格，方便集合排序
+  end
+
+  after_destroy do
+    min_price = self.product.variants.map(&:price).min
+    self.product.update_attributes price: min_price
   end
 
   def options

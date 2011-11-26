@@ -39,10 +39,98 @@ describe Product do
 
     end
 
-    it 'should has price', focus: true do
+    it 'should has price' do
       product = shop.products.create title: 'iphone 手机', product_type: '智能手机', vendor: 'Apple'
       variant = product.variants.first
       product.reload.price.should eql variant.price
+    end
+
+  end
+
+  describe 'Variants' do # issues#300
+
+    context '#create' do
+
+      context '#price compare to product' do
+
+        context '#lower' do
+
+          it 'should update product price' do
+            variant = iphone4.variants.create price: 2500.0
+            iphone4.reload.price.should eql 2500.0
+          end
+
+        end
+
+        context '#greater' do
+
+          it 'should not update product price' do
+            variant = iphone4.variants.create price: 3500.0
+            iphone4.reload.price.should eql 3000.0
+          end
+
+        end
+
+      end
+
+    end
+
+    context '#update' do
+
+      context '#price compare to product' do
+
+        context '#lower' do
+
+          it 'should update product price' do
+            variant = iphone4.variants.first
+            variant.reload # reload使variant对象与iphone4.variants中分离开
+            variant.update_attributes! price: 2500.0
+            iphone4.reload.price.should eql 2500.0
+          end
+
+        end
+
+        context '#greater' do
+
+          it 'should not update product price' do
+            variant = iphone4.variants.first
+            variant.reload # reload使variant对象与iphone4.variants中分离开
+            variant.update_attributes! price: 3500.0
+            iphone4.reload.price.should eql 3500.0
+          end
+
+        end
+
+      end
+
+    end
+
+    context '#destroy', focus: true do
+
+      context '#price compare to product' do
+
+        context '#lower' do
+
+          it 'should update product price' do
+            variant = iphone4.variants.create price: 2500.0
+            variant.reload.destroy
+            iphone4.reload.price.should eql 3000.0
+          end
+
+        end
+
+        context '#greater' do
+
+          it 'should update product price' do
+            variant = iphone4.variants.create price: 3500.0
+            variant.reload.destroy
+            iphone4.reload.price.should eql 3000.0
+          end
+
+        end
+
+      end
+
     end
 
   end
