@@ -452,6 +452,11 @@ ActiveRecord::Schema.define(:version => 20111125024512) do
     t.string   "service",         :limit => 32
   end
 
+  create_table "permissions", :force => true do |t|
+    t.integer "user_id"
+    t.integer "resource_id"
+  end
+
   create_table "photos", :force => true do |t|
     t.integer  "product_id"
     t.string   "product_image_uid"

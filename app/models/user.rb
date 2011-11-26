@@ -1,5 +1,11 @@
 # encoding: utf-8
 class User < ActiveRecord::Base
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+  belongs_to   :shop
+  has_many     :articles       , dependent: :destroy
+  has_many     :permissions    , dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :token_authenticatable,
@@ -11,22 +17,18 @@ class User < ActiveRecord::Base
 
   validates_presence_of   :email
   validates :email, uniqueness: {scope: :shop_id}, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }, if: :email_changed?
-
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?
   validates_length_of       :password, within: 6..20, allow_blank: true
-
-  belongs_to :shop
-  has_many :articles, dependent: :destroy
-  accepts_nested_attributes_for :shop
+  validates_size_of :avatar_image, maximum: 8000.kilobytes
+  validates_property :mime_type, of: :avatar_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
   before_create :ensure_authentication_token # 生成login token，只使用一次
+  accepts_nested_attributes_for :shop
   image_accessor :avatar_image do
     storage_path{ |image|
       "#{self.shop_id}/users/#{self.id}/#{image.basename}_#{rand(1000)}.#{image.format}"
     }
   end
-  validates_size_of :avatar_image, maximum: 8000.kilobytes
-  validates_property :mime_type, of: :avatar_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
 
   def is_admin?
     admin
@@ -41,7 +43,10 @@ class User < ActiveRecord::Base
   end
 
   after_create do
-    Subscribe.create shop: shop, user: self
+    Subscribe.create shop: shop, user: self #增加商店提醒给用户
+    KeyValues::Resource.all.each do |resource|
+      Permission.create user_id: self.id  , resource_id: resource.id
+    end
   end
 
   protected

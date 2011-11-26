@@ -88,7 +88,6 @@ class Shop::AppController < ActionController::Base
       collections_drop = CollectionsDrop.new(shop)
       pages_drop = PagesDrop.new(shop)
       blogs_drop = BlogsDrop.new(shop)
-      ap params[:page]
       drops = {
         'shop' => shop_drop,
         'cart' => cart_drop,
