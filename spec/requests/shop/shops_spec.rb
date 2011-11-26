@@ -83,6 +83,15 @@ describe "Shop::Shops", js:true do
       page.should have_content "过期"
     end
 
+    describe 'customer', focus: true do # 顾客
+
+      it "should show register link" do  # 注册
+        visit '/'
+        page.should have_content "注册"
+      end
+
+    end
+
   end
 
   # 查询(需要启动全文检索服务) RAILS_ENV=test bundle exec rake sunspot:solr:run

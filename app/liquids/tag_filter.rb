@@ -32,7 +32,7 @@ module TagFilter
     end
 
     def customer_regist_link(input)
-      "<a href='/account/sign_up' id='customer_regist_link'>#{input}</a>"
+      "<a href='/account/signup' id='customer_regist_link'>#{input}</a>"
     end
 
     def customer_logout_link(input)
