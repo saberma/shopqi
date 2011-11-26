@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111125024512) do
+ActiveRecord::Schema.define(:version => 20111125083249) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -456,6 +456,8 @@ ActiveRecord::Schema.define(:version => 20111125024512) do
     t.integer "user_id"
     t.integer "resource_id"
   end
+
+  add_index "permissions", ["user_id", "resource_id"], :name => "index_permissions_on_user_id_and_resource_id"
 
   create_table "photos", :force => true do |t|
     t.integer  "product_id"

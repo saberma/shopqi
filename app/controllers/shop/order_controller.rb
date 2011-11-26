@@ -1,9 +1,10 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
   include Admin::ShopsHelper
-  skip_before_filter :password_protected  , only: [:notify, :done]
-  skip_before_filter :must_has_theme      , only: [:notify, :done]
-  skip_before_filter :check_shop_avaliable, only: [:notify, :done]
+  skip_before_filter :password_protected       , only: [:notify, :done]
+  skip_before_filter :must_has_theme           , only: [:notify, :done]
+  skip_before_filter :check_shop_avaliable     , only: [:notify, :done]
+  skip_before_filter :check_shop_access_enabled, only: [:notify, :done]
 
   layout 'shop/checkout'
 
