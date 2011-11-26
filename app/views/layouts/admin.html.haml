@@ -108,6 +108,8 @@
   :javascript
     $("#upgrade-ie6").show();
 
+=yield :footer_javascripts
+
 -unless shop.guided
   :javascript
     App.tasks = new App.Collections.Tasks(#{tasks_json});

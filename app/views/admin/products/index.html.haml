@@ -132,14 +132,15 @@
   %td.list-total(style="text-align: center; vertical-align: middle;")
     %span(style="font-size: 18px") {{{quantity_sum}}}
 
-:javascript
-  task_name = 'add_product';
+=content_for :footer_javascripts do # issues#310
+  :javascript
+    task_name = 'add_product';
 
-  App.init = function(){
-    new App.Controllers.Products();
-    Backbone.history.start();
-  }
+    App.init = function(){
+      new App.Controllers.Products();
+      Backbone.history.start();
+    }
 
-  App.products = new App.Collections.Products();
-  App.products.refresh(#{@products_json});
-  new App.Views.Product.Index.Index({collection: App.products})
+    App.products = new App.Collections.Products();
+    App.products.refresh(#{@products_json});
+    new App.Views.Product.Index.Index({collection: App.products})

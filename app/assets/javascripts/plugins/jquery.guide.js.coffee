@@ -105,7 +105,7 @@
     @source()
 
   $.guide = (target, text, position) ->
-     new Guide target, text, hook: position
+    new Guide target, text, hook: position
 
   $.fn.extend guide: (options) ->
     @each ->
