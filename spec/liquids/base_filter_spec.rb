@@ -60,14 +60,14 @@ describe BaseFilter do
 
   context '#money' do
 
-    it 'should get money', focus: true do
+    it 'should get money' do
       variant = "{{ price | money }}"
       assign = { 'price' => 18.8, 'shop' => shop_drop }
       result = Liquid::Template.parse(variant).render(assign)
       result.should eql "&#165;18.8"
     end
 
-    it 'should get money with currency', focus: true do
+    it 'should get money with currency' do
       variant = "{{ price | money_with_currency }}"
       assign = { 'price' => 18.8, 'shop' => shop_drop }
       result = Liquid::Template.parse(variant).render(assign)
@@ -79,6 +79,16 @@ describe BaseFilter do
       assign = { 'price' => 18.8 }
       result = Liquid::Template.parse(variant).render(assign)
       result.should eql '18.8'
+    end
+
+  end
+
+  context '#handleize' do # 用于菜单显示二级菜单(link没有handle，直接将title转为handle后与链接列表的handle比较)
+
+    it 'should be success' do
+      variant = "{{ '%@*$如何使用' | handleize }}"
+      result = Liquid::Template.parse(variant).render({})
+      result.should eql "ru-he-shi-yong"
     end
 
   end

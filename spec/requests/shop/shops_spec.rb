@@ -83,7 +83,7 @@ describe "Shop::Shops", js:true do
       page.should have_content "过期"
     end
 
-    describe 'customer', focus: true do # 顾客
+    describe 'customer' do # 顾客
 
       it "should show register link" do  # 注册
         visit '/'
@@ -132,7 +132,7 @@ describe "Shop::Shops", js:true do
       end
     end
 
-    it "should paginate the seach results"  do
+    it "should paginate the seach results", f:true  do
 
       with_resque do
         1.upto(11).each do |n|
@@ -144,11 +144,10 @@ describe "Shop::Shops", js:true do
         fill_in 'q', with: '示例'
         click_on '查询'
         page.should_not have_content('示例商品11')
-        page.should have_link('1')
-        page.should have_link('2')
+        page.should have_link('1') # 页码1
+        page.should have_link('2') # 页码2
         click_link '2'
         page.should have_content('示例商品11')
-
       end
 
     end

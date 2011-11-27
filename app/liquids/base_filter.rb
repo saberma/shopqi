@@ -26,4 +26,9 @@ module BaseFilter #扩展标准filter http://j.mp/v8XGFK
     object
   end
 
+  def handleize(input) # 转化可用于url的字符串(英文转为中文，并去掉%@*$)
+    input.gsub! /[%@*$]/, ''
+    Pinyin.t input, '-'
+  end
+
 end

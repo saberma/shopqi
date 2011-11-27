@@ -59,7 +59,9 @@ describe "Shop::Customers", js: true do
 
     it "should can registe a new customer" do
       visit new_customer_registration_path
-      click_on '注册'
+      within '#regist_new_customer' do # 商店顶端还有一个注册链接，避免冲突
+        click_on '注册'
+      end
       within '.errors' do
         page.should have_content('姓名 不能为空')
         page.should have_content('邮箱 不能为空')
@@ -71,7 +73,9 @@ describe "Shop::Customers", js: true do
       fill_in 'customer[password]', with: '666666'
       fill_in 'customer[password_confirmation]', with: '666666'
 
-      click_on '注册'
+      within '#regist_new_customer' do
+        click_on '注册'
+      end
 
       current_path.should == '/account/index'
       click_link '查看地址簿(0)'

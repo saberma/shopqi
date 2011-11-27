@@ -8,7 +8,7 @@ describe "Shopqi::Registrations", js: true do
 
   let(:theme_dark) { Factory :theme_woodland_dark }
 
-  let(:theme_slate) { Factory :theme_woodland_dark }
+  let(:theme_slate) { Factory :theme_woodland_slate }
 
   let(:user_admin) {  Factory :user_admin }
 

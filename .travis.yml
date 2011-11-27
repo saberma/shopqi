@@ -4,6 +4,9 @@ rvm:
   - 1.9.2
   - 1.9.3
 
+# request headless test
+before_script: sh -e /etc/init.d/xvfb start
+
 script:
  - "cp config/alipay.yml.example config/alipay.yml 2>&1"
  - "cp config/sms.yml.example config/sms.yml 2>&1"
@@ -12,11 +15,11 @@ script:
  - "cp config/app_secret_config.yml.example config/app_secret_config.yml 2>&1"
  - "cp config/initializers/secret_token.rb.example config/initializers/secret_token.rb 2>&1"
  - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
- - "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers spec/mailers spec/routings" #except request
+ #- "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers spec/mailers spec/routings" #except requests
+ - "DISPLAY=:99.0 bundle exec rspec spec/requests"
 
 env:
- - LANG='en_US.UTF-8'
- - RAILS_ENV='travis'"
+ - RAILS_ENV='travis'
 
 #notifications:
 #  recipients:

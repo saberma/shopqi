@@ -257,14 +257,14 @@ describe "Themes", js: true do
 
         it "should be save" do
           within '#theme-assets' do # 附件
-            has_content?('robots.txt').should be_false
+            has_content?('collection.jpg').should be_false
           end
           click_on '新增附件'
           click_on '取消'
           click_on '新增附件'
-          attach_file 'file', File.join(Rails.root, 'public', 'robots.txt')
+          attach_file 'file', Rails.root.join('spec', 'factories', 'data', 'themes', 'collection.jpg')
           within '#theme-assets' do # 附件
-            has_content?('robots.txt').should be_true
+            has_content?('collection.jpg').should be_true
           end
         end
 
