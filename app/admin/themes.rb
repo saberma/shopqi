@@ -15,13 +15,13 @@ ActiveAdmin.register Theme do
       f.input :published
       f.input :position
       f.input :name
-      f.input :handle
+      f.input :handle      , hint: '英文名称'
       f.input :style
-      f.input :style_handle
-      f.input :role        , as: :radio, collection: {'普通' => 'main', '手机' => 'mobile'}
+      f.input :style_handle, hint: '风格的英文名称，主题只有一个风格时，输入default'
+      f.input :role        , as: :radio          , collection: KeyValues::Theme::Role.options
       f.input :price
-      f.input :color       , as: :radio, collection: Theme::COLOR
-      f.input :desc        , as: :text , input_html: { rows: 10 }
+      f.input :color       , as: :radio          , collection: Theme::COLOR
+      f.input :desc        , as: :text           , input_html: { rows: 10 }
     end
     f.inputs "作者信息" do
       f.input :shop
