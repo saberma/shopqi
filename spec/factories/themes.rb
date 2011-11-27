@@ -20,6 +20,7 @@ FactoryGirl.define do
     name '乔木林地'
     handle 'woodland'
     role 'main'
+    color 'grey'
     desc '乔木林地 是ShopQi官方模板之一，除提供具体模板功能外还提供丰富的自定义配置。'
     shop 'woodland'
     site 'http://www.shopqi.com'
@@ -36,7 +37,6 @@ FactoryGirl.define do
     style '黑桤木'
     style_handle 'dark-alder'
     price 0
-    color 'grey'
   end
 
 end
