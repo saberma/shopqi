@@ -28,7 +28,8 @@ class Admin::UsersController < Admin::AppController
         flash[:notice] = "新增用户成功！"
         render js: "window.location = '#{account_index_path}';msg('#{flash[:notice]}');"
       end
-      #Todo
+    else
+      render js: "error_msg('新增用户失败:邮箱格式不正确')"
     end
   end
 

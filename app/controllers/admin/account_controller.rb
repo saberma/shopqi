@@ -50,7 +50,7 @@ class Admin::AccountController < Admin::AppController
     cancel_reason.save  #保存反馈信息
     content  ="您好！您的商店已经关闭，感谢您一直以来对我们的支持。谢谢。"
     phone = shop.users.where(admin: true).first.phone
-    if shop.phone
+    if shop.phone && !development? && !test?
       SMS.safe_send phone, content, request.remote_ip #给商店拥有者发送短信
     end
     shop.update_attribute(:access_enabled,false)

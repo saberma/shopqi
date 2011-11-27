@@ -6,36 +6,42 @@
 =render partial:'plans'
 .group.box2
   =render partial: 'about'
-#staff-members.group.box2
-  %h3 用户列表
+%h3 用户列表
+#staff-members
   #user-list
-    %table.data.st{:cellspacing => "0"}
-      =render users
-      -if current_user.is_admin?
-        %tr
-          %td.r{:colspan => "4", :style => "border-bottom:none"}
-            =link_to '新增用户',"#",id:"add-user",class:'btn'
-            #new-user-form{:style => "display:none; text-align: left"}
-              =form_for user,remote:true,validate:true,html:{id:"new_user",class:"new_user"} do |f|
-                %h3 增加新的用户
-                %p.note
-                  新的用户可以
-                  %strong 进入
-                  = succeed "." do
-                    %strong 你商店的管理页面
-                  初始密码为666666
-                %dl
-                  %dt=f.label :name
-                  %dd=f.text_field :name
-                  %dt=f.label :email
-                  %dd=f.text_field :email
-                %p.sst
-                  %input.btn{:name => "commit", :type => "submit", :value => "新增"}/
-                  =w('or')
-                  %a{:href => "#",id:'cancel'} 返回
+    %table.standard-table(cellspacing=0)
+      %thead
+        %th 姓名
+        %th 邮箱
+        -#%th 权限
+        %th
+      %tbody
+        =render users
+    -if current_user.is_admin?
+      .group-actions
+        =link_to '新增用户',"#",id:"add-user",class:'btn'
+        #new-user-form{:style => "display:none; text-align: left"}
+          =form_for user,remote:true,validate:true,html:{id:"new_user",class:"new_user"} do |f|
+            %h3 增加新的用户
+            %p.note
+              新的用户可以
+              %strong 进入
+              = succeed "." do
+                %strong 你商店的管理页面
+              初始密码为666666
+            %dl
+              %dt=f.label :name
+              %dd=f.text_field :name
+              %dt=f.label :email
+              %dd=f.text_field :email
+            %p.sst
+              %input.btn{:name => "commit", :type => "submit", :value => "新增"}/
+              =w('or')
+              %a{:href => "#",id:'cancel'} 返回
 -if current_user.is_admin?
-  #billing-cycles.group.box2
-    %h3 费用清单
+  -#
+    #billing-cycles.group.box2
+      %h3 费用清单
   .group.box2
     %h4 需要改变商店所有者?
     =form_for user,url:{action:"change_ownership"} do |f|
@@ -51,7 +57,7 @@
     %p.st
       =link_to "删除我的帐户(我知道这是无法恢复的)",cancel_account_index_path,class: 'btn'
 %hr/
-=render partial:"admin/home/show_user"
+=render partial: "admin/home/show_user"
 :javascript
   App.init = function(){
     new App.Controllers.Users();

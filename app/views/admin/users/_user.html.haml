@@ -6,6 +6,8 @@
       %br/
       %span.note 商店所有者
   %td=user.email
+  -#%td
+    #edit_regular_user_status
   %td.r
     -if current_user.is_admin? && current_user.email != user.email
       = link_to image_tag('admin/icons/trash.gif'), user_path(user), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del

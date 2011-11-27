@@ -10263,3 +10263,61 @@ table.selected-image {
 
 #edit-link-overlay {
   z-index: 2; }
+
+/* overides standard-table */
+.standard-table.collections td { vertical-align:middle ;}
+.standard-table.collections img { background:#fff; padding:4px; border: 1px solid #ebebeb; border-bottom:1px solid #cacaca; }
+
+#coupons.standard-table ul { padding-left:17px; }
+
+
+/* table slider */
+.table-slider { position: relative; }
+.table-slider td { border-bottom:0px; border-top:0; overflow:hidden; position:relative;}
+.table-slider-content { padding:10px; background:#fffdf2; }
+
+.table-slider-wrapper.table-slider-ani-down {  opacity:1;position:relative; height:auto;position:relative;top:0px; border-bottom:1px solid #e4e0c8; overflow:visible;}
+
+
+.table-slider-wrapper { 
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;	
+  transition: all 0.25s ease-in-out; 
+  opacity:0; top:0px; height:0px; position:relative; overflow:hidden;}
+
+.standard-table .table-slider td { padding:0px; position:relative; overflow:hidden; }
+
+.table-slider-actions { background:#faf6e5; padding:10px; }
+
+/* account specific table slider */
+.permissions-table table { width:460px; margin-top:5px;}
+.permissions-table th { font-weight:bold;}
+.permissions-table td { border:none; padding:0 0 5px 0;}
+.permissions-table td input[type="checkbox"] { margin-right:3px;}
+.permissions-table td input[type="checkbox"]:checked + label { opacity:1;}
+.permissions-table td input[type="checkbox"] + label { opacity:0.5;}
+.edit-permissions label { font-weight:normal; }
+
+.permissions-table  { opacity:0.5;position:absolute;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;	
+  transition: all 0.25s ease-in-out;
+} 
+
+.permissions-table.fadein { opacity:1; position:relative; }
+.permissions-table.fadeout { visibility:hidden  }
+
+.edit-permissions ul { list-style-type:none; margin:0; padding:0 0 0 2px;}
+.edit-permissions ul li { margin-bottom:3px;}
+.edit-permissions dl  { margin:0; padding:0;overflow:hidden;}
+.edit-permissions dl dt { margin:0 10px 0 0; padding:0; float:left; width:100px; text-align:right; }
+.edit-permissions dl dd { margin:0; padding:0; float:left; width:500px; position:relative;}
+.edit-permissions dl dt, .edit-permissions dl dd { margin-bottom:5px;}
+.edit-permissions input[type="radio"] { margin-right:3px; }
+
+.permissions-table-users table { width:460px;}
+.permissions-table-users table td { background:none;}
