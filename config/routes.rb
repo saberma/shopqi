@@ -123,7 +123,7 @@ Shopqi::Application.routes.draw do
       resources :orders
     end
 
-    devise_for :user, skip: :registrations, controllers: {sessions: "users/sessions"}# 登录
+    devise_for :user, skip: :registrations, controllers: {sessions: "admin/sessions"}# 登录
 
     scope module: :shop do # 前台商店
       scope '/account' do
