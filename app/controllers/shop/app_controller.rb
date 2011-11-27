@@ -93,6 +93,7 @@ class Shop::AppController < ActionController::Base
         'blogs' => blogs_drop,
         'collections' => collections_drop,
         'current_page' => params[:page],
+        'current_url' => request.path,
       }
       drops['customer'] = CustomerDrop.new(current_customer) if current_customer
       drops.merge(extra_assign)
