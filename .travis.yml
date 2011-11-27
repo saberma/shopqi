@@ -16,7 +16,7 @@ script:
  - "cp config/initializers/secret_token.rb.example config/initializers/secret_token.rb 2>&1"
  - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
  #- "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers spec/mailers spec/routings" #except requests
- - "export DISPLAY=:99.0 && bundle exec rspec spec/requests/shopqi/login_spec.rb"
+ - "bundle exec rake travis"
 
 env:
  - RAILS_ENV='travis'
