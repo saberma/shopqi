@@ -15,8 +15,7 @@ script:
  - "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers spec/mailers spec/routings" #except request
 
 env:
- - LANG='en_US.UTF-8'
- - RAILS_ENV='travis'"
+ - LANG='en_US.UTF-8' RAILS_ENV='travis'
 
 #notifications:
 #  recipients:
