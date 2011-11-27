@@ -67,7 +67,7 @@ class ProductDrop < Liquid::Drop
   end
 
   def featured_image
-    ProductImageDrop.new @product.photos.first
+    ProductImageDrop.new @product.photos.first unless @product.photos.empty?
   end
 
   def as_json(options = nil)

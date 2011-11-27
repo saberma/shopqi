@@ -34,9 +34,29 @@ describe UrlFilter do
     Liquid::Template.parse(variant).render.should eql "#{asset_host}/s/shopqi/option_selection.js?8888"
   end
 
-  it 'should get product_img_url' do
-    variant = "{{ product.photos.first | product_img_url: 'medium' }}"
-    Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql "#{asset_host}/assets/admin/no-image-medium.gif"
+  context '#product_img_url' do
+
+    context '#product with photos' do # 商品带图片
+
+      it 'should get photo url' do
+        photo = iphone4.photos.build
+        photo.product_image = Rails.root.join('spec/factories/data/products/iphone4.jpg')
+        photo.save!
+        variant = "{{ product.featured_image | product_img_url: 'medium' }}"
+        Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql "#{asset_host}#{iphone4.photos.first.medium}"
+      end
+
+    end
+
+    context '#product without photos' do # 商品不带图片
+
+      it 'should get photo url' do
+        variant = "{{ product.featured_image | product_img_url: 'medium' }}"
+        Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql "#{asset_host}/assets/admin/no-image-medium.gif"
+      end
+
+    end
+
   end
 
 end
