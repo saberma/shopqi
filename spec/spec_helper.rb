@@ -67,7 +67,9 @@ Spork.each_run do
     end
 
     config.before(:each) do
+      puts "travis?: #{travis?}"
       if travis? and Capybara.current_driver == :selenium # xvfb headless
+        puts "Require headless."
         require 'headless'
         headless = Headless.new
         headless.start
@@ -86,6 +88,7 @@ Spork.each_run do
       FileUtils.rm_rf(File.join(Rails.root, 'data', 'shops', Rails.env))
       #CarrierWave.clean_cached_files!
       if travis? and Capybara.current_driver == :selenium # xvfb headless
+        puts "Destroy headless."
         headless.destroy
       end
     end
