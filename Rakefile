@@ -11,8 +11,7 @@ task "resque:setup" => :environment do
 end
 
 task :travis do
-  #["rspec spec", "rake jasmine:ci", "rake cucumber"].each do |cmd|
-  ["rspec spec/requests/shopqi/login_spec.rb"].each do |cmd|
+  ["rspec spec"].each do |cmd|
     puts "Starting to run #{cmd}..."
     system("export DISPLAY=:99.0 && bundle exec #{cmd}")
     raise "#{cmd} failed!" unless $?.exitstatus == 0
