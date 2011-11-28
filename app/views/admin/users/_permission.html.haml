@@ -1,0 +1,74 @@
+%tr#edit-user-permissions-1555092.edit-permissions.table-slider
+  %td{:colspan => "5"}
+    #edit_invited_user_1555092.edit_invited_user.table-slider-wrapper.table-slider-ani-down
+      %form#edit_invited_user_1555092.permission_form{"accept-charset" => "UTF-8", :action => "/admin/users/1555092/update_permissions", "data-remote" => "true", "data-target" => "edit_invited_user_1555092", "data-username" => "ee ee", :method => "post"}
+        %div{:style => "margin:0;padding:0;display:inline"}
+          %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+          %input{:name => "_method", :type => "hidden", :value => "put"}/
+          %input{:name => "authenticity_token", :type => "hidden", :value => "HgkFJHniOEwUiXNU2eAokMHcDcsT6ZVTMqxEQuOdB7w="}/
+        .table-slider-content
+          .clearfix
+            .col-1
+              %img.gravatar{:alt => "ee ee", :height => "55", :src => "https://secure.gravatar.com/avatar.php?gravatar_id=1283cdb70fcac7f2c0516a45aa84b4d6&amp;size=55&amp;default=https%3A%2F%2Fdurgan-frami9762.myshopify.com/images/admin/icons/customer.gif", :title => "ee ee", :width => "55"}/
+            / .col-2
+            .col-9.last
+              %dl.clearfix
+                %dt Permissions:
+                %dd
+                  %ul
+                    %li
+                      %input#user_1555092_mark_all.all-access{:checked => "checked", "data-target" => "edit_invited_user_1555092", :name => "user[permissions][]", :type => "radio", :value => "full"}/
+                      %label{:for => "user_1555092_mark_all"} ee ee has access to everything in my store
+                    %li
+                      %input#user_1555092_limited_access.limited-access{"data-target" => "edit_invited_user_1555092", :name => "user[permissions][]", :type => "radio", :value => "limited"}/
+                      %label{:for => "user_1555092_limited_access"} Let me choose what ee ee has access to
+                  .permissions-table
+                    %table
+                      %tbody
+                        %tr
+                          %th Store Management
+                          %th Store Content
+                          %th Store Settings
+                        %tr
+                          %td
+                            %input#user_1555092_dashboard{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "dashboard"}/
+                            %label{:for => "user_1555092_dashboard"} Dashboard
+                          %td
+                            %input#user_1555092_products{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "products"}/
+                            %label{:for => "user_1555092_products"} Products &amp; Collections
+                          %td
+                            %input#user_1555092_applications{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "applications"}/
+                            %label{:for => "user_1555092_applications"} Apps
+                        %tr
+                          %td
+                            %input#user_1555092_customers{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "customers"}/
+                            %label{:for => "user_1555092_customers"} Customers
+                          %td
+                            %input#user_1555092_themes{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "themes"}/
+                            %label{:for => "user_1555092_themes"} Themes
+                          %td
+                            %input#user_1555092_preferences{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "preferences"}/
+                            %label{:for => "user_1555092_preferences"} Preferences
+                        %tr
+                          %td
+                            %input#user_1555092_orders{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "orders"}/
+                            %label{:for => "user_1555092_orders"} Orders
+                          %td
+                            %input#user_1555092_pages{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "pages"}/
+                            %label{:for => "user_1555092_pages"} Blogs &amp; Pages
+                        %tr
+                          %td
+                            %input#user_1555092_marketing{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "marketing"}/
+                            %label{:for => "user_1555092_marketing"} Promotions
+                          %td
+                            %input#user_1555092_links{:checked => "checked", :name => "user[permissions][]", :type => "checkbox", :value => "links"}/
+                            %label{:for => "user_1555092_links"} Navigation
+                  / .permissions table
+            / .col-7 last
+          / .clearfix
+        / .table-slider-content
+        .table-slider-actions
+          %input.btn{:name => "commit", :remote => "true", :type => "submit", :value => "Save permissions"}/
+          or
+          %a{:href => "#", :onclick => "$('edit_invited_user_1555092').toggleClassName('table-slider-ani-down');; return false;"} Cancel
+        / .table-slider-actions

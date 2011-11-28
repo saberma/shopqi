@@ -9,6 +9,7 @@
 #=require_tree ./views/custom_collections
 #=require_tree ./views/link_lists
 #=require_tree ./views/themes
+#=require_tree ./views/users
 #=require_tree ./views/domains
 #=require_tree ./views/assets
 #=require_tree ./views/comments
@@ -28,6 +29,7 @@
 window.App =
   Models: {}
   Views:
+    User: {}
     ApiClient: {}
     LinkList:
       Links: {}
