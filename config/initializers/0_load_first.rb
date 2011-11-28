@@ -19,6 +19,10 @@ def test?
   env_is('test')
 end
 
+def travis?
+  env_is('travis')
+end
+
 def env_is(env)
   Rails.env == env
 end

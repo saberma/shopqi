@@ -1,3 +1,35 @@
+## v0.1.3 / 2011-11-27 (23)
+
+### 功能(11):
+
+1. smtp发送邮箱改为可配置[saberma] #312
+2. 顾客购买商品支付后要能看到支付成功的提示[saberma] #304
+3. 后台管理支付时可以选择支付宝接口类型[saberma] #302
+4. 官网、主题商店等使用不同的robots[saberma] #301
+5. 百度采集时不使用https[saberma] #299
+6. 商店菜单支持下拉二级菜单[saberma] #252
+7. 新增主题时要加校验[saberma] #253
+8. 商店后台管理帐号设置关闭商店功能没有实现删除商店[liwh] #283
+9. sku数量超过商店限制后不能再新增商品和款式[liwh] #282
+10. 商店帐户到期后不能再访问[liwh] #281
+11. 完善用户权限管理，细化用户权限[liwh] #192
+
+### 缺陷(12):
+
+1. 商品详情图片未显示[saberma] #317
+2. 给body加字体，要不然ie下字体显得特瘦窄[saberma] #286
+3. 启用商店后商品列表仍显示指南[saberma] #310
+4. 注册页面电话、手机验证码样式有问题[saberma] #309
+5. 支付成功后后台管理订单详情未显示正确的支付方式[saberma] #306
+6. 商店购买商品支付时出现错误[saberma] #303
+7. 注册失败时商店目录没有删除[saberma] #292
+8. 官网后台找不到active_admin的js文件[saberma] #298
+9. 各主题 加上顾客注册链接[saberma] #297
+10. 商品价格没有与款式同步更新[saberma] #300
+11. 查询分页问题[liwh] #296
+12. NoMethodError in ActiveAdmin::ShopsController#state  undefined method `index_photo' for nil:NilClass[liwh] #311
+
+
 ## v0.1.2 / 2011-11-20 (25)
 
 ### 功能(7):
