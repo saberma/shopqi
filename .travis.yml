@@ -16,8 +16,13 @@ script:
  - "bundle exec rake travis"
 
 env:
- - TEST='unit'      # 单元测试
- - TEST='integrate' # 集成测试
+ - UNIT_TEST=1      # 单元测试1
+ - UNIT_TEST=2      # 单元测试2
+ - UNIT_TEST=3      # 单元测试3
+ - INTEGRATE_TEST=1 # 集成测试1
+ - INTEGRATE_TEST=2 # 集成测试2
+ - INTEGRATE_TEST=3 # 集成测试3
+ - INTEGRATE_TEST=4 # 集成测试4
 
 #notifications:
 #  recipients:
