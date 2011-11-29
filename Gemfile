@@ -41,6 +41,7 @@ gem "mini_magick" # 调用参数说明:http://www.imagemagick.org/Usage/
 gem 'haml'
 gem 'message_block' #用于显示错误信息
 gem 'client_side_validations' #客户端校验
+gem 'therubyracer', require: nil # 编译coffee-script # 安装编译过程太慢(大概需要4分钟)
 
 ##### 其他 #####
 gem "activemerchant" # 支付
@@ -81,27 +82,20 @@ group :development, :test do
   gem "awesome_print", require: 'ap' # 调试
   gem "interactive_editor"
   gem 'sunspot_solr'
-  # 编译coffee-script
-  gem 'therubyracer', require: nil # 安装编译过程太慢(大概需要4分钟)
-  #gem 'mustang' # 一修改coffee文件就报错误:lib/mustang/context.rb:18: [BUG] Segmentation fault
+  gem "factory_girl"
+  gem "factory_girl_rails"
 end
 
-group :test, :travis do
+group :test do
+  gem "selenium-webdriver", "~> 2.13.0" # 支持travis-ci的firefox8.0版本
   gem "rspec-rails"
   gem 'capybara' , ' ~> 1.1.0'
   gem 'resque_spec' # resque测试
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
-  gem 'headless' # 不显示browser进行集成测试
-end
-
-group :development, :test, :travis do
-  gem "factory_girl"
-  gem "factory_girl_rails"
 end
 
 group :production do
-  gem 'therubyracer', require: nil # 预编译asset
   gem 'memcache-client'
 end
 

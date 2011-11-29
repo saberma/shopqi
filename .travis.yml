@@ -18,8 +18,8 @@ script:
  #- "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers spec/mailers spec/routings" #except requests
  - "bundle exec rake travis"
 
-env:
- - RAILS_ENV='travis'
+#env:
+# - RAILS_ENV='travis'
 
 #notifications:
 #  recipients:
