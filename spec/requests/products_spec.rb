@@ -435,7 +435,7 @@ describe "Products", js: true do
           page.should have_content("复制 #{iphone4.title}")
         end
 
-        it 'should not duplication a new product' ,focus: true do #如果sku超过限制，则不能复制商品 #282
+        it 'should not duplication a new product' do #如果sku超过限制，则不能复制商品 #282
           shop.plan_type.stub!(:skus).and_return(shop.variants.size)
           visit product_path(iphone4) #重新加载一遍页面
           click_on '复制此商品'

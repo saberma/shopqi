@@ -89,7 +89,7 @@ end
 group :test do
   gem "selenium-webdriver", "~> 2.13.0" # 支持travis-ci的firefox8.0版本
   gem "rspec-rails"
-  gem 'capybara' , ' ~> 1.1.0'
+  gem 'capybara' , ' ~> 1.1.2'
   gem 'resque_spec' # resque测试
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
