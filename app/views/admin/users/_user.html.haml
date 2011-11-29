@@ -1,13 +1,14 @@
-%tr#user_list(class="#{cycle(:odd,:even)}")
+%script(id="show-user-list" type="text/x-handlebars-template")
   %td
-    =link_to user.name, "#users/#{user.id}",class:"closure-lightbox"
-    -if current_user == user
-      ==(#{link_to "修改",edit_user_path(user)})
-      %br/
-      %span.note 商店所有者
-  %td=user.email
-  -#%td
+    %a(href="#users/{{id}}" id="set_permissions" class="closure-lightbox") {{ name }}
+    {{#if is_self}}
+    %a(href="/admin/users/{{ id }}/edit") 修改
+    {{/if }}
+  %td {{ email }}
+  %td
     #edit_regular_user_status
+      limited
   %td.r
-    -if current_user.is_admin? && current_user.email != user.email
-      = link_to image_tag('admin/icons/trash.gif'), user_path(user), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+    {{#if can_delete}}
+    %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')
+    {{/if}}

@@ -13,15 +13,14 @@
       %thead
         %th 姓名
         %th 邮箱
-        -#%th 权限
+        %th 权限
         %th
       %tbody
-        =render users
     -if current_user.is_admin?
       .group-actions
         =link_to '新增用户',"#",id:"add-user",class:'btn'
         #new-user-form{:style => "display:none; text-align: left"}
-          =form_for user,remote:true,validate:true,html:{id:"new_user",class:"new_user"} do |f|
+          =form_for user, remote:true, validate:true, html:{id:"new_user",class:"new_user"} do |f|
             %h3 增加新的用户
             %p.note
               新的用户可以
@@ -58,9 +57,13 @@
       =link_to "删除我的帐户(我知道这是无法恢复的)",cancel_account_index_path,class: 'btn'
 %hr/
 =render partial: "admin/home/show_user"
+=render "admin/users/user"
 :javascript
   App.init = function(){
     new App.Controllers.Users();
     Backbone.history.start();
   }
-
+  App.users = new App.Collections.Users();
+  App.users.refresh(#{users_json});
+  App.current_user = #{current_user.to_json(only: [:id,:admin])}
+  new App.Views.User.Index({collection: App.users});

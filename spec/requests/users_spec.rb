@@ -15,8 +15,10 @@ describe "Users" do
       page.should have_content('新增用户成功！')
 
       page.execute_script("window.confirm = function(msg) { return true; }")
-      find('.del').click
-      page.should have_no_content('testss@gmail.com')
+      within('#user-list')  do
+        find('.action.destroy').click
+        page.should have_no_content('testss@gmail.com')
+      end
 
       click_on '修改'
       fill_in 'user[name]', with: 'liwhh'

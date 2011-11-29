@@ -3,7 +3,7 @@
     %input.selector.approvable(name="comments[]" type="checkbox" value="{{id}}" id="checkbox-{{id}}")
   %td
     {{ author }}
-    %a.email{:href => "mailto:{{ email }}"} {{ email }}
+    %a.email(href="mailto:{{ email }}") {{ email }}
     %span.note
       %span.today {{date created_at }}
   %td

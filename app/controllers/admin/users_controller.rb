@@ -35,8 +35,7 @@ class Admin::UsersController < Admin::AppController
 
   def destroy
     user.destroy
-    flash[:notice] = "删除用户成功！"
-    render js: "window.location = '#{account_index_path}';msg('#{flash[:notice]}');"
+    render json: user
   end
 
   def show
