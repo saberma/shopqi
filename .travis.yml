@@ -1,8 +1,6 @@
 bundler_args: --without development #rails-dev-boost: invalid byte sequence in US-ASCI
 
-rvm:
-  - 1.9.2
-  - 1.9.3
+rvm: 1.9.3
 
 # request headless test
 before_script: sh -e /etc/init.d/xvfb start
@@ -15,11 +13,11 @@ script:
  - "cp config/app_secret_config.yml.example config/app_secret_config.yml 2>&1"
  - "cp config/initializers/secret_token.rb.example config/initializers/secret_token.rb 2>&1"
  - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
- #- "bundle exec rspec spec/controllers spec/helpers spec/liquids spec/models spec/observers spec/mailers spec/routings" #except requests
  - "bundle exec rake travis"
 
-#env:
-# - RAILS_ENV='travis'
+env:
+ - TEST='unit'      # 单元测试
+ - TEST='integrate' # 集成测试
 
 #notifications:
 #  recipients:

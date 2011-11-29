@@ -11,11 +11,15 @@ task "resque:setup" => :environment do
 end
 
 task :travis do
-  ["rspec spec/requests/shopqi/login_spec.rb"].each do |cmd|
-    puts "Starting to run #{cmd}..."
-    system("export DISPLAY=:99.0 && bundle exec #{cmd}")
-    raise "#{cmd} failed!" unless $?.exitstatus == 0
-  end
+  test_for = ENV['TEST'] || 'unit'
+  cmd = if test_for == 'unit'
+         "rspec spec/controllers spec/helpers spec/jobs spec/liquids spec/models spec/observers spec/mailers spec/routings"
+        else
+         "rspec spec/requests"
+        end
+  puts "Starting to run #{cmd}..."
+  system("export DISPLAY=:99.0 && bundle exec #{cmd}")
+  raise "#{cmd} failed!" unless $?.exitstatus == 0
 end
 
 Shopqi::Application.load_tasks
