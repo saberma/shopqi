@@ -59,7 +59,7 @@ describe "Blogs" do
         has_no_content?('不为垃圾评论').should be_true
         page.execute_script("window.confirm = function(msg) { return true; }")
         find('.action.destroy').click
-        has_content?('新评论内容').should be_true
+        page.should_not have_content('新评论内容') # 删除评论
       end
 
       #删除文章

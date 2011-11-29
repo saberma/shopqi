@@ -15,6 +15,9 @@ task :travis do
   integrate_test = ENV['INTEGRATE_TEST']
   all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}
   integrate_files = Dir.chdir(Rails.root) { Dir["spec/requests/**/*_spec.rb"]}
+  %w(shop/shops_searches_spec.rb lookup_spec.rb).each do |searchable_spec|
+    integrate_files.delete "spec/requests/#{searchable_spec}" # 需要solr才能运行
+  end
   files = if unit_test # 3个并发
           unit_files = all_files - integrate_files
           unit_files.in_groups(3)[unit_test.to_i-1].join(' ')

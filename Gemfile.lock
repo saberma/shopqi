@@ -412,7 +412,7 @@ DEPENDENCIES
   activemerchant_patch_for_china!
   awesome_print
   capistrano
-  capybara (~> 1.1.0)
+  capybara (~> 1.1.2)
   carmen!
   carrierwave
   chinese_pinyin
