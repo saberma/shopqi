@@ -9,4 +9,5 @@ App.Views.User.Index = Backbone.View.extend
 
   render: ->
     _(@collection.models).each (model) ->
-      new App.Views.User.Show model: model
+      new App.Views.User.Show model: model , id: "user-" + model.id
+      new App.Views.User.Permission model: model, id: "edit-user-permissions-" + model.id

@@ -13,6 +13,8 @@ class Admin::AccountController < Admin::AppController
   expose(:skus_size){ shop.variants.size }
   expose(:cancel_reason)
   expose(:cancel_reason_options){ KeyValues::CancelReason.options }
+  expose(:resource_types){ KeyValues::ResourceType.all }
+  expose(:resource_hashs){ KeyValues::ResourceType.all.map(&:resources).flatten.group_by{|r|r.resource_type_id} }
 
   def change_ownership
     if params[:user]
