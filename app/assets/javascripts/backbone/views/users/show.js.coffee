@@ -3,11 +3,11 @@ App.Views.User.Show = Backbone.View.extend
 
   events:
     "click .destroy" : 'destroy'
+    "click .set_permissions" : 'toggle_permission_tr'
 
   initialize: ->
     self = this
     this.render()
-
     @model.bind 'remove', (model) ->
       self.remove()
 
@@ -31,4 +31,8 @@ App.Views.User.Show = Backbone.View.extend
         success: (model, response) ->
           self.remove()
           msg '删除成功!'
+    false
+
+  toggle_permission_tr: ->
+    $("#edit-user-permissions-#{@model.id}").toggle()
     false

@@ -1,6 +1,6 @@
 %script(id="show-user-list" type="text/x-handlebars-template")
   %td
-    %a(href="#users/{{id}}" id="set_permissions" class="closure-lightbox") {{ name }}
+    %a(href="#users/{{id}}" class="set_permissions" ) {{ name }}
     {{#if is_self}}
     %a(href="/admin/users/{{ id }}/edit") 修改
     {{/if }}

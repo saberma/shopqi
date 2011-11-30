@@ -275,7 +275,11 @@ Shopqi::Application.routes.draw do
         end
       end
 
-      resources :users
+      resources :users do
+        member do
+          put :update_permissions
+        end
+      end
 
       match 'account/change_plan/:code'      ,to: 'account#change_plan', as: :change_plan
 
