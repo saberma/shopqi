@@ -11,11 +11,12 @@
                 %dt 权限:
                 %dd
                   %ul
+                    -radio_checked = KeyValues::Resource.all.size == user.permissions.size
                     %li
-                      %input(checked="checked" name="user[permissions][]" type="radio" value= "full" class="mark_all")
-                      %label {{ name }} 有所有权限
+                      =radio_button_tag "user[permissions][]",'full',radio_checked
+                      %label {{ name }} 拥有所有权限
                     %li
-                      %input(name= "user[permissions][]" type= "radio" value="limited" class="limited_access")
+                      =radio_button_tag "user[permissions][]",'limited_access', !radio_checked
                       %label  选择权限
                   %div(class="permissions-table fadein")
                     %table
