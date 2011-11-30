@@ -259,9 +259,12 @@ describe "Themes", js: true do
           within '#theme-assets' do # 附件
             has_content?('collection.jpg').should be_false
           end
-          click_on '新增附件'
-          click_on '取消'
-          click_on '新增附件'
+          #click_on '新增附件' # 按钮处于窗口可视范围外则无法点击，重现问题的脚本 http://j.mp/vU9T2I ;selenium2.15将修正此问题 http://j.mp/uZVgRN
+          page.execute_script("$('#new_asset_reveal_link a').click()")
+          #click_on '取消'
+          page.execute_script("$('#new-asset a').click()")
+          #click_on '新增附件'
+          page.execute_script("$('#new_asset_reveal_link a').click()")
           attach_file 'file', Rails.root.join('spec', 'factories', 'data', 'themes', 'collection.jpg')
           within '#theme-assets' do # 附件
             has_content?('collection.jpg').should be_true
@@ -269,7 +272,8 @@ describe "Themes", js: true do
         end
 
         it "should be show" do
-          click_on '新增附件'
+          #click_on '新增附件'
+          page.execute_script("$('#new_asset_reveal_link a').click()")
           attach_file 'file', File.join(Rails.root, 'app', 'assets', 'images', 'spinner.gif')
           within '#current-asset' do
             find('#asset-title').has_content?('spinner.gif').should be_true

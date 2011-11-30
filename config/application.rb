@@ -76,7 +76,7 @@ module Shopqi
     config.generators.javascripts = false
 
     config.middleware.insert 0, 'Rack::Cache', {
-      :verbose     => true,
+      :verbose     => false,
       :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"),
       :entitystore => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/body")
     }  unless Rails.env.production?  ## uncomment this 'unless' in Rails 3.1,

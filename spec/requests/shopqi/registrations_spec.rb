@@ -51,11 +51,12 @@ describe "Shopqi::Registrations", js: true do
 
       before(:each) do
         SMS.stub!(:safe_send) # 测试环境不要发短信
-        Rails.cache.write("registered_127.0.0.1", true, expires_in: 24.hours) # 避免重复注册
+        Rails.cache.write("registered_127.0.1.1", true, expires_in: 24.hours) # 避免重复注册
+        visit '/services/signup/new/basic'
       end
 
       after(:each) do
-        Rails.cache.delete("registered_127.0.0.1")
+        Rails.cache.delete("registered_127.0.1.1")
       end
 
       it "should require phone" do
