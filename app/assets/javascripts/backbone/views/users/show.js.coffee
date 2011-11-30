@@ -3,7 +3,7 @@ App.Views.User.Show = Backbone.View.extend
 
   events:
     "click .destroy" : 'destroy'
-    "click #set_permissions" : 'toggle_permission_tr'
+    "click .set_permissions" : 'toggle_permission_tr'
 
   initialize: ->
     self = this
