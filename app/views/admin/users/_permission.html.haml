@@ -1,7 +1,7 @@
 %script(id="show-user-permission" type="text/x-handlebars-template")
   %td(colspan="5")
     %div(id="edit_invited_user_{{id}}" class="edit_invited_user table-slider-wrapper table-slider-ani-down")
-      %form(id="edit_invited_user_1555092" class="permission_form" action="#")
+      %form(id="edit_invited_user_1555092" class="permission_form" action="#" onsubmit="return false")
         %div(class="table-slider-content")
           %div(class="clearfix")
             %div(clas="col-1")
@@ -12,10 +12,10 @@
                 %dd
                   %ul
                     %li
-                      %input(checked="checked" name="user[permissions][]" type="radio" value= "full" id="mark_all")
+                      %input(checked="checked" name="user[permissions][]" type="radio" value= "full" class="mark_all")
                       %label {{ name }} 有所有权限
                     %li
-                      %input(name= "user[permissions][]" type= "radio" value="limited" id="limited_access")
+                      %input(name= "user[permissions][]" type= "radio" value="limited" class="limited_access")
                       %label  选择权限
                   %div(class="permissions-table fadein")
                     %table
@@ -30,10 +30,7 @@
                               -if resource
                                 -checked = resource.id.in?(current_user.permissions.map(&:resource_id))
                                 %td
-                                  -if checked
-                                    %input(checked=true name= "user[permissions][]" type= "checkbox" value= "#{resource.code}")
-                                  -else
-                                    %input(checked=false name= "user[permissions][]" type= "checkbox" value= "#{resource.code}")
+                                  =check_box_tag "user[permissions][]",resource.id,checked
                                   %label==#{resource.name}
         %div(class="table-slider-actions")
           %input(name="commit" type="submit" value= "保存" class="btn")
