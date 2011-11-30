@@ -83,13 +83,14 @@ group :development, :test do
     gem "awesome_print", require: 'ap' # 调试
     gem "interactive_editor"
     gem 'sunspot_solr'
+    gem 'fakeredis' # 开发测试环境不需要安装redis
   end
   gem "factory_girl"
   gem "factory_girl_rails"
 end
 
 group :test do
-  gem "selenium-webdriver", "~> 2.13.0" # 支持travis-ci的firefox8.0版本
+  gem "selenium-webdriver", "~> 2.14.0" # 支持travis-ci的firefox8.0版本(但存在session未被清空的问题)
   gem "rspec-rails"
   gem 'capybara' , ' ~> 1.1.2'
   gem 'resque_spec' # resque测试

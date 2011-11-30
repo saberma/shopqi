@@ -1,7 +1,6 @@
 #encoding: utf-8
 require 'spec_helper'
 require 'shared_stuff'
-require 'subdomain_capybara_server'
 
 describe "Shop::Customers", js: true do
 
@@ -22,10 +21,9 @@ describe "Shop::Customers", js: true do
     o.save
     o
   }
-  before(:each) { Capybara::Server.manual_host = shop.primary_domain.host }
-  after(:each) { Capybara::Server.manual_host = nil }
 
   describe "GET /account" do  #顾客登陆页面
+
     it "should can login with a exist customer" do
       customer_liwh
       order
@@ -58,7 +56,7 @@ describe "Shop::Customers", js: true do
 
     end
 
-    it "should can registe a new customer" do
+    it "should can registe a new customer", f: true do
       visit new_customer_registration_path
       within '#regist_new_customer' do # 商店顶端还有一个注册链接，避免冲突
         click_on '注册'
