@@ -26,7 +26,7 @@ describe "Orders", js: true do
       page.should have_content('创建您的订单') # 显示结算页面
     end
 
-    it 'should be keep after customer sign in', focus: true do # issues#260
+    it 'should be keep after customer sign in' do # issues#260
       visit '/'
       page.should have_content('购物车 (1)')
       customer_saberma # 已有顾客
@@ -61,7 +61,7 @@ describe "Orders", js: true do
     #  page.should have_content('创建您的订单') # 跳转回结算页面
     #end
 
-    it 'should be sign in', focus: true do
+    it 'should be sign in', f: true do
       customer_saberma # 已有顾客
       visit "/cart"
       click_on '结算'
