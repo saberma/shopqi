@@ -13,6 +13,7 @@
                 %dd
                   %ul
                     {{#if can_delete }}
+
                     {{#if radio_checked }}
                     %li
                       %input(type="radio" name="user[permissions][]" value="full" checked="checked" class="mark_all")
@@ -20,24 +21,24 @@
                     %li
                       %input(type="radio" name="user[permissions][]" value="limited_access" class="limited_access")
                       %label  选择权限
-                    {{/if}}
-                    {{#unless radio_checked }}
+                    {{else}}
                     %li
                       %input(type="radio" name="user[permissions][]" value="full"  class="mark_all")
                       %label {{ name }} 拥有所有权限
                     %li
                       %input(type="radio" name="user[permissions][]" value="limited_access" checked="checked" class="limited_access")
                       %label  选择权限
-                    {{/unless }}
-                    {{/if }}
-                    {{#unless can_delete }}
+                    {{/if}}
+
+                    {{else}}
+
                     {{#if radio_checked }}
                     %label {{ name }} 拥有所有权限
-                    {{/if }}
-                    {{#unless radio_checked }}
+                    {{else}}
                     %label 限制的
-                    {{/unless }}
-                    {{/unless }}
+                    {{/if }}
+
+                    {{/if }}
                   %div(class="permissions-table fadein")
                     %table
                       %tbody
@@ -49,10 +50,9 @@
                             -[1,2,3,4].each do |i|
                               -resource  = resource_hashs[i] ? resource_hashs[i][index] : nil
                               -if resource
-                                -checked = resource.id.in?(current_user.permissions.map(&:resource_id))
                                 %td
                                   -if current_user.is_admin?
-                                    =check_box_tag "user[permissions][]",resource.id,checked
+                                    %input(type="checkbox" name="user[permissions][]" value="#{resource.id}" class="user_resource_#{resource.id}")
                                     %label==#{resource.name}
                                   -else
                                     %s==#{resource.name}
