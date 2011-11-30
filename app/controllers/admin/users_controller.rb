@@ -46,6 +46,7 @@ class Admin::UsersController < Admin::AppController
 
   def update_permissions
     user.permissions.clear
+    params[:resource_ids] ||= []
     if params[:access_flag] == 'limited_access'
       params[:resource_ids].each do |resource|
         user.permissions.create resource_id: resource.to_i

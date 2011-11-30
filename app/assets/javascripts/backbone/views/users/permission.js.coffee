@@ -26,7 +26,8 @@ App.Views.User.Permission = Backbone.View.extend
     $('#user-list > table > tbody').append @el
     _.map attrs['permissions'] , (permission) ->
       resource_id = permission.resource_id
-      @$(".user_resource_#{resource_id}").attr('checked',true)
+      id = attrs['id']
+      @$("#user_#{id}_resource_#{resource_id}").attr('checked',true)
 
   save: ->
     self = this

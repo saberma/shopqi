@@ -52,7 +52,7 @@
                               -if resource
                                 %td
                                   -if current_user.is_admin?
-                                    %input(type="checkbox" name="user[permissions][]" value="#{resource.id}" class="user_resource_#{resource.id}")
+                                    %input(type="checkbox" name="user[permissions][]" value="#{resource.id}" id="user_{{ id }}_resource_#{resource.id}")
                                     %label==#{resource.name}
                                   -else
                                     %s==#{resource.name}
