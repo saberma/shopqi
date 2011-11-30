@@ -41,7 +41,7 @@ gem "mini_magick" # 调用参数说明:http://www.imagemagick.org/Usage/
 gem 'haml'
 gem 'message_block' #用于显示错误信息
 gem 'client_side_validations' #客户端校验
-gem 'therubyracer', require: nil # 编译coffee-script # 安装编译过程太慢(大概需要4分钟)
+gem 'therubyracer', require: nil unless ENV['TRAVIS'] # 编译coffee-script # 安装编译过程太慢(大概需要4分钟)
 
 ##### 其他 #####
 gem "activemerchant" # 支付
@@ -79,9 +79,11 @@ group :development do
 end
 
 group :development, :test do
-  gem "awesome_print", require: 'ap' # 调试
-  gem "interactive_editor"
-  gem 'sunspot_solr'
+  unless ENV['TRAVIS'] # 特殊处理，去掉在travis-ci中不需要的gem
+    gem "awesome_print", require: 'ap' # 调试
+    gem "interactive_editor"
+    gem 'sunspot_solr'
+  end
   gem "factory_girl"
   gem "factory_girl_rails"
 end
