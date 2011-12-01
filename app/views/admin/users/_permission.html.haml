@@ -8,16 +8,37 @@
               %img(class="gravatar" height= "55" src= "https://secure.gravatar.com/avatar.php?gravatar_id=1283cdb70fcac7f2c0516a45aa84b4d6&amp;size=55&amp;default=https%3A%2F%2Fdurgan-frami9762.myshopify.com/images/admin/icons/customer.gif" title= "ee ee" width= "55")
             %div(class="col-9 last")
               %dl(class="clearfix")
+                {{#unless admin }}
                 %dt 权限:
                 %dd
                   %ul
-                    -radio_checked = KeyValues::Resource.all.size == user.permissions.size
+                    {{#if can_delete }}
+
+                    {{#if radio_checked }}
                     %li
-                      =radio_button_tag "user[permissions][]",'full',radio_checked
+                      %input(type="radio" name="user[permissions][]" value="full" checked="checked" class="mark_all")
                       %label {{ name }} 拥有所有权限
                     %li
-                      =radio_button_tag "user[permissions][]",'limited_access', !radio_checked
+                      %input(type="radio" name="user[permissions][]" value="limited_access" class="limited_access")
                       %label  选择权限
+                    {{else}}
+                    %li
+                      %input(type="radio" name="user[permissions][]" value="full"  class="mark_all")
+                      %label {{ name }} 拥有所有权限
+                    %li
+                      %input(type="radio" name="user[permissions][]" value="limited_access" checked="checked" class="limited_access")
+                      %label  选择权限
+                    {{/if}}
+
+                    {{else}}
+
+                    {{#if radio_checked }}
+                    %label {{ name }} 拥有所有权限
+                    {{else}}
+                    %label 限制的
+                    {{/if }}
+
+                    {{/if }}
                   %div(class="permissions-table fadein")
                     %table
                       %tbody
@@ -29,11 +50,16 @@
                             -[1,2,3,4].each do |i|
                               -resource  = resource_hashs[i] ? resource_hashs[i][index] : nil
                               -if resource
-                                -checked = resource.id.in?(current_user.permissions.map(&:resource_id))
                                 %td
-                                  =check_box_tag "user[permissions][]",resource.id,checked
-                                  %label==#{resource.name}
+                                  -if current_user.is_admin?
+                                    %input(type="checkbox" name="user[permissions][]" value="#{resource.id}" id="user_{{ id }}_resource_#{resource.id}")
+                                    %label==#{resource.name}
+                                  -else
+                                    %s==#{resource.name}
+                {{/unless }}
+        {{#if can_delete }}
         %div(class="table-slider-actions")
           %input(name="commit" type="submit" value= "保存" class="btn")
           或者
           %a(href= "#" class='action cancel') 取消
+        {{/if }}

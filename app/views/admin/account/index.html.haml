@@ -67,4 +67,5 @@
   App.users = new App.Collections.Users();
   App.users.refresh(#{users_json});
   App.current_user = #{current_user.to_json(only: [:id,:admin])}
+  App.resources_size = #{KeyValues::Resource.all.size}
   new App.Views.User.Index({collection: App.users});

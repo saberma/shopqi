@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
          #, :validatable # 校验要限制在shop范围下，因此不能使用devise自带校验 issue#287
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :id, :email, :password, :password_confirmation, :remember_me,:name, :shop_attributes,:phone, :bio,  :receive_announcements,:avatar_image
+  attr_accessible :id, :email, :password, :password_confirmation,:admin, :remember_me,:name, :shop_attributes,:phone, :bio,  :receive_announcements,:avatar_image
 
   validates_presence_of   :email
   validates :email, uniqueness: {scope: :shop_id}, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }, if: :email_changed?

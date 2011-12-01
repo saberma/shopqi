@@ -16,6 +16,7 @@ App.Views.User.Permission = Backbone.View.extend
 
   render: ->
     attrs = @model.attributes
+    attrs['radio_checked'] = attrs['permissions'].length == App.resources_size
     current_user_id = App.current_user['user']['id']
     current_user_is_admin = App.current_user['user']['admin']
     attrs['is_self'] = current_user_id == attrs['id']
@@ -23,6 +24,10 @@ App.Views.User.Permission = Backbone.View.extend
     template = Handlebars.compile $('#show-user-permission').html()
     $(@el).html template attrs
     $('#user-list > table > tbody').append @el
+    _.map attrs['permissions'] , (permission) ->
+      resource_id = permission.resource_id
+      id = attrs['id']
+      @$("#user_#{id}_resource_#{resource_id}").attr('checked',true)
 
   save: ->
     self = this
