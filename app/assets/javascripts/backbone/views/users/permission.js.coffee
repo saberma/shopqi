@@ -1,6 +1,6 @@
 App.Views.User.Permission = Backbone.View.extend
   tagName: 'tr'
-  className: 'edit-permissions table-silder hide'
+  className: 'edit-permissions table-slider'
   events:
     "click .action.cancel"  : "hide_permission_tr"
     "click .mark_all"       : "markAll"
@@ -27,7 +27,10 @@ App.Views.User.Permission = Backbone.View.extend
     _.map attrs['permissions'] , (permission) ->
       resource_id = permission.resource_id
       id = attrs['id']
-      @$("#user_#{id}_resource_#{resource_id}").attr('checked',true)
+      if current_user_is_admin
+        @$("#user_#{id}_resource_#{resource_id}").attr('checked',true)
+      else
+        @$("#user_#{id}_resource_#{resource_id}_label").css('text-decoration','none')
 
   save: ->
     self = this

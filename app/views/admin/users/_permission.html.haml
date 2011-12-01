@@ -55,7 +55,7 @@
                                     %input(type="checkbox" name="user[permissions][]" value="#{resource.id}" id="user_{{ id }}_resource_#{resource.id}")
                                     %label==#{resource.name}
                                   -else
-                                    %s==#{resource.name}
+                                    %s(id="user_{{id}}_resource_#{resource.id}_label")==#{resource.name}
                 {{/unless }}
         {{#if can_delete }}
         %div(class="table-slider-actions")
