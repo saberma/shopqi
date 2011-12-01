@@ -219,7 +219,7 @@ class ShopTheme < ActiveRecord::Base
     FileUtils.mkdir_p public_path # 主题文件只有附件对外公开，其他文件不能被外部访问
     public_asset_path = File.join(public_path, 'assets')
     FileUtils.rm_rf public_asset_path # fixed: ln_s发现目录存在时，会在目录下新增目录，导致循环
-    FileUtils.ln_s File.join(path, 'assets'), public_asset_path
+    FileUtils.ln_s File.realpath(File.join(path, 'assets')), public_asset_path
   end
 
   # 修改此模块内方法要记得重启服务
