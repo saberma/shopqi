@@ -46,15 +46,15 @@
         %ul#navlist
           %li=link_to '首页', user_root_path, id: is_home? && :current
           -menus.each do |menu|
-            %li=link_to menu[:label], menu[:url], id: current(menu)
-          %li=link_to '市场营销', '#', onclick: "javascript:msg('即将上线...');return false;"
+            %li=link_to menu[:label], menu[:url], id: current(menu),class: check_label_has_right(menu[:label])
+          %li=link_to '市场营销', '#', onclick: "javascript:msg('即将上线...');return false;",class: 'inactive'
         %ul#secondary
           %li#apps-link
             #apps-dropdown.nav-dropdown.dropdown.hide
               %h3 未安装应用
               %ul
                 %li
-              %p.nav-manage=link_to '管理应用', "#", onclick: "javascript:msg('即将上线...');return false;"
+              %p.nav-manage=link_to '管理应用', "#", onclick: "javascript:msg('即将上线...');return false;", class: 'inactive'
               %p.more
                 =link_to '获取更多应用', "#", onclick: "javascript:msg('即将上线...');return false;"
                 %span 访问应用商店
@@ -63,10 +63,10 @@
               -if shop.theme
                 %h3 修改网店外观
                 %ul
-                  %li#nav-theme-settings=link_to "外观设置", settings_theme_path(shop.theme)
-                  %li#nav-template-editor=link_to "模板编辑器", theme_assets_path(shop.theme)
+                  %li#nav-theme-settings=link_to "外观设置", settings_theme_path(shop.theme), class: check_label_has_right('外观')
+                  %li#nav-template-editor=link_to "模板编辑器", theme_assets_path(shop.theme), class: check_label_has_right('外观')
               %p.nav-manage.pb
-                =link_to '主题管理', themes_path
+                =link_to '主题管理', themes_path, class: check_label_has_right('外观')
               %p.more
                 =link_to '浏览外观', "#{theme_store_url_with_port}?shop_url=#{show_shop_url}"
                 %span 访问外观商店
@@ -74,15 +74,15 @@
             #preferences-dropdown.nav-dropdown.dropdown.hide
               %h3 您的商店设置
               %ul
-                %li#settings=link_to '一般设置', general_preferences_path
-                %li#regions=link_to '区域&税收',countries_path
-                %li#payment=link_to '支付',payments_path
-                %li#shipping=link_to '快递',shipping_index_path
+                %li#settings=link_to '一般设置', general_preferences_path, class: check_label_has_right('设置')
+                %li#regions=link_to '区域&税收',countries_path, class: check_label_has_right('设置')
+                %li#payment=link_to '支付',payments_path, class: check_label_has_right('设置')
+                %li#shipping=link_to '快递',shipping_index_path, class: check_label_has_right('设置')
                 -#
                   %li#fulfillment
                     %a(href="https://github.shopqi.com/admin/fulfillment_services") 其他服务
-                %li#email=link_to "Email & 提醒", notifications_path
-                %li#network=link_to "DNS & 域名", domains_path
+                %li#email=link_to "Email & 提醒", notifications_path, class: check_label_has_right('设置')
+                %li#network=link_to "DNS & 域名", domains_path, class: check_label_has_right('设置')
     #container.clearfix
       #main.clearfix.col-12.last.fullscreen
         =render "shared/password_protected" if shop.password_enabled
@@ -114,3 +114,9 @@
   :javascript
     App.tasks = new App.Collections.Tasks(#{tasks_json});
     new App.Views.Task.Index({collection: App.tasks})
+:javascript
+  $(document).ready(function(){
+    $('#apps-link > a').attr('class',"#{check_label_has_right('应用')}")
+    $('#theme-link > a').attr('class',"#{check_label_has_right('外观')}")
+    $('#preferences-link > a').attr('class',"#{check_label_has_right('设置')}")
+  });

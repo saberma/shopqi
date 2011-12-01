@@ -38,11 +38,18 @@ module Admin::AppHelper
       { label: '顾客', url: customers_path },
       { label: '商品', url: products_path },
       { label: '集合', url: custom_collections_path },
-      { label: '博客 & 页面', url: pages_path },
+      { label: '博客&页面', url: pages_path },
       { label: '链接列表', url: link_lists_path },
       #{ label: '市场营销', url: "javascript:msg('即将上线...')" }
     ]
     @menus
+  end
+
+  def check_label_has_right(label_name)
+    if label_name == '商品' || label_name == '集合'
+      label_name = '商品&集合'
+    end
+    label_name.in?(current_user.permissions_name) ? ' ' : 'inactive'
   end
 
   #是否为当前页面
