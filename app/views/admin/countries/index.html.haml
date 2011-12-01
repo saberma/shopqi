@@ -3,7 +3,7 @@
   %ul
     %li#add-region
       =link_to '新增目的地', new_country_path
-.box2.ssb
+.ssb
   =form_for shop, remote: true do |f|
     %h3 税 率 设 置
     %p
@@ -17,12 +17,13 @@
       =f.check_box :tax_shipping, onclick: "$(this).closest('form').submit()"
       %label{:for => "shop_tax_shipping"} 关税
 .pgroup{:style => "margin-top:0"}
-  %table#countries.data{:cellpadding => "0", :cellspacing => "0"}
-    %tr
-      %th{:colspan => "2"} 目的地
-      %th 应征税率
-      %th &nbsp;
-    =render countries
+  %table#countries.standard-table{:cellpadding => "0", :cellspacing => "0"}
+    %thead
+      %tr
+        %th{:colspan => "2"} 目的地
+        %th 应征税率
+        %th &nbsp;
+    %tbody=render countries
 
 :javascript
   task_name = 'setup_taxes';

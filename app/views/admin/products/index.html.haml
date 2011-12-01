@@ -18,7 +18,7 @@
     (以逗号分隔商品属性).
   %a.btn(href="/admin/products.csv") 导出当前显示的商品
   %a.btn.sl(href="/admin/product_exports.csv") 导出所有商品
-#table-filters.box2.ssb.sst
+#table-filters.box2.sst
   显示
   %a#vendor-filter-link(href="#")=search_label :vendor, '所有厂商'
   和
@@ -38,11 +38,11 @@
       -types.each do |product_type|
         %li=link_to product_type.name, product_search_path(product_type_eq: product_type.name)
       %li.filter-show-all.current=link_to "显示所有", product_search_path(producty_type_eq: nil)
-%ul.segmented.fr
-  %li
-    %a.btn.active(href="#{products_path}") 列表视图
-  %li
-    %a.btn(href="#{inventory_products_path}")> 库存视图
+  %ul.segmented.fr
+    %li
+      %a.btn.active(href="#{products_path}") 列表视图
+    %li
+      %a.btn(href="#{inventory_products_path}")> 库存视图
 / PRODUCTS LIST
 .listing.sst
   -if products.size.zero?
@@ -52,11 +52,11 @@
       %form#batch-form(action="/admin/products/set" method="post")
         / PRODUCTS LIST
         .listing
-          %div(style="height: 32px;")
-            %table#product-controls.hide(cellpadding="0" cellspacing="0")
-              %tbody
-                %tr
-                  %td(style="text-align: left; vertical-align: middle;")
+          #product-container
+            %table#product-table.standard-table.ssb.sticky-area(cellpadding="0" cellspacing="0")
+              %thead.sticky-header.sticky-inactive
+                %tr#product-controls.hide
+                  %th.bulk-editor(colspan=10 style="width:907px")
                     %select#product-select(name="operation")
                       %option(selected="selected" style="color: rgb(136, 136, 136);" value="") 选择操作…
                       %option.indent(value="publish") 发布
@@ -65,24 +65,20 @@
                       %optgroup(label="加入自定义集合:")
                         -custom_collections.each do |collection|
                           %option(value="add_to_collection-#{collection.id}")=collection.title
-                  %td(style="text-align: center; vertical-align: middle;")
-                    #multipage-page.hide
-                      All
-                      %b#multipage-page-count ###
-                      products on this page are selected.
-                      %a#multipage-select-link(href="#" onclick="return false")
-                        Select all
-                        %b#multipage-page-total ###
-                        products
-                    #multipage-all(style="display: none")
-                      %b#multipage-all-count ###
-                      products are selected on all pages.
-                      %a#multipage-clear-link(href="#" onclick="return false") Clear selection
-                  %td(style="text-align: right; vertical-align: middle;")
-                    %span#product-count.note(style="margin-bottom: 5px")
-          #product-container
-            %table#product-table.standard-table.ssb(cellpadding="0" cellspacing="0")
-              %thead
+                    -#
+                      #multipage-page.hide
+                        所有
+                        %b#multipage-page-count ###
+                        在此页中已选中的商品.
+                        %a#multipage-select-link(href="#" onclick="return false")
+                          选择所有
+                          %b#multipage-page-total ###
+                          商品
+                      #multipage-all(style="display: none")
+                        %b#multipage-all-count ###
+                        所有页面已选中的商品.
+                        %a#multipage-clear-link(href="#" onclick="return false")  清除选中项
+                    %span#product-count
                 %tr
                   %th.nosort.sortcol(style="width: 16px;")
                     %input#select-all(type="checkbox")/

@@ -10,15 +10,18 @@ App.Views.LinkList.Links.Index = Backbone.View.extend
   render: ->
     self = this
     $(@el).html ''
-    @collection.each (link) -> new App.Views.LinkList.Links.Show model: link
-    $(@el).sortable axis: 'y', placeholder: "sortable-placeholder", handle: '.image_handle', update: (event, ui) -> #links排序
-      $.post "#{self.collection.url}/sort", $(this).sortable('serialize')
-      #排序后设置到model
-      ids = _.map $(this).sortable('toArray'), (id) -> id.substr(5) #link_1
-      i = 0
-      _.each ids, (id) -> self.collection.get(id).set { position: i++ }, silent: true
-      self.collection.sort silent: true
-      self.cycle_class()
+    if _.isEmpty(@collection.models)
+      $(@el).html "<li class='c note' style='padding-top:20px; padding-bottom:20px'>此链接列表还没有加入任何链接</li>"
+    else
+      @collection.each (link) -> new App.Views.LinkList.Links.Show model: link
+      $(@el).sortable axis: 'y', placeholder: "sortable-placeholder", handle: '.image_handle', update: (event, ui) -> #links排序
+        $.post "#{self.collection.url}/sort", $(this).sortable('serialize')
+        #排序后设置到model
+        ids = _.map $(this).sortable('toArray'), (id) -> id.substr(5) #link_1
+        i = 0
+        _.each ids, (id) -> self.collection.get(id).set { position: i++ }, silent: true
+        self.collection.sort silent: true
+        self.cycle_class()
 
   cycle_class: -> # 行间隔
     self = this

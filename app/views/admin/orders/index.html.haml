@@ -41,34 +41,31 @@
   #orders
     %form#batch-form(action="/admin/orders/set" method="post")
       .listing
-        %div(style="height: 32px;")
-          %table#order-controls.hide(cellpadding="0" cellspacing="0")
-            %tr
-              %td(style="text-align:left;vertical-align: middle")
-                %select#order-select(name="operation")
-                  %option(checked="checked" style="color: #888" value="") 选择操作…
-                  %option.indent(value="close") 关闭订单
-                  %option.indent(value="open") 恢复订单
-                  -#%option.indent(value="capture") Capture Payments
-              -#
-                %td(style="text-align:center;vertical-align: middle")
-                  #multipage-page.hide
-                    所有
-                    %b#multipage-page-count ###
-                    在此页中已选中的订单.
-                    %a#multipage-select-link(href="#" onclick="return false")
-                      选择所有
-                      %b#multipage-page-total ###
-                      订单
-                  #multipage-all(style="display: none")
-                    %b#multipage-all-count ###
-                    所有页面已选中的订单.
-                    %a#multipage-clear-link(href="#") 清除选中项
-                %td(style="text-align:right;vertical-align: middle")
-                  %span#order-count.note(style="margin-bottom: 5px")  
         #order-container
-          %table#order-table.standard-table.ssb(cellpadding="0" cellspacing="0")
-            %thead
+          %table#order-table.standard-table.ssb.sticky-area(cellpadding="0" cellspacing="0")
+            %thead.sticky-header.sticky-inactive
+              %tr#order-controls.hide
+                %th.bulk-editor(colspan=10 style="width:907px")
+                  %select#order-select(name="operation")
+                    %option(checked="checked" style="color: #888" value="") 选择操作…
+                    %option.indent(value="close") 关闭订单
+                    %option.indent(value="open") 恢复订单
+                    -#%option.indent(value="capture") 接收款项
+                  -#
+                    #multipage-page.hide
+                      所有
+                      %b#multipage-page-count ###
+                      在此页中已选中的订单.
+                      %a#multipage-select-link(href="#" onclick="return false")
+                        选择所有
+                        %b#multipage-page-total ###
+                        订单
+                    #multipage-all(style="display: none")
+                      %b#multipage-all-count ###
+                      所有页面已选中的订单.
+                      %a#multipage-clear-link(href="#") 清除选中项
+                    %td(style="text-align:right;vertical-align: middle")
+                  %span#order-count
               %tr
                 %th.nosort(style="width: 16px")
                   %input#select-all(type="checkbox")/

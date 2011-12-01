@@ -11,7 +11,7 @@ App.Views.LinkList.Edit = Backbone.View.extend
     template = Handlebars.compile $('#edit_form_link_container-item').html()
     attrs = _.clone @model.attributes
     $(@el).html template attrs
-    @model.links.each (link) -> new App.Views.LinkList.Links.Edit model: link, parent: self.$('.edit_links')
+    @model.links.each (link) -> new App.Views.LinkList.Links.Edit model: link, parent: self.$('.editing-link-list')
     $(@el).show()
     @model.view.$(".default_container_link_list, .add_form_link_container").hide() #隐藏列表窗口、新增链接按钮
 

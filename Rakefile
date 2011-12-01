@@ -14,7 +14,7 @@ task :travis do
   parallel_size = 4
   unit_test = ENV['UNIT_TEST']
   integrate_test = ENV['INTEGRATE_TEST']
-  all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}
+  all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}.sort
   integrate_files = Dir.chdir(Rails.root) { Dir["spec/requests/**/*_spec.rb"]}.sort
   unit_files = all_files - integrate_files
   %w(shop/shops_searches_spec.rb lookup_spec.rb).each do |searchable_spec|
