@@ -26,14 +26,14 @@ module KeyValues
     include ActiveHash::Associations
     belongs_to :resource_type , class_name: 'KeyValues::ResourceType'
     self.data = [
-      {id: 1 , name: '首页'        , code: 'dashboard'         ,resource_type_id: 1},
+      {id: 1 , name: '首页'        , code: 'home'              ,resource_type_id: 1},
       {id: 2 , name: '顾客'        , code: 'customers'         ,resource_type_id: 1},
       {id: 3 , name: '订单'        , code: 'orders'            ,resource_type_id: 1},
       {id: 4 , name: '市场营销'    , code: 'marketing'         ,resource_type_id: 1},
       {id: 5 , name: '商品&集合'   , code: 'products'          ,resource_type_id: 2},
       {id: 6 , name: '外观'        , code: 'themes'            ,resource_type_id: 2},
       {id: 7 , name: '博客&页面'   , code: 'pages'             ,resource_type_id: 2},
-      {id: 8 , name: '链接列表'    , code: 'links'             ,resource_type_id: 2},
+      {id: 8 , name: '链接列表'    , code: 'link_lists'        ,resource_type_id: 2},
       {id: 9 , name: '应用'        , code: 'applications'      ,resource_type_id: 3},
       {id: 10, name: '设置'        , code: 'preferences'       ,resource_type_id: 3},
     ]

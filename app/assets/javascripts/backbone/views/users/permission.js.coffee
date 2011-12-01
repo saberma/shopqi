@@ -1,6 +1,6 @@
 App.Views.User.Permission = Backbone.View.extend
   tagName: 'tr'
-  className: 'edit-permissions table-slider'
+  className: 'edit-permissions table-slider hide'
   events:
     "click .action.cancel"  : "hide_permission_tr"
     "click .mark_all"       : "markAll"

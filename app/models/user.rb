@@ -34,6 +34,12 @@ class User < ActiveRecord::Base
     admin
   end
 
+  def has_right?(resource_code)
+    no_check_controller_array = ['account','users','kindeditor','photos','sessions']     #不需要校验权限的控制器
+    permissions = [self.permissions.all.map(&:resource).map(&:code) << no_check_controller_array].flatten
+    resource_code.in?(permissions)
+  end
+
   def default_avatar_image_url
     self.avatar_image_uid? ? self.avatar_image.thumb('50x50').url : 'avatar.jpg'
   end
