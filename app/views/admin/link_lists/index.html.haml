@@ -5,23 +5,23 @@
       %a(href="#") 新增链接列表
 =render "shared/noscript"
 =render "shared/upgrade_ie"
-#add-menu.box2(style="display:none")
+#add-menu.group(style="display:none")
   %form(action="/admin/links/add_list" onsubmit="return false")
-    %h3.sb 添加一个链接列表
-    %p
-      %label(for="list_title") 标题
-    %p.ssb
-      %input#list_title.long(name="title" type="text" value="")
-    %p.btn-divider
+    .group-fields
+      %p
+        %label(for="list_title") 标题
+      %p.ssb
+        %input#list_title.long(name="title" type="text" value="")
+    .group-actions
       %input.btn(name="commit" type="submit" value="保存")
       或者
       %a.cancel(href="#") 取消
 #link-lists
   %h3.st.sb 链接列表
   %p.note.ssb
-    当您添加一个新的链接列表，需要在外观主题中包含它才能显示出来.
+    链接列表是链接的集合，顾客通过点击这些链接来浏览商店的各个页面；
     %br/
-    要让这个链接列表显示在商店页面，请在
+    当您添加一个新的链接列表，需要在外观主题中包含它才能显示出来；要让这个链接列表显示在商店页面，请在
     %a(href="/admin/themes/current") 模板编辑器
     中修改模板.
   .section
@@ -30,49 +30,40 @@
 %script(id="link-list-item" type="text/x-handlebars-template")
   / begin: default Link List items
   .default_container_link_list
-    .section-header
-      %p.list-actions
-        %a.editlist-action(href="#" style="padding-left: 14px;") 修改链接列表
-        {{#unless system_default}}
-        |
+    .clearfix
+      %h4.fl.sr.sb(title="固定链接: {{{handle}}}") {{{title}}}
+      %span.fl(style="position: relative; font-size: 11px; ")
+        %a.editlist-action(href="#") 修改链接列表
+      {{#unless system_default}}
+      %span.delete-linklist
         %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
-        {{/unless}}
-      %span(title="固定链接: {{{handle}}}") {{{title}}}
-      %span.hint {{#if system_default}}这是默认链接列表，不能删除.{{/if}}
-    .none_link_list.hint.padding(style="{{#unless is_empty_links}}display: none{{/unless}}") 此链接列表还没有加入任何链接
-    .link-header.st.sl.sr(style="{{#if is_empty_links}}display: none{{/if}}")
-      %span.sl 链接名称
-      %span.sl 链接路径
-    %ul.nobull.sr.ssb.links(style="{{#if is_empty_links}}display: none{{/if}}")
+      {{/unless}}
+      %span.note.lighter.fr {{#if system_default}}这是默认链接列表，不能删除.{{/if}}
+    .faux-table-header
+      %span 链接名称
+      %span 链接路径
+    %ul.links
   / begin: add new Link
-  .add_form_link_container
-    .action-row
-      .action-link
-        %p
-          %a(href="#")
-            %span.plus +
-            新增链接
+  .add_form_link_container.group-actions.unattached
+    .add-action-link
+      %a.btn(href="#") 新增链接
     .link(style="display:none;")
-      .group
-        %form(action="#" onsubmit="return false")
-          .group-fields
-            .add-link-title.link-col
-              %span.add-link-header 新链接的名称
-              %input.medium(name="title" type="text")
-            .add-link-linksto.link-col
-              %span.add-link-header 链接至
-              %select.selector(name="link_type")
-                =options_for_select link_types
-              %select.subject(name="subject_handle")
-              %input.medium.subject_params.linkform-hint(data-hint="Filter by tags (comma separated)" name="subject_params" type="text" style="display:none")
-              %input.long.subject_http.linkform-hint(data-hint="http://shopqi.com" name="url" type="text" style="display:none")
-          / .group-fields
-          .group-actions
-            %input.btn(name="commit" type="submit" value="新增链接")
-            或者
-            %a.cancel(href="#") 取消
-          / .group-actions
-      / .group
+      %form(action="#" onsubmit="return false")
+        .clearfix.sb
+          .add-link-title.link-col
+            %span.add-link-header 新链接的名称
+            %input.medium(name="title" type="text")
+          .add-link-linksto.link-col
+            %span.add-link-header 链接至
+            %select.selector(name="link_type")
+              =options_for_select link_types
+            %select.subject(name="subject_handle")
+            %input.medium.subject_params.linkform-hint(data-hint="Filter by tags (comma separated)" name="subject_params" type="text" style="display:none")
+            %input.long.subject_http.linkform-hint(data-hint="http://shopqi.com" name="url" type="text" style="display:none")
+        %input.btn(name="commit" type="submit" value="新增链接")
+        或者
+        %a.cancel(href="#") 取消
+        / .group-actions
   / begin: edit Link List items
   .edit_form_link_container(style="display:none;")
 %script(id="link-item" type="text/x-handlebars-template")
@@ -82,34 +73,35 @@
   %span.link-url {{{url}}}
 %script(id="edit_form_link_container-item" type="text/x-handlebars-template")
   %form.edit_link_list(action="#" onsubmit="return false")
-    .section-header 修改这个链接列表
-    .link-list-edit-header
-      %dl.padding.nst.nsb.nsl.nsr
-        %dt.nst 名称
-        %dd
-          %input.big.sb(name="link_list[title]" size="30" type="text" value="{{{title}}}")
-        %dt
-          固定链接
-          %span.note
-            (
-            %a(href="#{wiki_url_with_port}/Handle" target="_blank")> 这是什么?
-            )
-        %dd
-          {{#if system_default}}
-          %input(disabled="disabled" name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
-          %span.hint 默认链接列表的固定链接是不能修改的
-          {{else}}
-          %input(name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
-          {{/if}}
-    .link-header.link-header-edit.nobull.st
-      %span 链接名称
-      %span 链接至
-    / edit-link
-    %ul.nobull.st.sr.ssb.sl.edit_links
-    .group-actions
-      %input.btn(name="commit" type="submit" value="保存")
-      或者
-      %a.cancel(href="#") 取消
+    .group
+      .group-fields
+        .link-list-edit-header
+          %dl.padding.nst.nsb.nsl.nsr
+            %dt.nst 名称
+            %dd
+              %input.big.sb(name="link_list[title]" size="30" type="text" value="{{{title}}}")
+            %dt
+              固定链接
+              %span.note
+                (
+                %a(href="#{wiki_url_with_port}/Handle" target="_blank")> 这是什么?
+                )
+            %dd
+              {{#if system_default}}
+              %input(disabled="disabled" name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
+              %span.hint 默认链接列表的固定链接是不能修改的
+              {{else}}
+              %input(name="link_list[handle]" size="30" type="text" value="{{{handle}}}")
+              {{/if}}
+      .faux-table-header
+        %span 链接名称
+        %span 链接至
+      / edit-link
+      %ul.editing-link-list
+      .group-actions
+        %input.btn(name="commit" type="submit" value="保存")
+        或者
+        %a.cancel(href="#") 取消
 %script(id="edit-link-item" type="text/x-handlebars-template")
   %a.delete.fr(href="#")=image_tag 'admin/icons/trash.gif'
   %input(name="id" type="hidden" value="{{{id}}}")

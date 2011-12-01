@@ -376,7 +376,7 @@ describe "Products", js: true do
 
       # 快捷操作
       it "should be select" do
-        shop.custom_collections.create title: '热门商品'
+        collection = shop.custom_collections.create title: '热门商品'
         visit products_path
         # 发布
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]") do
@@ -384,16 +384,15 @@ describe "Products", js: true do
         end
         select '隐藏'
         page.should have_content('批量更新成功!') # 延时处理
-        within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_true }
+        within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { page.should have_css('.status-hidden', visible: true) }
         select '发布'
         page.should have_content('批量更新成功!') # 延时处理
-        within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { find('.status-hidden').visible?.should be_false } #隐藏提示消失
+        within(:xpath, "//table[@id='product-table']/tbody/tr[1]") { page.should have_css('.status-hidden', visible: false) } #隐藏提示消失
         select '热门商品'
         title = ''
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]/td[3]") { title = find('a').text }
         page.should have_content('批量更新成功!') # 延时处理
-        product = shop.products.where(title: title).first
-        product.collections.first.title.should eql '热门商品'
+        collection.reload.products.should_not be_empty
         page.execute_script("window.confirm = function(msg) { return true; }")
         select '删除'
         within("#product-table") { has_no_content?(title).should be_true }

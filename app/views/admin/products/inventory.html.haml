@@ -1,38 +1,39 @@
 %h2#title 库存
 #action-links
   %ul
-.box2.ssb.sst
-  %p
-    %span.highlight-alt
-      只有选择了
-      %strong 库存跟踪
-      的商品会显示在这里.
-%ul.segmented.fr
-  %li
-    %a.btn(href="#{products_path}") 列表视图
-  %li
-    %a.btn.active(href="#{inventory_products_path}")> 库存视图
+#table-filters.box2.sst
+  %span.highlight-alt
+    只有选择了
+    %strong 库存跟踪
+    的商品会显示在这里.
+  %ul.segmented.fr
+    %li
+      %a.btn(href="#{products_path}") 列表视图
+    %li
+      %a.btn.active(href="#{inventory_products_path}")> 库存视图
 .cl(style="margin-top: 52px")
-  %table#product-table.ssb.data(cellpadding="0" cellspacing="0")
-    %tr
-      %th.nosort(style="width: 12px; text-align: center !important")  
-      %th#product-col.sortcol(style="padding-left: 3px;min-width: 150px") 商品款式
-      %th.sortcol SKU
-      %th.nosort(style="width: 175px") 库存政策
-      %th.sortcol.number.sortasc(style="text-align: center;padding-right: 25px !important") 现存
-    -@product_variants.each do |variant|
-      %tr.variant
-        %td=image_tag 'other/no-image-thumb.gif'
-        %td
-          =link_to product_path(variant.product) do
-            =variant.product.title
-            %br/
-            %strong.highlight(style="color: #000")=variant.options.join(' / ')
-        %td=variant.sku
-        %td
-          %span.hint=variant.inventory_policy_name
-        %td(style="text-align:center;")
-          %span(style="font-size: 18px")
-            %span=variant.inventory_quantity
+  %table#product-table.standard-table(cellpadding="0" cellspacing="0")
+    %thead
+      %tr
+        %th.nosort(style="width: 12px; text-align: center !important")  
+        %th#product-col.sortcol(style="padding-left: 3px;min-width: 150px") 商品款式
+        %th.sortcol SKU
+        %th.nosort(style="width: 175px") 库存政策
+        %th.sortcol.number.sortasc(style="text-align: center;padding-right: 25px !important") 现存
+    %tbody
+      -@product_variants.each do |variant|
+        %tr.variant
+          %td=image_tag 'other/no-image-thumb.gif'
+          %td
+            =link_to product_path(variant.product) do
+              =variant.product.title
+              %br/
+              %strong.highlight(style="color: #000")=variant.options.join(' / ')
+          %td=variant.sku
+          %td
+            %span.hint=variant.inventory_policy_name
+          %td(style="text-align:center;")
+            %span(style="font-size: 18px")
+              %span=variant.inventory_quantity
 #btm-nav.act-screen
   #pagination

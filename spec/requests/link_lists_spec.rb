@@ -19,9 +19,9 @@ describe "LinkLists", js: true do
       it "should be index" do # 默认链接列表
         within '#menus' do
           within :xpath, './li[1]' do
-            within '.section-header' do
-              find('span:first').text.should eql '主菜单'
-              find('span.hint').text.should eql '这是默认链接列表，不能删除.'
+            within '.default_container_link_list > div:first' do
+              find('h4').text.should eql '主菜单'
+              find('span.note').text.should eql '这是默认链接列表，不能删除.'
               has_css?('.destroy').should be_false
             end
             within '.links' do # 链接记录
@@ -40,9 +40,9 @@ describe "LinkLists", js: true do
             end
           end
           within :xpath, './li[2]' do
-            within '.section-header' do
-              find('span:first').text.should eql '页脚'
-              find('span.hint').text.should eql '这是默认链接列表，不能删除.'
+            within '.default_container_link_list > div:first' do
+              find('h4').text.should eql '页脚'
+              find('span.note').text.should eql '这是默认链接列表，不能删除.'
               has_css?('.destroy').should be_false
             end
             within '.links' do # 链接记录
@@ -68,8 +68,8 @@ describe "LinkLists", js: true do
         has_content?('新增成功!').should be_true
         within '#menus' do
           within :xpath, './li[3]' do
-            within '.section-header' do
-              find('span:first').text.should eql '热门产品'
+            within '.default_container_link_list > div:first' do
+              find('h4').text.should eql '热门产品'
               has_content?('这是默认链接列表，不能删除.').should be_false
               has_css?('.destroy').should be_true
             end
@@ -83,7 +83,7 @@ describe "LinkLists", js: true do
           within :xpath, './li[1]' do
             click_on '修改链接列表'
             fill_in 'link_list[title]', with: '商店菜单'
-            within '.edit_links' do # 链接记录
+            within '.editing-link-list' do # 链接记录
               within :xpath, './li[1]' do
                 fill_in 'title', with: '商店首页'
                 select '其他网址'
@@ -91,8 +91,8 @@ describe "LinkLists", js: true do
               end
             end
             click_on '保存'
-            within '.section-header' do # 回显
-              find('span:first').text.should eql '商店菜单'
+            within '.default_container_link_list > div:first' do
+              find('h4').text.should eql '商店菜单'
             end
             within '.links' do # 链接记录
               within :xpath, './li[1]' do
@@ -117,8 +117,8 @@ describe "LinkLists", js: true do
         page.should have_content('修改成功!')
         within '#menus' do
           within :xpath, './li[3]' do
-            within '.section-header' do
-              find('span:first')['title'].should have_content('固定链接: sub-navigation')
+            within '.default_container_link_list > div:first' do
+              find('h4')['title'].should have_content('固定链接: sub-navigation')
             end
           end
         end
@@ -166,11 +166,17 @@ describe "LinkLists", js: true do
         end
 
         it "should not add multi-links after edit" do # 修改后新增不能显示多条重复的链接 issues#243
+          links_size = 0
           within '#menus' do
             within :xpath, './li[1]' do
               links_size = all('.links li').size
               click_on '修改链接列表'
               click_on '保存'
+            end
+          end
+          page.should have_content('修改成功!')
+          within '#menus' do
+            within :xpath, './li[1]' do
               click_on '新增链接'
               fill_in 'title', with: '购物指南'
               click_on '新增链接'
@@ -189,7 +195,7 @@ describe "LinkLists", js: true do
         within '#menus' do
           within :xpath, './li[1]' do
             click_on '修改链接列表'
-            within '.edit_links' do # 链接记录
+            within '.editing-link-list' do # 链接记录
               within :xpath, './li[1]' do
                 page.execute_script("window.confirm = function(msg) { return true; }")
                 find('.delete').click

@@ -1,7 +1,7 @@
 App.Views.LinkList.Links.New = Backbone.View.extend
 
   events:
-    "click .action-link a": "add"
+    "click .add-action-link a": "add"
     "submit form": "save"
     "click .cancel": "cancel"
     "change .selector": "select" # 选择链接类型
@@ -17,7 +17,7 @@ App.Views.LinkList.Links.New = Backbone.View.extend
       self.$("input[name='link[title]']").val ''
       self.$("input[name='link[subject]']").val ''
       new App.Views.LinkList.Links.Show model: model
-      self.link_list.view.$('.default_container_link_list .hint').hide() # 有记录了不显示"无链接"提示
+      self.link_list.view.$('.c.note').remove() # 有记录了不显示"无链接"提示
       self.link_list.view.$('.link-header, .links').show()
 
   save: ->
@@ -34,12 +34,12 @@ App.Views.LinkList.Links.New = Backbone.View.extend
 
   cancel: ->
     @$('.link').hide()
-    @$('.action-row').show()
+    @$('.add-action-link').show()
     false
 
   add: ->
     @$('.link').show()
-    @$('.action-row').hide()
+    @$('.add-action-link').hide()
     @$('.selector').change()
     @$("input[name='url'], input[name='title']").val('')
     false

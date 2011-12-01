@@ -1,6 +1,6 @@
 App.Views.LinkList.Links.Show = Backbone.View.extend
   tagName: 'li'
-  className: 'sl link'
+  className: 'link'
 
   initialize: ->
     self = this

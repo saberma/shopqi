@@ -1,6 +1,6 @@
 App.Views.LinkList.Links.Edit = Backbone.View.extend
   tagName: 'li'
-  className: 'sl link link-edit'
+  className: 'link link-edit'
 
   events:
     "click .delete": "destroy"

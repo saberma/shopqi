@@ -22,7 +22,7 @@ App.Views.User.Show = Backbone.View.extend
     $(@el).html template attrs
     position = _.indexOf @model.collection.models, @model
     cycle = if position % 2 == 0 then 'odd' else 'even'
-    $(@el).addClass "row#{cycle}"
+    $(@el).addClass "row #{cycle}"
     $('#user-list > table > tbody').append @el
 
   destroy: ->
