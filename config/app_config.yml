@@ -1,4 +1,5 @@
 defaults: &defaults
+  mail_from: "ShopQi电子商务平台 <noreply@shopqi.com>"
   domain:
     host: lvh.me
   wiki:
@@ -80,6 +81,3 @@ production:
   domain:
     #host: lvh.me
     host: shopqi.com
-
-travis:
-  <<: *defaults

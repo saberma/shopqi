@@ -23,6 +23,11 @@ Shopqi::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+  #config.action_controller.asset_host = Proc.new { |source, request|
+  #  protocol = request ? request.protocol : 'http://' # 在url_filter中调用时没有request
+  #  "#{protocol}cdn.lvh.me"
+  #}
+
   # Do not compress assets
   config.assets.compress = false
 
