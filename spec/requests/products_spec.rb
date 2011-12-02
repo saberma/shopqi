@@ -413,7 +413,6 @@ describe "Products", js: true do
         visit inventory_products_path
         has_content?('iphone4').should be_true
       end
-
     end
 
   end

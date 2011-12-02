@@ -27,7 +27,7 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
     elsif controller_name.in?(['api_clients'])
       resource_code = 'applications'
     end
-    render template: 'shared/access_deny', layout: 'application' unless current_user.has_right?(resource_code)
+    render template: 'shared/access_deny', layout: 'application' if current_user && !current_user.has_right?(resource_code)
   end
 
   def check_shop_access_enabled
