@@ -53,14 +53,16 @@ ActiveAdmin.register Shop do
        @theme = Theme.first
      end
      begin 'shop' # 商店
-       @shop_global_js = "#{ActionController::Base.asset_host}/s/global/jquery/1.5.2/jquery.js"
-       @shop_shopqi_js = "#{ActionController::Base.asset_host}/s/shopqi/option_selection.js"
+       asset_host = ActionController::Base.asset_host # 可能为Proc对象
+       asset_host_for_shop = asset_host.respond_to?(:call) ? asset_host.call : asset_host
+       @shop_global_js = "#{asset_host_for_shop}/s/global/jquery/1.5.2/jquery.js"
+       @shop_shopqi_js = "#{asset_host_for_shop}/s/shopqi/option_selection.js"
        @shop = Shop.where(email: 'admin@shopqi.com', :id.lt => 10).order('id asc').first
        if @shop
          theme = @shop.themes.where(name: '乔木林地').first
          if theme
-           @shop_shop_css = "#{ActionController::Base.asset_host}#{theme.asset_url('stylesheet.css')}"
-           @shop_shop_js = "#{ActionController::Base.asset_host}#{theme.asset_url('fancybox.js')}"
+           @shop_shop_css = "#{asset_host_for_shop}#{theme.asset_url('stylesheet.css')}"
+           @shop_shop_js = "#{asset_host_for_shop}#{theme.asset_url('fancybox.js')}"
          end
          @shop_product_photo = @shop.products.first.try(:index_photo)
        end

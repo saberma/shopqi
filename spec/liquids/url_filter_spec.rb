@@ -14,7 +14,8 @@ describe UrlFilter do
 
   before(:each) do
     File.stub!(:mtime).and_return(8888)
-    ActionController::Base.stub!(:asset_host).and_return(asset_host)
+    asset_host_proc = Proc.new { |source, request| asset_host }
+    ActionController::Base.stub!(:asset_host).and_return(asset_host_proc)
   end
 
   it 'should get asset_url' do
