@@ -56,7 +56,7 @@ describe "Shop::Customers", js: true do
 
     end
 
-    it "should can registe a new customer", f: true do
+    it "should can registe a new customer" do
       visit new_customer_registration_path
       within '#regist_new_customer' do # 商店顶端还有一个注册链接，避免冲突
         click_on '注册'

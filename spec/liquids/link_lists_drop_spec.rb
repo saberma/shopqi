@@ -36,7 +36,7 @@ describe LinkListsDrop do
 
   end
 
-  describe LinkDrop, f: true do # 链接
+  describe LinkDrop do # 链接
 
     let(:variant) { "{% for link in linklists.main-menu.links %}{{ link.active }} {% endfor %}" } # 首页 商品列表 关于我们
 

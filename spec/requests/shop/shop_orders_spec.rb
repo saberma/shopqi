@@ -61,7 +61,7 @@ describe "Orders", js: true do
     #  page.should have_content('创建您的订单') # 跳转回结算页面
     #end
 
-    it 'should be sign in', f: true do
+    it 'should be sign in' do
       customer_saberma # 已有顾客
       visit "/cart"
       click_on '结算'
