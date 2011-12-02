@@ -48,11 +48,26 @@ describe Shopqi::HomeController do
       response.should be_success
     end
 
-    it "should show no shop" do
-      request.host = "http://aaa.lvh.me:4000"
+  end
+
+  describe 'no shop' do
+
+    before { request.host = "http://aaa.lvh.me:4000" }
+
+    it "should show info" do
       get :no_shop
       response.status.should eql 404
       response.should render_template("shared/no_shop")
+    end
+
+    context '/robots.txt' do
+
+      it "should show info" do
+        get :no_shop, format: :text
+        response.status.should eql 404
+        response.should render_template("shared/no_shop")
+      end
+
     end
 
   end

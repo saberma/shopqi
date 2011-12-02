@@ -15,7 +15,7 @@ class Shop::AppController < ActionController::Base
 
   protected
   def check_shop_access_enabled
-    render template: 'shared/no_shop', status: 404, layout: nil and return unless shop.access_enabled
+    render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil and return unless shop.access_enabled
   end
   def check_shop_avaliable
     redirect_to controller: :shops, action: :unavailable and return unless shop.available?

@@ -12,7 +12,7 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
   def check_shop_access_enabled
     shop = Shop.at(request.host)
     if !shop.access_enabled
-      render template: 'shared/no_shop', status: 404, layout: nil
+      render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil
     end
   end
 
