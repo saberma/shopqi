@@ -57,9 +57,20 @@ describe Shopqi::HomeController do
 
   end
 
+  describe 'subdomain' do
+
+    it "should use www subdomain" do # issues#291
+      request.host = "lvh.me"
+      get :page
+      response.status.should eql 301
+      response.should be_redirect
+    end
+
+  end
+
   describe 'robots' do
 
-    it "should be show", focus: true do
+    it "should be show" do
       get :robots
       response.should be_success
       response.body.should include 'Sitemap'
