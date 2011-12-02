@@ -70,27 +70,30 @@
     $("##{id}").toggle()
   false
 
-#可新增下拉框
+#可新增下拉框(商品新增和编辑页面的下拉类型不一样，新增时直接使用input，编辑时外套div)
 @UpdateableSelectBox = (select_box, create_label) ->
-  input_field = select_box.next()
-  input_field = input_field.children('input') if input_field.hasClass('field_with_errors')
+  input_field = container = select_box.next()
+  input_field = container = container.children('input') if input_field.hasClass('field_with_errors') # 商品新增页面厂商为空
+  input_field = container.children('input') unless container.attr('type') is 'text'
   if select_box.children().size() > 0
     select_box.append("<option value='' disabled='disabled'>--------</option>")
   else
-    input_field.show()
+    container.show()
   select_box.append("<option value='create_new'>#{create_label}...</option>")
   select_box.change ->
     if $(this).val() is 'create_new'
-      input_field.show().val('')
+      container.show()
+      input_field.val('')
     else
-      input_field.hide().val($(this).val())
+      container.hide()
+      input_field.val($(this).val())
   #回显
   values = select_box.children().map -> this.value
   value = input_field.val()
   if value
     if value not in values
       select_box.val('create_new')
-      input_field.show()
+      container.show()
     else
       select_box.val(value)
   else if select_box.val() isnt 'create_new'
