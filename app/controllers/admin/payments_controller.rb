@@ -9,7 +9,7 @@ class Admin::PaymentsController < Admin::AppController
   expose(:policy_types){ KeyValues::PolicyType.all }
   expose(:policies){ shop.policies }
   expose(:all_custom_types){ KeyValues::Payment::Custom.all.map{|c|[c.name,c.name]}}
-  expose(:custom_payments){ Payment.where(payment_type_id: nil).all }
+  expose(:custom_payments){ shop.payments.where(payment_type_id: nil).all }
   expose(:selected_custom_types){ custom_payments.map{|c|[c.name,c.name]} }
   expose(:custom_types){ all_custom_types - selected_custom_types }
   expose(:service_types){ KeyValues::Payment::Alipay::Service.options }
