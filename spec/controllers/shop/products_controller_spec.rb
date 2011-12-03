@@ -44,4 +44,13 @@ describe Shop::ProductsController do
 
   end
 
+  describe 'error' do
+
+    it "should handle not found" do
+      get 'show', handle: 'no-exists-handle'
+      response.status.should eql 404
+    end
+
+  end
+
 end

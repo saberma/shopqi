@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  include Models::Handle
   belongs_to :shop
 
   validates_presence_of :title
@@ -10,10 +11,6 @@ class Page < ActiveRecord::Base
 
   before_save do
     Handle.make_valid(shop.pages, self)
-  end
-
-  def self.show(handle)
-    self.where(handle: handle, published: true).first
   end
 
 end

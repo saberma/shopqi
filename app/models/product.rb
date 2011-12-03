@@ -1,7 +1,8 @@
 # encoding: utf-8
 class Product < ActiveRecord::Base
+  include Models::Handle
   belongs_to :shop
-  has_many :photos             , dependent: :destroy           ,order: 'position asc'
+  has_many :photos             , dependent: :destroy           , order: 'position asc'
   has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'
   has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: 'position asc'
   has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
@@ -90,7 +91,7 @@ class Product < ActiveRecord::Base
     self.published
   end
 
-  begin 'shop' # 只供商店调用的json
+  begin 'shop' # 只供商店调用
 
     def shop_as_json(options = nil) # 不能以as_json，会与后台管理的to_json冲突(options同名)
       {

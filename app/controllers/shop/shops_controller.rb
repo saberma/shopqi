@@ -21,7 +21,7 @@ class Shop::ShopsController < Shop::AppController
   end
 
   def unkown
-    raise '404'
+    raise ActionController::RoutingError.new(params[:unkown])
   end
 
   # 附件

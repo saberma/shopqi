@@ -3,7 +3,7 @@ class Shop::PagesController < Shop::AppController
 
   expose(:shop) { Shop.at(request.host) }
 
-  expose(:page) { shop.pages.show(params[:handle]) }
+  expose(:page) { shop.pages.published_handle!(params[:handle]) }
 
   def show
     PagesDrop
