@@ -34,10 +34,16 @@ describe "Products", js: true do
 
           click_on '保存'
 
-          #校验
-          has_content?('标题 不能为空').should be_true
-          has_content?('商品类型 不能为空').should be_true
-          has_content?('商品生产商 不能为空').should be_true
+          #校验#增加了客户端形式的校验
+          within(:xpath,"//label[@for='product_title']") do
+            has_content?('不能为空').should be_true
+          end
+          within(:xpath,"//label[@for='product_vendor']") do
+            has_content?('不能为空').should be_true
+          end
+          within(:xpath,"//label[@for='product_product_type']") do
+            has_content?('不能为空').should be_true
+          end
 
           #校验不通过仍然显示新增类型、生产商
           find_field('product[product_type]').visible?.should be_true
@@ -49,9 +55,11 @@ describe "Products", js: true do
           click_on '保存'
 
           #校验
-          has_content?('标题 不能为空').should be_true
-          has_no_content?('商品类型 不能为空').should be_true
-          has_no_content?('商品生产商 不能为空').should be_true
+          within(:xpath,"//label[@for='product_title']") do
+            has_content?('不能为空').should be_true
+          end
+          page.has_xpath?("//label[@for='product_vendor']").should be_false
+          page.has_xpath?("//label[@for='product_product_type']").should be_false
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
@@ -405,7 +413,6 @@ describe "Products", js: true do
         visit inventory_products_path
         has_content?('iphone4').should be_true
       end
-
     end
 
   end

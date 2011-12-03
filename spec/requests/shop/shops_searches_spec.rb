@@ -48,7 +48,7 @@ describe "Shop::Searches", js:true do
       end
     end
 
-    it "should paginate the seach results", f:true  do
+    it "should paginate the seach results" do
 
       with_resque do
         1.upto(11).each do |n|

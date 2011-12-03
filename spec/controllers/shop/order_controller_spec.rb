@@ -132,7 +132,7 @@ describe Shop::OrderController do
 
       let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
 
-      it 'should change order financial_status to paid', f: true do
+      it 'should change order financial_status to paid' do
         order.financial_status_pending?.should be_true
         expect do
           post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
@@ -182,7 +182,7 @@ describe Shop::OrderController do
 
       let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
 
-      it 'should change order financial_status to paid', f: true do
+      it 'should change order financial_status to paid' do
         expect do
           get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
           response.should be_success

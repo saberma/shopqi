@@ -34,6 +34,23 @@ class User < ActiveRecord::Base
     admin
   end
 
+  def has_right?(resource_code)
+    #暂时不需要校验首页权限，目前没有很多数据内容
+    no_check_controller_array = ['account','users','kindeditor','photos','sessions','home']     #不需要校验权限的控制器
+    permissions = [all_resources.map(&:code) << no_check_controller_array].flatten
+    resource_code.in?(permissions)
+  end
+
+  def all_resources
+    Rails.cache.fetch("all_resources_for_user_#{id}") do
+      all_resources = self.permissions.all.map(&:resource)
+    end
+  end
+
+  def permissions_name
+    all_resources.map(&:name)
+  end
+
   def default_avatar_image_url
     self.avatar_image_uid? ? self.avatar_image.thumb('50x50').url : 'avatar.jpg'
   end

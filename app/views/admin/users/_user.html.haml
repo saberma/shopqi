@@ -7,7 +7,9 @@
   %td {{ email }}
   %td
     #edit_regular_user_status
-      limited
+      {{#unless radio_checked }}
+      受限制的
+      {{/unless }}
   %td.r
     {{#if can_delete}}
     %a.action.destroy(href='#')=image_tag('admin/icons/trash.gif')
