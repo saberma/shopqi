@@ -116,7 +116,7 @@
     new App.Views.Task.Index({collection: App.tasks})
 :javascript
   $(document).ready(function(){
-    $('#apps-link > a').attr('class',"#{check_label_has_right('应用')}")
-    $('#theme-link > a').attr('class',"#{check_label_has_right('外观')}")
-    $('#preferences-link > a').attr('class',"#{check_label_has_right('设置')}")
+    $('#apps-link > a').addClass("#{check_label_has_right('应用')}")
+    $('#theme-link > a').addClass("#{check_label_has_right('外观')}")
+    $('#preferences-link > a').addClass("#{check_label_has_right('设置')}")
   });
