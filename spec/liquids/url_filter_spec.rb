@@ -10,11 +10,11 @@ describe UrlFilter do
 
   let(:iphone4) { Factory :iphone4, shop: shop }
 
-  let(:asset_host) { 'http://cdn.shopqi.com' }
+  let(:asset_host) { '//cdn.shopqi.com' }
 
   before(:each) do
     File.stub!(:mtime).and_return(8888)
-    asset_host_proc = Proc.new { |source, request| asset_host }
+    asset_host_proc = Proc.new { |source| asset_host }
     ActionController::Base.stub!(:asset_host).and_return(asset_host_proc)
   end
 
