@@ -489,6 +489,12 @@ describe "Products", js: true do
           page.should have_no_css('#image_list')
         end
 
+        it 'should be valid' do # 校验文件类型 issues#321
+          find('#upload-label .show-upload-link').click # 上传按钮
+          attach_file 'add-file', Rails.root.join('spec', 'factories', 'data', 'themes', 'invalid.file')
+          page.should have_content('商品图片 格式不正确')
+        end
+
       end
 
       describe '#edit' do # 修改

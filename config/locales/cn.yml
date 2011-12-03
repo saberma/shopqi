@@ -59,6 +59,8 @@ cn:
           requires_shipping: 要求送货地址
         photos:
           product_image: 商品图片
+      photo:
+        product_image: 商品图片
       product_variant:
         price: 价格
         weight: 重量
