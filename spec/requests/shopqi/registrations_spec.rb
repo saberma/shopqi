@@ -29,9 +29,9 @@ describe "Shopqi::Registrations", js: true do
         fill_in 'domain[subdomain]', with: 'apple'
         click_on '跳过这一步'
         fill_in '姓名'             , with: '马波'
-        select '广东省'
-        select '深圳市'
-        select '南山区'
+        select '广东省'            , from: 'shop[province]'
+        select '深圳市'            , from: 'shop[city]'
+        select '南山区'            , from: 'shop[district]'
         fill_in '地址'             , with: '311'
         fill_in '邮编'             , with: '517058'
         fill_in '电话'             , with: '0755-26748888'
@@ -51,12 +51,16 @@ describe "Shopqi::Registrations", js: true do
 
       before(:each) do
         SMS.stub!(:safe_send) # 测试环境不要发短信
-        Rails.cache.write("registered_127.0.1.1", true, expires_in: 24.hours) # 避免重复注册
+        local_ip.each do |ip|
+          Rails.cache.write("registered_#{ip}", true, expires_in: 24.hours) # 避免重复注册
+        end
         visit '/services/signup/new/basic'
       end
 
       after(:each) do
-        Rails.cache.delete("registered_127.0.1.1")
+        local_ip.each do |ip|
+          Rails.cache.delete("registered_#{ip}")
+        end
       end
 
       it "should require phone" do
@@ -154,6 +158,11 @@ describe "Shopqi::Registrations", js: true do
 
     end
 
+  end
+
+  private
+  def local_ip # 有的主机获取到的remote_ip为127.0.1.1
+    ['127.0.1.1', '127.0.0.1']
   end
 
 end

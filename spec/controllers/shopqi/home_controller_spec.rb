@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe Shopqi::HomeController do
 
+  before { request.host = "www.#{Setting.host}" }
+
   describe 'homepage' do
 
     it "should be show" do
