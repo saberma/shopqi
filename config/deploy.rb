@@ -118,7 +118,7 @@ namespace :sitemaps do # 搜索引擎网站地图
 
   desc "Refresh sitemaps"
   task :refresh_sitemaps do
-    run "cd #{current_path} && bundle exec rake sitemap:refresh:no_ping"
+    run "cd #{release_path} && bundle exec rake sitemap:refresh:no_ping"
   end
 
 end
