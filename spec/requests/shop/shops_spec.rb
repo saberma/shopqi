@@ -78,7 +78,8 @@ describe "Shop::Shops", js:true do
     end
 
     it "should redirect to unavailable page" do  # 密码保护
-      shop.update_attributes deadline: Date.new(2001,01,01)
+      shop.deadline = Date.new(2001,01,01)
+      shop.save
       visit '/'
       page.should have_content "过期"
     end
