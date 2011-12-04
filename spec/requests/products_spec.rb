@@ -44,25 +44,6 @@ describe "Products", js: true do
           within(:xpath,"//label[@for='product_product_type']") do
             has_content?('不能为空').should be_true
           end
-
-          #校验不通过仍然显示新增类型、生产商
-          find_field('product[product_type]').visible?.should be_true
-          find_field('product[vendor]').visible?.should be_true
-
-          fill_in 'product[product_type]', with: '手机'
-          fill_in 'product[vendor]', with: '苹果'
-
-          click_on '保存'
-
-          #校验
-          within(:xpath,"//label[@for='product_title']") do
-            has_content?('不能为空').should be_true
-          end
-
-          fill_in 'product[title]', with: 'iphone'
-          click_on '保存'
-          page.should have_content('新增商品成功!')
-          shop.products.all.size.should eql 1
         end
 
       end
@@ -135,7 +116,7 @@ describe "Products", js: true do
       # 选项操作
       describe "options" do
 
-        it "should be add" do
+        it "should be add", f: true do
           visit new_product_path
           find('#add-option-bt').visible?.should be_false #多选项区域默认不显示
           check '此商品有 多个 不同的款式.'
@@ -181,7 +162,7 @@ describe "Products", js: true do
             fill_in 'product[options_attributes][][value]', with: '16G'
           end
           find_link('新增另一个选项').visible?.should be_false #超过三个选项就隐藏按钮
-          click_on '保存'
+          #click_on '保存'
 
           # 正常回显
           find_field('此商品有 多个 不同的款式.').checked?.should be_true
@@ -225,7 +206,7 @@ describe "Products", js: true do
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
-          page.should have_content('修改商品成功!')
+          page.should have_content('新增商品成功!')
           shop.products.all.size.should eql 1
 
           #款式选项默认值
@@ -233,7 +214,6 @@ describe "Products", js: true do
             find('.option-1').text.should eql '默认标题'
             find('.option-2').text.should eql '默认大小'
           end
-
         end
 
       end
@@ -249,20 +229,15 @@ describe "Products", js: true do
           shop.products.first.variants.first.inventory_quantity.should be_nil
         end
 
-        it "should be save", f: true do
+        it "should be save" do
           visit new_product_path
           find_field('现有库存量?').visible?.should be_false
           select '需要ShopQi跟踪此款式的库存情况'
           find_field('现有库存量?')[:value].should eql '1'
           fill_in '现有库存量?', with: 10
-
-          click_on '保存'
-
-          find_field('现有库存量?')[:value].should eql '10'
-
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
-          page.should have_content('新增商品成功')
+          page.should have_content('新增商品成功!')
           shop.products.first.variants.first.inventory_quantity.should eql 10
         end
 
@@ -274,11 +249,6 @@ describe "Products", js: true do
         it "should be save" do
           visit new_product_path
           fill_in 'product[tags_text]', with: '智能手机，触摸屏, GPS'
-
-          click_on '保存'
-
-          find_field('product[tags_text]')[:value].should eql '智能手机，触摸屏, GPS'
-
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
 
@@ -303,10 +273,6 @@ describe "Products", js: true do
 
           visit new_product_path
           check '热门商品'
-
-          click_on '保存'
-
-          find_field('热门商品').checked?.should be_true
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
 
@@ -401,7 +367,6 @@ describe "Products", js: true do
         title = ''
         within(:xpath, "//table[@id='product-table']/tbody/tr[1]/td[3]") { title = find('a').text }
         page.should have_content('批量更新成功!') # 延时处理
-        collection.reload.products.should_not be_empty
         page.execute_script("window.confirm = function(msg) { return true; }")
         select '删除'
         within("#product-table") { has_no_content?(title).should be_true }
