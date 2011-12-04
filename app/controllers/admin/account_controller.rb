@@ -5,7 +5,7 @@ class Admin::AccountController < Admin::AppController
 
   expose(:shop){ current_user.shop }
   expose(:users){ current_user.shop.users}
-  expose(:users_json){ current_user.shop.users.delete_if{|u| !u.id}.to_json( include: :permissions)}
+  expose(:users_json){ current_user.shop.users.delete_if{|u| !u.id}.to_json( include: :permissions , methods: [:default_avatar_image_url])}
   expose(:user)
   expose(:plan_types){KeyValues::Plan::Type.all}
   expose(:plan_type){KeyValues::Plan::Type.find_by_code(params[:code])}

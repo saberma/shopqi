@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   end
 
   def default_avatar_image_url
-    self.avatar_image_uid? ? self.avatar_image.thumb('50x50').url : 'avatar.jpg'
+    self.avatar_image_uid? ? self.avatar_image.thumb('50x50').url : '/assets/avatar.jpg'
   end
 
   def after_token_authentication # 登录后取消token
