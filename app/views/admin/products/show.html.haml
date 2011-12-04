@@ -138,11 +138,11 @@
           %th.section-header 集合
         %tr
           %td(style="padding: 15px 10px 0 10px;")
-            {{#unless collections}}
+            {{#if collections_empty}}
             %p 此商品不属于任何集合.
             {{else}}
             %p 此商品属于以下集合:
-            {{/unless}}
+            {{/if}}
             %ul.product-collection-list.pgroup
               {{#each collections}}
               %li

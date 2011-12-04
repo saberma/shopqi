@@ -58,8 +58,6 @@ describe "Products", js: true do
           within(:xpath,"//label[@for='product_title']") do
             has_content?('不能为空').should be_true
           end
-          page.has_xpath?("//label[@for='product_vendor']").should be_false
-          page.has_xpath?("//label[@for='product_product_type']").should be_false
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
@@ -227,6 +225,7 @@ describe "Products", js: true do
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
+          page.should have_content('修改商品成功!')
           shop.products.all.size.should eql 1
 
           #款式选项默认值
@@ -246,10 +245,11 @@ describe "Products", js: true do
           visit new_product_path
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
+          page.should have_content('新增商品成功!')
           shop.products.first.variants.first.inventory_quantity.should be_nil
         end
 
-        it "should be save" do
+        it "should be save", f: true do
           visit new_product_path
           find_field('现有库存量?').visible?.should be_false
           select '需要ShopQi跟踪此款式的库存情况'
@@ -262,6 +262,7 @@ describe "Products", js: true do
 
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
+          page.should have_content('新增商品成功')
           shop.products.first.variants.first.inventory_quantity.should eql 10
         end
 
@@ -281,15 +282,15 @@ describe "Products", js: true do
           fill_in 'product[title]', with: 'iphone'
           click_on '保存'
 
-          has_content?('智能手机').should be_true
-          has_content?('触摸屏').should be_true
-          has_content?('GPS').should be_true
+          page.should have_content('智能手机')
+          page.should have_content('触摸屏')
+          page.should have_content('GPS')
 
           # 最近使用
           visit new_product_path
-          has_content?('智能手机').should be_true
-          has_content?('触摸屏').should be_true
-          has_content?('GPS').should be_true
+          page.should have_content('智能手机')
+          page.should have_content('触摸屏')
+          page.should have_content('GPS')
         end
 
       end
@@ -735,8 +736,9 @@ describe "Products", js: true do
               fill_in 'product_variant[weight]', with: '1'
               click_on '保存'
             end
+            page.should have_content('新增成功!')
 
-            within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do
+            within(:xpath, "//tbody[@id='product-options-list']/tr[1]") do # 更新显示商品的选项值
               find('.option-values-show .small').text.should eql '默认标题,最新上市'
             end
 
