@@ -22,6 +22,15 @@ ActiveAdmin.register Shop do
      default_actions
    end
 
+   form do |f| # 编辑页面
+     f.inputs "基本信息" do
+       f.input :name
+       f.input :plan    , collection: KeyValues::Plan::Type.options
+       f.input :deadline
+     end
+     f.buttons
+   end
+
    member_action :restore, method: :put do
      shop = Shop.find(params[:id])
      shop.update_attribute(:access_enabled,true)
@@ -29,7 +38,16 @@ ActiveAdmin.register Shop do
      redirect_to active_admin_shop_path(shop), notice: '商店已恢复'
    end
 
-   collection_action :state do
+   member_action :update, method: :put do # 更新商店的敏感字段:到期时间(无法通过update_attributes更新)
+     shop = Shop.find(params[:id])
+     params_shop = params[:shop]
+     shop.plan = params_shop[:plan]
+     shop.deadline = Date.parse("#{params_shop['deadline(1i)']}-#{params_shop['deadline(2i)']}-#{params_shop['deadline(3i)']}")
+     shop.save
+     redirect_to active_admin_shop_path(shop), notice: '更新成功!'
+   end
+
+   collection_action :state do # 系统运行状态
      begin 'libxml2' # issues#274
        html_path = Rails.root.join "spec/factories/data/themes/settings_with_class.html"
        settings = Nokogiri::HTML(File.open(html_path), nil, 'utf-8').inner_html

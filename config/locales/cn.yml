@@ -95,6 +95,7 @@ cn:
       shop:
         permanent_domain: 二级域名
         name: 网店名
+        plan: 类型
         zip_code: 邮政编码
         keywords: 关键字
         phone: 电话
