@@ -62,9 +62,16 @@ class Shop < ActiveRecord::Base
     domains.primary
   end
 
+  begin 'plan' # 商店帐号类型
 
-  def plan_type
-    KeyValues::Plan::Type.find_by_code(self.plan)
+    def plan_type
+      KeyValues::Plan::Type.find_by_code(self.plan)
+    end
+
+    def plan_unlimited?
+      self.plan == 'unlimited'
+    end
+
   end
 
   begin 'customer account' #用于顾客结账页面是否需要登录账号

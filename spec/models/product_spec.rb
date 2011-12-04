@@ -73,6 +73,17 @@ describe Product do
 
       end
 
+      context 'in unlimited shop' do
+
+        it 'should be success' do # issues#319
+          shop.update_attributes plan: :unlimited
+          expect do
+            variant = iphone4.variants.create price: 2500.0
+          end.should_not raise_error
+        end
+
+      end
+
     end
 
     context '#update' do
