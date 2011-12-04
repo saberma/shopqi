@@ -26,4 +26,14 @@ describe Blog do
 
   end
 
+  describe 'handle not found' do
+
+    it 'should be raise error' do
+      expect do
+        shop.blogs.handle!('no-exists-handle')
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
+
+  end
+
 end

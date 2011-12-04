@@ -1,5 +1,6 @@
 # encoding: utf-8
 class SmartCollection < ActiveRecord::Base
+  include Models::Handle
   belongs_to :shop
   has_many :rules   , class_name: 'SmartCollectionRule'   , dependent: :destroy
   has_many :collection_products, dependent: :destroy          , class_name: 'SmartCollectionProduct'

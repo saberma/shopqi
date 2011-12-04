@@ -51,7 +51,9 @@ Shopqi::Application.configure do
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # 指定域名，否则访问themes子域名后,再访问wiki子域名时附件需要重新下载
-  config.action_controller.asset_host = "https://cdn.shopqi.com"
+  config.action_controller.asset_host = Proc.new { |source|
+    "//cdn.lvh.me"
+  }
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w(
@@ -64,6 +66,7 @@ Shopqi::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :sendmail
 
   # Enable threaded mode
   # config.threadsafe!

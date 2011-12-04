@@ -9,13 +9,15 @@ class Shop::AppController < ActionController::Base
   before_filter :password_protected # 设置了密码保护
   before_filter :must_has_theme # 必须存在主题
   before_filter :remove_preview_theme_query_string # url去掉preview_theme_id
-  rescue_from StandardError, with: :show_errors
+  rescue_from StandardError                 , with: :rescue_other
+  rescue_from ActiveRecord::RecordNotFound  , with: :rescue_some
+  rescue_from ActionController::RoutingError, with: :rescue_some
 
   #protect_from_forgery #theme各个页面中的form都没有csrf，导致post action获取不到session id
 
   protected
   def check_shop_access_enabled
-    render template: 'shared/no_shop', status: 404, layout: nil and return unless shop.access_enabled
+    render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil and return unless shop.access_enabled
   end
   def check_shop_avaliable
     redirect_to controller: :shops, action: :unavailable and return unless shop.available?
@@ -154,12 +156,24 @@ class Shop::AppController < ActionController::Base
     session['cart_session_id'] ||= request.session_options[:id]
   end
 
-  def show_errors # 出错显示404页面
-    assign = template_assign
-    html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
-    render text: html, status: 404
-  end
+  begin 'rescue' # 出错显示404页面
 
+    def rescue_some(exception) # 找不到记录、路由不正确等的普通错误
+      show_errors(exception)
+    end
+
+    def rescue_other(exception) # 其他错误，详细记录
+      logger.error(exception.backtrace.join("\n"))
+      show_errors(exception)
+    end
+
+    def show_errors(exception) # 出错显示404页面
+      assign = template_assign
+      html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
+      render text: html, status: 404
+    end
+
+  end
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) ||  customer_account_index_path

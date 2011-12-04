@@ -1,8 +1,8 @@
 #container
   #dialog
-    -if flash[:alert]
+    -if flash[:alert] || flash[:notice]
       #system_error.status.system-error
-        %p=flash[:alert]
+        %p==#{flash[:alert]} #{flash[:notice]}
     .ssb.c=image_tag 'logos/shopqi-logo-new.jpg'
     =form_for(resource, url: session_path(resource_name)) do |f|
       #sign-in-form.lform

@@ -59,6 +59,8 @@ cn:
           requires_shipping: 要求送货地址
         photos:
           product_image: 商品图片
+      photo:
+        product_image: 商品图片
       product_variant:
         price: 价格
         weight: 重量
@@ -93,6 +95,7 @@ cn:
       shop:
         permanent_domain: 二级域名
         name: 网店名
+        plan: 类型
         zip_code: 邮政编码
         keywords: 关键字
         phone: 电话

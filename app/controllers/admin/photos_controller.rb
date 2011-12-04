@@ -16,8 +16,11 @@ class Admin::PhotosController < Admin::AppController
   def create
     position = photos.blank? ? 0 : photos.last.position + 1 # 注意:一调用photo，则photos就包含photo对象了
     photo.position = position
-    photo.save
-    flash[:notice] = notice_msg
+    if photo.save
+      flash[:notice] = notice_msg
+    else
+      flash[:error] = photo.errors.full_messages.join(';')
+    end
     redirect_to product_path(product)
   end
 

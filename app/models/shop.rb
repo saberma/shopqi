@@ -36,7 +36,8 @@ class Shop < ActiveRecord::Base
 
   accepts_nested_attributes_for :domains, :themes, :policies
   attr_readonly :orders_count
-  validates_presence_of :name,:email
+  attr_protected :deadline
+  validates_presence_of :name, :email, :plan
   validates :email, email_format: true
 
   before_create :init_valid_date, :init_currency
@@ -61,9 +62,16 @@ class Shop < ActiveRecord::Base
     domains.primary
   end
 
+  begin 'plan' # 商店帐号类型
 
-  def plan_type
-    KeyValues::Plan::Type.find_by_code(self.plan)
+    def plan_type
+      KeyValues::Plan::Type.find_by_code(self.plan)
+    end
+
+    def plan_unlimited?
+      self.plan == 'unlimited'
+    end
+
   end
 
   begin 'customer account' #用于顾客结账页面是否需要登录账号

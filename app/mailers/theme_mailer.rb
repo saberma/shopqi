@@ -1,6 +1,6 @@
 # encoding: utf-8
 class ThemeMailer < ActionMailer::Base
-  default from: SecretSetting.mail.from
+  default from: Setting.mail_from
 
   def export(shop, name, tar_gz_content)
     user = shop.users.where(admin: true).first

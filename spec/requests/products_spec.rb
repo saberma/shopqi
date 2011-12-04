@@ -489,9 +489,15 @@ describe "Products", js: true do
           page.should have_no_css('#image_list')
         end
 
+        it 'should be valid' do # 校验文件类型 issues#321
+          find('#upload-label .show-upload-link').click # 上传按钮
+          attach_file 'add-file', Rails.root.join('spec', 'factories', 'data', 'themes', 'invalid.file')
+          page.should have_content('商品图片 格式不正确')
+        end
+
       end
 
-      describe '#edit' do
+      describe '#edit' do # 修改
 
         it 'should save title' do
           visit product_path(iphone4)
@@ -610,8 +616,45 @@ describe "Products", js: true do
           end
         end
 
-        # 款式
-        describe 'variant' do
+        describe 'vendor' do # 厂商
+
+          it 'should be update' do # 更新厂商
+            shop.vendors.create name: '谷歌'
+            visit product_path(iphone4)
+            click_on '修改'
+            select '谷歌', from: 'product-vendor-select'
+            click_on '保存'
+            within '#product-options' do # 回显
+              page.should have_content('谷歌')
+            end
+            visit product_path(iphone4) # 刷新页面
+            within '#product-options' do
+              page.should have_content('谷歌')
+            end
+            click_on '修改'
+            find('#product-vendor-select').value.should eql '谷歌'
+          end
+
+          it 'should be add' do # 新增厂商
+            visit product_path(iphone4)
+            click_on '修改'
+            select '新增厂商...', from: 'product-vendor-select'
+            fill_in 'vendor', with: 'Apple'
+            click_on '保存'
+            within '#product-options' do # 回显
+              page.should have_content('Apple')
+            end
+            visit product_path(iphone4)
+            within '#product-options' do # 刷新页面
+              page.should have_content('Apple')
+            end
+            click_on '修改'
+            find('#product-vendor-select').value.should eql 'Apple'
+          end
+
+        end
+
+        describe 'variant' do # 款式
 
           before(:each) { visit product_path(iphone4) }
 

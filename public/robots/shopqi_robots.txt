@@ -5,4 +5,4 @@
 # User-Agent: *
 # Disallow: /
 Disallow: /services/signup
-Sitemap: http://www.shopqi.com/sitemap/shopqi/sitemap_index.xml.gz
+Sitemap: http://www.shopqi.com/sitemaps/shopqi/sitemap_index.xml.gz

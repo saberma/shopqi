@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Shop::ArticlesController < Shop::AppController
   expose(:shop) { Shop.at(request.host) }
-  expose(:blog){ shop.blogs.where(handle: params[:handle]).first }
+  expose(:blog){ shop.blogs.handle!(params[:handle]) }
   expose(:articles){ blog.articles }
   expose(:article){ Article.show(params[:article_id] || params[:id])}
 

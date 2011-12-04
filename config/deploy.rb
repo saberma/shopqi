@@ -123,6 +123,6 @@ namespace :sitemaps do # 搜索引擎网站地图
 
 end
 after 'deploy:update_code', 'sitemaps:symlink'
-after 'deploy'            , 'sitemaps:refresh_sitemaps'
+after 'sitemaps:symlink'  , 'sitemaps:refresh_sitemaps'
 
 # HOOK IMAGE http://j.mp/psRjx2

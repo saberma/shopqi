@@ -1,5 +1,6 @@
 # encoding: utf-8
 class CustomCollection < ActiveRecord::Base
+  include Models::Handle
   belongs_to :shop
   has_many :collection_products, dependent: :destroy          , class_name: 'CustomCollectionProduct'
   has_many :products           , through: :collection_products, order: '"custom_collection_products"."position" asc' # 商店使用

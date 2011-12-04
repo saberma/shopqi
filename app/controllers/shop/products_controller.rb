@@ -2,7 +2,7 @@
 class Shop::ProductsController < Shop::AppController
 
   expose(:shop) { Shop.at(request.host) }
-  expose(:product) { shop.products.where(handle: params[:handle]).first }
+  expose(:product) { shop.products.handle!(params[:handle]) }
 
   def show
     respond_to do |format|

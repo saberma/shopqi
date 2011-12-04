@@ -39,7 +39,7 @@ end
 
 shared_context 'use shopqi host' do # 访问 shopqi.com
   before :each do
-    Capybara::Server.manual_host = Setting.host
+    Capybara::Server.manual_host = "www.#{Setting.host}"
   end
 
   after(:each) { Capybara::Server.manual_host = nil }

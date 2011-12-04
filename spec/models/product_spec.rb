@@ -73,6 +73,17 @@ describe Product do
 
       end
 
+      context 'in unlimited shop' do
+
+        it 'should be success' do # issues#319
+          shop.update_attributes plan: :unlimited
+          expect do
+            variant = iphone4.variants.create price: 2500.0
+          end.should_not raise_error
+        end
+
+      end
+
     end
 
     context '#update' do
@@ -275,6 +286,16 @@ describe Product do
         iphone4
         Factory :iphone4, shop: shop, product_type: '智能手机', vendor: 'Apple', tags_text: 'phone,phone,apple'
       end.to change(Tag, :count).by(2)
+    end
+
+  end
+
+  describe 'handle not found' do
+
+    it 'should be raise error' do
+      expect do
+        shop.products.handle!('no-exists-handle')
+      end.should raise_error(ActiveRecord::RecordNotFound)
     end
 
   end

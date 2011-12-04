@@ -40,14 +40,14 @@
       %td 最多商品款式数量(SKU)
       -plan_types.each_with_index do |plan_type, index|
         %td(class="table-col-#{index} #{plan_type.code}")
-          %span.special=plan_type.skus
+          %span.special=plan_type.skus_name
     %tr.odd
       %td 存储空间
       -plan_types.each_with_index do |plan_type, index|
         %td(class="table-col-#{index} #{plan_type.code}")
           %span.special
-            =plan_type.storage
-            ='MB' unless plan_type.storage == '不限'
+            =plan_type.storage_name
+            ='MB' unless plan_type.storage == KeyValues::Plan::Type::UNLIMIT_STORAGE
     %tr.even
       %td 包含所有电子商务核心功能(绑定域名,SSL保护,统计等)
       %td.table-col-0

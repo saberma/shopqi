@@ -22,6 +22,8 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
       resource_code = 'pages'
     elsif controller_name.in?(['fulfillments','transactions'])
       resource_code = 'orders'
+    elsif controller_name.in?(['customer_groups','customers'])
+      resource_code = 'customers'
     elsif controller_name.in?(['shops','countries','payments','emails','domains']) || controller_name =~ /shipping/
       resource_code = 'preferences'
     elsif controller_name.in?(['api_clients'])
@@ -33,7 +35,7 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
   def check_shop_access_enabled
     shop = Shop.at(request.host)
     if !shop.access_enabled
-      render template: 'shared/no_shop', status: 404, layout: nil
+      render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil
     end
   end
 
