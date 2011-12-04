@@ -84,7 +84,7 @@ class Theme::ThemesController < Theme::AppController
       session[:shop_url] ||= params[:shop_url] # 如果后台管理已经设置了商店url
       if session[:shop_url] == ""
          session[:shop_url] = nil
-         redirect_to theme_store_url_with_port and return 
+         redirect_to theme_store_url_with_port and return
       end
       redirect_to client.auth_code.authorize_url(
         redirect_uri: "#{theme_store_url_with_port}/callback"

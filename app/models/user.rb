@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 
   def has_right?(resource_code)
     #暂时不需要校验首页权限，目前没有很多数据内容
-    no_check_controller_array = ['account','users','kindeditor','photos','sessions','home']     #不需要校验权限的控制器
+    no_check_controller_array = ['account','users','kindeditor','photos','sessions','home','oauth']     #不需要校验权限的控制器
     permissions = [all_resources.map(&:code) << no_check_controller_array].flatten
     resource_code.in?(permissions)
   end

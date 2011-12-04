@@ -32,7 +32,7 @@ describe "Account" do
   context '#update user permission' do #在账户页面更改用户权限
     describe "change the user permission" do
       include_context 'login admin'
-      it "should can update the permission",js: true,f: true do
+      it "should can update the permission",js: true do
         visit account_index_path
         click_on '新增用户'
         fill_in 'user[name]', with: 'liwh'

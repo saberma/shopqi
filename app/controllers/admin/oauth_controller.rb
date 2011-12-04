@@ -1,5 +1,6 @@
 class Admin::OauthController < Admin::AppController
   prepend_before_filter :authenticate_user!, except: [:access_token]
+  before_filter :check_theme_permission, except: :access_token
 
 
   def authorize # 返回authorize_code
@@ -41,5 +42,8 @@ class Admin::OauthController < Admin::AppController
   #     nil
   #   end
   # end
+  def check_theme_permission
+    render template: 'shared/access_deny', layout: 'application' if current_user && !current_user.has_right?('themes')
+  end
 
 end
