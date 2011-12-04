@@ -36,30 +36,31 @@ describe "Account" do
         visit account_index_path
         click_on '新增用户'
         fill_in 'user[name]', with: 'liwh'
-        fill_in 'user[email]', with: 'liwh87@gmail.com'
+        fill_in 'user[email]', with: 'liwh88@gmail.com'
         click_on '新增'
         page.should have_content('新增用户成功！')
+        u = User.find_by_email('liwh88@gmail.com')
 
-        #click_link 'liwh'
-        #within(:xpath,"//table[@class='standard-table']/tbody/tr[4]") do
-        #  page.should have_content('拥有所有权限')
-        #  page.should have_content('选择权限')
-        #  page.choose '选择权限'
-        #  page.have_content('订单').should be_true
-        #  uncheck '订单'
-        #  uncheck '商品&集合'
-        #  click_button '保存'
-        #end
-        #page.should have_content('更新成功')
+        click_link 'liwh'
+        within(:xpath,"//table[@class='standard-table']/tbody/tr[4]") do
+          page.should have_content('拥有所有权限')
+          page.should have_content('选择权限')
+          choose "user_#{u.id}_limited_access"
+          page.should have_content('订单')
+          uncheck "user_#{u.id}_resource_3"
+          click_button '保存'
+        end
 
-        #User.find_by_email('liwh87@gmail.com').permissions.destroy
-        #click_link '退出登录'
-        #visit new_user_session_path
-        #fill_in 'user[email]', with: 'liwh87@gmail.com'
-        #fill_in 'user[password]', with: '666666'
-        #click_on '登录'
-        #visit '/admin/orders'
-        #page.should have_content('没有权限')
+        page.should have_content('更新成功')
+
+        click_link '退出登录'
+        visit new_user_session_path
+        fill_in 'user[email]', with: 'liwh88@gmail.com'
+        fill_in 'user[password]', with: '666666'
+
+        click_on '登录'
+        visit '/admin/orders'
+        page.should have_content('没有权限')
       end
     end
   end

@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
   validates_size_of :avatar_image, maximum: 8000.kilobytes
   validates_property :mime_type, of: :avatar_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
   before_create :ensure_authentication_token # 生成login token，只使用一次
+  after_update do
+    Rails.cache.delete("all_resources_for_user_#{id}")
+  end
   accepts_nested_attributes_for :shop
   image_accessor :avatar_image do
     storage_path{ |image|
@@ -43,7 +46,7 @@ class User < ActiveRecord::Base
 
   def all_resources
     Rails.cache.fetch("all_resources_for_user_#{id}") do
-      all_resources = self.permissions.all.map(&:resource)
+     all_resources = self.permissions.all.map(&:resource)
     end
   end
 
@@ -52,7 +55,7 @@ class User < ActiveRecord::Base
   end
 
   def default_avatar_image_url
-    self.avatar_image_uid? ? self.avatar_image.thumb('50x50').url : 'avatar.jpg'
+    self.avatar_image_uid? ? self.avatar_image.thumb('50x50').url : '/assets/avatar.jpg'
   end
 
   def after_token_authentication # 登录后取消token
