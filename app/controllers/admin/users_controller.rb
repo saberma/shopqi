@@ -54,6 +54,7 @@ class Admin::UsersController < Admin::AppController
     else
       user.prepare_resources
     end
+    Rails.cache.delete("all_resources_for_user_#{user.id}") #清空resource缓存
     render nothing: true
   end
 

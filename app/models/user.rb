@@ -23,9 +23,6 @@ class User < ActiveRecord::Base
   validates_size_of :avatar_image, maximum: 8000.kilobytes
   validates_property :mime_type, of: :avatar_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
   before_create :ensure_authentication_token # 生成login token，只使用一次
-  after_update do
-    Rails.cache.delete("all_resources_for_user_#{id}")
-  end
   accepts_nested_attributes_for :shop
   image_accessor :avatar_image do
     storage_path{ |image|
@@ -39,6 +36,7 @@ class User < ActiveRecord::Base
 
   def has_right?(resource_code)
     #暂时不需要校验首页权限，目前没有很多数据内容
+    return true if self.is_admin?
     no_check_controller_array = ['account','users','kindeditor','photos','sessions','home','oauth']     #不需要校验权限的控制器
     permissions = [all_resources.map(&:code) << no_check_controller_array].flatten
     resource_code.in?(permissions)
@@ -46,7 +44,7 @@ class User < ActiveRecord::Base
 
   def all_resources
     Rails.cache.fetch("all_resources_for_user_#{id}") do
-     all_resources = self.permissions.all.map(&:resource)
+      all_resources = self.permissions.all.map(&:resource)
     end
   end
 
