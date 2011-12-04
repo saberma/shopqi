@@ -16,17 +16,17 @@
 
                     {{#if radio_checked }}
                     %li
-                      %input(type="radio" name="user[permissions][]" value="full" checked="checked" class="mark_all")
+                      %input(type="radio" name="user[permissions][]" value="full" checked="checked" class="mark_all" id="user_{{ id }}_mark_all")
                       %label {{ name }} 拥有所有权限
                     %li
-                      %input(type="radio" name="user[permissions][]" value="limited_access" class="limited_access")
+                      %input(type="radio" name="user[permissions][]" value="limited_access" class="limited_access" id="user_{{id}}_limited_access")
                       %label  选择权限
                     {{else}}
                     %li
-                      %input(type="radio" name="user[permissions][]" value="full"  class="mark_all")
+                      %input(type="radio" name="user[permissions][]" value="full"  class="mark_all" id="user_{{id}}_mark_all")
                       %label {{ name }} 拥有所有权限
                     %li
-                      %input(type="radio" name="user[permissions][]" value="limited_access" checked="checked" class="limited_access")
+                      %input(type="radio" name="user[permissions][]" value="limited_access" checked="checked"  class="limited_access" id="user_{{id}}_limited_access")
                       %label  选择权限
                     {{/if}}
 
