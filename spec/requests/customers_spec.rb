@@ -120,7 +120,7 @@ describe "Customers", js: true do
         within '#customer-facts' do
           find(:xpath, './/li[1]').find('.big').text.should eql '¥20'
           find(:xpath, './/li[2]').find('.big').text.should eql '1'
-          find(:xpath, './/li[3]').find('.big').text.should eql Date.today.to_s(:db)
+          find(:xpath, './/li[3]').find('.big').text.should eql Time.zone.today.to_s(:db)
         end
       end
 
@@ -129,7 +129,7 @@ describe "Customers", js: true do
         within '#order-table tbody' do
           within :xpath, './/tr[1]' do
            find(:xpath, './td[1]').text.should eql order.name
-           find(:xpath, './td[2]').text.should eql Date.today.to_s(:month_and_day)
+           find(:xpath, './td[2]').text.should eql Time.zone.today.to_s(:month_and_day)
            find(:xpath, './td[3]').text.should eql '待支付'
            find(:xpath, './td[4]').text.should eql '未发货'
            find(:xpath, './td[5]').text.should eql '¥20'
@@ -401,7 +401,7 @@ describe "Customers", js: true do
             find(:xpath, './td[5]').text.should eql '20' #消费金额
             find(:xpath, './td[6]').text.should eql '1' #订单数
 
-            find(:xpath, './td[7]').text.should eql "#1001 #{Date.today.to_s(:month_and_day)}" #最近订单
+            find(:xpath, './td[7]').text.should eql "#1001 #{Time.zone.today.to_s(:month_and_day)}" #最近订单
           end
         end
       end
