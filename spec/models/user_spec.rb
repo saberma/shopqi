@@ -28,15 +28,6 @@ describe User do
 
   let(:user_saberma) { Factory :user_saberma }
 
-  let(:attrs) do # 不包含商店属性，创建用户时使用
-    {
-      name: "李卫辉",
-      email: "liwh87@gmail.com",
-      password: "666666",
-      password_confirmation: "666666",
-    }
-  end
-
   context '#create' do
 
     it 'should be success' do
@@ -54,8 +45,7 @@ describe User do
       it 'should be create' do # 要创建
         user_saberma
         expect do
-          u = user_saberma.shop.users.create attrs
-          p u.new_record?
+          Factory :normal_user, shop: user_saberma.shop
         end.should change(Permission, :count)
       end
 

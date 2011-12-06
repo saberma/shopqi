@@ -18,11 +18,15 @@ class Admin::AccountController < Admin::AppController
 
   def change_ownership
     if params[:user]
-      current_user.admin = false
-      u = User.find(params[:user][:id])
-      u.admin = true
-      u.save
-      current_user.save
+      User.transaction do
+        current_user.admin = false
+        current_user.prepare_resources
+        u = shop.users.find(params[:user][:id])
+        u.admin = true
+        u.permissions.clear
+        u.save
+        current_user.save
+      end
     end
     redirect_to account_index_path
   end

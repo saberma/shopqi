@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
 
   def prepare_resources
     KeyValues::Resource.all.each do |resource|
-      Permission.create user_id: self.id  , resource_id: resource.id
+      self.permissions.create resource_id: resource.id
     end
   end
 
