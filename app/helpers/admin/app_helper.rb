@@ -46,7 +46,6 @@ module Admin::AppHelper
   end
 
   def check_label_has_right(label_name)
-    return ' ' if current_user.is_admin?
     if label_name == '商品' || label_name == '集合'
       label_name = '商品&集合'
     elsif label_name.start_with?('订单') # 订单 (5)
