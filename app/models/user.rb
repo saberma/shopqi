@@ -62,12 +62,12 @@ class User < ActiveRecord::Base
 
   after_create do
     Subscribe.create shop: shop, user: self #增加商店提醒给用户
-    prepare_resources
+    prepare_resources unless self.is_admin? # 管理员不需要分配权限，默认拥有所有权限
   end
 
   def prepare_resources
     KeyValues::Resource.all.each do |resource|
-      Permission.create user_id: self.id  , resource_id: resource.id
+      self.permissions.create resource_id: resource.id
     end
   end
 

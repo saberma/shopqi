@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe User do
 
-  let(:attrs) {
+  let(:attrs_with_shop) do # 包含商店属性，创建商店时使用
     {
       shop_attributes: {
         name: "测试商店",
@@ -24,7 +24,9 @@ describe User do
       password_confirmation: "666666",
       phone: ""
     }
-  }
+  end
+
+  let(:user_saberma) { Factory :user_saberma }
 
   context '#create' do
 
@@ -32,15 +34,33 @@ describe User do
       expect do
         expect do
           expect do
-            User.create attrs
+            User.create attrs_with_shop
           end.should change(User, :count).by(1)
         end.should change(Shop, :count).by(1)
       end.should change(ShopDomain, :count).by(1)
     end
 
-    describe 'validate', focus: true do
+    describe 'permissions' do # 普通用户权限记录
 
-      let(:user_saberma) { Factory :user_saberma }
+      it 'should be create' do # 要创建
+        user_saberma
+        expect do
+          Factory :normal_user, shop: user_saberma.shop
+        end.should change(Permission, :count)
+      end
+
+    end
+
+    describe 'validate' do
+
+      let(:attrs) do # 不包含商店属性，与现有用户重复
+        {
+          name: "马海波",
+          email: "mahb45@gmail.com",
+          password: "666666",
+          password_confirmation: "666666",
+        }
+      end
 
       context '#email' do
 
@@ -48,12 +68,7 @@ describe User do
 
           it 'should be not unique' do # 不唯一
             user_saberma
-            user = user_saberma.shop.users.create({
-              name: "马海波",
-              email: "mahb45@gmail.com",
-              password: "666666",
-              password_confirmation: "666666",
-            })
+            user = user_saberma.shop.users.create attrs
             user.errors[:email].should_not be_empty
           end
 
@@ -63,7 +78,7 @@ describe User do
 
           it 'should be unique' do # 唯一
             user_saberma
-            user = User.create(attrs)
+            user = User.create(attrs_with_shop)
             user.errors[:email].should be_empty
           end
 
@@ -74,8 +89,8 @@ describe User do
       context '#password' do
 
         it 'should be present' do # 不为空
-          attrs.delete :password
-          user = User.create(attrs)
+          attrs_with_shop.delete :password
+          user = User.create(attrs_with_shop)
           user.errors[:password].should_not be_empty
         end
 

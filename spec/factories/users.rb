@@ -27,4 +27,12 @@ FactoryGirl.define do
     name 'liwh'
   end
 
+  factory :normal_user, class: User do # 普通用户
+    name "张三"
+    email 'zhangsan@shopqi.com'
+    password '666666'
+    password_confirmation '666666'
+    admin false
+  end
+
 end

@@ -98,4 +98,18 @@ describe Shop do
 
   end
 
+  describe User do # 管理员
+
+    context '#permissions' do # 权限记录
+
+      it 'should not be create' do # 不需要创建
+        expect do
+          shop
+        end.should_not change(Permission, :count)
+      end
+
+    end
+
+  end
+
 end
