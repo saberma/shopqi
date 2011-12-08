@@ -2,6 +2,6 @@
 -if !@results.empty?
   %ul
     -@results.each do |r|
-      %li=link_to r.name,r.name
+      %li=link_to Translation.get_value(r.name),r.name
 -else
   此wiki尚未创建任何页面

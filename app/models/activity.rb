@@ -2,7 +2,6 @@ class Activity < ActiveRecord::Base
   belongs_to :shop
   belongs_to :user
 
-
   def self.log(record,operate,user,content = "")
     class_name = record.class.to_s.underscore
     unless operate == 'delete'

@@ -16,7 +16,8 @@ class Wiki::WikiPagesController < Wiki::AppController
 
   def create
     begin
-      WikiPage.create params[:name],params[:format], params[:content],commit_message
+      wiki.write_page params[:name], params[:format].intern, params[:content],commit_message
+      Translation.update_or_create params[:name] , params[:chinese_name] unless params[:chinese_name].blank?
       redirect_to "/#{CGI.escape(params[:name])}"
     rescue Gollum::DuplicatePageError => e
       @message = "页面重名了: #{e.message}"
@@ -32,9 +33,9 @@ class Wiki::WikiPagesController < Wiki::AppController
 
   def edit
     @name = params[:name]
-    if page = wiki.page(@name)
-      @format = page.format
-      @content = page.raw_data.force_encoding('utf-8')
+    if @page = wiki.page(@name)
+      @format = @page.format
+      @content = @page.raw_data.force_encoding('utf-8')
     else
       render text: '没有找到对应的页面',layout: true
     end
@@ -68,11 +69,13 @@ class Wiki::WikiPagesController < Wiki::AppController
   end
 
   def update
+    old_name = params[:old_name]
     name   = params[:name]
-    page   = wiki.page(name)
-    format = params[:format] || :textile
+    page   = wiki.page(old_name)
+    format = params[:format] || :markdown
     wiki.update_page(page, name, format.intern, params[:content], commit_message)
-    redirect_to "/#{Gollum::Page.cname name}"
+    Translation.update_or_create params[:name] , params[:chinese_name] unless params[:chinese_name].blank?
+    redirect_to "/#{CGI.escape(name)}"
   end
 
   def destroy

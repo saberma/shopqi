@@ -15,7 +15,7 @@ describe "Wiki::WikiPages", js: true do
 
   describe "GET /" do
 
-    it "should show the proper link " do
+    it "should show the proper link ", f: true do
       admin_user
 
       #测试显示链接(未登陆)
@@ -38,12 +38,13 @@ describe "Wiki::WikiPages", js: true do
       #测试新增
       visit new_wiki_page_path
       fill_in 'name'   , with: 'home'
+      fill_in 'chinese_name'   , with: '首页'
       fill_in 'content', with: "h2. 内容"
       fill_in 'message', with: '新增首页'
       select  'textile', from: 'format'
       click_on '保存'
 
-      current_path.should == '/home'
+      current_path.should == "/home"
       within("h2") do
         has_content?("内容").should be_true
       end
@@ -68,10 +69,10 @@ describe "Wiki::WikiPages", js: true do
       click_on '保存'
       click_link '页面列表'
       has_link?('side').should be_true
-      has_link?('home').should be_true
+      has_link?('首页').should be_true #此处测测中文名
 
       #测试回退
-      visit '/home'
+      visit "/home"
       click_link '历史'
       within(:xpath, "//table/tbody/tr[1]") do
         check "versions[]"
@@ -87,7 +88,7 @@ describe "Wiki::WikiPages", js: true do
       end
 
       #测试预览
-      visit '/home'
+      visit "/home"
       click_link '编辑'
       find_link('预览').click
       has_content?("内容").should be_true
