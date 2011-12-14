@@ -83,7 +83,6 @@ group :development, :test do
     gem "awesome_print", require: 'ap' # 调试
     gem "interactive_editor"
     gem 'sunspot_solr'
-    gem 'fakeredis' # 开发测试环境不需要安装redis
   end
   gem "factory_girl"
   gem "factory_girl_rails"
