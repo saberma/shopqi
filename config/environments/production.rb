@@ -16,12 +16,12 @@ Shopqi::Application.configure do
     return true if env['HTTP_USER_AGENT'] =~ /(bot|crawl|spider)/i # 搜索引擎不使用https协议
     host = env['SERVER_NAME']
     path = env['PATH_INFO']
-    host.end_with?(Setting.store_host) and !path.start_with?('/admin') # 访问商店 apple.lvh.me
-    if host.end_with?(Setting.store_host)
-      not_admin = !path.start_with?('/admin')
-      return (not_admin and !(Regexp.new("(www|themes|wiki|app|checkout)#{Setting.store_host}") =~ host))
+    return false if host == Setting.host # shopqi.com
+    if host.end_with?(Setting.store_host) # 二级域名(www.shopqi.com等使用https，example.shopqi.com不使用，除非访问/admin)
+      not_admin_or_user = !(path.start_with?('/admin') or path.start_with?('/user')) # 不是后台管理或者登录页面
+      return (not_admin_or_user and !(Regexp.new("(www|themes|wiki|app|checkout)#{Setting.store_host}") =~ host))
     end
-    false
+    true
   }
 
   # For nginx:
