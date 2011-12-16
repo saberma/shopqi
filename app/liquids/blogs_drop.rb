@@ -28,7 +28,7 @@ class BlogDrop < Liquid::Drop
   memoize :articles
 
   def comments_enabled?
-    @blog.commentable != 'no'
+    @blog.comments_enabled?
   end
 
   def moderated?

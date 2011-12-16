@@ -6,20 +6,44 @@ describe ArticleDrop do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:article) { Article.new title: '优惠', body_html: '全场5折' }
+  let(:blog) { shop.blogs.where(handle: 'news').first }
+
+  let(:article) { blog.articles.build title: '优惠', body_html: '全场5折' }
 
   let(:article_drop) { ArticleDrop.new article }
 
   it 'should get title' do
-    article_drop.title.should eql '优惠'
+    result = '优惠'
+    variant = "{{ article.title }}"
+    liquid(variant).should eql result
   end
 
   it 'should get content' do
-    article_drop.content.should eql '全场5折'
+    result = '全场5折'
+    variant = "{{ article.content }}"
+    liquid(variant).should eql result
   end
 
-  it 'should get comments size' do
-    article_drop.comments_count.should eql 0
+  describe CommentDrop do
+
+    it 'should get comments size' do
+      result = '0'
+      variant = "{{ article.comments_count }}"
+      liquid(variant).should eql result
+    end
+
+    it 'should get comments enabled' do
+      result = blog.comments_enabled?.to_s
+      variant = "{{ article.comments_enabled? }}"
+      liquid(variant).should eql result
+    end
+
   end
+
+  private
+  def liquid(variant, assign = {'article' => article_drop})
+    Liquid::Template.parse(variant).render(assign)
+  end
+
 
 end

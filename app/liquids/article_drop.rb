@@ -24,6 +24,10 @@ class ArticleDrop < Liquid::Drop
     comments.size
   end
 
+  def comments_enabled?
+    @article.blog.comments_enabled?
+  end
+
   def blog
     BlogDrop.new @article.blog
   end
