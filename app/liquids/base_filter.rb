@@ -31,4 +31,8 @@ module BaseFilter #扩展标准filter http://j.mp/v8XGFK
     Pinyin.t input, '-'
   end
 
+  def camelize(input)
+    input && input.gsub(/\s+/, '_').camelize
+  end
+
 end
