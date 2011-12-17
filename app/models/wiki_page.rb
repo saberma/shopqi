@@ -11,14 +11,13 @@ class WikiPage
     end
 
     def wiki
-      FileUtils.mkdir_p path
-      Grit::Repo.init path
+      unless File.exist?(path)
+        FileUtils.mkdir_p path
+        Grit::Repo.init path
+      end
       Gollum::Wiki.new(path)
     end
 
-    def create(name,format = :textile,content,commit_message)
-      wiki.write_page(name, format.intern, content, commit_message)
-    end
   end
 
 end
