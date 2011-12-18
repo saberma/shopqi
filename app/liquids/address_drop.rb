@@ -1,3 +1,5 @@
+#encoding: utf-8
+#用于存储地址变量
 class AddressDrop < Liquid::Drop
 
   def initialize(address)
