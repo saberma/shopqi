@@ -4,5 +4,6 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-Agent: *
 # Disallow: /
+User-Agent: *
 Disallow: /services/signup
 Sitemap: http://www.shopqi.com/sitemaps/shopqi/sitemap_index.xml.gz

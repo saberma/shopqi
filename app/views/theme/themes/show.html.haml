@@ -23,34 +23,34 @@
     .clearfix
       %p.price {{{budget}}}
       %p.download
-        %a.standard-button.login(href="/themes/{{{handle}}}/styles/{{{style_handle}}}/download") 获取主题
+        %a.standard-button.login(href="/themes/{{{handle}}}/styles/{{{style_handle}}}/download" rel="nofollow") 获取主题
         {{#if has_shop}}
         或者
-        %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank")
+        %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank" rel="nofollow")
           %span 查看示例 &rsaquo;
         {{/if}}
   %ul.theme-details
     %li
       此主题由
-      %a(href="{{{site}}}") {{{author}}}
+      %a(href="{{{site}}}" rel="nofollow") {{{author}}}
       提供官方技术支持
       %br/
       申请技术支持请发邮件至
-      %a(href="mailto: {{{email}}}") {{{email}}}
+      %a(href="mailto: {{{email}}}" rel="nofollow") {{{email}}}
   %br/
   %li
     主题作者:
-    %a(href="{{{site}}}") {{{author}}}
+    %a(href="{{{site}}}" rel="nofollow") {{{author}}}
 %script(id="screenshots-item" type="text/x-handlebars-template")
   %ul
     %li
-      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/main/original.jpg")
+      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="nofollow")
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/main/large_original.jpg")
     %li
-      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/collection/original.jpg")
+      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/collection/original.jpg" rel="nofollow")
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/collection/thumb_original.jpg")
     %li
-      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/product/original.jpg")
+      %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/product/original.jpg" rel="nofollow")
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/product/thumb_original.jpg")
 %script(id="styles-item" type="text/x-handlebars-template")
   %ul
@@ -58,14 +58,14 @@
     %ul.theme-thumbs.packaged-styles
       {{#each styles}}
       %li
-        %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}")
+        %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}" rel="nofollow")
           %p
             %strong 风格: {{{style}}}
           %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium_original.jpg")
         {{#unless is_current}}
         {{#if has_shop}}
         %p.view-style-demo
-          %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank") 查看示例  ›
+          %a(href="http://{{{shop}}}#{store_host_with_port}" target="_blank" rel="nofollow") 查看示例  ›
         {{/if}}
         {{/unless}}
       {{/each}}
@@ -78,7 +78,7 @@
     %ul#themes.theme-thumbs
 %script(id="theme-item" type="text/x-handlebars-template")
   %li.theme
-    %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}")
+    %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}" rel="nofollow")
       %p
         %big {{{budget}}}
         {{#if has_style}}
