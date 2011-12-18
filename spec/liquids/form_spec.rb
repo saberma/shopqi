@@ -73,12 +73,10 @@ describe Form do
 
   describe Contact do
 
-    it 'should show contact form' do
-      variant = "{% form 'customer_address', address %}{% endform %}"
-      address = customer.addresses.first
-      assign = { 'address' => CustomerAddressDrop.new(address) }
-      result = %Q{<form id="address_form_#{address.id}" class="customer_address edit_address" method="post" action="/account/addresses/#{address.id}">\n<input name="_method" type="hidden" value="put" />\n\n</form>}
-      Liquid::Template.parse(variant).render(assign).should eql result
+    it 'should show contact form', f: true do
+      variant = "{% form 'contact'%}{% endform %}"
+      result = %Q{<form class="contact-form" method="post" action="/contact">\n\n</form>}
+      Liquid::Template.parse(variant).render({}).should eql result
     end
 
   end
