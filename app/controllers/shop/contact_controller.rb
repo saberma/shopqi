@@ -7,6 +7,7 @@ class Shop::ContactController < Shop::AppController
     url = request.referer
     url = url[0, url.index('?')] if url.index('?')
     if contact.valid?
+      Resque.enqueue(ShopContactUs, contact.email, contact.body, contact.name, shop.id) # 后台发送
       url += "?contact_posted=true"
     else # 无法保存时传递contact参数，用于form提示错误
       url += "?#{contact.to_query}"
