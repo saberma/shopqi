@@ -205,6 +205,17 @@ cn:
             title:
               blank: 不能为空
 
+cn:
+  activemodel:
+    attributes:
+      contact:
+        name: 姓名
+        email: Email地址
+        body: 内容
+    errors:
+      messages:
+        blank: 不能为空
+
   # flash message
   flash:
     actions:

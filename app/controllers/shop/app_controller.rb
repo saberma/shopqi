@@ -98,6 +98,7 @@ class Shop::AppController < ActionController::Base
         'current_url' => request.path,
       }
       drops['customer'] = CustomerDrop.new(current_customer) if current_customer
+      drops['params'] = params # 方便form liquid进一步处理
       drops.merge(extra_assign)
     end
 

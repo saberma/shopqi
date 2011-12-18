@@ -156,6 +156,7 @@ Shopqi::Application.routes.draw do
       get '/blogs/:handle'                 , to: 'blogs#show'
       get '/blogs/:handle/:id'             , to: 'articles#show'
       match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'
+      post '/contact'                      , to: 'contact#create'
       get '/robots.txt'                    , to: 'shops#robots'
     end
 
