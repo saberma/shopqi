@@ -75,18 +75,18 @@ class ShopThemeSetting < ActiveRecord::Base
       doc.css("select.font").each do |element| # 字体
         builder = Nokogiri::HTML::Builder.new do
           div {
-            optgroup(label: "Sans-serif") {
+            optgroup(label: "无衬线字体(Sans-serif)") {
               option(value: "Helvetica, Arial, sans-serif") { text 'Helvetica/Arial' }
               option(value: "Impact, Charcoal, Helvetica, Arial, sans-serif") { text 'Impact' }
               option(value: "'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Lucida, Helvetica, Arial, sans-serif") { text 'Lucida Grande' }
               option(value: "Trebuchet MS, sans-serif") { text 'Trebuchet MS'}
               option(value: "Verdana, Helvetica, Arial, sans-serif") { text 'Verdana' } }
-            optgroup(label: "Serif") {
+            optgroup(label: "衬线字体(Serif)") {
               option(value: "Garamond, Baskerville, Caslon, serif") { text 'Garamond' }
               option(value: "Georgia, Utopia, 'Times New Roman', Times, serif") { text 'Georgia' }
               option(value: "Palatino, 'Palatino Linotype', 'Book Antiqua', serif") { text 'GPalatino' }
               option(value: "'Times New Roman', Times, serif") { text 'Times New Roman' } }
-            optgroup(label: "Monospace") {
+            optgroup(label: "等宽字体(Monospace)") {
               option(value: "'Courier New', Courier, monospace") { text 'Courier New' }
               option(value: "Monaco, 'Lucida Console', 'DejaVu Sans Mono', monospace") { text 'Monaco/Lucida Console' } } }
         end

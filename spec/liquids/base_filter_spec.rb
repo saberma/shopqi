@@ -93,4 +93,14 @@ describe BaseFilter do
 
   end
 
+  context '#camelize ' do # 用于body加入templateIndex等class,Index为当前template名称
+
+    it 'should be success' do
+      variant = "{{ 'camel case' | camelize }}"
+      result = Liquid::Template.parse(variant).render({})
+      result.should eql "CamelCase"
+    end
+
+  end
+
 end

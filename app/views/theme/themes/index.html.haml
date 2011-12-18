@@ -41,7 +41,7 @@
     %ul#themes.theme-thumbs
 
 %script(id="theme-item" type="text/x-handlebars-template")
-  %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}")
+  %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}" rel="nofollow")
     %p
       %big {{{budget}}}
       {{#if has_style}}

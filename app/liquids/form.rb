@@ -34,6 +34,14 @@ class Form < Liquid::Block
     elsif @variable_name == 'article'
       object = context[@variable_name]
       render_article_form context, object
+    elsif @variable_name == 'contact'
+      params = context['params']
+      object = nil
+      if params
+        context['posted_successfully'] = params['contact_posted']
+        object = Contact.new(params['contact']) if params['contact']
+      end
+      render_contact_form context, object
     end
   end
 
@@ -126,6 +134,17 @@ class Form < Liquid::Block
         action = "/account/addresses/#{address.id}"
         %Q{<form id="address_form_#{address.id}" class="customer_address edit_address" method="post" action="#{action}">\n<input name="_method" type="hidden" value="put" />\n#{input}\n</form>}
       end
+    end
+  end
+
+  def render_contact_form(context, contact) # 提交意见或建议表单
+    context.stack do
+      context['form'] = {
+        'posted_successfully?' => context['posted_successfully'],
+      }
+      context['form']['errors'] = ErrorsDrop.new(contact.errors) if contact and !contact.valid?
+      input = render_all(@nodelist, context)
+      %Q{<form class="contact-form" method="post" action="/contact">\n#{input}\n</form>}
     end
   end
 

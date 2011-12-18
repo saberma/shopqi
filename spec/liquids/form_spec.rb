@@ -71,4 +71,14 @@ describe Form do
     end
   end
 
+  describe Contact do
+
+    it 'should show contact form', f: true do
+      variant = "{% form 'contact'%}{% endform %}"
+      result = %Q{<form class="contact-form" method="post" action="/contact">\n\n</form>}
+      Liquid::Template.parse(variant).render({}).should eql result
+    end
+
+  end
+
 end

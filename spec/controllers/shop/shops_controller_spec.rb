@@ -87,6 +87,7 @@ describe Shop::ShopsController do
       https?('app.lvh.me').should be_true
       https?('checkout.lvh.me').should be_true
       https?('apple.lvh.me/admin').should be_true
+      https?('apple.lvh.me/user').should be_true # 用户登录
     end
 
     context 'shop' do # 商店
@@ -94,6 +95,15 @@ describe Shop::ShopsController do
       it 'should get http route' do
         https?('apple.lvh.me').should be_false # 商店
       end
+
+      context 'with domain' do # 商店顶级域名
+
+        it 'should get http route' do
+          https?('www.example.com').should be_false
+        end
+
+      end
+
     end
 
     context 'search engine' do # 搜索引擎
@@ -101,6 +111,8 @@ describe Shop::ShopsController do
       it 'should get http route' do
         https?('www.lvh.me', 'Baiduspider+(+http://www.baidu.com/search/spider.htm)').should be_false # 百度
         https?('www.lvh.me', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)').should be_false # Google
+        https?('lvh.me', 'Baiduspider+(+http://www.baidu.com/search/spider.htm)').should be_false # 百度
+        https?('lvh.me', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)').should be_false # Google
       end
 
     end
@@ -125,11 +137,12 @@ describe Shop::ShopsController do
     return true if env['HTTP_USER_AGENT'] =~ /(bot|crawl|spider)/i # 搜索引擎不使用https协议
     host = env['SERVER_NAME']
     path = env['PATH_INFO']
-    if host.end_with?(Setting.store_host) # 二级域名
-      not_admin = !path.start_with?('/admin') # 不是后台管理
-      return (not_admin and !(Regexp.new("(www|themes|wiki|app|checkout)#{Setting.store_host}") =~ host))
+    return false if host == Setting.host # shopqi.com
+    if host.end_with?(Setting.store_host) # 二级域名(www.shopqi.com等使用https，example.shopqi.com不使用，除非访问/admin)
+      not_admin_or_user = !(path.start_with?('/admin') or path.start_with?('/user')) # 不是后台管理或者登录页面
+      return (not_admin_or_user and !(Regexp.new("(www|themes|wiki|app|checkout)#{Setting.store_host}") =~ host))
     end
-    false
+    true
   end
 
 end
