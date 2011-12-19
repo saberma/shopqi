@@ -53,6 +53,7 @@ class Shop::AppController < ActionController::Base
   begin 'liquid'
 
     def shop_assign(template = 'index', template_extra_object = {}) # 渲染layout时的hash
+      template_extra_object['template'] = template # templates模板中也需要此变量
       powered_by_link = Rails.cache.fetch "shopqi_snippets_powered_by_link" do
         content = File.read(Rails.root.join('app', 'views', 'shop', 'snippets', 'powered_by_link.liquid'))
         Liquid::Template.parse(content).render('url_with_port'=>url_with_port)
@@ -63,7 +64,6 @@ class Shop::AppController < ActionController::Base
         content_for_layout = template_extra_object['content_for_layout']
       end
       {
-        'template' => template,
         'content_for_header' => '',
         'content_for_layout' => content_for_layout,
         'powered_by_link' => powered_by_link,
