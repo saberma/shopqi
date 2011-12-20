@@ -3,15 +3,16 @@ class Shop::CollectionsController < Shop::AppController
 
   expose(:shop) { Shop.at(request.host) }
 
-  def index
-    path = Rails.root.join 'app/views/shop/collections/collections.liquid'
+  def index # /collections
+    path = theme.snippets_path('collection-listing')
+    path = Rails.root.join 'app/views/shop/collections/collections.liquid' unless File.exist?(path)
     collection_view = Liquid::Template.parse(File.read(path)).render('collections' => CollectionsDrop.new(shop) )
     assign = template_assign('content_for_layout' => collection_view)
-    html = Liquid::Template.parse(layout_content).render(shop_assign('', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign('list-collections', assign))
     render text: html
   end
 
-  def show
+  def show # collections/all ...
     CollectionsDrop
     if params[:handle] == 'all'
       collection = CustomCollection.new(title: '所有商品',handle: 'all', products: shop.products.where(published: true))

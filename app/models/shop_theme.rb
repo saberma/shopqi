@@ -308,6 +308,10 @@ class ShopTheme < ActiveRecord::Base
     def template_path(template) # data/shops/1/theme/1/templates/products.liquid
       File.join path, 'templates', "#{template}.liquid"
     end
+
+    def snippets_path(name) # data/shops/1/theme/1/snippets/collection-listing.liquid
+      File.join path, 'snippets', "#{name}.liquid"
+    end
   end
 
   def commit(repo, message) # 提交
