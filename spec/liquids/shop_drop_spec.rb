@@ -27,6 +27,18 @@ describe ShopDrop do
     liquid(variant).should eql "true"
   end
 
+  context 'with products' do
+
+    let(:iphone4) { Factory :iphone4, shop: shop }
+
+    it 'should get vendors', f: true do
+      iphone4
+      variant = "{% for v in shop.vendors %}{{ v }}{% endfor %}"
+      liquid(variant).should eql "Apple"
+    end
+
+  end
+
   private
   def liquid(variant, assign = {'shop' => shop_drop})
     Liquid::Template.parse(variant).render(assign)

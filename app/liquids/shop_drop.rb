@@ -1,5 +1,6 @@
 #encoding: utf-8
 class ShopDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   def initialize(shop, theme = nil)
     @shop = shop
@@ -20,5 +21,10 @@ class ShopDrop < Liquid::Drop
   def customer_accounts_enabled # 启用顾客功能
     !@shop.customer_accounts.blank?
   end
+
+  def vendors
+    @shop.vendors.map(&:name)
+  end
+  memoize :vendors
 
 end
