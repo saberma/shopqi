@@ -13,20 +13,22 @@ class Shop::AccountController < Shop::AppController
   end
 
   def index
-    path = Rails.root.join 'app/views/shop/templates/customers/account.liquid'
+    path = theme.template_path('customers/account')
+    path = Rails.root.join 'app/views/shop/templates/customers/account.liquid' unless File.exist?(path)
     assign = template_assign()
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
-    html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign('customers_account', assign))
     render text: html
   end
 
   def show_order
-    path = Rails.root.join 'app/views/shop/templates/customers/order.liquid'
+    path = theme.template_path('customers/order')
+    path = Rails.root.join 'app/views/shop/templates/customers/order.liquid' unless File.exist?(path)
     assign = template_assign('order' => OrderDrop.new(order))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
-    html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign('customers_order', assign))
     render text: html
   end
 end

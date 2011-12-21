@@ -29,11 +29,12 @@ class Shop::PasswordsController  < Shop::AppController
   def edit
     self.resource = resource_class.new
     resource.reset_password_token = params[:reset_password_token]
-    path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid'
+    path = theme.template_path('customers/reset_password')
+    path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid' unless File.exist?(path)
     assign = template_assign('customer' => CustomerDrop.new(resource))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
-    html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign('customers_reset_password', assign))
     render text: html
   end
 
@@ -47,11 +48,12 @@ class Shop::PasswordsController  < Shop::AppController
       sign_in(resource_name, resource)
       respond_with resource, :location => redirect_location(resource_name, resource)
     else
-      path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid'
+      path = theme.template_path('customers/reset_password')
+      path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid' unless File.exist?(path)
       assign = template_assign('customer' => CustomerDrop.new(resource))
       liquid_view = Liquid::Template.parse(File.read(path)).render(assign.merge!('reset_password_token' => resource.reset_password_token ))
       assign.merge!('content_for_layout' => liquid_view)
-      html = Liquid::Template.parse(layout_content).render(shop_assign('customers', assign))
+      html = Liquid::Template.parse(layout_content).render(shop_assign('customers_reset_password', assign))
       render text: html
     end
   end
