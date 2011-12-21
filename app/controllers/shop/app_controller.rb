@@ -71,14 +71,6 @@ class Shop::AppController < ActionController::Base
       }.merge template_extra_object # layout也需要product变量，显示description
     end
 
-    # 渲染附件asset时的hash
-    def asset_assign
-      {
-        'shop' => ShopDrop.new(shop, theme),
-        'settings' => SettingsDrop.new(theme),
-      }
-    end
-
     # 渲染template时的hash
     def template_assign(extra_assign = {})
       shop_drop = ShopDrop.new(shop, theme)
