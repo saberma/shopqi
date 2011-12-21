@@ -38,7 +38,7 @@ class Customer < ActiveRecord::Base
 
   # 默认地址
   def default_address
-    address =  addresses.where(default_address: true).first ||  addresses.first
+    address =  addresses.where(default_address: true).first ||  addresses.first || addresses.build # 商店顾客未下订单直接注册时没有地址
     json =  address.as_json(methods: [:country_name,:province_name, :city_name, :district_name])
     json['customer_address']
   end

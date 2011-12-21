@@ -30,7 +30,6 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
         note: this.$("textarea[name='customer[note]']").val(),
         tags_text: this.$("input[name='customer[tags_text]']").val(),
         addresses_attributes: [
-          id: @model.get('default_address').id,
           name: this.$("input[name='name']").val(),
           company: this.$("input[name='company']").val(),
           phone: this.$("input[name='phone']").val(),
@@ -41,9 +40,10 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
           zip: this.$("input[name='zip']").val(),
         ]
       _method: 'put'
+    default_address = @model.get('default_address')
+    attrs['customer']['addresses_attributes']['id'] = default_address.id if default_address # 商店顾客未下订单直接注册时没有地址
     $.post "/admin/customers/#{@model.id}", attrs, (data) ->
       customer = attrs.customer
-      default_address = self.model.get('default_address')
       _(customer.addresses_attributes[0]).each (value, name) -> default_address[name] = value
       default_address['province_name'] = self.$("select[name='province']").children(':selected').text()
       default_address['city_name'] = self.$("select[name='city']").children(':selected').text()
