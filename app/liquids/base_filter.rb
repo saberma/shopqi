@@ -30,6 +30,7 @@ module BaseFilter #扩展标准filter http://j.mp/v8XGFK
     input.gsub! /[%@*$]/, ''
     Pinyin.t input, '-'
   end
+  alias :handle :handleize
 
   def camelize(input)
     input && input.gsub(/\s+/, '_').camelize
