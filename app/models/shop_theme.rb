@@ -165,11 +165,13 @@ class ShopThemeSetting < ActiveRecord::Base
     end
 
     def save_settings(data) # 保存settings记录，方便liquid获取(比如settings.use_logo_image)
-      theme.settings.clear
       data = data.map do |name, value|
         {name: name, value: value}
       end
-      theme.settings.create data
+      self.transaction do
+        theme.settings.clear
+        theme.settings.create data
+      end
     end
 
     def theme
