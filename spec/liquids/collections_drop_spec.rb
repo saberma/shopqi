@@ -87,22 +87,20 @@ describe CollectionsDrop do
       end
 
       it "should get all products count and all tags" do
-        frontpage_collection
         iphone4.tags_text = '手机，电脑'
-        psp.tags_text = '电脑，游戏机'
         iphone4.save
+        frontpage_collection.reload
+        psp.tags_text = '电脑，游戏机'
         psp.save
         variant = "{{ collection.all_products_count }} {{ collection.all_tags}}"
         Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '2 手机,电脑,游戏机'
       end
 
       it "should get products count and tags" do
-        frontpage_collection
-        iphone4
-        psp
         iphone4.tags_text = '手机,电脑'
-        psp.tags_text = '电脑,游戏机'
         iphone4.save
+        frontpage_collection.reload
+        psp.tags_text = '电脑,游戏机'
         psp.save
         variant = "{% paginate collection.products by 1 %}{{ collection.products_count }} {{ collection.tags}}{% endpaginate %}"
         Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 手机,电脑'
@@ -110,17 +108,20 @@ describe CollectionsDrop do
 
       it "should get previous product" do
         iphone4
+        frontpage_collection.reload
         variant = "{{ collection.previous_product }}"
         result = "/collections/frontpage/products/iphone4"
         assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(psp) }
         Liquid::Template.parse(variant).render(assign).should eql result
       end
 
-      it "should get next product" do
+      it "should get next product", f: true do
         psp
+        frontpage_collection.reload
+        iphone4
         variant = "{{ collection.next_product }}"
-        result = "/collections/frontpage/products/psp"
-        assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(iphone4) }
+        result = "/collections/frontpage/products/iphone4"
+        assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(psp) }
         Liquid::Template.parse(variant).render(assign).should eql result
       end
 

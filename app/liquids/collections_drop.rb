@@ -32,7 +32,7 @@ class CollectionDrop < Liquid::Drop
     @collection = collection
   end
 
-  def products #数组要缓存，以便paginate替换为当前页
+  def products #数组要缓存，以便paginate替换为当前页(TODO: 此方法应与all_products区别，关联paginate)
     #注：不能用products.where,因为有地方是直接用collection.new来直接关联products,
     #而没有在数据库中存储对应的记录的
     @collection.products.map do |product|
@@ -40,7 +40,6 @@ class CollectionDrop < Liquid::Drop
     end.compact
   end
   memoize :products
-  alias :all_products :products
 
   def description
     @collection.body_html
@@ -60,6 +59,12 @@ class CollectionDrop < Liquid::Drop
 
   def products_count #显示匹配当前集合，当前页面的商品总数
     self.products.size
+  end
+
+  def all_products #所有商品
+    @collection.products.map do |product|
+      ProductDrop.new product if product.published #只显示product published的商品
+    end.compact
   end
 
   def all_products_count #显示当前集合所含商品总数

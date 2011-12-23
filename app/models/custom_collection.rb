@@ -36,4 +36,8 @@ class CustomCollectionProduct < ActiveRecord::Base
   def self.ordered(products_order = 'position asc')
     self.select("custom_collection_products.*").joins(:product).order(products_order) # issues#231
   end
+
+  before_create do
+    self.position ||= self.custom_collection.collection_products.size + 1
+  end
 end

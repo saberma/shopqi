@@ -41,7 +41,7 @@ App.Views.Customer.Show.Edit = Backbone.View.extend
         ]
       _method: 'put'
     default_address = @model.get('default_address')
-    attrs['customer']['addresses_attributes']['id'] = default_address.id if default_address # 商店顾客未下订单直接注册时没有地址
+    attrs['customer']['addresses_attributes'][0]['id'] = default_address.id if default_address # 商店顾客未下订单直接注册时没有地址
     $.post "/admin/customers/#{@model.id}", attrs, (data) ->
       customer = attrs.customer
       _(customer.addresses_attributes[0]).each (value, name) -> default_address[name] = value
