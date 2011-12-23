@@ -31,4 +31,19 @@ describe Paginate do
     Liquid::Template.parse(variant).render(assign).should eql collection.title
   end
 
+  describe 'syntax' do
+
+    context 'divide by variable' do
+
+      it 'should be success', f: true do
+        iphone4
+        variant = "{% paginate collection.products by limit %}{{paginate.current_offset}}{% endpaginate %}"
+        assign = { 'collection' => collection_drop, 'current_page' => 1, 'limit' => 1 }
+        Liquid::Template.parse(variant).render(assign).should eql '0'
+      end
+
+    end
+
+  end
+
 end

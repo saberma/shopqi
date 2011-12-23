@@ -1,11 +1,13 @@
 #encoding: utf-8
 class Paginate < Liquid::Block
-  Syntax = /(#{Liquid::VariableSignature}+)\s+by\s+(\d+)/
+  # paginate collection.products by 20
+  # paginate collection.products by settings.pagination_limit
+  Syntax = /(#{Liquid::VariableSignature}+)\s+by\s+(\d+|#{Liquid::VariableSignature}+)/
 
   def initialize(tag_name, markup, tokens)
     if markup =~ Syntax
       @collection_name = $1
-      @size = $2.to_i
+      @size_or_variable = $2
     else
       raise Liquid::SyntaxError.new("Syntax Error in 'paginate' - Valid syntax: paginate [collection] by [size]")
     end
@@ -13,6 +15,7 @@ class Paginate < Liquid::Block
   end
 
   def render(context)
+    @size = ((@size_or_variable =~ /^\d+$/ && @size_or_variable) || context[@size_or_variable]).to_i
     collection = context[@collection_name] or return ''
     current_page = (context['current_page'] || 1).to_i
     items = collection.size

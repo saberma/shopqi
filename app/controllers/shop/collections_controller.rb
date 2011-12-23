@@ -23,7 +23,7 @@ class Shop::CollectionsController < Shop::AppController
       column = if params[:handle] == 'types' ; :product_type else :vendor end
       collection = CustomCollection.new(title: params[:q], handle: params[:handle], products: shop.products.where(column => params[:q], published: true))
     else
-      collection = shop.custom_collections.where(published: true, handle: params[:handle]).first || shop.smart_collections.where(published: true, handle: params[:handle]).first
+      collection = shop.collection(params[:handle])
     end
     assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q])
     #若不存在集合，则显示404页面
