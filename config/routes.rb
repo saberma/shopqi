@@ -138,26 +138,27 @@ Shopqi::Application.routes.draw do
         get '/'                            , to: 'account#index'
         resources :customer_addresses, path: '/addresses'
       end
-      match '/'                            , to: 'shops#show'
-      match '/password'                    , to: 'shops#password'
-      get   '/unavailable'                 , to: 'shops#unavailable'
-      get '/themes'                        , to: 'shops#themes' , as: :shop_themes_tip
-      get '/search'                        , to: 'search#show'
-      get '/products/:handle'              , to: 'products#show', as: :product_show
-      get '/collections'                   , to: 'collections#index'
-      get '/collections/:handle'           , to: 'collections#show'
-      get '/pages/:handle'                 , to: 'pages#show'
-      post '/cart/add'                     , to: 'cart#add'
-      get '/cart'                          , to: 'cart#show'
-      post '/cart'                         , to: 'cart#update'
-      get '/cart/change/:variant_id'       , to: 'cart#change' # quantity=0一般用于删除
-      post '/cart/change'                  , to: 'cart#change' # ajax修改款式数量
-      post '/cart/clear'                   , to: 'cart#clear' # 清空购物车
-      get '/blogs/:handle'                 , to: 'blogs#show'
-      get '/blogs/:handle/:id'             , to: 'articles#show'
-      match '/blogs/:handle/:id/comments'  , to: 'articles#add_comment'
-      post '/contact'                      , to: 'contact#create'
-      get '/robots.txt'                    , to: 'shops#robots'
+      match '/'                                             , to: 'shops#show'
+      match '/password'                                     , to: 'shops#password'
+      get   '/unavailable'                                  , to: 'shops#unavailable'
+      get '/themes'                                         , to: 'shops#themes'        , as: :shop_themes_tip
+      get '/search'                                         , to: 'search#show'
+      get '/products/:handle'                               , to: 'products#show'       , as: :product_show
+      get '/collections/:collection_handle/products/:handle', to: 'products#show'       , as: :collection_product_show
+      get '/collections'                                    , to: 'collections#index'
+      get '/collections/:handle'                            , to: 'collections#show'
+      get '/pages/:handle'                                  , to: 'pages#show'
+      post '/cart/add'                                      , to: 'cart#add'
+      get '/cart'                                           , to: 'cart#show'
+      post '/cart'                                          , to: 'cart#update'
+      get '/cart/change/:variant_id'                        , to: 'cart#change'
+      post '/cart/change'                                   , to: 'cart#change'
+      post '/cart/clear'                                    , to: 'cart#clear'
+      get '/blogs/:handle'                                  , to: 'blogs#show'
+      get '/blogs/:handle/:id'                              , to: 'articles#show'
+      match '/blogs/:handle/:id/comments'                   , to: 'articles#add_comment'
+      post '/contact'                                       , to: 'contact#create'
+      get '/robots.txt'                                     , to: 'shops#robots'
     end
 
     scope module: :admin do # 用户后台管理

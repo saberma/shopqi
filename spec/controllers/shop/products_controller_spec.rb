@@ -12,16 +12,33 @@ describe Shop::ProductsController do
     model
   end
 
-  let(:iphone4) { Factory(:iphone4, shop: shop) }
+  let(:frontpage_collection) { shop.custom_collections.where(handle: 'frontpage').first }
+
+  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
 
   before :each do
     request.host = "#{shop.primary_domain.host}"
   end
 
-  it 'should be show' do
-    get 'show', handle: iphone4.handle
-    response.should be_success
-    response.body.should have_content('iphone')
+  context 'show' do
+
+    it 'should be success' do
+      get 'show', handle: iphone4.handle
+      response.should be_success
+      response.body.should have_content('iphone')
+    end
+
+    context 'within collection' do
+
+      it 'should be get' do
+        path = shop.theme.template_path('product')
+        File.open(path, 'w') {|f| f.write('{{collection.title}}分类') }
+        get 'show', handle: iphone4.handle, collection_handle: frontpage_collection.handle
+        response.body.should have_content('首页商品分类')
+      end
+
+    end
+
   end
 
   context 'js' do

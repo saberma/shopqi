@@ -6,7 +6,7 @@ class CollectionsDrop < Liquid::Drop
   end
 
   def before_method(handle) #相当于method_missing
-    collection = @shop.custom_collections.where(published: true, handle: handle).first || @shop.smart_collections.where(published: true, handle: handle).first || @shop.custom_collections.new
+    collection = @shop.collection(handle) || @shop.custom_collections.new
     CollectionDrop.new(collection)
   end
 
@@ -24,6 +24,7 @@ class CollectionsDrop < Liquid::Drop
 end
 
 class CollectionDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
 
   delegate :title, :handle, to: :@collection
 
@@ -34,10 +35,12 @@ class CollectionDrop < Liquid::Drop
   def products #数组要缓存，以便paginate替换为当前页
     #注：不能用products.where,因为有地方是直接用collection.new来直接关联products,
     #而没有在数据库中存储对应的记录的
-    @products ||= @collection.products.map do |product|
+    @collection.products.map do |product|
       ProductDrop.new product if product.published #只显示product published的商品
     end.compact
   end
+  memoize :products
+  alias :all_products :products
 
   def description
     @collection.body_html
@@ -47,41 +50,56 @@ class CollectionDrop < Liquid::Drop
     "/collections/#{@collection.handle}"
   end
 
-  #显示集合包含的所有商品的product_type
-  def all_types
+  def all_types #显示集合包含的所有商品的product_type
     self.products.map(&:type).uniq if !['types','all','vendors'].include?(@collection.handle)
   end
 
-  #显示集合包含的所有商品的品牌
-  def all_vendors
+  def all_vendors #显示集合包含的所有商品的品牌
     self.products.map(&:vendor).uniq if !['types','all','vendors'].include?(@collection.handle)
   end
 
-  #显示匹配当前集合，当前页面的商品总数
-  def products_count
+  def products_count #显示匹配当前集合，当前页面的商品总数
     self.products.size
   end
 
-  #所有商品
-  def all_products
-    @collection.products.map do |product|
-      ProductDrop.new product if product.published #只显示product published的商品
-    end.compact
-  end
-
-  #显示当前集合所含商品总数
-  def all_products_count
+  def all_products_count #显示当前集合所含商品总数
     self.all_products.size
   end
 
-  #显示集合中所有商品的标签
-  def all_tags
+  def all_tags #显示集合中所有商品的标签
     self.all_products.map(&:tags).flatten.map(&:name).uniq.join(',')
   end
 
-  #显示集合中当前页面商品所包含的标签
-  def tags
+  def tags #显示集合中当前页面商品所包含的标签
     self.products.map(&:tags).flatten.map(&:name).uniq.join(',')
   end
+
+  def previous_product # 集合中的上一个商品
+    product = @context['product']
+    index = product && product_drops.keys.index(product.id)
+    previous_id = index && product_drops.keys[index-1]
+    if previous_id
+      previous_product = product_drops[previous_id]
+      "#{self.url}#{previous_product.url}"
+    end
+  end
+
+  def next_product # 集合中的下一个商品
+    product = @context['product']
+    index = product && product_drops.keys.index(product.id)
+    next_id = index && product_drops.keys[index+1]
+    if next_id
+      next_product = product_drops[next_id]
+      "#{self.url}#{next_product.url}"
+    end
+  end
+
+  private
+  def product_drops # {1 => ProductDrop.new(product)}
+    Hash[ *self.products.map do |product_drop|
+      [product_drop.id, product_drop]
+    end.flatten ]
+  end
+  memoize :product_drops
 
 end

@@ -108,6 +108,22 @@ describe CollectionsDrop do
         Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 手机,电脑'
       end
 
+      it "should get previous product" do
+        iphone4
+        variant = "{{ collection.previous_product }}"
+        result = "/collections/frontpage/products/iphone4"
+        assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(psp) }
+        Liquid::Template.parse(variant).render(assign).should eql result
+      end
+
+      it "should get next product" do
+        psp
+        variant = "{{ collection.next_product }}"
+        result = "/collections/frontpage/products/psp"
+        assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(iphone4) }
+        Liquid::Template.parse(variant).render(assign).should eql result
+      end
+
     end
 
     context 'missing' do

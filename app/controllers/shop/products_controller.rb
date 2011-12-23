@@ -7,7 +7,9 @@ class Shop::ProductsController < Shop::AppController
   def show
     respond_to do |format|
       format.html {
-        assign = template_assign('product' => ProductDrop.new(product))
+        variable = { 'product' => ProductDrop.new(product) }
+        variable['collection'] = CollectionDrop.new(shop.collection(params[:collection_handle])) if params[:collection_handle]
+        assign = template_assign(variable)
         html = Liquid::Template.parse(layout_content).render(shop_assign('product', assign))
         render text: html
       }
@@ -17,3 +19,4 @@ class Shop::ProductsController < Shop::AppController
     end
   end
 end
+CollectionsDrop

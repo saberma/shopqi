@@ -54,6 +54,10 @@ class Shop < ActiveRecord::Base
     custom_collections.where(published: true) + smart_collections.where(published: true)
   end
 
+  def collection(handle)
+    custom_collections.where(handle: handle, published: true).first || smart_collections.where(handle: handle, published: true).first
+  end
+
   def launch! # 启用商店
     self.update_attributes! guided: true, password_enabled: false
   end

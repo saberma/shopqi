@@ -58,7 +58,7 @@ class Shop::CartController < Shop::AppController
     end
   end
 
-  def change # 修改某个款式的购买数量 quantity=0 时移除
+  def change # 修改某个款式的购买数量 quantity=0 时移除,ajax修改款式数量
     id = params[:variant_id] || params[:id]
     save_line_item id, params[:quantity].to_i
     respond_to do |format|
