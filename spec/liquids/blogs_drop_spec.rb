@@ -49,6 +49,12 @@ describe BlogsDrop do
         Liquid::Template.parse(text).render(assign).should eql '0'
       end
 
+      it 'should get articles count' do # 文章总数
+        article1
+        text = "{{ blogs.news.articles_count }}"
+        Liquid::Template.parse(text).render(assign).should eql '1'
+      end
+
       it 'should get the comment enable true for blog articles' do
         text = "{{ blog.comments_enabled? }}"
         Liquid::Template.parse(text).render(assign).should eql "false"

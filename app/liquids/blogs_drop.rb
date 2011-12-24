@@ -27,6 +27,10 @@ class BlogDrop < Liquid::Drop
   end
   memoize :articles
 
+  def articles_count
+    self.articles.size
+  end
+
   def comments_enabled?
     @blog.comments_enabled?
   end
