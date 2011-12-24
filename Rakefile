@@ -16,7 +16,7 @@ namespace :travis do
   task :init_db do # 并发时使用不同的数据库，否则偶尔会死锁(deadlock detected)
     unit_test = ENV['UNIT_TEST']
     integrate_test = ENV['INTEGRATE_TEST']
-    path = Rails.root.join 'config/database.yml.example'
+    path = Rails.root.join 'config/database.yml'
     configs = YAML.load_file(path)
     db_name = "#{configs[Rails.env]['database']}_#{unit_test && 'u_'}#{unit_test || integrate_test}"
     configs[Rails.env]['database'] = db_name
@@ -25,7 +25,7 @@ namespace :travis do
 
   desc "Run travis in parallel"
   task :parallel do
-    parallel_size = 5
+    parallel_size = 7
     unit_test = ENV['UNIT_TEST']
     integrate_test = ENV['INTEGRATE_TEST']
     all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}.sort
