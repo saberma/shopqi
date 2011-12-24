@@ -11,7 +11,7 @@ task "resque:setup" => :environment do
 end
 
 task :travis do
-  parallel_size = 4
+  parallel_size = 5
   unit_test = ENV['UNIT_TEST']
   integrate_test = ENV['INTEGRATE_TEST']
   all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}.sort
