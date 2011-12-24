@@ -108,21 +108,25 @@ describe CollectionsDrop do
 
       it "should get previous product" do
         iphone4
-        frontpage_collection.reload
+        frontpage_collection.reload # position递增
         variant = "{{ collection.previous_product }}"
         result = "/collections/frontpage/products/iphone4"
         assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(psp) }
         Liquid::Template.parse(variant).render(assign).should eql result
+        assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(iphone4) } # 没有上一个
+        Liquid::Template.parse(variant).render(assign).should be_blank
       end
 
-      it "should get next product", f: true do
+      it "should get next product" do
         psp
-        frontpage_collection.reload
+        frontpage_collection.reload # position递增
         iphone4
         variant = "{{ collection.next_product }}"
         result = "/collections/frontpage/products/iphone4"
         assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(psp) }
         Liquid::Template.parse(variant).render(assign).should eql result
+        assign = { 'collection' => CollectionDrop.new(frontpage_collection), 'product' => ProductDrop.new(iphone4) } # 没有下一个
+        Liquid::Template.parse(variant).render(assign).should be_blank
       end
 
     end

@@ -7,6 +7,10 @@ describe BlogsDrop do
 
   let(:blog) { shop.blogs.where(handle: 'news').first }
 
+  let(:article1) { blog.articles.create title: '新店开张', body_html: '全场5折' }
+
+  let(:article2) { blog.articles.create title: '圣诞优惠', body_html: '全场免运费' }
+
   let(:assign) { { 'blogs' => BlogsDrop.new(shop) , 'blog' => BlogDrop.new(blog)}}
 
   it 'should get news' do
@@ -15,6 +19,28 @@ describe BlogsDrop do
   end
 
   describe BlogDrop do
+
+    describe ArticleDrop do
+
+      before { [article1, article2] } # blog.articles是按id倒序排序，会返回article2, article1
+
+      it 'should get previous' do
+        text = "{{ blog.previous_article }}"
+        assign['article'] = ArticleDrop.new article1
+        Liquid::Template.parse(text).render(assign).should eql "/blogs/news/#{article2.id}"
+        assign['article'] = ArticleDrop.new article2 # 没有上一条
+        Liquid::Template.parse(text).render(assign).should be_blank
+      end
+
+      it 'should get next' do
+        text = "{{ blog.next_article }}"
+        assign['article'] = ArticleDrop.new article2
+        Liquid::Template.parse(text).render(assign).should eql "/blogs/news/#{article1.id}"
+        assign['article'] = ArticleDrop.new article1 # 没有下一条
+        Liquid::Template.parse(text).render(assign).should be_blank
+      end
+
+    end
 
     context 'exist' do
 

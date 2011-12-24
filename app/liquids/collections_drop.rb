@@ -82,7 +82,7 @@ class CollectionDrop < Liquid::Drop
   def previous_product # 集合中的上一个商品
     product = @context['product']
     index = product && product_drops.keys.index(product.id)
-    previous_id = index && product_drops.keys[index-1]
+    previous_id = index && !index.zero? && product_drops.keys[index-1]
     if previous_id
       previous_product = product_drops[previous_id]
       "#{self.url}#{previous_product.url}"
