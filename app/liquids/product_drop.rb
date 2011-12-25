@@ -6,7 +6,7 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
-  delegate :id, :handle, :title, :price, :available, :vendor, :tags, to: :@product
+  delegate :id, :handle, :title, :url, :price, :available, :vendor, :tags, to: :@product
 
   def variants
     @product.variants.map do |variant|
@@ -28,11 +28,6 @@ class ProductDrop < Liquid::Drop
     end
   end
   memoize :images
-
-  def url
-    #Rails.application.routes.url_helpers.product_path(@product)
-    "/products/#{@product.handle}"
-  end
 
   def type
     @product.product_type

@@ -91,6 +91,10 @@ class Product < ActiveRecord::Base
     self.published
   end
 
+  def url
+    "/products/#{self.handle}"
+  end
+
   begin 'shop' # 只供商店调用
 
     def shop_as_json(options = nil) # 不能以as_json，会与后台管理的to_json冲突(options同名)
@@ -98,10 +102,19 @@ class Product < ActiveRecord::Base
         id: self.id,
         handle: self.handle,
         title: self.title,
+        url: self.url,
         available: self.available,
         options: self.options.map(&:name),
         variants: self.variants.map(&:shop_as_json),
+        featured_image: self.featured_image # 配合api.jquery.js的resizeImage方法
       }
+    end
+
+    def featured_image
+      photo = self.photos.first
+      Hash[*Photo::VERSION_KEYS.map do |version|
+        [version, photo.send(version)]
+      end.flatten] if photo
     end
 
   end
@@ -192,6 +205,7 @@ end
 class Photo < ActiveRecord::Base
   belongs_to :product
   default_scope order: 'position asc'
+  VERSION_KEYS = []
 
   image_accessor :product_image do
     storage_path{ |image|
@@ -206,6 +220,7 @@ class Photo < ActiveRecord::Base
   #定义图片显示大小种类
   def self.versions(opt={})
     opt.each_pair do |k,v|
+      VERSION_KEYS << k
       define_method k do
         if product_image
           product_image.thumb(v).url
