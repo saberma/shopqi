@@ -10,7 +10,7 @@ class Page < ActiveRecord::Base
   end
 
   before_save do
-    Handle.make_valid(shop.pages, self)
+    self.make_valid(shop.pages)
   end
 
 end

@@ -12,7 +12,7 @@ class CustomCollection < ActiveRecord::Base
   end
 
   before_save do
-    Handle.make_valid(shop.custom_collections, self)
+    self.make_valid(shop.custom_collections)
   end
 
   #默认排序

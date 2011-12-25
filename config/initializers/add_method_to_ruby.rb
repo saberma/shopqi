@@ -16,24 +16,6 @@ module LiquidDropHelper
 
 end
 
-module Handle
-
-  # @collection shop.products
-  def self.make_valid(collection, model) # 确保handle唯一，替换空格为横杠(-)
-    model.handle = Pinyin.t(model.title) if model.handle.blank?
-    unique_handle = model.handle.strip.gsub /\s+/, '-'
-    number = 1
-    condition = {}
-    condition[:id.not_eq] = model.id unless model.new_record?
-    while collection.exists?(condition.merge(handle: unique_handle))
-      unique_handle = "#{unique_handle}-#{number}"
-      number += 1
-    end
-    model.handle = unique_handle
-  end
-
-end
-
 Liquid::Drop.send :include , LiquidDropHelper
 
 Carmen.default_locale = :cn

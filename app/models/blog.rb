@@ -6,7 +6,7 @@ class Blog < ActiveRecord::Base
   validates_presence_of :title
 
   before_save do
-    Handle.make_valid(shop.blogs, self)
+    self.make_valid(shop.blogs)
   end
 
   def comments_enabled?

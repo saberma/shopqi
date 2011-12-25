@@ -22,6 +22,15 @@ describe Product do
         product.handle.should eql 'iphone-shou-ji-1'
       end
 
+      context 'title contain dot' do
+
+        it 'should be replace with dash' do
+          product = shop.products.create title: '佐卡伊12.19克拉', product_type: '智能手机', vendor: 'Apple'
+          product.handle.should eql 'zuo-qia-yi-12-19-ke-la'
+        end
+
+      end
+
     end
 
     context '(with handle)' do

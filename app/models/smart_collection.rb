@@ -9,7 +9,7 @@ class SmartCollection < ActiveRecord::Base
   accepts_nested_attributes_for :rules, allow_destroy: true
 
   before_save do
-    Handle.make_valid(shop.smart_collections, self)
+    self.make_valid(shop.smart_collections)
     set_default_order
   end
 

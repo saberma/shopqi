@@ -1,5 +1,6 @@
 # encoding: utf-8
 class LinkList < ActiveRecord::Base
+  include Models::Handle
   belongs_to :shop
   has_many :links, dependent: :destroy, order: :position.asc
 
@@ -7,7 +8,7 @@ class LinkList < ActiveRecord::Base
 
   before_save do
     self.title = self.title.blank? ? '未命名' : self.title
-    Handle.make_valid(shop.link_lists, self)
+    self.make_valid(shop.link_lists)
   end
 end
 
