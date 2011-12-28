@@ -26,4 +26,24 @@ describe SettingsDrop do
     Liquid::Template.parse(variant).render(assign).should eql result
   end
 
+  describe 'syntax' do
+
+    context 'use hash' do
+
+      it 'should get array' do
+        variant = "{% for i in (1..6) %}{{ i }}{% endfor %}"
+        result = "123456"
+        Liquid::Template.parse(variant).render(assign).should eql result
+      end
+
+      it 'should get boolean value' do
+        variant = "{% assign what = 'text' %}{% capture name %}{{ what }}_color{% endcapture %}{{ settings[name] }}"
+        result = "#333333"
+        Liquid::Template.parse(variant).render(assign).should eql result
+      end
+
+    end
+
+  end
+
 end
