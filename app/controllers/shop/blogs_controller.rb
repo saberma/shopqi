@@ -6,8 +6,8 @@ class Shop::BlogsController < Shop::AppController
 
   def show
     BlogsDrop
-    assign = template_assign('blog' => BlogDrop.new(blog))
-    html = Liquid::Template.parse(layout_content).render(shop_assign('blog', assign))
+    assign = template_assign('template' => 'blog', 'blog' => BlogDrop.new(blog))
+    html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     render text: html
   end
 

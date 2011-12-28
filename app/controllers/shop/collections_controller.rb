@@ -6,9 +6,10 @@ class Shop::CollectionsController < Shop::AppController
   def index # /collections
     path = theme.snippets_path('collection-listing')
     path = Rails.root.join 'app/views/shop/collections/collections.liquid' unless File.exist?(path)
-    collection_view = Liquid::Template.parse(File.read(path)).render('collections' => CollectionsDrop.new(shop) )
-    assign = template_assign('content_for_layout' => collection_view)
-    html = Liquid::Template.parse(layout_content).render(shop_assign('list-collections', assign))
+    assign = template_assign('template' => 'list-collections', 'collections' => CollectionsDrop.new(shop))
+    collection_view = Liquid::Template.parse(File.read(path)).render(assign)
+    assign = assign.merge('content_for_layout' => collection_view)
+    html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     render text: html
   end
 
@@ -25,12 +26,13 @@ class Shop::CollectionsController < Shop::AppController
     else
       collection = shop.collection(params[:handle])
     end
-    assign = template_assign('collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q])
-    #若不存在集合，则显示404页面
-    if collection.nil?
-      html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
+    assign = {'collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q]}
+    if collection.nil? #若不存在集合，则显示404页面
+      assign = template_assign(assign.merge('template' => '404'))
+      html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     else
-      html = Liquid::Template.parse(layout_content).render(shop_assign('collection', assign))
+      assign = template_assign(assign.merge('template' => 'collection'))
+      html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     end
     render text: html
   end

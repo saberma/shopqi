@@ -15,8 +15,8 @@ class Shop::ShopsController < Shop::AppController
   end
 
   def show
-    assign = template_assign
-    html = Liquid::Template.parse(layout_content).render(shop_assign('index', assign))
+    assign = template_assign('template' => 'index')
+    html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     render text: html
   end
 

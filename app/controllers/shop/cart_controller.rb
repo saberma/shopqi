@@ -21,7 +21,8 @@ class Shop::CartController < Shop::AppController
   def show
     respond_to do |format|
       format.html {
-        html = Liquid::Template.parse(layout_content).render(shop_assign('cart', template_assign))
+        assign = template_assign('template' => 'cart')
+        html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
         render text: html
       }
       format.js { render json: SessionCart.new(session_cart_hash, shop) }

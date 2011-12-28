@@ -9,7 +9,7 @@ class Shop::AppController < ActionController::Base
   before_filter :password_protected # 设置了密码保护
   before_filter :must_has_theme # 必须存在主题
   before_filter :remove_preview_theme_query_string # url去掉preview_theme_id
-  rescue_from StandardError                 , with: :rescue_other
+  #rescue_from StandardError                 , with: :rescue_other
   rescue_from ActiveRecord::RecordNotFound  , with: :rescue_some
   rescue_from ActionController::RoutingError, with: :rescue_some
 
@@ -52,27 +52,22 @@ class Shop::AppController < ActionController::Base
 
   begin 'liquid'
 
-    def shop_assign(template = 'index', template_extra_object = {}) # 渲染layout时的hash
-      template_extra_object['template'] = template # templates模板中也需要此变量
-      powered_by_link = Rails.cache.fetch "shopqi_snippets_powered_by_link" do
-        content = File.read(Rails.root.join('app', 'views', 'shop', 'snippets', 'powered_by_link.liquid'))
-        Liquid::Template.parse(content).render('url_with_port'=>url_with_port)
-      end
-      unless template_extra_object.key?('content_for_layout')
-        content_for_layout = Liquid::Template.parse(File.read(theme.template_path(template))).render(template_assign(template_extra_object))
+    def shop_assign(assign = {}) # 渲染layout时的hash
+      template = assign['template']
+      content_for_layout = if assign.key?('content_for_layout')
+        assign['content_for_layout']
       else
-        content_for_layout = template_extra_object['content_for_layout']
+        Liquid::Template.parse(File.read(theme.template_path(template))).render(template_assign(assign))
       end
       {
         'content_for_header' => '',
         'content_for_layout' => content_for_layout,
         'powered_by_link' => powered_by_link,
-        'page_title' =>  get_current_page_title(template,template_extra_object)
-      }.merge template_extra_object # layout也需要product变量，显示description
+      }.merge assign # layout也需要product变量，显示description
     end
 
-    # 渲染template时的hash
-    def template_assign(extra_assign = {})
+    def template_assign(assign = {}) # 渲染template时的hash
+      template = assign['template'] || 'index'
       shop_drop = ShopDrop.new(shop, theme)
       settings_drop = SettingsDrop.new(theme)
       linklists_drop = LinkListsDrop.new(shop)
@@ -87,25 +82,33 @@ class Shop::AppController < ActionController::Base
         'blogs' => blogs_drop,
         'collections' => collections_drop,
         'current_page' => params[:page],
-        'current_url' => request.path,
+        'current_url' => request.path
       }
-      drops['customer'] = CustomerDrop.new(current_customer) if current_customer
       drops['params'] = params # 方便form liquid进一步处理
-      drops.merge(extra_assign)
+      drops['customer'] = CustomerDrop.new(current_customer) if current_customer
+      drops['page_title'] = get_current_page_title(template, assign)
+      drops.merge(assign)
+    end
+
+    def powered_by_link
+      Rails.cache.fetch "shopqi_snippets_powered_by_link" do
+        content = File.read(Rails.root.join('app', 'views', 'shop', 'snippets', 'powered_by_link.liquid'))
+        Liquid::Template.parse(content).render('url_with_port' => url_with_port)
+      end
     end
 
     def cart_drop
       CartDrop.new(session_cart_hash)
     end
 
-    def get_current_page_title(template,template_extra_object)
+    def get_current_page_title(template, assign)
       case template
       when 'index'      ; '欢迎光临'
-      when 'page'       ; template_extra_object['page'].title
-      when 'product'    ; template_extra_object['product'].title
-      when 'blog'       ; template_extra_object['blog'].title
-      when 'collection' ; template_extra_object['collection'].title
-      when 'article'    ; template_extra_object['article'].title
+      when 'page'       ; assign['page'].title
+      when 'product'    ; assign['product'].title
+      when 'blog'       ; assign['blog'].title
+      when 'collection' ; assign['collection'].title
+      when 'article'    ; assign['article'].title
       when 'search'     ; '查询'
       when 'cart'       ; '购物车'
       else ; '' end
@@ -161,8 +164,8 @@ class Shop::AppController < ActionController::Base
     end
 
     def show_errors(exception) # 出错显示404页面
-      assign = template_assign
-      html = Liquid::Template.parse(layout_content).render(shop_assign('404', assign))
+      assign = template_assign('template' => '404')
+      html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
       render text: html, status: 404
     end
 

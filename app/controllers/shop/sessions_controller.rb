@@ -20,10 +20,10 @@ class Shop::SessionsController < Shop::AppController
     clean_up_passwords(resource)
     path = theme.template_path('customers/login')
     path = Rails.root.join 'app/views/shop/templates/customers/login.liquid' unless File.exist?(path)
-    assign = template_assign('errors' => flash[:alert], 'recover_errors' => flash[:notice])
+    assign = template_assign('template' => 'customers_login', 'errors' => flash[:alert], 'recover_errors' => flash[:notice])
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
-    html = Liquid::Template.parse(layout_content).render(shop_assign('customers_login', assign))
+    html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     render text: html
   end
 
