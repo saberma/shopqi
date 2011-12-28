@@ -31,6 +31,15 @@ describe Product do
 
       end
 
+      context 'title contain upcase letter' do # 大写字母
+
+        it 'should be replace with downcase' do
+          product = shop.products.create title: 'CASE', product_type: '智能手机', vendor: 'Apple'
+          product.handle.should eql 'case'
+        end
+
+      end
+
     end
 
     context '(with handle)' do

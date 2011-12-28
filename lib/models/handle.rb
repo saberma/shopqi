@@ -24,7 +24,7 @@ module Models # 实体扩展模块
       # @collection ie: shop.products
       def make_valid(collection) # 确保handle唯一，替换空格,点号为横杠(-)
         self.handle = Pinyin.t(self.title) if self.handle.blank?
-        unique_handle = self.handle.strip.gsub /\s+|\./, '-'
+        unique_handle = self.handle.strip.downcase.gsub /\s+|\./, '-'
         number = 1
         condition = {}
         condition[:id.not_eq] = self.id unless self.new_record?
