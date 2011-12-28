@@ -146,7 +146,7 @@ Shopqi::Application.routes.draw do
       get '/products/:handle'                               , to: 'products#show'       , as: :product_show
       get '/collections/:collection_handle/products/:handle', to: 'products#show'       , as: :collection_product_show
       get '/collections'                                    , to: 'collections#index'
-      get '/products'                                       , to: 'collections#index'
+      get '/products'                                       , to: 'collections#index'   , as: :shop_products
       get '/collections/:handle'                            , to: 'collections#show'
       get '/collections/:handle/products'                   , to: 'collections#show'
       get '/pages/:handle'                                  , to: 'pages#show'
