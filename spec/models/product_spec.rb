@@ -311,12 +311,21 @@ describe Product do
 
   describe Shop do # 商店js获取商品
 
-    it "should get json" do
-      photo = iphone4.photos.build
-      photo.product_image = Rails.root.join('spec/factories/data/products/iphone4.jpg')
-      photo.save
-      json = iphone4.shop_as_json
-      json[:featured_image].should_not be_empty
+    describe 'get product via js' do
+
+      it "should get featured_image" do
+        photo = iphone4.photos.build
+        photo.product_image = Rails.root.join('spec/factories/data/products/iphone4.jpg')
+        photo.save
+        json = iphone4.shop_as_json
+        json[:featured_image].should_not be_empty
+      end
+
+      it "should get price" do
+        json = iphone4.shop_as_json
+        json[:price].should eql iphone4.price
+      end
+
     end
 
   end

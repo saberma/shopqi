@@ -102,6 +102,7 @@ class Product < ActiveRecord::Base
         id: self.id,
         handle: self.handle,
         title: self.title,
+        price: self.price,
         url: self.url,
         available: self.available,
         options: self.options.map(&:name),
