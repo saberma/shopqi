@@ -23,6 +23,12 @@ describe LinkListsDrop do
         liquid(variant).should eql result
       end
 
+      it 'should check empty?' do
+        variant = "{% if linklists.main-menu == empty %}{% else %}false{% endif %}"
+        result = "false"
+        liquid(variant).should eql result
+      end
+
     end
 
     context 'missing' do # 链接列表的固定链接不存在
@@ -30,6 +36,12 @@ describe LinkListsDrop do
       it 'should get empty links' do
         variant = "{{ linklists.noexist.links.size }}"
         result = "0"
+        liquid(variant).should eql result
+      end
+
+      it 'should check empty?' do
+        variant = "{% if linklists.noexist == empty %}true{% endif %}"
+        result = "true"
         liquid(variant).should eql result
       end
     end

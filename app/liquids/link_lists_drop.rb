@@ -26,6 +26,10 @@ class LinkListDrop < Liquid::Drop
     end
   end
 
+  def empty? # if linklists['main-menu'] == empty
+    @link_list.links.empty?
+  end
+
 end
 
 class LinkDrop < Liquid::Drop
