@@ -40,6 +40,15 @@ describe Product do
 
       end
 
+      context 'title contain brackets' do # 删除特殊字符
+
+        it 'should be remove' do
+          product = shop.products.create title: '(brackets)', product_type: '智能手机', vendor: 'Apple'
+          product.handle.should eql 'brackets'
+        end
+
+      end
+
     end
 
     context '(with handle)' do

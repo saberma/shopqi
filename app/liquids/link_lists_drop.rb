@@ -50,4 +50,8 @@ class LinkDrop < Liquid::Drop
     current_url == @link.url
   end
 
+  def handle # link本身没有handle属性，用于实现二级菜单
+    Models::Handle.handleize(self.title)
+  end
+
 end

@@ -26,9 +26,8 @@ module BaseFilter #扩展标准filter http://j.mp/v8XGFK
     object
   end
 
-  def handleize(input) # 转化可用于url的字符串(英文转为中文，并去掉%@*$)
-    input.gsub! /[%@*$]/, ''
-    Pinyin.t input, '-'
+  def handleize(input) # 转化可用于url的字符串(中文转为英文，并去掉%@*$等特殊字符)
+    Models::Handle.handleize(input)
   end
   alias :handle :handleize
 

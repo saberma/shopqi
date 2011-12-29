@@ -113,6 +113,16 @@ describe LinkListsDrop do
 
     end
 
+    context 'handle' do
+
+      it 'should be get', f: true do
+        variant = "{{ linklists.main-menu.links.first.handle }}"
+        result = "shou-ye"
+        liquid(variant).should eql result
+      end
+
+    end
+
   end
 
   private

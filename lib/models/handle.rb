@@ -7,6 +7,10 @@ module Models # 实体扩展模块
       base.send(:include, InstanceMethods)
     end
 
+    def self.handleize(input) # 中文转为拼音、去掉首尾空格、转小写、空格和小数点转为横杠、删除其他特殊字符
+      Pinyin.t(input).gsub(/[^\w\-\s\.]/, '').strip.downcase.gsub(/\s+|\./, '-')
+    end
+
     module ClassMethods
 
       def handle!(handle) # 通过handle查找记录，找不到则抛出错误
@@ -22,9 +26,9 @@ module Models # 实体扩展模块
     module InstanceMethods
 
       # @collection ie: shop.products
-      def make_valid(collection) # 确保handle唯一，替换空格,点号为横杠(-)
-        self.handle = Pinyin.t(self.title) if self.handle.blank?
-        unique_handle = self.handle.strip.downcase.gsub /\s+|\./, '-'
+      def make_valid(collection) # 确保handle唯一
+        self.handle = self.title if self.handle.blank?
+        unique_handle = Models::Handle.handleize(self.handle)
         number = 1
         condition = {}
         condition[:id.not_eq] = self.id unless self.new_record?
