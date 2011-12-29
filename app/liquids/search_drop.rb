@@ -22,6 +22,10 @@ class SearchDrop < Liquid::Drop
   end
   memoize :results
 
+  def results_count
+    @results.size
+  end
+
 end
 
 # 結果Item包括商品、博客、页面

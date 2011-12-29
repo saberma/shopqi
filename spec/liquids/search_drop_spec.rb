@@ -24,6 +24,11 @@ describe SearchDrop do
     liquid(variant).should eql "1"
   end
 
+  it 'should get results count', f: true do
+    variant = "{{ search.results_count }}"
+    liquid(variant).should eql "1"
+  end
+
   describe SearchItemDrop do
 
     it 'should get url' do
