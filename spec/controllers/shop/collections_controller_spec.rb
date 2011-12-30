@@ -87,4 +87,44 @@ describe Shop::CollectionsController do
     response.body.should_not have_content('低价商品')
   end
 
+  context '#show_with_tag' do # 结合标签过滤集合商品
+
+    let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection], tags_text: '手机, 游戏机, 带拍照功能' }
+
+    let(:psp) { Factory :psp, shop: shop, collections: [frontpage_collection], tags_text: '游戏机, 带拍照功能' }
+
+    let(:leika) { Factory :leika, shop: shop, collections: [frontpage_collection], tags_text: '相机, 带拍照功能' }
+
+    before do
+      [iphone4, psp]
+      path = shop.theme.template_path('collection')
+      File.open(path, 'w') {|f| f.write("{% for tag in current_tags %}{{ tag }} {% endfor %} - {% for product in collection.products %}{{ product.title }} {% endfor %}") }
+    end
+
+    context '#single' do # 单个标签
+
+      it "should be success" do
+        get 'show_with_tag', handle: frontpage_collection.handle, tags: '手机'
+        response.body.should have_content('手机') # current_tags
+        response.body.should have_content('iphone4')
+        response.body.should_not have_content('psp')
+      end
+
+    end
+
+    context '#multi' do # 多个标签
+
+      it "should be success" do
+        leika
+        get 'show_with_tag', handle: frontpage_collection.handle, tags: '游戏机+带拍照功能'
+        response.body.should have_content('游戏机 带拍照功能') # current_tags
+        response.body.should have_content('iphone4')
+        response.body.should have_content('psp')
+        response.body.should_not have_content('leika')
+      end
+
+    end
+
+  end
+
 end

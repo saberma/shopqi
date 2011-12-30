@@ -18,11 +18,39 @@ module TagFilter
   end
 
   def link_to_type(input)
-    "<a title=#{input} href='/collections/types?q=#{input}'>#{input}</a>"
+    "<a title='#{input}' href='/collections/types?q=#{input}'>#{input}</a>"
   end
 
   def link_to_vendor(input)
-    "<a title=#{input} href='/collections/vendors?q=#{input}'>#{input}</a>"
+    "<a title='#{input}' href='/collections/vendors?q=#{input}'>#{input}</a>"
+  end
+
+  begin 'tag' # 标签
+
+    def link_to_tag(alt, input)
+      collection = @context['collection']
+      "<a title='显示有#{alt}标签的商品' href='#{collection.url}/#{input}'>#{alt}</a>"
+    end
+
+    def link_to_add_tag(alt, input)
+      collection = @context['collection']
+      current_tags = @context['current_tags']
+      alt_tags = [alt]
+      input_tags = [input]
+      if current_tags
+        alt_tags += current_tags
+        input_tags += current_tags
+      end
+      "<a title='显示有#{alt_tags.join('和')}标签的商品' href='#{collection.url}/#{input_tags.join('+')}'>#{alt}</a>"
+    end
+
+    def link_to_remove_tag(alt, input)
+      collection = @context['collection']
+      current_tags = @context['current_tags']
+      input_tags = current_tags ? (current_tags - [input]) : []
+      "<a title='取消#{alt}标签' href='#{collection.url}/#{input_tags.join('+')}'>#{alt}</a>"
+    end
+
   end
 
   begin 'customer'

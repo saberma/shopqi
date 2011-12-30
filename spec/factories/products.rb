@@ -28,4 +28,14 @@ FactoryGirl.define do
       {price: 1000, compare_at_price: 1500, weight: 2.8}
     ]
   end
+
+  factory :leika, parent: :product do
+    title "leika"
+    body_html ""
+    product_type "相机"
+    vendor "徕卡"
+    variants_attributes [
+      {price: 10000, compare_at_price: 15000, weight: 2.8}
+    ]
+  end
 end

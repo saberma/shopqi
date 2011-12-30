@@ -32,19 +32,13 @@ describe TagFilter do
 
   it "should get type url" do
     variant = "{{ product.type | link_to_type}}"
-    result = "<a title=#{iphone4.product_type} href='/collections/types?q=#{iphone4.product_type}'>#{iphone4.product_type}</a>"
+    result = "<a title='#{iphone4.product_type}' href='/collections/types?q=#{iphone4.product_type}'>#{iphone4.product_type}</a>"
     Liquid::Template.parse(variant).render('product' => ProductDrop.new(iphone4)).should eql result
   end
 
   it "should get vendor url" do
     variant = "{{ vendor | link_to_vendor}}"
-    result = "<a title=Cola href='/collections/vendors?q=Cola'>Cola</a>"
-    Liquid::Template.parse(variant).render('vendor' => 'Cola').should eql result
-  end
-
-  it "should get vendor url" do
-    variant = "{{ vendor | link_to_vendor}}"
-    result = "<a title=Cola href='/collections/vendors?q=Cola'>Cola</a>"
+    result = "<a title='Cola' href='/collections/vendors?q=Cola'>Cola</a>"
     Liquid::Template.parse(variant).render('vendor' => 'Cola').should eql result
   end
 
@@ -56,6 +50,32 @@ describe TagFilter do
     errors = { email: '不能为空' }
     result = '<div class="errors"><ul><li> email 不能为空 </li></ul></div>'
     Liquid::Template.parse(variant).render('errors' => errors).should eql result
+  end
+
+  describe Tag do
+
+    let(:collection) { shop.custom_collections.where(handle: 'frontpage').first }
+
+    let(:iphone4) { Factory :iphone4, shop: shop, collections: [collection], tags_text: '智能 手机 待机时间长'  }
+
+    it "should get link to tag url" do
+      variant = "{{ tag | link_to_tag: tag }}"
+      result = "<a title='显示有手机标签的商品' href='/collections/frontpage/手机'>手机</a>"
+      Liquid::Template.parse(variant).render('tag' => '手机', 'collection' => CollectionDrop.new(collection)).should eql result
+    end
+
+    it "should get link to add tag url" do
+      variant = "{{ tag | link_to_add_tag: tag }}"
+      result = "<a title='显示有待机时间长和手机标签的商品' href='/collections/frontpage/待机时间长+手机'>待机时间长</a>"
+      Liquid::Template.parse(variant).render('current_tags' => ['手机'], 'tag' => '待机时间长', 'collection' => CollectionDrop.new(collection)).should eql result
+    end
+
+    it "should get link to remove tag url", f: true do
+      variant = "{{ tag | link_to_remove_tag: tag }}"
+      result = "<a title='取消手机标签' href='/collections/frontpage/待机时间长'>手机</a>"
+      Liquid::Template.parse(variant).render('current_tags' => ['待机时间长', '手机'], 'tag' => '手机', 'collection' => CollectionDrop.new(collection)).should eql result
+    end
+
   end
 
   describe CustomerDrop do

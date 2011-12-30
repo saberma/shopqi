@@ -32,7 +32,7 @@ class CollectionDrop < Liquid::Drop
     @collection = collection
   end
 
-  def products #数组要缓存，以便paginate替换为当前页(TODO: 此方法应与all_products区别，关联paginate)
+  def products #数组要缓存，以便paginate替换为当前页
     #注：不能用products.where,因为有地方是直接用collection.new来直接关联products,
     #而没有在数据库中存储对应的记录的
     @collection.products.map do |product|

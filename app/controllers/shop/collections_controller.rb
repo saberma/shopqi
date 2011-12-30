@@ -37,4 +37,16 @@ class Shop::CollectionsController < Shop::AppController
     render text: html
   end
 
+  def show_with_tag # collections/frontpage/手机+带照相功能
+    current_tags = params[:tags].split '+'
+    collection = shop.collection(params[:handle])
+    products = collection.products.select do |product|
+      (current_tags & product.tags.map(&:name)) == current_tags # 包含指定的标签(可能为多个)
+    end
+    collection = CustomCollection.new(title: collection.title, handle: collection.handle, products: products)
+    assign = template_assign( 'template' => 'collection', 'collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'current_tags' => current_tags)
+    html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
+    render text: html
+  end
+
 end
