@@ -79,6 +79,7 @@ class Shop::AppController < ActionController::Base
         'cart' => cart_drop,
         'settings' => settings_drop,
         'linklists' => linklists_drop,
+        'pages' => pages_drop,
         'blogs' => blogs_drop,
         'collections' => collections_drop,
         'current_page' => params[:page],
