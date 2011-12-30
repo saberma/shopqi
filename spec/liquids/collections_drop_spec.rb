@@ -92,8 +92,8 @@ describe CollectionsDrop do
         frontpage_collection.reload
         psp.tags_text = '电脑，游戏机'
         psp.save
-        variant = "{{ collection.all_products_count }} {{ collection.all_tags}}"
-        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '2 手机,电脑,游戏机'
+        variant = "{{ collection.all_products_count }} {% for tag in collection.all_tags %},{{ tag }}{% endfor %}"
+        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '2 ,手机,电脑,游戏机'
       end
 
       it "should get products count and tags" do
@@ -102,8 +102,8 @@ describe CollectionsDrop do
         frontpage_collection.reload
         psp.tags_text = '电脑,游戏机'
         psp.save
-        variant = "{% paginate collection.products by 1 %}{{ collection.products_count }} {{ collection.tags}}{% endpaginate %}"
-        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 手机,电脑'
+        variant = "{% paginate collection.products by 1 %}{{ collection.products_count }} {% for tag in collection.tags %},{{ tag }}{% endfor %}{% endpaginate %}"
+        Liquid::Template.parse(variant).render('collection' => CollectionDrop.new(frontpage_collection)).should eql '1 ,手机,电脑'
       end
 
       it "should get previous product" do

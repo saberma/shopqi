@@ -72,11 +72,11 @@ class CollectionDrop < Liquid::Drop
   end
 
   def all_tags #显示集合中所有商品的标签
-    self.all_products.map(&:tags).flatten.map(&:name).uniq.join(',')
+    self.all_products.map(&:tags).flatten.map(&:name).uniq
   end
 
   def tags #显示集合中当前页面商品所包含的标签
-    self.products.map(&:tags).flatten.map(&:name).uniq.join(',')
+    self.products.map(&:tags).flatten.map(&:name).uniq
   end
 
   def previous_product # 集合中的上一个商品
