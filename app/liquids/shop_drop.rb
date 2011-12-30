@@ -22,6 +22,11 @@ class ShopDrop < Liquid::Drop
     !@shop.customer_accounts.blank?
   end
 
+  def types
+    @shop.types.map(&:name)
+  end
+  memoize :types
+
   def vendors
     @shop.vendors.map(&:name)
   end

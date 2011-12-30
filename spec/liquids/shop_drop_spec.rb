@@ -31,10 +31,16 @@ describe ShopDrop do
 
     let(:iphone4) { Factory :iphone4, shop: shop }
 
-    it 'should get vendors', f: true do
-      iphone4
+    before { iphone4 }
+
+    it 'should get vendors' do
       variant = "{% for v in shop.vendors %}{{ v }}{% endfor %}"
       liquid(variant).should eql "Apple"
+    end
+
+    it 'should get types' do
+      variant = "{% for t in shop.types %}{{ t }}{% endfor %}"
+      liquid(variant).should eql "手机"
     end
 
   end
