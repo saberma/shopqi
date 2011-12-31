@@ -33,6 +33,8 @@ App.Views.Theme.Settings.Preset.Index = Backbone.View.extend
       switch obj.attr('type')
         when 'checkbox'
           obj.attr 'checked', value
+        when 'radio'
+          $("input[name='settings[#{name}]'][value='#{value}']").attr('checked', 'checked')
         else
           obj.val value
           obj.trigger 'keyup.miniColors' if obj.hasClass 'color' # 更新颜色指示方块

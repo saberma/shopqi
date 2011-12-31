@@ -62,10 +62,16 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
       value = switch obj.attr('type')
         when 'checkbox'
           obj.attr('checked') is 'checked'
+        when 'radio'
+          if obj.attr('checked') is 'checked'
+            obj.val()
+          else
+            obj = null # 跳过，进入下一个元素
         else
           obj.val()
-      name = obj.attr('name')
-      result[name] = value unless name is 'file'
+      if obj # radio元素未被选中时,obj会被置为nil
+        name = obj.attr('name')
+        result[name] = value unless name is 'file'
       result
     , {_method: 'put'}
     $.post "/admin/themes/#{theme_id}/settings", attrs, (data) ->

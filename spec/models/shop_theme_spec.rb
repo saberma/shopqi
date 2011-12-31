@@ -48,7 +48,7 @@ describe ShopTheme do
       describe 'class', focus: true do # 根据class的值转换为实际的链接列表选项等
 
         before(:each) do
-          settings_html_path = Rails.root.join("spec/factories/data/themes/settings_with_class.html")
+          settings_html_path = Rails.root.join("spec/factories/data/themes/settings/with_class.html")
           Asset.create(theme, 'config/settings.html', nil, File.read(settings_html_path))
         end
 

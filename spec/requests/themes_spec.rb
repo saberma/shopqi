@@ -132,7 +132,7 @@ describe "Themes", js: true do
 
   end
 
-  describe "GET /settings" do # theme = woodland
+  describe "GET /settings" do # 主题外观设置 theme = woodland
 
     before(:each) do
       visit settings_theme_path(shop.theme)
@@ -151,7 +151,7 @@ describe "Themes", js: true do
       has_content?('logo.png').should be_true
     end
 
-    describe 'presets' do
+    describe 'presets' do # 外边的设置项
 
       before(:each) do
         find('.section-header', text: '图片').click # 展开图片fieldset
@@ -180,7 +180,7 @@ describe "Themes", js: true do
 
       end
 
-      describe 'save' do
+      describe 'save' do # 保存
 
         it "should update exists preset" do # 更新预设
           uncheck 'use_banner_image'
@@ -216,6 +216,32 @@ describe "Themes", js: true do
 
       end
 
+      context 'with' do # 存在
+
+        context 'radio' do # 单选框
+
+          before do
+            settings_html_path = Rails.root.join("spec/factories/data/themes/settings/with_radio.html")
+            settings_data_json_path = Rails.root.join("spec/factories/data/themes/settings/with_radio.json")
+            Asset.create(shop.theme, 'config/settings.html', nil, File.read(settings_html_path)) # 上传
+            Asset.create(shop.theme, 'config/settings_data.json', nil, File.read(settings_data_json_path))
+            visit settings_theme_path(shop.theme)
+          end
+
+          it 'should be show' do
+            find("input[name='settings[product_images_position]'][value='left']")['checked'].should be_true
+            find("input[name='settings[product_images_position]'][value='right']")['checked'].should be_false
+            find("input[name='settings[product_images_position]'][value='right']").click
+            click_on '保存配置'
+            visit settings_theme_path(shop.theme)
+            find("input[name='settings[product_images_position]'][value='left']")['checked'].should be_false
+            find("input[name='settings[product_images_position]'][value='right']")['checked'].should be_true
+          end
+
+        end
+
+      end
+
     end
 
     describe 'tranform' do
@@ -241,7 +267,7 @@ describe "Themes", js: true do
 
   end
 
-  describe "GET /assets" do
+  describe "GET /assets" do # 模板编辑器
 
     before(:each) do
       visit theme_assets_path(shop.theme)
