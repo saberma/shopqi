@@ -46,7 +46,8 @@ class CollectionDrop < Liquid::Drop
   end
 
   def url
-    "/collections/#{@collection.handle}"
+    types_or_vendors_query = ['types', 'vendors'].include?(@collection.handle) ? "?q=#{@collection.title}" : ""
+    "/collections/#{@collection.handle}#{types_or_vendors_query}"
   end
 
   def all_types #显示集合包含的所有商品的product_type

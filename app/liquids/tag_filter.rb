@@ -29,7 +29,8 @@ module TagFilter
 
     def link_to_tag(alt, input)
       collection = @context['collection']
-      "<a title='显示有#{alt}标签的商品' href='#{collection.url}/#{input}'>#{alt}</a>"
+      url = ['types', 'vendors'].include?(collection.handle) ? "&constraint=#{input}" : "/#{input}"
+      "<a title='显示有#{alt}标签的商品' href='#{collection.url}#{url}'>#{alt}</a>"
     end
 
     def link_to_add_tag(alt, input)
@@ -41,14 +42,18 @@ module TagFilter
         alt_tags += current_tags
         input_tags += current_tags
       end
-      "<a title='显示有#{alt_tags.join('和')}标签的商品' href='#{collection.url}/#{input_tags.join('+')}'>#{alt}</a>"
+      input = input_tags.join('+')
+      url = ['types', 'vendors'].include?(collection.handle) ? "&constraint=#{input}" : "/#{input}"
+      "<a title='显示有#{alt_tags.join('和')}标签的商品' href='#{collection.url}#{url}'>#{alt}</a>"
     end
 
     def link_to_remove_tag(alt, input)
       collection = @context['collection']
       current_tags = @context['current_tags']
       input_tags = current_tags ? (current_tags - [input]) : []
-      "<a title='取消#{alt}标签' href='#{collection.url}/#{input_tags.join('+')}'>#{alt}</a>"
+      input = input_tags.join('+')
+      url = ['types', 'vendors'].include?(collection.handle) ? "&constraint=#{input}" : "/#{input}"
+      "<a title='取消#{alt}标签' href='#{collection.url}#{url}'>#{alt}</a>"
     end
 
   end

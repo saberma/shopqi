@@ -13,40 +13,46 @@ class Shop::CollectionsController < Shop::AppController
     render text: html
   end
 
-  def show # collections/all ...
-    CollectionsDrop
-    if params[:handle] == 'all'
-      collection = CustomCollection.new(title: '所有商品',handle: 'all', products: shop.products.where(published: true))
-    #handle为types时显示商品类型为params[:q]时的商品
-    #handle为vendors时显示商品品牌为params[:q]时的商品
-    elsif params[:handle] == 'types' || params[:handle] == 'vendors'
-      vendor = params[:q]
-      column = if params[:handle] == 'types' ; :product_type else :vendor end
-      collection = CustomCollection.new(title: params[:q], handle: params[:handle], products: shop.products.where(column => params[:q], published: true))
-    else
-      collection = shop.collection(params[:handle])
+  def show # collections/frontpage
+    render text: liquid(assign_for(shop.collection(params[:handle])))
+  end
+
+  def show_all # collections/all
+    collection = CustomCollection.new(title: '所有商品', handle: 'all', products: shop.products.published)
+    render text: liquid(assign_for(collection))
+  end
+
+  def show_with_types_or_vendors # collections/types?q=手机  collections/vendors?q=苹果
+    column = (params[:handle] == 'types') ?  'product_type' : 'vendor'
+    products = shop.products.published.where(column => params[:q])
+    if params[:constraint]
+      @current_tags = params[:constraint].split '+'
+      products = products.select do |product|
+        (@current_tags & product.tags.map(&:name)) == @current_tags # 包含指定的标签(可能为多个)
+      end
     end
-    assign = {'collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q]}
-    if collection.nil? #若不存在集合，则显示404页面
-      assign = template_assign(assign.merge('template' => '404'))
-      html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
-    else
-      assign = template_assign(assign.merge('template' => 'collection'))
-      html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
-    end
-    render text: html
+    collection = CustomCollection.new(title: params[:q], handle: params[:handle], products: products)
+    render text: liquid(assign_for(collection))
   end
 
   def show_with_tag # collections/frontpage/手机+带照相功能
-    current_tags = params[:tags].split '+'
+    @current_tags = params[:tags].split '+'
     collection = shop.collection(params[:handle])
-    products = collection.products.select do |product|
-      (current_tags & product.tags.map(&:name)) == current_tags # 包含指定的标签(可能为多个)
+    products = collection.products.published.select do |product|
+      (@current_tags & product.tags.map(&:name)) == @current_tags # 包含指定的标签(可能为多个)
     end
     collection = CustomCollection.new(title: collection.title, handle: collection.handle, products: products)
-    assign = template_assign( 'template' => 'collection', 'collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'current_tags' => current_tags)
-    html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
-    render text: html
+    render text: liquid(assign_for(collection))
+  end
+
+  private
+  def assign_for(collection)
+    {'template' => 'collection', 'collection' => CollectionDrop.new(collection), 'current_page' => params[:page], 'q' => params[:q], 'current_tags' => @current_tags}
+  end
+
+  def liquid(assign)
+    Liquid::Template.parse(layout_content).render(shop_assign(template_assign(assign)))
   end
 
 end
+CollectionsDrop

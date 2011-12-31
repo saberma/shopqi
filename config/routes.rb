@@ -147,9 +147,11 @@ Shopqi::Application.routes.draw do
       get '/collections/:collection_handle/products/:handle', to: 'products#show'       , as: :collection_product_show
       get '/collections'                                    , to: 'collections#index'
       get '/products'                                       , to: 'collections#index'   , as: :shop_products
-      get '/collections/:handle'                            , to: 'collections#show'
+      get '/collections/all'                                , to: 'collections#show_all'
       get '/collections/:handle/products'                   , to: 'collections#show'
+      get '/collections/:handle'                            , to: 'collections#show_with_types_or_vendors' , constraints: { handle: /types|vendors/ }
       get '/collections/:handle/:tags'                      , to: 'collections#show_with_tag'
+      get '/collections/:handle'                            , to: 'collections#show'
       get '/pages/:handle'                                  , to: 'pages#show'
       post '/cart/add'                                      , to: 'cart#add'
       get '/cart'                                           , to: 'cart#show'
