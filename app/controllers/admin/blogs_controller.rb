@@ -23,7 +23,7 @@ class Admin::BlogsController < Admin::AppController
 
   def create
     if blog.save
-      render action:'show'
+      redirect_to blog_path(blog), notice: "新增成功!"
     else
       render action:'new'
     end
@@ -31,7 +31,8 @@ class Admin::BlogsController < Admin::AppController
 
   def update
     if blog.save
-      render action:"show"
+      flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
+      redirect_to blog_path(blog)
     else
       render action:'edit'
     end
@@ -39,6 +40,7 @@ class Admin::BlogsController < Admin::AppController
 
   def destroy
     blog.destroy
+    flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
     respond_to do |format|
       format.js { render template: "admin/pages/destroy" }
     end

@@ -90,4 +90,8 @@ class Comment < ActiveRecord::Base
   belongs_to :shop
   validates_presence_of :body,:email,:author
   validates :email, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }
+
+  before_create do
+    self.shop_id = article.shop_id
+  end
 end

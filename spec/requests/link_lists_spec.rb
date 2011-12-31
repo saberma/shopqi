@@ -202,6 +202,11 @@ describe "LinkLists", js: true do
               end
             end
             click_on '保存'
+          end
+        end
+        page.should have_content('修改成功!')
+        within '#menus' do
+          within :xpath, './li[1]' do
             within '.links' do # 链接记录
               within :xpath, './li[1]' do
                 find('.link-title').text.should eql '商品列表'

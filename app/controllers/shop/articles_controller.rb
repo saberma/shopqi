@@ -14,14 +14,8 @@ class Shop::ArticlesController < Shop::AppController
   end
 
   def add_comment
-    comment = Comment.new params[:comment]
-    if article.blog.commentable == 'moderate'
-      comment.status = 'unapproved'
-    else
-      comment.status = 'published'
-    end
-    comment.shop = shop
-    comment.article = article
+    comment = article.comments.build params[:comment]
+    comment.status = (article.blog.commentable == 'moderate') ? 'unapproved' : 'published'
     if comment.save
       redirect_to "/blogs/#{article.blog.handle}/#{article.id}?comment_id=#{comment.id}#comments"
     else
