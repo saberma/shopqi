@@ -63,8 +63,11 @@
                           选择商店应用程序
                     %li
                       =link_to theme_store_url_with_port do
-                        %strong> 外观
-                        选择商店外观
+                        %strong> 主题外观
+                        选择商店外观模板
+                      =link_to wiki_url_with_port do
+                        %strong> 帮助文档
+                        了解如何使用ShopQi
                 %li.last
                   %a(href="/login") 登录
       =yield
@@ -82,7 +85,7 @@
             .col-3
               %h3 资源
               %ul
-                %li=link_to "百科文档", wiki_url_with_port
+                %li=link_to "帮助文档", wiki_url_with_port
                 %li=link_to "主题商店", theme_store_url_with_port
             .col-3
               %h3 ShopQi

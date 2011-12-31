@@ -10,7 +10,7 @@ Shopqi::Application.routes.draw do
   end
 
 
-  constraints(Domain::Wiki) do # 百科文档
+  constraints(Domain::Wiki) do # 帮助文档
     devise_for :admin_users, ActiveAdmin::Devise.config
     scope module: :wiki do
       get '/'                         , to: 'wiki_pages#index'           , as: :wiki_pages_index
