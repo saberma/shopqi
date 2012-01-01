@@ -86,11 +86,15 @@ class Admin::ThemesController < Admin::AppController
     end
 
     def current # 当前主题的模板编辑器
-      redirect_to theme_assets_path(shop.theme)
+      theme_id = session[:preview_theme_id]
+      theme = theme_id.blank? ? shop.theme : shop.themes.find(theme_id)
+      redirect_to theme_assets_path(theme)
     end
 
     def settings # 当前主题的外观设置
-      redirect_to settings_theme_path(shop.theme)
+      theme_id = session[:preview_theme_id]
+      theme = theme_id.blank? ? shop.theme : shop.themes.find(theme_id)
+      redirect_to settings_theme_path(theme)
     end
 
     def update # 发布主题

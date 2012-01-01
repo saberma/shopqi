@@ -343,6 +343,7 @@ Shopqi::Application.routes.draw do
           post :upload     # 上传主题
           get  :current    # 当前主题的模板编辑器
           get  :settings   # 当前主题的外观设置
+          get  '/current/settings', to: 'themes#settings'
         end
         member do
           get  :background_queue_status  # 检查主题解压状态
