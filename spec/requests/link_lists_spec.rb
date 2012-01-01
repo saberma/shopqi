@@ -201,6 +201,11 @@ describe "LinkLists", js: true do
                 find('.delete').click
               end
             end
+          end
+        end
+        page.should have_content('删除成功!')
+        within '#menus' do
+          within :xpath, './li[1]' do
             click_on '保存'
           end
         end
