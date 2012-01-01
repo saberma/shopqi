@@ -11,8 +11,8 @@ module Admin::ShopsHelper
       "#{Setting.host}#{request.port_string}"
     end
 
-    def url_with_port # http://shopqi.com:4000
-      "#{url_protocol}#{host_with_port}"
+    def url_with_port # http://www.shopqi.com:4000
+      "#{url_protocol}www.#{host_with_port}"
     end
 
     def theme_store_url_with_port # http://themes.shopqi.com:4000
