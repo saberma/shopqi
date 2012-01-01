@@ -33,6 +33,7 @@ class Admin::ArticlesController < Admin::AppController
 
   def destroy
     article.destroy
+    flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
   end
 
 end

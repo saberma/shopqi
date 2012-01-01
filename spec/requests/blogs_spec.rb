@@ -68,6 +68,7 @@ describe "Blogs", js:true do
         visit blog_article_path(blog, article)
         page.execute_script("window.confirm = function(msg) { return true; }")
         find('.del').click
+        page.should have_content('删除成功!')
         page.should_not have_content('新品上市')
       end
 
@@ -77,7 +78,7 @@ describe "Blogs", js:true do
 
         before { comment }
 
-        it "should be add", f: true do # 新增评论
+        it "should be edit" do # 新增评论
           visit pages_path
           within("#comments-list")  do
             page.should have_content("新评论内容")

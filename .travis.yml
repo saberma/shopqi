@@ -12,7 +12,7 @@ script:
  - "cp config/database.yml.example config/database.yml 2>&1"
  - "cp config/app_secret_config.yml.example config/app_secret_config.yml 2>&1"
  - "cp config/initializers/secret_token.rb.example config/initializers/secret_token.rb 2>&1"
- - "bundle exec rake travis:init_db"
+ #- "bundle exec rake travis:init_db"
  - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
  - "bundle exec rake travis:parallel"
 
@@ -35,7 +35,6 @@ env:
 #notifications:
 #  recipients:
 #    - mahb45@gmail.com
-#    - liwh87@gmail.com
 
 timeouts:
   bundle: 600
