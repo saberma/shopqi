@@ -1,7 +1,4 @@
-require 'resque-retry'
-
 class SunspotWorker # 参考http://j.mp/r64ADZ
-  extend Resque::Plugins::ExponentialBackoff
   @queue = :solr_index
 
   def self.perform(sunspot_method, object = nil)
@@ -12,7 +9,10 @@ class SunspotWorker # 参考http://j.mp/r64ADZ
     Sunspot.session = Sunspot::Rails.build_session
     case sunspot_method
     when :index
-      self.index( object[:class].constantize.find(object[:id]) )
+      begin
+        self.index( object[:class].constantize.find(object[:id]) )
+      rescue ActiveRecord::RecordNotFound
+      end
     when :remove
       self.remove_by_id(object[:class], object[:id])
     when :remove_all
