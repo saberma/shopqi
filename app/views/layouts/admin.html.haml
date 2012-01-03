@@ -19,7 +19,7 @@
     = javascript_include_tag :admin_application
     =yield :kindeditor
     =yield :javascripts
-    =render 'shared/google'
+    -#=render 'shared/google'
   %body
     #ajax-notice.hide
       %div
@@ -106,6 +106,8 @@
     -if flash[:error]
       :javascript
         window.onload = function(){ error_msg("#{flash[:error]}"); }
+
+    =render 'shared/baidu'
 
 /[if lte IE 6]
   :javascript

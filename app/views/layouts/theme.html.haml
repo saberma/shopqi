@@ -10,7 +10,7 @@
       = stylesheet_link_tag 'ie7-themes'
     /[if IE]
       = stylesheet_link_tag 'ie-themes'
-    =render 'shared/google'
+    -#=render 'shared/google'
   %body
     .resources-nav
       %ul
@@ -43,3 +43,4 @@
         =yield :filter
       #content(class=@content_class)
         =yield
+    =render 'shared/baidu'

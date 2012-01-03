@@ -22,7 +22,7 @@
       =javascript_include_tag 'shopqi_application'
     =yield :javascripts
     =csrf_meta_tag
-    =render 'shared/google'
+    -#=render 'shared/google'
   %body(style=@body_style)
     #wrapper
       #masthead
@@ -103,3 +103,4 @@
                   =link_to 'admin@shopqi.com', 'mailto:admin@shopqi.com'
           #copyright.center.clear
             %p © 2011 shopqi.com All Rights Reserved | 粤ICP备11089804号 | ShopQi - 索奇电子商务平台.
+    =render 'shared/baidu'

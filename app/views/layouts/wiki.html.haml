@@ -13,7 +13,7 @@
     = stylesheet_link_tag "layout_shopqi_wiki"
     = javascript_include_tag 'shopqi_wiki_application'
     =csrf_meta_tag
-    =render 'shared/google'
+    -#=render 'shared/google'
   %body
     .resources-nav
       %ul
@@ -61,6 +61,9 @@
               =raw sidebar.formatted_data if sidebar
         #content.col-9.last
           =preserve yield
+
+    =render 'shared/baidu'
+
 :javascript
   $(document).ready(function(){
     $('#category-navigation h3').click(function(){
