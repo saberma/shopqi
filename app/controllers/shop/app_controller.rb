@@ -104,15 +104,18 @@ class Shop::AppController < ActionController::Base
 
     def get_current_page_title(template, assign)
       case template
-      when 'index'      ; '欢迎光临'
-      when 'page'       ; assign['page'].title
-      when 'product'    ; assign['product'].title
-      when 'blog'       ; assign['blog'].title
-      when 'collection' ; assign['collection'].title
-      when 'article'    ; assign['article'].title
-      when 'search'     ; '查询'
-      when 'cart'       ; '购物车'
-      when '404'        ; '页面不存在'
+      when 'index'              ; '欢迎光临'
+      when 'page'               ; assign['page'].title
+      when 'product'            ; assign['product'].title
+      when 'blog'               ; assign['blog'].title
+      when 'collection'         ; assign['collection'].title
+      when 'article'            ; assign['article'].title
+      when 'customers_order'    ; "订单#{assign['order'].name}"
+      when 'customers_account'  ; "我的帐号"
+      when 'customers_addresses'; "收货地址"
+      when 'search'             ; '查询'
+      when 'cart'               ; '购物车'
+      when '404'                ; '页面不存在'
       else ; '' end
     end
 
