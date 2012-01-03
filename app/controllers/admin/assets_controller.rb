@@ -25,9 +25,13 @@ class Admin::AssetsController < Admin::AppController
     image = qqfile.body
     max_width = params['max_width']
     max_height = params['max_height']
-    unless max_width.blank? or max_height.blank? # 限制宽高
+    unless max_width.blank? and max_height.blank? # 限制宽高
+      max_width = max_width.blank? ? nil : max_width.to_i
+      max_height = max_height.blank? ? nil : max_height.to_i
       image = MiniMagick::Image.read(image)
-      image.resize "#{max_width}x#{max_height}"
+      max_width = [max_width, image[:width]].compact.min
+      max_height = [max_height, image[:height]].compact.min
+      image.resize "#{max_width}x#{max_height}" unless max_width == image[:width] and max_height == image[:height]
     end
     asset = Asset.create theme, params[:key], nil, image
     render text: asset.to_json

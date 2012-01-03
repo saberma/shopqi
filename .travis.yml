@@ -37,4 +37,4 @@ env:
 #    - mahb45@gmail.com
 
 timeouts:
-  bundle: 600
+  bundle: 1200
