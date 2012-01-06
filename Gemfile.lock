@@ -48,7 +48,7 @@ GIT
     rails-dev-boost (0.1.1)
 
 GEM
-  remote: http://ruby.taobao.org/
+  remote: http://rubygems.org/
   specs:
     RedCloth (4.2.8)
     actionmailer (3.1.1)
