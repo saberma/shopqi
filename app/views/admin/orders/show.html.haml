@@ -202,7 +202,11 @@
   %td
     %strong
       %label(for="line-item-{{{id}}}")
+        {{#if product_deleted}}
+        {{title}}}
+        {{else}}
         %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
+        {{/if}}
     \- {{{variant_title}}}
     %br
     {{#if fulfilled}}
@@ -216,7 +220,11 @@
   %td(style="max-width:320px")
     %strong
       %label(for="line-item-{{{id}}}")
+        {{#if product_deleted}}
+        {{title}}}
+        {{else}}
         %a.product-link(href="/admin/products/{{{product_id}}}" title="前往商品页面") {{{title}}}
+        {{/if}}
     \- {{{variant_title}}}
     %br
     {{#if fulfilled}}

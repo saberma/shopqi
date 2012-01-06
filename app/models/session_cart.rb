@@ -76,8 +76,7 @@ class SessionLineItem # Session购物车中商品款式
   end
 
   def title
-    return product.title if product.variants.size == 1
-    "#{product.title} - #{@variant.options.join('/')}"
+    @variant.name
   end
   memoize :title
 
@@ -90,8 +89,8 @@ class SessionLineItem # Session购物车中商品款式
     @quantity
   end
 
-  def grams
-    quantity * @variant.weight
+  def grams # 单位:克
+    quantity * @variant.weight * 1000
   end
   memoize :grams
 

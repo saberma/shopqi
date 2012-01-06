@@ -28,7 +28,7 @@ class Admin::OrdersController < Admin::AppController
     order.to_json({
       methods: [ :gateway, :status_name, :financial_status_name, :fulfillment_status_name, :shipping_rate_price ],
       include: {
-        line_items: { methods: [:total_price, :title, :variant_title, :sku, :fulfillment_created_at] },
+        line_items: { methods: [:total_price, :fulfillment_created_at, :product_deleted] },
         transactions: {},
         histories: {}
       },

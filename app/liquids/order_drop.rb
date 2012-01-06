@@ -1,6 +1,5 @@
 #encoding: utf-8
 #订单关联的liquid属性
-SessionCart
 class OrderDrop < Liquid::Drop
 
   def initialize(order)
@@ -45,8 +44,7 @@ class OrderDrop < Liquid::Drop
 
   def line_items
     @order.line_items.map do |line_item|
-      session_line_item = SessionLineItem.new line_item.product_variant_id, line_item.quantity, @order.shop
-      LineItemDrop.new(session_line_item)
+      OrderLineItemDrop.new(line_item)
     end
   end
 
@@ -91,6 +89,32 @@ class OrderDrop < Liquid::Drop
 
 end
 
+class OrderLineItemDrop < Liquid::Drop
+  extend ActiveSupport::Memoizable
+
+  def initialize(order_line_item)
+    @order_line_item = order_line_item
+  end
+
+  delegate :id, :title, :line_price, :price, :quantity, :sku, :grams, :requires_shipping, :vendor, to: :@order_line_item
+
+  def variant
+    ProductVariantDrop.new(@order_line_item.product_variant)
+  end
+  memoize :variant
+
+  def product
+    ProductDrop.new(@order_line_item.product)
+  end
+  memoize :product
+
+  def line_price
+    quantity * price
+  end
+  memoize :line_price
+
+end
+
 #配送记录
 class OrderFulfillmentDrop < Liquid::Drop
   def initialize(fulfillment)
@@ -100,8 +124,7 @@ class OrderFulfillmentDrop < Liquid::Drop
 
   def line_items
     @fulfillment.line_items.map do |line_item|
-      session_line_item = SessionLineItem.new line_item.product_variant_id, line_item.quantity, @order.shop
-      LineItemDrop.new(session_line_item)
+      OrderLineItemDrop.new(line_item)
     end
   end
 

@@ -51,7 +51,7 @@ class Order < ActiveRecord::Base
   #订单商品总重量
   #用于匹配相应的快递方式的价钱
   def total_weight
-    line_items.map(&:product_variant).map(&:weight).sum
+    line_items.map(&:grams).sum
   end
 
   before_update do
@@ -149,12 +149,11 @@ end
 # 订单商品
 class OrderLineItem < ActiveRecord::Base
   belongs_to :order
+  belongs_to :product
   belongs_to :product_variant
   has_and_belongs_to_many :fulfillments, class_name: 'OrderFulfillment'
   validates_presence_of :price, :quantity
   scope :unshipped, where(fulfilled: false)
-
-  delegate :sku, to: :product_variant
 
   def total_price
     self.price * self.quantity
@@ -164,21 +163,12 @@ class OrderLineItem < ActiveRecord::Base
     fulfillments.first
   end
 
-  # 显示发货时间
-  def fulfillment_created_at
+  def fulfillment_created_at # 显示发货时间
     fulfillment.try(:created_at)
   end
 
-  def title
-    product_variant.product.title
-  end
-
-  def variant_title
-    product_variant.options.join(' - ')
-  end
-
-  def sku
-    product_variant.sku ? product_variant.sku : '没有SKU'
+  def product_deleted # 商品已经被删除?
+    product.nil?
   end
 end
 

@@ -156,7 +156,11 @@ class ProductVariant < ActiveRecord::Base
   end
 
   def title
-    self.options.join(' / ')
+    self.options.join(' / ') if product.variants.size > 1
+  end
+
+  def name
+    (product.variants.size > 1) ? "#{product.title} - #{self.title}" : product.title
   end
 
   def available

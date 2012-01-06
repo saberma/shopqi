@@ -6,7 +6,7 @@ class ProductDrop < Liquid::Drop
     @product = product
   end
 
-  delegate :id, :handle, :title, :url, :price, :available, :vendor, :tags, to: :@product
+  delegate :id, :handle, :title, :url, :price, :available, :vendor, :tags, to: :@product, allow_nil: true
 
   def variants
     @product.variants.map do |variant|

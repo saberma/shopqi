@@ -111,6 +111,27 @@ describe Product do
 
       end
 
+      context '#name' do # 名称
+
+        context 'product has another variant' do # 有其他款式
+
+          it 'should append variant title' do #
+            variant = iphone4.variants.create option1: '16G', price: 4000.0
+            variant.name.should eql 'iphone4 - 16G'
+          end
+
+        end
+
+        context 'product has not another variant' do # 没有其他款式
+
+          it 'should show product title only' do #
+            variant = iphone4.variants.first
+            variant.name.should eql 'iphone4'
+          end
+        end
+
+      end
+
     end
 
     context '#update' do
