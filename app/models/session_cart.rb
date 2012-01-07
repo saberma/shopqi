@@ -31,7 +31,7 @@ class SessionCart # Session购物车
   memoize :total_price
 
   def total_weight
-    items.map(&:grams).sum
+    items.map(&:line_weight).sum
   end
   memoize :total_weight
 
@@ -64,7 +64,7 @@ class SessionLineItem # Session购物车中商品款式
     @product = @variant.product
   end
 
-  delegate :id, :price, :sku, :requires_shipping, to: :@variant
+  delegate :id, :price, :weight, :sku, :requires_shipping, to: :@variant
   delegate :vendor, to: :@product
 
   def variant
@@ -85,12 +85,17 @@ class SessionLineItem # Session购物车中商品款式
   end
   memoize :line_price
 
+  def line_weight
+    quantity * grams
+  end
+  memoize :line_weight
+
   def quantity
     @quantity
   end
 
   def grams # 单位:克
-    (quantity * @variant.weight * 1000).to_i
+    (@variant.weight * 1000).to_i
   end
   memoize :grams
 

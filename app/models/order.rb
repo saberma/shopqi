@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'    , order: :id.desc #订单历史
   belongs_to  :payment     , class_name: 'Payment' #支付方式
 
-  attr_accessible :id, :email, :shipping_rate,  :note, :shipping_address_attributes, :cancel_reason, :total_weight
+  attr_accessible :id, :email, :shipping_rate, :note, :shipping_address_attributes, :cancel_reason, :total_weight
 
   accepts_nested_attributes_for :shipping_address
 
@@ -51,7 +51,7 @@ class Order < ActiveRecord::Base
   #订单商品总重量
   #用于匹配相应的快递方式的价钱
   def total_weight
-    line_items.map(&:grams).sum
+    line_items.map(&:total_weight).sum
   end
 
   before_update do
@@ -163,12 +163,16 @@ class OrderLineItem < ActiveRecord::Base
     self.name = product_variant.name
     self.vendor = product.vendor
     self.requires_shipping = product_variant.requires_shipping
-    self.grams = (product_variant.weight * 1000 * self.quantity).to_i
+    self.grams = (product_variant.weight * 1000).to_i
     self.sku = product_variant.sku
   end
 
   def total_price
     self.price * self.quantity
+  end
+
+  def total_weight
+    self.grams * self.quantity
   end
 
   def fulfillment
