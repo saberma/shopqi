@@ -79,7 +79,7 @@ describe Order do
       line_item.name.should eql variant.name
       line_item.vendor.should eql iphone4.vendor
       line_item.requires_shipping.should eql variant.requires_shipping
-      line_item.grams.should eql (variant.weight * 1000 * line_item.quantity).to_i
+      line_item.grams.should eql (variant.weight * 1000).to_i
       line_item.sku.should eql variant.sku
     end
 

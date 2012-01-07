@@ -146,7 +146,7 @@ describe Shop::CartController do
         url: "/products/#{product.handle}",
         quantity: 2,
         id: variant.id,
-        grams: 5800,
+        grams: 2900,
         sku: variant.sku,
         vendor: product.vendor,
         image: product.index_photo,
