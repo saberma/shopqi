@@ -130,7 +130,6 @@ describe "Orders", js: true do
           within(:xpath, ".//tr[1]") do
             within(:xpath, ".//td[2]") do
               has_content?(iphone4.title).should be_true
-              has_content?(iphone4_variant.option1).should be_true
             end
             find('.line-price').text.should eql '10'
             find('.line-qty').text.should eql '2'
@@ -139,7 +138,6 @@ describe "Orders", js: true do
           within(:xpath, ".//tr[2]") do
             within(:xpath, ".//td[2]") do
               has_content?(psp.title).should be_true
-              has_content?(psp_variant.option1).should be_true
             end
             find('.line-price').text.should eql '20'
             find('.line-qty').text.should eql '2'

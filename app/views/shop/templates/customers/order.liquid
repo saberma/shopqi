@@ -74,7 +74,7 @@
     
     {% for shipping_method in order.shipping_methods %}
     <tr class="order_summary note">
-      <td class="label" colspan="4">Shipping ({{ shipping_method.title }}):</td>
+      <td class="label" colspan="4">快递 ({{ shipping_method.title }}):</td>
       <td class="total money">{{ shipping_method.price | money }}</td>
     </tr>
     {% endfor %}

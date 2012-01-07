@@ -90,7 +90,7 @@ class SessionLineItem # Session购物车中商品款式
   end
 
   def grams # 单位:克
-    quantity * @variant.weight * 1000
+    (quantity * @variant.weight * 1000).to_i
   end
   memoize :grams
 

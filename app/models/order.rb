@@ -155,6 +155,18 @@ class OrderLineItem < ActiveRecord::Base
   validates_presence_of :price, :quantity
   scope :unshipped, where(fulfilled: false)
 
+  before_create do # 保存款式冗余属性
+    self.product = product_variant.product
+    self.product_id = product.id
+    self.title = product.title
+    self.variant_title = product_variant.title
+    self.name = product_variant.name
+    self.vendor = product.vendor
+    self.requires_shipping = product_variant.requires_shipping
+    self.grams = (product_variant.weight * 1000 * self.quantity).to_i
+    self.sku = product_variant.sku
+  end
+
   def total_price
     self.price * self.quantity
   end

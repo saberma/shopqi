@@ -21,7 +21,7 @@ class AddAttributesToLineItem < ActiveRecord::Migration # 增加商品款式冗�
         line_item.name = variant.name
         line_item.vendor = product.vendor
         line_item.requires_shipping = variant.requires_shipping
-        line_item.grams = variant.weight * 1000 * line_item.quantity
+        line_item.grams = (variant.weight * 1000 * line_item.quantity).to_i
         line_item.sku = variant.sku
         line_item.save
       end

@@ -16,6 +16,8 @@ describe Order do
     o
   end
 
+  let(:line_item) { order.line_items.first }
+
   describe Customer do
 
     it 'should be add' do
@@ -47,7 +49,7 @@ describe Order do
       end.should change(OrderHistory, :count).by(1)
     end
 
-    context 'enough amount', focus: true do # 完整支付
+    context 'enough amount' do # 完整支付
 
       it 'should change order financial_status to paid' do
         transaction
@@ -56,7 +58,7 @@ describe Order do
 
     end
 
-    context 'no enough amount', focus: true do # 部分支付
+    context 'no enough amount' do # 部分支付
 
       let(:transaction) { order.transactions.create kind: :capture, amount: 1 }
 
@@ -69,9 +71,21 @@ describe Order do
 
   end
 
-  describe OrderFulfillment do
+  describe OrderLineItem do
 
-    let(:line_item) { order.line_items.first }
+    it 'should set variant attributes' do
+      line_item.title.should eql iphone4.title
+      line_item.variant_title.should be_nil
+      line_item.name.should eql variant.name
+      line_item.vendor.should eql iphone4.vendor
+      line_item.requires_shipping.should eql variant.requires_shipping
+      line_item.grams.should eql (variant.weight * 1000 * line_item.quantity).to_i
+      line_item.sku.should eql variant.sku
+    end
+
+  end
+
+  describe OrderFulfillment do
 
     let(:fulfillment) do
       record = order.fulfillments.build

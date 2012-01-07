@@ -31,7 +31,7 @@ describe BaseFilter do
           'option2' => nil,
           'option3' => nil,
           'available' => true,
-          'title' => '默认标题',
+          'title' => nil,
           'price' => variant.price,
           'compare_at_price' => variant.compare_at_price,
           'weight' => variant.weight,

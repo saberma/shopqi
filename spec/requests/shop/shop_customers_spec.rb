@@ -53,7 +53,6 @@ describe "Shop::Customers", js: true do
       page.should have_content('iphone4')
       page.should have_content('psp')
       page.should have_content('60')
-
     end
 
     it "should can registe a new customer" do

@@ -126,7 +126,7 @@ describe Shop::CartController do
         attributes: nil,
         item_count: 1,
         note: nil,
-        total_weight: 5.8
+        total_weight: 5800
       }.each_pair do |key, value|
         cart[key.to_s].should eql value
       end
@@ -146,7 +146,7 @@ describe Shop::CartController do
         url: "/products/#{product.handle}",
         quantity: 2,
         id: variant.id,
-        grams: 5.8,
+        grams: 5800,
         sku: variant.sku,
         vendor: product.vendor,
         image: product.index_photo,
