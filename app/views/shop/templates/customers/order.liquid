@@ -8,7 +8,7 @@
 
 {% if order.cancelled %}
 <div id="order_cancelled" class="flash notice">
-  <h5 id="order_cancelled_title">订单<span class="note">已于 {{ order.cancelled_at | date: "%Y年%m月%d日 %I:%M" }}</span></h5>
+  <h5 id="order_cancelled_title">订单取消<span class="note">于 {{ order.cancelled_at | date: "%Y年%m月%d日 %I:%M" }}</span></h5>
   <span class="note">{{ order.cancel_reason }}</span>
 </div>
 {% endif %}
@@ -74,7 +74,7 @@
     
     {% for shipping_method in order.shipping_methods %}
     <tr class="order_summary note">
-      <td class="label" colspan="4">快递 ({{ shipping_method.title }}):</td>
+      <td class="label" colspan="4">配送方式: ({{ shipping_method.title }}):</td>
       <td class="total money">{{ shipping_method.price | money }}</td>
     </tr>
     {% endfor %}

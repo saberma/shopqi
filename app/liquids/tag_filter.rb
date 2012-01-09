@@ -73,7 +73,7 @@ module TagFilter
     end
 
     def edit_customer_address_link(title,id)
-      %Q{<span class="action_link action_edit"><a href="#" onclick="ShopQi.CustomerAddress.toggleForm(#{id});return false">#{title}</a></span>}
+      %Q{<a href="#" onclick="ShopQi.CustomerAddress.toggleForm(#{id});return false">#{title}</a>}
     end
 
     def delete_customer_address_link(title,id)

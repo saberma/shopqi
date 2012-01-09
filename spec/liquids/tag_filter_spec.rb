@@ -129,7 +129,7 @@ describe TagFilter do
 
     it "should get customer edit address link",focus: true do
       variant = '{{ "编辑" | edit_customer_address_link: 1 }}'
-      result = %Q{<span class="action_link action_edit"><a href="#" onclick="ShopQi.CustomerAddress.toggleForm(1);return false">编辑</a></span>}
+      result = %Q{<a href="#" onclick="ShopQi.CustomerAddress.toggleForm(1);return false">编辑</a>}
       Liquid::Template.parse(variant).render().should eql result
     end
 
