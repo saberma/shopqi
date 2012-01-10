@@ -4,12 +4,12 @@
     %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")/
     %meta(content="no" http-equiv="imagetoolbar")/
     %meta(content="true" name="MSSmartTagsPreventParsing")/
-    %meta(content="ShopQi电商平台是强大的电子商务解决方案，包含所有电子商务功能，免费注册使用" name="description")/
+    %meta(content="ShopQi是强大的电子商务解决方案，包含所有电子商务功能，免费注册使用" name="description")/
     %meta(content="ShopQi 电商服务商 B2C 独立网店 网上开店 网上商店 在线销售 电子商务 电子商务解决方案 购物车 品牌电子商务 垂直电子商务 区域电子商务" name="keywords")/
     %meta(content="width=device-width initial-scale=1.0" name="viewport")/
     %link(href="#{image_path('favicon.png')}" rel="shortcut icon" type="image/x-icon")/
     %link(href="#{image_path('icons/apple-touch-icon.png')}" rel="apple-touch-icon-precomposed")/
-    %title ShopQi &mdash; 电商之路从此开始
+    %title ShopQi &mdash; 网上开店新选择
     = stylesheet_link_tag "layout_shopqi"
     =yield :stylesheets
     /[if IE]
@@ -46,19 +46,15 @@
                   %ul
                     -#
                       %li
-                        %a(href="http://support.myshopqi.com/" title="Welcome - ShopQi Support")
-                          %strong> 支持
+                        %a(href="http://support.shopqi.com/" title="欢迎 &mdash; 售后支持")
+                          %strong> 售后支持
                           联系ShopQi
                       %li
-                        %a(href="#{wiki_url_with_port}/" title="Main Page - ShopQi Wiki")
-                          %strong> 文档
-                          学习ShopQi相关文档
-                      %li
-                        %a(href="http://forums.shopqi.com/" title="ShopQi Community")
+                        %a(href="http://forums.shopqi.com/" title="ShopQi论坛")
                           %strong> 论坛
                           ShopQi社区
                       %li
-                        %a(href="http://apps.shopqi.com/" title="ShopQi Application Store")
+                        %a(href="http://apps.shopqi.com/" title="ShopQi应用商店")
                           %strong> 应用
                           选择商店应用程序
                     %li
