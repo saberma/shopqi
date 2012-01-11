@@ -6,4 +6,14 @@
 # Disallow: /
 User-Agent: *
 Disallow: /services/signup
+Disallow: /s/
+Disallow: /media/
+Disallow: /javascripts/
+Disallow: /admin/
+Disallow: /active_admin/
+Disallow: /cdn.shopqi.com/
+User-agent: Baiduspider-image
+Disallow: /
+User-agent: Googlebot-Image
+Disallow: /
 Sitemap: http://www.shopqi.com/sitemaps/shopqi/sitemap_index.xml.gz
