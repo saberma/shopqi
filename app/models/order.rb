@@ -33,11 +33,11 @@ class Order < ActiveRecord::Base
   end
 
   def shipping_rate_price
-    shipping_rate.gsub(/.+-/,'').to_f if shipping_rate
+    shipping_rate.gsub(/.+\s*-/,'').to_f if shipping_rate
   end
 
   def shipping_name
-    shipping_rate.scan(/(.+)-/).flatten[0] if shipping_rate
+    shipping_rate.scan(/(.+?)\s*-/).flatten[0] if shipping_rate
   end
 
   def order_tax_price

@@ -41,6 +41,12 @@ describe OrderDrop do
     liquid(variant).should eql "#{order.total_line_items_price}"
   end
 
+  it 'should get shipping_methods', f: true do
+    order.update_attributes shipping_rate: '普通快递 - 10'
+    variant = "{% for shipping_method in order.shipping_methods %}{{ shipping_method.title }}-{{ shipping_method.price }}{% endfor %}"
+    liquid(variant).should eql "普通快递-10.0"
+  end
+
   private
   def liquid(variant, assign = {'order' => order_drop})
     Liquid::Template.parse(variant).render(assign)

@@ -16,6 +16,10 @@ class OrderDrop < Liquid::Drop
     ShippingMethodDrop.new @order
   end
 
+  def shipping_methods
+    [ShippingMethodDrop.new(@order)]
+  end
+
   #支付细节
   def payment_details
   end
