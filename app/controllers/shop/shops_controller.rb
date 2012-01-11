@@ -49,6 +49,12 @@ class Shop::ShopsController < Shop::AppController
     render text: robots, layout: false, content_type: "text/plain"
   end
 
+  def favicon # 网站图标
+    path = theme.asset_path_without_liquid('favicon.ico')
+    path = Rails.root.join('public/favicon.ico') unless File.exists?(path)
+    send_file path, content_type: 'image/x-icon', disposition: 'inline'
+  end
+
   def unavailable # 提示商店已过期，暂时无法访问
   end
 

@@ -11,6 +11,10 @@ class Shopqi::HomeController < Shopqi::AppController # 官网首页
     render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil
   end
 
+  def favicon # 官网图标
+    send_file Rails.root.join('public/favicon.ico'), content_type: 'image/x-icon', disposition: 'inline'
+  end
+
   def no_page
     render status: 404
   end

@@ -372,6 +372,7 @@ Shopqi::Application.routes.draw do
 
   constraints(Domain::NoStore) do
     scope module: :shopqi do # 用于处理商店不存在的情况
+      match '/favicon.ico'     , to: 'home#favicon'
       match '/'                , to: 'home#no_shop'
       match '/*any'            , to: 'home#no_shop'
     end
@@ -379,6 +380,7 @@ Shopqi::Application.routes.draw do
 
   constraints(Domain::Store) do
     scope module: :shop do # 前台商店
+      match '/favicon.ico'                 , to: 'shops#favicon'
       match '/:unkown'                     , to: 'shops#unkown' # 访问商店不存在的页面时显示404，一定要放在route最后面
     end
   end

@@ -294,13 +294,13 @@ class ShopTheme < ActiveRecord::Base
     end
 
     def asset_path(asset) # data/shops/1/themes/1/assets/checkout.css.liquid
-      asset_liquid = "#{asset}.liquid"
-      liquid_path = File.join path, 'assets', asset_liquid
-      if File.exist?(liquid_path) #存在liquid文件，则解释liquid
-        liquid_path
-      else
-        File.join path, 'assets', asset
-      end
+      liquid_path = File.join path, 'assets', "#{asset}.liquid"
+      return liquid_path if File.exist?(liquid_path) #存在liquid文件，则解释liquid
+      asset_path_without_liquid asset
+    end
+
+    def asset_path_without_liquid(asset) # data/shops/1/themes/1/assets/favicon.ico
+      File.join path, 'assets', asset
     end
 
     def layout_theme_path # data/shops/1/theme/1/layout/theme.liquid
