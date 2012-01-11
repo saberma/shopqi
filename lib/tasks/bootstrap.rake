@@ -6,10 +6,9 @@ namespace :shopqi do
   desc "Run all bootstrapping tasks"
   task :bootstrap do
     unless Rails.env == 'production' # 防止生产环境下执行
-      secret_files = %w(
-        config/initializers/secret_token.rb
-      )
+      secret_files = %w(database sunspot app_secret_config)
       secret_files.each do |file|
+        file = "config/#{file}.yml"
         path = Rails.root.join(file)
         unless File.exists?(path)
           source_path = Rails.root.join("#{file}.example")

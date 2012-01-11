@@ -21,7 +21,7 @@ class SMS # 短信接口
 
   def self.send(receiver, content) # 发送短信
     content += " 【ShopQi电子商务平台】" # 短信平台要求签名结尾
-    config = YAML::load_file(Rails.root.join('config/sms.yml'))
+    config = SecretSetting.sms
     url = "http://#{config['smsapi']}/#{config['charset']}/interface/send_sms.aspx"
     begin
       res = Net::HTTP.post_form(URI.parse(url), username: config['username'], password: config['password'], receiver: receiver, content: content)

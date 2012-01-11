@@ -8,8 +8,7 @@
 ############### 注意 ###############
 
 # 创建官网管理员
-admin_users =  YAML::load_file(Rails.root.join('config/admin_users.yml'))
-admin_users.each_value do |attr|
+SecretSetting.admin_users.each_value do |attr|
   AdminUser.create!(attr) unless AdminUser.exists?(email: attr['email'])
 end
 

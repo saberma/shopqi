@@ -1,4 +1,4 @@
-AlipayConfig =  YAML::load_file(Rails.root.join('config/alipay.yml'))
+AlipayConfig = SecretSetting.alipay
 
 ActiveMerchant::Billing::Integrations::Alipay::KEY =  AlipayConfig['key']
 
