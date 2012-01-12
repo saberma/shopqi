@@ -10,14 +10,18 @@ module BaseFilter #扩展标准filter http://j.mp/v8XGFK
 
   def money(object) # ¥19.00
     shop = @context['shop'] #ShopDrop
+    is_email = @context['is_email']
     format = shop.money_format
+    format = shop.money_in_emails_format if is_email
     text = format.gsub '{{amount}}', object.to_s
     text.gsub '{{amount_no_decimals}}', object.round.to_s
   end
 
   def money_with_currency(object) # ¥19.00 元
     shop = @context['shop'] #ShopDrop
+    is_email = @context['is_email']
     format = shop.money_with_currency_format
+    format = shop.money_with_currency_in_emails_format if is_email
     text = format.gsub '{{amount}}', object.to_s
     text.gsub '{{amount_no_decimals}}', object.round.to_s
   end

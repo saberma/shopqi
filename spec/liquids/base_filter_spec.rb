@@ -65,6 +65,8 @@ describe BaseFilter do
       assign = { 'price' => 18.8, 'shop' => shop_drop }
       result = Liquid::Template.parse(variant).render(assign)
       result.should eql "&#165;18.8"
+      result = Liquid::Template.parse(variant).render(assign.merge('is_email' => true))
+      result.should eql "¥18.8"
     end
 
     it 'should get money with currency' do
@@ -72,6 +74,8 @@ describe BaseFilter do
       assign = { 'price' => 18.8, 'shop' => shop_drop }
       result = Liquid::Template.parse(variant).render(assign)
       result.should eql "&#165;18.8 元"
+      result = Liquid::Template.parse(variant).render(assign.merge('is_email' => true))
+      result.should eql "¥18.8 元"
     end
 
     it 'should get money without currency' do
