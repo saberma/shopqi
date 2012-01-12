@@ -56,7 +56,7 @@ class ShopObserver < ActiveRecord::Observer
 
     KeyValues::Mail::Type.all.each do |type| # 创建各个邮件样板
       title, body = type.title_body
-      shop.emails.create title: title, mail_type: code, body: body
+      shop.emails.create title: title, mail_type: type.code, body: body
     end
 
     # 预先生成consumer access_token(不需要用户手动授权主题应用)，用于主题商店切换主题
