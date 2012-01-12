@@ -155,7 +155,7 @@ class OrderLineItem < ActiveRecord::Base
   validates_presence_of :price, :quantity
   scope :unshipped, where(fulfilled: false)
 
-  before_create do # 保存款式冗余属性
+  def before_create # 保存款式冗余属性
     self.product = product_variant.product
     self.product_id = product.id
     self.title = product.title

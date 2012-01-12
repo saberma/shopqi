@@ -1,8 +1,8 @@
-尊敬的 {{ shipping_address.name }},
+尊敬的{{ shipping_address.name }},
 
   您的订单号为{{ name }}的商品更改了运送信息：
 
-{% for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}
+{% for line in fulfillment.line_items %}{{ line.quantity }} x {{ line.title }}
 {% endfor %}
 
  它们将通过{% if fulfillment.tracking_company %} {{ fulfillment.tracking_company }}{% endif %} 运送，运单号为 {{ fulfillment.tracking_number }}. 您可以通过下面链接查询：

@@ -56,22 +56,14 @@ class OrderDrop < Liquid::Drop
     AddressDrop.new @order.shipping_address
   end
 
-  #order关联的fulfillments按照更新时间排序，并且需为
-  #降序排列,下面方法获取的fulfillment就是最后更新的那个
-  def fulfillment
-    OrderFulfillmentDrop.new(@order.fulfillments.first)  if  @order.fulfillments.first
-  end
-
   def unfulfilled_line_items
   end
 
-  #订单取消原因
-  def cancel_reason
+  def cancel_reason #订单取消原因
     KeyValues::Order::CancelReason.hash[@order.cancel_reason]
   end
 
-  #如果订单已被取消，则返回true
-  def cancelled
+  def cancelled #如果订单已被取消，则返回true
     @order.cancelled_at?
   end
 
@@ -116,6 +108,11 @@ class OrderLineItemDrop < Liquid::Drop
     quantity * price
   end
   memoize :line_price
+
+  def fulfillment
+    OrderFulfillmentDrop.new(@order_line_item.fulfillments.first) if @order_line_item.fulfillments.first
+  end
+  memoize :fulfillment
 
 end
 

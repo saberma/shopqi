@@ -413,10 +413,5 @@ module KeyValues
 
   end
 
-  class DemoData < ActiveYaml::Base
-    set_root_path "db"
-    set_filename 'demo_data'
-  end
-
 end
 

@@ -2,7 +2,7 @@
 
    您所订购的商品 已经发货了:
 
-   {% for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}
+   {% for line in fulfillment.line_items %}{{ line.quantity }} x {{ line.title }}
    {% endfor %}
 
 {% if requires_shipping %} 通过 {% if fulfillment.tracking_company %} {{ fulfillment.tracking_company }} {% endif %}发送到以下地址:
