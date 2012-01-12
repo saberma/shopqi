@@ -190,15 +190,27 @@ module KeyValues
 
     class Type < KeyValues::Base
         self.data = [
-          {id: 1, name: '订单确认提醒'            , code: 'order_confirm'                 , des: '当订单创建时，给客户发送此邮件'                                  },
-          {id: 2, name: '新订单提醒'              , code: 'new_order_notify'              , des: '当有新订单创建时，给网店管理者发送此邮件'                        },
-          {id: 3, name: '货物发送提醒'            , code: 'ship_confirm'                  , des: '当客户的订单的货物发送时，给客户发送此邮件'                      },
-          {id: 4, name: '货物发送信息更改提醒'    , code: 'ship_update'                   , des: '当订单的发送信息变更时，给客户发送此邮件'                        },
-          {id: 5, name: '订单取消提醒'            , code: 'order_cancelled'               , des: '当订单取消时，给客户发送此邮件'                                  },
-          #{id: 6, name: '顾客帐号激活提醒'        , code: 'customer_account_activation'   , des: '当客户创建帐号时，告知客户如何激活帐户,给客户发送此邮件'         },
-          #{id: 7, name: '顾客帐号密码更改提醒'    , code: 'customer_password_reset'       , des: '当客户需要密码变更时，给客户发送此邮件'                          },
-          #{id: 8, name: '顾客帐号确认提醒'        , code: 'customer_account_welcome'      , des: '当客户激活了帐户时，给客户发送此邮件'                            }
+          {id: 10, name: '订单确认提醒'            , code: 'order_confirm'                 , des: '当订单创建时，给客户发送此邮件'                                  },
+          {id: 20, name: '新订单提醒'              , code: 'new_order_notify'              , des: '当有新订单创建时，给网店管理者发送此邮件'                        },
+          #{id: 25, name: '新订单提醒(手机)'        , code: 'new_order_notify_mobile'       , des: '当有新订单创建时，给网店管理者发送此手机短信'                    },
+          {id: 30, name: '货物发送提醒'            , code: 'ship_confirm'                  , des: '当客户的订单的货物发送时，给客户发送此邮件'                      },
+          {id: 40, name: '货物发送信息更改提醒'    , code: 'ship_update'                   , des: '当订单的发送信息变更时，给客户发送此邮件'                        },
+          #{id: 50, name: '联系买家'                , code: 'contact_buyer'                 , des: '在订单页面点击"发送邮件"时显示的邮件内容'                        },
+          {id: 60, name: '订单取消提醒'            , code: 'order_cancelled'               , des: '当订单取消时，给客户发送此邮件'                                  },
+          #{id: 70, name: '顾客帐号激活提醒'        , code: 'customer_account_activation'   , des: '当客户创建帐号时，告知客户如何激活帐户,给客户发送此邮件'         }, # 暂不需要
+          #{id: 80, name: '顾客帐号密码更改提醒'    , code: 'customer_password_reset'       , des: '当客户需要密码变更时，给客户发送此邮件'                          },
+          #{id: 90, name: '顾客帐号确认提醒'        , code: 'customer_account_welcome'      , des: '当客户激活了帐户时，给客户发送此邮件'                            }
         ]
+
+        def title_body
+          title = Rails.cache.fetch "shopqi_templates_emails_#{self.code}_title" do
+            File.read(Rails.root.join("app/views/admin/templates/emails/#{self.code}_title.liquid"))
+          end
+          body = Rails.cache.fetch "shopqi_templates_emails_#{self.code}_body" do
+            File.read(Rails.root.join("app/views/admin/templates/emails/#{self.code}_body.liquid"))
+          end
+          [title, body]
+        end
     end
   end
 

@@ -54,12 +54,9 @@ class ShopObserver < ActiveRecord::Observer
     c.weight_based_shipping_rates.build name: '普通快递' #并创建默认的快递方式
     c.save
 
-    # 创建各个邮件样板
-    KeyValues::Mail::Type.all.each do |type|
-      code = type.code.to_sym
-      title = Setting.templates.email.send(code).title
-      body  = Setting.templates.email.send(code).body
-      shop.emails.create title: title,mail_type: code , body: body
+    KeyValues::Mail::Type.all.each do |type| # 创建各个邮件样板
+      title, body = type.title_body
+      shop.emails.create title: title, mail_type: code, body: body
     end
 
     # 预先生成consumer access_token(不需要用户手动授权主题应用)，用于主题商店切换主题

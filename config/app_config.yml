@@ -1,70 +1,9 @@
 defaults: &defaults
-  mail_from: "ShopQi电子商务平台 <noreply@shopqi.com>"
+  mail_from: "ShopQi<noreply@shopqi.com>"
   domain:
     host: lvh.me
   wiki:
     relative_path: 'data/wiki'
-  templates:
-    email:
-      order_confirm:
-        body:  "尊敬的{{customer.name}}： \r\n   您好,恭喜您已经在{{shop_name}}商店订购商品成功!,订单号：{{order_number}}。{%
-          if requires_shipping %} \r\n   收货人信息： {{ shipping_address.name}}： \r\n              {{
-          shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}}
-          {{ shipping_address.address1}} {% endif %} \r\n   订单商品明细： {% for line in line_items %} \r\n              {{ line.quantity
-          }} x {{ line.title }}  单价： {{ line.price | money }} {% endfor %}\r\n   订单总额：
-          {{ total_price }}  | 商品总额： {{ total_line_items_price }}  | 发货方式及金额： {{ shipping_rate
-          }}\r\n   付款方式： {{ gateway }}   \r\n   \r\n   如果您尚未付款，请您尽快付款。订单商品发货后，我们将发送一封电子邮件给您，确认发货日期、发货内容和送货方式。\r\n\r\n
-           欢迎您再次到{{shop_name}}购物，祝您购物愉快！"
-        title: 您在{{shop_name}}的订单下单成功
-
-      new_order_notify:
-        body:  "{{ shop_name }},\r\n\r\n{{ shipping_address.name }} 新增了订单({{ date | date:
-          \"%b %d %I:%M%p\" }}). \r\n\r\n付款方式:\r\n  {{ gateway }}{% if requires_shipping
-          %}\r\n\r\n发送方式: \r\n  {{ shipping_method.title
-          }}\r\n  \r\n收货人信息:\r\n  {{ shipping_address.name }}\r\n  {{ shipping_address.country}}
-          {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}}
-          {{ shipping_address.address1}} , {{ shipping_address.zip }}\r\n  {{ shipping_address.phone
-          }}{% endif %}\r\n\r\n\r\n{% for line in line_items %}{{ line.quantity }}x {{line.title
-          }}\t\t(sku: {{ line.sku }})\r\n{% endfor %}"
-        title:  '[{{shop_name}}] 订单 {{ name }} , {{ shipping_address.name }}下单'
-
-      ship_confirm:
-        body:  "尊敬的{{ shipping_address.name }},\r\n\r\n   您所订购的商品 已经发货了:\r\n\r\n   {%
-          for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}\r\n
-          \  {% endfor %}\r\n\r\n{% if requires_shipping %} 通过 {% if fulfillment.tracking_company
-          %} {{ fulfillment.tracking_company }} {% endif %}发送到以下地址:\r\n  收货人信息: {{shipping_address.name}}:\r\n
-                       {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}}\r\n\r\n  {% if fulfillment.tracking_number %}\r\n 运单号为： {{ fulfillment.tracking_number }}.
-          您可以通过下面的地址，查询您货物的运送状态 :\r\n\r\n{{ fulfillment.tracking_url }}\r\n\r\n{% endif
-          %}{% endif %}\r\n\r\n  欢迎您再次到{{shop_name}}购物，祝您购物愉快！"
-        title: 订单 {{ name }} 发货提醒
-
-      ship_update:
-        body:  "尊敬的 {{ shipping_address.name }},\r\n\r\n  您的订单号为{{ name }}的商品更改了运送信息：\r\n\r\n{%
-          for line in fulfillment.line_items %}{{ line.quantity }}x {{ line.title }}\r\n{%
-          endfor %}\r\n\r\n 它们将通过{% if fulfillment.tracking_company %} {{ fulfillment.tracking_company
-          }}{% endif %} 运送，运单号为 {{ fulfillment.tracking_number }}. 您可以通过下面链接查询：\r\n\r\n
-          \ {{ fulfillment.tracking_url }}\r\n\r\n 欢迎您再次到{{shop_name}}购物，祝您购物愉快！"
-        title: 订单{{ name }} 运送方式更改提醒
-
-      order_cancelled:
-        body:  "尊敬的 {{ shipping_address.name }},\r\n\r\n  您的订单{{ name }}已取消！取消原因是:{{ cancel_reason }} 。 如果您已付款，我们将会把款项返回给您！\r\n\r\n
-          \ 如果，您有任何疑问，可以回复此邮件！\r\n  \r\n  欢迎您再次到{{ shop_name }}购物，祝您购物愉快！\r\n"
-        title: 订单 {{ name }} 取消提醒
-
-      customer_account_activation:
-        body:  "尊敬的{{ customer.name }},\r\n\r\n  您在{{ shop.name }}的帐号已经创建.\r\n\r\n  请点击下面的链接完成激活操作！
-          \r\n\r\n  {{ customer.account_activation_url }}\r\n\r\n  \r\n"
-        title:  '{{ shop_name }}帐号激活提醒'
-
-      customer_password_reset:
-        body:  "尊敬的 {{ customer.name }},\r\n\r\n  你申请了密码重置，请点击下面的链接重置你的密码\r\n   {{ customer.reset_password_url
-          }}\r\n  \r\n  为保障你账户的安全性，以上链接将在你密码修改成功后失效。\r\n  {{ shop_name }}"
-        title: 密码变更
-
-      customer_account_welcome:
-        body:  "尊敬的 {{ customer.name }},\r\n\r\n  您在{{ shop_name}}的帐号已激活！ 您可以方便的使用此帐号在本店购物！\r\n
-          \ \r\n  谢谢！\r\n  {{ shop_name }}\r\n\r\n"
-        title: 帐号激活确认提醒
 
 development:
   <<: *defaults

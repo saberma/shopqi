@@ -1,0 +1,18 @@
+{{ shop_name }},
+
+{{ shipping_address.name }} 新增了订单({{ date | date: "%b %d %I:%M%p" }}). 
+
+付款方式:
+  {{ gateway }}{% if requires_shipping %}
+
+发送方式: 
+  {{ shipping_method.title }}
+  
+收货人信息:
+  {{ shipping_address.name }}
+  {{ shipping_address.country}} {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}} , {{ shipping_address.zip }}
+  {{ shipping_address.phone }}{% endif %}
+
+
+{% for line in line_items %}{{ line.quantity }}x {{line.title }}		(sku: {{ line.sku }})
+{% endfor %}
