@@ -52,13 +52,15 @@ describe "Domains", js: true do
         find('#errorExplanation').has_content?('域名 不能为空').should be_true
       end
 
-      it "should be add" do
+      it "should be success" do
         click_on '新增一个您已经拥有的域名'
         fill_in 'domain[host]', with: 'www.example.com'
+        fill_in 'domain[record]', with: '粤ICP备8888号'
         click_on '绑定此域名'
         within '#domains > .items' do
           within :xpath, './tr[2]' do
             find('a.host').text.should eql "www.example.com"
+            find('td.record').text.should eql '粤ICP备8888号'
             find('.dns-check').should have_content('失败')
             find(:xpath, './td[3]').has_content?('总是重定向顾客到这里?').should be_false
             page.should have_css('.deletions .del')
@@ -68,6 +70,7 @@ describe "Domains", js: true do
         within '#domains > .items' do
           within :xpath, './tr[2]' do
             find('a.host').text.should eql "www.example.com"
+            find('td.record').text.should eql '粤ICP备8888号'
           end
         end
       end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120103132045) do
+ActiveRecord::Schema.define(:version => 20120113091629) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -548,6 +548,8 @@ ActiveRecord::Schema.define(:version => 20120103132045) do
     t.string  "host",         :limit => 64
     t.boolean "primary",                    :default => true
     t.boolean "force_domain",               :default => false
+    t.string  "record",       :limit => 32
+    t.boolean "verified",                   :default => true
   end
 
   add_index "shop_domains", ["host"], :name => "index_shop_domains_on_host"

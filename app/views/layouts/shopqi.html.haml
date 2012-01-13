@@ -98,5 +98,9 @@
                   =image_tag 'admin/icons/email.gif', height: 12, width: 12
                   =link_to 'admin@shopqi.com', 'mailto:admin@shopqi.com'
           #copyright.center.clear
-            %p © 2011 shopqi.com All Rights Reserved | 粤ICP备11089804号 | ShopQi - 索奇电子商务平台.
+            %p==© 2011 ShopQi Inc. | #{Setting.domain.record}
+            %p
+              ShopQi
+              %a(href="#{url_with_port}") 电子商务解决方案
+              \- 3分钟快速开店
     =render 'shared/baidu'

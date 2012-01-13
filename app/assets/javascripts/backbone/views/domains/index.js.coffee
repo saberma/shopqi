@@ -21,12 +21,12 @@ App.Views.Domain.Index = Backbone.View.extend
 
   save: ->
     host = $('#domain_host').val()
+    record = $('#domain_record').val()
     if host
       $('.group-actions .btn').attr 'disabled', true
-      @collection.create host: host, primary: false, # 默认一定要为非主域名
+      @collection.create host: host, record: record, primary: false, # 默认一定要为非主域名
         success: ->
           $('.group-actions .btn').attr 'disabled', false
-
     else
       $('#errorExplanation').show()
     false
@@ -43,4 +43,5 @@ App.Views.Domain.Index = Backbone.View.extend
     $('#add-domain').hide()
     $('#add-domain-link').show()
     $('#domain_host').val ''
+    $('#domain_record').val ''
     false

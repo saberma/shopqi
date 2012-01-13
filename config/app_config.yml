@@ -2,13 +2,12 @@ defaults: &defaults
   mail_from: "ShopQi<noreply@shopqi.com>"
   domain:
     host: lvh.me
+    record: 粤ICP备11089804号
   wiki:
     relative_path: 'data/wiki'
 
 development:
   <<: *defaults
-  domain:
-    host: lvh.me
 
 test:
   <<: *defaults
@@ -20,3 +19,4 @@ production:
   domain:
     #host: lvh.me
     host: shopqi.com
+    record: 粤ICP备11089804号

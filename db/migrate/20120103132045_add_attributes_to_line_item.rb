@@ -11,6 +11,7 @@ class AddAttributesToLineItem < ActiveRecord::Migration # 增加商品款式冗�
     add_column :order_line_items, :grams            , :integer, comment: '重量单位:克'
     add_column :order_line_items, :sku              , :string , comment: '商品唯一标识符'
 
+    OrderLineItem.reset_column_information
     OrderLineItem.all.each do |line_item| # 处理原有数据
       variant = line_item.product_variant
       if variant

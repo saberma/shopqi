@@ -68,7 +68,7 @@ class Shop::AppController < ActionController::Base
 
     def template_assign(assign = {}) # 渲染template时的hash
       template = assign['template'] || 'index'
-      shop_drop = ShopDrop.new(shop, theme)
+      shop_drop = ShopDrop.new(shop, theme, request.host)
       settings_drop = SettingsDrop.new(theme)
       linklists_drop = LinkListsDrop.new(shop)
       collections_drop = CollectionsDrop.new(shop)

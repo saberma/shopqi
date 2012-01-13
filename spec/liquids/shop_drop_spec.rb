@@ -5,7 +5,7 @@ describe ShopDrop do
 
   let(:shop) { Factory(:user).shop }
 
-  let(:shop_drop) { ShopDrop.new shop }
+  let(:shop_drop) { ShopDrop.new shop, nil, "#{shop.domains.first.host}" }
 
   it 'should get url' do
     variant = "{{ shop.url }}"
@@ -41,6 +41,11 @@ describe ShopDrop do
     it 'should get types' do
       variant = "{% for t in shop.types %}{{ t }}{% endfor %}"
       liquid(variant).should eql "手机"
+    end
+
+    it 'should get domain record' do
+      variant = "{{ shop.domain_record }}"
+      liquid(variant).should eql Setting.domain.record
     end
 
   end

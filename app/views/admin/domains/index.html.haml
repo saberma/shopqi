@@ -14,12 +14,13 @@
       %thead
         %tr
           %th(scope="col") 域名
+          %th(scope="col") 备案号
           %th.c(scope="col" style="text-align: center" width="100px") DNS绑定至商店
           %th(colspan="2" scope="col" width="140px") &nbsp;
       %tbody.items
       %tbody
         %tr#add-domain-link
-          %td.action-link(colspan="4")
+          %td.action-link(colspan="5")
             %a(href="#")
               %span.plus +
               新增一个您已经拥有的域名
@@ -36,6 +37,11 @@
             %p
               http://
               %input#domain_host(name="domain[host]" size="32" type="text")
+          .instructions
+            %p
+              %strong 请输入域名备案号(备案号无效的话，此域名将无法被访问)
+            %p
+              %input#domain_record(name="domain[record]" size="32" type="text")
           / instructions
         / .group-fields
         .group-actions
@@ -51,6 +57,7 @@
     %span.note http://
     %span
       %a.host(href="http://{{{host}}}") {{{host}}}
+  %td.record {{{record}}}
   %td.c
     %span.dns-check=image_tag 'spinner.gif'
   %td(style="text-align: left; padding: 10px")
