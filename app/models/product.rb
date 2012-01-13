@@ -112,10 +112,9 @@ class Product < ActiveRecord::Base
     end
 
     def featured_image
-      photo = self.photos.first
       Hash[*Photo::VERSION_KEYS.map do |version|
-        [version, photo.send(version)]
-      end.flatten] if photo
+        [version, self.photo(version)]
+      end.flatten]
     end
 
   end
