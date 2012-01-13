@@ -68,6 +68,15 @@ describe Shop::ProductsController do
       response.status.should eql 404
     end
 
+    context 'js' do # 通过js访问时，返回空json，否则会导致[最近浏览列表]无法显示
+
+      it "should be success" do
+        get 'show', handle: 'no-exists-handle', format: :js
+        response.status.should eql 200
+      end
+
+    end
+
   end
 
 end

@@ -14,7 +14,9 @@ class Shop::ProductsController < Shop::AppController
         render text: html
       }
       format.js {
-        render json: product.shop_as_json
+        product = shop.products.where(handle: params[:handle]).first
+        json = product ? product.shop_as_json : {}
+        render json: json
       }
     end
   end
