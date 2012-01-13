@@ -44,7 +44,7 @@ describe ProductVariantDrop do
   end
 
   it 'should get sku' do
-    variant_drop.sku.should be_nil
+    variant_drop.sku.should eql 'APPLE1000'
   end
 
   it 'should get option1' do
