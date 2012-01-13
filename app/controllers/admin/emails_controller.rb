@@ -67,7 +67,7 @@ class Admin::EmailsController < Admin::AppController
     order.order_number = 9999
     order.name = shop.order_number_format.gsub /{{number}}/, order.order_number.to_s
     variant = shop.variants.first # 商品款式
-    order.line_items.build(product_variant: variant, price: variant.price, quantity: 1).before_create
+    order.line_items.build(product_variant: variant, price: variant.price, quantity: 1).init
     order.total_line_items_price = order.line_items.map(&:total_price).sum
     order.total_price = order.total_line_items_price + order.tax_price
     address = order.shipping_address # 顾客地址
