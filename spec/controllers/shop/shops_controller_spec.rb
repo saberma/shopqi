@@ -15,9 +15,7 @@ describe Shop::ShopsController do
 
   describe '#preview' do
 
-    before :each do
-      shop.update_attributes password_enabled: false
-    end
+    before { shop.update_attributes password_enabled: false }
 
     it 'should show theme controll' do # 右上角显示当前预览主题提示
       get :show, preview_theme_id: shop.theme.id # 跳转后去掉preview_theme_id参数
@@ -49,9 +47,7 @@ describe Shop::ShopsController do
 
     context '#without protected' do
 
-      before :each do
-        shop.update_attributes password_enabled: false
-      end
+      before { shop.update_attributes password_enabled: false }
 
       it 'should be show' do
         get :show
@@ -60,6 +56,19 @@ describe Shop::ShopsController do
 
       it 'should get css file' do
         get :asset, id: shop.id, theme_id: shop.theme.id, file: 'stylesheet', format: 'css'
+        response.should be_success
+      end
+
+    end
+
+  end
+
+  describe '#unavailable' do # 商店已过期
+
+    context '#with shop password' do # 并设置了密码
+
+      it 'should be show' do # 正常显示，不会出现循环跳转
+        get :unavailable
         response.should be_success
       end
 

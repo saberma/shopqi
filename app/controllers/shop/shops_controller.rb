@@ -2,7 +2,7 @@
 #class Shop::ShopsController < Shop::ApplicationController #warning: toplevel constant ApplicationController referenced by
 class Shop::ShopsController < Shop::AppController
   include Admin::ShopsHelper
-  skip_before_filter :password_protected, only: [:password, :themes, :asset, :robots]
+  skip_before_filter :password_protected, only: [:password, :unavailable, :themes, :asset, :robots]
   skip_before_filter :must_has_theme, only: [:password, :themes, :asset, :robots]
   skip_before_filter :check_shop_avaliable, only: [:unavailable, :robots]
 
