@@ -21,8 +21,9 @@ describe "Domains", js: true do
       within '#domains > .items' do
         within :xpath, './tr[1]' do
           find('a.host').text.should eql "shopqi#{Setting.store_host}"
+          find('td.record').text.should eql Setting.domain.record
           find('.dns-check').has_content?('成功').should be_true
-          find(:xpath, './td[3]').has_content?('总是重定向顾客到这里?').should be_true
+          find(:xpath, './td[4]').has_content?('总是重定向顾客到这里?').should be_true
           has_css?('.deletions .del').should be_false
         end
       end
@@ -85,21 +86,21 @@ describe "Domains", js: true do
         click_on '绑定此域名'
         click_on '作为主域名'
         within '#domains > .items' do
-          find(:xpath, './tr[2]/td[3]').has_content?('总是重定向顾客到这里?').should be_true  # 新的域名记录
-          find(:xpath, './tr[1]/td[3]').has_content?('总是重定向顾客到这里?').should be_false # 第一条域名记录
+          find(:xpath, './tr[2]/td[4]').has_content?('总是重定向顾客到这里?').should be_true  # 新的域名记录
+          find(:xpath, './tr[1]/td[4]').has_content?('总是重定向顾客到这里?').should be_false # 第一条域名记录
         end
       end
 
       it "should be force redirect" do # 重定向
         within '#domains > .items' do
-          within :xpath, './tr[1]/td[3]' do
+          within :xpath, './tr[1]/td[4]' do
             find('#shop_force_domain')['checked'].should be_false
           end
         end
         check '总是重定向顾客到这里?'
         visit domains_path
         within '#domains > .items' do
-          within :xpath, './tr[1]/td[3]' do
+          within :xpath, './tr[1]/td[4]' do
             find('#shop_force_domain')['checked'].should be_true
           end
         end
