@@ -1,0 +1,16 @@
+#container
+  #dialog
+    .status
+      %p 账户方案续费
+    =form_for :consumption, url: confirm_pay_plan_account_index_path do |f|
+      .ppb
+        %p.sb==您当前使用的是 #{raw high_color shop.plan_type.name} 方案，此方案单价为#{raw high_color shop.plan_type.price}元/月，
+        %p.sb 默认支付为12个月,您可以选择支付
+        %p.sb
+          =f.select :quantity, options_for_select((1..24).map{|c|[c,c]}, 12)
+          个月
+        %p.sb 点击确认按钮，将进入确认付款页面。
+      .actions
+        =f.submit '确认',class: 'btn'
+        =w('or')
+        =link_to w('cancel'), account_index_path

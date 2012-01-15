@@ -1,15 +1,11 @@
 #container
   #dialog
     .status
-      %p 确认账户方案变更
+      %p 确认账户方案续费
     .ppb
-      %p.sb
-        %strong 请您确认你想要升级您的ShopQi账户:
-      %p.sb
-        ==您将升级您的账户到 #{raw high_color plan_type.name} 方案，此方案单价为#{raw high_color plan_type.price}元/月，
-      %p.sb
-        ==您将支付 #{raw high_color @consumption.quantity} 个月，总价为 #{raw high_color @consumption.total_price} 元
-      %p.sb 方案将在您支付成功后生效！暂支持 #{raw high_color '支付宝'} 方式支付
+      %p.sb==您当前使用的是 #{raw high_color shop.plan_type.name} 方案，此方案单价为#{raw high_color shop.plan_type.price}元/月，
+      %p.sb==您将支付 #{raw high_color @consumption.quantity} 个月，总价为 #{raw high_color @consumption.total_price} 元
+      %p.sb 目前，暂支持 #{raw high_color '支付宝'} 方式支付
     - payment_service_for @consumption.token, AlipayConfig['account'], :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
       - service.total_fee @consumption.total_price
       - service.seller email: AlipayConfig['email']
@@ -18,9 +14,9 @@
       - service.charset "utf-8"
       - service.service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER
       - service.payment_type 1
-      - service.subject '升级ShopQi账户方案'
+      - service.subject 'ShopQi账户方案续费'
       - service.sign
     .actions
       = button_to_function "确认支付", "$('#payment-form > div').remove();$('#payment-form').submit()",class:'btn'
       =w('or')
-      =link_to w('cancel'),account_index_path
+      =link_to w('cancel'), account_index_path

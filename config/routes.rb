@@ -288,13 +288,14 @@ Shopqi::Application.routes.draw do
         end
       end
 
-      match 'account/change_plan/:code'      ,to: 'account#change_plan', as: :change_plan
-
       resources :account, only: [:index] do
         collection do
+          get 'change_plan/:code', to: 'account#change_plan', as: :change_plan
+          post :confirm_plan
+          get  :pay_plan
+          post :confirm_pay_plan
           post :change_ownership
           post :notify
-          post :confirm_plan
           get  :cancel
           delete :destroy
           get :done

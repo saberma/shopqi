@@ -13,12 +13,16 @@
       -flag = shop.plan == plan_type.code
       %tr(class="#{flag ? 'current-plan' : ''}")
         %td
-          %strong=plan_type.name
+          %strong
+            =plan_type.name
+            -if flag
+              %span.note (您当前的方案)
           %br/
           -if flag
-            %span.note 您当前得方案
+            =raw(high_color('当前帐户已过期')) unless shop.available?
+            =link_to '续费', pay_plan_account_index_path
           -else
-            =link_to w('upgrade'),change_plan_path(code: plan_type.code)
+            =link_to w('upgrade'), change_plan_account_index_path(code: plan_type.code)
         %td=plan_type.price
         %td=plan_type.skus_name
         %td=plan_type.storage_name

@@ -31,13 +31,28 @@ class Admin::AccountController < Admin::AppController
     redirect_to account_index_path
   end
 
-  #用于用户升级账户
-  def confirm_plan
-    quantity = params[:consumption][:quantity]
-    @consumption = shop.consumptions.where(plan_type_id: plan_type.id, status: false, quantity: quantity).first || shop.consumptions.create(plan_type_id: plan_type.id, quantity: quantity)
+  begin '变更方案'
+
+    def change_plan
+    end
+
+    def confirm_plan #用于用户升级账户
+      quantity = params[:consumption][:quantity]
+      @consumption = shop.consumptions.where(plan_type_id: plan_type.id, status: false, quantity: quantity).first || shop.consumptions.create(plan_type_id: plan_type.id, quantity: quantity)
+    end
+
   end
 
-  def change_plan
+  begin '续费'
+
+    def pay_plan
+    end
+
+    def confirm_pay_plan
+      quantity = params[:consumption][:quantity]
+      @consumption = shop.consumptions.where(plan_type_id: shop.plan_type.id, status: false, quantity: quantity).first || shop.consumptions.create(plan_type_id: shop.plan_type.id, quantity: quantity)
+    end
+
   end
 
   begin 'from pay gateway'
@@ -58,7 +73,7 @@ class Admin::AccountController < Admin::AppController
       @consumption = Consumption.find_by_token(pay_return.order)
       if @consumption
         @consumption.pay! unless @consumption.status # 要支持重复请求
-        flash[:notice] = "支付成功"
+        flash[:notice] = "支付成功!"
       else
         raise pay_return.message
       end
@@ -85,7 +100,7 @@ class Admin::AccountController < Admin::AppController
 
   protected
   def determine_layout
-    %w(confirm_plan change_plan cancel).include?(action_name) ? "application" : "admin"
+    %w(change_plan confirm_plan pay_plan confirm_pay_plan cancel).include?(action_name) ? "application" : "admin"
   end
 
   private

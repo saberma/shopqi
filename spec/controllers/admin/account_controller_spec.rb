@@ -44,6 +44,20 @@ describe Admin::AccountController do
 
   end
 
+  context 'pay plan' do # 续费
+
+    it 'should get pay plan' do
+      get :pay_plan
+      response.should be_success
+    end
+
+    it 'should get confirm pay plan' do
+      post :confirm_pay_plan, consumption: { quantity: 2 }
+      response.should be_success
+    end
+
+  end
+
   context '#notify' do # 支付宝从后台发送通过
 
     let(:consumption) { Factory(:consumption, shop: shop) }
