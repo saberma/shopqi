@@ -297,6 +297,7 @@ Shopqi::Application.routes.draw do
           post :confirm_plan
           get  :cancel
           delete :destroy
+          get :done
         end
       end
 

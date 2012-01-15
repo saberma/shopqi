@@ -8,15 +8,14 @@
       %p.sb
         ==您将升级您的账户到 #{raw high_color plan_type.name} 方案，此方案单价为#{raw high_color plan_type.price}元/月，
       %p.sb
-        ==您将支付 #{raw high_color @consumption.quantity} 个月，总价为 #{raw high_color @consumption.quantity * @consumption.price} 元
+        ==您将支付 #{raw high_color @consumption.quantity} 个月，总价为 #{raw high_color @consumption.total_price} 元
       %p.sb
         方案将在您支付成功后生效！目前，暂支持支付宝方式支付
     - payment_service_for @consumption.token, AlipayConfig['account'], :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
-      - service.price @consumption.price
-      - service.quantity @consumption.quantity
-      - service.seller :email => AlipayConfig['email']
+      - service.total_fee @consumption.total_price
+      - service.seller email: AlipayConfig['email']
       - service.notify_url notify_account_index_url
-      - service.return_url account_index_url
+      - service.return_url done_account_index_url
       - service.charset "utf-8"
       - service.service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER
       - service.payment_type 1

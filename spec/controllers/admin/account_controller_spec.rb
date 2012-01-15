@@ -44,4 +44,133 @@ describe Admin::AccountController do
 
   end
 
+  context '#notify' do # 支付宝从后台发送通过
+
+    let(:consumption) { Factory(:consumption, shop: shop) }
+
+    before do
+      controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
+    end
+
+    context 'trade status is TRADE_FINISHED' do # 交易完成
+
+      let(:attrs) { { out_trade_no: consumption.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: consumption.total_price } }
+
+      context 'shop is available' do # 未到期
+
+        before do
+          shop.deadline = Date.today.advance months: 1 # 一个月后才到期
+          shop.save
+        end
+
+        it 'should change consumption status to true' do
+          consumption.status.should be_false
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.body.should eql 'success'
+          consumption.reload.status.should be_true
+          shop.reload.deadline.should eql Date.today.advance(months: 3) # 三个月后到期
+        end
+
+      end
+
+      context 'shop is unavailable' do # 已过期
+
+        before do
+          shop.deadline = Date.today.advance months: -1 # 一个月前已过期
+          shop.save
+        end
+
+        it 'should change consumption status to true' do
+          consumption.status.should be_false
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.body.should eql 'success'
+          consumption.reload.status.should be_true
+          shop.reload.deadline.should eql Date.today.advance(months: 2) # 二个月后到期
+        end
+
+      end
+
+      it 'should be retry' do # 要支持重复请求
+        consumption.status = true
+        consumption.save
+        expect do
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.body.should eql 'success'
+        end.should_not change(shop, :deadline)
+      end
+
+    end
+
+    context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
+
+      let(:attrs) { { out_trade_no: consumption.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY', total_fee: consumption.total_price } }
+
+      it 'should remain consumption status' do
+        consumption.status.should be_false
+        expect do
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.body.should eql 'success'
+        end.should_not change(shop, :deadline)
+        consumption.reload.status.should be_false
+      end
+
+    end
+
+  end
+
+  context '#done' do # 支付宝直接跳转回商店(支付成功后才会返回)
+
+    let(:consumption) { Factory(:consumption, shop: shop) }
+
+    before { consumption }
+
+    context 'trade status is TRADE_SUCCESS' do # 交易完成
+
+      let(:attrs) { { out_trade_no: consumption.token, trade_status: 'TRADE_SUCCESS', total_fee: consumption.total_price } }
+
+      context 'shop is available' do # 未到期
+
+        before do
+          shop.deadline = Date.today.advance months: 1 # 一个月后才到期
+          shop.save
+        end
+
+        it 'should change consumption status to true' do
+          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.should be_redirect
+          consumption.reload.status.should be_true
+          shop.reload.deadline.should eql Date.today.advance(months: 3) # 三个月后到期
+        end
+
+      end
+
+      context 'shop is unavailable' do # 已过期
+
+        before do
+          shop.deadline = Date.today.advance months: -1 # 一个月前已过期
+          shop.save
+        end
+
+        it 'should change consumption status to true' do
+          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.should be_redirect
+          consumption.reload.status.should be_true
+          shop.reload.deadline.should eql Date.today.advance(months: 2) # 二个月后到期
+        end
+
+      end
+
+      it 'should be retry' do # 要支持重复请求
+        consumption.status = true
+        consumption.save
+        expect do
+          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
+          response.should be_redirect
+        end.should_not change(shop, :deadline)
+      end
+
+    end
+
+  end
+
 end

@@ -1,6 +1,6 @@
 #encoding: utf-8
 class Admin::AccountController < Admin::AppController
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, except: [:notify]
   layout :determine_layout
 
   expose(:shop){ current_user.shop }
@@ -33,21 +33,38 @@ class Admin::AccountController < Admin::AppController
 
   #用于用户升级账户
   def confirm_plan
-    @consumption = shop.consumptions.where(plan_type_id: plan_type.id, status: false, quantity: params[:consumption][:quantity], price: plan_type.price).first || shop.consumptions.create( plan_type_id: plan_type.id,price: plan_type.price, quantity: params[:consumption][:quantity])
+    quantity = params[:consumption][:quantity]
+    @consumption = shop.consumptions.where(plan_type_id: plan_type.id, status: false, quantity: quantity).first || shop.consumptions.create(plan_type_id: plan_type.id, quantity: quantity)
   end
 
   def change_plan
   end
 
-  def notify
-    notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
-    if notification.acknowledge && valid?(notification)
-      @consumption = Consumption.find_by_token(notification.out_trade_no)
-      @consumption.pay! if notification.status == "TRADE_FINISHED"
-      render :text => "success"
-    else
-      render :text => "fail"
+  begin 'from pay gateway'
+
+    def notify
+      notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
+      if notification.acknowledge && valid?(notification)
+        @consumption = Consumption.find_by_token(notification.out_trade_no)
+        @consumption.pay! if notification.status == "TRADE_FINISHED"
+        render text: "success"
+      else
+        render text: "fail"
+      end
     end
+
+    def done # 支付后从浏览器前台直接返回(return_url)
+      pay_return = ActiveMerchant::Billing::Integrations::Alipay::Return.new(request.query_string)
+      @consumption = Consumption.find_by_token(pay_return.order)
+      if @consumption
+        @consumption.pay! unless @consumption.status # 要支持重复请求
+        flash[:notice] = "支付成功"
+      else
+        raise pay_return.message
+      end
+      redirect_to account_index_path
+    end
+
   end
 
   def cancel #删除账户页面

@@ -99,3 +99,8 @@ end
 def raw_attach_file(file)
   request.env['RAW_POST_DATA'] = File.read(file) # 模拟ajax上传附件，上传后控制器通过request.raw_post获取文件内容 http://j.mp/n71jxS http://j.mp/ouLYdw
 end
+
+def sign(attrs, key) # 支付宝传递url参数时的加密字符串
+  md5_string = attrs.sort.map {|s| "#{s[0]}=#{s[1]}"}
+  Digest::MD5.hexdigest(md5_string.join("&") + key)
+end

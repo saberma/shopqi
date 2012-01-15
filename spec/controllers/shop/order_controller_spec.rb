@@ -207,9 +207,3 @@ describe Shop::OrderController do
   end
 
 end
-
-private
-def sign(attrs, key)
-  md5_string = attrs.sort.map {|s| "#{s[0]}=#{s[1]}"}
-  Digest::MD5.hexdigest(md5_string.join("&") + key)
-end
