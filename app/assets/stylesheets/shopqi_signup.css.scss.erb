@@ -125,9 +125,7 @@ label {
   margin-right: 10px; }
 
 .inline-form-select {
-  margin: -5px 0 9px;
-  select {
-    margin: -22px 0 22px; } }
+  margin: -5px 0 9px; }
 
 .message {
   color: #4f3613;
@@ -367,8 +365,10 @@ table#price-chart {
   position: relative;
   right: 45px;
   height: 33px;
-  input[type="text"] {
+  input {
     display: inline;
+    clear: none; /* ie6 #391 */
+    margin-top: 2px;
     margin-bottom: 0;
     padding-left: 48px; } }
 
