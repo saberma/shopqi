@@ -8,6 +8,19 @@
  *= require shopqi_signup
  *= require_self
 */
+ul#nav-primary li a.top-nav { /* fixed: ie6 nav height */
+    color: #ddd;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12.5px;
+    text-shadow: 1px 1px 1px #222;
+    outline: none;
+    text-shadow: 1px 1px 0.5px #000;
+    color: #fff;
+    float: left;
+    height: 54px;
+    line-height: 54px;
+    padding: 0 20px; }
 
 #faq p {
   margin-bottom: 20px; }
@@ -34,7 +47,8 @@
   color: rgba(255,255,255,0);
   vertical-align: bottom; }
 
-#nav-primary-phone {
+ul#nav-primary li#nav-primary-phone {
+  height: 56px;
   line-height: 56px;
   color: #a3a3a3;
   margin-right: 10px;
@@ -50,6 +64,9 @@
   height: 14px;
   line-height: 14px;
   background: url(<%=asset_path('banners/phone.gif')%>) top right no-repeat; }
+
+.essential-features ul { /* 修正:特色演示内容显示大侧边栏下方 */
+  width: 100%; }
 
 #agreement { /* 服务条款 */
   width: 600px }

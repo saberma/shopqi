@@ -33,12 +33,12 @@
             %li#nav-primary-phone
               服务热线
               %span.imgreplacement.phone-400 400-6767-888
-            %li(class=@current_tour)=link_to '特色演示', tour_intro_path
+            %li(class=@current_tour)=link_to '特色演示', tour_intro_path, class: 'top-nav'
             -#
               %li
                 %a(href="/examples/") 成功案例
-            %li(class=@current_faq)=link_to '常见问题', faq_path
-            %li(class=@current_signup)=link_to '价格 & 注册', services_signup_path
+            %li(class=@current_faq)=link_to '常见问题', faq_path, class: 'top-nav'
+            %li(class=@current_signup)=link_to '价格 & 注册', services_signup_path, class: 'top-nav'
             %li.sub-nav
               %ul.utilities
                 %li.megadropdown
