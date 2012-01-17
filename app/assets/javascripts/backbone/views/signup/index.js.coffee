@@ -97,7 +97,7 @@ App.Views.Signup.Index = Backbone.View.extend
     Utils.Effect.scrollTo("#errorExplanation") unless result
 
   reset: ->
-    $('#shop_submit').attr('disabled', false).val '创建我的ShopQi商店'
+    $('#shop_submit').prop('disabled', false).val '创建我的ShopQi商店'
 
   get_domain: ->
     "#{$('#domain_subdomain').val()}#{$('#domain_domain').val()}"
