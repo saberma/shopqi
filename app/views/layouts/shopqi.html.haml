@@ -30,8 +30,9 @@
           %a.logo-shopqi(href="/")=image_tag 'logos/shopqi_bag.gif'
           %ul#nav-primary
             %li#nav-primary-phone
-              服务热线
-              %span.imgreplacement.phone-400 400-6767-888
+              %div
+                %span 服务热线
+                %span.imgreplacement.phone-400 400-6767-888
             %li(class=@current_tour)=link_to '特色演示', tour_intro_path, class: 'top-nav'
             -#
               %li
