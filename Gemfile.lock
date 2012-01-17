@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/bvandenbos/resque-scheduler.git
+  revision: cbad71432341e0b1c32b280970b3cfd327f66d11
+  specs:
+    resque-scheduler (2.0.0.f)
+      redis (>= 2.0.1)
+      resque (>= 1.19.0)
+      rufus-scheduler
+
+GIT
   remote: git://github.com/defunkt/resque.git
   revision: af5a9a8e501c3732100b4ec768f7b2a4ec2aec2e
   specs:
@@ -299,10 +308,6 @@ GEM
     redis-namespace (1.0.3)
       redis (< 3.0.0)
     responders (0.6.4)
-    resque-scheduler (2.0.0.e)
-      redis (>= 2.0.1)
-      resque (>= 1.15.0)
-      rufus-scheduler
     resque_spec (0.7.0)
       resque (>= 1.15.0)
       rspec (>= 2.5.0)
@@ -443,7 +448,7 @@ DEPENDENCIES
   rails-dev-boost!
   rails3-generators
   resque!
-  resque-scheduler (~> 2.0.0.e)
+  resque-scheduler!
   resque_spec
   rspec-rails
   rubyzip
