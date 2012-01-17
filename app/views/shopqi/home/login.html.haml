@@ -14,7 +14,7 @@
         %input#login(name="user[email]" type="text")/
         %label(for="password") 密码
         %input#password.formnote(name="user[password]" type="password" value="")/
-        / <span class="formnote"><a href="">Forgot?</a></span>
+        / <span class="formnote"><a href="">忘记密码?</a></span>
         =image_submit_tag 'buttons/btn-login-grey.gif', value: 'log in', onclick: "this.form.action='http://'+$('#subdomain').val()+'#{Setting.store_host}#{request.port_string}/user/sign_in';this.form.submit(); return false;"
     / .col-5
     .col-5.secondcol.last(style="padding-top:25px;padding-bottom:25px")
