@@ -21,8 +21,10 @@ h1 {
     height: auto;
     color: #6fc51b; } }
 
-#masthead ul#nav-primary ul.utilities li ul { /* 修正:子资源菜单显示位置 */
-  left: -110px; }
+#masthead ul#nav-primary ul.utilities {
+  z-index: 100; /* 修正:子资源菜单在首页显示时会被覆盖 */
+  li ul { /* 修正:子资源菜单显示位置 */
+    left: -110px; } }
 
 ul#nav-primary li#nav-primary-phone div{ /* fixed: 400 phone text height */
   margin-top: 20px; }
