@@ -27,6 +27,8 @@ set :branch, "master"
 set :user, ENV['CAP_USER']
 set :use_sudo, false
 
+set :pids_path, "#{shared_path}/pids"
+
 depend :remote, :gem, "bundler", ">=1.0.21" # 可以通过 cap deploy:check 检查依赖情况
 
 # If you are using Passenger mod_rails uncomment this:
@@ -37,11 +39,11 @@ namespace :deploy do
   end
 
   task :stop do
-    run "kill -s QUIT `cat /tmp/unicorn.#{application}.pid`"
+    run "kill -s QUIT `cat #{pids_path}/unicorn.#{application}.pid`"
   end
 
   task :restart, roles: :app, except: { no_release: true } do
-    run "kill -s USR2 `cat /tmp/unicorn.#{application}.pid`"
+    run "kill -s USR2 `cat #{pids_path}/unicorn.#{application}.pid`"
   end
 
   # scp -P $CAP_PORT config/{database,sunspot,app_secret_config}.yml $CAP_USER@$CAP_APP_HOST:/u/apps/shopqi/shared/config/
@@ -76,14 +78,14 @@ namespace :resque do # 后台任务
 
   desc "Start resque scheduler, workers"
   task :start, roles: :app, only: { jobs: true } do
-    run "cd #{current_path}; PIDFILE=/tmp/resque.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shop_contact_us bundle exec rake resque:work"
-    run "cd #{current_path}; PIDFILE=/tmp/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shop_contact_us bundle exec rake resque:scheduler"
+    run "cd #{current_path}; PIDFILE=#{pids_path}/resque.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shop_contact_us bundle exec rake resque:work"
+    run "cd #{current_path}; PIDFILE=#{pids_path}/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shop_contact_us bundle exec rake resque:scheduler"
   end
 
   desc "Stop resque scheduler, workers"
   task :stop, roles: :app, only: { jobs: true } do
-    run "kill -s QUIT `cat /tmp/resque-scheduler.#{application}.pid`"
-    run "kill -s QUIT `cat /tmp/resque.#{application}.pid`"
+    run "kill -s QUIT `cat #{pids_path}/resque-scheduler.#{application}.pid`"
+    run "kill -s QUIT `cat #{pids_path}/resque.#{application}.pid`"
   end
 
   desc "Restart resque workers"
