@@ -17,7 +17,7 @@ App.Views.Theme.Themes.Index.Index = Backbone.View.extend
       attribute: "data-id"
       useScaling: false
     , -> self.finish()
-    this.finish() if @collection.length is 0 # 没有符合记录刷新页面时要显示提示
+    @finish() if @collection.length is 0 or $('.ie6')[0] # 没有符合记录刷新页面时要显示提示, ie6没有调用callback
 
   search: (e) -> # 多条件联合查询
     current = window.location.hash.substr(1)

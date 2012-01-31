@@ -1,3 +1,4 @@
+//     2012-02-01 修正ie6下主题商店无法根据条件进行查询的问题 http://j.mp/ybAru1
 //     Backbone.js 0.3.3
 //     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
@@ -691,6 +692,8 @@
       var oldIE = ($.browser.msie && (!docMode || docMode <= 7));
       if (oldIE) {
         this.iframe = $('<iframe src="javascript:0" tabindex="-1" />').hide().appendTo('body')[0].contentWindow;
+        this.iframe.document.open().close();
+        this.iframe.location.hash = window.location.hash;
       }
       if ('onhashchange' in window && !oldIE) {
         $(window).bind('hashchange', this.checkUrl);

@@ -1,5 +1,5 @@
 #=require json2
 #=require underscore-min
-#=require backbone-min
+#=require backbone
 #=require handlebars
 #=require backbone.rails
