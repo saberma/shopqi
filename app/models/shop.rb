@@ -143,7 +143,7 @@ class Shop < ActiveRecord::Base
 
   protected
   def init_valid_date
-    self.deadline = Date.today.next_day(30)
+    self.deadline = Date.today.advance months: 1
   end
 
   def init_currency

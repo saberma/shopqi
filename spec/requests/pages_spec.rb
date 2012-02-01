@@ -21,7 +21,8 @@ describe "Pages", js: true do
       click_on '保存'
       page.should have_content('new-welcome')
 
-      select '显示', :from => 'page_published'
+      select '显示', from: 'page_published'
+      sleep 1 # 延时处理
       page.should have_content('修改成功!')
 
       page.execute_script("window.confirm = function(msg) { return true; }")
