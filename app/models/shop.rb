@@ -76,6 +76,12 @@ class Shop < ActiveRecord::Base
       self.plan == 'unlimited'
     end
 
+    def storage # 已占用的容量(如要支持windows可修改为循环获取目录大小)
+      Rails.cache.fetch("shop_storage_#{self.id}") do
+        `du -sm #{self.path} | awk '{print $1}'`.to_i # 以M为单位
+      end
+    end
+
   end
 
   begin 'customer account' #用于顾客结账页面是否需要登录账号

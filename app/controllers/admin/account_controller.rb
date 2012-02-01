@@ -11,6 +11,7 @@ class Admin::AccountController < Admin::AppController
   expose(:plan_type){KeyValues::Plan::Type.find_by_code(params[:code])}
   expose(:current_plan_type){ shop.plan_type }
   expose(:skus_size){ shop.variants.size }
+  expose(:storages_size){ shop.storage }
   expose(:cancel_reason)
   expose(:cancel_reason_options){ KeyValues::CancelReason.options }
   expose(:resource_types){ KeyValues::ResourceType.all }

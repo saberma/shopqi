@@ -33,6 +33,17 @@ describe Shop do
 
     end
 
+    describe 'plan' do # 商店帐号类型
+
+      let(:theme) { Factory :theme_woodland_dark }
+
+      it 'should get storage' do # 已占用的容量
+        shop.themes.install theme
+        shop.storage.should eql 2
+      end
+
+    end
+
   end
 
   describe 'validate' do
