@@ -90,7 +90,7 @@ describe "Orders", js: true do
         click_on '发货' #发第二个商品
         within '#batch_fulfillment_form' do
           fill_in 'shipping_options[manual][tracking_number]', with: '789012'
-          select '其他', from: 'shipping_options[manual][tracking_company]'
+          select '其它', from: 'shipping_options[manual][tracking_company]'
           click_on '发货'
         end
         within '#unshipped-goods' do

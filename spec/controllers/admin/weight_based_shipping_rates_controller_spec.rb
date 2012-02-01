@@ -16,7 +16,7 @@ describe Admin::WeightBasedShippingRatesController do
   context '#create' do
     it "success" do
       expect do
-        xhr :post, :create,weight_based_shipping_rate: {weight_low: 0.0, weight_high: 10.0, country_id: c.id, name: '顺风'}
+        xhr :post, :create,weight_based_shipping_rate: {weight_low: 0.0, weight_high: 10.0, country_id: c.id, name: '顺丰快递'}
       end.should change(WeightBasedShippingRate,:count).by(1)
     end
 
@@ -29,10 +29,10 @@ describe Admin::WeightBasedShippingRatesController do
 
   context "#edit" do
     it "success" do
-      put :update, weight_based_shipping_rate: { weight_low: 1.0, weight_high: 11.0,name: 'EMS', price: 20}, id: weight_based_shipping_rate.id
+      put :update, weight_based_shipping_rate: { weight_low: 1.0, weight_high: 11.0,name: '顺丰快递', price: 20}, id: weight_based_shipping_rate.id
       response.should be_redirect
       weight_based_shipping_rate.reload
-      weight_based_shipping_rate.name.should eql 'EMS'
+      weight_based_shipping_rate.name.should eql '顺丰快递'
     end
 
   end

@@ -86,7 +86,7 @@ describe Admin::EmailsController do
       title.should include '订单 #9999 发货提醒'
       body.should include '尊敬的马海波'
       body.should include '1 x iphone4'
-      body.should include '通过  EMS 发送到以下地址'
+      body.should include '通过  顺丰快递 发送到以下地址'
       body.should include '收货人信息: 马海波'
       body.should include '广东省 深圳市 南山区 科技园南区6栋311'
       body.should include '运单号为： 1234' # TODO:显示物流查询链接
@@ -103,7 +103,7 @@ describe Admin::EmailsController do
       body.should include '尊敬的马海波'
       body.should include '您的订单号为#9999的商品更改了运送信息'
       body.should include '1 x iphone4'
-      body.should include '通过 EMS 运送'
+      body.should include '通过 顺丰快递 运送'
       body.should include '运单号为 1234' # TODO:显示物流查询链接
       title.should_not include 'Liquid error'
       body.should_not include 'Liquid error'
