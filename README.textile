@@ -1,6 +1,6 @@
 h2. ShopQi "!http://stillmaintained.com/saberma/shopqi.png!":http://stillmaintained.com/saberma/shopqi
 
-ShopQi基于rails3开发，现阶段ShopQi处于频繁更新中，仅用于学习研究
+ShopQi基于rails3开发，现阶段处于频繁更新中，源码仅供学习交流
 
 "!https://secure.travis-ci.org/saberma/shopqi.png!":http://travis-ci.org/saberma/shopqi
 
