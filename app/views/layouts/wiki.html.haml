@@ -1,5 +1,5 @@
-!!!
-%html(lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml")
+!!! 5
+- conditional_html do
   %head
     %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")/
     %meta(content="no" http-equiv="imagetoolbar")/
@@ -12,6 +12,10 @@
     %title ShopQi 帮助文档
     = stylesheet_link_tag "layout_shopqi_wiki"
     = javascript_include_tag 'shopqi_wiki_application'
+    /[if lt IE 7]
+      = javascript_include_tag 'DD_belatedPNG_0.0.8a-min'
+      :javascript
+        DD_belatedPNG.fix('.png_bg');
     =csrf_meta_tag
     -#=render 'shared/google'
   %body
@@ -26,12 +30,9 @@
     / .resources-nav
     #header.clearfix
       .clearfix
-        %h1=link_to image_tag('skins/logo-documentation.png'),"#{wiki_url_with_port}"
+        %h1=link_to image_tag('skins/logo-documentation.png', class: :png_bg),"#{wiki_url_with_port}"
         %ul.user-options
           %li#pt-anonlogin=link_to '页面列表', '/pages'
-        -unless admin_user_signed_in?
-          %ul.user-options
-            %li#pt-anonlogin=link_to '登录',new_admin_user_session_path
         -if admin_user_signed_in?
           %ul.user-options
             %li#pt-anonlogin=link_to '退出登录',destroy_admin_user_session_path
@@ -54,9 +55,9 @@
                 %label{:for => "searchInput"} 查询
               #searchBody.pBody
                 %form#searchform(action= "/search" method='get')
-                  %div
+                  %div.png_bg
                     %input#searchInput(accesskey= "f" name="q" type= "text" value= "")
-                    %input( type="submit"  class="searchButton" id="mw-searchButton")
+                    %input#mw-searchButton.searchButton.png_bg(type="submit")
             #category-navigation
               =raw sidebar.formatted_data if sidebar
         #content.col-9.last
