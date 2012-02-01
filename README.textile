@@ -1,7 +1,6 @@
 h2. ShopQi "!http://stillmaintained.com/saberma/shopqi.png!":http://stillmaintained.com/saberma/shopqi
 
-中国开源电子商务平台，基于rails3开发
-注意：现阶段ShopQi处于频繁更新中(有破坏性)，仅用于学习研究，请勿部署在生产环境
+ShopQi基于rails3开发，现阶段ShopQi处于频繁更新中，仅用于学习研究
 
 "!https://secure.travis-ci.org/saberma/shopqi.png!":http://travis-ci.org/saberma/shopqi
 
