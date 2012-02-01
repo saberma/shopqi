@@ -208,6 +208,7 @@ end
 
 class Photo < ActiveRecord::Base
   belongs_to :product
+  delegate :shop, to: :product
   default_scope order: 'position asc'
   VERSION_KEYS = []
 
@@ -218,6 +219,7 @@ class Photo < ActiveRecord::Base
   end
 
   validates_size_of :product_image, maximum: 8000.kilobytes
+  validates_with StorageValidator
 
   validates_property :mime_type, of: :product_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
 

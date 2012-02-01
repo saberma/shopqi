@@ -40,6 +40,7 @@ describe Shop do
       it 'should get storage' do # 已占用的容量
         shop.themes.install theme
         shop.storage.should eql 2
+        shop.storage_idle?.should be_true
       end
 
     end

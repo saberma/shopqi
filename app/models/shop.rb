@@ -42,6 +42,10 @@ class Shop < ActiveRecord::Base
 
   before_create :init_valid_date, :init_currency
 
+  after_create do
+    FileUtils.mkdir_p self.path
+  end
+
   before_update do
     self.set_currency_format if currency_changed? # 修改币种，则更新相应格式(如果用户同时修改格式，则会被覆盖)
   end
@@ -77,9 +81,17 @@ class Shop < ActiveRecord::Base
     end
 
     def storage # 已占用的容量(如要支持windows可修改为循环获取目录大小)
-      Rails.cache.fetch("shop_storage_#{self.id}") do
+      #Rails.cache.fetch("shop_storage_#{self.id}") do
         `du -sm #{self.path} | awk '{print $1}'`.to_i # 以M为单位
-      end
+      #end
+    end
+
+    def available?
+      !self.deadline.past?
+    end
+
+    def storage_idle? # 存在剩余空间
+      (self.plan_type.storage - self.storage) > 0
     end
 
   end
@@ -104,10 +116,6 @@ class Shop < ActiveRecord::Base
       themes.where(role: 'mobile').first
     end
 
-  end
-
-  def available?
-    !self.deadline.past?
   end
 
   begin 'path'
