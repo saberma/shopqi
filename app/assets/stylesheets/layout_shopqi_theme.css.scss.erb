@@ -13,4 +13,11 @@
   .vig-left, .vig-right, #navigation .logo img  { /* 不显示半透明过滤效果; 不显示重复的img */
     display: none; }
   .resources-nav li.logo a:hover { /* 修正:鼠标悬停logo时显示为灰色 */
-    background: url(<%= asset_path 'resources-nav/logo-shopqi.png' %>) no-repeat; } }
+    background: url(<%= asset_path 'resources-nav/logo-shopqi.png' %>) no-repeat; }
+  #filter-bar p.pointed a { /* 修正:鼠标悬停时导航背景图位置不正确 */
+      &:hover, &:focus {
+        background-position: 0 0; } }
+  #screenshots ul li.first {/* 修正:主题截图列表的间距 */
+    margin: 0 25px 0 0;
+    background: url(/assets/layout/bg-bigthumbnail-shadow.png) no-repeat;
+    padding: 4px 3px 10px 4px; } }

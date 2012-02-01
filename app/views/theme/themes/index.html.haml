@@ -1,20 +1,20 @@
 =content_for :filter do
-  #filter-bar
+  #filter-bar.png_bg
     .prices.selection-bar
       %ul
-        %li.first.selected.price
+        %li.first.selected.price.png_bg
           %a.price(href="#" rel="both") 全部
-        %li.price
+        %li.price.png_bg
           %a.price(href="#price=free" rel="free") 免费
-        %li.last.price
+        %li.last.price.png_bg
           %a.price(href="#price=paid" rel="paid") 收费
     .colors.selection-bar
       %ul
-        %li.first.selected.color
+        %li.first.selected.color.png_bg
           %a.color(href="#" rel="") 所有颜色
         -Theme::COLOR.each do |color|
           %li.color(class="#{color == Theme::COLOR.last and 'last'}")
-            %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png"
+            %a.color(href="#color=#{color}" rel="#{color}")=image_tag "buttons/button-color#{color}.png", class: 'png_bg'
     -#
       .sortby.dropdown
         %ul#sortby-dropdown
@@ -42,7 +42,7 @@
 
 %script(id="theme-item" type="text/x-handlebars-template")
   %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}" rel="nofollow")
-    %p
+    %p.png_bg
       %big {{{budget}}}
       {{#if has_style}}
       %strong.has-style {{{name}}}

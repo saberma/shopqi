@@ -1,8 +1,8 @@
 =content_for :filter do
-  #filter-bar
+  #filter-bar.png_bg
     %p.pointed
-      %a(href="/##{session[:q]}")
-        %span ‹ 返回主题商店
+      %a.png_bg(href="/##{session[:q]}")
+        %span.png_bg ‹ 返回主题商店
 
 #overview.theme-overview.col-6
 #screenshots.theme-screenshots.col-10.last
@@ -43,7 +43,7 @@
     %a(href="{{{site}}}" rel="nofollow") {{{author}}}
 %script(id="screenshots-item" type="text/x-handlebars-template")
   %ul
-    %li
+    %li.first.png_bg
       %a.fancy-box(href="/s/theme/screenshots/{{{id}}}/main/original.jpg" rel="nofollow")
         %img(alt="Large" src="/s/theme/screenshots/{{{id}}}/main/large_original.jpg")
     %li
@@ -79,7 +79,7 @@
 %script(id="theme-item" type="text/x-handlebars-template")
   %li.theme
     %a(href="/themes/{{{handle}}}/styles/{{{style_handle}}}" rel="nofollow")
-      %p
+      %p.png_bg
         %big {{{budget}}}
         {{#if has_style}}
         %strong.has-style {{{name}}}
@@ -87,7 +87,7 @@
         {{else}}
         %strong {{{name}}}
         {{/if}}
-      %img(alt="Medium" src="/s/theme/screenshots/{{{id}}}/main/medium_original.jpg")
+      %img(alt="{{{name}}}- {{{style}}}" src="/s/theme/screenshots/{{{id}}}/main/medium_original.jpg")
 
 :javascript
   App.theme = new App.Models.Theme(#{@theme_json});
