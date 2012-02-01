@@ -112,8 +112,7 @@
                 %span#manual_tracking_company_area.hide
                   通过
                   %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
-                    %option(value="ems") EMS
-                    %option(value="other") 其他
+                    =options_for_select tracking_companies
           .btns(style="background: none")
             .sb
               %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")

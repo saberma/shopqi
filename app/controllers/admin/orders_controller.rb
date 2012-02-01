@@ -39,6 +39,7 @@ class Admin::OrdersController < Admin::AppController
   expose(:financial_status) { KeyValues::Order::FinancialStatus.hash }
   expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }
   expose(:cancel_reasons) { KeyValues::Order::CancelReason.hash }
+  expose(:tracking_companies) { KeyValues::Order::TrackingCompany.hash }
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
   def index

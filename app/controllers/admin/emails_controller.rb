@@ -82,7 +82,7 @@ class Admin::EmailsController < Admin::AppController
   end
 
   def demo_fulfillment(order) # 物流信息
-    fulfillment = order.fulfillments.new tracking_number: '1234', tracking_company: 'EMS'
+    fulfillment = order.fulfillments.new tracking_number: '1234', tracking_company: KeyValues::Order::TrackingCompany.first.code
     fulfillment.line_items << order.line_items.first
     fulfillment
   end

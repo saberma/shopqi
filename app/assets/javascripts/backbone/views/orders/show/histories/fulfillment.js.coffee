@@ -6,19 +6,19 @@ App.Views.Order.Show.History.Fulfillment = Backbone.View.extend
 
   initialize: ->
     @options.body.hide()
-    this.render()
+    @render()
 
   render: ->
     template = Handlebars.compile $('#order-history-fulfillment-item').html()
     $(@el).html template @options.order_fulfillment
+    $('select[name="tracking_company"]', @el).val @options.order_fulfillment.tracking_company # 回显
     @options.body.after @el
-    this.$('.tracking-number').keyup()
+    @$('.tracking-number').keyup()
 
   save: ->
     self = this
     attrs = notify_customer: (@$("input[name='notify_customer']").attr('checked') is 'checked'), fulfillment: {
       tracking_number: this.$("input[name='tracking_number']").val(),
-      tracking_company: this.$("select[name='tracking_company']").val()
       tracking_company: this.$("select[name='tracking_company']").val()
     }, _method: 'put'
     $.post "/admin/orders/#{App.order.id}/fulfillments/#{@options.order_fulfillment.id}", attrs, ->

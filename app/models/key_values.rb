@@ -336,13 +336,29 @@ module KeyValues
       ]
     end
 
-    # 取消原因
-    class CancelReason < KeyValues::Base
+    class CancelReason < KeyValues::Base # 取消原因
       self.data = [
         {id: 1, name: '顾客改变/取消订单', code: 'customer'    },
         {id: 2, name: '欺诈性订单'       , code: 'fraud'       },
         {id: 3, name: '没有商品了'       , code: 'inventory'   },
         {id: 4, name: '其他'             , code: 'other'       }
+      ]
+    end
+
+    class TrackingCompany < KeyValues::Base # 快递公司
+      self.data = [
+        {id: 1,  name: '顺丰快递' , code: '顺丰快递' },
+        {id: 2,  name: 'EMS'      , code: 'EMS'      },
+        {id: 3,  name: '申通E物流', code: '申通E物流'},
+        {id: 4,  name: '圆通速递' , code: '圆通速递' },
+        {id: 5,  name: '中通速递' , code: '中通速递' },
+        {id: 6,  name: '宅急送'   , code: '宅急送'   },
+        {id: 7,  name: '韵达快运' , code: '韵达快运' },
+        {id: 8,  name: '天天快递' , code: '天天快递' },
+        {id: 9,  name: '联邦快递' , code: '联邦快递' },
+        {id: 10, name: '汇通快运' , code: '汇通快运' },
+        {id: 11, name: '华强物流' , code: '华强物流' },
+        {id: 12, name: '其它'     , code: '其它'     }
       ]
     end
 

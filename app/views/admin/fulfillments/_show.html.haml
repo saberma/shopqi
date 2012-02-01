@@ -24,9 +24,7 @@
             %input.tracking-number(name="tracking_number" size="20" type="text" value="{{{tracking_number}}}")
             %span.hide
               通过
-              %select(name="tracking_company")
-                %option(value="ems") EMS
-                %option(value="other") 其他
+              %select(name="tracking_company")=options_for_select tracking_companies
             .st
               %input(id="fulfillment_notify_customer_{{{id}}}" checked="checked" name="notify_customer" type="checkbox" value="1")
               %label.note(for="fulfillment_notify_customer_{{{id}}}") 发送物流信息给顾客

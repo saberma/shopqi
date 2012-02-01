@@ -25,7 +25,6 @@ describe "Wiki::WikiPages", js: true do
       has_no_link?('删除').should be_true
       has_no_link?('历史').should be_true
       has_link?('页面列表').should be_true
-      has_link?('登录').should be_true
 
       #登陆
       visit new_admin_user_session_path
