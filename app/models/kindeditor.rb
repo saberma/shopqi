@@ -9,6 +9,7 @@ class Kindeditor < ActiveRecord::Base
   end
 
   validates_size_of :kindeditor_image, maximum: 8000.kilobytes
+  validates_with StorageValidator
 
   validates_property :mime_type, of: :kindeditor_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
 end
