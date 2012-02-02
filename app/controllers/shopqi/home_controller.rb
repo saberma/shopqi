@@ -8,6 +8,7 @@ class Shopqi::HomeController < Shopqi::AppController # 官网首页
   end
 
   def no_shop
+    logger.error "#{request.host} does not exist!"
     render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil
   end
 
