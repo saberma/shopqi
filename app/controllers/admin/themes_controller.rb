@@ -17,6 +17,8 @@ class Admin::ThemesController < Admin::AppController
       if authorization.valid?
         if shop.themes.exceed? # 超出主题数则不更新
           render json: {error: '商店的主题总数不能超过8个，请删除不再使用的主题!'} and return
+        elsif !shop.storage_idle? # 超出商店容量
+          render json: {error: I18n.t('activerecord.errors.models.shop.attributes.storage.full')} and return
         else
           theme = Theme.where(handle: params[:handle], style_handle: params[:style_handle]).first
           shop.themes.install theme
@@ -43,6 +45,9 @@ class Admin::ThemesController < Admin::AppController
       if shop.themes.exceed?
         request.raw_post # fixed: 需要先接收数据，否则浏览器直接显示上传被cancle，无法获取返回的json数据
         render text: {exceed: true}.to_json and return
+      elsif !shop.storage_idle?
+        request.raw_post
+        render text: {storage_full: true}.to_json and return
       end
       path = Rails.root.join 'tmp', 'themes', shop.id.to_s
       qqfile = QqFile.new params[:qqfile], request
@@ -114,6 +119,8 @@ class Admin::ThemesController < Admin::AppController
     def duplicate # 复制主题
       if shop.themes.exceed?
         render json: {exceed: true}
+      elsif !shop.storage_idle?
+        render json: {storage_full: true}
       else
         duplicate_theme = theme.duplicate
         render json: duplicate_theme.to_json(except: [:created_at, :updated_at])

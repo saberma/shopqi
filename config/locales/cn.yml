@@ -200,6 +200,8 @@ cn:
               taken: 已被占用
             name:
               blank: 不能为空
+            storage:
+              full: 商店容量已经用完，详情请进入[帐号]页面查看
         product:
           attributes:
             title:

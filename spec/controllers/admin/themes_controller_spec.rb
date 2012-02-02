@@ -33,12 +33,30 @@ describe Admin::ThemesController do
 
   context '#duplicate' do # 复制主题
 
-    it 'should be duplicate' do
+    before do
       shop.themes.install theme_dark # 原主题会置为[未发布]状态
+    end
+
+    it 'should be duplicate' do
       expect do
         put :duplicate, id: theme.id
         JSON(response.body)['shop_theme']['role'].should eql 'unpublished'
       end.should change(ShopTheme, :count).by(1)
+    end
+
+    describe 'validate' do
+
+      context 'shop storage is not idle' do # 商店容量已用完
+
+        before { Rails.cache.write(shop.storage_cache_key, 101) }
+
+        it 'should be fail' do
+          put :duplicate, id: theme.id
+          JSON(response.body)['storage_full'].should eql true
+        end
+
+      end
+
     end
 
   end
@@ -105,7 +123,19 @@ describe Admin::ThemesController do
 
     end
 
-    describe 'ie', focus: true do # 支持ie浏览器上传
+    context 'shop storage is not idle' do # 商店容量已用完
+
+      before { Rails.cache.write(shop.storage_cache_key, 101) }
+
+      it 'should be fail' do
+        raw_attach_file File.join(zip_path, 'woodland-missing-templates-index.zip')
+        post :upload, qqfile: 'woodland.zip'
+        JSON(response.body)['storage_full'].should eql true
+      end
+
+    end
+
+    describe 'ie' do # 支持ie浏览器上传
 
       it 'should be success' do
         post :upload, qqfile: Rack::Test::UploadedFile.new(File.join(zip_path, 'woodland.zip'))
@@ -119,15 +149,32 @@ describe Admin::ThemesController do
 
   context '#api' do # 安装主题
 
-    it 'should be install' do # issues#228
+    before do
       authorization = mock('authorization')
       authorization.stub!(:owner).and_return(shop)
       authorization.stub!(:valid?).and_return(true)
       OAuth2::Provider.stub!(:access_token).and_return(authorization)
+    end
+
+    it 'should be install' do # issues#228
       expect do
         post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle
         response.should be_success
       end.should change(ShopTheme, :count).by(1)
+    end
+
+    describe 'validate' do
+
+      context 'shop storage is not idle' do # 商店容量已用完
+
+        before { Rails.cache.write(shop.storage_cache_key, 101) }
+
+        it 'should be fail' do
+          post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle
+          JSON(response.body)['error'].should_not be_blank
+        end
+
+      end
     end
 
   end
