@@ -81,7 +81,7 @@ class Shop < ActiveRecord::Base
     end
 
     def storage # 已占用的容量(如要支持windows可修改为循环获取目录大小)
-      Rails.cache.fetch(self.storage_cache_key, expires_in: 5.minutes) do
+      smart_fetch(self.storage_cache_key, expires_in: 5.minutes) do
         `du -sm #{self.path} | awk '{print $1}'`.to_i # 以M为单位
       end
     end

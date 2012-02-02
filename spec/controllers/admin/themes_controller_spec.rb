@@ -37,7 +37,7 @@ describe Admin::ThemesController do
       shop.themes.install theme_dark # 原主题会置为[未发布]状态
     end
 
-    it 'should be duplicate' do
+    it 'should be success' do
       expect do
         put :duplicate, id: theme.id
         JSON(response.body)['shop_theme']['role'].should eql 'unpublished'
@@ -49,6 +49,8 @@ describe Admin::ThemesController do
       context 'shop storage is not idle' do # 商店容量已用完
 
         before { Rails.cache.write(shop.storage_cache_key, 101) }
+
+        after { Rails.cache.delete(shop.storage_cache_key) }
 
         it 'should be fail' do
           put :duplicate, id: theme.id
@@ -127,6 +129,8 @@ describe Admin::ThemesController do
 
       before { Rails.cache.write(shop.storage_cache_key, 101) }
 
+      after { Rails.cache.delete(shop.storage_cache_key) }
+
       it 'should be fail' do
         raw_attach_file File.join(zip_path, 'woodland-missing-templates-index.zip')
         post :upload, qqfile: 'woodland.zip'
@@ -168,6 +172,8 @@ describe Admin::ThemesController do
       context 'shop storage is not idle' do # 商店容量已用完
 
         before { Rails.cache.write(shop.storage_cache_key, 101) }
+
+        after { Rails.cache.delete(shop.storage_cache_key) }
 
         it 'should be fail' do
           post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle

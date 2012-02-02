@@ -20,6 +20,16 @@ Liquid::Drop.send :include , LiquidDropHelper
 
 Carmen.default_locale = :cn
 
+# 修正:DEPRECATION WARNING: Setting :expires_in on read has been deprecated in favor of setting it on write
+def smart_fetch(name, options = {}, &blk)
+  in_cache = Rails.cache.fetch(name)
+  return in_cache if in_cache
+  if block_given?
+    val = yield
+    Rails.cache.write(name, val, options)
+    return val
+  end
+end
 
 #增加subdomain属性
 #rails 3.1默认支持subdomain和domain
