@@ -12,10 +12,10 @@
         %span.note{:style => ""}==剩余#{current_plan_type.skus - skus_size}个
     %tr#disk-management
       %td.r 剩余使用空间:
-      %td
-        %div{:style => "width:170px"}
-          .progress-container{:style => "margin-top:7px"}
-            .progress-bar{:style => "width: #{storages_size*100/current_plan_type.storage}%; "}
+      %td(title="数值会被缓存5分钟")
+        %div(style="width:170px")
+          .progress-container(style="margin-top:7px")
+            .progress-bar(style="width: #{storages_size*100/current_plan_type.storage}%; ")
         %span.note==剩余#{current_plan_type.storage - storages_size} MB
     -#
       %tr
