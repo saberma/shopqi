@@ -36,7 +36,10 @@ App.Views.Asset.Index.Sidebar = Backbone.View.extend
       onComplete: (id, file_name, responseJSON)->
         $('#indicator').hide()
         $(document).unbind 'mousemove'
-        self.options.assets.assets.add responseJSON
+        if responseJSON['storage_full']
+          error_msg '<%= I18n.t("activerecord.errors.models.shop.attributes.storage.full") %>'
+        else
+          self.options.assets.assets.add responseJSON
     $('.qq-upload-list').hide() # 不显示上传文件列表
     $(".qq-upload-button").contents().first().replaceWith("选择文件")
 

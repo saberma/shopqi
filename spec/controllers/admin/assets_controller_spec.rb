@@ -32,14 +32,30 @@ describe Admin::AssetsController do
 
     let(:file_path) { Rails.root.join('spec', 'factories', 'data', 'themes') }
 
-    describe 'ie', focus: true do # 支持ie浏览器上传
+    before do
+      post :upload, key: 'assets/product.jpg', theme_id: theme.id, id: 0, qqfile: Rack::Test::UploadedFile.new(File.join(file_path, 'product.jpg'))
+    end
+
+    describe 'ie' do # 支持ie浏览器上传
 
       it 'should be success' do
-        post :upload, key: 'assets/product.jpg', theme_id: theme.id, id: 0, qqfile: Rack::Test::UploadedFile.new(File.join(file_path, 'product.jpg'))
         response.should be_success
         response.content_type.should eql 'text/html' # context_type不为'text/html'时，ie会将json作为文件下载
       end
 
+    end
+
+    describe 'validate' do # 校验
+
+      context 'shop storage is not idle' do # 商店容量已用完
+
+        before { Rails.cache.write(shop.storage_cache_key, 101) }
+
+        it 'should be fail' do
+          JSON(response.body)['storage_full'].should be_true
+        end
+
+      end
     end
 
   end

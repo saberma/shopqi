@@ -23,6 +23,9 @@ class Admin::AssetsController < Admin::AppController
   def upload # 上传asset附件
     qqfile = QqFile.new params[:qqfile], request
     image = qqfile.body
+    unless shop.storage_idle? # 商店容量已经用完
+      render text: {storage_full: true}.to_json and return
+    end
     max_width = params['max_width']
     max_height = params['max_height']
     unless max_width.blank? and max_height.blank? # 限制宽高

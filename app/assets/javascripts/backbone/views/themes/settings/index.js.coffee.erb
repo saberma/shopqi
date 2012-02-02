@@ -48,9 +48,12 @@ App.Views.Theme.Settings.Index = Backbone.View.extend
           this.params = key: "assets/#{name}", name: name, max_width: max_width, max_height: max_height
           this.params[csrf_param] = csrf_token
         onComplete: (id, file_name, responseJSON)->
-          msg '上传成功!'
           $('#indicator').hide()
           $(document).unbind 'mousemove'
+          if responseJSON['storage_full']
+            error_msg '<%= I18n.t("activerecord.errors.models.shop.attributes.storage.full") %>'
+          else
+            msg '上传成功!'
     $('.qq-upload-list').hide() # 不显示上传文件列表
     $(".qq-upload-button").each ->
       $(this).css('padding', '2px 0').width(70).contents().first().replaceWith("选择文件")
