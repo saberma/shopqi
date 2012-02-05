@@ -1,17 +1,19 @@
 App.Views.Payment.Index = Backbone.View.extend
   el: '#main'
+
   events:
     'change #select_custom_payment_method' : 'select_method'
     'click #checkout' : 'change_checkout_config'
     'submit form#new_custom_payment' : 'save'
 
   initialize: ->
+    new App.Views.Payment.Alipay model: App.payment_alipay # 支付宝
     self = this
     @collection.view = this
     _.bindAll this, 'render'
     @collection.bind 'add',(model) ->
       new App.Views.Payment.Show model: model
-    this.render()
+    @render()
 
     $('#shop_customer_accounts_required').click ->
       $('#customer-accounts-required').show()
@@ -19,25 +21,10 @@ App.Views.Payment.Index = Backbone.View.extend
       $(this).click ->
         $('#customer-accounts-required').hide()
 
-    $('#alipay-gateway-id').change ->
-      $('#account_payment_provider').toggle()
-    $('#alipay_edit').click ->
-      $('#account_payment_provider').toggle()
-      $('#activate_payment_provider').hide()
-    $('#cancel').click ->
-      $('#account_payment_provider').toggle()
-      $('#activate_payment_provider').toggle()
-      $('#alipay-gateway-id option:eq(0)').attr 'selected', true
-      false
-
     $('#cancel_custom_payment_form').click ->
       $('#account_manual_payment_gateway').hide()
       $('#select_custom_payment_method option:eq(0)').attr 'selected', true
       false
-
-    if $('.field-with-errors input').size() > 0
-      $('#account_payment_provider').show()
-      $('#alipay-gateway-id option:eq(1)').attr 'selected', true
 
   render: ->
     _(@collection.models).each (model) ->

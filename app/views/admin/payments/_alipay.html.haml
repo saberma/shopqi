@@ -1,0 +1,65 @@
+#payment_alipay.payment-service-provider
+  %table
+    %tr
+      %td.fl(style="padding:20px 10px 20px 20px;width:225px")
+        =link_to image_tag('admin/payments/alipay.png'), 'https://b.alipay.com/order/productSign.htm?action=newsign&productId=2011011904422299', title: '申请', target: '_blank'
+      %td
+        %table.desc
+          %tr
+            %td.r 支付方式:
+            %td.meta
+              %strong 在线支付-支付宝
+          %tr
+            %td.r 描述:
+            %td.meta==#{link_to '支付宝', 'http://www.alipay.com'}致力于为中国电子商务提供各种安全、方便、个性化的在线支付解决方案。
+  %dl.cl.sst(style="padding:0px; margin-bottom: 0; border-top: 1px solid #ddd")
+    %dd.payment_select.hide(style="margin:0; padding-bottom: 10px")
+      %p.gateway-select(style="padding-top:10px; padding-left:10px")
+        %select.gateway-id(name="enabled_gateway")
+          %option(value="0") 不使用支付宝
+          %option(value="1") 使用支付宝
+    %dd.hide.activate_payment_provider(style="padding: 10px 10px 5px 10px")
+      .fr
+        %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+      当前正在使用:
+      %strong 支付宝即时到帐服务
+      %span.warn=link_to w('edit'), '#', class: :payment_edit
+    %dd.account_payment_provider.nsb.alipay-properties(style="display:none;border-top: 1px solid #ddd;")
+      %form(action="#" onsubmit="return false")
+        .group-fields
+          %table
+            %tr
+              %td.payment-gateway-form(style="vertical-align: top; padding: 20px 20px 20px 0px; width: 180px")
+              %td.provider-info
+                %div
+                  %p.note
+                    %strong
+                      请提供您
+                      %a(href="http://www.alipay.com" target="gateway") 支付宝
+                      账户的合作者身份ID(partner)、交易安全校验码(key)以及账户,若没有，则请您登陆到
+                      %a(href="https://b.alipay.com/order/productDetail.htm?productId=2011060800327555" target="gateway") 支付宝商家服务
+                      进行申请
+        / .group-fields
+        .group-actions
+          %input.btn(name="commit" type="submit" value="保存")
+          =w('or')
+          =link_to w('cancel'), '#', class: 'cancel'
+          / .group-actions
+
+%script(id="payment-alipay-form-item" type="text/x-handlebars-template")
+  .sb
+    %label(for="payment_alipay_partner") 合作者身份ID
+    %p.credential
+      %input#payment_alipay_partner(autocomplete="off" name="partner" size="30" type="text" value="{{partner}}")
+  .sb
+    %label(for="payment_alipay_account") 帐号
+    %p.credential
+      %input#payment_alipay_account(autocomplete="off" name="account" size="30" type="text" value="{{account}}")
+  .sb
+    %label(for="payment_alipay_key") 交易安全校验码
+    %p.credential
+      %input#payment_alipay_key(autocomplete="off" name="key" size="30" type="password" value="{{key}}")
+  .sb
+    %label(for="payment_alipay_service") 接口类型
+    %p.credential
+      %select#payment_alipay_service(name="service")=options_for_select service_types

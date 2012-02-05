@@ -4,8 +4,11 @@ class Admin::PaymentsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   expose(:shop){ current_user.shop }
   expose(:payments){ shop.payments }
-  expose(:payment_alipay){ shop.payments.where(:payment_type_id => 1).first || shop.payments.new}
+  expose(:payment_alipay){ shop.payments.where(payment_type_id: 1).first }
+  expose(:payment_alipay_json){ payment_alipay.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
+  expose(:payment_tenpay){ shop.payments.where(payment_type_id: 2).first }
   expose(:payment)
+  expose(:payment_json){ payment.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
   expose(:policy_types){ KeyValues::PolicyType.all }
   expose(:policies){ shop.policies }
   expose(:all_custom_types){ KeyValues::Payment::Custom.all.map{|c|[c.name,c.name]}}
@@ -23,38 +26,17 @@ class Admin::PaymentsController < Admin::AppController
   end
 
   def create
-    #处理支付宝部分
-    if params[:payment][:payment_type_id]
-      payment_alipay.attributes = params[:payment]
-      if payment_alipay.save
-        redirect_to payments_path,  notice: notice_msg
-      else
-        render action: 'index'
-      end
-    #处理普通支付部分
-    else
-      payment.attributes = params[:payment]
-      payment.save
-      render json: payment
-    end
+    payment.save
+    render json: payment_json
   end
 
   def update
-    if payment.save
-      respond_to do |format|
-        format.html { redirect_to payments_path,  notice: notice_msg }
-        format.json { render json: payment }
-      end
-    else
-      render action: 'index'
-    end
+    payment.save
+    render json: payment_json
   end
 
   def destroy
     payment.destroy
-    respond_to do |format|
-      format.js { render js: "window.location='#{payments_path}';msg('删除成功！')" }
-      format.json { render json: payment }
-    end
+    render json: nil
   end
 end
