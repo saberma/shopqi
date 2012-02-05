@@ -163,6 +163,17 @@ module KeyValues
 
     end
 
+    module Tenpay
+
+      class Service < KeyValues::Base # 支付接口
+        self.data = [
+          {id: 1, name: '即时到帐交易'  , code: 'direct' },
+          {id: 2, name: '中价担保交易'  , code: 'protect'}
+        ]
+      end
+
+    end
+
   end
 
   module Plan

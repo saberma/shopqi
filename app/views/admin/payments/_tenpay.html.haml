@@ -1,0 +1,62 @@
+#payment_tenpay.payment-service-provider
+  %table
+    %tr
+      %td.fl(style="padding:20px 10px 20px 20px;width:225px")
+        =link_to image_tag('admin/payments/tenpay.png'), 'http://union.tenpay.com/mch/mch_register_1.shtml', title: '申请', target: '_blank'
+      %td
+        %table.desc
+          %tr
+            %td.r 支付方式:
+            %td.meta
+              %strong 在线支付-财付通
+          %tr
+            %td.r 描述:
+            %td.meta==#{link_to '财付通', 'http://www.tenpay.com'}是腾讯公司创办的在线支付平台。按交易额来算，财付通排名第二，份额为20%，仅次于支付宝。
+  %dl.cl.sst(style="padding:0px; margin-bottom: 0; border-top: 1px solid #ddd")
+    %dd.payment_select.hide(style="margin:0; padding-bottom: 10px")
+      %p.gateway-select(style="padding-top:10px; padding-left:10px")
+        %select.gateway-id(name="enabled_gateway")
+          %option(value="0") 不使用财付通
+          %option(value="1") 使用财付通
+    %dd.hide.activate_payment_provider(style="padding: 10px 10px 5px 10px")
+      .fr
+        %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+      当前正在使用:
+      %strong 财付通即时到帐服务
+      %span.warn=link_to w('edit'), '#', class: :payment_edit
+    %dd.account_payment_provider.nsb(style="display:none;border-top: 1px solid #ddd;")
+      %form(action="#" onsubmit="return false")
+        .group-fields
+          %table
+            %tr
+              %td.payment-gateway-form(style="vertical-align: top; padding: 20px 20px 20px 0px; width: 180px")
+              %td.provider-info
+                %div
+                  %p.note
+                    %strong
+                      请提供您
+                      %a(href="http://www.tenpay.com" target="gateway") 财付通
+                      账户的商户号、初始密钥，若没有，则请您登陆到
+                      %a(href="http://mch.tenpay.com/market/index.shtml" target="gateway") 财付通商家服务
+                      进行申请
+        / .group-fields
+        .group-actions
+          %input.btn(name="commit" type="submit" value="保存")
+          =w('or')
+          =link_to w('cancel'), '#', class: 'cancel'
+          / .group-actions
+
+  %script(type="text/x-handlebars-template")
+    .sb
+      %label(for="payment_tenpay_partner")  商户号
+      %p.credential
+        %input#payment_tenpay_partner(autocomplete="off" name="partner" size="30" type="text" value="{{partner}}")
+    .sb
+      %label(for="payment_tenpay_key") 商户密钥
+      %p.credential
+        %input#payment_tenpay_key(autocomplete="off" name="key" size="30" type="password" value="{{key}}")
+    .sb
+      %label(for="payment_tenpay_service") 接口类型
+      %p.credential
+        %select#payment_tenpay_service(name="service")=options_for_select tenpay_service_types
+        %input(name="payment_type_id" type="hidden" value="2")

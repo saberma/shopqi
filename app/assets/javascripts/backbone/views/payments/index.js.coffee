@@ -7,7 +7,8 @@ App.Views.Payment.Index = Backbone.View.extend
     'submit form#new_custom_payment' : 'save'
 
   initialize: ->
-    new App.Views.Payment.Alipay model: App.payment_alipay # 支付宝
+    new App.Views.Payment.Online el: '#payment_alipay', model: App.payment_alipay # 支付宝
+    new App.Views.Payment.Online el: '#payment_tenpay', model: App.payment_tenpay # 财付通
     self = this
     @collection.view = this
     _.bindAll this, 'render'

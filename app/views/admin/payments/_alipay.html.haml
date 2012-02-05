@@ -24,7 +24,7 @@
       当前正在使用:
       %strong 支付宝即时到帐服务
       %span.warn=link_to w('edit'), '#', class: :payment_edit
-    %dd.account_payment_provider.nsb.alipay-properties(style="display:none;border-top: 1px solid #ddd;")
+    %dd.account_payment_provider.nsb(style="display:none;border-top: 1px solid #ddd;")
       %form(action="#" onsubmit="return false")
         .group-fields
           %table
@@ -46,20 +46,21 @@
           =link_to w('cancel'), '#', class: 'cancel'
           / .group-actions
 
-%script(id="payment-alipay-form-item" type="text/x-handlebars-template")
-  .sb
-    %label(for="payment_alipay_partner") 合作者身份ID
-    %p.credential
-      %input#payment_alipay_partner(autocomplete="off" name="partner" size="30" type="text" value="{{partner}}")
-  .sb
-    %label(for="payment_alipay_account") 帐号
-    %p.credential
-      %input#payment_alipay_account(autocomplete="off" name="account" size="30" type="text" value="{{account}}")
-  .sb
-    %label(for="payment_alipay_key") 交易安全校验码
-    %p.credential
-      %input#payment_alipay_key(autocomplete="off" name="key" size="30" type="password" value="{{key}}")
-  .sb
-    %label(for="payment_alipay_service") 接口类型
-    %p.credential
-      %select#payment_alipay_service(name="service")=options_for_select service_types
+  %script(type="text/x-handlebars-template")
+    .sb
+      %label(for="payment_alipay_partner") 合作者身份ID
+      %p.credential
+        %input#payment_alipay_partner(autocomplete="off" name="partner" size="30" type="text" value="{{partner}}")
+    .sb
+      %label(for="payment_alipay_account") 帐号
+      %p.credential
+        %input#payment_alipay_account(autocomplete="off" name="account" size="30" type="text" value="{{account}}")
+    .sb
+      %label(for="payment_alipay_key") 交易安全校验码
+      %p.credential
+        %input#payment_alipay_key(autocomplete="off" name="key" size="30" type="password" value="{{key}}")
+    .sb
+      %label(for="payment_alipay_service") 接口类型
+      %p.credential
+        %select#payment_alipay_service(name="service")=options_for_select alipay_service_types
+        %input(name="payment_type_id" type="hidden" value="1")

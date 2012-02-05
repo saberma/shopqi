@@ -1,5 +1,4 @@
-App.Views.Payment.Alipay = Backbone.View.extend
-  el: '#payment_alipay'
+App.Views.Payment.Online = Backbone.View.extend # 在线支付
 
   events:
     'change .gateway-id'  : 'select'
@@ -25,7 +24,7 @@ App.Views.Payment.Alipay = Backbone.View.extend
 
   edit: -> # 编辑
     self = this
-    template = Handlebars.compile $('#payment-alipay-form-item').html()
+    template = Handlebars.compile @$('script').html()
     @$('.payment-gateway-form').html template @model.attributes
     @$('.account_payment_provider form select').each -> $(this).val self.model.get($(this).attr('name')) # 显示下拉框
     @$('.account_payment_provider').show()
@@ -39,7 +38,7 @@ App.Views.Payment.Alipay = Backbone.View.extend
         account: self.$("input[name='account']").val(),
         key: self.$("input[name='key']").val(),
         service: self.$("select[name='service']").val(),
-        payment_type_id: 1,
+        payment_type_id: self.$("input[name='payment_type_id']").val()
       },
       success: (model, resp) ->
         msg '修改成功!'

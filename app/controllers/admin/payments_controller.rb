@@ -5,6 +5,7 @@ class Admin::PaymentsController < Admin::AppController
   expose(:shop){ current_user.shop }
   expose(:payments){ shop.payments }
   expose(:payment_alipay_json){ shop.payments.alipay.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
+  expose(:payment_tenpay_json){ shop.payments.tenpay.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
   expose(:payment)
   expose(:payment_json){ payment.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
   expose(:policy_types){ KeyValues::PolicyType.all }
@@ -13,7 +14,8 @@ class Admin::PaymentsController < Admin::AppController
   expose(:custom_payments){ shop.payments.where(payment_type_id: nil).all }
   expose(:selected_custom_types){ custom_payments.map{|c|[c.name,c.name]} }
   expose(:custom_types){ all_custom_types - selected_custom_types }
-  expose(:service_types){ KeyValues::Payment::Alipay::Service.options }
+  expose(:alipay_service_types){ KeyValues::Payment::Alipay::Service.options }
+  expose(:tenpay_service_types){ KeyValues::Payment::Tenpay::Service.options }
 
   def index
     if shop.policies.empty?
