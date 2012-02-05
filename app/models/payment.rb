@@ -14,6 +14,10 @@ class Payment < ActiveRecord::Base
 
   begin 'alipay' # 支付宝
 
+    def self.alipay
+      where(payment_type_id: 1).first
+    end
+
     def service_name # 支付接口类型
       KeyValues::Payment::Alipay::Service.find_by_code(self.service).name
     end

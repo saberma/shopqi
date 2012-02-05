@@ -4,9 +4,7 @@ class Admin::PaymentsController < Admin::AppController
   prepend_before_filter :authenticate_user!
   expose(:shop){ current_user.shop }
   expose(:payments){ shop.payments }
-  expose(:payment_alipay){ shop.payments.where(payment_type_id: 1).first }
-  expose(:payment_alipay_json){ payment_alipay.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
-  expose(:payment_tenpay){ shop.payments.where(payment_type_id: 2).first }
+  expose(:payment_alipay_json){ shop.payments.alipay.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
   expose(:payment)
   expose(:payment_json){ payment.to_json(except: [:created_at, :updated_at], methods: [:service_name]) }
   expose(:policy_types){ KeyValues::PolicyType.all }
