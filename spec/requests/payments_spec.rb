@@ -16,7 +16,7 @@ describe "Payments", js: true do
 
         before { visit payments_path }
 
-        it "should be config", f: true do # 配置
+        it "should be config" do # 配置
           within '#payment_alipay' do
             select '使用支付宝'
             find('.account_payment_provider').visible?.should be_true
