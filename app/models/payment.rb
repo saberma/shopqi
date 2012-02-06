@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   belongs_to :shop
-  validates_presence_of :partner, :key, :service, if: Proc.new{|p| p.payment_type_id?}
-  validates_presence_of :account, if: Proc.new{|p| p.is_alipay?} # 支付宝才需要account
+  validates_presence_of :account, :key, :service, if: Proc.new{|p| p.payment_type_id?}
+  validates_presence_of :email, if: Proc.new{|p| p.is_alipay?} # 支付宝才需要email
   validates_presence_of :name, if: Proc.new{|p| !p.payment_type_id?}
   #default_scope order('created_at')
 

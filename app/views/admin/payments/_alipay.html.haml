@@ -36,7 +36,7 @@
                     %strong
                       请提供您
                       %a(href="http://www.alipay.com" target="gateway") 支付宝
-                      账户的合作者身份ID(partner)、交易安全校验码(key)以及账户,若没有，则请您登陆到
+                      账户的合作者身份ID(account)、交易安全校验码(key)以及账户(email),若没有，则请您登陆到
                       %a(href="https://b.alipay.com/order/productDetail.htm?productId=2011060800327555" target="gateway") 支付宝商家服务
                       进行申请
         / .group-fields
@@ -48,17 +48,17 @@
 
   %script(type="text/x-handlebars-template")
     .sb
-      %label(for="payment_alipay_partner") 合作者身份ID
-      %p.credential
-        %input#payment_alipay_partner(autocomplete="off" name="partner" size="30" type="text" value="{{partner}}")
-    .sb
-      %label(for="payment_alipay_account") 帐号
+      %label(for="payment_alipay_account") 合作者身份ID
       %p.credential
         %input#payment_alipay_account(autocomplete="off" name="account" size="30" type="text" value="{{account}}")
     .sb
       %label(for="payment_alipay_key") 交易安全校验码
       %p.credential
         %input#payment_alipay_key(autocomplete="off" name="key" size="30" type="password" value="{{key}}")
+    .sb
+      %label(for="payment_alipay_email") 帐号
+      %p.credential
+        %input#payment_alipay_email(autocomplete="off" name="email" size="30" type="text" value="{{email}}")
     .sb
       %label(for="payment_alipay_service") 接口类型
       %p.credential

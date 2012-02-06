@@ -32,11 +32,11 @@ cn:
         name: 名称
         price: 运费
       payment:
-        partner: 合作者身份ID
         payment_type: 支付类型
         remark: 备注
         key: 交易安全校验码
-        account: 账号
+        account: 账号(合作者身份ID或者商户号)
+        email: 支付宝登录帐号(email地址或者手机号)
         service: 接口类型
         number: 序号
         apply: 申请

@@ -142,7 +142,7 @@ class Shop::OrderController < Shop::AppController
       def notify # 此action只供支付网关(支付宝)服务器的外部通知接口使用，通知我们订单支付状态(notify_url)
         notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
         @order = Order.find_by_token(notification.out_trade_no)
-        if @order and notification.acknowledge(@order.payment.key) and valid?(notification, @order.payment.partner)
+        if @order and notification.acknowledge(@order.payment.key) and valid?(notification, @order.payment.account)
           @order.pay!(notification.total_fee) if notification.complete? and @order.financial_status_pending? # 要支持重复请求
           render text: "success"
         else
@@ -168,7 +168,7 @@ class Shop::OrderController < Shop::AppController
       def tenpay_notify # 此action只供支付网关(财付通)服务器的外部通知接口使用，通知我们订单支付状态(return_url)
         notification = ActiveMerchant::Billing::Integrations::Tenpay::Return.new(request.raw_post)
         @order = Order.find_by_token(notification.order)
-        if @order and notification.success?(@order.payment.key, @order.payment.partner)
+        if @order and notification.success?(@order.payment.key, @order.payment.account)
           @order.pay!(notification.total_fee) if @order.financial_status_pending? # 要支持重复请求
           render
         else
@@ -221,9 +221,9 @@ class Shop::OrderController < Shop::AppController
     end
   end
 
-  def valid?(notification, partner) # 注意:支付宝的notify_id只在一分钟内才有效
+  def valid?(notification, account) # 注意:支付宝的notify_id只在一分钟内才有效
     url = "https://www.alipay.com/cooperate/gateway.do?service=notify_verify"
-    result = HTTParty.get(url, query: {partner: partner, notify_id: notification.notify_id}).body
+    result = HTTParty.get(url, query: {partner: account, notify_id: notification.notify_id}).body
     result == 'true'
   end
 

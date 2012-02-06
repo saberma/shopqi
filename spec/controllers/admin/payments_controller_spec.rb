@@ -21,13 +21,13 @@ describe Admin::PaymentsController do
     it "should be success" do
       attrs = payment_alipay.attributes.clone
       service = ActiveMerchant::Billing::Integrations::Alipay::Helper::TRADE_CREATE_BY_BUYER # 改为担保交易
-      attrs.merge! key: 'abcdef', partner: '123456', account: 'admin@shopqi.com', service: service
+      attrs.merge! key: 'abcdef', account: '123456', email: 'admin@shopqi.com', service: service
       post :update, id: payment_alipay.id, payment: attrs
       payment_alipay.reload
-      payment_alipay.account.should eql 'admin@shopqi.com'
       payment_alipay.service.should eql service
       payment_alipay.key.should eql 'abcdef'
-      payment_alipay.partner.should eql '123456'
+      payment_alipay.account.should eql '123456'
+      payment_alipay.email.should eql 'admin@shopqi.com'
     end
 
     it "should support empty key" do # 更新时不输入key

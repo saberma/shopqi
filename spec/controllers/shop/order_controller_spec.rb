@@ -214,7 +214,7 @@ describe Shop::OrderController do
 
     let(:date) { Date.today.to_s(:number) }
 
-    let(:transaction_id) { "#{order.payment.partner}#{date}0000000001" }
+    let(:transaction_id) { "#{order.payment.account}#{date}0000000001" }
 
     let(:attrs) { { cmdno: '1', pay_result: '0', date: Date.today.to_s(:number), transaction_id: transaction_id, sp_billno: order.token, total_fee: (order.total_price*100).to_i, fee_type: '1', attach: 'ShopQi' } }
 
@@ -230,7 +230,7 @@ describe Shop::OrderController do
         it 'should change order financial_status to paid' do
           order.financial_status_pending?.should be_true
           expect do
-            post :tenpay_notify, attrs.merge(bargainor_id: order.payment.partner, sign: tenpay_sign(attrs, order.payment.key))
+            post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
             response.body.should_not eql 'fail'
             order.reload.financial_status_paid?.should be_true
           end.should change(OrderTransaction, :count).by(1)
@@ -241,9 +241,9 @@ describe Shop::OrderController do
           order.reload
           order.financial_status = :abandoned
           order.save
-          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.partner, sign: tenpay_sign(attrs, order.payment.key))
+          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
           response.body.should_not eql 'fail'
-          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.partner, sign: tenpay_sign(attrs, order.payment.key))
+          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
           response.body.should_not eql 'fail'
           order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
         end

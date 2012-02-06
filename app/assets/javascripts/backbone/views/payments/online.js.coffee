@@ -34,10 +34,10 @@ App.Views.Payment.Online = Backbone.View.extend # 在线支付
   save: ->
     self = this
     @model.save {
-        partner: self.$("input[name='partner']").val(),
         account: self.$("input[name='account']").val(),
         key: self.$("input[name='key']").val(),
         service: self.$("select[name='service']").val(),
+        email: self.$("input[name='email']").val(), # 支付宝才有
         payment_type_id: self.$("input[name='payment_type_id']").val()
       },
       success: (model, resp) ->

@@ -25,8 +25,8 @@ describe "Payments", js: true do
             select '使用支付宝'
 
             fill_in '合作者身份ID', with: '2398072190767748'
-            fill_in '帐号', with: 'mahb45@gmail.com'
             fill_in '交易安全校验码', with: '1111'
+            fill_in '帐号', with: 'mahb45@gmail.com'
             select '担保交易'
             click_on '保存'
           end
@@ -47,7 +47,7 @@ describe "Payments", js: true do
               select '使用支付宝'
               click_on '保存'
             end
-            page.should have_content('合作者身份ID 不能为空. 帐号 不能为空. 交易安全校验码 不能为空.')
+            page.should have_content('合作者身份ID 不能为空. 交易安全校验码 不能为空. 帐号 不能为空.')
           end
 
         end
@@ -72,16 +72,16 @@ describe "Payments", js: true do
             click_on '编辑'
 
             fill_in '合作者身份ID', with: '2398072190768888'
-            fill_in '帐号', with: 'mahb45@example.com'
             fill_in '交易安全校验码', with: '2222'
+            fill_in '帐号', with: 'mahb45@example.com'
             select '担保交易'
             click_on '保存'
           end
           page.should have_content('修改成功!')
 
           alipay = shop.payments.alipay
-          alipay.partner.should eql '2398072190768888'
-          alipay.account.should eql 'mahb45@example.com'
+          alipay.account.should eql '2398072190768888'
+          alipay.email.should eql 'mahb45@example.com'
           alipay.key.should eql '2222'
 
           visit payments_path # 回显
