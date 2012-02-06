@@ -120,90 +120,152 @@ describe Shop::OrderController do
 
   end
 
-  context '#notify' do # 支付宝从后台发送通过
+  context 'alipay' do # 支付宝
+
+    context '#notify' do # 支付宝从后台发送通过
+
+      before do
+        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id }
+        order.reload
+        controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
+      end
+
+      context 'trade status is TRADE_FINISHED' do # 交易完成
+
+        let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
+
+        it 'should change order financial_status to paid' do
+          order.financial_status_pending?.should be_true
+          expect do
+            post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+            response.body.should eql 'success'
+            order.reload.financial_status_paid?.should be_true
+          end.should change(OrderTransaction, :count).by(1)
+          order.transactions.first.amount.should eql order.total_price
+        end
+
+        it 'should be retry' do # 要支持重复请求
+          order.reload
+          order.financial_status = :abandoned
+          order.save
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.body.should eql 'success'
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.body.should eql 'success'
+          order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+        end
+
+      end
+
+      context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
+
+        let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY', total_fee: order.total_price } }
+
+        it 'should remain order financial status' do
+          order.financial_status_pending?.should be_true
+          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.body.should eql 'success'
+          order.reload.financial_status_pending?.should be_true
+        end
+
+      end
+
+    end
+
+    context '#done' do # 支付宝直接跳转回商店(支付成功后才会返回)
+
+      before do
+        order.financial_status = 'pending'
+        order.payment = payment_alipay
+        order.save
+      end
+
+      context 'trade status is TRADE_SUCCESS' do # 交易完成
+
+        let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
+
+        it 'should change order financial_status to paid' do
+          expect do
+            get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+            response.should be_success
+          end.should change(OrderTransaction, :count)
+          order.reload.financial_status_paid?.should be_true
+        end
+
+        it 'should be retry' do # 要支持重复请求
+          order.financial_status = :abandoned
+          order.save
+          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+          response.should be_success
+          expect do
+            get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+            response.should be_success
+          end.should_not change(OrderTransaction, :count)
+          order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+        end
+
+      end
+
+    end
+
+  end
+
+  context 'tenpay' do # 财付通
+
+    let(:date) { Date.today.to_s(:number) }
+
+    let(:transaction_id) { "#{order.payment.partner}#{date}0000000001" }
+
+    let(:attrs) { { cmdno: '1', pay_result: '0', date: Date.today.to_s(:number), transaction_id: transaction_id, sp_billno: order.token, total_fee: (order.total_price*100).to_i, fee_type: '1', attach: 'ShopQi' } }
 
     before do
       post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id }
       order.reload
-      controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
     end
 
-    context 'trade status is TRADE_FINISHED' do # 交易完成
+    context '#notify' do # 财付通从后台发送通过
 
-      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
+      context 'trade status is TRADE_FINISHED' do # 交易完成
+
+        it 'should change order financial_status to paid' do
+          order.financial_status_pending?.should be_true
+          expect do
+            post :tenpay_notify, attrs.merge(bargainor_id: order.payment.partner, sign: tenpay_sign(attrs, order.payment.key))
+            response.body.should_not eql 'fail'
+            order.reload.financial_status_paid?.should be_true
+          end.should change(OrderTransaction, :count).by(1)
+          order.transactions.first.amount.should eql order.total_price
+        end
+
+        it 'should be retry' do # 要支持重复请求
+          order.reload
+          order.financial_status = :abandoned
+          order.save
+          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.partner, sign: tenpay_sign(attrs, order.payment.key))
+          response.body.should_not eql 'fail'
+          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.partner, sign: tenpay_sign(attrs, order.payment.key))
+          response.body.should_not eql 'fail'
+          order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+        end
+
+      end
+
+    end
+
+    context '#done' do # 财付通直接跳转回商店(支付成功后才会返回)
 
       it 'should change order financial_status to paid' do
-        order.financial_status_pending?.should be_true
-        expect do
-          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.body.should eql 'success'
-          order.reload.financial_status_paid?.should be_true
-        end.should change(OrderTransaction, :count).by(1)
-        order.transactions.first.amount.should eql order.total_price
-      end
-
-      it 'should be retry' do # 要支持重复请求
-        order.reload
-        order.financial_status = :abandoned
-        order.save
-        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-        response.body.should eql 'success'
-        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-        response.body.should eql 'success'
-        order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
-      end
-
-    end
-
-    context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
-
-      let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY', total_fee: order.total_price } }
-
-      it 'should remain order financial status' do
-        order.financial_status_pending?.should be_true
-        post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-        response.body.should eql 'success'
-        order.reload.financial_status_pending?.should be_true
-      end
-
-    end
-
-  end
-
-  context '#done' do # 支付宝直接跳转回商店(支付成功后才会返回)
-
-    before do
-      order.financial_status = 'pending'
-      order.payment = payment_alipay
-      order.save
-    end
-
-    context 'trade status is TRADE_SUCCESS' do # 交易完成
-
-      let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
-
-      it 'should change order financial_status to paid' do
-        expect do
-          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.should be_success
-        end.should change(OrderTransaction, :count)
-        order.reload.financial_status_paid?.should be_true
-      end
-
-      it 'should be retry' do # 要支持重复请求
-        order.financial_status = :abandoned
-        order.save
-        get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+        get :tenpay_done, attrs.merge(token: order.token, sign: sign(attrs, order.payment.key))
         response.should be_success
-        expect do
-          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.should be_success
-        end.should_not change(OrderTransaction, :count)
-        order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
       end
 
     end
 
   end
 
+end
+
+def tenpay_sign(attrs, key) # 财付通传递url参数时的加密字符串
+  md5_string = attrs.map {|s| "#{s[0]}=#{s[1]}"}
+  Digest::MD5.hexdigest(md5_string.join("&") + "&key=#{key}")
 end

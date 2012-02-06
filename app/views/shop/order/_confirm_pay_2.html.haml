@@ -5,11 +5,10 @@
 - payment_service_for order.token, payment.partner, service: :tenpay, html: { id: 'payment-form', method: :get } do |service|
   - service.cmdno 1
   - service.date Date.today.to_s(:number)
-  -# service.amount (order.total_price*100).to_i # 以分为单位
-  - service.amount 1 # 以分为单位
+  - service.amount (order.total_price*100).to_i # 以分为单位
   - service.transaction_id "#{payment.partner}#{Date.today.to_s(:number)}#{order.number.to_s.rjust(10, '0')}"
   - service.currency '1' # 人民币
-  - service.return_url done_order_url
+  - service.return_url tenpay_notify_order_url
   - service.charset "utf-8"
   - service.spbill_create_ip request.remote_ip
   - service.description '商品付款'
