@@ -20,5 +20,5 @@
         %p 感谢您的惠顾 .
         .actions=link_to "返回#{shop.name}",show_shop_url
       -else
-        =render 'confirm_pay'
+        =render "confirm_pay_#{order.payment.payment_type_id}"
 
