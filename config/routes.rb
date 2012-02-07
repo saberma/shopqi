@@ -63,7 +63,7 @@ Shopqi::Application.routes.draw do
       match '/orders/:shop_id/:token/commit'             , to: 'order#commit'            , as: :commit_order
       post '/orders/notify'                              , to: 'order#notify'            , as: :notify_order
       get '/orders/done'                                 , to: 'order#done'              , as: :done_order
-      post '/orders/tenpay_notify'                       , to: 'order#tenpay_notify'     , as: :tenpay_notify_order
+      match '/orders/tenpay_notify'                      , to: 'order#tenpay_notify'     , as: :tenpay_notify_order
       get '/orders/tenpay_done/:token'                   , to: 'order#tenpay_done'       , as: :tenpay_done_order
       post '/orders/:shop_id/:token/update_total_price'  , to: 'order#update_total_price', as: :update_order_total_price
       post '/carts/:shop_id/:cart_token/update_tax_price', to: 'order#update_tax_price'  , as: :update_order_tax_price

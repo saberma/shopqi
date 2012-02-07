@@ -166,9 +166,11 @@ class Shop::OrderController < Shop::AppController
     begin '财付通'
 
       def tenpay_notify # 此action只供支付网关(财付通)服务器的外部通知接口使用，通知我们订单支付状态(return_url)
-        notification = ActiveMerchant::Billing::Integrations::Tenpay::Return.new(request.raw_post)
+        query_string = request.raw_post.blank? ? request.query_string : request.raw_post # 支持get和post方式
+        notification = ActiveMerchant::Billing::Integrations::Tenpay::Return.new(query_string)
         @order = Order.find_by_token(notification.order)
         if @order and notification.success?(@order.payment.key, @order.payment.account)
+          @_resources = { shop: @order.shop } # checkout.haml中expose的shop
           @order.pay!(notification.total_fee) if @order.financial_status_pending? # 要支持重复请求
           render
         else
