@@ -29,10 +29,7 @@
           %a(href="/")
           %a.logo-shopqi(href="/")=image_tag 'logos/shopqi_bag.gif'
           %ul#nav-primary
-            %li#nav-primary-phone
-              %div
-                %span 服务热线
-                %span.imgreplacement.phone-400 400-6767-888
+            %li=link_to '首页', '/', class: 'top-nav'
             %li(class=@current_tour)=link_to '特色演示', tour_intro_path, class: 'top-nav'
             -#
               %li
@@ -41,29 +38,32 @@
             %li(class=@current_signup)=link_to '价格 & 注册', services_signup_path, class: 'top-nav'
             %li.sub-nav
               %ul.utilities
-                %li.megadropdown
-                  %a(href="#") 资源
-                  %ul
-                    -#
+                %li=link_to '主题外观', theme_store_url_with_port
+                %li=link_to '帮助文档', wiki_url_with_port
+                -#
+                  %li.megadropdown
+                    %a(href="#") 资源
+                    %ul
+                      -#
+                        %li
+                          %a(href="http://support.shopqi.com/" title="欢迎 &mdash; 售后支持")
+                            %strong> 售后支持
+                            联系ShopQi
+                        %li
+                          %a(href="http://forums.shopqi.com/" title="ShopQi论坛")
+                            %strong> 论坛
+                            ShopQi社区
+                        %li
+                          %a(href="http://apps.shopqi.com/" title="ShopQi应用商店")
+                            %strong> 应用
+                            选择商店应用程序
                       %li
-                        %a(href="http://support.shopqi.com/" title="欢迎 &mdash; 售后支持")
-                          %strong> 售后支持
-                          联系ShopQi
-                      %li
-                        %a(href="http://forums.shopqi.com/" title="ShopQi论坛")
-                          %strong> 论坛
-                          ShopQi社区
-                      %li
-                        %a(href="http://apps.shopqi.com/" title="ShopQi应用商店")
-                          %strong> 应用
-                          选择商店应用程序
-                    %li
-                      =link_to theme_store_url_with_port do
-                        %strong> 主题外观
-                        选择商店外观模板
-                      =link_to wiki_url_with_port do
-                        %strong> 帮助文档
-                        了解如何使用ShopQi
+                        =link_to theme_store_url_with_port do
+                          %strong> 主题外观
+                          选择商店外观模板
+                        =link_to wiki_url_with_port do
+                          %strong> 帮助文档
+                          了解如何使用ShopQi
                 %li.last
                   %a(href="/login") 登录
       =yield

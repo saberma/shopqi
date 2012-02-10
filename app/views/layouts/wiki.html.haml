@@ -23,10 +23,11 @@
       %ul
         %li.logo
           %a{href: url_with_port, style: "filter:none"}=image_tag 'resources-nav/logo-shopqi.png'
-        %li=link_to '主题外观',"#{theme_store_url_with_port}"
         -#
           %li=link_to '论坛','#'
-        %li.current=link_to '帮助文档',"#{wiki_url_with_port}"
+        %li.current=link_to '帮助文档', wiki_url_with_port
+        %li=link_to '主题外观', theme_store_url_with_port
+        %li=link_to '首页',url_with_port
     / .resources-nav
     #header.clearfix
       .clearfix
