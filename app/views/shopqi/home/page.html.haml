@@ -5,7 +5,7 @@
     #createanonlinestore.banner.createanonlinestore
       %h1(style="position:absolute; top:20px; left:0px")
         =image_tag 'banners/text-createanonlinestore.jpg'
-      =link_to '现在注册', services_signup_path, class: 'blue-signup-button'
+      =link_to '现在注册', services_signup_path, class: 'blue-signup-button png_bg'
 -#
   #feature-bar
     .content
@@ -86,4 +86,4 @@
   .content
     %a(href="/tour") 查看功能演示
     %span 或者
-    =link_to image_tag('buttons/btn-pricing-signup-lighter.png', width: 191, height: 61), services_signup_path
+    =link_to image_tag('buttons/btn-pricing-signup-lighter.png', width: 191, height: 61, class: :png_bg), services_signup_path
