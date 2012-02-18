@@ -22,34 +22,25 @@
         #indianapolisstar-grey.sprites
         #pennyarcade-grey.sprites
         #evisu-grey.sprites
-#container.frontpage
+#new-container
   .content
-    #video-and-details.video-and-details
-      .col-6
-        #video-tour
-          %a.cboxElement(href="#")=image_tag 'graphics/video.jpg'
-    .col-6.last.frontpage-features
-      %ul
-        %li(onclick="document.location.href='/tour/design/'")
-          %h4.title-storefront
-            %span#monitor32.sprites>
-            华丽的界面
-          ShopQi提供各种漂亮的主题供您的商店选择.
-        %li.last(onclick="document.location.href='/tour/store/'")
-          %h4.title-shoppingcart
-            %span#shoppingcart32.sprites>
-            购物车
-          您的网店将拥有独立的购物车和结账流程.
-        %li(onclick="document.location.href='/tour/design/'")
-          %h4.title-customizable
-            %span#colorwheel32.sprites>
-            100% 可定制
-          使用您自己的HTML &amp; CSS，并可以完全控制您的网店外观.
-        %li.last(onclick="document.location.href='/tour/security/'")
-          %h4.title-secure
-            %span#safe32.sprites>
-            多重安全保障
-          我们拥有专门的安全团队来保障您的网上商店的安全性.
+    %ul
+      %li
+        =image_tag 'icons/monitor_48.png'
+        %h4 华丽的商店界面
+        %p ShopQi提供各种漂亮的主题供您的商店选择.
+      %li
+        =image_tag 'icons/buy_48.png'
+        %h4 独立的购物车
+        %p 您的网店将拥有独立的购物车和结账流程.
+      %li
+        =image_tag 'icons/gear_48.png'
+        %h4 100%可定制
+        %p 使用您自己的HTML &amp; CSS，并可以完全控制您的网店外观.
+      %li.last
+        =image_tag 'icons/shield_48.png'
+        %h4 多重安全保障
+        %p 我们拥有专门的安全团队来保障您的网上商店的安全性.
 -#
   #clients
     .content
