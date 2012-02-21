@@ -54,8 +54,10 @@ describe Shop do
 
       context 'free' do # 免费版本
 
+        let(:free_shop) { Factory(:free_user).shop }
+
         it 'should not init deadline' do # 没有截止时间
-          shop.deadline.should be_nil
+          free_shop.deadline.should be_nil
         end
 
       end

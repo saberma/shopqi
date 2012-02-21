@@ -36,4 +36,16 @@ FactoryGirl.define do
     admin false
   end
 
+  factory :free_user, class: User do # 免费用户
+    email 'free@shopqi.com'
+    shop_attributes({
+      name: '免费商店',
+      email: 'free@shopqi.com',
+      plan: 'free',
+      domains_attributes: [{subdomain: 'free', domain: Setting.store_host}]
+    })
+    password '666666'
+    password_confirmation '666666'
+  end
+
 end
