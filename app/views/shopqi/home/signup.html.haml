@@ -13,17 +13,13 @@
     %tr
       %th.heading &nbsp;
       %th.table-col-0.basic
-        %a(href="/services/signup/new/basic")
-          =image_tag 'signup/btn-table-signup.gif'
+        %a(href="/services/signup/new/free")
       %th.table-col-1.professional
         %a(href="/services/signup/new/professional")
-          =image_tag 'signup/btn-table-signup.gif'
       %th.table-col-2.business
         %a(href="/services/signup/new/business")
-          =image_tag 'signup/btn-table-signup.gif'
       %th.table-col-3.unlimited
         %a(href="/services/signup/new/unlimited")
-          =image_tag 'signup/btn-table-signup.gif'
     %tr.even
       %td 安装费
       %td.table-col-0 免费
@@ -40,16 +36,14 @@
       %td 最多商品款式数量(SKU)
       -plan_types.each_with_index do |plan_type, index|
         %td(class="table-col-#{index} #{plan_type.code}")
-          %span.special=plan_type.skus_name
+          %span.special=plan_type.skus
     %tr.odd
       %td 存储空间
       -plan_types.each_with_index do |plan_type, index|
         %td(class="table-col-#{index} #{plan_type.code}")
-          %span.special
-            =plan_type.storage_name
-            ='MB' unless plan_type.storage == KeyValues::Plan::Type::UNLIMIT_STORAGE
+          %span.special==#{plan_type.storage}MB
     %tr.even
-      %td 包含所有电子商务核心功能(绑定域名,SSL保护,统计等)
+      %td 包含所有电子商务核心功能
       %td.table-col-0
         =image_tag 'signup/checkmark.gif'
       %td.table-col-1
@@ -59,10 +53,19 @@
       %td.table-col-3
         =image_tag 'signup/checkmark.gif'
     %tr.odd
+      %td 绑定顶级域名
+      %td.table-col-0 &nbsp;
+      %td.table-col-1
+        =image_tag 'signup/checkmark.gif'
+      %td.table-col-2
+        =image_tag 'signup/checkmark.gif'
+      %td.table-col-3
+        =image_tag 'signup/checkmark.gif'
+    %tr.even
       %td
         %em.note 价格(元)
       %td.table-col-0
-        %a(href="/services/signup/new/basic")
+        %a(href="/services/signup/new/free")
           =image_tag 'signup/btn-table-signup.gif'
       %td.table-col-1
         %a(href="/services/signup/new/professional")

@@ -8,6 +8,11 @@
  *= require shopqi_signup
  *= require_self
 */
+
+body, h1, h2, h3, h4, h5, h6 { /* 中文字体友好 */
+  font-family: Arial,Tahoma,"hiragino sans gb",Helvetica;
+}
+
 ul#nav-primary li a.top-nav { /* fixed: ie6 nav height */
     color: #ddd;
     text-decoration: none;
@@ -78,7 +83,7 @@ ul#nav-primary li#nav-primary-phone {
   line-height: 28px!important;
   }
 
-#new-container {
+#new-container { /* 使用新的首页 */
   background-color: #e8e8e8;
   padding: 40px 0;
   border-top: 1px solid #fff;
@@ -102,13 +107,17 @@ ul#nav-primary li#nav-primary-phone {
       h4 {
         font-size: 18px;
         margin: 20px 0;
-        color: #75AC00;
-        color: #81aa48; }
+        a {
+          color: #81aa48; }}
       p {
         text-align: left;
         padding: 0 35px;
         color: #2f3235;
       } } } }
+
+table#price-chart {
+  th.basic, th.professional, th.business, th.unlimited {
+    height: 175px; } }
 
 #bottom-signup {
   margin-top: 0 }
