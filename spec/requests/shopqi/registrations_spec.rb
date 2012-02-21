@@ -19,7 +19,7 @@ describe "Shopqi::Registrations", js: true do
     before(:each) do
       theme_dark
       theme_slate
-      visit '/services/signup/new/basic'
+      visit '/services/signup/new/professional'
     end
 
     describe "signup" do
@@ -54,7 +54,7 @@ describe "Shopqi::Registrations", js: true do
         local_ip.each do |ip|
           Rails.cache.write("registered_#{ip}", true, expires_in: 24.hours) # 避免重复注册
         end
-        visit '/services/signup/new/basic'
+        visit '/services/signup/new/professional'
       end
 
       after(:each) do

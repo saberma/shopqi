@@ -6,9 +6,9 @@
       %p.sb
         %strong 请您确认你想要升级您的ShopQi账户:
       %p.sb
-        ==您将升级您的账户到 #{raw high_color plan_type.name} 方案，此方案单价为#{raw high_color plan_type.price}元/月，
+        ==您将升级您的账户到 #{raw high_color plan_type.name} 方案，此方案单价为#{raw high_color plan_type.price}元/年，
       %p.sb
-        ==您将支付 #{raw high_color @consumption.quantity} 个月，总价为 #{raw high_color @consumption.total_price} 元
+        ==您将支付 #{raw high_color @consumption.quantity} 年，总价为 #{raw high_color @consumption.total_price} 元
       %p.sb 方案将在您支付成功后生效！暂支持 #{raw high_color '支付宝'} 方式支付
     - payment_service_for @consumption.token, AlipayConfig['account'], :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
       - service.total_fee @consumption.total_price

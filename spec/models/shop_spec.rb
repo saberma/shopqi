@@ -43,6 +43,23 @@ describe Shop do
         shop.storage_idle?.should be_true
       end
 
+      context 'paid' do # 收费版本
+
+        it 'should init deadline' do # 有截止时间
+          shop.deadline.should_not be_nil
+        end
+
+      end
+
+
+      context 'free' do # 免费版本
+
+        it 'should not init deadline' do # 没有截止时间
+          shop.deadline.should be_nil
+        end
+
+      end
+
     end
 
   end

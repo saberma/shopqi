@@ -16,7 +16,7 @@ describe User do
         address: "311",
         zip_code: "518057",
         phone: "13928458888",
-        plan: "basic"
+        plan: "professional"
       },
       name: "马海波",
       email: "mahb45@gmail.com",

@@ -17,7 +17,7 @@ class Consumption < ActiveRecord::Base
     self.status = true
     self.save
     base = shop.deadline.future? ? shop.deadline : Date.today
-    shop.deadline = base.advance(months: self.quantity)
+    shop.deadline = base.advance(years: self.quantity)
     shop.plan = self.plan_type.code
     shop.save
   end

@@ -60,7 +60,7 @@ describe Admin::AccountController do
 
   context '#notify' do # 支付宝从后台发送通过
 
-    let(:consumption) { Factory(:consumption, shop: shop) }
+    let(:consumption) { Factory(:consumption, shop: shop) } # 支付两年
 
     before do
       controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
@@ -82,7 +82,7 @@ describe Admin::AccountController do
           post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.body.should eql 'success'
           consumption.reload.status.should be_true
-          shop.reload.deadline.should eql Date.today.advance(months: 3) # 三个月后到期
+          shop.reload.deadline.should eql Date.today.advance(years: 2, months: 1) # 两年一个月后到期
         end
 
       end
@@ -99,7 +99,7 @@ describe Admin::AccountController do
           post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.body.should eql 'success'
           consumption.reload.status.should be_true
-          shop.reload.deadline.should eql Date.today.advance(months: 2) # 二个月后到期
+          shop.reload.deadline.should eql Date.today.advance(years: 2) # 二年后到期
         end
 
       end
@@ -153,7 +153,7 @@ describe Admin::AccountController do
           get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.should be_redirect
           consumption.reload.status.should be_true
-          shop.reload.deadline.should eql Date.today.advance(months: 3) # 三个月后到期
+          shop.reload.deadline.should eql Date.today.advance(years: 2, months: 1) # 兩年一个月后到期
         end
 
       end
@@ -169,7 +169,7 @@ describe Admin::AccountController do
           get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.should be_redirect
           consumption.reload.status.should be_true
-          shop.reload.deadline.should eql Date.today.advance(months: 2) # 二个月后到期
+          shop.reload.deadline.should eql Date.today.advance(years: 2) # 二年后到期
         end
 
       end

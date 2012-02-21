@@ -2,12 +2,12 @@
   %table.data2{:cellspacing => "0"}
     %tr
       %th 方案
-      %th{:style => "text-align: center"} 费用(元/月)
+      %th{:style => "text-align: center"} 费用(元/年)
       %th{:style => "text-align: center"} 最多商品款式数量
       %th{:style => "text-align: center"} 存储空间(M)
       -#%th{:style => "text-align: center"} 商品打折促销
-      %th{:style => "text-align: center"} SSL
       %th{:style => "text-align: center"} 绑定域名
+      %th{:style => "text-align: center"} SSL
       %th{:style => "text-align: center"} 统计
     -plan_types.each do |plan_type|
       -flag = shop.plan == plan_type.code
@@ -20,12 +20,12 @@
           %br/
           -if flag
             =raw(high_color('当前帐户已过期')) unless shop.available?
-            =link_to '续费', pay_plan_account_index_path
+            =link_to '续费', pay_plan_account_index_path unless plan_type.free?
           -else
-            =link_to w('upgrade'), change_plan_account_index_path(code: plan_type.code)
+            =link_to w('upgrade'), change_plan_account_index_path(code: plan_type.code) unless plan_type.free?
         %td=plan_type.price
-        %td=plan_type.skus_name
-        %td=plan_type.storage_name
-        %td=image_tag 'admin/icons/check2.gif'
+        %td=plan_type.skus
+        %td=plan_type.storage
+        %td=image_tag 'admin/icons/check2.gif' unless plan_type.free?
         %td=image_tag 'admin/icons/check2.gif'
         %td=image_tag 'admin/icons/check2.gif'

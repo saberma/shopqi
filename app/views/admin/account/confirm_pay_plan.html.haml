@@ -3,8 +3,8 @@
     .status
       %p 确认账户方案续费
     .ppb
-      %p.sb==您当前使用的是 #{raw high_color shop.plan_type.name} 方案，此方案单价为#{raw high_color shop.plan_type.price}元/月，
-      %p.sb==您将支付 #{raw high_color @consumption.quantity} 个月，总价为 #{raw high_color @consumption.total_price} 元
+      %p.sb==您当前使用的是 #{raw high_color shop.plan_type.name} 方案，此方案单价为#{raw high_color shop.plan_type.price}元/年，
+      %p.sb==您将支付 #{raw high_color @consumption.quantity} 年，总价为 #{raw high_color @consumption.total_price} 元
       %p.sb 目前，暂支持 #{raw high_color '支付宝'} 方式支付
     - payment_service_for @consumption.token, AlipayConfig['account'], :service => :alipay, :html => { :id => 'payment-form', :method => :get } do |service|
       - service.total_fee @consumption.total_price

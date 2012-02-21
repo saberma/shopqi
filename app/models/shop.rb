@@ -76,8 +76,8 @@ class Shop < ActiveRecord::Base
       KeyValues::Plan::Type.find_by_code(self.plan)
     end
 
-    def plan_unlimited?
-      self.plan == 'unlimited'
+    def plan_free?
+      self.plan == 'free'
     end
 
     def storage # 已占用的容量(如要支持windows可修改为循环获取目录大小)
@@ -87,7 +87,7 @@ class Shop < ActiveRecord::Base
     end
 
     def available?
-      !self.deadline.past?
+      self.deadline.nil? or !self.deadline.past?
     end
 
     def storage_idle? # 存在剩余空间
@@ -165,7 +165,7 @@ class Shop < ActiveRecord::Base
 
   protected
   def init_valid_date
-    self.deadline = Date.today.advance months: 1
+    self.deadline = Date.today.advance months: 1 unless self.plan_free?
   end
 
   def init_currency

@@ -178,21 +178,15 @@ module KeyValues
 
   module Plan
     class Type < KeyValues::Base
-      UNLIMIT_SKU     = 65535
-      UNLIMIT_STORAGE = 65535
       self.data = [
-        {id: 1   ,name:'旗舰版'  , code: 'unlimited'   , skus: UNLIMIT_SKU , storage: UNLIMIT_STORAGE, price: 2998},
-        {id: 2   ,name:'企业版'  , code: 'business'    , skus: 10000       , storage: 1000           , price: 898 },
-        {id: 3   ,name:'专业版'  , code: 'professional', skus: 2500        , storage: 500            , price: 498 },
-        {id: 4   ,name:'基础版'  , code: 'basic'       , skus: 100         , storage: 100            , price: 298 },
+        {id: 1   ,name:'旗舰版'  , code: 'unlimited'    , skus: 1000 , storage: 1000, price: 9988 },
+        {id: 2   ,name:'企业版'  , code: 'business'     , skus: 500  , storage: 500 , price: 5988 },
+        {id: 3   ,name:'专业版'  , code: 'professional' , skus: 100  , storage: 100 , price: 2988 },
+        {id: 4   ,name:'免费版'  , code: 'free'         , skus: 50   , storage: 50  , price: 0    }
       ]
 
-      def skus_name
-        skus == UNLIMIT_SKU ? '不限' : skus
-      end
-
-      def storage_name
-        storage == UNLIMIT_STORAGE ? '不限' : storage
+      def free?
+        self.code == 'free'
       end
     end
   end
