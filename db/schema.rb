@@ -614,7 +614,7 @@ ActiveRecord::Schema.define(:version => 20120219015553) do
   create_table "shops", :force => true do |t|
     t.string   "name",                                 :limit => 16
     t.string   "phone",                                :limit => 16
-    t.string   "plan",                                 :limit => 16, :default => "basic"
+    t.string   "plan",                                               :default => "free"
     t.date     "deadline"
     t.string   "province",                             :limit => 8
     t.string   "city",                                 :limit => 8

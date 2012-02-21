@@ -6,6 +6,7 @@ FactoryGirl.define do
     shop_attributes({
       name: '测试商店',
       email: 'admin@shopqi.com',
+      plan: 'free',
       domains_attributes: [{subdomain: 'shopqi', domain: Setting.store_host}]
     })
     password '666666'

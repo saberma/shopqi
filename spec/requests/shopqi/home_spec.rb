@@ -10,7 +10,7 @@ describe "Shopqi::Home", js: true do
 
     it "should be show" do
       visit '/'
-      has_content?('华丽的界面').should be_true
+      has_content?('华丽的商店界面').should be_true
     end
 
   end

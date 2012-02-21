@@ -7,8 +7,8 @@ describe Consumption do
   let(:consumption) { Factory(:consumption, shop: shop) }
 
   it "should init price" do
-    consumption.price.should eql 298.0
-    consumption.total_price.should eql 596.0
+    consumption.price.should eql 2988.0
+    consumption.total_price.should eql 5976.0
   end
 
 end
