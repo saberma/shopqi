@@ -1,2 +1,0 @@
-module Shop::CollectionsHelper
-end

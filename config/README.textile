@@ -1,8 +1,0 @@
-此目录存在关键配置文件
-
-# database.yml
-# sunspot.yml
-# app_config.yml
-# app_secret_config.yml
-# newrelic.yml # 无example，自行从newrelic注册后下载
-部署时要从本地上传至服务器
