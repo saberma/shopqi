@@ -111,20 +111,26 @@ describe Order do
 
   end
 
-  describe 'validate' do
+  describe 'validate' do # 校验
 
     let(:order) { shop.orders.build }
 
-    it 'should validate email' do
+    it 'should be perform' do
       order.valid?.should be_false
-      order.errors[:email].should_not be_nil
-      order.errors[:shipping_address].should_not be_nil
+      order.errors[:email].should_not be_empty
+      order.errors[:shipping_rate].should_not be_empty
+      order.errors[:payment_id].should_not be_empty
     end
 
     it 'should validate shipping_address' do
       order.update_attributes email: 'mahb45@gmail.com', shipping_address_attributes: { name: '' }
       order.errors['shipping_address.name'].should_not be_empty
     end
+
+    #it 'should validate shipping_rate' do # 商店要支持的配送方式
+    #  order.update_attributes email: 'mahb45@gmail.com', shipping_rate: "顺丰快递-0"
+    #  order.errors['shipping_rate'].should_not be_empty
+    #end
 
   end
 

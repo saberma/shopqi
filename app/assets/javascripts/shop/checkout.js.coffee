@@ -1,8 +1,7 @@
 #=require jquery
 #=require jquery_ujs
 
-#地区(冗余代码待重构)
-RegionUtils =
+RegionUtils = #地区(冗余代码待重构)
   init: (seed = [], region = '.region') ->
     $(region).each ->
       selects = $('select', this)
@@ -20,77 +19,73 @@ RegionUtils =
             value = seed[select_index]
             select.val(value).change() if value # 级联回显
 
+Validator = # 校验
+  validate_blank: (id, field)-> # 是否为空
+    obj = $("##{id}")
+    if obj.val() is '' # order_email
+      $("#error_#{id}").text("#{field}不能为空!").show() # error_order_email
+      obj.focus()
+      false
+    else
+      $("#error_#{id}").hide()
+      true
+
+  valid_email: (id, field)->
+    filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9_]{2,4})+$/
+    obj = $("##{id}")
+    if !filter.test(obj.val())
+      $("#error_#{id}").text("#{field}格式不正确!").show() # error_order_email
+      obj.focus()
+      false
+    else
+      $("#error_#{id}").hide()
+      true
+
+  validates: (fields)-> # 校验
+    flag = true
+    $.each fields, (id, field) ->
+      flag = Validator.validate_blank(id, field)
+      return flag
+    flag
+
 $(document).ready ->
 
-  #处理地址，级联操作税率
-  $('#order_shipping_address_attributes_country_code').each ->
-    $(this).change ->
-      country_code = $(this).val()
-      if country_code isnt 'CN'
-        $(this).closest('table').find('.region').parent().hide()
-      else
-        $(this).closest('table').find('.region').parent().show()
-      action = $(this).closest('form').attr('action').replace(/create_order/i,'update_tax_price')
-      $.post action, { country_code: country_code, shipping_same: checked }, (data) ->
-        img = $("#cost :first-child")[0]
-        $('#cost').html('¥' + data.total_price).append(img)
-        $('#tax_span').html(" ..包含#{data.order_tax_price}元的税")
-      $(this).ajaxStart ->
-        $('.spinner').show()
-      $(this).ajaxStop ->
-        $('.spinner').hide()
-
-  #/carts/xxx 页面处理货品地址和发单地址
-  #$('#shipping-toggle').change ->
-  #  checked = $(this).attr('checked') is 'checked'
-  #  $('#shipping').toggle !checked
-  #  $('#shipping-same').toggle checked
-  #  if checked
-  #    $('#order_billing_address_attributes_country_code').change()
-  #  else
-  #    $('#order_shipping_address_attributes_country_code').change()
-  #.change()
-
   if $('#no-shipping-rates').size() > 0
-    $('input#complete-purchase').attr 'disabled', true
+    $('#complete-purchase').attr 'disabled', true
 
-  #处理快递费用
-  $('#shipping-rates').change ->
-    action = $(this).closest('form').attr('action')
-    href = action.substr(0,action.lastIndexOf('/')) + '/update_total_price'
-    rate = $(this).val()
-    $.post href, { shipping_rate: rate }, (data) ->
-      if data.error is 'shipping_rate'
-        $('#shipping-rate-error').show()
-        $("#shipping-rates option[value='#{data.shipping_rate}']").remove()
-      else
-        $('#shipping-rate-error').hide()
-        img = $("#cost :first-child")[0]
-        $('#cost').html('¥' + data.total_price).append(img)
-        $('#shipping_span').html(" ..包含快递费#{data.shipping_rate_price}元")
-    $(this).ajaxStart -> $('.spinner').show()
-    $(this).ajaxStop -> $('.spinner').hide()
-  .change()
+  $("input[name='order[shipping_rate]']").change -> # 快递费用
+    format = $('#cost').attr('format')
+    price = parseFloat $(this).attr('start')
+    total_price = parseFloat($('#cost').attr('total_price')) + price
+    format_price = format.replace /{{amount}}/, total_price
+    $('#cost').html(format_price)
+    $('#shipping_span').html(" ..包含快递费#{price}元")
 
-  #处理订单提交结账
-  $("input#complete-purchase").click ->
-    $(this).attr('disabled', 'true').val '正在完成订单...'
+  $("#complete-purchase").click -> #处理订单提交结账
+    return false unless Validator.validates {
+      order_email: 'Email地址',
+      order_shipping_address_attributes_name: '姓名',
+      order_shipping_address_attributes_province: '省份',
+      order_shipping_address_attributes_city: '城市',
+      order_shipping_address_attributes_district: '地区',
+      order_shipping_address_attributes_address1: '地址',
+      order_shipping_address_attributes_phone: '电话'
+    }
+    return false unless Validator.valid_email('order_email', 'Email地址')
+    if $("input[name='order[shipping_rate]']:checked").size() is 0
+      alert '请选择配送方式'
+      return false
+    else if $("input[name='order[payment_id]']:checked").size() is 0
+      alert '请选择支付方式'
+      return false
+    $(this).attr('disabled', 'true').val '正在提交...'
     form = $(this).closest('form')
-    action = form.attr('action')
-    attrs = form.serialize()
-    $.post action,attrs, (data) ->
-      $("input#complete-purchase").attr('disabled', '').val '购买'
-      if data.error is 'shipping_rate'
-        $('#shipping-rate-error').show()
-        $("#shipping-rates option[value='#{data.shipping_rate}']").remove()
-      if data.payment_error is true
-        $('#payment-error').show()
-      if data.success is true
-        window.location = data.url
-    $(this).ajaxStart -> $('#purchase-progress').show()
-    $(this).ajaxStop -> $('#purchase-progress').hide()
+    $('#purchase-progress').show()
+    $.post form.attr('action'), form.serialize(), (data) ->
+      $("#complete-purchase").attr('disabled', '').val '提交订单'
+      $('#purchase-progress').hide()
+      window.location = data.url if data.success is true
     false
-
 
   #地区的级联选择
   $(".region").each ->
@@ -144,4 +139,3 @@ $(document).ready ->
       $("##{str}_zip").val('')
       $("##{str}_company").val('')
       $("##{str}_phone").val('')
-

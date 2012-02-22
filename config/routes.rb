@@ -56,17 +56,13 @@ Shopqi::Application.routes.draw do
   # 订单页面
   constraints(Domain::Checkout) do
     scope module: :shop do
-      get '/carts/:shop_id/:cart_token'                  , to: 'order#address'
-      match '/carts/:shop_id/:cart_token/create_order'   , to: 'order#create'
-      get '/orders/:shop_id/:token/pay'                  , to: 'order#pay'               , as: :pay_order
+      get '/carts/:shop_id/:cart_token'                  , to: 'order#new'
+      post '/carts/:shop_id/:cart_token'                 , to: 'order#create'
       get '/orders/:shop_id/:token/forward'              , to: 'order#forward'           , as: :forward_order
-      match '/orders/:shop_id/:token/commit'             , to: 'order#commit'            , as: :commit_order
       post '/orders/notify'                              , to: 'order#notify'            , as: :notify_order
       get '/orders/done'                                 , to: 'order#done'              , as: :done_order
       match '/orders/tenpay_notify'                      , to: 'order#tenpay_notify'     , as: :tenpay_notify_order
       get '/orders/tenpay_done/:token'                   , to: 'order#tenpay_done'       , as: :tenpay_done_order
-      post '/orders/:shop_id/:token/update_total_price'  , to: 'order#update_total_price', as: :update_order_total_price
-      post '/carts/:shop_id/:cart_token/update_tax_price', to: 'order#update_tax_price'  , as: :update_order_tax_price
       get '/carts/:shop_id/:cart_token/get_address'      , to: 'order#get_address'       , as: :get_address
     end
   end

@@ -27,6 +27,7 @@ class Customer < ActiveRecord::Base
   attr_accessor :tags_text
 
   default_value_for :status, 'enabled'
+  default_value_for :accepts_marketing, true
 
   def tags_text
     @tags_text ||= self.tags.map(&:name).join(', ')

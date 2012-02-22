@@ -15,4 +15,14 @@ FactoryGirl.define do
     email 'mahb45@gmail.com'
     service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER # 即时到帐
   end
+
+  factory :payment_tenpay, parent: :payment do
+    message  ""
+    name ''
+    payment_type_id 2 # KeyValues::PaymentType 财付通
+    account '1872652336'
+    key UUID.generate(:compact)
+    email 'mahb45@gmail.com'
+    service 'direct' # 即时到帐
+  end
 end

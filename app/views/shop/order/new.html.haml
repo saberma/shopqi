@@ -1,0 +1,116 @@
+#header
+  #logo
+    / css hook for logos
+  %h1#tagline
+    %span.title=shop.name
+    %span.subtitle 填写购物信息
+#main
+  / begin overview
+  #overview.clearfix
+    #products
+      %h2 您购买了&hellip;
+      %table#thumbs(cellspacing="0" cellpadding="0")=render 'line_items', line_items: cart_line_items
+    #wallet
+      %span#cost(format="#{shop.money_in_emails_format}" total_price="#{cart_total_price}")=shop.format_money_in_emails(cart_total_price )
+      %br
+      %span#shipping_span.hint .. 未包含运费
+    %div(style="clear:left")
+  /
+    \/end overview
+  #content
+    =form_for order, url: "/carts/#{shop.id}/#{cart.token}", html: {onsubmit: 'return false;'} do |f|
+      #email
+        =f.label :email, '邮箱'
+        -current_customer = cart.customer
+        -if current_customer
+          =f.hidden_field :email, value: current_customer.email
+          %h4.active-customer
+            =current_customer.email
+            %span.sign-in-message
+              ==不是#{current_customer.name}?
+              =link_to '用另一个账号登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}" )
+        -else
+          =f.text_field :email
+          %span#error_order_email.errorHint
+          -if shop.customer_accounts_optional?
+            %span.sign-in-message
+              已经有账户了？
+              =link_to ' 现在就登录',new_customer_session_url(checkout_url: "#{request.protocol}checkout.#{request.domain}#{request.port_string}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}" )
+      / begin addresses
+      #addresses.group.clearfix
+        %h3 收货地址
+        %table#shipping.form(cellspacing="0" cellpadding="0")
+          -if current_customer
+            %tr#shipping_address_selection.multiple_address_selection
+              %td(colspan=2)
+                =select_tag :shipping_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''] )
+          =f.fields_for :shipping_address do |s|
+            %tr
+              %td.lbl=s.label :name
+              %td
+                =s.text_field :name, class: :short
+                %span#error_order_shipping_address_attributes_name.errorHint
+            %tr
+              %td.lbl
+                %label(for='order_shipping_address_attributes_province') 地区
+              %td.region
+                =s.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
+                =s.select :city, District.list(order.shipping_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
+                =s.select :district, District.list(order.shipping_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
+                %span#error_order_shipping_address_attributes_province.errorHint
+                %span#error_order_shipping_address_attributes_city.errorHint
+                %span#error_order_shipping_address_attributes_district.errorHint
+            %tr
+              %td.lbl=s.label :address1
+              %td
+                =s.text_field :address1
+                %span#error_order_shipping_address_attributes_address1.errorHint
+            %tr
+              %td.lbl=s.label :phone
+              %td
+                =s.text_field :phone, class: :short
+                %span#error_order_shipping_address_attributes_phone.errorHint
+            %tr
+              %td.lbl=s.label :zip
+              %td
+                =s.text_field :zip, class: :short
+                %span#error_order_shipping_address_attributes_zip.errorHint
+        %div(style="clear: both")
+      / end addresses
+      #payment
+        .group.clearfix
+          %h3 配送方式
+          -unless shipping_rates.blank?
+            %p.sst
+              %ul#shipping_rates
+                -shipping_rates.each do |shipping_rate|
+                  %li
+                    =f.radio_button :shipping_rate, "#{shipping_rate.name}-#{shop.format_money_in_emails(shipping_rate.price)}", start: shipping_rate.price
+                    =label_tag "order_shipping_rate_-#{shipping_rate.price.to_s.sub('.','')}" , "#{shipping_rate.name}-#{shop.format_money_in_emails(shipping_rate.price)}"
+          -else
+            %p#no-shipping-rates 对不起，由于本店暂时没有为该地区设置发货方式，所以，将不能发往该地区
+      -unless shipping_rates.blank?
+        .group
+          %h3 支付方式
+          .field-with-errors#payment-error(style='display:none')
+            %p
+              %span 请您选择的支付方式，若没有支付方式可供选择，请联系店主！
+          .sst
+            .gleft
+              %span.error-message
+              %ul#payment-methods
+                -shop.payments.each do |gateway|
+                  %li
+                    =f.radio_button :payment_id, gateway.id
+                    =label_tag "order_payment_id_#{gateway.id}" , gateway.name? ? gateway.name :  gateway.payment_type.name
+            #pay-info.gright
+          %p(style="clear:both;height: 0")
+      %table#buttons(border="0" cellspacing="0" cellpadding="0" style="height: 55px; width: 100%")
+        %tr
+          %td(style="vertical-align:middle")
+            %input#complete-purchase(name="commit" type="submit" value="提交订单")
+            %small#cancel-purchase
+              或者
+              %a(href="#{shop.primary_domain.url}#{request.port_string}") 返回商店
+          %td(style="text-align:right;vertical-align:bottom")
+            %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'

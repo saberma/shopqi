@@ -1,10 +1,11 @@
 #encoding: utf-8
 class Shop::OrderController < Shop::AppController
   include Admin::ShopsHelper
-  skip_before_filter :password_protected       , only: [:notify, :done, :tenpay_notify, :tenpay_done]
-  skip_before_filter :must_has_theme           , only: [:notify, :done, :tenpay_notify, :tenpay_done]
-  skip_before_filter :check_shop_avaliable     , only: [:notify, :done, :tenpay_notify, :tenpay_done]
-  skip_before_filter :check_shop_access_enabled, only: [:notify, :done, :tenpay_notify, :tenpay_done]
+  PAYMENT_METHODS = [:notify, :done, :tenpay_notify, :tenpay_done]
+  skip_before_filter :password_protected       , only: PAYMENT_METHODS
+  skip_before_filter :must_has_theme           , only: PAYMENT_METHODS
+  skip_before_filter :check_shop_avaliable     , only: PAYMENT_METHODS
+  skip_before_filter :check_shop_access_enabled, only: PAYMENT_METHODS
 
   layout 'shop/checkout'
 
@@ -26,7 +27,7 @@ class Shop::OrderController < Shop::AppController
 
   expose(:cart) { shop.carts.where(token: params[:cart_token]).first }
 
-  before_filter only: :address do
+  before_filter only: :new do
     verify_customer!(cart)
   end
 
@@ -39,6 +40,14 @@ class Shop::OrderController < Shop::AppController
       end
       result
     end
+  end
+
+  expose(:cart_total_weight) do
+    cart_line_items.map do |item|
+      variant = item.first
+      quantity = item.second
+      quantity * variant.weight
+    end.sum
   end
 
   expose(:cart_total_price) do
@@ -60,79 +69,43 @@ class Shop::OrderController < Shop::AppController
     order.total_price
   end
 
-  expose(:countries){
-    shop.countries
-  }
-
   expose(:country){
-    order.shipping_address.country
+    shop.countries.where(code: 'CN').first
   }
 
   expose(:shipping_rates) do
-    total_weight = order.total_weight / 1000.0 # 订单的total_weight以克为单位
+    total_weight = cart_total_weight / 1000.0 # 订单的total_weight以克为单位
     country.weight_based_shipping_rates.where(:weight_low.lte => total_weight,:weight_high.gte => total_weight ).all + country.price_based_shipping_rates.where(:min_order_subtotal.lte => order.total_line_items_price,:max_order_subtotal.gte => order.total_line_items_price ).all
   end
 
-  # 订单提交Step1
-  def address
-    if cart.cart_hash.blank?
+  def new # 显示订单表单
+    if cart_line_items.empty?
       render(action: 'error', layout: false) and return
     end
     order.build_shipping_address if order.shipping_address.nil?
   end
 
-  # 提交订单: 填写完收货地址等就可以创建订单了
-  def create
-    address #初始化shipping_address
+  def create # 提交订单
+    if cart_line_items.empty?
+      render json: {error: 'unavailable_product'} and return
+    end
+
     order.build_shipping_address(order.shipping_address.attributes)
-    JSON(cart.cart_hash).each_pair do |variant_id, quantity| #保存已购买商品
-      begin
-        variant = shop.variants.find(variant_id)
-        order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
-      rescue ActiveRecord::RecordNotFound # 款式已被删除
-      end
+    cart_line_items.each_pair do |variant, quantity|
+      order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
 
-    #税率
-    order.tax_price = shop.taxes_included  ? 0.0 : cart_total_price * shop.countries.find_by_code(order.shipping_address.country_code).tax_percentage/100
-
+    data = {}
     if order.save
-      redirect_to pay_order_path(shop_id: shop.id, token: order.token)
-    else
-      render action: :address
+      shop.carts.where(token: order.token).first.try(:destroy) # 删除购物车实体
+      order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
+      data = {success: true, url: forward_order_path(params[:shop_id], params[:cart_token])}
     end
-  end
-
-  # 发货方式、付款方式Step2
-  def pay
-    order.payment ||= shop.payments.first
+    render json: data
   end
 
   def forward
     render file: 'public/404.html',layout: false, status: 404 unless order
-  end
-
-  # 支付
-  def commit
-    data = {}
-    include_shipping_rate = shipping_rates.map(&:shipping_rate).include? params[:order][:shipping_rate]
-    if !include_shipping_rate || !params[:order][:payment_id]
-      data = data.merge({error: 'shipping_rate', shipping_rate: params[:shipping_rate] }) if !include_shipping_rate
-      data = data.merge({payment_error: true}) if !params[:order][:payment_id]
-    else
-      #若是已提交过的订单，则不做任何操作
-      if order.payment.nil?
-        params[:buyer_accepts_marketing] == 'true' ? order.customer.accepts_marketing = true : order.customer.accepts_marketing = false
-        order.customer.save
-        order.financial_status = 'pending'
-        order.payment = shop.payments.find(params[:order][:payment_id])
-        order.save
-        shop.carts.where(token: order.token).first.try(:destroy) # 删除购物车实体
-        order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
-      end
-      data = {success: true, url: forward_order_path(params[:shop_id],params[:token])}
-    end
-    render json: data
   end
 
   begin 'from pay gateway'
@@ -186,27 +159,6 @@ class Shop::OrderController < Shop::AppController
 
     end
 
-  end
-
-  def update_total_price
-    #处理更新快递方式
-    if !shipping_rates.map(&:shipping_rate).include? params[:shipping_rate]
-      data = {error: 'shipping_rate', shipping_rate: params[:shipping_rate] }
-    else
-      order.shipping_rate = params[:shipping_rate]
-      order.total_price = order.total_line_items_price + params[:shipping_rate].gsub(/.+-/,'').to_f + order.order_tax_price
-      order.save
-      data = {total_price: order.total_price, shipping_rate_price: order.shipping_rate_price}
-    end
-    render json: data
-  end
-
-  def update_tax_price
-    country = shop.countries.find_by_code(params[:country_code])
-    order_tax_price = shop.taxes_included  ? 0.0 : cart_total_price * country.tax_percentage/100
-    total_price = cart_total_price + order_tax_price
-    data = {total_price: total_price, order_tax_price: order_tax_price}
-    render json: data
   end
 
   def get_address

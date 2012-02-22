@@ -9,15 +9,15 @@ class Order < ActiveRecord::Base
   has_many :histories      , dependent: :destroy, class_name: 'OrderHistory'    , order: :id.desc #订单历史
   belongs_to  :payment     , class_name: 'Payment' #支付方式
 
-  attr_accessible :id, :email, :shipping_rate, :note, :shipping_address_attributes, :cancel_reason, :total_weight
+  attr_accessible :id, :email, :shipping_rate, :note, :shipping_address_attributes, :cancel_reason, :total_weight, :payment_id
 
   accepts_nested_attributes_for :shipping_address
 
-  validates_presence_of :email, message: '此栏不能为空白'
-  #validates_presence_of :shipping_rate, :gateway, on: :update
+  validates_presence_of :email, :shipping_address, :shipping_rate, :payment_id, message: '此栏不能为空白'
+  #validates :shipping_rate, inclusion: { in: %w()} # TODO: 配送记录必须存在
 
   default_value_for :status, 'open'
-  default_value_for :financial_status, 'abandoned'
+  default_value_for :financial_status, 'pending'
   default_value_for :fulfillment_status, 'unshipped'
 
   before_create do
@@ -227,6 +227,8 @@ end
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
+
+  default_value_for :country_code, 'CN'
 
   def country
     order.shop.countries.where(code: country_code).first

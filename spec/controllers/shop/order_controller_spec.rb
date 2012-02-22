@@ -18,245 +18,246 @@ describe Shop::OrderController do
 
   let(:cart) { Factory :cart, shop: shop, cart_hash: %Q({"#{variant.id}":1}) }
 
-  let(:order) do
-    o = Factory.build :order, shop: shop
-    o.line_items.build product_variant: variant, price: variant.price, quantity: 1
-    o.save
-    o
-  end
-
-  let(:payment) do # 支付方式
-    Factory :payment, shop: shop
-  end
-
-  let(:payment_alipay) do # 支付方式:支付宝
-    Factory :payment_alipay, shop: shop
-  end
-
-  let(:shipping_address_attributes) { {name: 'ma',country_code: 'CN', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
-
-  context '#address' do
+  context '#new' do # 显示表单
 
     context 'exist vairant' do # 款式仍然存在
 
       it 'should be show' do
-        get :address, shop_id: shop.id, cart_token: cart.token
+        get :new, shop_id: shop.id, cart_token: cart.token
         response.should be_success
-      end
-
-      it 'should save the shipping address' do
-        expect do
-          post :create, shop_id: shop.id, cart_token: cart.token, order: {
-            email: 'mahb45@gmail.com',
-            shipping_address_attributes: shipping_address_attributes
-          }
-          order = assigns['_resources']['order']
-          order.shipping_address.address1.should eql order.shipping_address.address1
-          order.line_items.should_not be_empty
-        end.should change(Order, :count).by(1)
       end
 
     end
 
-    context 'missing variant' do # 款式已在后台管理中删除
+    context 'missing variant'do # 款式已在后台管理中删除
 
-      render_views
+      render_views # 让rspec渲染视图,以便检查页面显示結果
 
       let(:un_exist_variant_id) { 8888 }
 
       it 'should be show' do
         invalid_cart = Factory :cart, shop: shop, cart_hash: %Q({"#{un_exist_variant_id}":1})
         expect do
-          get :address, shop_id: shop.id, cart_token: invalid_cart.token
+          get :new, shop_id: shop.id, cart_token: invalid_cart.token
         end.should_not raise_error
         response.should be_success
+        response.body.should include '购物车是空的'
       end
 
     end
 
   end
 
-  context '#update' do
-    it 'should be pay' do
-      get :pay, shop_id: shop.id, token: order.token
-      response.should be_success
-    end
+  context '#create' do # 创建表单(ajax操作)
 
-    it 'should update financial_status' do
-      #china
-      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
-      order.reload.financial_status.should eql 'pending'
-    end
+    let(:payment) { Factory :payment, shop: shop }
 
-    it 'should show product line_items' do
-      #china
-      order
-      expect do
-        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
-        order = assigns['_resources']['order']
-        order.errors.should be_empty
-        order.shipping_rate.should eql '普通快递-10.0'
-        order.payment_id.should eql payment.id
-      end.should_not change(Order, :count)
-    end
+    let(:shipping_address_attributes) { {name: 'ma', province: 'guandong', city: 'shenzhen', district: 'nanshan', address1: '311', phone: '13912345678' } }
 
-  end
+    let(:order_attributes) { { email: 'mahb45@gmail.com', shipping_address_attributes: shipping_address_attributes, shipping_rate: '普通快递-10.0', payment_id: payment.id } }
 
-  context '#commit' do # 提交订单
+    context 'exist vairant' do # 款式仍然存在
 
-    describe '#cart' do
-
-      it 'should be destroy' do # 购物车会被删除
-        post :create, shop_id: shop.id, cart_token: cart.token, order: {
-          email: 'mahb45@gmail.com',
-          shipping_address_attributes: shipping_address_attributes
-        }
+      it 'should be success' do
         expect do
-          post :commit, shop_id: shop.id, token: cart.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment.id }
-        end.should change(Cart, :count).by(-1)
+          expect do
+            post :create, shop_id: shop.id, cart_token: cart.token, order: order_attributes
+            response.should be_success
+            order = assigns['_resources']['order']
+            order.errors.should be_empty
+            order.shipping_address.address1.should eql shipping_address_attributes[:address1]
+            order.shipping_rate.should eql '普通快递-10.0'
+            order.payment_id.should eql payment.id
+            order.line_items.should_not be_empty
+          end.should change(Order, :count).by(1)
+        end.should change(OrderLineItem, :count).by(1)
+      end
+
+      describe '#cart' do # 购物车
+
+        before { cart }
+
+        it 'should be destroy' do # 会被删除
+          expect do
+            post :create, shop_id: shop.id, cart_token: cart.token, order: order_attributes
+          end.should change(Cart, :count).by(-1)
+        end
+
+      end
+
+    end
+
+    context 'missing variant' do # 款式已在后台管理中删除
+
+      render_views # 让rspec渲染视图,以便检查页面显示結果
+
+      let(:un_exist_variant_id) { 8888 }
+
+      it 'should not be success' do
+        invalid_cart = Factory :cart, shop: shop, cart_hash: %Q({"#{un_exist_variant_id}":1})
+        expect do
+          expect do
+            expect do
+              post :create, shop_id: shop.id, cart_token: invalid_cart.token, order: order_attributes
+              response.should be_success
+              JSON(response.body)['error'].should eql 'unavailable_product'
+            end.should_not change(Order, :count)
+          end.should_not change(OrderLineItem, :count)
+        end.should_not change(Cart, :count)
       end
 
     end
 
   end
 
-  context 'alipay' do # 支付宝
+  context 'online pay' do # 在线支付
 
-    context '#notify' do # 支付宝从后台发送通过
+    let(:payment_alipay) { Factory :payment_alipay, shop: shop } # 支付方式:支付宝
 
-      before do
-        post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id }
-        order.reload
-        controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
-      end
+    let(:payment_tenpay) { Factory :payment_tenpay, shop: shop } # 支付方式:财付通
 
-      context 'trade status is TRADE_FINISHED' do # 交易完成
+    let(:order) do
+      o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id 
+      o.line_items.build product_variant: variant, price: variant.price, quantity: 1
+      o.save
+      o
+    end
 
-        let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
+    context 'alipay' do # 支付宝
 
-        it 'should change order financial_status to paid' do
-          order.financial_status_pending?.should be_true
-          expect do
+      context '#notify' do # 支付宝从后台发送通过
+
+        before do
+          controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
+        end
+
+        context 'trade status is TRADE_FINISHED' do # 交易完成
+
+          let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
+
+          it 'should change order financial_status to paid' do
+            order.financial_status_pending?.should be_true
+            expect do
+              post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+              response.body.should eql 'success'
+              order.reload.financial_status_paid?.should be_true
+            end.should change(OrderTransaction, :count).by(1)
+            order.transactions.first.amount.should eql order.total_price
+          end
+
+          it 'should be retry' do # 要支持重复请求
+            order.financial_status = :abandoned
+            order.save
             post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
             response.body.should eql 'success'
-            order.reload.financial_status_paid?.should be_true
-          end.should change(OrderTransaction, :count).by(1)
-          order.transactions.first.amount.should eql order.total_price
+            post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+            response.body.should eql 'success'
+            order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+          end
+
         end
 
-        it 'should be retry' do # 要支持重复请求
-          order.reload
-          order.financial_status = :abandoned
-          order.save
-          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.body.should eql 'success'
-          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.body.should eql 'success'
-          order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+        context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
+
+          let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY', total_fee: order.total_price } }
+
+          it 'should remain order financial status' do
+            order.financial_status_pending?.should be_true
+            post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+            response.body.should eql 'success'
+            order.reload.financial_status_pending?.should be_true
+          end
+
         end
 
       end
 
-      context 'trade status is WAIT_BUYER_PAY' do # 等待顾客付款
+      context '#done' do # 支付宝直接跳转回商店(支付成功后才会返回)
 
-        let(:attrs) { { out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_BUYER_PAY', total_fee: order.total_price } }
+        before do
+          order.payment = payment_alipay
+          order.save
+        end
 
-        it 'should remain order financial status' do
-          order.financial_status_pending?.should be_true
-          post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.body.should eql 'success'
-          order.reload.financial_status_pending?.should be_true
+        context 'trade status is TRADE_SUCCESS' do # 交易完成
+
+          let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
+
+          it 'should change order financial_status to paid' do
+            expect do
+              get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+              response.should be_success
+            end.should change(OrderTransaction, :count)
+            order.reload.financial_status_paid?.should be_true
+          end
+
+          it 'should be retry' do # 要支持重复请求
+            order.financial_status = :abandoned
+            order.save
+            get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+            response.should be_success
+            expect do
+              get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+              response.should be_success
+            end.should_not change(OrderTransaction, :count)
+            order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+          end
+
         end
 
       end
 
     end
 
-    context '#done' do # 支付宝直接跳转回商店(支付成功后才会返回)
+    context 'tenpay' do # 财付通
+
+      let(:date) { Date.today.to_s(:number) }
+
+      let(:transaction_id) { "#{order.payment.account}#{date}0000000001" }
+
+      let(:attrs) { { cmdno: '1', pay_result: '0', date: Date.today.to_s(:number), transaction_id: transaction_id, sp_billno: order.token, total_fee: (order.total_price*100).to_i, fee_type: '1', attach: 'ShopQi' } }
 
       before do
-        order.financial_status = 'pending'
-        order.payment = payment_alipay
+        order.payment_id = payment_tenpay.id
         order.save
       end
 
-      context 'trade status is TRADE_SUCCESS' do # 交易完成
+      context '#notify' do # 财付通从后台发送通过
 
-        let(:attrs) { { out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
+        context 'trade status is TRADE_FINISHED' do # 交易完成
 
-        it 'should change order financial_status to paid' do
-          expect do
-            get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-            response.should be_success
-          end.should change(OrderTransaction, :count)
-          order.reload.financial_status_paid?.should be_true
-        end
+          it 'should change order financial_status to paid' do
+            order.financial_status_pending?.should be_true
+            expect do
+              post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
+              response.body.should_not eql 'fail'
+              order.reload.financial_status_paid?.should be_true
+            end.should change(OrderTransaction, :count).by(1)
+            order.transactions.first.amount.should eql order.total_price
+          end
 
-        it 'should be retry' do # 要支持重复请求
-          order.financial_status = :abandoned
-          order.save
-          get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-          response.should be_success
-          expect do
-            get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
-            response.should be_success
-          end.should_not change(OrderTransaction, :count)
-          order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
-        end
-
-      end
-
-    end
-
-  end
-
-  context 'tenpay' do # 财付通
-
-    let(:date) { Date.today.to_s(:number) }
-
-    let(:transaction_id) { "#{order.payment.account}#{date}0000000001" }
-
-    let(:attrs) { { cmdno: '1', pay_result: '0', date: Date.today.to_s(:number), transaction_id: transaction_id, sp_billno: order.token, total_fee: (order.total_price*100).to_i, fee_type: '1', attach: 'ShopQi' } }
-
-    before do
-      post :commit, shop_id: shop.id, token: order.token, order: { shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id }
-      order.reload
-    end
-
-    context '#notify' do # 财付通从后台发送通过
-
-      context 'trade status is TRADE_FINISHED' do # 交易完成
-
-        it 'should change order financial_status to paid' do
-          order.financial_status_pending?.should be_true
-          expect do
+          it 'should be retry' do # 要支持重复请求
+            order.reload
+            order.financial_status = :abandoned
+            order.save
             post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
             response.body.should_not eql 'fail'
-            order.reload.financial_status_paid?.should be_true
-          end.should change(OrderTransaction, :count).by(1)
-          order.transactions.first.amount.should eql order.total_price
-        end
+            post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
+            response.body.should_not eql 'fail'
+            order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+          end
 
-        it 'should be retry' do # 要支持重复请求
-          order.reload
-          order.financial_status = :abandoned
-          order.save
-          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
-          response.body.should_not eql 'fail'
-          post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
-          response.body.should_not eql 'fail'
-          order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
         end
 
       end
 
-    end
+      context '#done' do # 财付通直接跳转回商店(支付成功后才会返回)
 
-    context '#done' do # 财付通直接跳转回商店(支付成功后才会返回)
+        it 'should change order financial_status to paid' do
+          get :tenpay_done, attrs.merge(token: order.token, sign: sign(attrs, order.payment.key))
+          response.should be_success
+        end
 
-      it 'should change order financial_status to paid' do
-        get :tenpay_done, attrs.merge(token: order.token, sign: sign(attrs, order.payment.key))
-        response.should be_success
       end
 
     end
