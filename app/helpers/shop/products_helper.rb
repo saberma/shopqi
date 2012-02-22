@@ -1,2 +1,0 @@
-module Shop::ProductsHelper
-end

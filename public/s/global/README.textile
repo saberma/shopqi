@@ -1,5 +1,0 @@
-此目录放置全局静态文件，由各个商店主题文件中使用，示例如下:
-
-pre. 
-{{ 'textile.css' | global_asset_url | stylesheet_tag }}
-{{ 'jquery/1.5.2/jquery.js' | global_asset_url | script_tag }}

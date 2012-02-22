@@ -1,6 +1,0 @@
--line_items.each_pair do |variant, quantity|
-  %tr
-    %td
-      %div=image_tag variant.product.index_photo, class: :images
-      %h3.plisthead(title="#{variant.product.title}")=variant.product.title
-      %span.plist-line-price==#{quantity}x #{variant.price}
