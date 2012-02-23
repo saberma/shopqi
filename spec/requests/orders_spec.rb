@@ -16,18 +16,18 @@ describe "Orders", js: true do
 
   let(:psp_variant) { psp.variants.first }
 
+  let(:payment_alipay) do # 支付方式:支付宝
+    Factory :payment_alipay, shop: shop
+  end
+
   let(:order) do
-    o = Factory.build(:order, shop: shop)
+    o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id
     o.line_items.build [
       {product_variant: iphone4_variant, price: 10, quantity: 2},
       {product_variant: psp_variant, price: 20, quantity: 2},
     ]
     o.save
     o
-  end
-
-  let(:payment_alipay) do # 支付方式:支付宝
-    Factory :payment_alipay, shop: shop
   end
 
   before :each do
@@ -37,6 +37,7 @@ describe "Orders", js: true do
   ##### 查看 #####
   describe "GET /orders/id" do
 
+=begin # 合并结算步骤后不会再有放弃状态的订单了
     context "#abandoned" do
 
       it "should show tip" do
@@ -57,6 +58,7 @@ describe "Orders", js: true do
       end
 
     end
+=end
 
     context "#pending" do
 
@@ -100,9 +102,6 @@ describe "Orders", js: true do
       end
 
       it "should accept payment" do
-        order.financial_status = 'pending'
-        order.payment = payment_alipay
-        order.save
         visit order_path(order)
         within '#order-status' do
           page.should have_content('在线支付-支付宝')
@@ -206,6 +205,7 @@ describe "Orders", js: true do
 
     context "(with a order)" do
 
+=begin
       it "should not list abandoned order" do
         visit orders_path
         has_content?(order.name).should be_false # 默认不显示[放弃]的订单
@@ -218,6 +218,7 @@ describe "Orders", js: true do
         visit orders_path
         has_content?(order.name).should be_true
       end
+=end
 
     end
 

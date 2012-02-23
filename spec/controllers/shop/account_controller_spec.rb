@@ -18,8 +18,10 @@ describe Shop::AccountController do
 
   let(:variant) { iphone4.variants.first }
 
+  let(:payment) { Factory :payment, shop: shop }
+
   let(:order) do
-    o = Factory.build :order, shop: shop
+    o = Factory.build(:order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment.id)
     o.line_items.build product_variant: variant, price: variant.price, quantity: 1
     o.save
     o

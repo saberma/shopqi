@@ -12,8 +12,9 @@ describe "Shop::Customers", js: true do
 
   let(:psp) { Factory :psp, shop: shop }
   let(:psp_variant) { psp.variants.first }
+  let(:payment) { Factory :payment, shop: shop }
   let(:order) {
-    o = Factory.build(:order_liwh, shop: shop)
+    o = Factory.build :order_liwh, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment.id
     o.line_items.build [
       {product_variant: iphone4_variant, price: 10, quantity: 2},
       {product_variant: psp_variant, price: 20, quantity: 2},
@@ -45,7 +46,7 @@ describe "Shop::Customers", js: true do
 
       within '#customer_orders' do
         has_content?('#1001').should be_true
-        has_content?('放弃').should be_true
+        has_content?('待支付').should be_true
         has_content?('未发货').should be_true
       end
 

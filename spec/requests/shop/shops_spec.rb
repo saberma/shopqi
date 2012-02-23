@@ -49,11 +49,9 @@ describe "Shop::Shops", js:true do
       select '南山区', form: 'order[shipping_address_attributes][district]'
       fill_in 'order[shipping_address_attributes][address1]', with: '科技园'
       fill_in 'order[shipping_address_attributes][phone]', with: '13928458888'
-      click_on '去到下一步'
-      #选择支付方式
-      page.should have_content(product.title)
-      choose '邮局汇款'
-      click_on '购买'
+      choose '邮局汇款' #选择支付方式
+      choose '普通快递-¥10.0' #选择配送方式
+      click_on '提交订单'
       page.should have_content("您的订单号为： #1001")
     end
 

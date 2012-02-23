@@ -16,8 +16,10 @@ describe Admin::FulfillmentsController do
 
   let(:psp_variant) { psp.variants.first }
 
+  let(:payment) { Factory :payment, shop: shop }
+
   let(:order) do
-    o = Factory.build(:order, shop: shop)
+    o = Factory.build(:order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment.id)
     o.line_items.build product_variant: iphone_variant, price: 10, quantity: 2
     o.line_items.build product_variant: psp_variant, price: 20, quantity: 3
     o.save

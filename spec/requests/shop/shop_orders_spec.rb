@@ -23,7 +23,7 @@ describe "Orders", js: true do
     it 'should show order address page' do # issues#248
       visit "/cart"
       click_on '结算'
-      page.should have_content('创建您的订单') # 显示结算页面
+      page.should have_content('填写购物信息') # 显示结算页面
     end
 
     it 'should be keep after customer sign in' do # issues#260
@@ -58,7 +58,7 @@ describe "Orders", js: true do
     #  fill_in 'customer[password]'             , with: '666666'
     #  fill_in 'customer[password_confirmation]', with: '666666'
     #  click_on '注册'
-    #  page.should have_content('创建您的订单') # 跳转回结算页面
+    #  page.should have_content('填写购物信息') # 跳转回结算页面
     #end
 
     it 'should be sign in' do
@@ -71,7 +71,7 @@ describe "Orders", js: true do
       within '#customer' do # 商店顶端还有一个登录链接，避免冲突
         click_on '登录'
       end
-      page.should have_content('创建您的订单') # 跳转回结算页面
+      page.should have_content('填写购物信息') # 跳转回结算页面
       page.should have_content('mahb45@gmail.com') # 回显已经登录的顾客信息
       within '#cost' do
         page.should have_content('3000.0') # 计算金额

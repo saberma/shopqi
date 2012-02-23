@@ -12,8 +12,10 @@ describe "Customers", js: true do
 
   let(:iphone4_variant) { iphone4.variants.first }
 
+  let(:payment) { Factory :payment, shop: shop }
+
   let(:order) do
-    o = Factory.build(:order, shop: shop)
+    o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment.id
     o.line_items.build [
       {product_variant: iphone4_variant, price: 10, quantity: 2},
     ]
@@ -117,6 +119,7 @@ describe "Customers", js: true do
 
       # 统计
       it "should show statics" do
+        sleep 20
         within '#customer-facts' do
           find(:xpath, './/li[1]').find('.big').text.should eql '¥20'
           find(:xpath, './/li[2]').find('.big').text.should eql '1'
