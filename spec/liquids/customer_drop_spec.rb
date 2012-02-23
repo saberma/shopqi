@@ -9,7 +9,9 @@ describe CustomerDrop do
 
   let(:customer_drop){ CustomerDrop.new customer }
 
-  let(:order) { Factory(:order, shop: shop, customer: customer) }
+  let(:payment) { Factory :payment, shop: shop }
+
+  let(:order) { Factory(:order, shop: shop, customer: customer, shipping_rate: '普通快递-10.0', payment_id: payment.id ) }
 
   let(:order_drop) { OrderDrop.new order }
 

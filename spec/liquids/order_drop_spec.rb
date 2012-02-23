@@ -4,7 +4,8 @@ require 'spec_helper'
 describe OrderDrop do
   let(:shop) { Factory(:user).shop }
   let(:customer){ Factory(:customer_liwh, shop: shop)}
-  let(:order) { Factory(:order_liwh, shop: shop, customer: customer)}
+  let(:payment) { Factory :payment, shop: shop }
+  let(:order) { Factory(:order_liwh, shop: shop, customer: customer, shipping_rate: '普通快递-10.0', payment_id: payment.id )}
   let(:order_drop) { OrderDrop.new order}
 
   it 'should get the order based delegate attributes for order_drop' do

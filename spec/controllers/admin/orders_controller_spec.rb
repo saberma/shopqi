@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'spec_helper'
 
 describe Admin::OrdersController do
@@ -11,8 +12,10 @@ describe Admin::OrdersController do
 
   let(:variant) { iphone4.variants.first }
 
+  let(:payment) { Factory :payment, shop: shop }
+
   let(:order) do
-    o = Factory.build(:order, shop: shop)
+    o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment.id
     o.line_items.build product_variant: variant, price: 10, quantity: 2
     o.save
     o

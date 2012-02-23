@@ -9,8 +9,10 @@ describe Order do
 
   let(:variant) { iphone4.variants.first }
 
+  let(:payment) { Factory :payment, shop: shop }
+
   let(:order) do
-    o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com')
+    o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com', shipping_rate: '普通快递-10.0', payment_id: payment.id)
     o.line_items.build product_variant: variant, price: 10, quantity: 2
     o.save
     o
