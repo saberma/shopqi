@@ -171,39 +171,6 @@ describe "Guides", js: true do
 
     end
 
-    describe "Tax" do # 调整税率
-
-      before(:each) do
-        shop.tasks[0,4].map{|t| t.update_attributes completed: true}
-        visit '/admin/countries'
-      end
-
-      it "should show check off" do
-        has_content?('在此页面确保您的商品所销售地区的税率设置是正确的').should be_true
-        find('#task-checkoff').visible?.should be_true
-        find('#progress-bar').visible?.should be_false
-      end
-
-      it "should pick another" do
-        click_on '选择其他步骤'
-        sleep 3 # 等待opacity渲染
-        click_on '调整税率'
-        sleep 3
-        find('#progress-bar').visible?.should be_false
-      end
-
-      it "should be complete" do
-        click_on '我已经完成此步骤'
-        sleep 3 # 等待opacity渲染
-        find('#task-checkoff').visible?.should be_false
-        find('.guide-outer.above').visible?.should be_true
-        find('.guide-outer.above').has_content?('下一步是 设置您的运费').should be_true
-        visit '/admin' # 首页更新进度
-        find('#next-step-description h2').text.should eql '下一步骤: 物流配送'
-      end
-
-    end
-
     describe "Shipping" do # 物流配送
 
       before(:each) do

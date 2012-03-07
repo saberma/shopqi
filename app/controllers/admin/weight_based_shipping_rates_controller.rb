@@ -1,8 +1,9 @@
 class Admin::WeightBasedShippingRatesController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
+  expose(:shop){ current_user.shop }
+  expose(:weight_based_shipping_rates) { shop.weight_based_shipping_rates }
   expose(:weight_based_shipping_rate)
-  expose(:country){ weight_based_shipping_rate.country }
 
   def create
     if weight_based_shipping_rate.save

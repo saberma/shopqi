@@ -69,13 +69,9 @@ class Shop::OrderController < Shop::AppController
     order.total_price
   end
 
-  expose(:country){
-    shop.countries.where(code: 'CN').first
-  }
-
   expose(:shipping_rates) do
     total_weight = cart_total_weight / 1000.0 # 订单的total_weight以克为单位
-    country.weight_based_shipping_rates.where(:weight_low.lte => total_weight,:weight_high.gte => total_weight ).all + country.price_based_shipping_rates.where(:min_order_subtotal.lte => order.total_line_items_price,:max_order_subtotal.gte => order.total_line_items_price ).all
+    shop.weight_based_shipping_rates.where(:weight_low.lte => total_weight,:weight_high.gte => total_weight ).all + shop.price_based_shipping_rates.where(:min_order_subtotal.lte => order.total_line_items_price,:max_order_subtotal.gte => order.total_line_items_price ).all
   end
 
   def new # 显示订单表单

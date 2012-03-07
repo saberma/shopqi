@@ -9,12 +9,11 @@ class Shop::CustomerAddressesController < Shop::AppController
   }
   expose(:customer_address)
   expose(:shop){ current_customer.shop }
-  expose(:countries){ shop.countries }
 
   def index
     path = theme.template_path('customers/addresses')
     path = Rails.root.join 'app/views/shop/templates/customers/addresses.liquid' unless File.exist?(path)
-    assign = template_assign('template' => 'customers_addresses', 'customer' => CustomerDrop.new(current_customer), 'country_option_tags' => options_for_select(countries.collect{|c|[Carmen.country_name(c.code),c.code]}) )
+    assign = template_assign('template' => 'customers_addresses', 'customer' => CustomerDrop.new(current_customer))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
     html = Liquid::Template.parse(layout_content).render(shop_assign(assign))

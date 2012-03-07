@@ -24,7 +24,7 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
       resource_code = 'orders'
     elsif controller_name.in?(['customer_groups','customers'])
       resource_code = 'customers'
-    elsif controller_name.in?(['shops','countries','payments','emails','domains']) || controller_name =~ /shipping/
+    elsif controller_name.in?(['shops','payments','emails','domains']) || controller_name =~ /shipping/
       resource_code = 'preferences'
     elsif controller_name.in?(['api_clients'])
       resource_code = 'applications'

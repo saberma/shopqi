@@ -26,13 +26,14 @@ class Shop < ActiveRecord::Base
   has_many :types                 , dependent: :destroy                      , class_name: 'ShopProductType'
   has_many :vendors               , dependent: :destroy                      , class_name: 'ShopProductVendor'
   has_many :emails                , dependent: :destroy
-  has_many :countries             , dependent: :destroy
   has_many :activities            , dependent: :destroy                      , order: 'created_at desc'
   has_many :payments              , dependent: :destroy                      , order: 'payment_type_id, created_at'
   has_many :tasks                 , dependent: :destroy                      , order: 'id asc', class_name: 'ShopTask'
   has_many :policies              , dependent: :destroy                      , order: 'id asc', class_name: 'ShopPolicy'
   has_many :consumptions          , dependent: :destroy
   has_many :kindeditors           , dependent: :destroy                      , order: :id.asc
+  has_many :weight_based_shipping_rates,          dependent: :destroy        , order: :id.asc
+  has_many :price_based_shipping_rates ,          dependent: :destroy        , order: :id.asc
 
   accepts_nested_attributes_for :domains, :themes, :policies
   attr_readonly :orders_count
@@ -181,6 +182,29 @@ class Shop < ActiveRecord::Base
     self.money_in_emails_format               = data.email
   end
 
+end
+
+class WeightBasedShippingRate < ActiveRecord::Base # 基于重量计算的运费
+  belongs_to :shop
+  default_value_for :weight_low , 0.0
+  default_value_for :weight_high, 25.0
+  default_value_for :price, 10.0
+  validates_presence_of :name
+
+  def shipping_rate # 保存在order的配送方式
+    "#{self.name}-#{self.price}"
+  end
+end
+
+class PriceBasedShippingRate < ActiveRecord::Base # 基于价格计算的运费(适合珠宝手饰等贵重物品)
+  belongs_to :shop
+  default_value_for :min_order_subtotal , 50.0
+  default_value_for :price, 0.0
+  validates_presence_of :name
+
+  def shipping_rate # 保存在order的配送方式
+    "#{self.name}-#{self.price}"
+  end
 end
 
 class ShopDomain < ActiveRecord::Base # 域名

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120219015553) do
+ActiveRecord::Schema.define(:version => 20120303031526) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -141,16 +141,6 @@ ActiveRecord::Schema.define(:version => 20120219015553) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "countries", :force => true do |t|
-    t.integer  "shop_id"
-    t.string   "code",           :limit => 32
-    t.float    "tax_percentage"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "countries", ["shop_id"], :name => "index_countries_on_shop_id"
 
   create_table "custom_collection_products", :force => true do |t|
     t.integer  "custom_collection_id"
@@ -479,16 +469,16 @@ ActiveRecord::Schema.define(:version => 20120219015553) do
   add_index "photos", ["product_id"], :name => "index_photos_on_product_id"
 
   create_table "price_based_shipping_rates", :force => true do |t|
-    t.integer  "country_id"
     t.float    "price"
     t.float    "min_order_subtotal"
     t.float    "max_order_subtotal"
     t.string   "name",               :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "shop_id"
   end
 
-  add_index "price_based_shipping_rates", ["country_id"], :name => "index_price_based_shipping_rates_on_country_id"
+  add_index "price_based_shipping_rates", ["shop_id"], :name => "index_price_based_shipping_rates_on_shop_id"
 
   create_table "product_options", :force => true do |t|
     t.integer "product_id", :null => false
@@ -750,15 +740,15 @@ ActiveRecord::Schema.define(:version => 20120219015553) do
   add_index "users", ["shop_id"], :name => "index_users_on_shop_id"
 
   create_table "weight_based_shipping_rates", :force => true do |t|
-    t.integer  "country_id"
     t.float    "price"
     t.float    "weight_low"
     t.float    "weight_high"
     t.string   "name",        :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "shop_id"
   end
 
-  add_index "weight_based_shipping_rates", ["country_id"], :name => "index_weight_based_shipping_rates_on_country_id"
+  add_index "weight_based_shipping_rates", ["shop_id"], :name => "index_weight_based_shipping_rates_on_shop_id"
 
 end

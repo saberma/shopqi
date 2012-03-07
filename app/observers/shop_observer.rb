@@ -50,9 +50,7 @@ class ShopObserver < ActiveRecord::Observer
       {name: :launch},
     ]
 
-    c = shop.countries.build(code: 'CN') #默认创建中国地区
-    c.weight_based_shipping_rates.build name: '普通快递' #并创建默认的快递方式
-    c.save
+    shop.weight_based_shipping_rates.create name: '普通快递' #并创建默认的快递方式
 
     KeyValues::Mail::Type.all.each do |type| # 创建各个邮件样板
       title, body = type.title_body

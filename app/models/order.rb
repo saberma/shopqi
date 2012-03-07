@@ -230,10 +230,6 @@ class OrderShippingAddress < ActiveRecord::Base
 
   default_value_for :country_code, 'CN'
 
-  def country
-    order.shop.countries.where(code: country_code).first
-  end
-
   def country_name
     Carmen.country_name(country_code)
   end

@@ -1,8 +1,9 @@
 class Admin::PriceBasedShippingRatesController < Admin::AppController
   prepend_before_filter :authenticate_user!
   layout 'admin'
+  expose(:shop){ current_user.shop }
+  expose(:price_based_shipping_rates) { shop.price_based_shipping_rates }
   expose(:price_based_shipping_rate)
-  expose(:country){ price_based_shipping_rate.country }
 
   def create
     if price_based_shipping_rate.save
