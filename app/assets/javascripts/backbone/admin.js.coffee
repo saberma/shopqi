@@ -14,6 +14,7 @@
 #=require_tree ./views/assets
 #=require_tree ./views/comments
 #=require_tree ./views/payments
+#=require_tree ./views/shippings
 #=require_tree ./views/api_clients
 #=require_tree ./controllers/orders
 #=require_tree ./controllers/customers
@@ -62,6 +63,9 @@ window.App =
       Index: {}
     Comment: {}
     Payment: {}
+    Shipping:
+      WeightBasedShippingRates: {}
+      PriceBasedShippingRates: {}
     ProductOption: {}
     Task: {}
     Domain: {}
