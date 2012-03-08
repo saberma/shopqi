@@ -16,67 +16,67 @@
           %td.new-rate-link.no-border.action-link(colspan="4")
             %p.add.icon
               %span.action
-                %a(href="#" onclick="$('#new-promotional-rate').hide();$('#new-promotional-rate-done').hide();$('#new-standard-rate').show();$('#new-standard-rate-done').show();$('#standard-rate-name-new').focus(); return false;" style="display: inline")新增基于重量的费用
+                %a#add-weight(href="#" style="display: inline") 新增基于重量的费用
               |
               %span.action
-                %a(href="#" onclick="$('#new-standard-rate').hide();$('#new-standard-rate-done').hide();$('#new-promotional-rate').show();$('#new-promotional-rate-done').show();$('#promotional-rate-name-new').focus(); return false;" style="display: inline")新增基于价格的费用
-        %tr(style="display:none" id="new-standard-rate")
+                %a#add-price(href="#" style="display: inline") 新增基于价格的费用
+        %tr#new-standard-rate.hide
           %td(colspan="4" style="padding:0")
-            =form_for WeightBasedShippingRate.new, remote: true do |f|
+            %form(action="#" method="post")
               %table.new-rate-table
                 %tr
                   %td.new-rate.rate-name(style="padding-left: 10px")
-                    %label(for="standard-rate-name-new")名称
-                    =f.text_field :name,maxlength: 255, style: 'width:100%',id:"weight_based_shipping_rate_name"
+                    %label 名称
+                    %input(name="weight_based_shipping_rate[name]" style="width:100%" type="text")
                   %td.new-rate.rate-weight
-                    %label(for="rate-weight-low-new")重量
-                    =f.text_field :weight_low,maxlength: 3, class: 'r'
+                    %label 重量
+                    %input.r(maxlength="3" name="weight_based_shipping_rate[weight_low]" size="3" type="text" value="0.0")
                     =succeed "-" do
                       %strong kg
-                    =f.text_field :weight_high,maxlength: 3,  class: 'r'
+                    %input.r(maxlength="3" name="weight_based_shipping_rate[weight_high]" size="3" type="text" value="25.0")
                     %strong kg
                   %td.new-rate.rate-price
-                    =f.label :price
+                    %label 价格
                     %strong ¥
-                    =f.text_field :price, class: 'r',size: 5
-                    %strong RMB
-                %tr.no-lines(style="display:none" id="new-standard-rate-done")
+                    %input.r(maxlength="5" name="weight_based_shipping_rate[price]" size="5" type="text" value="10.0")
+                    %strong 元
+                %tr.no-lines
                   %td.new-rate-done(colspan="3")
-                    =f.submit w('save')
-                    =w('or')
+                    %input(name="commit" type="submit" value="保存")
+                    或者
                     %span.action
-                      %a(href="#" onclick="$('#new-standard-rate').hide();$('#new-standard-rate-done').hide(); return false;")取消
-        %tr(style="display:none" id="new-promotional-rate")
+                      %a#cancel-weight(href="#") 取消
+        %tr#new-promotional-rate.hide
           %td(colspan="4" style="padding:0")
-            =form_for PriceBasedShippingRate.new, remote: true do |f|
+            %form(action="#" method="post")
               %table.new-rate-table
                 %tr
                   %td.new-rate.rate-name(style="padding-left: 10px")
-                    =f.label :name
-                    =f.text_field :name, maxlength: 255, style: 'width:100%',id:"price_based_shipping_rate_name"
+                    %label 名称
+                    %input(name="price_based_shipping_rate[name]" style="width: 100%; background-image: none; background-position: 0% 0%; background-repeat: repeat repeat;" type="text")
                   %td.new-rate.rate-min-order-subtotal(style="width:220px;")
                     %label 价格区间
                     %strong ¥
-                    =f.text_field :min_order_subtotal, size: 5
-                    %strong RMB
-                    %span(style="" id="show-max-purchase")
-                      %a(href="#" onclick="$('#show-max-purchase').hide();$('#edit-max-purchase').show();$('#rate-max-order-subtotal-new').focus();return false;")以上
-                    %span(style ="display:none" id="edit-max-purchase")
+                    %input(name="price_based_shipping_rate[min_order_subtotal]" size ="5" type="text" value="50.0")
+                    %strong 元
+                    %span#show-max-purchase
+                      %a(href="#") 以上
+                    %span#edit-max-purchase.hide
                       \&mdash;
                       %strong ¥
-                      =f.text_field :max_order_subtotal,class:'r',size: 5, onblur: "if($(this).val() =='')($('#edit-max-purchase').hide();$('#show-max-purchase').show())"
-                      %strong RMB
+                      %input.r(name="price_based_shipping_rate[max_order_subtotal]" size="5" type="text")
+                      %strong 元
                   %td.new-rate.rate-price
-                    =f.label :price
+                    %label 运费
                     %strong ¥
-                    =f.text_field :price,size: 5,class: 'r'
-                    %strong RMB
-                %tr.no-lines(style="display:none" id="new-promotional-rate-done")
+                    %input.r(name="price_based_shipping_rate[price]" size="5" type="text" value="0.0")
+                    %strong 元
+                %tr.no-lines
                   %td.new-rate-done(colspan="3")
-                    =f.submit w('save')
-                    =w('or')
+                    %input(name="commit" type="submit" value="保存")
+                    或者
                     %span.action
-                      %a(href="#" onclick="$('#new-promotional-rate').hide();$('#new-promotional-rate-done').hide(); return false;")取消
+                      %a#cancel-price(href="#") 取消
 .pgroup.st
 
 %script(id="standard-rate-item" type="text/x-handlebars-template")
@@ -84,7 +84,7 @@
     %span.rate-summary
       %a(href="/admin/weight_based_shipping_rates/{{id}}/edit") {{name}}
   %td {{weight_low}}kg - {{weight_high}}kg
-  %td ¥{{price}}RMB
+  %td ¥{{price}}元
   %td.r
     %a.del(href="#")=image_tag 'admin/icons/trash.gif'
 %script(id="promotional-rate-item" type="text/x-handlebars-template")
@@ -92,7 +92,7 @@
     %span.rate-summary
       %a(href="/admin/price_based_shipping_rates/{{id}}/edit") {{name}}
   %td ¥{{min_order_subtotal}} {{max_order_subtotal}}
-  %td ¥{{price}}RMB
+  %td ¥{{price}}元
   %td.r
     %a.del(href="#")=image_tag 'admin/icons/trash.gif'
 
