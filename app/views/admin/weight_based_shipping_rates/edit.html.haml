@@ -2,7 +2,7 @@
 #action-links
   %ul
     %li.no-icon=link_to w('edit'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
-    %li.no-icon=link_to_delete weight_based_shipping_rate_path(weight_based_shipping_rate)
+    %li.no-icon=link_to '返回', shipping_index_path
 #shipping-details.box2
   %h3  编辑基于重量的运费
   #shipping-summary
