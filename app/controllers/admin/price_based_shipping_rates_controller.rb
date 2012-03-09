@@ -6,17 +6,13 @@ class Admin::PriceBasedShippingRatesController < Admin::AppController
   expose(:price_based_shipping_rate)
 
   def create
-    if price_based_shipping_rate.save
-      flash.now[:notice] = notice_msg
-    else
-      flash[:error] = price_based_shipping_rate.errors.full_messages[0]
-      render template: "shared/error_msg"
-    end
+    price_based_shipping_rate.save
+    render json: price_based_shipping_rate
   end
 
   def destroy
     price_based_shipping_rate.destroy
-    flash.now[:notice] = notice_msg
+    render json: price_based_shipping_rate
   end
 
   def update

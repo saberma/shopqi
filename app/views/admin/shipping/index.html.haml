@@ -22,61 +22,61 @@
                 %a#add-price(href="#" style="display: inline") 新增基于价格的费用
         %tr#new-standard-rate.hide
           %td(colspan="4" style="padding:0")
-            %form(action="#" method="post")
+            %form(action="#" method="post" onsubmit="return false")
               %table.new-rate-table
                 %tr
                   %td.new-rate.rate-name(style="padding-left: 10px")
                     %label 名称
-                    %input(name="weight_based_shipping_rate[name]" style="width:100%" type="text")
+                    %input#standard-rate-name-new(name="name" style="width:100%" type="text")
                   %td.new-rate.rate-weight
                     %label 重量
-                    %input.r(maxlength="3" name="weight_based_shipping_rate[weight_low]" size="3" type="text" value="0.0")
+                    %input.r(maxlength="3" name="weight_low" size="3" type="text" value="0.0")
                     =succeed "-" do
                       %strong kg
-                    %input.r(maxlength="3" name="weight_based_shipping_rate[weight_high]" size="3" type="text" value="25.0")
+                    %input.r(maxlength="3" name="weight_high" size="3" type="text" value="25.0")
                     %strong kg
                   %td.new-rate.rate-price
                     %label 价格
                     %strong ¥
-                    %input.r(maxlength="5" name="weight_based_shipping_rate[price]" size="5" type="text" value="10.0")
+                    %input.r(maxlength="5" name="price" size="5" type="text" value="10.0")
                     %strong 元
                 %tr.no-lines
                   %td.new-rate-done(colspan="3")
                     %input(name="commit" type="submit" value="保存")
                     或者
                     %span.action
-                      %a#cancel-weight(href="#") 取消
+                      %a.cancel(href="#") 取消
         %tr#new-promotional-rate.hide
           %td(colspan="4" style="padding:0")
-            %form(action="#" method="post")
+            %form(action="#" method="post" onsubmit="return false")
               %table.new-rate-table
                 %tr
                   %td.new-rate.rate-name(style="padding-left: 10px")
                     %label 名称
-                    %input(name="price_based_shipping_rate[name]" style="width: 100%; background-image: none; background-position: 0% 0%; background-repeat: repeat repeat;" type="text")
+                    %input#promotional-rate-name-new(name="name" style="width: 100%; background-image: none; background-position: 0% 0%; background-repeat: repeat repeat;" type="text")
                   %td.new-rate.rate-min-order-subtotal(style="width:220px;")
                     %label 价格区间
                     %strong ¥
-                    %input(name="price_based_shipping_rate[min_order_subtotal]" size ="5" type="text" value="50.0")
+                    %input(name="min_order_subtotal" size ="5" type="text" value="50.0")
                     %strong 元
                     %span#show-max-purchase
                       %a(href="#") 以上
                     %span#edit-max-purchase.hide
                       \&mdash;
                       %strong ¥
-                      %input.r(name="price_based_shipping_rate[max_order_subtotal]" size="5" type="text")
+                      %input.r(name="max_order_subtotal" size="5" type="text")
                       %strong 元
                   %td.new-rate.rate-price
                     %label 运费
                     %strong ¥
-                    %input.r(name="price_based_shipping_rate[price]" size="5" type="text" value="0.0")
+                    %input.r(name="price" size="5" type="text" value="0.0")
                     %strong 元
                 %tr.no-lines
                   %td.new-rate-done(colspan="3")
                     %input(name="commit" type="submit" value="保存")
                     或者
                     %span.action
-                      %a#cancel-price(href="#") 取消
+                      %a.cancel(href="#") 取消
 .pgroup.st
 
 %script(id="standard-rate-item" type="text/x-handlebars-template")

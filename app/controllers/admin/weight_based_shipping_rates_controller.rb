@@ -6,17 +6,13 @@ class Admin::WeightBasedShippingRatesController < Admin::AppController
   expose(:weight_based_shipping_rate)
 
   def create
-    if weight_based_shipping_rate.save
-      flash.now[:notice] = notice_msg
-    else
-      flash[:error] = weight_based_shipping_rate.errors.full_messages[0]
-      render template: "shared/error_msg"
-    end
+    weight_based_shipping_rate.save
+    render json: weight_based_shipping_rate
   end
 
   def destroy
     weight_based_shipping_rate.destroy
-    flash.now[:notice] = notice_msg
+    render json: weight_based_shipping_rate
   end
 
   def update
