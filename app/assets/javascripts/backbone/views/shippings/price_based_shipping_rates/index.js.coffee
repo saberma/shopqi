@@ -4,4 +4,5 @@ App.Views.Shipping.PriceBasedShippingRates.Index = Backbone.View.extend
     @render()
 
   render: ->
-    @collection.each (price) -> new App.Views.Shipping.PriceBasedShippingRates.Show model: price
+    self = this
+    @collection.each (price) -> new App.Views.Shipping.PriceBasedShippingRates.Show model: price, collection: self.collection

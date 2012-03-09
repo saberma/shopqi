@@ -4,4 +4,5 @@ App.Views.Shipping.WeightBasedShippingRates.Index = Backbone.View.extend
     @render()
 
   render: ->
-    @collection.each (weight) -> new App.Views.Shipping.WeightBasedShippingRates.Show model: weight
+    self = this
+    @collection.each (weight) -> new App.Views.Shipping.WeightBasedShippingRates.Show model: weight, collection: self.collection
