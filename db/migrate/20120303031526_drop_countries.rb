@@ -1,5 +1,5 @@
 # encoding: utf-8
-class DropCountries < ActiveRecord::Migration # B2C不需要按区域收取不同的运费，免运费或者统一收取快递费更合理
+class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费，改为按省市收取快递费，有些快递不到的，则指定为EMS
 
   class Country < ActiveRecord::Base # faux model，源代码已经删除此实体文件
     belongs_to :shop
@@ -8,16 +8,25 @@ class DropCountries < ActiveRecord::Migration # B2C不需要按区域收取不�
   end
 
   def up
-    add_column :weight_based_shipping_rates, :shop_id, :integer, comment: '归属商店'
-    add_column :price_based_shipping_rates,  :shop_id, :integer, comment: '归属商店'
-    add_index :weight_based_shipping_rates, :shop_id
-    add_index :price_based_shipping_rates,  :shop_id
+    create_table :shippings do |t| # 物流
+      t.references :shop     , comment: "所属商店"
+      t.string :code         , comment: "编码(全国为000000)", limit: 8
+      t.timestamps
+    end
+    add_index :shippings, :shop_id
+
+    add_column :weight_based_shipping_rates, :shipping_id, :integer, comment: '归属物流'
+    add_column :price_based_shipping_rates,  :shipping_id, :integer, comment: '归属物流'
+    add_index :weight_based_shipping_rates, :shipping_id
+    add_index :price_based_shipping_rates,  :shipping_id
+
     Country.all.each do |country|
+      shipping = country.shop.shippings.create code: District::CHINA
       country.weight_based_shipping_rates.each do |weight|
-        weight.update_attributes! shop_id: country.shop_id
+        weight.update_attributes! shipping_id: shipping.id
       end
       country.price_based_shipping_rates.each do |price|
-        price.update_attributes! shop_id: country.shop_id
+        price.update_attributes! shipping_id: shipping.id
       end
     end
     remove_column :weight_based_shipping_rates, :country_id
@@ -40,16 +49,19 @@ class DropCountries < ActiveRecord::Migration # B2C不需要按区域收取不�
 
     Shop.all.each do |shop|
       country = Country.create(shop_id: shop.id, code: 'CN') # 原有国家记录被删除后只能恢复时只能全部归为中国
-      shop.weight_based_shipping_rates.each do |weight|
-        weight.update_attributes! country_id: country.id
-      end
-      shop.price_based_shipping_rates.each do |price|
-        price.update_attributes! country_id: country.id
+      shop.shippings.each do |shipping|
+        shipping.weight_based_shipping_rates.each do |weight|
+          weight.update_attributes! country_id: country.id
+        end
+        shipping.price_based_shipping_rates.each do |price|
+          price.update_attributes! country_id: country.id
+        end
       end
     end
 
-    remove_column :weight_based_shipping_rates, :shop_id
-    remove_column :price_based_shipping_rates,  :shop_id
+    remove_column :weight_based_shipping_rates, :shipping_id
+    remove_column :price_based_shipping_rates,  :shipping_id
+    drop_table :shippings
   end
 
 end

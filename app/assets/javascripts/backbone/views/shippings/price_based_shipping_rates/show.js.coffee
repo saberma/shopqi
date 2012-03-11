@@ -13,7 +13,7 @@ App.Views.Shipping.PriceBasedShippingRates.Show = Backbone.View.extend
     attrs = _.clone @model.attributes
     attrs['max_order_subtotal'] = if @model.get('max_order_subtotal') then "- #{@model.get('max_order_subtotal')}" else "起"
     $(@el).html template attrs
-    $('#promotional-rate').append @el
+    $(@collection.view.el).append @el
 
   destroy: ->
     if confirm '您确定要删除吗'

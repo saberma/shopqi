@@ -1,6 +1,7 @@
 App.Views.Shipping.WeightBasedShippingRates.Index = Backbone.View.extend
 
   initialize: ->
+    @collection.view = this
     @render()
 
   render: ->

@@ -2,6 +2,8 @@
 class Admin::LinksController < Admin::AppController
   prepend_before_filter :authenticate_user!
 
+  expose(:shop){ current_user.shop }
+  expose(:link_lists) { shop.link_lists }
   expose(:link_list)
   expose(:links) { link_list.links }
   expose(:link)

@@ -1,5 +1,4 @@
 App.Views.Shipping.WeightBasedShippingRates.New = Backbone.View.extend
-  el: '#new-standard-rate'
 
   events:
     "submit form": "save"
@@ -10,7 +9,7 @@ App.Views.Shipping.WeightBasedShippingRates.New = Backbone.View.extend
     @collection.bind 'add', (model, collection) ->
       self.cancel()
       msg "新增快递费用成功."
-      show = new App.Views.Shipping.WeightBasedShippingRates.Show model: model
+      show = new App.Views.Shipping.WeightBasedShippingRates.Show model: model, collection: self.collection
       $(show.el).effect 'highlight', {}, 2000
 
   save: ->

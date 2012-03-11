@@ -475,10 +475,10 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
     t.string   "name",               :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "shop_id"
+    t.integer  "shipping_id"
   end
 
-  add_index "price_based_shipping_rates", ["shop_id"], :name => "index_price_based_shipping_rates_on_shop_id"
+  add_index "price_based_shipping_rates", ["shipping_id"], :name => "index_price_based_shipping_rates_on_shipping_id"
 
   create_table "product_options", :force => true do |t|
     t.integer "product_id", :null => false
@@ -530,6 +530,15 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
 
   add_index "products_tags", ["product_id"], :name => "index_products_tags_on_product_id"
   add_index "products_tags", ["tag_id"], :name => "index_products_tags_on_tag_id"
+
+  create_table "shippings", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "code",       :limit => 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shippings", ["shop_id"], :name => "index_shippings_on_shop_id"
 
   create_table "shop_domains", :force => true do |t|
     t.integer "shop_id"
@@ -746,9 +755,9 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
     t.string   "name",        :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "shop_id"
+    t.integer  "shipping_id"
   end
 
-  add_index "weight_based_shipping_rates", ["shop_id"], :name => "index_weight_based_shipping_rates_on_shop_id"
+  add_index "weight_based_shipping_rates", ["shipping_id"], :name => "index_weight_based_shipping_rates_on_shipping_id"
 
 end

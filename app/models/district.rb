@@ -1,5 +1,6 @@
 # encoding: utf-8
 class District
+  CHINA = '000000' # 全国
 
   def self.list(parent_id = '000000')
     result = []

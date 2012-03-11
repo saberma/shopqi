@@ -2,7 +2,7 @@
 #action-links
   %ul
     %li.no-icon=link_to w('edit'),'#', onclick: "TogglePair(['shipping-summary', 'shipping-form']); return false;"
-    %li.no-icon=link_to '返回', shipping_index_path
+    %li.no-icon=link_to '返回', shippings_path
 #shipping-details.box2
   %h3  编辑基于重量的运费
   #shipping-summary
@@ -17,7 +17,7 @@
         %label 运费
       %dd== ¥#{price_based_shipping_rate.price} RMB
   #shipping-form{:style => "display:none"}
-    =form_for price_based_shipping_rate do |f|
+    =form_for [shipping, price_based_shipping_rate ]do |f|
       =message_block on: [price_based_shipping_rate]
       %dl
         %dt
