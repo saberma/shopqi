@@ -17,5 +17,8 @@ describe District do
     District.get('440000').should eql '广东省'
     District.get('440300').should eql '深圳市'
     District.get('440305').should eql '南山区'
+    District.get('440000', prepend_parent: true).should eql '广东省'
+    District.get('440300', prepend_parent: true).should eql '广东省深圳市'
+    District.get('440305', prepend_parent: true).should eql '广东省深圳市南山区'
   end
 end

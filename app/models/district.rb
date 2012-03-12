@@ -20,17 +20,21 @@ class District
     result
   end
 
-  def self.get(id)
+  # @options[:prepend_parent] 是否显示上级区域
+  def self.get(id, options = {})
     return '' if id.blank?
+    prepend_parent = options[:prepend_parent] || false
     children = self.data
     return children[id][:text] if children.has_key?(id)
     id_match = id.match(/(\d{2})(\d{2})(\d{2})/)
     province_id = id_match[1].ljust(6, '0')
+    province_text = children[province_id][:text]
     children = children[province_id][:children]
-    return children[id][:text] if children.has_key?(id)
+    return "#{prepend_parent ? province_text : ''}#{children[id][:text]}" if children.has_key?(id)
     city_id = "#{id_match[1]}#{id_match[2]}".ljust(6, '0')
+    city_text = children[city_id][:text]
     children = children[city_id][:children]
-    return children[id][:text]
+    return "#{prepend_parent ? (province_text + city_text) : ''}#{children[id][:text]}"
   end
 
   private
