@@ -1,13 +1,13 @@
-%h2#title 快递费用
+%h2#title 快递物流费用
 #action-links
   %ul
     %li#add-region
-      %a(href="#") 新增快递区域
+      %a(href="#") 新增目的地
 #new-region.group(style="display:none")
   %form(action="#" onsubmit="return false")
     .group-fields
       %p
-        %label 区域
+        %label 目的地
       %p.ssb.region
         =select_tag :province, options_for_select(District.list), {prompt: '全国', style: 'width: 106px'}
         =select_tag :city, nil, {prompt: '--城市--', style: 'width: 106px'}
