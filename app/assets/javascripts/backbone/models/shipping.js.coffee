@@ -11,8 +11,9 @@ App.Models.Shipping = Backbone.Model.extend
     attrs = @wrappedAttributes()
     if @weight_based_shipping_rates? #手动调用_clone，因为toJSON会加wraper
       weights_attrs = @weight_based_shipping_rates.models.map (model) -> _.clone model.attributes
-      prices_attrs = @price_based_shipping_rates.models.map (model) -> _.clone model.attributes
       attrs['shipping']['weight_based_shipping_rates_attributes'] = weights_attrs
+    if @price_based_shipping_rates? #手动调用_clone，因为toJSON会加wraper
+      prices_attrs = @price_based_shipping_rates.models.map (model) -> _.clone model.attributes
       attrs['shipping']['price_based_shipping_rates_attributes'] = prices_attrs
     attrs
 

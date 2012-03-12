@@ -3,6 +3,11 @@ class Shipping < ActiveRecord::Base
   belongs_to :shop
   has_many :weight_based_shipping_rates
   has_many :price_based_shipping_rates
+
+  def code_name # 区域
+    return '全国' if self.code == District::CHINA
+    District.get self.code, prepend_parent: true
+  end
 end
 
 class WeightBasedShippingRate < ActiveRecord::Base # 基于重量计算的运费

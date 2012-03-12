@@ -6,16 +6,20 @@ App.Views.Shipping.New = Backbone.View.extend
     "click .cancel": "cancel"
 
   initialize: ->
+    Utils.Region.init()
     self = this
-    @model = new App.Models.Shipping
     @collection = App.shippings
     @collection.bind 'add', (model, collection) ->
+      model.with_weights()
+      model.with_prices()
       self.cancel()
       msg '新增成功!'
       new App.Views.Shipping.Show model: model
 
   save: ->
-    @collection.create title: this.$("#list_title").val()
+    code = _.last(_.compact([$('#province').val(), $('#city').val(), $('#district').val()]))
+    code = '<%= District::CHINA %>' unless code?
+    @collection.create code: code
     false
 
   cancel: ->

@@ -8,8 +8,8 @@
     .group-fields
       %p
         %label 区域
-      %p.ssb
-        =select_tag :province, options_for_select(District.list), {prompt: '--省份--', style: 'width: 106px'}
+      %p.ssb.region
+        =select_tag :province, options_for_select(District.list), {prompt: '全国', style: 'width: 106px'}
         =select_tag :city, nil, {prompt: '--城市--', style: 'width: 106px'}
         =select_tag :district, nil, {prompt: '--地区--', style: 'width: 106px'}
     .group-actions
@@ -24,10 +24,11 @@
     %tr
       %th
         =image_tag("admin/countries/cn.gif")
-        全国
+        {{code_name}}
       %th(style="width: 160px") &nbsp;
       %th(style="width: 110px") &nbsp;
-      %th(style="width: 80px") &nbsp;
+      %th(style="width: 80px; text-align: right")
+        %a.del(href="#")=image_tag 'admin/icons/trash.gif'
   %tbody.standard-rate
   %tbody.promotional-rate
   %tbody

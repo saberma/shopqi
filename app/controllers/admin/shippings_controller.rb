@@ -5,20 +5,19 @@ class Admin::ShippingsController < Admin::AppController
   expose(:shop){ current_user.shop }
   expose(:shippings) { shop.shippings }
   expose(:shipping)
-  expose(:shippings_json) do
-    shippings.to_json(
+  expose(:json_options) do
+    {
+      methods: :code_name,
       except: [ :created_at, :updated_at ],
       include: [:weight_based_shipping_rates, :price_based_shipping_rates]
-    )
+    }
   end
-  #expose(:weight_based_shipping_rates) { shop.weight_based_shipping_rates }
-  #expose(:weight_based_shipping_rates_json) { weight_based_shipping_rates.to_json(except: [ :created_at, :updated_at ]) }
-  #expose(:price_based_shipping_rates) { shop.price_based_shipping_rates }
-  #expose(:price_based_shipping_rates_json) { price_based_shipping_rates.to_json(except: [ :created_at, :updated_at ]) }
+  expose(:shippings_json) { shippings.to_json(json_options) }
+  expose(:shipping_json) { shipping.to_json(json_options) }
 
   def create
     shipping.save
-    render json: shipping
+    render json: shipping_json
   end
 
   def destroy

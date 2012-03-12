@@ -27,7 +27,7 @@ class Shop < ActiveRecord::Base
   has_many :vendors               , dependent: :destroy                      , class_name: 'ShopProductVendor'
   has_many :emails                , dependent: :destroy
   has_many :activities            , dependent: :destroy                      , order: 'created_at desc'
-  has_many :shippings             , dependent: :destroy                      , order: 'id asc'
+  has_many :shippings             , dependent: :destroy                      , order: 'code desc'
   has_many :payments              , dependent: :destroy                      , order: 'payment_type_id, created_at'
   has_many :tasks                 , dependent: :destroy                      , order: 'id asc', class_name: 'ShopTask'
   has_many :policies              , dependent: :destroy                      , order: 'id asc', class_name: 'ShopPolicy'

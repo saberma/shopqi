@@ -5,6 +5,7 @@ App.Views.Shipping.Show = Backbone.View.extend
   events:
     "click .add-weight"             : "addWeight"
     "click .add-price"              : "addPrice"
+    "click thead th .del"           : "destroy"
 
   initialize: ->
     @render()
@@ -31,4 +32,14 @@ App.Views.Shipping.Show = Backbone.View.extend
     @$('.new-standard-rate').hide()
     @$('.new-promotional-rate').show()
     @$('.promotional-rate-name-new').focus()
+    false
+
+  destroy: ->
+    if confirm '您确定要删除吗'
+      self = this
+      this.model.destroy
+        success: (model, response) ->
+          App.shippings.remove self.model
+          self.remove()
+          msg '删除成功!'
     false
