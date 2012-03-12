@@ -15,7 +15,7 @@
       %dd== 从 #{weight_based_shipping_rate.weight_low}kg 到 #{weight_based_shipping_rate.weight_high}kg
       %dt
         %label 运费
-      %dd== ¥#{weight_based_shipping_rate.price} RMB
+      %dd== ¥#{weight_based_shipping_rate.price} 元
   #shipping-form{:style => "display:none"}
     =form_for [shipping, weight_based_shipping_rate] do |f|
       =message_block on: [weight_based_shipping_rate]
@@ -37,7 +37,7 @@
         %dt=f.label :price
         %dd
           =f.text_field :price ,size: 5, class: 'r'
-          %strong RMB
+          %strong 元
       %p.btn-divider
         =f.submit w('save'),class: 'btn'
         =w('or')

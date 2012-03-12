@@ -2,11 +2,11 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :country do
-    code 'HK'
+  factory :shipping do
+    code '440000' # 广东
   end
 
-  factory :country_china,parent: :country do
-    code 'CN'
+  factory :shipping_china, parent: :shipping do
+    code '000000'
   end
 end

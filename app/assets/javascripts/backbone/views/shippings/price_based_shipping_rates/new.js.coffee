@@ -10,7 +10,7 @@ App.Views.Shipping.PriceBasedShippingRates.New = Backbone.View.extend
     self = this
     @collection.bind 'add', (model, collection) ->
       self.cancel()
-      msg "新增快递费用成功."
+      msg "新增成功!"
       show = new App.Views.Shipping.PriceBasedShippingRates.Show model: model, collection: self.collection
       $(show.el).effect 'highlight', {}, 2000
 

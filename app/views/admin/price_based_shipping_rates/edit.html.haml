@@ -15,7 +15,7 @@
       %dd==¥#{price_based_shipping_rate.min_order_subtotal} #{price_max_order_subtotal_helper(price_based_shipping_rate)}
       %dt
         %label 运费
-      %dd== ¥#{price_based_shipping_rate.price} RMB
+      %dd== ¥#{price_based_shipping_rate.price} 元
   #shipping-form{:style => "display:none"}
     =form_for [shipping, price_based_shipping_rate ]do |f|
       =message_block on: [price_based_shipping_rate]
@@ -40,7 +40,7 @@
         %dd
           %strong ¥
           =f.text_field :price ,size: 5, class: 'r'
-          %strong RMB
+          %strong 元
       %p.btn-divider
         =f.submit w('save'),class: 'btn'
         =w('or')
