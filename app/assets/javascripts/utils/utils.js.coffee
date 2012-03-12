@@ -15,7 +15,10 @@ namespace 'Utils', (exports) ->
           $this = this
           select_index = selects.index($this) + 1
           select = selects.eq(select_index)
-          if $(this).val() and select[0]
+          if !$(this).val() # 选中空值时要清空所有下级
+            $("option:gt(0)", select).remove()
+            select.change()
+          else if select[0]
             $.get "/district/" + $(this).val(), (data) ->
               result = eval(data)
               options = select[0].options
