@@ -21,4 +21,13 @@ describe District do
     District.get('440300', prepend_parent: true).should eql '广东省深圳市'
     District.get('440305', prepend_parent: true).should eql '广东省深圳市南山区'
   end
+
+  it 'should be parse' do # 可以直接获取省、市
+    District.province('440000').should eql '440000' # 省
+    District.city('440000').should eql '440000'
+    District.province('440300').should eql '440000' # 市
+    District.city('440300').should eql '440300'
+    District.province('440305').should eql '440000' # 区
+    District.city('440305').should eql '440300'
+  end
 end
