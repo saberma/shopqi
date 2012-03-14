@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Shipping < ActiveRecord::Base
   belongs_to :shop
-  has_many :weight_based_shipping_rates
-  has_many :price_based_shipping_rates
+  has_many :weight_based_shipping_rates, order: 'id asc'
+  has_many :price_based_shipping_rates , order: 'id asc'
 
   # 修改此模块内方法要记得重启服务
   module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions

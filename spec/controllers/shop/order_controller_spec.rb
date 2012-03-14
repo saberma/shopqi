@@ -46,6 +46,13 @@ describe Shop::OrderController do
 
     end
 
+    it 'should get shipping_rates' do # 可以获取快递费用记录
+      get :shipping_rates, shop_id: shop.id, cart_token: cart.token, code: '440305' # 深圳
+      json = JSON(response.body).first['weight_based_shipping_rate']
+      json['name'].should eql '普通快递'
+      json['price'].should eql 10.0
+    end
+
   end
 
   context '#create' do # 创建表单(ajax操作)

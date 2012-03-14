@@ -78,18 +78,11 @@
         %div(style="clear: both")
       / end addresses
       #payment
-        .group.clearfix
+        .group.clearfix#shipping_rates_group.hide
           %h3 配送方式
-          -unless shipping_rates.blank?
-            %p.sst
-              %ul#shipping_rates
-                -shipping_rates.each do |shipping_rate|
-                  %li
-                    =f.radio_button :shipping_rate, "#{shipping_rate.name}-#{shop.format_money_in_emails(shipping_rate.price)}", start: shipping_rate.price
-                    =label_tag "order_shipping_rate_-#{shipping_rate.price.to_s.sub('.','')}" , "#{shipping_rate.name}-#{shop.format_money_in_emails(shipping_rate.price)}"
-          -else
-            %p#no-shipping-rates 对不起，由于本店暂时没有为该地区设置发货方式，所以，将不能发往该地区
-      -unless shipping_rates.blank?
+          %p.sst
+            %ul#shipping_rates
+          %p#no-shipping-rates.hide 对不起，由于本店暂时没有为该地区设置发货方式，所以，将不能发往该地区
         .group
           %h3 支付方式
           .field-with-errors#payment-error(style='display:none')
@@ -114,3 +107,7 @@
               %a(href="#{shop.primary_domain.url}#{request.port_string}") 返回商店
           %td(style="text-align:right;vertical-align:bottom")
             %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'
+
+%script(id="shipping-rate-item" type="text/x-handlebars-template")
+  %input(id="shipping_rate_{{id}}" name="order[shipping_rate]" start="{{price}}" type="radio" value="{{value}}")
+  %label(for="shipping_rate_{{id}}") {{value}}

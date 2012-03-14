@@ -69,11 +69,6 @@ class Shop::OrderController < Shop::AppController
     order.total_price
   end
 
-  expose(:shipping_rates) do
-    total_weight = cart_total_weight / 1000.0 # 订单的total_weight以克为单位
-    shop.shippings.rates(total_weight, cart_total_price, District::CHINA)
-  end
-
   def new # 显示订单表单
     if cart_line_items.empty?
       render(action: 'error', layout: false) and return
@@ -102,6 +97,11 @@ class Shop::OrderController < Shop::AppController
 
   def forward
     render file: 'public/404.html',layout: false, status: 404 unless order
+  end
+
+  def shipping_rates # 获取快递记录
+    total_weight = cart_total_weight / 1000.0 # 订单的total_weight以克为单位
+    render json: shop.shippings.rates(total_weight, cart_total_price, params[:code]).as_json(root: false)
   end
 
   begin 'from pay gateway'

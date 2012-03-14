@@ -56,14 +56,15 @@ Shopqi::Application.routes.draw do
   # 订单页面
   constraints(Domain::Checkout) do
     scope module: :shop do
-      get '/carts/:shop_id/:cart_token'                  , to: 'order#new'
-      post '/carts/:shop_id/:cart_token'                 , to: 'order#create'
-      get '/orders/:shop_id/:token/forward'              , to: 'order#forward'           , as: :forward_order
-      post '/orders/notify'                              , to: 'order#notify'            , as: :notify_order
-      get '/orders/done'                                 , to: 'order#done'              , as: :done_order
-      match '/orders/tenpay_notify'                      , to: 'order#tenpay_notify'     , as: :tenpay_notify_order
-      get '/orders/tenpay_done/:token'                   , to: 'order#tenpay_done'       , as: :tenpay_done_order
-      get '/carts/:shop_id/:cart_token/get_address'      , to: 'order#get_address'       , as: :get_address
+      get '/carts/:shop_id/:cart_token'                      , to: 'order#new'
+      get '/carts/:shop_id/:cart_token/shipping_rates/:code' , to: 'order#shipping_rates'
+      post '/carts/:shop_id/:cart_token'                     , to: 'order#create'
+      get '/orders/:shop_id/:token/forward'                  , to: 'order#forward'           , as: :forward_order
+      post '/orders/notify'                                  , to: 'order#notify'            , as: :notify_order
+      get '/orders/done'                                     , to: 'order#done'              , as: :done_order
+      match '/orders/tenpay_notify'                          , to: 'order#tenpay_notify'     , as: :tenpay_notify_order
+      get '/orders/tenpay_done/:token'                       , to: 'order#tenpay_done'       , as: :tenpay_done_order
+      get '/carts/:shop_id/:cart_token/get_address'          , to: 'order#get_address'       , as: :get_address
     end
   end
 

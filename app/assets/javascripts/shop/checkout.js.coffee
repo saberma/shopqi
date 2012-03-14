@@ -50,9 +50,6 @@ Validator = # 校验
 
 $(document).ready ->
 
-  if $('#no-shipping-rates').size() > 0
-    $('#complete-purchase').attr 'disabled', true
-
   $("input[name='order[shipping_rate]']").change -> # 快递费用
     format = $('#cost').attr('format')
     price = parseFloat $(this).attr('start')
@@ -101,6 +98,21 @@ $(document).ready ->
           $("option:gt(0)", select).remove()
           $.each result, (i, item) ->
             options[options.length] = new Option(item[0], item[1])
+
+  $("#order_shipping_address_attributes_district").change -> # 选择区下拉框时显示相应的配送方式
+    $.getJSON "#{window.location}/shipping_rates/#{$(this).val()}", (data)->
+      $("#shipping_rates").html('')
+      if data
+        $.each data, (index, item) ->
+          item = item['weight_based_shipping_rate'] || item['price_based_shipping_rate']
+          template = $("#shipping-rate-item").html()
+          template = template.replace /{{id}}/g, item.id
+          template = template.replace /{{price}}/g, item.price
+          template = template.replace /{{value}}/g, "#{item.name}-#{item.price}"
+          $("<li/>").html(template).appendTo($("#shipping_rates"))
+      $("#shipping_rates_group").show()
+      $("#no-shipping-rates").toggle(!data or data.length is 0)
+
 
   #获取地址补全
   $('#billing_address_selector,#shipping_address_selector').each ->
