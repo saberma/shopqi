@@ -4,9 +4,34 @@ class Shipping < ActiveRecord::Base
   has_many :weight_based_shipping_rates
   has_many :price_based_shipping_rates
 
+  # 修改此模块内方法要记得重启服务
+  module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
+    def shop
+      @association.owner
+    end
+
+    # 根据订单的重量、价格、目的地获取快递费用
+    # @code 目的地(如440305，指深圳)
+    def rates(weight, price, code)
+      #p "weight: #{weight}; price: #{price}, code: #{code}"
+      shipping = shop.shippings.where(code: code).first # 区
+      return shipping.match(weight, price) if shipping
+      shipping = shop.shippings.where(code: District.city(code)).first # 市
+      return shipping.match(weight, price) if shipping
+      shipping = shop.shippings.where(code: District.province(code)).first # 省
+      return shipping.match(weight, price) if shipping
+      shipping = shop.shippings.where(code: District::CHINA).first # 全国
+      return shipping.match(weight, price) if shipping
+    end
+  end
+
   def code_name # 区域
     return '全国' if self.code == District::CHINA
     District.get self.code, prepend_parent: true
+  end
+
+  def match(weight, price) # 找出符合快递记录
+    self.weight_based_shipping_rates.where(:weight_low.lte => weight, :weight_high.gte => weight).all + self.price_based_shipping_rates.where(:min_order_subtotal.lte => price, :max_order_subtotal.gte => price).all + self.price_based_shipping_rates.where(:min_order_subtotal.lte => price, :max_order_subtotal => nil).all
   end
 end
 
