@@ -18,12 +18,16 @@ describe Shop::OrderController do
 
   let(:cart) { Factory :cart, shop: shop, cart_hash: %Q({"#{variant.id}":1}) }
 
+  before :each do
+    request.host = "#{shop.primary_domain.host}"
+  end
+
   context '#new' do # 显示表单
 
     context 'exist vairant' do # 款式仍然存在
 
       it 'should be show' do
-        get :new, shop_id: shop.id, cart_token: cart.token
+        get :new, cart_token: cart.token
         response.should be_success
       end
 
@@ -38,7 +42,7 @@ describe Shop::OrderController do
       it 'should be show' do
         invalid_cart = Factory :cart, shop: shop, cart_hash: %Q({"#{un_exist_variant_id}":1})
         expect do
-          get :new, shop_id: shop.id, cart_token: invalid_cart.token
+          get :new, cart_token: invalid_cart.token
         end.should_not raise_error
         response.should be_success
         response.body.should include '购物车是空的'
@@ -47,7 +51,7 @@ describe Shop::OrderController do
     end
 
     it 'should get shipping_rates' do # 可以获取快递费用记录
-      get :shipping_rates, shop_id: shop.id, cart_token: cart.token, code: '440305' # 深圳
+      get :shipping_rates, cart_token: cart.token, code: '440305' # 深圳
       json = JSON(response.body).first['weight_based_shipping_rate']
       json['name'].should eql '普通快递'
       json['price'].should eql 10.0
@@ -68,7 +72,7 @@ describe Shop::OrderController do
       it 'should be success' do
         expect do
           expect do
-            post :create, shop_id: shop.id, cart_token: cart.token, order: order_attributes
+            post :create, cart_token: cart.token, order: order_attributes
             response.should be_success
             order = assigns['_resources']['order']
             order.errors.should be_empty
@@ -86,7 +90,7 @@ describe Shop::OrderController do
 
         it 'should be destroy' do # 会被删除
           expect do
-            post :create, shop_id: shop.id, cart_token: cart.token, order: order_attributes
+            post :create, cart_token: cart.token, order: order_attributes
           end.should change(Cart, :count).by(-1)
         end
 
@@ -105,7 +109,7 @@ describe Shop::OrderController do
         expect do
           expect do
             expect do
-              post :create, shop_id: shop.id, cart_token: invalid_cart.token, order: order_attributes
+              post :create, cart_token: invalid_cart.token, order: order_attributes
               response.should be_success
               JSON(response.body)['error'].should eql 'unavailable_product'
             end.should_not change(Order, :count)
