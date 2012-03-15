@@ -25,7 +25,6 @@ describe "Guides", js: true do
         '定制外观' => '点击此处修改您的主题外观',
         '发布内容' => '点击此处修改您的商店内容',
         '支付网关' => '点击此处选择您的支付网关',
-        '调整税率' => '点击此处设置您的税率',
         '物流配送' => '点击此处设置您的物流费用',
         '绑定域名' => '点击此处管理您的域名'
       }
@@ -164,9 +163,9 @@ describe "Guides", js: true do
         sleep 3 # 等待opacity渲染
         find('#task-checkoff').visible?.should be_false
         find('.guide-outer.above').visible?.should be_true
-        find('.guide-outer.above').has_content?('下一步是 设置您的税率').should be_true
+        find('.guide-outer.above').has_content?('下一步是 设置您的物流费用').should be_true
         visit '/admin' # 首页更新进度
-        find('#next-step-description h2').text.should eql '下一步骤: 税率'
+        find('#next-step-description h2').text.should eql '下一步骤: 物流费用'
       end
 
     end

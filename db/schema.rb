@@ -396,21 +396,20 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
   add_index "order_transactions", ["order_id"], :name => "index_order_transactions_on_order_id"
 
   create_table "orders", :force => true do |t|
-    t.integer  "shop_id",                                               :null => false
+    t.integer  "shop_id",                              :null => false
     t.integer  "customer_id"
-    t.string   "token",                  :limit => 32,                  :null => false
-    t.string   "name",                   :limit => 32,                  :null => false
-    t.integer  "number",                                                :null => false
-    t.integer  "order_number",                                          :null => false
-    t.string   "status",                 :limit => 16,                  :null => false
-    t.string   "financial_status",       :limit => 16,                  :null => false
-    t.string   "fulfillment_status",     :limit => 16,                  :null => false
-    t.string   "email",                  :limit => 32,                  :null => false
+    t.string   "token",                  :limit => 32, :null => false
+    t.string   "name",                   :limit => 32, :null => false
+    t.integer  "number",                               :null => false
+    t.integer  "order_number",                         :null => false
+    t.string   "status",                 :limit => 16, :null => false
+    t.string   "financial_status",       :limit => 16, :null => false
+    t.string   "fulfillment_status",     :limit => 16, :null => false
+    t.string   "email",                  :limit => 32, :null => false
     t.string   "shipping_rate",          :limit => 32
     t.integer  "payment_id"
-    t.float    "total_line_items_price",                                :null => false
-    t.float    "total_price",                                           :null => false
-    t.float    "tax_price",                            :default => 0.0, :null => false
+    t.float    "total_line_items_price",               :null => false
+    t.float    "total_price",                          :null => false
     t.string   "note"
     t.datetime "closed_at"
     t.string   "cancel_reason",          :limit => 16
@@ -629,8 +628,6 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
     t.string   "money_in_emails_format",               :limit => 32
     t.integer  "orders_count",                                       :default => 0
     t.string   "order_number_format",                  :limit => 32, :default => "\#{{number}}"
-    t.boolean  "taxes_included",                                     :default => true
-    t.boolean  "tax_shipping",                                       :default => false
     t.string   "customer_accounts",                                  :default => "optional"
     t.string   "signup_source",                        :limit => 16
     t.boolean  "guided",                                             :default => false

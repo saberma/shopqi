@@ -77,13 +77,6 @@
       <td class="total money">{{ shipping_method.price | money }}</td>
     </tr>
     {% endfor %}
-    
-    {% for tax_line in order.tax_lines %}
-      <tr class="order_summary note">
-        <td class="label" colspan="4">税费 ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%):</td>
-        <td class="total money">{{ tax_line.price | money }}</td>
-      </tr>
-    {% endfor %}    
             
     <tr class="order_summary order_total">
       <td class="label" colspan="4">总金额:</td>

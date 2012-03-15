@@ -111,8 +111,6 @@ cn:
         password: 密码
         password_enabled: 商店密码启用
         password_message: 提示信息
-        taxes_included: 税收是否包含在商品中
-        tax_shipping: 关税
         customer_accounts: 顾客付款设置
         guided: 是否完成指南任务
         created_at: 创建时间

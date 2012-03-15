@@ -29,7 +29,7 @@ class Order < ActiveRecord::Base
 
   before_save do
     self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price + self.tax_price unless self.total_price
+    self.total_price = self.total_line_items_price # TODO:要加上运费
   end
 
   def shipping_rate_price
@@ -38,10 +38,6 @@ class Order < ActiveRecord::Base
 
   def shipping_name
     shipping_rate.scan(/(.+?)\s*-/).flatten[0] if shipping_rate
-  end
-
-  def order_tax_price
-    shop.taxes_included? ? 0.0  : self.tax_price
   end
 
   def gateway

@@ -28,12 +28,10 @@ class OrderDrop < Liquid::Drop
     !@order.line_items.blank?
   end
 
-  #税钱
-  def tax_price
+  def tax_price #税钱
   end
 
-  #各种税
-  def tax_lines
+  def tax_lines #各种税
   end
 
   #提交订单的顾客

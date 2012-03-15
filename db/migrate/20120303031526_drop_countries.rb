@@ -8,8 +8,11 @@ class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费�
   end
 
   def up
-    remove_column :customer_addresses, :country_code # 删除实体中的country_code属性
+    remove_column :customer_addresses, :country_code # 删除实体中的country_code和tax属性
     remove_column :order_shipping_addresses, :country_code
+    remove_column :shops, :taxes_included
+    remove_column :shops, :tax_shipping
+    remove_column :orders, :tax_price
 
     create_table :shippings do |t| # 物流
       t.references :shop     , comment: "所属商店"
@@ -40,6 +43,9 @@ class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费�
   def down
     add_column :customer_addresses, :country_code, :string, comment: '国家', limit: 10, default: 'CN', null: false
     add_column :order_shipping_addresses, :country_code, :string, comment: '国家', limit: 10, default: 'CN', null: false
+    add_column :shops, :taxes_included, :boolean, comment: '税收是否包含在商品中', default: true
+    add_column :shops, :tax_shipping, :boolean, comment: '是否要缴航运税', default: false
+    add_column :orders, :tax_price, :float, comment: '税收金额', default: 0.0, null: false
 
     create_table :countries do |t| #可发往国家
       t.references :shop     , comment: "所属商店"

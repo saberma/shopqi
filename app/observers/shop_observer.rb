@@ -44,7 +44,6 @@ class ShopObserver < ActiveRecord::Observer
       {name: :customize_theme},
       {name: :add_content},
       {name: :setup_payment_gateway},
-      {name: :setup_taxes},
       {name: :setup_shipping},
       {name: :setup_domain},
       {name: :launch},
