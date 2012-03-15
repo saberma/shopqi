@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: 'position asc'
   has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
   has_many :collections        , class_name: 'CustomCollection', through: :collection_products        , source: :custom_collection
-  has_and_belongs_to_many :tags
+  has_and_belongs_to_many :tags, order: 'id asc'
   # 标签
   attr_accessor :tags_text,:images
   scope :published, where(published: true)
