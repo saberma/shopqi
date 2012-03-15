@@ -72,7 +72,7 @@ class Admin::EmailsController < Admin::AppController
     order.total_price = order.total_line_items_price + order.tax_price
     address = order.shipping_address # 顾客地址
     customer = shop.customers.new email: order.email, name: order.shipping_address.name
-    customer.addresses.new(name: address.name, company: address.company, country_code: address.country_code, province: address.province, city: address.city, district: address.district, address1: address.address1, address2: address.address2, zip: address.zip, phone: address.phone)
+    customer.addresses.new(name: address.name, company: address.company, province: address.province, city: address.city, district: address.district, address1: address.address1, address2: address.address2, zip: address.zip, phone: address.phone)
     order.customer = customer
     order.shipping_rate = '普通快递 - 10'
     order.payment = shop.payments.first

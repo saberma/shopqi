@@ -18,12 +18,6 @@ GIT
       vegas (~> 0.1.2)
 
 GIT
-  remote: git://github.com/jim/carmen.git
-  revision: 1eecf3b41379badd5856293ac8873a1d6c84c178
-  specs:
-    carmen (0.2.7)
-
-GIT
   remote: git://github.com/mojombo/grit.git
   revision: 8b5449e559879d74224bce3c9c52b0d17bbc0b4b
   specs:
@@ -410,7 +404,6 @@ DEPENDENCIES
   awesome_print
   capistrano
   capybara (~> 1.1.2)
-  carmen!
   carrierwave
   chinese_pinyin
   client_side_validations

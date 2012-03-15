@@ -128,7 +128,6 @@ $(document).ready ->
           address = data.customer_address
           str = "order_#{id}_address_attributes"
           $("##{str}_name").val(address.name)
-          $("##{str}_country_code").val(address.country_code)
           RegionUtils.init [address.province, address.city, address.district], "##{id} .region"
           $("##{str}_province").val(address.province).change()
           $("##{str}_address1").val(address.address1)
@@ -142,7 +141,6 @@ $(document).ready ->
 
   reset = (str) ->
       $("##{str}_name").val('')
-      $("##{str}_country_code").val('')
       $("##{str}_province").val('')
       $("##{str}_city").val('')
       $("##{str}_district").val('')

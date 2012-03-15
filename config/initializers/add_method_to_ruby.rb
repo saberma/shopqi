@@ -18,8 +18,6 @@ end
 
 Liquid::Drop.send :include , LiquidDropHelper
 
-Carmen.default_locale = :cn
-
 # 修正:DEPRECATION WARNING: Setting :expires_in on read has been deprecated in favor of setting it on write
 def smart_fetch(name, options = {}, &blk)
   in_cache = Rails.cache.fetch(name)

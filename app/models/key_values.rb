@@ -278,7 +278,7 @@ module KeyValues
         {id: 1, name: '消费金额'    , code: 'total_spent'              , clazz: 'integer'},
         {id: 2, name: '订单数'      , code: 'orders_count'             , clazz: 'integer'},
         {id: 3, name: '下单时间'    , code: 'last_order_date'          , clazz: 'date'   },
-        #{id: 4, name: '所在城市'   , code: 'country'                  , clazz: 'city'   },
+        #{id: 4, name: '所在城市'   , code: 'city'                     , clazz: 'city'   },
         {id: 5, name: '接收营销邮件', code: 'accepts_marketing'        , clazz: 'boolean'},
         {id: 6, name: '放弃订单时间', code: 'last_abandoned_order_date', clazz: 'date'   },
         #{id: 7, name: '订单标签'   , code: 'tag'                      , clazz: 'tag'    },

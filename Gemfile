@@ -22,15 +22,9 @@ gem 'dragonfly', ' ~> 0.9.8'
 gem 'rack-cache', require: 'rack/cache'
 gem 'liquid','~> 2.3.0' #模板语言
 gem "carrierwave"
-#查询
-#gem 'meta_where'
-gem 'meta_search', '~> 1.1.1'
+gem 'meta_search', '~> 1.1.1' #查询
 gem 'squeel'
-
-#gem 'carmen'#地区
-gem 'carmen', git: "git://github.com/jim/carmen.git"
 gem 'seedbank' # 分离出各个环境下的seed
-#gem 'gravtastic' #gravtastic头像服务,现在没有这服务了
 
 ##### 控制器相关 #####
 gem 'decent_exposure'

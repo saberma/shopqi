@@ -8,6 +8,9 @@ class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费�
   end
 
   def up
+    remove_column :customer_addresses, :country_code # 删除实体中的country_code属性
+    remove_column :order_shipping_addresses, :country_code
+
     create_table :shippings do |t| # 物流
       t.references :shop     , comment: "所属商店"
       t.string :code         , comment: "编码(全国为000000)", limit: 8
@@ -35,6 +38,9 @@ class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费�
   end
 
   def down
+    add_column :customer_addresses, :country_code, :string, comment: '国家', limit: 10, default: 'CN', null: false
+    add_column :order_shipping_addresses, :country_code, :string, comment: '国家', limit: 10, default: 'CN', null: false
+
     create_table :countries do |t| #可发往国家
       t.references :shop     , comment: "所属商店"
       t.string :code         , comment: "国家编码", limit: 32

@@ -169,7 +169,6 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
     t.integer "customer_id",                                      :null => false
     t.string  "name"
     t.string  "company",         :limit => 64
-    t.string  "country_code",    :limit => 10, :default => "CN",  :null => false
     t.string  "province",        :limit => 64
     t.string  "city",            :limit => 64
     t.string  "district",        :limit => 64
@@ -373,17 +372,16 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
   add_index "order_line_items", ["order_id"], :name => "index_order_line_items_on_order_id"
 
   create_table "order_shipping_addresses", :force => true do |t|
-    t.integer "order_id",                                     :null => false
-    t.string  "name",                                         :null => false
-    t.string  "company",      :limit => 64
-    t.string  "country_code", :limit => 10, :default => "CN", :null => false
-    t.string  "province",     :limit => 64
-    t.string  "city",         :limit => 64
-    t.string  "district",     :limit => 64
-    t.string  "address1",                                     :null => false
+    t.integer "order_id",               :null => false
+    t.string  "name",                   :null => false
+    t.string  "company",  :limit => 64
+    t.string  "province", :limit => 64
+    t.string  "city",     :limit => 64
+    t.string  "district", :limit => 64
+    t.string  "address1",               :null => false
     t.string  "address2"
-    t.string  "zip",          :limit => 12
-    t.string  "phone",        :limit => 64,                   :null => false
+    t.string  "zip",      :limit => 12
+    t.string  "phone",    :limit => 64, :null => false
   end
 
   add_index "order_shipping_addresses", ["order_id"], :name => "index_order_shipping_addresses_on_order_id"

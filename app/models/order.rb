@@ -228,12 +228,6 @@ class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
 
-  default_value_for :country_code, 'CN'
-
-  def country_name
-    Carmen.country_name(country_code)
-  end
-
   def province_name
     District.get(self.province)
   end

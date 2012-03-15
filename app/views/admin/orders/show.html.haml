@@ -62,9 +62,6 @@
         %span.value==电话: #{order.shipping_address.phone}
       %address.adr
         %span.type.hide 家庭
-        -#
-          %span.country-name=order.shipping_address.country
-          %br
         %span.street-address=order.shipping_address.province_name
         %br
         %span.locality=order.shipping_address.city_name

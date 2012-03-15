@@ -55,8 +55,8 @@ class CustomerAddressDrop < Liquid::Drop
 
   delegate :id,:name,:company,:zip, :phone, :address1, :address2,:detail_address,:default_address, to: :@address
 
-  def country
-    @address.country_name
+  def country # 不显示国籍
+    ''
   end
 
   def province_code

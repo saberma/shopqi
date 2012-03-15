@@ -14,8 +14,8 @@ class AddressDrop < Liquid::Drop
     end
   end
 
-  def country
-    Carmen.country_name(@address.country_code)
+  def country # 不显示国籍
+    ''
   end
 
 end

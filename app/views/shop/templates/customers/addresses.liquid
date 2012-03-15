@@ -17,12 +17,6 @@
         <td class="value"><input type="text" id="address_name_new" class="address_form" name="address[name]" value="{{form.name}}" size="40" /></td>
       </tr>
       <tr>
-        <td class="label"><label for="address_country_new">国家</label></td>
-        <td class="value">
-          <select id="address_country_new" name="address[country_code]" disabled="disabled" >{{ country_option_tags }}</select>
-        </td>
-      </tr>
-      <tr>
         <td class='label'>
           <label for='address_attributes'>地区</label>
         </td>
@@ -91,12 +85,6 @@
           <tr>
             <td class="label"><label for="address_name_{{form.id}}">姓名</label></td>
             <td class="value"><input type="text" id="address_name_{{form.id}}" class="address_form" name="address[name]" value="{{form.name}}" size="40" /></td>
-          </tr>
-          <tr>
-            <td class="label"><label for="address_country_{{form.id}}">国家</label></td>
-            <td class="value">
-              <select id="address_country_{{form.id}}" name="address[country_code]" disabled="disabled" >{{ country_option_tags }}</select>
-            </td>
           </tr>
           <tr>
             <td class='label'>

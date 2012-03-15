@@ -40,7 +40,7 @@ class Customer < ActiveRecord::Base
   # 默认地址
   def default_address
     address =  addresses.where(default_address: true).first ||  addresses.first || addresses.build # 商店顾客未下订单直接注册时没有地址
-    json =  address.as_json(methods: [:country_name,:province_name, :city_name, :district_name])
+    json =  address.as_json(methods: [:province_name, :city_name, :district_name])
     json['customer_address']
   end
 
@@ -55,7 +55,7 @@ class Customer < ActiveRecord::Base
 
   # 加入地址(不能重复)
   def add_address(a) #a可以是billing_address或者shipping_address
-    attrs = { name: a.name, company: a.company, country_code: a.country_code, province: a.province, city: a.city,
+    attrs = { name: a.name, company: a.company, province: a.province, city: a.city,
               district: a.district, address1: a.address1, address2: a.address2, zip: a.zip, phone: a.phone }
     unless self.addresses.exists?(attrs)
       self.addresses.create attrs
@@ -108,10 +108,6 @@ class CustomerAddress < ActiveRecord::Base
     self.name = self.customer.name if self.name.blank?
   end
 
-  def country_name
-    Carmen.country_name(country_code)
-  end
-
   def province_name
     District.get(self.province)
   end
@@ -140,7 +136,7 @@ class CustomerAddress < ActiveRecord::Base
   end
 
   def detail_address
-    "#{country_name} #{province_name}#{city_name}#{district_name}#{address1}".gsub(/市县/,'市').gsub(/市辖区/,'')
+    "#{province_name}#{city_name}#{district_name}#{address1}".gsub(/市县/,'市').gsub(/市辖区/,'')
   end
 
 end

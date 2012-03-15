@@ -12,7 +12,7 @@
     <div class="address note">
       {% if customer.default_address != nil %}
         <p>{{ customer.default_address.phone }}</p>
-        <p>{{customer.default_address.country}} {{customer.default_address.province_code}} {{ customer.default_address.city}} {{ customer.default_address.district}}</p>
+        <p>{{customer.default_address.province_code}} {{ customer.default_address.city}} {{ customer.default_address.district}}</p>
         <p>{{ customer.default_address.address1 }}</p>
         {% if customer.default_address.address2 != "" %}
           <p>{{ customer.default_address.address2 }}</p>

@@ -84,7 +84,6 @@ describe "Shop::Customers", js: true do
       find('#add_address').should be_visible
       within '#add_address' do
         fill_in 'address[name]', with: '李卫辉'
-        select '中国', form: 'address[country_code]'
         select '广东省', form: 'address[province]'
         select '深圳市', form: 'address[city]'
         select '南山区', form: 'address[district]'
@@ -99,7 +98,7 @@ describe "Shop::Customers", js: true do
 
       within '#address_tables' do
         page.should have_content('收货人: 李卫辉')
-        page.should have_content('详细地址: 中国 广东省深圳市南山区深港产学研基地')
+        page.should have_content('详细地址: 广东省深圳市南山区深港产学研基地')
         page.should have_content('邮政编码: 518000')
         page.should have_content('公司: shopqi')
       end

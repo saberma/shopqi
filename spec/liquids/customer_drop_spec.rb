@@ -46,20 +46,20 @@ describe CustomerDrop do
 
     it 'should get country' do
       variant = "{{ customer.default_address.country }}"
-      liquid(variant).should eql "中国"
+      liquid(variant).should be_blank
     end
 
-    it "should get detail address" ,focus: true do
+    it "should get detail address" do
       variant = "{{ customer.default_address.detail_address }}"
-      liquid(variant).should eql "中国 广东省深圳市南山区311"
+      liquid(variant).should eql "广东省深圳市南山区311"
     end
 
-    it "should get  address name" ,focus: true do
+    it "should get  address name" do
       variant = "{{ customer.default_address.name }}"
       liquid(variant).should eql "马海波"
     end
 
-    it "should get  address company" ,focus: true do
+    it "should get  address company" do
       variant = "{{ customer.default_address.company }}"
       liquid(variant).should eql "ShopQi"
     end
