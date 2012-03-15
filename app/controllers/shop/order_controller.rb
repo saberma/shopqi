@@ -9,7 +9,7 @@ class Shop::OrderController < Shop::AppController
 
   layout 'shop/checkout'
 
-  expose(:shop) { Shop.find(params[:shop_id]) }
+  expose(:shop) { Shop.at(request.host) }
 
   expose(:orders) { shop.orders }
 
@@ -90,7 +90,7 @@ class Shop::OrderController < Shop::AppController
     if order.save
       shop.carts.where(token: order.token).first.try(:destroy) # 删除购物车实体
       order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
-      data = {success: true, url: forward_order_path(params[:shop_id], params[:cart_token])}
+      data = {success: true, url: forward_order_path(params[:cart_token])}
     end
     render json: data
   end
@@ -110,7 +110,7 @@ class Shop::OrderController < Shop::AppController
 
       def notify # 此action只供支付网关(支付宝)服务器的外部通知接口使用，通知我们订单支付状态(notify_url)
         notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
-        @order = Order.find_by_token(notification.out_trade_no)
+        @order = shop.orders.find_by_token(notification.out_trade_no)
         if @order and notification.acknowledge(@order.payment.key) and valid?(notification, @order.payment.account)
           @order.pay!(notification.total_fee) if notification.complete? and @order.financial_status_pending? # 要支持重复请求
           render text: "success"
@@ -121,7 +121,7 @@ class Shop::OrderController < Shop::AppController
 
       def done # 支付后从浏览器前台直接返回(return_url)
         pay_return = ActiveMerchant::Billing::Integrations::Alipay::Return.new(request.query_string)
-        @order = Order.find_by_token(pay_return.order)
+        @order = shop.orders.find_by_token(pay_return.order)
         @_resources = { shop: @order.shop } # checkout.haml中expose的shop
         if @order
           @order.pay!(pay_return.amount) if @order.financial_status_pending? # 要支持重复请求
@@ -137,7 +137,7 @@ class Shop::OrderController < Shop::AppController
       def tenpay_notify # 此action只供支付网关(财付通)服务器的外部通知接口使用，通知我们订单支付状态(return_url)
         query_string = request.raw_post.blank? ? request.query_string : request.raw_post # 支持get和post方式
         notification = ActiveMerchant::Billing::Integrations::Tenpay::Return.new(query_string)
-        @order = Order.find_by_token(notification.order)
+        @order = shop.orders.find_by_token(notification.order)
         if @order and notification.success?(@order.payment.key, @order.payment.account)
           @_resources = { shop: @order.shop } # checkout.haml中expose的shop
           @order.pay!(notification.total_fee) if @order.financial_status_pending? # 要支持重复请求
@@ -148,7 +148,7 @@ class Shop::OrderController < Shop::AppController
       end
 
       def tenpay_done # 支付后从浏览器前台直接返回(show_url)
-        @order = Order.find_by_token(params[:token])
+        @order = shop.orders.find_by_token(params[:token])
         @_resources = { shop: @order.shop } # checkout.haml中expose的shop
         render action: :done
       end
@@ -167,7 +167,7 @@ class Shop::OrderController < Shop::AppController
 
   def verify_customer!(cart)
     if cart.shop.customer_accounts_required? and !cart.customer
-      redirect_to new_customer_session_url(checkout_url: "#{checkout_url_with_port}/carts/#{cart.shop_id}/#{cart.token}", host: "#{cart.shop.primary_domain.host}#{request.port_string}" )
+      redirect_to new_customer_session_url(checkout_url: "/carts/#{cart.token}")
     end
   end
 

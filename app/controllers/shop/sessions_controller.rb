@@ -1,7 +1,7 @@
 #encoding: utf-8
 # 顾客登录
 # 1. 直接登录
-# 2. 从checkout.lvh.me中跳转到登录页面
+# 2. 从checkout结算页面中跳转到登录页面
 #    a. 登录或注册后返回
 #    b. 不登录，以游客身份返回
 class Shop::SessionsController < Shop::AppController

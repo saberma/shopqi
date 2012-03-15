@@ -27,11 +27,26 @@ describe Form do
 
     let(:customer_drop) { CustomerDrop.new customer }
 
-    it 'should show login from' do
-      variant = "{% form 'customer_login' %} {{ form.errors | default_errors }} {% if form.password_needed %}password{% endif %} {% endform %}"
-      assign = { 'customer' => customer_drop }
-      result = "<form id=\"customer_login\" method=\"post\" action=\"/account/login\">\n  password \n</form>"
-      Liquid::Template.parse(variant).render(assign).should eql result
+    describe 'login form' do
+
+      it 'should be show' do
+        variant = "{% form 'customer_login' %} {{ form.errors | default_errors }} {% if form.password_needed %}password{% endif %} {% endform %}"
+        assign = { 'customer' => customer_drop }
+        result = "<form id=\"customer_login\" method=\"post\" action=\"/account/login\">\n  password \n</form>"
+        Liquid::Template.parse(variant).render(assign).should eql result
+      end
+
+      context 'from checkout' do # 在结算页面中点击"现在登录"，成功登录后要跳转回结算页面
+
+        it 'should add checkout url input' do
+          variant = "{% form 'customer_login' %} {% endform %}"
+          assign = { 'customer' => customer_drop, 'params' => { 'checkout_url' => '/cart/abc123' } }
+          result = "<form id=\"customer_login\" method=\"post\" action=\"/account/login\">\n<input type='hidden' name='checkout_url' value='/cart/abc123'>\n \n</form>"
+          Liquid::Template.parse(variant).render(assign).should eql result
+        end
+
+      end
+
     end
 
     it 'should show recover customer password form ' do

@@ -50,7 +50,7 @@ Validator = # 校验
 
 $(document).ready ->
 
-  $("input[name='order[shipping_rate]']").change -> # 快递费用
+  $("input[name='order[shipping_rate]']").live 'change', -> # 快递费用
     format = $('#cost').attr('format')
     price = parseFloat $(this).attr('start')
     total_price = parseFloat($('#cost').attr('total_price')) + price
@@ -99,8 +99,8 @@ $(document).ready ->
           $.each result, (i, item) ->
             options[options.length] = new Option(item[0], item[1])
 
-  $("#order_shipping_address_attributes_district").change -> # 选择区下拉框时显示相应的配送方式
-    $.getJSON "#{window.location}/shipping_rates/#{$(this).val()}", (data)->
+  $("#order_shipping_address_attributes_district").live 'change ', -> # 选择区下拉框时显示相应的配送方式
+    $.getJSON "#{$(this).closest('form').attr('action')}/shipping_rates/#{$(this).val()}", (data)->
       $("#shipping_rates").html('')
       if data
         $.each data, (index, item) ->
@@ -113,39 +113,30 @@ $(document).ready ->
       $("#shipping_rates_group").show()
       $("#no-shipping-rates").toggle(!data or data.length is 0)
 
-
-  #获取地址补全
-  $('#billing_address_selector,#shipping_address_selector').each ->
-    $(this).change ->
-      val = $(this).val()
-      action = $(this).closest('form').attr('action').replace(/create_order/i,'get_address')
-      if $(this).attr('id') is 'billing_address_selector'
-        id = 'billing'
+  $('#shipping_address_selector').change -> #获取地址补全
+    val = $(this).val()
+    $.get "#{$(this).closest('form').attr('action')}/get_address", {address_id: val}, (data) ->
+      if data isnt null
+        address = data.customer_address
+        $("#order_shipping_address_attributes_name").val(address.name)
+        RegionUtils.init [address.province, address.city, address.district], "#shipping .region"
+        $("#order_shipping_address_attributes_province").val(address.province).change()
+        $("#order_shipping_address_attributes_address1").val(address.address1)
+        $("#order_shipping_address_attributes_address2").val(address.address2)
+        $("#order_shipping_address_attributes_zip").val(address.zip)
+        $("#order_shipping_address_attributes_company").val(address.company)
+        $("#order_shipping_address_attributes_phone").val(address.phone)
       else
-        id = 'shipping'
-      $.get action, {address_id: val}, (data) ->
-        if data isnt null
-          address = data.customer_address
-          str = "order_#{id}_address_attributes"
-          $("##{str}_name").val(address.name)
-          RegionUtils.init [address.province, address.city, address.district], "##{id} .region"
-          $("##{str}_province").val(address.province).change()
-          $("##{str}_address1").val(address.address1)
-          $("##{str}_address2").val(address.address2)
-          $("##{str}_zip").val(address.zip)
-          $("##{str}_company").val(address.company)
-          $("##{str}_phone").val(address.phone)
-        else
-          reset(str)
-    .change()
+        reset()
+  .change()
 
-  reset = (str) ->
-      $("##{str}_name").val('')
-      $("##{str}_province").val('')
-      $("##{str}_city").val('')
-      $("##{str}_district").val('')
-      $("##{str}_address1").val('')
-      $("##{str}_address2").val('')
-      $("##{str}_zip").val('')
-      $("##{str}_company").val('')
-      $("##{str}_phone").val('')
+  reset = ->
+    $("#order_shipping_address_attributes_name").val('')
+    $("#order_shipping_address_attributes_province").val('')
+    $("#order_shipping_address_attributes_city").val('')
+    $("#order_shipping_address_attributes_district").val('')
+    $("#order_shipping_address_attributes_address1").val('')
+    $("#order_shipping_address_attributes_address2").val('')
+    $("#order_shipping_address_attributes_zip").val('')
+    $("#order_shipping_address_attributes_company").val('')
+    $("#order_shipping_address_attributes_phone").val('')

@@ -23,10 +23,6 @@ module Admin::ShopsHelper
       "#{url_protocol}wiki.#{host_with_port}"
     end
 
-    def checkout_url_with_port # http://checkout.shopqi.com:4000 #TODO: 要修改为https协议
-      "#{url_protocol}checkout.#{host_with_port}"
-    end
-
   end
 
   begin '.myshopqi.com'

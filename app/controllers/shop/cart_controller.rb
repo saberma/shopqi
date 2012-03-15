@@ -46,7 +46,7 @@ class Shop::CartController < Shop::AppController
       redirect_to cart_path
     else
       cart = shop.carts.update_or_create({session_id: cart_session_id}, cart_hash: cart_hash.to_json)
-      checkout_url = "#{checkout_url_with_port}/carts/#{shop.id}/#{cart.token}"
+      checkout_url = "/carts/#{cart.token}"
       if shop.customer_accounts_required?
         session['customer_return_to'] = checkout_url
         self.send :authenticate_customer!

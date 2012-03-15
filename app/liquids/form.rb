@@ -54,7 +54,9 @@ class Form < Liquid::Block
       }
       input = render_all(@nodelist, context)
       action = "/account/login"
-      %Q{<form id="customer_login" method="post" action="#{action}">\n#{input}\n</form>}
+      checkout_url = context['params']['checkout_url']
+      checkout_url_input = checkout_url.blank? ? "" : "<input type='hidden' name='checkout_url' value='#{checkout_url}'>"
+      %Q{<form id="customer_login" method="post" action="#{action}">\n#{checkout_url_input}\n#{input}\n</form>}
     end
   end
 

@@ -19,7 +19,7 @@ Shopqi::Application.configure do
     return false if host == Setting.host # shopqi.com
     if host.end_with?(Setting.store_host) # 二级域名(www.shopqi.com等使用https，example.shopqi.com不使用，除非访问/admin)
       not_admin_or_user = !(path.start_with?('/admin') or path.start_with?('/user')) # 不是后台管理或者登录页面
-      return (not_admin_or_user and !(Regexp.new("(www|themes|wiki|app|checkout)#{Setting.store_host}") =~ host))
+      return (not_admin_or_user and !(Regexp.new("(www|themes|wiki|app)#{Setting.store_host}") =~ host))
     end
     true
   }
