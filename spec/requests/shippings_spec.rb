@@ -123,7 +123,7 @@ describe "Shippings", js: true do
 
     end
 
-    describe PriceBasedShippingRate, f: true do
+    describe PriceBasedShippingRate do
 
       context 'add' do
 
@@ -162,8 +162,11 @@ describe "Shippings", js: true do
               within '.new-promotional-rate' do
                 find('.edit-max-purchase').visible?.should be_false
                 click_on '以上'
-                fill_in 'min_order_subtotal', with: '150'
+                sleep 1
                 find('.edit-max-purchase').visible?.should be_true
+                fill_in 'min_order_subtotal', with: '150'
+                sleep 1
+                find('.edit-max-purchase').visible?.should be_false
               end
             end
           end
