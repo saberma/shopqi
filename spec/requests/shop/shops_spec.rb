@@ -50,7 +50,7 @@ describe "Shop::Shops", js:true do
       fill_in 'order[shipping_address_attributes][address1]', with: '科技园'
       fill_in 'order[shipping_address_attributes][phone]', with: '13928458888'
       choose '邮局汇款' #选择支付方式
-      choose '普通快递-¥10.0' #选择配送方式
+      choose '普通快递-¥10' #选择配送方式
       click_on '提交订单'
       page.should have_content("您的订单号为： #1001")
     end

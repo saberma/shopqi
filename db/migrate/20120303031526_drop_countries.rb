@@ -14,6 +14,8 @@ class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费�
     remove_column :shops, :tax_shipping
     remove_column :orders, :tax_price
 
+    ShopTask.where(name: 'setup_taxes').delete_all # 删除税率对应的指南
+
     create_table :shippings do |t| # 物流
       t.references :shop     , comment: "所属商店"
       t.string :code         , comment: "编码(全国为000000)", limit: 8
@@ -46,6 +48,10 @@ class DropCountries < ActiveRecord::Migration # 不按国家区域收取运费�
     add_column :shops, :taxes_included, :boolean, comment: '税收是否包含在商品中', default: true
     add_column :shops, :tax_shipping, :boolean, comment: '是否要缴航运税', default: false
     add_column :orders, :tax_price, :float, comment: '税收金额', default: 0.0, null: false
+
+    Shop.all.each do |shop| # 恢复税率相应的指南
+      shop.tasks.create name: :setup_taxes
+    end
 
     create_table :countries do |t| #可发往国家
       t.references :shop     , comment: "所属商店"

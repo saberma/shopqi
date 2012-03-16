@@ -51,11 +51,9 @@ Validator = # 校验
 $(document).ready ->
 
   $("input[name='order[shipping_rate]']").live 'change', -> # 快递费用
-    format = $('#cost').attr('format')
     price = parseFloat $(this).attr('start')
     total_price = parseFloat($('#cost').attr('total_price')) + price
-    format_price = format.replace /{{amount}}/, total_price
-    $('#cost').html(format_price)
+    $('#cost').html(format(total_price))
     $('#shipping_span').html(" ..包含快递费#{price}元")
 
   $("#complete-purchase").click -> #处理订单提交结账
@@ -108,7 +106,7 @@ $(document).ready ->
           template = $("#shipping-rate-item").html()
           template = template.replace /{{id}}/g, item.id
           template = template.replace /{{price}}/g, item.price
-          template = template.replace /{{value}}/g, "#{item.name}-#{item.price}"
+          template = template.replace /{{value}}/g, "#{item.name}-#{format(item.price)}"
           $("<li/>").html(template).appendTo($("#shipping_rates"))
       $("#shipping_rates_group").show()
       $("#no-shipping-rates").toggle(!data or data.length is 0)
@@ -140,3 +138,6 @@ $(document).ready ->
     $("#order_shipping_address_attributes_zip").val('')
     $("#order_shipping_address_attributes_company").val('')
     $("#order_shipping_address_attributes_phone").val('')
+
+  format = (price) -> # 格式化金额
+    SHOP_MONEY_IN_EMAILS_FORMAT.replace /{{amount}}/, price

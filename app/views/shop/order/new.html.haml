@@ -11,7 +11,7 @@
       %h2 您购买了&hellip;
       %table#thumbs(cellspacing="0" cellpadding="0")=render 'line_items', line_items: cart_line_items
     #wallet
-      %span#cost(format="#{shop.money_in_emails_format}" total_price="#{cart_total_price}")=shop.format_money_in_emails(cart_total_price )
+      %span#cost(total_price="#{cart_total_price}")=shop.format_money_in_emails(cart_total_price )
       %br
       %span#shipping_span.hint .. 未包含运费
     %div(style="clear:left")
@@ -107,6 +107,10 @@
               %a(href="#{shop.primary_domain.url}#{request.port_string}") 返回商店
           %td(style="text-align:right;vertical-align:bottom")
             %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'
+
+:javascript
+  SHOP_MONEY_IN_EMAILS_FORMAT = "#{shop.money_in_emails_format}"
+
 
 %script(id="shipping-rate-item" type="text/x-handlebars-template")
   %input(id="shipping_rate_{{id}}" name="order[shipping_rate]" start="{{price}}" type="radio" value="{{value}}")

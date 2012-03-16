@@ -163,9 +163,9 @@ describe "Guides", js: true do
         sleep 3 # 等待opacity渲染
         find('#task-checkoff').visible?.should be_false
         find('.guide-outer.above').visible?.should be_true
-        find('.guide-outer.above').has_content?('下一步是 设置您的物流费用').should be_true
+        find('.guide-outer.above').has_content?('下一步是 设置您的运费').should be_true
         visit '/admin' # 首页更新进度
-        find('#next-step-description h2').text.should eql '下一步骤: 物流费用'
+        find('#next-step-description h2').text.should eql '下一步骤: 物流配送'
       end
 
     end
@@ -173,8 +173,8 @@ describe "Guides", js: true do
     describe "Shipping" do # 物流配送
 
       before(:each) do
-        shop.tasks[0,5].map{|t| t.update_attributes completed: true}
-        visit '/admin/shipping'
+        shop.tasks[0,4].map{|t| t.update_attributes completed: true}
+        visit '/admin/shippings'
       end
 
       it "should show check off" do
@@ -206,7 +206,7 @@ describe "Guides", js: true do
     describe "Domain" do # 绑定域名
 
       before(:each) do
-        shop.tasks[0,6].map{|t| t.update_attributes completed: true}
+        shop.tasks[0,5].map{|t| t.update_attributes completed: true}
         visit '/admin/domains'
       end
 
@@ -243,7 +243,7 @@ describe "Guides", js: true do
     end
 
     it "should be launch" do
-      shop.tasks[0,7].map{|t| t.update_attributes completed: true}
+      shop.tasks[0,6].map{|t| t.update_attributes completed: true}
       visit '/admin'
       click_on '启用我的商店'
       has_content?('您已经启用商店，恭喜您').should be_true
