@@ -307,6 +307,8 @@ Shopqi::Application.routes.draw do
       end
       get '/links' => redirect('/admin/link_lists') # 商店模板中使用
 
+      resources :discounts, only: [:index, :create, :destroy]
+
       resources :custom_collections, except: :edit do
         resources :custom_collection_products, path: :products, as: :products, except: [:index, :new, :edit, :update] do
           post :sort, on: :collection

@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :shop         , counter_cache: true
   belongs_to :customer     , counter_cache: true    #顾客信息
   has_one :shipping_address, dependent: :destroy, class_name: 'OrderShippingAddress' #收货人信息
+  has_one :discount        , dependent: :destroy, class_name: 'OrderDiscount'   , order: :id.desc #订单优惠
   has_many :line_items     , dependent: :destroy, class_name: 'OrderLineItem'   , order: :id.asc #订单商品
   has_many :transactions   , dependent: :destroy, class_name: 'OrderTransaction' #支付记录
   has_many :fulfillments   , dependent: :destroy, class_name: 'OrderFulfillment', order: :updated_at.desc #配送记录
@@ -243,5 +244,9 @@ end
 
 # 订单历史
 class OrderHistory < ActiveRecord::Base
+  belongs_to :order
+end
+
+class OrderDiscount < ActiveRecord::Base # 订单优惠
   belongs_to :order
 end

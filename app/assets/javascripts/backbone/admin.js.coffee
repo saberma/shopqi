@@ -8,6 +8,7 @@
 #=require_tree ./views/customer_groups
 #=require_tree ./views/custom_collections
 #=require_tree ./views/link_lists
+#=require_tree ./views/discounts
 #=require_tree ./views/themes
 #=require_tree ./views/users
 #=require_tree ./views/domains
@@ -35,6 +36,7 @@ window.App =
     LinkList:
       Links: {}
     Link: {}
+    Discount: {}
     SmartCollection: {}
     CustomCollection: {}
     Order:

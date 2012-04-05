@@ -47,7 +47,6 @@
           %li=link_to '首页', user_root_path, id: is_home? && :current
           -menus.each do |menu|
             %li=link_to menu[:label], menu[:url], id: current(menu),class: check_label_has_right(menu[:label])
-          %li=link_to '市场营销', '#', onclick: "javascript:msg('即将上线...');return false;",class: 'inactive'
         %ul#secondary
           %li#apps-link
             #apps-dropdown.nav-dropdown.dropdown.hide

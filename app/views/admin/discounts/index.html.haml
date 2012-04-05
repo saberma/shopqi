@@ -1,0 +1,75 @@
+%h2#title 促销
+#action-links
+  %ul
+    %li.no-icon.discount-icon
+      %a#add-discount-code-link(href="#") 新增优惠码
+=render "shared/noscript"
+=render "shared/upgrade_ie"
+.col-12.ssb
+  #new-code.group(style="display:none; margin-top:0")
+    %form#new-code-form.discount_new(action="#" onsubmit="return false")
+      .group-fields
+        .new-coupon
+          %dl.clearfix
+            %dt
+              %label(for="discount_code")
+                优惠码
+                %a#generate-coupon-code.note(href="#") 生成
+            %dd
+              %input#discount_code.big(name="discount[code]" size="30" type="text")/
+            %dt
+              %label(for="value") 代金券金额
+            %dd#discount-group.clearfix.ssb
+              %input#discount_value.r(name="discount[value]" size="10" type="text")/
+            %dt.cb
+              %label(for="discount_usage_limit") 代金券数量
+            %dd
+              %input#discount_usage_limit.r(name="discount[usage_limit]" size="10" type="text")/
+        / .new-coupon
+      / .group-fields
+      .group-actions
+        %input.btn(name="commit" type="submit" value="新增优惠码")/
+        或者
+        %a.cancel(href="#") 取消
+      / .group-actions
+  / new code
+  %h3 优惠码
+  %p.ssb 您可以为商店定制优惠码
+  #discount_table
+    %table#coupons.standard-table(cellspacing="0")
+      %thead
+        %tr
+          %th(width="30%") 优惠码
+          %th(width="25%") 代金券金额
+          %th(width="20%") 代金券数量
+          %th(width="25%") 
+      %tbody
+        %tr#none-item.hide
+          %td.c(colspan="4")
+            %span.note 您还没有优惠码。发放优惠码可以吸引更多的顾客。
+      %input#page(name="page" type="hidden" value="1")/
+    .sst.ssb
+      #pagination
+
+%script(id="discount-item" type="text/x-handlebars-template")
+  %td
+    .coupon.unique-coupon
+      %strong {{{code}}}
+  %td
+    %strong {{{value}}}
+  %td.note
+    {{#if usage_limit}}
+    %ul
+      %li 已使用 {{used_times}} 次
+      %li 剩余 {{usage_limit}} 次
+    {{else}}
+    \—
+    {{/if}}
+  %td.r
+    %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+%script(id="none-item" type="text/x-handlebars-template")
+
+:javascript
+  App.discounts = new App.Collections.Discounts();
+  App.discounts.refresh(#{discounts_json});
+  new App.Views.Discount.Index({collection: App.discounts})

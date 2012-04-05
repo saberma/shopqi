@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120303031526) do
+ActiveRecord::Schema.define(:version => 20120405081909) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -234,6 +234,15 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
   add_index "customers", ["shop_id", "email"], :name => "index_customers_on_shop_id_and_email", :unique => true
   add_index "customers", ["shop_id"], :name => "index_customers_on_shop_id"
 
+  create_table "discounts", :force => true do |t|
+    t.integer "shop_id"
+    t.string  "code",          :limit => 32
+    t.string  "discount_type", :limit => 16
+    t.float   "value"
+    t.integer "used_times",                  :default => 0
+    t.integer "usage_limit"
+  end
+
   create_table "emails", :force => true do |t|
     t.integer  "shop_id"
     t.string   "title",                           :null => false
@@ -325,6 +334,12 @@ ActiveRecord::Schema.define(:version => 20120303031526) do
   end
 
   add_index "oauth2_consumer_tokens", ["shop_id", "client_id"], :name => "index_oauth2_consumer_tokens_on_shop_id_and_client_id"
+
+  create_table "order_discounts", :force => true do |t|
+    t.integer "order_id"
+    t.string  "code",     :limit => 32
+    t.float   "amount"
+  end
 
   create_table "order_fulfillments", :force => true do |t|
     t.integer  "order_id",         :null => false

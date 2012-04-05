@@ -102,3 +102,11 @@ namespace 'Utils', (exports) ->
   exports.markFeaturedImage = ->
     $('.featured').remove()
     $('div#image-show-area ul li:first-child').append("<div class='featured'></div>")
+
+  exports.randomString = (length) ->
+    chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ"
+    result = ''
+    for i in [1..length]
+      rnum = Math.floor(Math.random() * chars.length)
+      result += chars.substring(rnum,rnum+1)
+    result

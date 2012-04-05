@@ -8,6 +8,7 @@ class Shop < ActiveRecord::Base
   has_many :products              , dependent: :destroy                      , order: 'id desc'
   has_many :variants              , class_name: 'ProductVariant' #冗余shop_id
   has_many :link_lists            , dependent: :destroy                      , order: 'id asc'
+  has_many :discounts             , dependent: :destroy                      , order: 'id asc'
   has_many :pages                 , dependent: :destroy                      , order: 'id desc'
   has_many :blogs                 , dependent: :destroy                      , order: 'id desc'
   has_many :smart_collections     , dependent: :destroy                      , order: 'id desc'
