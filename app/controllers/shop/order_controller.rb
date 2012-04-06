@@ -32,30 +32,15 @@ class Shop::OrderController < Shop::AppController
   end
 
   expose(:cart_line_items) do
-    JSON(cart.cart_hash).inject({}) do |result, (variant_id, quantity)|
-      begin
-        variant = shop.variants.find(variant_id)
-        result[variant] = quantity
-      rescue ActiveRecord::RecordNotFound # 款式已经被删除
-      end
-      result
-    end
+    cart.line_items
   end
 
   expose(:cart_total_weight) do
-    cart_line_items.map do |item|
-      variant = item.first
-      quantity = item.second
-      quantity * variant.weight
-    end.sum
+    cart.total_weight
   end
 
   expose(:cart_total_price) do
-    cart_line_items.map do |item|
-      variant = item.first
-      quantity = item.second
-      quantity * variant.price
-    end.sum
+    cart.total_price
   end
 
   expose(:order_line_items) do
@@ -155,6 +140,12 @@ class Shop::OrderController < Shop::AppController
 
     end
 
+  end
+
+  def apply_discount
+    result = shop.discounts.apply code: params[:code], cart: cart
+    session['discount_code'] = result[:code]
+    render json: result
   end
 
   def get_address

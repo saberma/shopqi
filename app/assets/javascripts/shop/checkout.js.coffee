@@ -50,11 +50,26 @@ Validator = # 校验
 
 $(document).ready ->
 
+  $("#discount_new").submit -> # 提交优惠码
+    $("#discount-errors").hide()
+    $.post $("#discount_new").attr('action'), code: $("#discount_code").val(), (data) ->
+      if data.code
+        price = data.amount
+        $("#discount_new").hide()
+        $("#discount-detail .code").text data.code
+        $("#discount-detail .amount").text price
+        $("#discount-detail").show()
+        $('#cost').attr 'discount_amount', price
+        calculate_price()
+      else
+        $("#discount-errors").show()
+        $("#discount-detail").hide()
+    false
+  $("#discount_new").submit() unless $("#discount_code").val() is '' # 登录后回显优惠码
+
   $("input[name='order[shipping_rate]']").live 'change', -> # 快递费用
-    price = parseFloat $(this).attr('start')
-    total_price = parseFloat($('#cost').attr('total_price')) + price
-    $('#cost').html(format(total_price))
-    $('#shipping_span').html(" ..包含快递费#{price}元")
+    $('#cost').attr 'shipping_rate', $(this).attr('start')
+    calculate_price()
 
   $("#complete-purchase").click -> #处理订单提交结账
     return false unless Validator.validates {
@@ -82,8 +97,7 @@ $(document).ready ->
       window.location = data.url if data.success is true
     false
 
-  #地区的级联选择
-  $(".region").each ->
+  $(".region").each -> #地区的级联选择
     selects = $('select', this)
     selects.change ->
       $this = this
@@ -141,3 +155,12 @@ $(document).ready ->
 
   format = (price) -> # 格式化金额
     SHOP_MONEY_IN_EMAILS_FORMAT.replace /{{amount}}/, price
+
+  calculate_price = -> # 计算总金额
+    total_price = parseFloat($('#cost').attr('total_price'))
+    discount_amount = parseFloat($('#cost').attr('discount_amount') or 0)
+    shipping_rate = parseFloat($('#cost').attr('shipping_rate') or 0)
+    price = total_price - discount_amount + shipping_rate
+    $('#cost').html(format(price))
+    $('#discount_span').html(" ..已优惠#{discount_amount}元").toggle(discount_amount > 0)
+    $('#shipping_span').html(" ..包含快递费#{shipping_rate}元") unless $('#cost').attr('shipping_rate') is ''

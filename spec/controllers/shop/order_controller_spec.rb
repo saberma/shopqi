@@ -18,6 +18,8 @@ describe Shop::OrderController do
 
   let(:cart) { Factory :cart, shop: shop, cart_hash: %Q({"#{variant.id}":1}) }
 
+  let(:discount) { shop.discounts.create code: 'coupon123' }
+
   before :each do
     request.host = "#{shop.primary_domain.host}"
   end
@@ -55,6 +57,17 @@ describe Shop::OrderController do
       json = JSON(response.body).first['weight_based_shipping_rate']
       json['name'].should eql '普通快递'
       json['price'].should eql 10.0
+    end
+
+    context 'discount' do # 优惠码
+
+      it 'should be apply' do # 可以使用
+        post :apply_discount, cart_token: cart.token, code: discount.code # 深圳
+        json = JSON(response.body)
+        json['code'].should eql discount.code
+        json['amount'].should eql 5.0
+      end
+
     end
 
   end

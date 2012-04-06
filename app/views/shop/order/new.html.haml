@@ -11,13 +11,30 @@
       %h2 您购买了&hellip;
       %table#thumbs(cellspacing="0" cellpadding="0")=render 'line_items', line_items: cart_line_items
     #wallet
-      %span#cost(total_price="#{cart_total_price}")=shop.format_money_in_emails(cart_total_price )
+      %span#cost(total_price="#{cart_total_price}" discount_amount="" shipping_rate="")=shop.format_money_in_emails(cart_total_price )
       %br
       %span#shipping_span.hint .. 未包含运费
+      %br
+      %span#discount_span.hint.hide .. 未包含折扣
     %div(style="clear:left")
   /
     \/end overview
   #content
+    #discounts
+      .group.clearfix
+        %h3 优惠码
+        %p#discount-detail.hide
+          您正使用优惠码
+          %span.highlight.code
+          节省了
+          %span.highlight.amount
+          元。
+        %form#discount_new.discount_new(action="/carts/#{cart.token}/apply_discount" onsubmit='return false;')
+          #discounts-body
+            %p 如果您有优惠码，请在此处输入:
+            %p#discount-errors(style="color:red; display:none") 优惠码无效或者已过期。
+            %input#discount_code(name="discount[code]" size="25" type="text" value="#{session['discount_code']}")
+            %input(name="commit" type="submit" value="提交")
     =form_for order, url: "/carts/#{cart.token}", html: {onsubmit: 'return false;'} do |f|
       #email
         =f.label :email, '邮箱'

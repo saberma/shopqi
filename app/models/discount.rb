@@ -11,4 +11,25 @@ class Discount < ActiveRecord::Base
     o = [(0..9),('A'..'Z')].map{|i| i.to_a}.flatten
     (1..8).map{ o[rand(o.length)]  }.join
   end
+
+  # 修改此模块内方法要记得重启服务
+  module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
+    def shop
+      @association.owner
+    end
+
+    # @options {code: '123', cart: cart}
+    def apply(options)
+      cart = options[:cart]
+      result = {}
+      discount = shop.discounts.where(code: options[:code]).first
+      if discount
+        if discount.usage_limit.nil? or (discount.usage_limit - discount.used_times > 0)
+          amount = [discount.value, cart.total_price].min # 优惠金额比订单金额大时，取订单金额
+          result = {code: discount.code, amount: amount}
+        end
+      end
+      result
+    end
+  end
 end

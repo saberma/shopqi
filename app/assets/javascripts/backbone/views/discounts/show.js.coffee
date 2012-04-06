@@ -24,4 +24,5 @@ App.Views.Discount.Show = Backbone.View.extend
           App.discounts.remove self.model
           self.remove()
           msg '删除成功!'
+          $('#none-item').show() if _.isEmpty(App.discounts.models)
     return false
