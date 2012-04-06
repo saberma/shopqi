@@ -18,14 +18,14 @@ class Discount < ActiveRecord::Base
       @association.owner
     end
 
-    # @options {code: '123', cart: cart}
+    # @options {code: '123', cart: cart, order: order}
     def apply(options)
-      cart = options[:cart]
+      cart_or_order = options[:cart] || options[:order]
       result = {}
       discount = shop.discounts.where(code: options[:code]).first
       if discount
         if discount.usage_limit.nil? or (discount.usage_limit - discount.used_times > 0)
-          amount = [discount.value, cart.total_price].min # 优惠金额比订单金额大时，取订单金额
+          amount = [discount.value, cart_or_order.total_price].min # 优惠金额比订单金额大时，取订单金额
           result = {code: discount.code, amount: amount}
         end
       end

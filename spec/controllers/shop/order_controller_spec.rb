@@ -62,7 +62,7 @@ describe Shop::OrderController do
     context 'discount' do # 优惠码
 
       it 'should be apply' do # 可以使用
-        post :apply_discount, cart_token: cart.token, code: discount.code # 深圳
+        post :apply_discount, cart_token: cart.token, code: discount.code
         json = JSON(response.body)
         json['code'].should eql discount.code
         json['amount'].should eql 5.0
@@ -128,6 +128,22 @@ describe Shop::OrderController do
             end.should_not change(Order, :count)
           end.should_not change(OrderLineItem, :count)
         end.should_not change(Cart, :count)
+      end
+
+    end
+
+    context 'discount' do # 优惠码
+
+      before :each do
+        session = mock('session')
+        session.stub!(:[], 'discount_code').and_return(discount.code)
+        controller.stub!(:session).and_return(session)
+      end
+
+      it 'should be apply' do # 可以使用
+        post :create, cart_token: cart.token, order: order_attributes
+        order = assigns['_resources']['order']
+        order.total_price.should eql (cart.total_price - discount.value + order.shipping_rate_price)
       end
 
     end

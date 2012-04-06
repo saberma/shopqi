@@ -123,7 +123,8 @@ $(document).ready ->
           template = $("#shipping-rate-item").html()
           template = template.replace /{{id}}/g, item.id
           template = template.replace /{{price}}/g, item.price
-          template = template.replace /{{value}}/g, "#{item.name}-#{format(item.price)}"
+          template = template.replace /{{value}}/g, "#{item.name}-#{item.price}"
+          template = template.replace /{{label}}/g, "#{item.name}-#{format(item.price)}"
           $("<li/>").html(template).appendTo($("#shipping_rates"))
       $("#shipping_rates_group").show()
       $("#no-shipping-rates").toggle(!data or data.length is 0)

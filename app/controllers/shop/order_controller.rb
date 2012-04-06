@@ -67,6 +67,7 @@ class Shop::OrderController < Shop::AppController
       render json: {error: 'unavailable_product'} and return
     end
 
+    order.discount_code = session['discount_code'] # 优惠码
     order.build_shipping_address(order.shipping_address.attributes)
     cart_line_items.each_pair do |variant, quantity|
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
@@ -74,6 +75,7 @@ class Shop::OrderController < Shop::AppController
 
     data = {}
     if order.save
+      session['discount_code'] = nil
       shop.carts.where(token: order.token).first.try(:destroy) # 删除购物车实体
       order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
       data = {success: true, url: forward_order_path(params[:cart_token])}

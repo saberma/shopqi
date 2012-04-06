@@ -11,6 +11,7 @@ class Order < ActiveRecord::Base
   belongs_to  :payment     , class_name: 'Payment' #支付方式
 
   attr_accessible :id, :email, :shipping_rate, :note, :shipping_address_attributes, :cancel_reason, :total_weight, :payment_id
+  attr_accessor :discount_code
 
   accepts_nested_attributes_for :shipping_address
 
@@ -26,11 +27,16 @@ class Order < ActiveRecord::Base
     self.number = shop.orders.size + 1
     self.order_number = self.number + 1000 # 1001比0001给顾客感觉更好
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s
-  end
-
-  before_save do
-    self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price = self.total_line_items_price # TODO:要加上运费
+    self.total_price = self.total_line_items_price = self.line_items.map(&:total_price).sum
+    unless self.discount_code.blank? # 优惠码
+      discount_json = self.shop.discounts.apply code: self.discount_code, order: self
+      unless discount_json[:code].blank?
+        amount = discount_json[:amount]
+        self.create_discount code: discount_json[:code], amount: amount
+        self.total_price -= amount
+      end
+    end
+    self.total_price += self.shipping_rate_price
   end
 
   def shipping_rate_price
