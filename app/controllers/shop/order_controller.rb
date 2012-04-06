@@ -58,6 +58,7 @@ class Shop::OrderController < Shop::AppController
     if cart_line_items.empty?
       render(action: 'error', layout: false) and return
     end
+    @exist_discount = !shop.discounts.size.zero?
     order.build_shipping_address if order.shipping_address.nil?
   end
 
