@@ -60,7 +60,10 @@
           -if current_customer
             %tr#shipping_address_selection.multiple_address_selection
               %td(colspan=2)
-                =select_tag :shipping_address_selector, options_for_select( current_customer.addresses.map{|a|["#{a.name},#{a.detail_address}",a.id]} << ['新地址',''] )
+                %select(id="shipping_address_selector" name="shipping_address_selector")
+                  -current_customer.addresses.each do |a|
+                    %option{value:a.id, name:a.name, province:a.province, city:a.city, district:a.district, address1:a.address1, zip:a.zip, phone:a.phone}==#{a.name},#{a.detail_address}
+                  %option 新地址
           =f.fields_for :shipping_address do |s|
             %tr
               %td.lbl=s.label :name

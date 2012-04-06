@@ -10,7 +10,10 @@ RegionUtils = #地区(冗余代码待重构)
         $this = this
         select_index = selects.index($this) + 1
         select = selects.eq(select_index)
-        if $(this).val() and select[0]
+        if !$(this).val() # 选中空值时要清空所有下级
+          $("option:gt(0)", select).remove()
+          select.change()
+        else if select[0]
           $.get "/district/" + $(this).val(), (data) ->
             result = eval(data)
             options = select[0].options
@@ -126,31 +129,23 @@ $(document).ready ->
       $("#no-shipping-rates").toggle(!data or data.length is 0)
 
   $('#shipping_address_selector').change -> #获取地址补全
-    val = $(this).val()
-    $.get "#{$(this).closest('form').attr('action')}/get_address", {address_id: val}, (data) ->
-      if data isnt null
-        address = data.customer_address
-        $("#order_shipping_address_attributes_name").val(address.name)
-        RegionUtils.init [address.province, address.city, address.district], "#shipping .region"
-        $("#order_shipping_address_attributes_province").val(address.province).change()
-        $("#order_shipping_address_attributes_address1").val(address.address1)
-        $("#order_shipping_address_attributes_address2").val(address.address2)
-        $("#order_shipping_address_attributes_zip").val(address.zip)
-        $("#order_shipping_address_attributes_company").val(address.company)
-        $("#order_shipping_address_attributes_phone").val(address.phone)
-      else
-        reset()
+    if $(this).val()?
+      option = $(this).children('option:selected')
+      $("#order_shipping_address_attributes_name").val option.attr('name')
+      RegionUtils.init [option.attr('province'), option.attr('city'), option.attr('district')], "#shipping .region"
+      $("#order_shipping_address_attributes_province").val(option.attr('province')).change()
+      $("#order_shipping_address_attributes_address1").val option.attr('address1')
+      $("#order_shipping_address_attributes_zip").val option.attr('zip')
+      $("#order_shipping_address_attributes_phone").val option.attr('phone')
+    else
+      reset()
   .change()
 
   reset = ->
     $("#order_shipping_address_attributes_name").val('')
     $("#order_shipping_address_attributes_province").val('')
-    $("#order_shipping_address_attributes_city").val('')
-    $("#order_shipping_address_attributes_district").val('')
     $("#order_shipping_address_attributes_address1").val('')
-    $("#order_shipping_address_attributes_address2").val('')
     $("#order_shipping_address_attributes_zip").val('')
-    $("#order_shipping_address_attributes_company").val('')
     $("#order_shipping_address_attributes_phone").val('')
 
   format = (price) -> # 格式化金额
