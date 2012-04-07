@@ -21,6 +21,12 @@ class CreateDiscounts < ActiveRecord::Migration
       t.string :code     , comment: "优惠码"  , limit: 32
       t.float :amount    , comment:  '优惠x元'
     end
+
+    add_column :orders, :subtotal_price, :float, comment: '小计(包含商品和优惠码)'
+    Order.all.each do |order|
+      order.subtotal_price = order.total_line_items_price
+      order.save
+    end
   end
 
 end

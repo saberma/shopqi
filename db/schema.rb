@@ -431,6 +431,7 @@ ActiveRecord::Schema.define(:version => 20120405081909) do
     t.datetime "cancelled_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "subtotal_price"
   end
 
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"

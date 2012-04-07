@@ -141,6 +141,7 @@
           %th(style="text-align:center") 数量
           %th.total-col 金额
       %tbody#line-items
+      %tbody#discount
       %tbody#price-summary
   #order-history
     %h3 订单历史
@@ -229,10 +230,17 @@
   %td.line-price {{{price}}}
   %td.line-qty.c {{{quantity}}}
   %td.total-col {{{total_price}}}
+%script(id="discount-item" type="text/x-handlebars-template")
+  %tr
+    %td
+    %td.discount-line(colspan="3")
+      %strong 优惠码
+      \- {{{code}}}
+    %td.total-col -{{{amount}}}
 %script(id="price-summary-item" type="text/x-handlebars-template")
   %tr#sep.summary
-    %td.r(colspan="4") 总共:
-    %td.r.subtotal.total-col {{{total_line_items_price}}}
+    %td.r(colspan="4") 小计:
+    %td.r.subtotal.total-col {{{subtotal_price}}}
   %tr.summary
     %td.r(colspan="4") 配送费用 (快递):
     %td.r.primary.total-col {{{ shipping_rate_price }}}

@@ -30,7 +30,8 @@ class Admin::OrdersController < Admin::AppController
       include: {
         line_items: { methods: [:total_price, :fulfillment_created_at, :product_deleted] },
         transactions: {},
-        histories: {}
+        histories: {},
+        discount: { only: [:code, :amount] }
       },
       except: [ :updated_at ]
     })

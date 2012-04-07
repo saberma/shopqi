@@ -6,13 +6,13 @@ App.Views.Order.Show.Show = Backbone.View.extend
     'click #cancel-order': 'showCancel'
 
   initialize: ->
-    this.render()
+    @render()
 
   render: ->
     new App.Views.Order.Show.Transaction.Index
     new App.Views.Order.Show.Fulfillment.Panel
     new App.Views.Order.Show.Fulfillment.Index
-    new App.Views.Order.Show.LineItem.Index
+    new App.Views.Order.Show.LineItem.Index model: App.order
     new App.Views.Order.Show.History.Index
     new App.Views.Order.Show.Note
 
