@@ -28,6 +28,10 @@ class Order < ActiveRecord::Base
     self.order_number = self.number + 1000 # 1001比0001给顾客感觉更好
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s
     self.total_price = self.subtotal_price = self.total_line_items_price = self.line_items.map(&:total_price).sum
+    self.total_price += self.shipping_rate_price
+  end
+
+  after_create do
     unless self.discount_code.blank? # 优惠码
       discount_json = self.shop.discounts.apply code: self.discount_code, order: self
       unless discount_json[:code].blank?
@@ -35,9 +39,9 @@ class Order < ActiveRecord::Base
         self.create_discount code: discount_json[:code], amount: amount
         self.subtotal_price -= amount
         self.total_price -= amount
+        self.save
       end
     end
-    self.total_price += self.shipping_rate_price
   end
 
   def shipping_rate_price
@@ -256,4 +260,8 @@ end
 
 class OrderDiscount < ActiveRecord::Base # 订单优惠
   belongs_to :order
+
+  after_create do
+    order.shop.discounts.decrement self.code
+  end
 end

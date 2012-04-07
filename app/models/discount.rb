@@ -31,5 +31,10 @@ class Discount < ActiveRecord::Base
       end
       result
     end
+
+    def decrement(code)
+      discount = shop.discounts.where(code: code).first
+      discount.increment! :used_times if discount
+    end
   end
 end

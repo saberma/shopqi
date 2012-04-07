@@ -140,10 +140,14 @@ describe Shop::OrderController do
         controller.stub!(:session).and_return(session)
       end
 
-      it 'should be apply' do # 可以使用
-        post :create, cart_token: cart.token, order: order_attributes
-        order = assigns['_resources']['order']
-        order.total_price.should eql (cart.total_price - discount.value + order.shipping_rate_price)
+      it 'should be use' do # 可以使用
+        discount.used_times.should eql 0
+        expect do
+          post :create, cart_token: cart.token, order: order_attributes
+          order = assigns['_resources']['order']
+          order.total_price.should eql (cart.total_price - discount.value + order.shipping_rate_price)
+          discount.reload.used_times.should eql 1
+        end.should change(OrderDiscount, :count).by(1)
       end
 
     end
