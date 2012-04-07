@@ -55,7 +55,7 @@
   %td
     .coupon.unique-coupon
       %strong {{{code}}}
-  %td
+  %td.value
     %strong {{{value}}}
   %td.note
     {{#if usage_limit}}
@@ -66,7 +66,7 @@
     \—
     {{/if}}
   %td.r
-    %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+    %a.destroy(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
 %script(id="none-item" type="text/x-handlebars-template")
 
 :javascript
