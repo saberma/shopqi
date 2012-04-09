@@ -116,7 +116,7 @@ describe "Products", js: true do
       # 选项操作
       describe "options" do
 
-        it "should be add", f: true do
+        it "should be add" do
           visit new_product_path
           find('#add-option-bt').visible?.should be_false #多选项区域默认不显示
           check '此商品有 多个 不同的款式.'
@@ -279,6 +279,21 @@ describe "Products", js: true do
           within '#product-edit-collections' do
             has_no_content?('此商品不属于任何集合.').should be_true
             has_content?('热门商品').should be_true
+          end
+        end
+
+      end
+
+      describe '#photo' do # 带上图片 #416
+
+        it 'should be upload' do
+          visit new_product_path
+          fill_in 'product[title]', with: 'iphone'
+          attach_file 'product[images][]', Rails.root.join('spec', 'factories', 'data', 'products', 'iphone4.jpg')
+          click_on '保存'
+          page.should have_content('新增商品成功!')
+          within '#image_list' do
+            page.should have_xpath('./li[1]') # 显示图片
           end
         end
 

@@ -208,7 +208,6 @@ end
 
 class Photo < ActiveRecord::Base
   belongs_to :product
-  delegate :shop, to: :product
   default_scope order: 'position asc'
   VERSION_KEYS = []
 
@@ -233,6 +232,10 @@ class Photo < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def shop # 直接使用delegate :shop, to: :product在新增商品带图片的情况下会报500错误 #416
+    product ? product.shop : nil
   end
 
   #显示在产品列表的缩略图(icon)
