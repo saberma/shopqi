@@ -119,9 +119,8 @@ describe "Customers", js: true do
 
       # 统计
       it "should show statics" do
-        sleep 20
         within '#customer-facts' do
-          find(:xpath, './/li[1]').find('.big').text.should eql '¥20'
+          find(:xpath, './/li[1]').find('.big').text.should eql '¥30'
           find(:xpath, './/li[2]').find('.big').text.should eql '1'
           find(:xpath, './/li[3]').find('.big').text.should eql Time.zone.today.to_s(:db)
         end
@@ -135,7 +134,7 @@ describe "Customers", js: true do
            find(:xpath, './td[2]').text.should eql Time.zone.today.to_s(:month_and_day)
            find(:xpath, './td[3]').text.should eql '待支付'
            find(:xpath, './td[4]').text.should eql '未发货'
-           find(:xpath, './td[5]').text.should eql '¥20'
+           find(:xpath, './td[5]').text.should eql '¥30'
           end
         end
       end
@@ -401,7 +400,7 @@ describe "Customers", js: true do
           within :xpath, './tr[1]' do
             find('.customer-name a').text.should eql '马海波'
             find(:xpath, './td[4]').text.should eql '广东省深圳市南山区'
-            find(:xpath, './td[5]').text.should eql '20' #消费金额
+            find(:xpath, './td[5]').text.should eql '30' #消费金额
             find(:xpath, './td[6]').text.should eql '1' #订单数
 
             find(:xpath, './td[7]').text.should eql "#1001 #{Time.zone.today.to_s(:month_and_day)}" #最近订单

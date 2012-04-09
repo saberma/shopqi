@@ -145,7 +145,7 @@ describe "Orders", js: true do
         end
         within '#price-summary' do
           find('.subtotal').text.should eql '60'
-          find('.totalnum.total-col').text.should eql '60'
+          find('.totalnum.total-col').text.should eql '70'
         end
       end
 
