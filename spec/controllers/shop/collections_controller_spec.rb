@@ -101,7 +101,7 @@ describe Shop::CollectionsController do
       response.body.should have_content('iphone4')
     end
 
-    context '#with_tag', f: true do # 结合标签过滤商品
+    context '#with_tag' do # 结合标签过滤商品
 
       let(:iphone4) { Factory :iphone4, shop: shop, product_type: '手持设备', tags_text: '手机, 游戏机, 带拍照功能' }
 

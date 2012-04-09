@@ -82,7 +82,8 @@ group :development, :test do
 end
 
 group :test do
-  gem "selenium-webdriver", "~> 2.14.0" # 支持travis-ci的firefox8.0版本(但存在session未被清空的问题)
+  #gem "selenium-webdriver", "~> 2.14.0" # 支持travis-ci的firefox8.0版本(但存在session未被清空的问题)
+  gem "selenium-webdriver", "~> 2.15.0" # 支持travis-ci的firefox11.0版本
   gem "rspec-rails"
   gem 'capybara' , ' ~> 1.1.2'
   gem 'resque_spec' # resque测试
