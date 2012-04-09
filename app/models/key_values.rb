@@ -29,7 +29,7 @@ module KeyValues
       {id: 1 , name: '首页'        , code: 'home'              ,resource_type_id: 1},
       {id: 2 , name: '顾客'        , code: 'customers'         ,resource_type_id: 1},
       {id: 3 , name: '订单'        , code: 'orders'            ,resource_type_id: 1},
-      {id: 4 , name: '市场营销'    , code: 'marketing'         ,resource_type_id: 1},
+      {id: 4 , name: '促销'        , code: 'marketing'         ,resource_type_id: 1},
       {id: 5 , name: '商品&集合'   , code: 'products'          ,resource_type_id: 2},
       {id: 6 , name: '外观'        , code: 'themes'            ,resource_type_id: 2},
       {id: 7 , name: '博客&页面'   , code: 'pages'             ,resource_type_id: 2},

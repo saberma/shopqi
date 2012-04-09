@@ -28,6 +28,8 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
       resource_code = 'preferences'
     elsif controller_name.in?(['api_clients'])
       resource_code = 'applications'
+    elsif controller_name == 'discounts'
+      resource_code = 'marketing'
     end
     render template: 'shared/access_deny', layout: 'application' if current_user && !current_user.has_right?(resource_code)
   end
