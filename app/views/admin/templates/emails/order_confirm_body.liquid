@@ -12,6 +12,7 @@
    订单总额： {{ total_price | money_with_currency }}  | 商品总额： {{ subtotal_price | money_with_currency }}  | 发货方式及金额： {{ shipping_rate }}
    付款方式： {{ gateway }}   
    
-   如果您尚未付款，请您尽快付款。订单商品发货后，我们将发送一封电子邮件给您，确认发货日期、发货内容和送货方式。
+   如果您尚未付款，请您尽快付款。您可以通过以下链接地址(复制到浏览器地址栏)返回订单付款页面：
+   {{ pay_url }}
 
  欢迎您再次到{{shop_name}}购物，祝您购物愉快！

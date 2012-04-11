@@ -78,7 +78,11 @@ class OrderDrop < Liquid::Drop
   end
 
   def subtotal_price
-    @order.total_line_items_price
+    @order.subtotal_price
+  end
+
+  def pay_url # #417
+    "#{@order.shop.primary_domain.url}/orders/#{@order.token}"
   end
 
 end

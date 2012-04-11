@@ -65,6 +65,7 @@ class Admin::EmailsController < Admin::AppController
       }
     })
     order.order_number = 9999
+    order.token = 'abcd1234'
     order.name = shop.order_number_format.gsub /{{number}}/, order.order_number.to_s
     variant = shop.variants.first # 商品款式
     order.line_items.build(product_variant: variant, price: variant.price, quantity: 1).init

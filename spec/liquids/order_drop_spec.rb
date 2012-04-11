@@ -39,13 +39,18 @@ describe OrderDrop do
 
   it 'should get subtotal_price' do
     variant = "{{ order.subtotal_price }}"
-    liquid(variant).should eql "#{order.total_line_items_price}"
+    liquid(variant).should eql "#{order.subtotal_price}"
   end
 
   it 'should get shipping_methods' do
     order.update_attributes shipping_rate: '普通快递 - 10'
     variant = "{% for shipping_method in order.shipping_methods %}{{ shipping_method.title }}-{{ shipping_method.price }}{% endfor %}"
     liquid(variant).should eql "普通快递-10.0"
+  end
+
+  it 'should get order pay url' do # #417
+    variant = "{{ order.pay_url }}"
+    liquid(variant).should eql "http://shopqi.lvh.me/orders/#{order.token}"
   end
 
   private
