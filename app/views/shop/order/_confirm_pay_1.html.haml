@@ -18,7 +18,7 @@
   - service.charset "utf-8"
   - service.service payment.service
   - service.payment_type 1
-  - service.subject '商品付款'
+  - service.subject "#{shop.name}商品付款"
   - service.sign payment.key
 .actions
   = button_to_function "确认支付", "$('#payment-form > div').remove();$('#payment-form').submit()",class:'btn'

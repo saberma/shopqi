@@ -77,13 +77,12 @@ class Shop::OrderController < Shop::AppController
     if order.save
       session['discount_code'] = nil
       shop.carts.where(token: order.token).first.try(:destroy) # 删除购物车实体
-      order.send_email_when_order_forward if order.payment.name #发送邮件,非在线支付方式。在线支付方式在付款之后发送邮件
-      data = {success: true, url: forward_order_path(params[:cart_token])}
+      data = {success: true, url: shop_order_path(params[:cart_token])}
     end
     render json: data
   end
 
-  def forward
+  def show
     render file: 'public/404.html',layout: false, status: 404 unless order
   end
 

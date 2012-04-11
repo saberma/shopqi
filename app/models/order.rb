@@ -42,6 +42,11 @@ class Order < ActiveRecord::Base
         self.save
       end
     end
+    self.histories.create body: '创建订单'
+    send_email("order_confirm") #发送客户确认邮件
+    shop.subscribes.map(&:email_address).each do |email_address| #给网店管理者发送邮件
+      send_email("new_order_notify",email_address)
+    end
   end
 
   def shipping_rate_price
@@ -79,10 +84,6 @@ class Order < ActiveRecord::Base
     if financial_status_changed? and financial_status_pending? # 一旦进入此待支付状态则需要更新顾客消费总金额
       self.customer.increment! :total_spent, self.total_price
     end
-  end
-
-  after_create do
-    self.histories.create body: '创建订单'
   end
 
   scope :today, where(:created_at.gt => Date.today.beginning_of_day)
@@ -136,20 +137,10 @@ class Order < ActiveRecord::Base
 
   def pay!(amount)
     self.transactions.create kind: :capture, amount: amount
-    self.send_email_when_order_forward
   end
 
   def send_email(mail_type,email_address = self.email)
     Resque.enqueue(ShopqiMailer, email_address ,self.id ,mail_type, self.shop.id )
-  end
-
-  def send_email_when_order_forward
-    #发送客户确认邮件
-    send_email("order_confirm")
-    #给网店管理者发送邮件
-    shop.subscribes.map(&:email_address).each do |email_address|
-      send_email("new_order_notify",email_address)
-    end
   end
 
 end

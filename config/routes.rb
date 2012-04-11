@@ -149,7 +149,7 @@ Shopqi::Application.routes.draw do
         get '/carts/:cart_token/get_address'                , to: 'order#get_address'       , as: :get_address
         post '/carts/:cart_token/apply_discount'            , to: 'order#apply_discount'
         post '/carts/:cart_token'                           , to: 'order#create'
-        get '/orders/:token/forward'                        , to: 'order#forward'           , as: :forward_order
+        get '/orders/:token'                                , to: 'order#show'              , as: :shop_order
         post '/orders/notify'                               , to: 'order#notify'            , as: :notify_order
         get '/orders/done'                                  , to: 'order#done'              , as: :done_order
         match '/orders/tenpay_notify'                       , to: 'order#tenpay_notify'     , as: :tenpay_notify_order
