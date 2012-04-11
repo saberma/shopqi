@@ -69,13 +69,13 @@ class Admin::EmailsController < Admin::AppController
     order.name = shop.order_number_format.gsub /{{number}}/, order.order_number.to_s
     variant = shop.variants.first # 商品款式
     order.line_items.build(product_variant: variant, price: variant.price, quantity: 1).init
-    order.total_line_items_price = order.line_items.map(&:total_price).sum
-    order.total_price = order.total_line_items_price
+    order.total_price = order.subtotal_price = order.total_line_items_price = order.line_items.map(&:total_price).sum
     address = order.shipping_address # 顾客地址
     customer = shop.customers.new email: order.email, name: order.shipping_address.name
     customer.addresses.new(name: address.name, company: address.company, province: address.province, city: address.city, district: address.district, address1: address.address1, address2: address.address2, zip: address.zip, phone: address.phone)
     order.customer = customer
     order.shipping_rate = '普通快递 - 10'
+    order.total_price += 10
     order.payment = shop.payments.first
     order.cancel_reason = 'customer'
     order.created_at = DateTime.now

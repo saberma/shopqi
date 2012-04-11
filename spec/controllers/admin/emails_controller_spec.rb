@@ -51,7 +51,7 @@ describe Admin::EmailsController do
       body.should include '收货人信息： 马海波'
       body.should include '广东省 深圳市 南山区 科技园南区6栋311'
       body.should include '1 x iphone4  单价： ¥3000.0'
-      body.should include '订单总额： ¥3000.0 元  | 商品总额： ¥3000.0 元  | 发货方式及金额： 普通快递 - 10'
+      body.should include '订单总额： ¥3010.0 元  | 商品总额： ¥3000.0 元  | 发货方式及金额： 普通快递 - ¥10.0 元'
       body.should include '付款方式： 在线支付-支付宝'
       body.should include '欢迎您再次到测试商店购物，祝您购物愉快！'
       title.should_not include 'Liquid error'
