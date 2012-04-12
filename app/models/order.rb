@@ -139,8 +139,8 @@ class Order < ActiveRecord::Base
     self.transactions.create kind: :capture, amount: amount
   end
 
-  def send_email(mail_type,email_address = self.email)
-    Resque.enqueue(ShopqiMailer, email_address ,self.id ,mail_type, self.shop.id )
+  def send_email(mail_type, email_address = self.email)
+    Resque.enqueue(ShopqiMailer, mail_type, email_address, self.id)
   end
 
 end
@@ -211,6 +211,7 @@ class OrderFulfillment < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   belongs_to :order
   has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
+  attr_accessor :notify_customer # 是否发邮件通知顾客
 
   after_create do
     line_items.each do |line_item|
@@ -219,6 +220,11 @@ class OrderFulfillment < ActiveRecord::Base
     fulfillment_status = (self.order.line_items.unshipped.size > 0) ? :partial : :fulfilled
     self.order.update_attribute :fulfillment_status, fulfillment_status
     self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
+    Resque.enqueue(ShopqiMailer::Ship, 'ship_confirm', self.id) if self.notify_customer == 'true' #当选中通知顾客时，发送邮件
+  end
+
+  after_update do
+    Resque.enqueue(ShopqiMailer::Ship, 'ship_update', self.id) if self.notify_customer == 'true' and self.changed?
   end
 end
 

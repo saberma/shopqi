@@ -352,19 +352,23 @@ module KeyValues
 
     class TrackingCompany < KeyValues::Base # 快递公司
       self.data = [
-        {id: 1,  name: '顺丰快递' , code: '顺丰快递' },
-        {id: 2,  name: 'EMS'      , code: 'EMS'      },
-        {id: 3,  name: '申通E物流', code: '申通E物流'},
-        {id: 4,  name: '圆通速递' , code: '圆通速递' },
-        {id: 5,  name: '中通速递' , code: '中通速递' },
-        {id: 6,  name: '宅急送'   , code: '宅急送'   },
-        {id: 7,  name: '韵达快运' , code: '韵达快运' },
-        {id: 8,  name: '天天快递' , code: '天天快递' },
-        {id: 9,  name: '联邦快递' , code: '联邦快递' },
-        {id: 10, name: '汇通快运' , code: '汇通快运' },
-        {id: 11, name: '华强物流' , code: '华强物流' },
-        {id: 12, name: '其它'     , code: '其它'     }
+        {id: 1,  name: '顺丰快递' , code: '顺丰快递' , url: 'http://www.sf-express.com/cn/sc' },
+        {id: 2,  name: 'EMS'      , code: 'EMS'      , url: 'http://www.ems.com.cn'           },
+        {id: 3,  name: '申通E物流', code: '申通E物流', url: 'http://www.sto.cn'               },
+        {id: 4,  name: '圆通速递' , code: '圆通速递' , url: 'http://www.yto.net.cn'           },
+        {id: 5,  name: '中通速递' , code: '中通速递' , url: 'http://www.zto.cn'               },
+        {id: 6,  name: '宅急送'   , code: '宅急送'   , url: 'http://www.zjs.com.cn'           },
+        {id: 7,  name: '韵达快运' , code: '韵达快运' , url: 'http://www.yundaex.com'          },
+        {id: 8,  name: '天天快递' , code: '天天快递' , url: 'http://www.ttkdex.com'           },
+        {id: 9,  name: '联邦快递' , code: '联邦快递' , url: 'http://www.fedex.com/cn'         },
+        {id: 10, name: '汇通快运' , code: '汇通快运' , url: 'http://www.htky365.com'          },
+        #{id: 11, name: '华强物流' , code: '华强物流' , url: ''                               },
+        {id: 12, name: '其它'     , code: '其它'     , url: ''                                }
       ]
+
+      def self.url(name) # 根据公司名称获取url地址
+        self.find_by_name(name).try(:url)
+      end
     end
 
   end

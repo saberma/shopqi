@@ -90,9 +90,10 @@ describe Order do
   describe OrderFulfillment do
 
     let(:fulfillment) do
-      record = order.fulfillments.build
+      record = order.fulfillments.build notify_customer: 'true'
       record.line_items << line_item
       record.save
+      record
     end
 
     it 'should be add' do
@@ -109,6 +110,35 @@ describe Order do
         fulfillment
         order.histories.first.url.should_not be_blank
       end.should change(OrderHistory, :count).by(1)
+    end
+
+    context '#create' do
+
+      it 'should send email to customer' do # 给顾客发送发货通知邮件
+        with_resque do
+          ActionMailer::Base.deliveries.empty?.should be_true
+          fulfillment
+          ActionMailer::Base.deliveries.empty?.should be_false
+          email = ActionMailer::Base.deliveries.last
+          email.subject.should eql "订单 #1001 发货提醒\n"
+        end
+      end
+
+    end
+
+    context '#update' do
+
+      it 'should send email to customer' do # 给顾客发送发货更新邮件
+        with_resque do
+          fulfillment
+          fulfillment.update_attributes! tracking_number: 'abcd1234' # 更新属性并保存，此时发邮件
+          fulfillment.save # 未做任何修改时保存，不要发邮件
+          ActionMailer::Base.deliveries.size.should eql 4 # 下单成功、下单通知、发货通知、发货修改
+          email = ActionMailer::Base.deliveries.last
+          email.subject.should eql "订单 #1001 运送方式更改提醒\n"
+        end
+      end
+
     end
 
   end

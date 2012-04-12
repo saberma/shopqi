@@ -131,6 +131,10 @@ class OrderFulfillmentDrop < Liquid::Drop
     end
   end
 
+  def tracking_url
+    KeyValues::Order::TrackingCompany.url(self.tracking_company)
+  end
+
 end
 
 class ShippingMethodDrop < Liquid::Drop
