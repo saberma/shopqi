@@ -36,6 +36,7 @@ class Order < ActiveRecord::Base
           self.total_price -= amount
         end
       end
+      self.financial_status = :paid if self.total_price.zero? # 订单总金额为0，直接进入已支付状态
     end
   end
 

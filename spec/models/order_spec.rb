@@ -181,6 +181,7 @@ describe Order do
         it 'should not validate payment' do # 不需要支付
           free_order.total_price.should be_zero
           free_order.errors.should be_empty
+          free_order.financial_status_paid?.should be_true
         end
 
       end
@@ -201,6 +202,7 @@ describe Order do
         it 'should not validate payment' do # 不需要支付
           order.total_price.should be_zero
           order.errors.should be_empty
+          order.financial_status_paid?.should be_true
         end
 
       end
