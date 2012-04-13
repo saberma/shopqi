@@ -26,7 +26,7 @@ class Order < ActiveRecord::Base
   before_validation do
     if self.total_price.nil? # 新增时才计算总金额
       self.total_price = self.subtotal_price = self.total_line_items_price = self.line_items.map(&:total_price).sum
-      self.total_price += self.shipping_rate_price
+      self.total_price += self.shipping_rate_price if shipping_rate
       unless self.discount_code.blank? # 优惠码
         discount_json = self.shop.discounts.apply code: self.discount_code, order: self
         unless discount_json[:code].blank?

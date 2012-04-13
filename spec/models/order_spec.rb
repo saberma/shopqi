@@ -151,7 +151,11 @@ describe Order do
 
   describe 'validate' do # 校验
 
-    let(:order) { shop.orders.build }
+    let(:order) do
+      o = shop.orders.build
+      o.line_items.build product_variant: variant, price: 10, quantity: 2
+      o
+    end
 
     it 'should be perform' do
       order.valid?.should be_false
