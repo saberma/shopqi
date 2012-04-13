@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Payment < ActiveRecord::Base
   belongs_to :shop
   validates_presence_of :account, :key, :service, if: Proc.new{|p| p.payment_type_id?}

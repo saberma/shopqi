@@ -89,20 +89,15 @@ describe "Orders", js: true do
 
     context 'exist discount' do # 商店有优惠码
 
-      before do
-        payment
-        discount
-      end
-
       it 'should show the discount form' do # 要显示优惠码输入框
+        [payment, discount]
         visit "/cart"
         click_on '结算'
         fill_in 'discount[code]', with: discount.code
         click_on '提交'
         find('#discount-detail').should have_content("您正使用优惠码 #{discount.code} 节省了 10 元。")
         find('#cost').should have_content("¥#{(iphone4_variant.price - discount.value).to_i}")
-        #收货人
-        fill_in 'order[email]', with: 'mahb45@gmail.com'
+        fill_in 'order[email]', with: 'mahb45@gmail.com' #收货人
         fill_in 'order[shipping_address_attributes][name]', with: '马海波'
         select '广东省', form: 'order[shipping_address_attributes][province]'
         select '深圳市', form: 'order[shipping_address_attributes][city]'
@@ -113,6 +108,7 @@ describe "Orders", js: true do
         choose '邮局汇款' #选择支付方式
         click_on '提交订单'
         page.should have_content("您的订单号为： #1001")
+
         visit new_user_session_path # 登录后台查看订单
         fill_in 'user[email]', with: user_admin.email
         fill_in 'user[password]', with: user_admin.password
@@ -124,6 +120,42 @@ describe "Orders", js: true do
           find(:xpath, ".//td[3]").should have_content("-10")
         end
         find('#price-summary').should have_content((iphone4_variant.price - discount.value).to_i) # 小计要减掉优惠金额
+      end
+
+      context 'free order' do # 免费订单
+
+        let(:discount) { shop.discounts.create code: 'COUPON123', value: 10000, usage_limit: 1 }
+
+        let(:free_shipping_rate){ shop.shippings.first.weight_based_shipping_rates.create name: '免费快递', price: 0 } # 全国免运费
+
+        before { [discount, free_shipping_rate] }
+
+        it 'should not require payment' do # 不需要支付
+          visit "/cart"
+          click_on '结算'
+          fill_in 'discount[code]', with: discount.code
+          click_on '提交'
+          fill_in 'order[email]', with: 'mahb45@gmail.com' #收货人
+          fill_in 'order[shipping_address_attributes][name]', with: '马海波'
+          select '广东省', form: 'order[shipping_address_attributes][province]'
+          select '深圳市', form: 'order[shipping_address_attributes][city]'
+          select '南山区', form: 'order[shipping_address_attributes][district]'
+          fill_in 'order[shipping_address_attributes][address1]', with: '311'
+          fill_in 'order[shipping_address_attributes][phone]', with: '13928458888'
+          choose '免费快递-¥0'
+          page.should have_content("您的订单是免费的")
+          click_on '提交订单'
+          page.should have_content("我们将会发送购物信息到您的电子邮箱中，请注意查收.")
+
+          visit new_user_session_path # 登录后台查看订单
+          fill_in 'user[email]', with: user_admin.email
+          fill_in 'user[password]', with: user_admin.password
+          click_on '登录'
+          visit orders_path
+          click_on '#1001'
+          find('#order-status').should have_content("已支付")
+        end
+
       end
 
     end

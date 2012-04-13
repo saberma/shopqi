@@ -171,7 +171,9 @@ describe Order do
 
     context 'free order' do # 免费订单
 
-      let(:free_shipping_rate){ shop.shippings.first.weight_based_shipping_rate.create name: '免费快递', price: 0 } # 全国免运费
+      let(:free_shipping_rate){ shop.shippings.first.weight_based_shipping_rates.create name: '免费快递', price: 0 } # 全国免运费
+
+      before { free_shipping_rate }
 
       context 'without discount' do # 没有优惠码
 
@@ -193,8 +195,6 @@ describe Order do
       context 'discount' do # 使用了优惠码
 
         let(:discount) { shop.discounts.create code: 'coupon123', value: 20 }
-
-        let(:free_shipping_rate){ shop.shippings.first.weight_based_shipping_rate.create name: '免费快递', price: 0 } # 全国免运费
 
         let(:order) do
           o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com', shipping_rate: '免费快递-0.0', discount_code: discount.code)
