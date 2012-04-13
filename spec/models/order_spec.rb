@@ -165,6 +165,48 @@ describe Order do
       order.errors['shipping_address.name'].should_not be_empty
     end
 
+    context 'free order' do # 免费订单
+
+      let(:free_shipping_rate){ shop.shippings.first.weight_based_shipping_rate.create name: '免费快递', price: 0 } # 全国免运费
+
+      context 'without discount' do # 没有优惠码
+
+        let(:free_order) do
+          o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com', shipping_rate: '免费快递-0.0')
+          o.line_items.build product_variant: variant, price: 0, quantity: 1
+          o.save
+          o
+        end
+
+        it 'should not validate payment' do # 不需要支付
+          free_order.total_price.should be_zero
+          free_order.errors.should be_empty
+        end
+
+      end
+
+      context 'discount' do # 使用了优惠码
+
+        let(:discount) { shop.discounts.create code: 'coupon123', value: 20 }
+
+        let(:free_shipping_rate){ shop.shippings.first.weight_based_shipping_rate.create name: '免费快递', price: 0 } # 全国免运费
+
+        let(:order) do
+          o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com', shipping_rate: '免费快递-0.0', discount_code: discount.code)
+          o.line_items.build product_variant: variant, price: 10, quantity: 1
+          o.save
+          o
+        end
+
+        it 'should not validate payment' do # 不需要支付
+          order.total_price.should be_zero
+          order.errors.should be_empty
+        end
+
+      end
+
+    end
+
     #it 'should validate shipping_rate' do # 商店要支持的配送方式
     #  order.update_attributes email: 'mahb45@gmail.com', shipping_rate: "顺丰快递-0"
     #  order.errors['shipping_rate'].should_not be_empty

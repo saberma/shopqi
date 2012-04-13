@@ -88,7 +88,7 @@ $(document).ready ->
     if $("input[name='order[shipping_rate]']:checked").size() is 0
       alert '请选择配送方式'
       return false
-    else if $("input[name='order[payment_id]']:checked").size() is 0
+    else if $("input[name='order[payment_id]']:checked").size() is 0 and !is_free()
       alert '请选择支付方式'
       return false
     $(this).attr('disabled', 'true').val '正在提交...'
@@ -153,10 +153,29 @@ $(document).ready ->
     SHOP_MONEY_IN_EMAILS_FORMAT.replace /{{amount}}/, price
 
   calculate_price = -> # 计算总金额
-    total_price = parseFloat($('#cost').attr('total_price'))
-    discount_amount = parseFloat($('#cost').attr('discount_amount') or 0)
-    shipping_rate = parseFloat($('#cost').attr('shipping_rate') or 0)
-    price = total_price - discount_amount + shipping_rate
+    price = pay_price()
     $('#cost').html(format(price))
-    $('#discount_span').html(" ..已优惠#{discount_amount}元").toggle(discount_amount > 0)
-    $('#shipping_span').html(" ..包含快递费#{shipping_rate}元") unless $('#cost').attr('shipping_rate') is ''
+    $('#discount_span').html(" ..已优惠#{discount_amount()}元").toggle(discount_amount() > 0)
+    $('#shipping_span').html(" ..包含快递费#{shipping_rate()}元") unless $('#cost').attr('shipping_rate') is ''
+    if price <= 0
+      $('#free_payment').show() # 显示免费订单提示
+      $('#available_payment').hide()
+      $("#available_payment input[name='order[payment_id]']").removeAttr('checked')
+    else
+      $('#free_payment').hide()
+      $('#available_payment').show()
+
+  is_free = -> # 免费订单
+    pay_price() <= 0
+
+  pay_price = -> # 待支付的金额
+    total_price() - discount_amount() + shipping_rate()
+
+  total_price = -> # 总金额
+    parseFloat($('#cost').attr('total_price'))
+
+  discount_amount = -> # 优惠金额
+    parseFloat($('#cost').attr('discount_amount') or 0)
+
+  shipping_rate = -> # 运费
+    parseFloat($('#cost').attr('shipping_rate') or 0)

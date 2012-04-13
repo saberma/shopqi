@@ -15,33 +15,38 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :shipping_address
 
-  validates_presence_of :email, :shipping_address, :shipping_rate, :payment_id, message: '此栏不能为空白'
+  validates_presence_of :email, :shipping_address, :shipping_rate, message: '此栏不能为空白'
+  validates_presence_of :payment_id, message: '此栏不能为空白', unless: "total_price.zero?"
   #validates :shipping_rate, inclusion: { in: %w()} # TODO: 配送记录必须存在
 
   default_value_for :status, 'open'
   default_value_for :financial_status, 'pending'
   default_value_for :fulfillment_status, 'unshipped'
 
+  before_validation do
+    if self.total_price.nil? # 新增时才计算总金额
+      self.total_price = self.subtotal_price = self.total_line_items_price = self.line_items.map(&:total_price).sum
+      self.total_price += self.shipping_rate_price
+      unless self.discount_code.blank? # 优惠码
+        discount_json = self.shop.discounts.apply code: self.discount_code, order: self
+        unless discount_json[:code].blank?
+          amount = discount_json[:amount]
+          self.build_discount code: discount_json[:code], amount: amount
+          self.subtotal_price -= amount
+          self.total_price -= amount
+        end
+      end
+    end
+  end
+
   before_create do
     self.token ||= UUID.generate(:compact) # 普通情况下token与cart的token一致，方便订单提交后清空购物车
     self.number = shop.orders.size + 1
     self.order_number = self.number + 1000 # 1001比0001给顾客感觉更好
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s
-    self.total_price = self.subtotal_price = self.total_line_items_price = self.line_items.map(&:total_price).sum
-    self.total_price += self.shipping_rate_price
   end
 
   after_create do
-    unless self.discount_code.blank? # 优惠码
-      discount_json = self.shop.discounts.apply code: self.discount_code, order: self
-      unless discount_json[:code].blank?
-        amount = discount_json[:amount]
-        self.create_discount code: discount_json[:code], amount: amount
-        self.subtotal_price -= amount
-        self.total_price -= amount
-        self.save
-      end
-    end
     self.histories.create body: '创建订单'
     send_email("order_confirm") #发送客户确认邮件
     shop.subscribes.map(&:email_address).each do |email_address| #给网店管理者发送邮件

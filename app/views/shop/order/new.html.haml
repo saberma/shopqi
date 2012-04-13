@@ -99,12 +99,12 @@
         %div(style="clear: both")
       / end addresses
       #payment
-        .group.clearfix#shipping_rates_group.hide
+        #shipping_rates_group.group.clearfix.hide
           %h3 配送方式
           %p.sst
             %ul#shipping_rates
           %p#no-shipping-rates.hide 对不起，由于本店暂时没有为该地区设置发货方式，所以，将不能发往该地区
-        .group
+        #available_payment.group
           %h3 支付方式
           .field-with-errors#payment-error(style='display:none')
             %p
@@ -119,6 +119,10 @@
                     =label_tag "order_payment_id_#{gateway.id}" , gateway.name? ? gateway.name :  gateway.payment_type.name
             #pay-info.gright
           %p(style="clear:both;height: 0")
+        #free_payment.group.hide
+          %h3 您的订单是免费的
+          %p.hint 选择免费的快递将不需要进行支付操作.
+          %br{:style => "clear:both"}
       %table#buttons(border="0" cellspacing="0" cellpadding="0" style="height: 55px; width: 100%")
         %tr
           %td(style="vertical-align:middle")

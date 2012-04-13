@@ -10,9 +10,10 @@
    订单商品明细： {% for line in line_items %} 
               {{ line.quantity }} x {{ line.title }}  单价： {{ line.price | money }} {% endfor %}
    订单总额： {{ total_price | money_with_currency }}  | 商品总额： {{ subtotal_price | money_with_currency }}  | 发货方式及金额： {{ shipping_name }} - {{ shipping_rate_price | money_with_currency }}
+   {% unless total_price == 0 %}
    付款方式： {{ gateway }}   
    
    如果您尚未付款，请您尽快付款。您可以通过以下链接地址(复制到浏览器地址栏)返回订单付款页面：
-   {{ pay_url }}
+   {{ pay_url }} {% endunless %}
 
  欢迎您再次到{{shop_name}}购物，祝您购物愉快！
