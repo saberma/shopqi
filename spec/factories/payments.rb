@@ -16,6 +16,10 @@ FactoryGirl.define do
     service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_DIRECT_PAY_BY_USER # 即时到帐
   end
 
+  factory :payment_alipay_escrow, parent: :payment_alipay do
+    service ActiveMerchant::Billing::Integrations::Alipay::Helper::CREATE_PARTNER_TRADE_BY_BUYER # 担保交易
+  end
+
   factory :payment_tenpay, parent: :payment do
     message  ""
     name ''

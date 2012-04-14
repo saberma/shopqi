@@ -147,6 +147,34 @@ describe Order do
 
     end
 
+    describe 'alipay' do # 集成支付宝担保交易发货接口
+
+      let(:fulfillment) do
+        record = order.fulfillments.build notify_customer: 'true', tracking_number: 'abcd1234', tracking_company: '申通E物流'
+        record.line_items << line_item
+        record.save
+        record
+      end
+
+      let(:trade_no) { '2012041441700373' } # 支付宝交易号
+
+      let(:payment) { Factory :payment_alipay_escrow, shop: shop } # 支付方式:支付宝
+
+      before do
+        order.trade_no = trade_no
+        order.save
+      end
+
+      it 'should receive send goods' do # 接受到发货信息
+        options = { 'logistics_name' => '申通E物流', 'invoice_no' => 'abcd1234', 'trade_no' => trade_no }
+        Gateway::Alipay.should_receive(:send_goods).with(options, payment.account, payment.key, payment.email)
+        with_resque do
+          fulfillment
+        end
+      end
+
+    end
+
   end
 
   describe 'validate' do # 校验

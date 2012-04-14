@@ -228,11 +228,15 @@ class OrderFulfillment < ActiveRecord::Base
     fulfillment_status = (self.order.line_items.unshipped.size > 0) ? :partial : :fulfilled
     self.order.update_attribute :fulfillment_status, fulfillment_status
     self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
-    Resque.enqueue(ShopqiMailer::Ship, 'ship_confirm', self.id) if self.notify_customer == 'true' #当选中通知顾客时，发送邮件
+    Resque.enqueue(ShopqiMailer::Ship, 'ship_confirm', self.id) if self.notify_customer == 'true' #当选中通知顾客时，发送邮件(不管有没有写运货单号)
   end
 
   after_update do
     Resque.enqueue(ShopqiMailer::Ship, 'ship_update', self.id) if self.notify_customer == 'true' and self.changed?
+  end
+
+  after_save do
+    Resque.enqueue(AlipaySendGoods, self.id) if order.payment and order.payment.escrow? and !self.tracking_number.blank? # 在线交易且为支付宝担保交易
   end
 end
 
