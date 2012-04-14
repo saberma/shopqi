@@ -99,7 +99,7 @@ class Shop::OrderController < Shop::AppController
         notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
         @order = shop.orders.find_by_token(notification.out_trade_no)
         if @order and notification.acknowledge(@order.payment.key) and valid?(notification, @order.payment.account)
-          @order.pay!(notification.total_fee) if notification.complete? and @order.financial_status_pending? # 要支持重复请求
+          @order.pay!(notification.total_fee, notification.trade_no) if notification.complete? and @order.financial_status_pending? # 要支持重复请求
           render text: "success"
         else
           render text: "fail"
@@ -111,7 +111,7 @@ class Shop::OrderController < Shop::AppController
         @order = shop.orders.find_by_token(pay_return.order)
         @_resources = { shop: @order.shop } # checkout.haml中expose的shop
         if @order
-          @order.pay!(pay_return.amount) if @order.financial_status_pending? # 要支持重复请求
+          @order.pay!(pay_return.amount, pay_return.trade_no) if @order.financial_status_pending? # 要支持重复请求
         else
           raise pay_return.message
         end

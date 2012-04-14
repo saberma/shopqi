@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120405081909) do
+ActiveRecord::Schema.define(:version => 20120414133405) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -432,6 +432,7 @@ ActiveRecord::Schema.define(:version => 20120405081909) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "subtotal_price"
+    t.string   "trade_no",               :limit => 16
   end
 
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"

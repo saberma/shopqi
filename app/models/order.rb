@@ -141,7 +141,9 @@ class Order < ActiveRecord::Base
     "订单 #{name}"
   end
 
-  def pay!(amount)
+  def pay!(amount, trade_no = nil)
+    self.trade_no = trade_no
+    self.save
     self.transactions.create kind: :capture, amount: amount
   end
 
