@@ -25,7 +25,7 @@ namespace :travis do
 
   desc "Run travis in parallel"
   task :parallel do
-    parallel_size = 7
+    parallel_size = 8
     unit_test = ENV['UNIT_TEST']
     integrate_test = ENV['INTEGRATE_TEST']
     all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}.sort
@@ -34,9 +34,9 @@ namespace :travis do
     %w(shop/shops_searches_spec.rb lookup_spec.rb).each do |searchable_spec|
       integrate_files.delete "spec/requests/#{searchable_spec}" # 需要solr才能运行
     end
-    files = if unit_test # 7个并发
+    files = if unit_test # 8个并发
             unit_files.in_groups(parallel_size)[unit_test.to_i-1].join(' ')
-          elsif integrate_test # 7个并发
+          elsif integrate_test # 8个并发
             integrate_files.in_groups(parallel_size)[integrate_test.to_i-1].join(' ')
           end
 
