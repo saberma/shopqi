@@ -58,22 +58,10 @@
         %a(href="#" onclick="window.open('http://maps.google.com/maps?q=china,+shenzhen,+518057,+China','popup','directories=no,location=no,resizable=yes,scrollbars=yes'); return false;") 显示地图
     %h3 收货人地址
     #shipping-address.vcard
-      .tel
-        %span.value==电话: #{order.shipping_address.phone}
       %address.adr
-        %span.type.hide 家庭
-        %span.street-address=order.shipping_address.province_name
-        %br
-        %span.locality=order.shipping_address.city_name
-        %br
-        %span.locality=order.shipping_address.district_name
-        %br
-        %span=order.shipping_address.address1
-        %br
-        %span.postal-code=order.shipping_address.zip
-        %br
-        %span.fn=order.shipping_address.name
-        %br
+        %span
+          =order.shipping_address.full_info
+          =raw clippy(order.shipping_address.full_info)
       %a.email.hide(href="mailto:mahb45@gmail.com")
 .col-8.last
   -#=render :payment_credit
