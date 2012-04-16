@@ -53,6 +53,31 @@ describe OrderDrop do
     liquid(variant).should eql "http://shopqi.lvh.me/orders/#{order.token}"
   end
 
+  describe OrderLineItemDrop do
+
+    let(:payment) { Factory :payment, shop: shop }
+
+    let(:iphone4) { Factory :iphone4_with_variants, shop: shop }
+
+    let(:variant) { iphone4.variants.find_by_option1('黑色') }
+
+    let(:order) do
+      o = Factory.build(:order, shop: shop, email: 'admin@shopqi.com', shipping_rate: '普通快递-10.0', payment_id: payment.id)
+      o.line_items.build product_variant: variant, price: 3300, quantity: 2
+      o.save
+      o
+    end
+
+    let(:line_item_drop) { OrderLineItemDrop.new order.line_items.first }
+
+    it 'should get title' do # #424
+      variant = "{{ line_item.title }}"
+      iphone4.reload
+      liquid(variant, {'line_item' => line_item_drop}).should eql "iphone4 - 黑色"
+    end
+
+  end
+
   private
   def liquid(variant, assign = {'order' => order_drop})
     Liquid::Template.parse(variant).render(assign)

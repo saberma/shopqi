@@ -19,6 +19,16 @@ FactoryGirl.define do
     ]
   end
 
+  factory :iphone4_with_variants, parent: :iphone4 do # 有多个款式
+    options_attributes [
+      { name: '颜色' }
+    ]
+    variants_attributes [
+      {option1: '黑色', price: 3200},
+      {option1: '白色', price: 3300}
+    ]
+  end
+
   factory :psp, parent: :product do
     title "psp"
     body_html ""

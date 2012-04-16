@@ -94,7 +94,11 @@ class OrderLineItemDrop < Liquid::Drop
     @order_line_item = order_line_item
   end
 
-  delegate :id, :title, :line_price, :price, :quantity, :sku, :grams, :requires_shipping, :vendor, to: :@order_line_item
+  delegate :id, :line_price, :price, :quantity, :sku, :grams, :requires_shipping, :vendor, to: :@order_line_item
+
+  def title
+    @order_line_item.name
+  end
 
   def variant
     ProductVariantDrop.new(@order_line_item.product_variant)
