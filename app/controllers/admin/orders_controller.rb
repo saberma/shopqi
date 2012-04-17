@@ -5,7 +5,7 @@ class Admin::OrdersController < Admin::AppController
 
   expose(:shop) { current_user.shop }
   expose(:orders) do
-    page_size = 25
+    page_size = 100
     if params[:search]
       page_size = params[:search].delete(:limit) || page_size
       params[:search][:financial_status_ne] = :abandoned if params[:search][:financial_status_eq].blank?

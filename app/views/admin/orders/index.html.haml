@@ -3,11 +3,11 @@
 #table-filters.box2.sst
   %div(style="float: right; font-size: 12px")
     每页显示条数:
-    -selected_page_size = order_search_path(limit: params[:search] && params[:search][:limit])
+    -page_size = params[:search].try(:[], 'limit') || 100
     %select#page-size-select(style="width:60px")
       -page_sizes.each_pair do |name, code|
         -value = order_search_path(limit: code)
-        %option{value:"#{value}", selected:(selected_page_size == value)}=name
+        %option{value:"#{value}", selected:(page_size.to_i == code.to_i)}=name
   显示
   %a#payment-filter-link(href="#")=search_label :financial_status, '任何支付状态', financial_status
   和
