@@ -93,11 +93,11 @@
                 快递单号
                 %span.hint 可以稍后加入
               %p
-                %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text")
+                %input#manual_tracking_number.tracking-number(name="shipping_options[manual][tracking_number]" type="text" value="#{latest_tracking_number}")
                 %span#manual_tracking_company_area.hide
                   通过
                   %select#manual_tracking_company(disabled="disabled" name="shipping_options[manual][tracking_company]")
-                    =options_for_select tracking_companies
+                    =options_for_select tracking_companies, latest_tracking_company
           .btns(style="background: none")
             .sb
               %input#notify_customer(checked="checked" name="notify_customer" type="checkbox" value="true")

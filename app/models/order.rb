@@ -151,6 +151,18 @@ class Order < ActiveRecord::Base
     Resque.enqueue(ShopqiMailer, mail_type, email_address, self.id)
   end
 
+  begin 'redis'
+
+    def latest_tracking_company_key # 用于根据快递方式的不同取不同的物流公司
+      "latest_tracking_company_#{self.shipping_name}"
+    end
+
+    def latest_tracking_number_key # 用于根据快递方式的不同取不同的运单号
+      "latest_tracking_number_#{self.shipping_name}"
+    end
+
+  end
+
 end
 
 # 订单商品
@@ -236,6 +248,11 @@ class OrderFulfillment < ActiveRecord::Base
   end
 
   after_save do
+    unless self.tracking_number.blank?
+      number = self.tracking_number[0..-5] # 去掉后四位
+      order.shop.redis self.order.latest_tracking_company_key, self.tracking_company
+      order.shop.redis self.order.latest_tracking_number_key, number unless number.blank?
+    end
     Resque.enqueue(AlipaySendGoods, self.id) if order.payment and order.payment.escrow? and !self.tracking_number.blank? # 在线交易且为支付宝担保交易
   end
 end

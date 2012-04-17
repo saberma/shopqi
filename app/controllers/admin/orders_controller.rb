@@ -41,6 +41,8 @@ class Admin::OrdersController < Admin::AppController
   expose(:fulfillment_status) { KeyValues::Order::FulfillmentStatus.hash }
   expose(:cancel_reasons) { KeyValues::Order::CancelReason.hash }
   expose(:tracking_companies) { KeyValues::Order::TrackingCompany.hash }
+  expose(:latest_tracking_company) { shop.redis order.latest_tracking_company_key }
+  expose(:latest_tracking_number) { shop.redis order.latest_tracking_number_key }
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
   def index

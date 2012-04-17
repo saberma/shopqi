@@ -151,10 +151,18 @@ class Shop < ActiveRecord::Base
 
   end
 
-  begin 'cache_key' # 缓存时使用的key
+  begin 'redis' # 缓存时使用的key
 
     def storage_cache_key
       "shop_storage_#{self.id}"
+    end
+
+    def redis(key, value = nil) # 存储到redis，统一在key前增加shop.id
+      if value.nil?
+        Resque.redis.get "#{self.id}_#{key}"
+      else
+        Resque.redis.set "#{self.id}_#{key}", value
+      end
     end
 
   end

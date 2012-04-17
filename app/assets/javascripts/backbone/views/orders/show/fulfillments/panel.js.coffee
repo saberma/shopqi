@@ -19,4 +19,5 @@ App.Views.Order.Show.Fulfillment.Panel = Backbone.View.extend
   show: ->
     $('#mark-shipped').show()
     $('#order-fulfillment').hide()
+    $('#manual_tracking_number').focus()
     false
