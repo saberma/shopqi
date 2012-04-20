@@ -15,6 +15,7 @@ cn:
       order: 订单
       subscribe: 订阅信息
       payment: 支付信息
+      shop_domain: 商店域名
     attributes:
       user:
         name: 姓名
