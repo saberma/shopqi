@@ -207,6 +207,7 @@ class ShopDomain < ActiveRecord::Base # 域名
 
   before_create do
     self.verified = is_myshopqi? # 子域名则直接通过审核
+    self # avoid ActiveRecord::RecordNotSaved
   end
 
   before_update do # 设置主域名
