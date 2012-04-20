@@ -5,7 +5,7 @@
    订单号：{{order_number}}。{% if requires_shipping %} 
 
    收货人信息： {{ shipping_address.name}}： 
-              {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}} {% endif %} 
+              {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}} {{ shipping_address.phone}} {% endif %}
 
    订单商品明细： {% for line in line_items %} 
               {{ line.quantity }} x {{ line.title }}  单价： {{ line.price | money }} {% endfor %}
