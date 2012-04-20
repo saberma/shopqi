@@ -7,8 +7,7 @@
 
 {% if requires_shipping %} 通过 {% if fulfillment.tracking_company %} {{ fulfillment.tracking_company }} {% endif %}发送到以下地址:
   收货人信息: {{shipping_address.name}}:
-  {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}} {{
-   shipping_address.phone}}
+  {{ shipping_address.province}} {{ shipping_address.city}} {{ shipping_address.district}} {{ shipping_address.address1}} {{ shipping_address.phone}}
 
   {% if fulfillment.tracking_number %}
  运单号为： {{ fulfillment.tracking_number }}. 您可以通过下面的地址，查询您货物的运送状态 :
