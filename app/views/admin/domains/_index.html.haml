@@ -33,7 +33,7 @@
             %input#domain_host(name="domain[host]" size="32" type="text")
         .instructions
           %p
-            %strong 请输入域名备案号(备案号无效的话，此域名将无法被访问)
+            %strong 请输入域名备案号(此备案号通过ShopQi审核后，域名才能被正常访问)
           %p
             %input#domain_record(name="domain[record]" size="32" type="text")
         / instructions
@@ -51,7 +51,7 @@
     %span.note http://
     %span
       %a.host(href="http://{{{host}}}") {{{host}}}
-  %td.record {{{record}}}
+  %td.record {{{record}}}({{#if verified}}审核通过{{else}}待审核或审核不通过{{/if}})
   %td.c
     %span.dns-check=image_tag 'spinner.gif'
   %td(style="text-align: left; padding: 10px")

@@ -29,7 +29,7 @@ class Shop::AppController < ActionController::Base
 
   def force_domain
     host = request.host
-    shop_domain = ShopDomain.from(host)
+    shop_domain = ShopDomain.at(host)
     return unless shop_domain # 排除checkout页面
     primary = shop_domain.shop.primary_domain
     if primary.force_domain and host != primary.host  # 重定向

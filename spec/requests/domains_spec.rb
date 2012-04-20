@@ -21,7 +21,7 @@ describe "Domains", js: true do
       within '#domains > .items' do
         within :xpath, './tr[1]' do
           find('a.host').text.should eql "shopqi#{Setting.store_host}"
-          find('td.record').text.should eql Setting.domain.record
+          find('td.record').text.should eql "#{Setting.domain.record}(审核通过)"
           find('.dns-check').has_content?('成功').should be_true
           find(:xpath, './td[4]').has_content?('总是重定向顾客到这里?').should be_true
           has_css?('.deletions .del').should be_false
@@ -61,7 +61,7 @@ describe "Domains", js: true do
         within '#domains > .items' do
           within :xpath, './tr[2]' do
             find('a.host').text.should eql "www.example.com"
-            find('td.record').text.should eql '粤ICP备8888号'
+            find('td.record').text.should eql '粤ICP备8888号(待审核或审核不通过)'
             find('.dns-check').should have_content('失败')
             find(:xpath, './td[3]').has_content?('总是重定向顾客到这里?').should be_false
             page.should have_css('.deletions .del')
@@ -71,7 +71,7 @@ describe "Domains", js: true do
         within '#domains > .items' do
           within :xpath, './tr[2]' do
             find('a.host').text.should eql "www.example.com"
-            find('td.record').text.should eql '粤ICP备8888号'
+            find('td.record').text.should eql '粤ICP备8888号(待审核或审核不通过)'
           end
         end
       end

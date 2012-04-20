@@ -52,7 +52,7 @@ class Shop < ActiveRecord::Base
   end
 
   def self.at(domain) # 域名
-    ShopDomain.from(domain).shop
+    ShopDomain.at(domain).shop
   end
 
   def collections
@@ -205,6 +205,10 @@ class ShopDomain < ActiveRecord::Base # 域名
     self.host ||= "#{self.subdomain}#{self.domain}"
   end
 
+  before_create do
+    self.verified = is_myshopqi? # 子域名则直接通过审核
+  end
+
   before_update do # 设置主域名
     if primary and primary_changed?
       shop.domains.primary.update_attributes primary: false, force_domain: false
@@ -216,8 +220,12 @@ class ShopDomain < ActiveRecord::Base # 域名
   end
 
   # @host admin.myshopqi.com
-  def self.from(host)
-    where(host: host).first
+  def self.at(host)
+    where(host: host, verified: true).first
+  end
+
+  def self.valid_exists?(host)
+    !at(host).nil?
   end
 
   def self.myshopqi # shopqi官方提供的二级子域名

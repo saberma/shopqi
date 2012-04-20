@@ -77,10 +77,20 @@ describe Shop do
 
   describe ShopDomain do
 
+    context 'default' do # 默认shopqi子域名
+
+      it 'should be verified' do # 已审核
+        domain = shop.domains.first
+        domain.verified.should be_true
+      end
+
+    end
+
     context '#create' do
 
       it 'should save host' do
         domain = ShopDomain.create subdomain: 'shop', domain: '.myshopqi.com'
+        domain.verified.should be_false
         domain.host.should_not be_blank
       end
 
