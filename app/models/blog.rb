@@ -32,6 +32,7 @@ class Article < ActiveRecord::Base
   #垃圾评论
   has_many :spam_comments,class_name:"Comment",conditions:"comments.status = 'spam'"
   validates_presence_of :title
+  delegate :shop, to: :blog
 
   searchable do
     integer :shop_id, references: Shop

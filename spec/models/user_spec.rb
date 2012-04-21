@@ -34,7 +34,8 @@ describe User do
       expect do
         expect do
           expect do
-            User.create attrs_with_shop
+            user = User.create attrs_with_shop
+            user.shop.activities.should_not be_empty
           end.should change(User, :count).by(1)
         end.should change(Shop, :count).by(1)
       end.should change(ShopDomain, :count).by(1)
