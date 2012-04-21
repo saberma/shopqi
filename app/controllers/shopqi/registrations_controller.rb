@@ -2,6 +2,7 @@
 class Shopqi::RegistrationsController < Devise::RegistrationsController
   include Shopqi::HomeHelper
   skip_before_filter :force_domain # 不需要重定向
+  before_filter :clear_current_user_for_observer
   layout 'shopqi'
 
   expose(:themes_json) do
@@ -48,7 +49,11 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
   end
 
   private
-  def is_code_valid? # 开发环境，或者还没有注册过的，则不需要校验码
+  def is_code_valid? # 测试环境，或者还没有注册过的，则不需要校验码
     Rails.env.test? or !is_registered? or params[:verify_code].to_i == session[:verify_code]
+  end
+
+  def clear_current_user_for_observer # 线程处理完其他商店用户操作后可能会保持current_user类变量
+    ActivityObserver.current_user = nil
   end
 end

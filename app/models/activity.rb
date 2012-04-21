@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Activity < ActiveRecord::Base
   belongs_to :shop
   belongs_to :user
@@ -28,6 +29,10 @@ class Activity < ActiveRecord::Base
 
   def self.url_helpers
     Rails.application.routes.url_helpers
+  end
+
+  def user_name
+    user ? user.name : '系统自动生成'
   end
 
 end

@@ -9,5 +9,5 @@
     = succeed "." do
       =raw activity.content
     %br/
-    %small.note==操作人:#{activity.user.name} 时间:#{activity.created_at.to_s(:h_and_m)}
+    %small.note==操作人:#{activity.user_name} 时间:#{activity.created_at.to_s(:h_and_m)}
   %td.r

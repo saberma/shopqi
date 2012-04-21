@@ -8,8 +8,7 @@ describe User do
       shop_attributes: {
         name: "测试商店",
         email: 'mahb45@gmail.com',
-        domains_attributes:
-          [{subdomain: "china", domain: ".myshopqi.com"}],
+        domains_attributes: [{subdomain: "china", domain: ".myshopqi.com"}],
         province: "110000",
         city: "",
         district: "",
