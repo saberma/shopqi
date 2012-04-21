@@ -55,7 +55,7 @@ class Admin::ProductsController < Admin::AppController
     end
     #保存商品图片
     if product.save
-      Activity.log product,'new',current_user
+      shop.activities.log product,'new',current_user
       redirect_to product_path(product, new_product: true), notice: "新增商品成功!"
     else
       render action: :new
@@ -70,7 +70,7 @@ class Admin::ProductsController < Admin::AppController
   def update
     product.save
     product.options.reject! {|option| option.destroyed?} #rails bug：使用_destroy标记删除后，需要reload后，删除集合中的元素才消失，而reload后value值将被置空
-    Activity.log product,'edit',current_user
+    shop.activities.log product,'edit',current_user
     render json: product_json
   end
 
@@ -120,6 +120,6 @@ class Admin::ProductsController < Admin::AppController
 
   def log_published(product)
     handle = product.published ? 'published' : 'hidden'
-    Activity.log product,handle,current_user
+    shop.activities.log product,handle,current_user
   end
 end
