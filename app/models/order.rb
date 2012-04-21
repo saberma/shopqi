@@ -84,7 +84,7 @@ class Order < ActiveRecord::Base
         self.histories.create body: '订单重新打开'
       when :cancelled
         self.cancelled_at = Time.now
-        self.histories.create body: '订单被取消.原因:#{cancel_reason_name}'
+        self.histories.create body: "订单被取消.原因:#{cancel_reason_name}"
       end
     end
     if financial_status_changed? and financial_status_pending? # 一旦进入此待支付状态则需要更新顾客消费总金额
@@ -121,8 +121,16 @@ class Order < ActiveRecord::Base
 
   end
 
-  def status_name
-    KeyValues::Order::Status.find_by_code(status).name
+  begin 'status'
+
+    def status_name
+      KeyValues::Order::Status.find_by_code(status).name
+    end
+
+    def cancelled?
+      status.to_sym == :cancelled
+    end
+
   end
 
   def financial_status_name

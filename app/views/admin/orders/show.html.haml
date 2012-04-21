@@ -13,7 +13,7 @@
       %li.no-icon= link_to image_tag('admin/icons/trash.gif'), order_path(order), method: :delete, confirm: '您确定要删除?'
     -else
       %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
-      -unless order.financial_status == 'abandoned'
+      -unless order.financial_status == 'abandoned' or order.cancelled?
         %li#cancel-order=link_to "取消此订单", '#'
 =render "shared/noscript"
 =render "shared/upgrade_ie"
