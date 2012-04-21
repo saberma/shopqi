@@ -7,6 +7,7 @@ App.Views.Order.Index.Index = Backbone.View.extend
     "change #select-all": 'selectAll'
 
   initialize: ->
+    $('a.live-tipsy').tipsy live: true, html: true, gravity: 'sw' # 鼠标移到订单号时显示订单简要
     self = this
     @collection.view = this
     _.bindAll this, 'render'

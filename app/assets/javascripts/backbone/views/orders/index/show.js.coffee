@@ -13,6 +13,12 @@ App.Views.Order.Index.Show = Backbone.View.extend
     attrs = @model.attributes
     attrs['financial_class'] = @model.financial_class()
     attrs['fulfill_class'] = @model.fulfill_class()
+    tips = _.map @model.get('line_items'), (line_item) ->
+      name = if line_item.name? then line_item.name else '商品已被删除'
+      "#{line_item.quantity} x #{name}"
+    tips.push "配送方式:#{@model.get('shipping_name')}" if @model.get('shipping_name')?
+    tips.push "备注:#{@model.get('note')}" if @model.get('note')?
+    attrs['title'] = tips.join "<br/>"
     $(@el).html template attrs
     position = _.indexOf @model.collection.models, @model
     cycle = if position % 2 == 0 then 'odd' else 'even'

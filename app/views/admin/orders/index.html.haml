@@ -83,7 +83,7 @@
   %td(style="padding-top: 5px")
     %input.selector(id="checkbox-{{id}}" name="orders[]" type="checkbox" value="{{id}}")
   %td
-    %a(href="/admin/orders/{{id}}") {{{name}}}
+    %a.live-tipsy(href="/admin/orders/{{id}}" title="{{title}}") {{{name}}}
   %td
     %span.note {{{date created_at "MM-dd HH:mm"}}}
   %td

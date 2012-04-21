@@ -18,8 +18,11 @@ class Admin::OrdersController < Admin::AppController
   expose(:order)
   expose(:orders_json) do
     orders.to_json({
-      include: {customer: {only: [:id, :name]}},
-      methods: [ :status_name, :financial_status_name, :fulfillment_status_name ],
+      include: {
+        customer: {only: [:id, :name]},
+        line_items: {only: [:name, :quantity]}
+      },
+      methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :shipping_name ],
       except: [ :updated_at ]
     })
   end
