@@ -44,13 +44,12 @@ class Admin::HomeController < Admin::AppController
     total_product = shop.products.all
     skus_size = shop.variants.size
     {
-      today: { price: today.map(&:total_price).inject(0,:+),size: today.size,des: '今天'},
-      yesterday: { price: yesterday.map(&:total_price).inject(0,:+),size: yesterday.size,des: '昨天'},
-      last_week: { price: last_week.map(&:total_price).inject(0,:+),size: last_week.size,des: '上周'},
-      total: { size: total.size,des: '订单总量'},
-      total_product: { size: total_product.size,des: '总商品数'},
+      today: { price: today.map(&:total_price).inject(0,:+).round(2), size: today.size, des: '今天'},
+      yesterday: { price: yesterday.map(&:total_price).inject(0,:+).round(2), size: yesterday.size, des: '昨天'},
+      last_week: { price: last_week.map(&:total_price).inject(0,:+).round(2), size: last_week.size, des: '上周'},
+      total: { size: total.size, des: '订单总量'},
+      total_product: { size: total_product.size, des: '总商品数'},
       skus: {size: skus_size, des: 'SKUS'}
-
     }
   }
 

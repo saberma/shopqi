@@ -62,9 +62,12 @@
     %ul#dashboard-orders
       -recent_orders.each do |order|
         %li
-          %p.note==#{order.created_at.to_s(:short)}
           =link_to order.name, order_path(order)
           \- ¥#{order.total_price}
+          %span.note
+            (
+            ==#{order.created_at.to_s(:short)}
+            )
   -unless recent_comments.blank?
     %h3.sst 最新的博客评论
     %ul#dashboard-comments
