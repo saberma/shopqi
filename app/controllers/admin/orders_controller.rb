@@ -20,7 +20,8 @@ class Admin::OrdersController < Admin::AppController
     orders.to_json({
       include: {
         customer: {only: [:id, :name]},
-        line_items: {only: [:name, :quantity]}
+        line_items: {only: [:name, :quantity]},
+        shipping_address: {only: [:name], methods: [:info]}
       },
       methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :shipping_name ],
       except: [ :updated_at ]

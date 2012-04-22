@@ -287,7 +287,7 @@ class OrderShippingAddress < ActiveRecord::Base
   end
 
   def full_info # 全地址
-    "#{order.shipping_address.province_name}#{order.shipping_address.city_name}#{order.shipping_address.district_name}#{order.shipping_address.address1}，#{order.shipping_address.zip}，#{order.shipping_address.name}，#{order.shipping_address.phone}"
+    "#{province_name}#{city_name}#{district_name}#{address1}，#{zip}，#{name}，#{phone}"
   end
 end
 
