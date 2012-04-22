@@ -177,11 +177,11 @@ describe Shop::OrderController do
           controller.stub!(:valid?) { true } # 向支付宝校验notification的合法性
         end
 
-        context 'trade status is TRADE_FINISHED' do # 交易完成
+        context 'trade status is TRADE_FINISHED' do # 交易完成(即时付款)
 
           let(:attrs) { { trade_no: trade_no, out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_FINISHED', total_fee: order.total_price } }
 
-          it 'should change order financial_status to paid', f: true do
+          it 'should change order financial_status to paid' do
             order.financial_status_pending?.should be_true
             expect do
               post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
@@ -200,6 +200,23 @@ describe Shop::OrderController do
             post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
             response.body.should eql 'success'
             order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
+          end
+
+        end
+
+        context 'trade status is WAIT_SELLER_SEND_GOODS' do # 已付款，等待卖家发货(担保交易)
+
+          let(:attrs) { { trade_no: trade_no, out_trade_no: order.token, notify_id: '123456', trade_status: 'WAIT_SELLER_SEND_GOODS', total_fee: order.total_price } }
+
+          it 'should change order financial_status to paid' do
+            order.financial_status_pending?.should be_true
+            expect do
+              post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
+              response.body.should eql 'success'
+              order.reload.financial_status_paid?.should be_true
+            end.should change(OrderTransaction, :count).by(1)
+            order.transactions.first.amount.should eql order.total_price
+            order.trade_no.should eql trade_no
           end
 
         end
@@ -230,7 +247,7 @@ describe Shop::OrderController do
 
           let(:attrs) { { trade_no: trade_no, out_trade_no: order.token, trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
 
-          it 'should change order financial_status to paid', f: true do
+          it 'should change order financial_status to paid' do
             expect do
               get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
               response.should be_success

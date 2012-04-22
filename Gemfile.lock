@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: git://github.com/saberma/activemerchant_patch_for_china.git
-  revision: 5b2ad81c0492a67888fc17ef393839cf0be4527e
+  revision: 539240e6db55a514d98df381c9d94befcccd6c55
   specs:
     activemerchant_patch_for_china (0.1.6)
       activemerchant (>= 1.4.2)
