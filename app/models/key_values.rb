@@ -343,12 +343,12 @@ module KeyValues
 
     class CancelReason < KeyValues::Base # 取消原因
       self.data = [
-        {id: 1, name: '顾客改变/取消订单'     , code: 'customer'    },
-        {id: 2, name: '订单有误，需要重新下单', code: 'duplicate'   },
-        {id: 3, name: '没有及时付款'          , code: 'not_pay'     },
-        {id: 4, name: '欺诈性订单'            , code: 'fraud'       },
-        {id: 5, name: '没有商品了'            , code: 'inventory'   },
-        {id: 6, name: '其他'                  , code: 'other'       }
+        {id: 1, name: '顾客改变/取消订单', code: 'customer'    },
+        {id: 2, name: '重复订单'         , code: 'duplicate'   },
+        {id: 3, name: '没有及时付款'     , code: 'not_pay'     },
+        {id: 4, name: '欺诈性订单'       , code: 'fraud'       },
+        {id: 5, name: '没有商品了'       , code: 'inventory'   },
+        {id: 6, name: '其他'             , code: 'other'       }
       ]
     end
 
