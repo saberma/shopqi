@@ -70,6 +70,7 @@
                 %th.nosort(style="width: 16px")
                   %input#select-all(type="checkbox")/
                 %th.sortcol 订单
+                %th(style="width: 22px; padding: 0") &nbsp;
                 %th.sortcol.sortasc(style="width: 80px !important") 日期
                 %th.sortcol 顾客
                 %th.sortcol 支付状态
@@ -84,6 +85,8 @@
     %input.selector(id="checkbox-{{id}}" name="orders[]" type="checkbox" value="{{id}}")
   %td
     %a.live-tipsy(href="/admin/orders/{{id}}" title="{{title}}") {{{name}}}
+  %td.position-td
+    %span.position.hide(title="第{{index}}条记录" style="") {{index}}
   %td
     %span.note {{{date created_at "MM-dd HH:mm"}}}
   %td

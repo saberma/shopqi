@@ -8,6 +8,11 @@ App.Views.Order.Index.Index = Backbone.View.extend
 
   initialize: ->
     $('a.live-tipsy').tipsy live: true, html: true, gravity: 'sw' # 鼠标移到订单号时显示订单简要
+    $('#order-table tbody').delegate 'tr', 'mouseover mouseout', (event) -> # 鼠标悬停，显示序号
+      if event.type is 'mouseover'
+        $('.position', this).show()
+      else if event.type is 'mouseout'
+        $('.position', this).hide()
     self = this
     @collection.view = this
     _.bindAll this, 'render'

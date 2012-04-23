@@ -20,8 +20,9 @@ App.Views.Order.Index.Show = Backbone.View.extend
     tips.push "配送方式:#{@model.get('shipping_name')}" if @model.get('shipping_name')?
     tips.push "备注:#{@model.get('note')}" if @model.get('note')?
     attrs['title'] = tips.join "<br/>"
-    $(@el).html template attrs
     position = _.indexOf @model.collection.models, @model
+    attrs['index'] = (position + 1)
+    $(@el).html template attrs
     cycle = if position % 2 == 0 then 'odd' else 'even'
     $(@el).addClass "visible row #{cycle}"
     $('#order-table > tbody').append @el
