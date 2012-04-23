@@ -35,7 +35,7 @@
               %p 如果您有优惠码，请在此处输入:
               %p#discount-errors(style="color:red; display:none") 优惠码无效或者已过期。
               %input#discount_code(name="discount[code]" size="25" type="text" value="#{session['discount_code']}")
-              %input(name="commit" type="submit" value="提交")
+              %input#discount_btn(name="commit" type="submit" value="提交")
     =form_for order, url: "/carts/#{cart.token}", html: {onsubmit: 'return false;'} do |f|
       #email
         =f.label :email, '邮箱'

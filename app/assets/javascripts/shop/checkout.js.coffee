@@ -54,6 +54,7 @@ Validator = # 校验
 $(document).ready ->
 
   $("#discount_new").submit -> # 提交优惠码
+    $("#discount_btn").attr 'disabled', 'disabled'
     $("#discount-errors").hide()
     $.post $("#discount_new").attr('action'), code: $("#discount_code").val(), (data) ->
       if data.code
@@ -65,9 +66,12 @@ $(document).ready ->
         $('#cost').attr 'discount_amount', price
         calculate_price()
       else
+        $("#discount_btn").removeAttr 'disabled'
         $("#discount-errors").show()
         $("#discount-detail").hide()
     false
+  $("#discount_code").blur -> # 失焦点时自动提交
+    $("#discount_new").submit() unless $("#discount_code").val() is ''
   $("#discount_new").submit() unless $("#discount_code").val() is '' # 登录后回显优惠码
 
   $("input[name='order[shipping_rate]']").live 'change', -> # 快递费用
