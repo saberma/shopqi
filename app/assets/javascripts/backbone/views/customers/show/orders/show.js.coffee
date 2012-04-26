@@ -11,7 +11,7 @@ App.Views.Customer.Show.Order.Show = Backbone.View.extend
     attrs = @model.attributes
     attrs['financial_class'] = @model.financial_class()
     attrs['fulfill_class'] = @model.fulfill_class()
-    attrs['abandoned_class'] = @model.get('status') is 'abandoned'
+    attrs['cancelled_class'] = 'abandoned' if @model.get('status') is 'cancelled'
     $(@el).html template attrs
     position = _.indexOf @model.collection.models, @model
     cycle = if position % 2 == 0 then 'odd' else 'even'

@@ -60,7 +60,10 @@ class Admin::CustomersController < Admin::AppController
     customer.to_json({
       include: {
         addresses: { methods: [:province_name, :city_name, :district_name] },
-        orders: { methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :created_at] }
+        orders: {
+          only: [:id, :name, :status, :created_at, :total_price],
+          methods: [ :status_name, :financial_status_name, :fulfillment_status_name]
+        }
       },
       methods: [ :default_address, :order, :total_spent, :status_name, :tags_text ],
       except: [ :created_at, :updated_at ]

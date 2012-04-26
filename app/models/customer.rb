@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Customer < ActiveRecord::Base
   belongs_to :shop
-  has_many :orders
+  has_many :orders, order: 'id desc'
   has_many :addresses, dependent: :destroy, class_name: 'CustomerAddress', order: 'id asc'
   has_and_belongs_to_many :tags, class_name: 'CustomerTag'
 
