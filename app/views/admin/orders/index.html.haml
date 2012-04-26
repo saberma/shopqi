@@ -84,11 +84,14 @@
   %td(style="padding-top: 5px")
     %input.selector(id="checkbox-{{id}}" name="orders[]" type="checkbox" value="{{id}}")
   %td
-    %a.live-tipsy(href="/admin/orders/{{id}}" title="{{title}}") {{{name}}}
+    %a.tips(href="/admin/orders/{{id}}" title="{{title}}") {{{name}}}
+    {{#if note}}
+    %span.note(title="{{note}}")
+    {{/if}}
   %td.position-td
     %span.position.hide(title="第{{index}}条记录" style="") {{index}}
   %td
-    %span.note {{{date created_at "MM-dd HH:mm"}}}
+    %span.hint {{{date created_at "MM-dd HH:mm"}}}
   %td
     %a(href="/admin/customers/{{customer.id}}") {{{customer.name}}}
   %td

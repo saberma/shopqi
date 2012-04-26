@@ -18,7 +18,6 @@ App.Views.Order.Index.Show = Backbone.View.extend
       "#{line_item.quantity} x #{name}"
     tips.push "#{@model.get('shipping_address')['info']}" if @model.get('shipping_address')?
     tips.push "配送方式:#{@model.get('shipping_name')}" if @model.get('shipping_name')?
-    tips.push "备注:#{@model.get('note')}" if @model.get('note')?
     attrs['title'] = tips.join "<br/>"
     position = _.indexOf @model.collection.models, @model
     attrs['index'] = (position + 1)

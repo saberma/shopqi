@@ -7,7 +7,7 @@ App.Views.Order.Index.Index = Backbone.View.extend
     "change #select-all": 'selectAll'
 
   initialize: ->
-    $('a.live-tipsy').tipsy live: true, html: true, gravity: 'sw' # 鼠标移到订单号时显示订单简要
+    $('#order-table .tips, #order-table .note').tipsy live: true, html: true, gravity: 'sw' # 鼠标移到订单号时显示订单简要
     $('#order-table tbody').delegate 'tr', 'mouseover mouseout', (event) -> # 鼠标悬停，显示序号
       if event.type is 'mouseover'
         $('.position', this).show()
