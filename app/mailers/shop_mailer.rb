@@ -1,7 +1,7 @@
 #encoding: utf-8
 #用于发送各网店的邮件,例如：订单提醒等
 class ShopMailer < ActionMailer::Base
-  default from: Setting.mail_from
+  default from: Setting.mail.from
 
   def notify_email(mail_type, email, order_id)
     order = Order.find(order_id)
@@ -34,6 +34,22 @@ Email地址: #{email}
     )
     message += "\n姓名: #{name}" unless name.blank?
     mail to: shop.email, subject: "[#{shop.name}]联系表单", body: message
+  end
+
+  def alipay_send_goods_error(fulfillment) # 订单发货信息同步至支付宝时出错(由support发信)
+    order = fulfillment.order
+    shop = order.shop
+    message = %Q(
+商店后台将订单#{order.name}的物流信息同步至支付宝时发生错误。
+
+请您登录支付宝，找到商户订单号为 #{order.token} 的交易记录，手动录入以下物流信息:
+
+快递公司:#{fulfillment.tracking_company}
+运单号:#{fulfillment.tracking_number}
+
+此类错误只会在网络异常时偶尔发生，如果经常发生，请直接回复此邮件联系我们。
+    )
+    mail from: Setting.mail.support, to: shop.email, subject: "[#{shop.name}]同步订单#{order.name}发货信息到支付宝时发生错误", body: message
   end
 
   private
