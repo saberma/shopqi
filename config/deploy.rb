@@ -71,7 +71,7 @@ namespace :deploy do
 
 end
 before 'deploy:assets:precompile', 'deploy:symlink_shared'
-before 'deploy:assets:precompile', 'deploy:symlink_data'
+before 'deploy:assets:precompile', 'deploy:symlink_data' # 注意要去掉Capfile文件 load 'deploy/assets' 的注释
 after  'deploy:migrate'          , 'deploy:seed'
 
 namespace :resque do # 后台任务

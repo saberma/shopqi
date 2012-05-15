@@ -30,7 +30,7 @@ namespace :shopqi do
       FileUtils.mkdir_p screenshot_files
       FileUtils.ln_s asset_files, public_asset_files
       FileUtils.ln_s screenshot_files, public_screenshot_files
-      Rake::Task['db:setup'].invoke # 会调用db:schema:load，而非db:migrate
+      Rake::Task['db:setup'].invoke # 会调用db:schema:load(而非db:migrate),db:seed
     end
   end
 
