@@ -13,7 +13,7 @@ App.Views.Order.Show.History.Index = Backbone.View.extend
     _(App.order.get('histories')).each (history) ->
       ie_date_format = Utils.Date.ie_date_format history.created_at
       created_at = new Date(ie_date_format)
-      date = "#{created_at.getFullYear()}-#{created_at.getMonth()}-#{created_at.getDate()}"
+      date = "#{created_at.getFullYear()}-#{created_at.getMonth() + 1}-#{created_at.getDate()}"
       histories[date] = [] unless histories[date]
       history.created_at = "#{created_at.getHours()}:#{created_at.getMinutes()}"
       histories[date].push history
