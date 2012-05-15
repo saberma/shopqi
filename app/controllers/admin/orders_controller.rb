@@ -59,8 +59,10 @@ class Admin::OrdersController < Admin::AppController
     ids = params[:orders]
     if [:open, :close].include?(operation)
       value = (operation == :close) ? :closed : :open
-      orders.find(ids).each do |order|
-        order.update_attribute :status, value
+      Order.transaction do
+        shop.orders.find(ids).each do |order|
+          order.update_attribute :status, value
+        end
       end
     else #支付授权
     end
