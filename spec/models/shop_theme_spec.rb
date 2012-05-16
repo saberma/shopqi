@@ -19,13 +19,42 @@ describe ShopTheme do
       end.should change(ShopTheme, :count).by(1)
     end
 
-    it 'should be duplicate' do
-      shop.themes.install theme_dark
-      theme
-      expect do
-        duplicate_theme = theme.duplicate
-        duplicate_theme.name.should eql "副本 #{theme.name}"
-      end.should change(ShopTheme, :count).by(1)
+    context '#duplicate' do
+
+      context 'a system theme' do
+
+        it 'should be success' do
+          shop.themes.install theme_dark
+          theme
+          expect do
+            duplicate_theme = theme.duplicate
+            duplicate_theme.name.should eql "副本 #{theme.name}"
+          end.should change(ShopTheme, :count).by(1)
+        end
+
+      end
+
+      context 'a user theme' do # 用户自行上传
+
+        let(:name) { 'user_theme' }
+
+        let(:user_theme) { shop.themes.create name: name, role: 'wait' }
+
+        before do
+          zip_path = Rails.root.join 'spec', 'factories', 'data', 'themes', 'woodland.zip'
+          with_resque do
+            Resque.enqueue(ThemeExtracter, shop.id, user_theme.id, zip_path)
+          end
+        end
+
+        it 'should be success' do
+          duplicate_theme = user_theme.duplicate
+          duplicate_theme.name.should eql "副本 #{name}"
+          File.exists?(duplicate_theme.path).should be_true
+        end
+
+      end
+
     end
 
   end

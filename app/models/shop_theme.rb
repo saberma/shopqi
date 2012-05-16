@@ -198,11 +198,7 @@ class ShopTheme < ActiveRecord::Base
   end
 
   after_create do
-    if self.theme_id # 应用某个主题，而非手动上传主题
-      self.create_repo do
-        FileUtils.cp_r "#{self.theme.path}/.", path
-      end
-    end
+    self.create_repo { FileUtils.cp_r("#{self.theme.path}/.", path) } if self.theme_id # 应用某个主题，而非手动上传主题
   end
 
   def create_repo # 初始化git版本控制，链接asset目录至public
@@ -222,6 +218,7 @@ class ShopTheme < ActiveRecord::Base
     public_asset_path = File.join(public_path, 'assets')
     FileUtils.rm_rf public_asset_path # fixed: ln_s发现目录存在时，会在目录下新增目录，导致循环
     FileUtils.ln_s File.realpath(File.join(path, 'assets')), public_asset_path
+    self
   end
 
   # 修改此模块内方法要记得重启服务
@@ -253,7 +250,8 @@ class ShopTheme < ActiveRecord::Base
   end
 
   def duplicate # 复制主题
-    self.shop.themes.create theme_id: self.theme_id, name: "副本 #{self.name}", load_preset: self.load_preset, role: 'unpublished'
+    duplicated = self.shop.themes.create theme_id: self.theme_id, name: "副本 #{self.name}", load_preset: self.load_preset, role: 'unpublished'
+    duplicated.create_repo { FileUtils.cp_r("#{self.path}/.", duplicated.path) }
   end
 
   begin #相对路径
