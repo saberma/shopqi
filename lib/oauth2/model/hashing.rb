@@ -1,6 +1,6 @@
 module OAuth2
   module Model
-    
+
     module Hashing
       def hashes_attributes(*attributes)
         attributes.each do |attribute|
@@ -10,7 +10,7 @@ module OAuth2
           end
           attr_reader attribute
         end
-        
+
         class_eval <<-RUBY
           def reload(*args)
             super
@@ -21,7 +21,7 @@ module OAuth2
         RUBY
       end
     end
-    
+
   end
 end
 

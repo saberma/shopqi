@@ -1,6 +1,6 @@
 module OAuth2
   module Model
-    
+
     class Schema < ActiveRecord::Migration
       def self.up
         create_table :oauth2_clients, :force => true do |t|
@@ -13,7 +13,7 @@ module OAuth2
           t.string     :redirect_uri
         end
         add_index :oauth2_clients, :client_id
-        
+
         create_table :oauth2_authorizations, :force => true do |t|
           t.timestamps
           t.string     :oauth2_resource_owner_type
@@ -30,13 +30,13 @@ module OAuth2
         add_index :oauth2_authorizations, [:client_id, :access_token_hash]
         add_index :oauth2_authorizations, [:client_id, :refresh_token_hash]
       end
-      
+
       def self.down
         drop_table :oauth2_clients
         drop_table :oauth2_authorizations
       end
     end
-    
+
   end
 end
 

@@ -1,6 +1,6 @@
 module OAuth2
   module Model
-    
+
     module ClientOwner
       def self.included(klass)
         klass.has_many :oauth2_clients,
@@ -8,6 +8,6 @@ module OAuth2
                        :as => :oauth2_client_owner
       end
     end
-    
+
   end
 end

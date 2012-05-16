@@ -1,6 +1,6 @@
 module OAuth2
   module Model
-    
+
     class ConsumerToken < ActiveRecord::Base
       set_table_name :oauth2_consumer_tokens
       belongs_to :shop

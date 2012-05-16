@@ -10,7 +10,7 @@ describe CartDrop do
   let(:variant) { iphone4.variants.first }
 
   context '(empty)' do
-    
+
     let(:assign) { { 'shop' => ShopDrop.new(shop), 'cart' => CartDrop.new({}) } }
 
     it 'should get item_counts' do
@@ -21,7 +21,7 @@ describe CartDrop do
   end
 
   context '(has one item)' do
-    
+
     let(:assign) { { 'shop' => ShopDrop.new(shop), 'cart' => CartDrop.new( variant.id => '1') } }
 
     it 'should get item_counts' do

@@ -10,7 +10,7 @@ class Milestone # http://developer.github.com/v3/issues/milestones/
   def initialize(json)
     @json = json
   end
-  
+
   def self.closed
     @closed ||= JSON(self.get("https://api.github.com/repos/saberma/shopqi/milestones?state=closed"))
   end
@@ -31,7 +31,7 @@ class Milestone # http://developer.github.com/v3/issues/milestones/
   end
 
   def bugs_issues # 缺陷
-    @bugs ||= begin 
+    @bugs ||= begin
       issues.select(&:bug?).sort do |y, x|
         x.assignee <=> y.assignee
       end
@@ -60,7 +60,7 @@ class Issue # http://developer.github.com/v3/issues/
   def initialize(json)
     @json = json
   end
-  
+
   def self.all(milestone)
     JSON(self.get("https://api.github.com/repos/saberma/shopqi/issues?state=closed&milestone=#{milestone['number']}")).map do |json|
       self.new json

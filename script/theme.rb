@@ -29,7 +29,7 @@ Dir["#{Rails.root}/app/themes/*"].each do |theme_path|
   config_data_path = File.join theme_path, 'config', 'settings_data.json'
   config_path = File.join theme_path, 'config', 'settings.html'
   unless File.exists?(config_data_path) #json文件则生成
-    p "create #{config_data_path}" 
+    p "create #{config_data_path}"
     data = {
       'presets' => {'default' => settings(config_path)},
       'current' => 'default'

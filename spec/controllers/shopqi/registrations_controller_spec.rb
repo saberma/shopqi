@@ -38,7 +38,7 @@ describe Shopqi::RegistrationsController do
     @request.env["devise.mapping"] = Devise.mappings[:user] # rspec controllers没有使用route中的信息，所以会出现已经定义了devise :user但仍提示未定义 http://j.mp/v4MP0i
     request.host = "www.#{Setting.host}"
   end
-  
+
   describe Activity do # #428
 
     let(:user) { Factory(:user) }

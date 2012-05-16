@@ -39,7 +39,7 @@ class SunspotWorker # 参考http://j.mp/r64ADZ
   end
 
   def self.commit
-    # on production, use autocommit in solrconfig.xml 
+    # on production, use autocommit in solrconfig.xml
     # or commitWithin whenever sunspot supports it
     Sunspot.commit unless Rails.env == 'production'
   end

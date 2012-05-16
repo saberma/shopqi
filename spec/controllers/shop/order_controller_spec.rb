@@ -161,7 +161,7 @@ describe Shop::OrderController do
     let(:payment_tenpay) { Factory :payment_tenpay, shop: shop } # 支付方式:财付通
 
     let(:order) do
-      o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id 
+      o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id
       o.line_items.build product_variant: variant, price: variant.price, quantity: 1
       o.save
       o

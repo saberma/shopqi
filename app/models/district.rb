@@ -56,18 +56,18 @@ class District
   private
   def self.data
     unless @list
-      #{ '440000' => 
-      #  { 
-      #    :text => '广东', 
-      #    :children => 
-      #      { 
-      #        '440300' => 
-      #          { 
-      #            :text => '深圳', 
-      #            :children => 
-      #              { 
+      #{ '440000' =>
+      #  {
+      #    :text => '广东',
+      #    :children =>
+      #      {
+      #        '440300' =>
+      #          {
+      #            :text => '深圳',
+      #            :children =>
+      #              {
       #                '440305' => { :text => '南山' }
-      #              } 
+      #              }
       #           }
       #       }
       #   }
