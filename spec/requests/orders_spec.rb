@@ -161,6 +161,18 @@ describe "Orders", js: true do
         end
       end
 
+      it "should list other orders" do # 此顾客的其他待处理的订单
+        o = Factory.build :order, shop: shop, shipping_rate: '普通快递-10.0', payment_id: payment_alipay.id
+        o.line_items.build [ {product_variant: iphone4_variant, price: 10, quantity: 2}, ]
+        o.save
+        visit order_path(order)
+
+        within '#other-orders' do
+          has_content?(o.name).should be_true
+          has_content?(o.created_at.to_s(:short)).should be_true
+        end
+      end
+
       it "should list histories" do
         visit order_path(order)
         within '#order-history' do
