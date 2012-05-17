@@ -183,7 +183,8 @@ end
 #商店外观主题
 class ShopTheme < ActiveRecord::Base
   REQUIRED_FILES = ["layout/theme.liquid","templates/index.liquid","templates/collection.liquid","templates/product.liquid","templates/cart.liquid","templates/search.liquid","templates/page.liquid","templates/blog.liquid","templates/article.liquid"]
-  ZIP_DIRECTORIES = /^.*(layout|templates|assets|snippets|config)/ # 上传压缩必须的目录
+  ZIP_DIRECTORIES = %w(layout templates assets snippets config) # 上传压缩必须的目录
+  ZIP_DIRECTORIES_REGEX = Regexp.new("^.*(#{ZIP_DIRECTORIES.join('|')})") # /^.*(layout|templates|assets|snippets|config)/
 
   belongs_to :shop
   belongs_to :theme
@@ -251,7 +252,11 @@ class ShopTheme < ActiveRecord::Base
 
   def duplicate # 复制主题
     duplicated = self.shop.themes.create theme_id: self.theme_id, name: "副本 #{self.name}", load_preset: self.load_preset, role: 'unpublished'
-    duplicated.create_repo { FileUtils.cp_r("#{self.path}/.", duplicated.path) }
+    duplicated.create_repo do
+      ZIP_DIRECTORIES.each do |dir| # 不能直接cp_r "#{self.path}/.",会把.git目录也拷贝过去
+        FileUtils.cp_r("#{self.path}/#{dir}", duplicated.path)
+      end
+    end
   end
 
   begin #相对路径

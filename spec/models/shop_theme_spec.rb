@@ -50,7 +50,9 @@ describe ShopTheme do
         it 'should be success' do
           duplicate_theme = user_theme.duplicate
           duplicate_theme.name.should eql "副本 #{name}"
-          File.exists?(duplicate_theme.path).should be_true
+          ShopTheme::ZIP_DIRECTORIES.each do |dir|
+            File.exists?(File.join(duplicate_theme.path, dir)).should be_true
+          end
         end
 
       end

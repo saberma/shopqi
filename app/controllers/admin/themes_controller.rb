@@ -63,9 +63,9 @@ class Admin::ThemesController < Admin::AppController
         Zip::ZipFile::open(zip_path) do |zf|
           zf.each do |e|
             file_name = e.name
-            match = ShopTheme::ZIP_DIRECTORIES.match(file_name) # 去掉多余的顶层目录
+            match = ShopTheme::ZIP_DIRECTORIES_REGEX.match(file_name) # 去掉多余的顶层目录
             next unless match
-            file_name = file_name.sub ShopTheme::ZIP_DIRECTORIES, match[1]
+            file_name = file_name.sub ShopTheme::ZIP_DIRECTORIES_REGEX, match[1]
             files << file_name unless file_name.blank? or file_name.end_with?('/')
           end
         end
