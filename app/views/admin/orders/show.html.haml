@@ -63,6 +63,9 @@
           =order.shipping_address.full_info
           =raw clippy(order.shipping_address.full_info)
       %a.email.hide(href="mailto:mahb45@gmail.com")
+  #other-orders-box.customer-col.hide
+    %h3(title="显示此顾客其他待处理的订单，方便一起发货") 此顾客其他订单
+    #other-orders
 .col-8.last
   -#=render :payment_credit
   .box2.sst(style="padding-top: 0")
@@ -135,6 +138,10 @@
     %h3 订单历史
     %table#order-history-table(cellspacing="0")
 
+%script(id="other-orders-item" type="text/x-handlebars-template")
+  %p
+    %a(href="/admin/orders/{{id}}") {{name}}
+    {{{created_at}}}
 %script(id="order-status-item" type="text/x-handlebars-template")
   .fr.r
     {{#if payed}}

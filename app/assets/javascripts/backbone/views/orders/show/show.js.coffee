@@ -15,6 +15,7 @@ App.Views.Order.Show.Show = Backbone.View.extend
     new App.Views.Order.Show.LineItem.Index model: App.order
     new App.Views.Order.Show.History.Index
     new App.Views.Order.Show.Note
+    new App.Views.Order.Show.OtherOrders model: App.order
 
   showNote: ->
     $('#order-note').hide()

@@ -92,6 +92,8 @@ class Order < ActiveRecord::Base
     end
   end
 
+  scope :status_open, where(status: 'open')
+
   scope :today, where(:created_at.gt => Date.today.beginning_of_day)
 
   scope :yesterday, where(:created_at.gt => Date.yesterday.beginning_of_day).where(:created_at.lt => Date.today.beginning_of_day)
@@ -153,6 +155,10 @@ class Order < ActiveRecord::Base
     self.trade_no = trade_no
     self.save
     self.transactions.create kind: :capture, amount: amount
+  end
+
+  def other_orders
+    customer.orders.status_open.where("id != ?", self.id).as_json(only: [:id, :name, :created_at])
   end
 
   def send_email(mail_type, email_address = self.email)
