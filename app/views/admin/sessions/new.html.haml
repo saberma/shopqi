@@ -21,7 +21,7 @@
             #forgot-password
               =link_to "忘记密码?", new_password_path(resource_name)
           .ppb.c
-            =check_box_tag :remember_me, 1, false, id: :remember_checkbox
-            =f.label w('remember_me'), class: :normal
+            =f.check_box :remember_me
+            =f.label :remember_me, class: :normal
         .actions
           %input.btn(name="commit" type="submit" value="登录")

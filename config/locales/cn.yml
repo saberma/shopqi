@@ -26,6 +26,7 @@ cn:
         current_password: 当前密码
         password: 密码
         password_confirmation: 确认密码
+        remember_me: 记住我
         shop:
           permanent_domain: 二级域名
           name: 网店名
@@ -389,4 +390,3 @@ cn:
     published: 发布
     hidden: 隐藏
     upgrade: 升级
-    remember_me: 记住我
