@@ -120,7 +120,7 @@ GEM
     bcrypt-ruby (3.0.1)
     blankslate (2.1.2.4)
     builder (3.0.0)
-    capistrano (2.9.0)
+    capistrano (2.12.0)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -199,7 +199,7 @@ GEM
       haml (~> 3.0)
       railties (~> 3.0)
     has_scope (0.5.1)
-    highline (1.6.2)
+    highline (1.6.12)
     hike (1.2.1)
     httparty (0.7.8)
       crack (= 0.1.8)
@@ -246,7 +246,7 @@ GEM
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.2.1)
+    net-ssh (2.3.0)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.2)
@@ -323,6 +323,8 @@ GEM
     rubyzip (0.9.7)
     rufus-scheduler (2.0.16)
       tzinfo (>= 0.3.23)
+    rvm-capistrano (1.1.0)
+      capistrano (>= 2.0.0)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
     sass (3.1.10)
@@ -399,7 +401,6 @@ DEPENDENCIES
   activemerchant
   activemerchant_patch_for_china!
   awesome_print
-  capistrano
   capybara (~> 1.1.2)
   carrierwave
   chinese_pinyin
@@ -442,6 +443,7 @@ DEPENDENCIES
   resque_spec
   rspec-rails
   rubyzip
+  rvm-capistrano (~> 1.1.0)
   sass-rails
   seedbank
   selenium-webdriver (~> 2.20.0)

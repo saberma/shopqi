@@ -5,9 +5,8 @@
 #export CAP_APP_HOST=$CAP_WEB_HOST
 #export CAP_DB_HOST=$CAP_WEB_HOST
 #export CAP_USER=deploy
-require "bundler/capistrano" # 集成bundler和rvm
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))   # Add RVM's lib directory to the load path.
 require "rvm/capistrano"                                 # Load RVM's capistrano plugin.
+require "bundler/capistrano" # 集成bundler和rvm
 set :rvm_ruby_string, ENV['CAP_RVM_RUBY']                # Or whatever env you want it to run in.
 set :rvm_type, :user                                     # Copy the exact line. I really mean :user here
 
