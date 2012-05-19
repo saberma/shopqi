@@ -164,7 +164,7 @@ describe Product do
 
     end
 
-    context '#destroy', focus: true do
+    context '#destroy' do
 
       context '#price compare to product' do
 
@@ -184,6 +184,70 @@ describe Product do
             variant = iphone4.variants.create price: 3500.0
             variant.reload.destroy
             iphone4.reload.price.should eql 3000.0
+          end
+
+        end
+
+      end
+
+    end
+
+    context '#available', f: true do # 商品款式是否on sale
+
+      let(:variant) { iphone4.variants.first }
+
+      context 'when inventory was not track' do # 不跟踪库存
+
+        it 'should be true' do
+          variant.manage_inventory?.should be_false
+          variant.available.should be_true
+        end
+
+      end
+
+      context 'when inventory was track' do # 跟踪库存
+
+        before do
+          variant.update_attributes! inventory_management: 'shopqi'
+          variant.manage_inventory?.should be_true
+        end
+
+        context 'one in stock' do # 库存有一件
+
+          before do
+            variant.update_attributes! inventory_quantity: 1
+          end
+
+          it 'should be true' do
+            variant.available.should be_true
+          end
+
+        end
+
+        context 'none in stock' do # 库存不足
+
+          context 'policy is allow' do # 继续预售
+
+            before do
+              variant.update_attributes! inventory_policy: 'continue'
+            end
+
+            it 'should be true' do
+              variant.available.should be_true
+            end
+
+          end
+
+          context 'policy is deny' do # 已售完
+
+            before do
+              variant.update_attributes! inventory_policy: 'deny'
+            end
+
+            it 'should be false' do
+              variant.available.should be_false
+            end
+
           end
 
         end

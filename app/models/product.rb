@@ -150,10 +150,6 @@ class ProductVariant < ActiveRecord::Base
     [option1, option2, option3].compact
   end
 
-  def inventory_policy_name
-    KeyValues::Product::Inventory::Policy.find_by_code(inventory_policy).name
-  end
-
   def title
     self.options.join(' / ') if product.variants.size > 1
   end
@@ -162,8 +158,29 @@ class ProductVariant < ActiveRecord::Base
     (product.variants.size > 1) ? "#{product.title} - #{self.title}" : product.title
   end
 
-  def available
-    true
+  begin 'inventory' # 库存
+
+    def inventory_policy_name
+      KeyValues::Product::Inventory::Policy.find_by_code(inventory_policy).name
+    end
+
+    def manage_inventory? # 需要管理库存,下单时减一，销单时加一
+      !self.inventory_management.blank?
+    end
+
+    def policy_deny? # 库存不足时拒绝继续销售
+      self.inventory_policy == 'deny'
+    end
+
+    def low_in_stock? # 库存不足
+      stock = self.inventory_quantity || 0
+      stock <= 0
+    end
+
+    def available
+      !(manage_inventory? and policy_deny? and low_in_stock?)
+    end
+
   end
 
 
