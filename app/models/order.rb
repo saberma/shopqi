@@ -45,6 +45,10 @@ class Order < ActiveRecord::Base
     self.number = shop.orders.size + 1
     self.order_number = self.number + 1000 # 1001比0001给顾客感觉更好
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s
+    self.line_items.each do |line_item| # 跟踪库存
+      variant = line_item.product_variant
+      variant.decrement! :inventory_quantity if variant.manage_inventory?
+    end
   end
 
   after_create do
@@ -131,6 +135,16 @@ class Order < ActiveRecord::Base
 
     def cancelled?
       status.to_sym == :cancelled
+    end
+
+    def cancel! # 取消订单
+      self.class.transaction do
+        self.update_attributes! status: :cancelled
+        self.line_items.each do |line_item| # 跟踪库存
+          variant = line_item.product_variant
+          variant.increment! :inventory_quantity if variant.manage_inventory?
+        end
+      end
     end
 
   end

@@ -275,6 +275,19 @@ describe Order do
       end.should change(OrderHistory, :count).by(1)
     end
 
+    context 'inventory tracking' do # 跟踪库存
+
+      before do
+        variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 2
+      end
+
+      it 'should reduce product variant inventory quantity' do #
+        order.save
+        variant.reload.inventory_quantity.should eql 1
+      end
+
+    end
+
   end
 
   describe 'update' do
@@ -282,6 +295,24 @@ describe Order do
     it 'should validate gateway' do
       order.save
       order.errors[:gateway].should_not be_nil
+    end
+
+    context 'cancel' do # 取消订单
+
+      context 'inventory tracking' do # 跟踪库存
+
+        before do
+          order
+          variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 0
+        end
+
+        it 'should reduce product variant inventory quantity' do #
+          order.cancel!
+          variant.reload.inventory_quantity.should eql 1
+        end
+
+      end
+
     end
 
   end
