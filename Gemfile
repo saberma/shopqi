@@ -8,6 +8,7 @@ gem 'pg'
 gem 'devise', '~> 1.4.9'
 gem "sass-rails" # 放在assets分组会报错 http://j.mp/oj7y6K
 gem 'activeadmin'
+gem 'acts_as_list'
 
 #use unicorn as web server
 gem 'unicorn'

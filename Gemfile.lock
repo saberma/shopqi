@@ -114,6 +114,7 @@ GEM
       activesupport (= 3.1.1)
     activesupport (3.1.1)
       multi_json (~> 1.0)
+    acts_as_list (0.1.6)
     addressable (2.2.6)
     arel (2.2.1)
     awesome_print (0.4.0)
@@ -400,6 +401,7 @@ DEPENDENCIES
   activeadmin
   activemerchant
   activemerchant_patch_for_china!
+  acts_as_list
   awesome_print
   capybara (~> 1.1.2)
   carrierwave
