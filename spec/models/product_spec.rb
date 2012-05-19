@@ -389,7 +389,7 @@ describe Product do
 
         end
 
-        context '#move!', f: true do # 移动
+        context '#move!' do # 移动
 
           it 'should be forward' do
             iphone4.options.first.move!(1)

@@ -226,8 +226,7 @@ Shopqi::Application.routes.draw do
           end
         end
 
-        # 支付记录
-        resources :transactions
+        resources :transactions # 支付记录
       end
 
       resources :customers, except: :edit do
@@ -246,6 +245,12 @@ Shopqi::Application.routes.draw do
         member do
           put :update_published
           post :duplicate
+        end
+
+        resources :product_options, only: [] do # 商品选项
+          member do
+            post :move
+          end
         end
 
         resources :photos, only:[:destroy,:new,:create] do
