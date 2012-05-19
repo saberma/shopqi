@@ -204,20 +204,34 @@ class ProductVariant < ActiveRecord::Base
   end
 end
 
-#商品选项
-class ProductOption < ActiveRecord::Base
+class ProductOption < ActiveRecord::Base # 商品选项
   belongs_to :product
   acts_as_list scope: :product
-  #辅助值，用于保存至商品款式中
-  attr_accessor :value
+  attr_accessor :value # 辅助值，用于保存至商品款式中
 
-  # 更新商品所有款式
-  before_destroy do
+  before_destroy do # 更新商品所有款式
     options_size = product.options.size
     product.variants.each do |variant|
       (position...options_size).each do |i|
         variant.send("option#{i}=", variant.send("option#{i+1}"))
       end
+      variant.save
+    end
+  end
+
+  def move!(dir)
+    pos = self.position # move后position会改变
+    if dir == -1
+      self.move_higher
+    elsif dir == 1
+      self.move_lower
+    else
+      return
+    end
+    product.variants.each do |variant|
+      tmp = variant.send("option#{pos}")
+      variant.send("option#{pos}=", variant.send("option#{pos+dir}"))
+      variant.send("option#{pos+dir}=", tmp)
       variant.save
     end
   end

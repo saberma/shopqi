@@ -192,7 +192,7 @@ describe Product do
 
     end
 
-    context '#available', f: true do # 商品款式是否on sale
+    context '#available' do # 商品款式是否on sale
 
       let(:variant) { iphone4.variants.first }
 
@@ -258,112 +258,11 @@ describe Product do
 
   end
 
-  describe 'Option' do
+  describe 'Option' do # 选项
 
     it 'should be save' do
       iphone4.options.first.name.should eql '标题'
       iphone4.variants.first.option1.should eql '默认标题'
-    end
-
-    it 'should be ordered' do
-      iphone4.options_attributes = [
-        {name: '大小', value: '16G'},
-        {name: '网络', value: 'WIFI'}
-      ]
-      iphone4.save
-      iphone4.reload
-      iphone4.options.map(&:name).should eql %w(标题 大小 网络)
-      iphone4.options.map(&:position).should eql [1,2,3]
-    end
-
-    describe '#move' do
-
-      it 'should be add' do
-        iphone4.options_attributes = [
-          {id: iphone4.options.first.id, _destroy: true},
-          {name: '大小', value: '16G'},
-          {name: '网络', value: 'WIFI'},
-        ]
-        iphone4.save
-        iphone4.reload
-        iphone4.options.map(&:name).should eql %w(大小 网络)
-        iphone4.options.map(&:position).should eql [1,2]
-        iphone4.variants.each do |variant|
-          variant.option1.should eql '16G'
-          variant.option2.should eql 'WIFI'
-          variant.option3.should be_nil
-        end
-      end
-
-      context '(with 3 options)' do
-
-        before :each do
-          iphone4.options_attributes = [
-            {name: '大小', value: '16G'},
-            {name: '网络', value: 'WIFI'},
-          ]
-          iphone4.save
-          iphone4.reload # 注意要reload，使option的value重置为空
-        end
-
-        it 'at first' do
-          iphone4.options_attributes = [
-            {id: iphone4.options.first.id, _destroy: true}
-          ]
-          iphone4.save
-          iphone4.reload
-          iphone4.options.map(&:name).should eql %w(大小 网络)
-          iphone4.options.map(&:position).should eql [1,2]
-          iphone4.variants.each do |variant|
-            variant.option1.should eql '16G'
-            variant.option2.should eql 'WIFI'
-          end
-        end
-
-        it 'at middle' do
-          iphone4.options_attributes = [
-            {id: iphone4.options.second.id, _destroy: true}
-          ]
-          iphone4.save
-          iphone4.reload
-          iphone4.options.map(&:name).should eql %w(标题 网络)
-          iphone4.options.map(&:position).should eql [1,2]
-          iphone4.variants.each do |variant|
-            variant.option1.should eql '默认标题'
-            variant.option2.should eql 'WIFI'
-          end
-        end
-
-        it 'first two options' do
-          iphone4.options_attributes = [
-            {id: iphone4.options.first.id, _destroy: true},
-            {id: iphone4.options.second.id, _destroy: true}
-          ]
-          iphone4.save
-          iphone4.reload
-          iphone4.options.map(&:name).should eql %w(网络)
-          iphone4.options.map(&:position).should eql [1]
-          iphone4.variants.each do |variant|
-            variant.option1.should eql 'WIFI'
-          end
-        end
-
-        it 'first and last options' do
-          iphone4.options_attributes = [
-            {id: iphone4.options.last.id, _destroy: true},
-            {id: iphone4.options.first.id, _destroy: true}
-          ]
-          iphone4.save
-          iphone4.reload
-          iphone4.options.map(&:name).should eql %w(大小)
-          iphone4.options.map(&:position).should eql [1]
-          iphone4.variants.each do |variant|
-            variant.option1.should eql '16G'
-          end
-        end
-
-      end
-
     end
 
     it 'should be add' do
@@ -387,6 +286,137 @@ describe Product do
       iphone4.save
       iphone4.options.reject! {|option| option.destroyed?} #rails bug，使用_destroy标记删除后，需要reload后，删除集合中的元素才消失
       iphone4.options.size.should eql 1
+    end
+
+    it 'should be ordered' do
+      iphone4.options_attributes = [
+        {name: '大小', value: '16G'},
+        {name: '网络', value: 'WIFI'}
+      ]
+      iphone4.save
+      iphone4.reload
+      iphone4.options.map(&:name).should eql %w(标题 大小 网络)
+      iphone4.options.map(&:position).should eql [1,2,3]
+    end
+
+    describe '#edit' do
+
+      it 'should be add' do
+        iphone4.options_attributes = [ # 删除原有选项后，新增两个选项
+          {id: iphone4.options.first.id, _destroy: true},
+          {name: '大小', value: '16G'},
+          {name: '网络', value: 'WIFI'},
+        ]
+        iphone4.save
+        iphone4.reload
+        iphone4.options.map(&:name).should eql %w(大小 网络)
+        iphone4.options.map(&:position).should eql [1,2]
+        iphone4.variants.each do |variant|
+          variant.option1.should eql '16G'
+          variant.option2.should eql 'WIFI'
+          variant.option3.should be_nil
+        end
+      end
+
+      context 'with 3 options' do
+
+        before :each do
+          iphone4.options_attributes = [
+            {name: '大小', value: '16G'},
+            {name: '网络', value: 'WIFI'},
+          ]
+          iphone4.save
+          iphone4.reload # 注意要reload，使option的value重置为空
+        end
+
+        context 'destroy' do
+
+          it 'at first' do
+            iphone4.options_attributes = [
+              {id: iphone4.options.first.id, _destroy: true}
+            ]
+            iphone4.save
+            iphone4.reload
+            iphone4.options.map(&:name).should eql %w(大小 网络)
+            iphone4.options.map(&:position).should eql [1,2]
+            iphone4.variants.each do |variant|
+              variant.option1.should eql '16G'
+              variant.option2.should eql 'WIFI'
+            end
+          end
+
+          it 'at middle' do
+            iphone4.options_attributes = [
+              {id: iphone4.options.second.id, _destroy: true}
+            ]
+            iphone4.save
+            iphone4.reload
+            iphone4.options.map(&:name).should eql %w(标题 网络)
+            iphone4.options.map(&:position).should eql [1,2]
+            iphone4.variants.each do |variant|
+              variant.option1.should eql '默认标题'
+              variant.option2.should eql 'WIFI'
+            end
+          end
+
+          it 'first two options' do
+            iphone4.options_attributes = [
+              {id: iphone4.options.first.id, _destroy: true},
+              {id: iphone4.options.second.id, _destroy: true}
+            ]
+            iphone4.save
+            iphone4.reload
+            iphone4.options.map(&:name).should eql %w(网络)
+            iphone4.options.map(&:position).should eql [1]
+            iphone4.variants.each do |variant|
+              variant.option1.should eql 'WIFI'
+            end
+          end
+
+          it 'first and last options' do
+            iphone4.options_attributes = [
+              {id: iphone4.options.last.id, _destroy: true},
+              {id: iphone4.options.first.id, _destroy: true}
+            ]
+            iphone4.save
+            iphone4.reload
+            iphone4.options.map(&:name).should eql %w(大小)
+            iphone4.options.map(&:position).should eql [1]
+            iphone4.variants.each do |variant|
+              variant.option1.should eql '16G'
+            end
+          end
+
+        end
+
+        context '#move!', f: true do # 移动
+
+          it 'should be forward' do
+            iphone4.options.first.move!(1)
+            iphone4.reload
+            iphone4.options.map(&:name).should eql %w(大小 标题 网络)
+            iphone4.variants.each do |variant|
+              variant.option1.should eql '16G'
+              variant.option2.should eql '默认标题'
+              variant.option3.should eql 'WIFI'
+            end
+          end
+
+          it 'should be backward' do
+            iphone4.options.third.move!(-1)
+            iphone4.reload
+            iphone4.options.map(&:name).should eql %w(标题 网络 大小)
+            iphone4.variants.each do |variant|
+              variant.option1.should eql '默认标题'
+              variant.option2.should eql 'WIFI'
+              variant.option3.should eql '16G'
+            end
+          end
+
+        end
+
+      end
+
     end
 
   end
