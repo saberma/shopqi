@@ -16,10 +16,8 @@ App.Views.Product.Show.Index = Backbone.View.extend
     # 先生成修改页面，以便查看页面获取集合名称
     new App.Views.Product.Show.Edit model: @model
     new App.Views.Product.Show.Show model: @model
-    # 显示商品选项
-    new App.Views.ProductOption.Index collection: @model.options
-    # 款式
-    new App.Views.Product.Show.Variant.Index collection: App.product_variants
+    new App.Views.ProductOption.Index collection: @model.options # 显示商品选项
+    new App.Views.Product.Show.Variant.Index collection: App.product_variants # 款式
     @model.bind 'change:title', (model) -> $('#product_title > a').text(model.attributes.title)
     @model.bind 'change:handle', (model) -> $('#product_title > a').attr('href', "/products/#{model.attributes.handle}")
     # 修改商品选项后要重新渲染所有款式

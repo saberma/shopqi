@@ -207,7 +207,7 @@ end
 class ProductOption < ActiveRecord::Base # 商品选项
   belongs_to :product
   acts_as_list scope: :product
-  attr_accessor :value # 辅助值，用于保存至商品款式中
+  attr_accessor :value, :first, :last # 辅助值，用于保存至商品款式中
 
   before_destroy do # 更新商品所有款式
     options_size = product.options.size
@@ -217,6 +217,14 @@ class ProductOption < ActiveRecord::Base # 商品选项
       end
       variant.save
     end
+  end
+
+  def first
+    self.first?
+  end
+
+  def last
+    self.last?
   end
 
   def move!(dir)

@@ -110,5 +110,9 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     $('#product-select').html template attrs
     template = Handlebars.compile $('#row-head-item').html()
     $('#row-head').html template attrs
+    $('.option-title').hover ->
+      $('.mover', this).show()
+    , ->
+      $('.mover', this).hide()
     _(@collection.models).each (model) ->
       new App.Views.Product.Show.Variant.Show model: model

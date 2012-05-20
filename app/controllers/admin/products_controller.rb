@@ -13,7 +13,7 @@ class Admin::ProductsController < Admin::AppController
   expose(:product)
   expose(:product_json) do
     product.to_json({
-      include: { options: { methods: :value, except: [ :created_at, :updated_at ] },photos: {methods: :icon} },
+      include: { options: { methods: [:value, :first, :last], except: [ :created_at, :updated_at ] },photos: {methods: :icon} },
       methods: [:tags_text, :collection_ids],
       except: [ :created_at, :updated_at ]
     })

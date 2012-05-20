@@ -223,7 +223,16 @@
   %th(class="checkbox-cell")
     %input#select-all(type="checkbox")
   {{#each_with_index options}}
-  %th(id="option-header-{{index_plus}}" class="option-{{index_plus}}" style="width:15%;") {{item.attributes.name}}
+  %th.option-title(id="option-header-{{index_plus}}" class="option-{{index_plus}}" style="width:15%;")
+    {{#unless item.attributes.first}}
+    %span.mover.hide(style="position: absolute; margin-left: -15px;")
+      %a(href="#" style="color: #666; text-decoration:none" title="移到左边") ←
+    {{/unless}}
+    {{item.attributes.name}}
+    {{#unless item.attributes.last}}
+    %span.mover.hide
+      %a(href="#" style="color: #666; text-decoration:none" title="移到右边") →
+    {{/unless}}
   {{/each_with_index}}
   %th(style="min-width: 150px") SKU
   %th.price-cell(style="width: 90px;")
