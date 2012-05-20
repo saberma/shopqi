@@ -10,20 +10,20 @@ App.Views.Product.Show.Index = Backbone.View.extend
     "click .closure-lightbox": 'show' # 显示图片
 
   initialize: ->
+    self = this
     Handlebars.registerHelper 'option_value', (context, block) -> # 获取款式中的option1,option2,option3等值，外围对options进行迭代，在handlebars中只能使用额外的helper实现
       [index, index_plus] = [this.index, this.index_plus]
       block(value: context["option#{index_plus}"], variant_id: context.id, index: index, index_plus: index_plus)
     # 先生成修改页面，以便查看页面获取集合名称
     new App.Views.Product.Show.Edit model: @model
     new App.Views.Product.Show.Show model: @model
-    new App.Views.ProductOption.Index collection: @model.options # 显示商品选项
+    new App.Views.ProductOption.Index collection: @model.options # 商品详情中的商品选项
     new App.Views.Product.Show.Variant.Index collection: App.product_variants # 款式
     @model.bind 'change:title', (model) -> $('#product_title > a').text(model.attributes.title)
     @model.bind 'change:handle', (model) -> $('#product_title > a').attr('href', "/products/#{model.attributes.handle}")
-    # 修改商品选项后要重新渲染所有款式
-    @model.bind 'change:options', (model) ->
+    @model.bind 'change:options', (model) -> # 修改商品选项后要重新渲染所有款式
       i = 0
-      model.options.each (option) ->
+      self.model.options.each (option) ->
         i++
         if option.attributes.value
           App.product_variants.each (variant) ->

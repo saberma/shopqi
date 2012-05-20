@@ -9,6 +9,9 @@ class Admin::ProductOptionsController < Admin::AppController
 
   def move
     product_option.move! params[:dir].to_i
-    render nothing: true
+    render json: {
+      options: product.options.as_json( methods: [:value, :first, :last], except: [ :created_at, :updated_at ] ),
+      variants: product.variants.as_json( except: [ :created_at, :updated_at ])
+    }
   end
 end

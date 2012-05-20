@@ -85,8 +85,12 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
   move: (event) -> # 移动选项
     option_id = $(event.currentTarget).parent('.option-title').attr('option-id')
     dir = $(event.currentTarget).closest('.mover').attr('dir')
-    $.post "/admin/products/#{App.product.get('id')}/product_options/#{option_id}/move", dir: dir, ->
-      log 'success'
+    $.post "/admin/products/#{App.product.get('id')}/product_options/#{option_id}/move", dir: dir, (data) ->
+      App.product_variants.refresh data['variants']
+      product = App.product
+      product.options.refresh data['options']
+      product.trigger 'change:options'
+      new App.Views.ProductOption.Index collection: product.options # 更新商品详情的商品选项
     false
 
   initialize: ->
