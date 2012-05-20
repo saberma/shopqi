@@ -108,10 +108,9 @@ App.Collections.ProductOptions = Backbone.Collection.extend
 
   initialize: ->
     _.bindAll this, 'addOne', 'removeOne', 'showBtn'
-    this.bind 'add', this.addOne
-    this.bind 'remove', this.removeOne
-    # 超过3个则隐藏[新增按钮]
-    this.bind 'all', this.showBtn
+    @bind 'add', @addOne
+    @bind 'remove', @removeOne
+    @bind 'all', @showBtn # 超过3个则隐藏[新增按钮]
 
   addOne: (model, collection) ->
     new App.Views.ProductOption.Edit model: model

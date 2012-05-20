@@ -47,8 +47,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
   destroy: ->
     undestroy_product_options = _(@model.collection.models).reject (model) -> typeof(model._destroy) isnt "undefined" and model._destroy
     if undestroy_product_options.length == 1
-      #alert '最后一个商品选项不能删除. 商品至少需要一个选项.'
-      alert '\u6700\u540E\u4E00\u4E2A\u5546\u54C1\u9009\u9879\u4E0D\u80FD\u5220\u9664\u002E\u0020\u5546\u54C1\u81F3\u5C11\u9700\u8981\u4E00\u4E2A\u9009\u9879.'
+      alert '最后一个商品选项不能删除. 商品至少需要一个选项.'
       return false
     if @model.id
       @model._destroy = true
@@ -63,8 +62,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
     @disableOption()
     return false
 
-  # 每个选项名称只能被选择一次
-  disableOption: ->
+  disableOption: -> # 每个选项名称只能被选择一次
     values = $('.option-selector').map -> this.value
     $('.option-selector').each ->
       value = $(this).val()
@@ -77,8 +75,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
             $(this).attr('disabled', false)
     return false
 
-  # 设置默认值
-  setDefaultValue: ->
+  setDefaultValue: -> # 设置默认值
     #this.$("name['product[options_attributes][][value]']").val("默认#{this.$('.option-selector > option:selected').text()}")
     value = "\u9ED8\u8BA4"
     value += @$('.option-selector > option:selected').text() if @$('.option-selector').val() isnt 'create_new'

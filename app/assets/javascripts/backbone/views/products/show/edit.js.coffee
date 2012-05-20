@@ -37,8 +37,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
       success: (model, resp) ->
         msg '修改成功!'
         self.show()
-        #显示商品选项
-        new App.Views.ProductOption.Index collection: self.model.options
+        new App.Views.ProductOption.Index collection: self.model.options # 显示商品选项
     false
 
   show: ->
