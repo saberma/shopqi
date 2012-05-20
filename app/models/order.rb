@@ -139,7 +139,7 @@ class Order < ActiveRecord::Base
 
     def cancel! # 取消订单
       self.class.transaction do
-        self.update_attributes! status: :cancelled
+        self.update_attribute :status, :cancelled
         self.line_items.each do |line_item| # 跟踪库存
           variant = line_item.product_variant
           variant.increment! :inventory_quantity if variant.manage_inventory?
