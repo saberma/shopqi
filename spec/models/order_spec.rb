@@ -307,6 +307,7 @@ describe Order do
         end
 
         it 'should reduce product variant inventory quantity' do #
+          order.cancel_reason = 'customer' # 顾客取消订单
           order.cancel!
           variant.reload.inventory_quantity.should eql 1
         end
