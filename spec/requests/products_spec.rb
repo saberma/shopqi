@@ -401,11 +401,10 @@ describe "Products", js: true do
   ##### 查看 #####
   describe "GET /products/id" do
 
-    context "(with two products)" do
+    context "(with a product)" do
 
       before :each do
         iphone4
-        psp
       end
 
       describe '#duplicate' do # 复制商品
@@ -725,6 +724,40 @@ describe "Products", js: true do
             has_no_xpath?("//tr[contains(@class, 'edit-option')][2]").should be_true # Bug: 不应该新增重复的选项输入项
           end
 
+          context 'with three options' do # 有三个选项
+
+            before do
+              iphone4.options_attributes = [
+                {name: '大小', value: '16G'},
+                {name: '网络', value: 'WIFI'},
+              ]
+              iphone4.save
+              iphone4.reload # 注意要reload，使option的value重置为空
+              visit product_path(iphone4)
+            end
+
+            describe 'option' do # 选项
+
+              it 'should move right' do # 向右移动位置
+                page.execute_script("$('.mover').show()") # 鼠标悬停时显示
+                find('#option-header-1 .mover').click # 箭头图标
+                asset_options titles: %w(大小 标题 网络), variants: [%w(16G 默认标题 WIFI)]
+                visit product_path(iphone4) # 回显
+                asset_options titles: %w(大小 标题 网络), variants: [%w(16G 默认标题 WIFI)]
+              end
+
+              it 'should move left', f: true do # 向右移动位置
+                page.execute_script("$('.mover').show()") # 鼠标悬停时显示
+                find('#option-header-2 .mover:first').click # 箭头图标
+                asset_options titles: %w(大小 标题 网络), variants: [%w(16G 默认标题 WIFI)]
+                visit product_path(iphone4) # 回显
+                asset_options titles: %w(大小 标题 网络), variants: [%w(16G 默认标题 WIFI)]
+              end
+
+            end
+
+          end
+
           describe '(batch)' do # 批量操作
 
             it 'should change price' do
@@ -787,4 +820,35 @@ describe "Products", js: true do
 
   end
 
+end
+
+DEFAULT_OPTIONS = %w(标题 大小 颜色 材料 风格)
+
+def asset_options(options) # 检查选项
+  titles = options[:titles]
+  variants = options[:variants]
+  titles.each_with_index do |title, index| # 检查选项标题
+    find("#option-header-#{index+1}").should have_content(title)
+  end
+  variants.each_with_index do |variant, index| # 检查款式选项值
+    within(:xpath, "//tr[contains(@class, 'inventory-row')][#{index+1}]") do
+      variant.each_with_index do |value, index|
+        find(".option-#{index+1}").text.should eql value
+      end
+    end
+  end
+  values = variants.clone
+  values = values.shift.zip *values
+  titles.each_with_index do |title, index|  # 检查商品详情显示的选项
+    within(:xpath, "//tbody[@id='product-options-list']/tr[#{index+1}]") do
+      find(".option-#{index+1} strong").text.should eql title
+      find('.option-values-show .small').text.should eql values[index].join(',')
+    end
+  end
+  titles.each_with_index do |title, index| # 检查编辑区域的选项
+    within(:xpath, "//tr[contains(@class, 'edit-option')][#{index+1}]") do
+      selector = DEFAULT_OPTIONS.include?(title) ? '.option-selector' : '.option-selector-frame input'
+      find(selector).value.should eql title
+    end
+  end
 end
