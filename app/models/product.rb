@@ -228,19 +228,21 @@ class ProductOption < ActiveRecord::Base # 商品选项
   end
 
   def move!(dir)
-    pos = self.position # move后position会改变
-    if dir == -1
-      self.move_higher
-    elsif dir == 1
-      self.move_lower
-    else
-      return
-    end
-    product.variants.each do |variant|
-      tmp = variant.send("option#{pos}")
-      variant.send("option#{pos}=", variant.send("option#{pos+dir}"))
-      variant.send("option#{pos+dir}=", tmp)
-      variant.save
+    self.class.transaction do
+      pos = self.position # move后position会改变
+      if dir == -1
+        self.move_higher
+      elsif dir == 1
+        self.move_lower
+      else
+        return
+      end
+      product.variants.each do |variant|
+        tmp = variant.send("option#{pos}")
+        variant.send("option#{pos}=", variant.send("option#{pos+dir}"))
+        variant.send("option#{pos+dir}=", tmp)
+        variant.save
+      end
     end
   end
 end

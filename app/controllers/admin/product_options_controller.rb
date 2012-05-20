@@ -8,7 +8,7 @@ class Admin::ProductOptionsController < Admin::AppController
   expose(:product_option)
 
   def move
-    product_option.move! params[:dir]
+    product_option.move! params[:dir].to_i
     render nothing: true
   end
 end

@@ -8,9 +8,9 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     "change #select-all": 'selectAll'
     "click #new-value .cancel": 'cancelUpdate'
     "submit form#batch-form": "saveBatchForm"
+    "click .mover": 'move'
 
-  # 批量操作保存
-  saveBatchForm: ->
+  saveBatchForm: -> # 批量操作保存
     self = this
     checked_variant_ids = _.map self.$('.selector:checked'), (checkbox) -> checkbox.value
     operation = @$('#product-select').val()
@@ -41,13 +41,11 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
         self.cancelUpdate()
     false
 
-  # 款式复选框全选操作
-  selectAll: ->
+  selectAll: -> # 款式复选框全选操作
     @$('.selector').attr 'checked', (@$('#select-all').attr('checked') is 'checked')
     @changeProductCheckbox()
 
-  # 款式复选框操作
-  changeProductCheckbox: ->
+  changeProductCheckbox: -> # 款式复选框操作
     checked_variants = @$('.selector:checked')
     all_checked = (checked_variants.size() == @$('.selector').size())
     @$('#select-all').attr 'checked', all_checked
@@ -65,8 +63,7 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
       $('#product-controls').hide()
       @$("#new-value input[name='new_value']").val('')
 
-  # 操作面板修改
-  changeProductSelect: ->
+  changeProductSelect: -> # 操作面板修改
     value = @$('#product-select').val()
     if value in ['price', 'inventory_quantity', 'duplicate-1', 'duplicate-2', 'duplicate-3']
       @$('#new-value').show()
@@ -79,11 +76,17 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
     else
       @$('#new-value').hide()
 
-  # 取消操作面板修改
-  cancelUpdate: ->
+  cancelUpdate: -> # 取消操作面板修改
     @$('#product-select').val('')
     @$('#new-value').hide()
     @$("#new-value input[name='new_value']").val('')
+    false
+
+  move: (event) -> # 移动选项
+    option_id = $(event.currentTarget).parent('.option-title').attr('option-id')
+    dir = $(event.currentTarget).closest('.mover').attr('dir')
+    $.post "/admin/products/#{App.product.get('id')}/product_options/#{option_id}/move", dir: dir, ->
+      log 'success'
     false
 
   initialize: ->
