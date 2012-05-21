@@ -22,9 +22,7 @@ App.Views.LinkList.Links.New = Backbone.View.extend
 
   save: ->
     self = this
-    position = @link_list.links.length + 1
     @link_list.links.create
-      position: position
       title: @$("input[name='title']").val()
       link_type: @$("select[name='link_type']").val()
       subject_handle: @$("select[name='subject_handle']").val()

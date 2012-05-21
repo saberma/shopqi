@@ -16,11 +16,6 @@ App.Views.LinkList.Links.Index = Backbone.View.extend
       @collection.each (link) -> new App.Views.LinkList.Links.Show model: link
       $(@el).sortable axis: 'y', placeholder: "sortable-placeholder", handle: '.image_handle', update: (event, ui) -> #links排序
         $.post "#{self.collection.url}/sort", $(this).sortable('serialize')
-        #排序后设置到model
-        ids = _.map $(this).sortable('toArray'), (id) -> id.substr(5) #link_1
-        i = 0
-        _.each ids, (id) -> self.collection.get(id).set { position: i++ }, silent: true
-        self.collection.sort silent: true
         self.cycle_class()
 
   cycle_class: -> # 行间隔

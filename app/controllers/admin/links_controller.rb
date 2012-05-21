@@ -20,7 +20,7 @@ class Admin::LinksController < Admin::AppController
 
   def sort
     params[:link].each_with_index do |id, index|
-      link_list.links.find(id).update_attributes position:  index
+      link_list.links.find(id).update_attribute :position, index + 1
     end
     render nothing: true
   end
