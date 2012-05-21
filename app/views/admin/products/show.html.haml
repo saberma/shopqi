@@ -299,7 +299,7 @@
   App.product = new App.Models.Product(#{product_json});
   App.product.url = "#{product_path(product)}";
   App.product_variants = new App.Collections.ProductVariants();
-  App.product_variants.refresh(#{variants.to_json(except: [ :created_at, :updated_at ])});
+  App.product_variants.refresh(#{variants_json});
   App.current_sku_size = #{current_sku_size}
   App.shop_sku_size = #{shop_sku_size}
   new App.Views.Product.Show.Index({model: App.product})

@@ -126,8 +126,3 @@ App.Views.Product.Show.Variant.Index = Backbone.View.extend
       new App.Views.Product.Show.Variant.Show model: model
     $('#variants-list').sortable axis: 'y', placeholder: "sortable-placeholder", handle: '.image_handle', update: (event, ui) -> #排序
       $.post "#{self.collection.url()}/sort", $(this).sortable('serialize')
-      #排序后设置到model
-      ids = _.map $(this).sortable('toArray'), (id) -> id.substr(8) # variant_169
-      i = 0
-      _.each ids, (id) -> self.collection.get(id).set { position: i++ }, silent: true
-      self.collection.sort silent: true

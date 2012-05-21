@@ -19,6 +19,7 @@ class Admin::ProductsController < Admin::AppController
     })
   end
   expose(:variants) { product.variants }
+  expose(:variants_json) { variants.to_json(except: [ :position, :created_at, :updated_at ]) }
   #expose(:variant) { variants.new }
   expose(:types) { shop.types }
   expose(:types_options) { types.map {|t| [t.name, t.name]} }

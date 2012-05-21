@@ -746,7 +746,7 @@ describe "Products", js: true do
                 asset_options titles: %w(大小 标题 网络), variants: [%w(16G 默认标题 WIFI)]
               end
 
-              it 'should move left', f: true do # 向右移动位置
+              it 'should move left' do # 向右移动位置
                 page.execute_script("$('.mover').show()") # 鼠标悬停时显示
                 find('#option-header-2 .mover:first').click # 箭头图标
                 asset_options titles: %w(大小 标题 网络), variants: [%w(16G 默认标题 WIFI)]

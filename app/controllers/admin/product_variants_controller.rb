@@ -39,7 +39,7 @@ class Admin::ProductVariantsController < Admin::AppController
 
   def sort
     params[:variant].each_with_index do |id, index|
-      product.variants.find(id).update_attributes position:  index
+      product.variants.find(id).update_attribute :position,  index + 1
     end
     render nothing: true
   end
