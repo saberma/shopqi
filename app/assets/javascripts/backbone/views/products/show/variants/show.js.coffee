@@ -69,7 +69,7 @@ App.Views.Product.Show.Variant.Show = Backbone.View.extend
     false
 
   cancel: ->
-    $('#row-head').removeAttr('style')
+    $('#row-head').removeAttr('style').css opacity: 1
     @$('.inventory-row').show()
     @$('tr.row-edit-details').hide()
     @$('tr.inventory_row').show()
