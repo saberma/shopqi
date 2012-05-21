@@ -153,3 +153,6 @@ App.Collections.ProductVariants = Backbone.Collection.extend
         option.push model.attributes["option#{i++}"]
         @data[key] = _.uniq _.compact option
     @data
+
+  comparator: (variant) ->
+    variant.get("position")

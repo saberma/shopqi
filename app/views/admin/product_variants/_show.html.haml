@@ -13,6 +13,7 @@
     %td.qty-cell(style="width: 50px;") {{inventory_quantity}}
     %td.action-cell(style="width: 70px; text-align:right")
       %a.edit-btn.note(href="#") 修改
+      =image_tag 'admin/icons/drag_handle.gif', class: :image_handle, style: 'float: right;'
   %tr.row-edit-details.hide
     %td(colspan="{{edit_td_size}}" style="padding: 0")
       %form(action="#" onsubmit='return false')

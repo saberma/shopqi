@@ -36,4 +36,11 @@ class Admin::ProductVariantsController < Admin::AppController
     end
     render nothing: true
   end
+
+  def sort
+    params[:variant].each_with_index do |id, index|
+      product.variants.find(id).update_attributes position:  index
+    end
+    render nothing: true
+  end
 end

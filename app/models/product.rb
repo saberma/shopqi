@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   include Models::Handle
   belongs_to :shop
   has_many :photos             , dependent: :destroy           , order: 'position asc'
-  has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'
+  has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'         , order: 'position asc'
   has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: 'position asc'
   has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
   has_many :collections        , class_name: 'CustomCollection', through: :collection_products        , source: :custom_collection
