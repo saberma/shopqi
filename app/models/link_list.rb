@@ -3,8 +3,7 @@ class LinkList < ActiveRecord::Base
   include Models::Handle
   belongs_to :shop
   has_many :links, dependent: :destroy, order: :position.asc
-  attr_accessible :title, :handle, :system_default
-
+  attr_accessible :title, :handle, :system_default, :links_attributes
   accepts_nested_attributes_for :links
 
   before_save do
