@@ -20,9 +20,11 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     .blur()
     # 初始化过滤器
     $('#search-filter_primary').change()
+    $("#customer-search_limit").change -> self.search()
 
   # 显示过滤器列表
   render: ->
+    self = this
     term_field = $('#customer-search_field')
     hint = term_field.attr('data-hint')
     value = term_field.val()
@@ -31,7 +33,7 @@ App.Views.Customer.Index.Search = Backbone.View.extend
       value = term_field.val()
       term_field.val(hint).css(color: '#888') unless value
     new App.Views.Customer.Index.Filter.Index model: @model
-    this.search()
+    @search()
 
   returnToSearch: (e) ->
     this.blurToSearch() if e.keyCode == 13 # 回车
@@ -42,16 +44,44 @@ App.Views.Customer.Index.Search = Backbone.View.extend
     if value isnt hint
       @model.set term: value
 
-  # 查询
-  search: ->
+  search: (page = 1)-> # 查询
+    self = this
     [value, filters] = [@model.get('term'), @model.filters()]
     value = '' unless value
-    params = q: value, f: _(filters).map (filter) -> "#{filter.condition}:#{filter.value}"
+    limit = $('#customer-search_limit').val()
+    params = page: page, limit: limit, q: value, f: _(filters).map (filter) -> "#{filter.condition}:#{filter.value}"
     $('#customer-search_msg').html('&nbsp;').show().css('background-image', 'url(/assets/spinner.gif)')
     $('#customer-search_overlay').show()
     $.get '/admin/customers/search', params, (data) ->
-      App.customers.refresh(data)
+      App.customers.total_count = data['total_count']
+      App.customers.refresh data['results']
       $('#customer-search_overlay').hide()
+      $("#pagination").paging data['total_count'],
+        format: '< (q-)nncnn(-p) >',
+        perpage: limit,
+        page: page,
+        onSelect: (selected_page) ->
+          self.search(selected_page) if selected_page isnt page
+        onFormat: (type) ->
+          switch  type
+            when 'block'
+              if !@active
+              else if @value isnt @page
+                "<a href='#'>#{@value}</a>"
+              else
+                " #{@value} "
+            when 'prev'
+              if @active then "<span class='prev'><a href='#'>« 上一页</a></span>" else ""
+            when 'next'
+              if @active then "<span class='next'><a href='#'>下一页 »</a></span>" else ""
+            when 'first' then ''
+            when 'last' then ''
+            when 'left'
+              if @active then "<a href='#'>#{@value}</a>" else ""
+            when 'right'
+              if @active then "<a href='#'>#{@value}</a>" else ""
+            when 'fill'
+              if @active then ' ... ' else ''
     model_id = @model.id
     # 左边分组 (查询条件为空时要重新激活所有顾客分组、在所有顾客分组中查询要激活当前查询)
     if @model.id == -1 and (value or !_.isEmpty(filters)) # 所有顾客 且 没有查询关键字和过滤条件

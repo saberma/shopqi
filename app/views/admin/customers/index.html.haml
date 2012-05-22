@@ -58,6 +58,7 @@
         %tbody#customer-table_list.ssb
       #customer-search_empty.c(style="display:none;") 没有顾客信息符合查询条件.
     #customer-search_pagination
+      #pagination
 .box2.clearfix
   .fl
     %p
@@ -69,15 +70,7 @@
       %a(href="/admin/payments#customer-accounts") 修改这些配置
   .fr
     每页显示条数:
-    %select#customer-search_limit(style="width:60px")
-      %option(value="25")
-        25
-      %option(value="" selected="selected")
-        50
-      %option(value="100")
-        100
-      %option(value="250")
-        250
+    %select#customer-search_limit(style="width:60px")=options_for_select page_sizes, 50
 #display_message.display_message(style="display:none;")
 #hidden-content(style="display:none;")
   %a#hidden-closure-link.closure-lightbox(href="/admin/customers/tag_form" title="Tag Customers") 新增标记

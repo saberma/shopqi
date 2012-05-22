@@ -16,6 +16,7 @@
 #=require jquery.miniColors
 #=require jquery.MultiFile
 #=require jquery.tipsy
+#=require jquery.paging
 #=require fileuploader
 #=require plugins/jquery.guide
 #=require plugins/jquery.blank_slate

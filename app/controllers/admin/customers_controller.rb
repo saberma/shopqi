@@ -4,11 +4,65 @@ class Admin::CustomersController < Admin::AppController
   layout 'admin'
 
   expose(:shop) { current_user.shop }
-  expose(:customers) do
-    if params[:q] or params[:f]
-      page_size = 25
+  expose(:customers) { shop.customers }
+  expose(:customer_groups) { shop.customer_groups }
+  expose(:customer)
+  expose(:tags) { shop.customer_tags.previou_used }
+  expose(:customer_groups_json) do
+    customer_groups.to_json({
+      except: [ :created_at, :updated_at ]
+    })
+  end
+  expose(:customer_json) do
+    customer.to_json({
+      include: {
+        addresses: { methods: [:province_name, :city_name, :district_name] },
+        orders: {
+          only: [:id, :name, :status, :created_at, :total_price],
+          methods: [ :status_name, :financial_status_name, :fulfillment_status_name]
+        }
+      },
+      methods: [ :default_address, :order, :total_spent, :status_name, :tags_text ],
+      except: [ :created_at, :updated_at ]
+    })
+  end
+  expose(:tags_json) { tags.to_json }
+  expose(:page_sizes) { KeyValues::PageSize.hash }
+  expose(:primary_filters) { KeyValues::Customer::PrimaryFilter.all }
+  expose(:secondary_filters_integer) { KeyValues::Customer::SecondaryFilter::Integer.hash }
+  expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
+  expose(:boolean) { KeyValues::Customer::Boolean.hash }
+  expose(:status) { KeyValues::Customer::State.hash }
+
+  def index
+    render action: :blank_slate if shop.customers.empty?
+  end
+
+  def new
+    customer.addresses.build if customer.addresses.empty?
+  end
+
+  def create
+    customer.password = Random.new.rand(100000..999999) #用于在后台新增用户时，为顾客增加一个随机密码
+    if customer.save
+      redirect_to customer_path(customer)
+    else
+      render action: :new
+    end
+  end
+
+  def update
+    customer.save
+    render nothing: true
+  end
+
+  def show
+  end
+
+  def search
+    customers = if params[:q] or params[:f]
       conditions = {}
-      unless params[:f].blank?
+      unless params[:f].blank? # 过滤器
         params[:f].each do |filter|
           condition, value = filter.split ':'
           value = case value.to_sym
@@ -37,72 +91,16 @@ class Admin::CustomersController < Admin::AppController
         end
       end
       conditions.merge! name_contains: params[:q] unless params[:q].blank?
-      shop.customers.limit(page_size).order(:id.desc).metasearch(conditions).all
+      shop.customers.metasearch(conditions)
     else
-      shop.customers.order(:id.desc)
+      shop.customers
     end
-  end
-  expose(:customer_groups) { shop.customer_groups }
-  expose(:customer)
-  expose(:tags) { shop.customer_tags.previou_used }
-  expose(:customers_json) do
-    customers.to_json({
+    limit = params[:limit] || 25
+    page = params[:page] || 1
+    customers = customers.page(page).per(limit)
+    render json: {total_count: customers.total_count, results: customers.as_json(
       methods: [ :default_address, :order, :total_spent ],
       except: [ :created_at, :updated_at ]
-    })
-  end
-  expose(:customer_groups_json) do
-    customer_groups.to_json({
-      except: [ :created_at, :updated_at ]
-    })
-  end
-  expose(:customer_json) do
-    customer.to_json({
-      include: {
-        addresses: { methods: [:province_name, :city_name, :district_name] },
-        orders: {
-          only: [:id, :name, :status, :created_at, :total_price],
-          methods: [ :status_name, :financial_status_name, :fulfillment_status_name]
-        }
-      },
-      methods: [ :default_address, :order, :total_spent, :status_name, :tags_text ],
-      except: [ :created_at, :updated_at ]
-    })
-  end
-  expose(:tags_json) { tags.to_json }
-  expose(:page_sizes) { KeyValues::PageSize.hash }
-  expose(:primary_filters) { KeyValues::Customer::PrimaryFilter.all }
-  expose(:secondary_filters_integer) { KeyValues::Customer::SecondaryFilter::Integer.hash }
-  expose(:secondary_filters_date) { KeyValues::Customer::SecondaryFilter::Date.hash }
-  expose(:boolean) { KeyValues::Customer::Boolean.hash }
-  expose(:status) { KeyValues::Customer::State.hash }
-
-  def index
-    render action: :blank_slate if customers.empty?
-  end
-
-  def new
-    customer.addresses.build if customer.addresses.empty?
-  end
-
-  def create
-    customer.password = Random.new.rand(100000..999999) #用于在后台新增用户时，为顾客增加一个随机密码
-    if customer.save
-      redirect_to customer_path(customer)
-    else
-      render action: :new
-    end
-  end
-
-  def update
-    customer.save
-    render nothing: true
-  end
-
-  def show
-  end
-
-  def search
-    render json: customers_json
+    )}
   end
 end

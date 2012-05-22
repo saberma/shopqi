@@ -15,7 +15,7 @@ App.Views.Customer.Index.Index = Backbone.View.extend
     $(document).click -> $('.display_message').fadeOut('slow') # 弹出的顾客tip
 
   render: ->
-    $('#customer-search_msg').html("找到 #{@collection.length}位 顾客").css('background-image', 'none')
+    $('#customer-search_msg').html("找到 #{@collection.total_count}位 顾客").css('background-image', 'none')
     $('#customer-table_list').html('')
     _(@collection.models).each (model) -> new App.Views.Customer.Index.Show model: model
 
