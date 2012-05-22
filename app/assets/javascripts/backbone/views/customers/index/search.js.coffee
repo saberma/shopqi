@@ -56,32 +56,8 @@ App.Views.Customer.Index.Search = Backbone.View.extend
       App.customers.total_count = data['total_count']
       App.customers.refresh data['results']
       $('#customer-search_overlay').hide()
-      $("#pagination").paging data['total_count'],
-        format: '< (q-)nncnn(-p) >',
-        perpage: limit,
-        page: page,
-        onSelect: (selected_page) ->
-          self.search(selected_page) if selected_page isnt page
-        onFormat: (type) ->
-          switch  type
-            when 'block'
-              if !@active
-              else if @value isnt @page
-                "<a href='#'>#{@value}</a>"
-              else
-                " #{@value} "
-            when 'prev'
-              if @active then "<span class='prev'><a href='#'>« 上一页</a></span>" else ""
-            when 'next'
-              if @active then "<span class='next'><a href='#'>下一页 »</a></span>" else ""
-            when 'first' then ''
-            when 'last' then ''
-            when 'left'
-              if @active then "<a href='#'>#{@value}</a>" else ""
-            when 'right'
-              if @active then "<a href='#'>#{@value}</a>" else ""
-            when 'fill'
-              if @active then ' ... ' else ''
+      paging data['total_count'], limit, page, (selected_page) ->
+        self.search(selected_page) if selected_page isnt page
     model_id = @model.id
     # 左边分组 (查询条件为空时要重新激活所有顾客分组、在所有顾客分组中查询要激活当前查询)
     if @model.id == -1 and (value or !_.isEmpty(filters)) # 所有顾客 且 没有查询关键字和过滤条件

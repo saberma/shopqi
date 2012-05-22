@@ -25,35 +25,11 @@ App.Views.Order.Index.Index = Backbone.View.extend
     @collection.refresh pagination['results']
     $('#order-table > tbody').html ''
     _(@collection.models).each (model) -> new App.Views.Order.Index.Show model: model
-    $("#pagination").paging pagination['total_count'],
-      format: '< (q-)nncnn(-p) >',
-      perpage: pagination['limit'],
-      page: page,
-      onSelect: (selected_page) ->
-        if selected_page isnt page
-          $.getJSON window.location.href, page: selected_page, (data) ->
-            App.orders_pagination = data
-            self.render()
-      onFormat: (type) ->
-        switch  type
-          when 'block'
-            if !@active
-            else if @value isnt @page
-              "<a href='#'>#{@value}</a>"
-            else
-              " #{@value} "
-          when 'prev'
-            if @active then "<span class='prev'><a href='#'>« 上一页</a></span>" else ""
-          when 'next'
-            if @active then "<span class='next'><a href='#'>下一页 »</a></span>" else ""
-          when 'first' then ''
-          when 'last' then ''
-          when 'left'
-            if @active then "<a href='#'>#{@value}</a>" else ""
-          when 'right'
-            if @active then "<a href='#'>#{@value}</a>" else ""
-          when 'fill'
-            if @active then ' ... ' else ''
+    paging pagination['total_count'], pagination['limit'], page, (selected_page) ->
+      if selected_page isnt page
+        $.getJSON window.location.href, page: selected_page, (data) ->
+          App.orders_pagination = data
+          self.render()
 
   # 商品复选框全选操作
   selectAll: ->

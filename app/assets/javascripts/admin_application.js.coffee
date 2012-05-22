@@ -36,6 +36,33 @@
   endsWith: (str, ends) ->
     str.length >= ends.length and str.substring(str.length - ends.length) is ends
 
+@paging = (total_count, limit, page, onSelect) ->
+  $("#pagination").paging total_count,
+    format: '< (q-)nncnn(-p) >',
+    perpage: limit,
+    page: page,
+    onSelect: onSelect,
+    onFormat: (type) ->
+      switch  type
+        when 'block'
+          if !@active
+          else if @value isnt @page
+            "<a href='#'>#{@value}</a>"
+          else
+            " #{@value} "
+        when 'prev'
+          if @active then "<span class='prev'><a href='#'>« 上一页</a></span>" else ""
+        when 'next'
+          if @active then "<span class='next'><a href='#'>下一页 »</a></span>" else ""
+        when 'first' then ''
+        when 'last' then ''
+        when 'left'
+          if @active then "<a href='#'>#{@value}</a>" else ""
+        when 'right'
+          if @active then "<a href='#'>#{@value}</a>" else ""
+        when 'fill'
+          if @active then ' ... ' else ''
+
 #为IE添加placeholder属性
 @setPlaceholderText = ->
   PLACEHOLDER_SUPPORTED = "placeholder" of document.createElement("input")
