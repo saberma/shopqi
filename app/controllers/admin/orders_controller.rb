@@ -4,29 +4,8 @@ class Admin::OrdersController < Admin::AppController
   layout 'admin'
 
   expose(:shop) { current_user.shop }
-  expose(:orders) do
-    page_size = 100
-    if params[:search]
-      page_size = params[:search].delete(:limit) || page_size
-      params[:search][:financial_status_ne] = :abandoned if params[:search][:financial_status_eq].blank?
-      params[:search][:status_eq] = :open if params[:search][:status_eq].blank?
-      shop.orders.limit(page_size).metasearch(params[:search]).all
-    else
-      shop.orders.limit(page_size).metasearch(status_eq: :open, financial_status_ne: :abandoned).all
-    end
-  end
+  expose(:orders) { shop.orders }
   expose(:order)
-  expose(:orders_json) do
-    orders.to_json({
-      include: {
-        customer: {only: [:id, :name]},
-        line_items: {only: [:name, :quantity]},
-        shipping_address: {only: [:name], methods: [:info]}
-      },
-      methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :shipping_name ],
-      except: [ :updated_at ]
-    })
-  end
   expose(:customer) { order.customer }
   expose(:order_json) do
     order.to_json({
@@ -50,7 +29,31 @@ class Admin::OrdersController < Admin::AppController
   expose(:page_sizes) { KeyValues::PageSize.hash }
 
   def index
-    render action: :blank_slate if shop.orders.empty?
+    render action: :blank_slate and return if shop.orders.empty?
+    @limit = 50
+    page = params[:page] || 1
+    orders = if params[:search]
+      @limit = params[:search].delete(:limit) || @limit
+      params[:search][:financial_status_ne] = :abandoned if params[:search][:financial_status_eq].blank?
+      params[:search][:status_eq] = :open if params[:search][:status_eq].blank?
+      shop.orders.metasearch(params[:search])
+    else
+      shop.orders.metasearch(status_eq: :open, financial_status_ne: :abandoned)
+    end
+    orders = orders.page(page).per(@limit)
+    @pagination = {total_count: orders.total_count, page: page.to_i, limit: @limit, results: orders.as_json(
+      include: {
+        customer: {only: [:id, :name]},
+        line_items: {only: [:name, :quantity]},
+        shipping_address: {only: [:name], methods: [:info]}
+      },
+      methods: [ :status_name, :financial_status_name, :fulfillment_status_name, :shipping_name ],
+      except: [ :updated_at ]
+    )}.to_json
+    respond_to do |format|
+      format.html
+      format.js { render json: @pagination }
+    end
   end
 
   # 批量修改
