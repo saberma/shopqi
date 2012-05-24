@@ -60,6 +60,7 @@ App.Views.Signup.Index = Backbone.View.extend
           errors['email'] = "Email地址已经注册" if data.email?
           errors['password'] = "密码与确认密码需要保持一致，长度不能少于6个字符" if data.password?
           errors['verify_code'] = "手机校验码不正确" if data.verify_code?
+          errors['shop.address'] = "地址 #{data['shop.address']}" if data['shop.address']?
           self.message errors
           self.reset()
     else # 校验不通过

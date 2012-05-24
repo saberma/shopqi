@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521093256) do
+ActiveRecord::Schema.define(:version => 20120524125233) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -634,7 +634,7 @@ ActiveRecord::Schema.define(:version => 20120521093256) do
     t.string   "city",                                 :limit => 8
     t.string   "district",                             :limit => 8
     t.string   "zip_code",                             :limit => 16
-    t.string   "address",                              :limit => 32
+    t.string   "address",                              :limit => 64
     t.string   "email",                                :limit => 64
     t.string   "password",                             :limit => 64
     t.boolean  "password_enabled",                                   :default => false

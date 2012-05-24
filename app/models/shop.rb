@@ -41,6 +41,7 @@ class Shop < ActiveRecord::Base
   attr_protected :deadline
   validates_presence_of :name, :email, :plan
   validates :email, email_format: true
+  validates_length_of :address, maximum: 64
 
   before_create :init_valid_date, :init_currency
 
