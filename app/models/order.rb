@@ -200,6 +200,8 @@ class OrderLineItem < ActiveRecord::Base
   belongs_to :product_variant
   has_and_belongs_to_many :fulfillments, class_name: 'OrderFulfillment'
   validates_presence_of :price, :quantity
+  attr_accessible :product_variant, :price, :quantity
+
   scope :unshipped, where(fulfilled: false)
 
   before_create do
@@ -242,6 +244,7 @@ end
 # 支付记录
 class OrderTransaction < ActiveRecord::Base
   belongs_to :order
+  attr_accessible :kind, :capture, :amount
 
   before_create do
     self.amount ||= order.total_price #非信用卡,手动接收款项
@@ -259,6 +262,7 @@ class OrderFulfillment < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   belongs_to :order
   has_and_belongs_to_many :line_items, class_name: 'OrderLineItem'
+  attr_accessible :tracking_number, :tracking_company, :notify_customer, :line_item_ids
   attr_accessor :notify_customer # 是否发邮件通知顾客
 
   after_create do
@@ -289,6 +293,7 @@ end
 class OrderShippingAddress < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :name, :province, :city, :district, :address1, :phone, message: '此栏不能为空白'
+  attr_accessible :name, :company, :province, :city, :district, :address1, :address2, :zip, :phone
 
   def province_name
     District.get(self.province)
@@ -314,10 +319,12 @@ end
 # 订单历史
 class OrderHistory < ActiveRecord::Base
   belongs_to :order
+  attr_accessible :body, :url
 end
 
 class OrderDiscount < ActiveRecord::Base # 订单优惠
   belongs_to :order
+  attr_accessible :code, :amount
 
   after_create do
     order.shop.discounts.decrement self.code

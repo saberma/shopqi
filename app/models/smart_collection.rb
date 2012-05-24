@@ -6,6 +6,7 @@ class SmartCollection < ActiveRecord::Base
   has_many :collection_products, dependent: :destroy          , class_name: 'SmartCollectionProduct'
   has_many :products           , through: :collection_products
   validates_presence_of :title
+  attr_accessible :title, :published, :handle, :body_html, :products_order, :rules_attributes
   accepts_nested_attributes_for :rules, allow_destroy: true
 
   before_save do
@@ -61,6 +62,7 @@ end
 
 class SmartCollectionRule < ActiveRecord::Base
   belongs_to :smart_collection
+  attr_accessible :column, :relation, :condition
 
   def info
     column_name = KeyValues::Collection::Column.find_by_code(self.column).name
@@ -73,6 +75,7 @@ end
 class SmartCollectionProduct < ActiveRecord::Base
   belongs_to :smart_collection
   belongs_to :product
+  attr_accessible :position, :product_id
 
   default_scope order: 'position asc'
 end

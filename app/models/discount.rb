@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Discount < ActiveRecord::Base
   belongs_to :shop
+  attr_accessible :code, :value, :discount_type, :usage_limit
 
   before_save do
     self.code = self.code.blank? ? self.class.generate_code : self.code

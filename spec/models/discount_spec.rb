@@ -24,7 +24,11 @@ describe Discount do
 
     context 'remain 0 times' do # 优惠码剩余次数不足
 
-      let(:discount) { shop.discounts.create code: 'coupon123', usage_limit: 1, used_times: 1 }
+      let(:discount) do
+        model = shop.discounts.create code: 'coupon123', usage_limit: 1
+        model.update_attribute :used_times, 1
+        model
+      end
 
       it 'should be faild' do
         json = shop.discounts.apply(code: discount.code, cart: cart)

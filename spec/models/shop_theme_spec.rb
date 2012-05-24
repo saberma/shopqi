@@ -173,7 +173,9 @@ describe ShopTheme do
       shop.stub!(:path) { current_data_path }
       FileUtils.mkdir_p data_path
       FileUtils.ln_sf data_path, current_data_path
-      theme = ShopTheme.create theme_id: theme_dark.id, role: theme_dark.role, shop: shop
+      theme = shop.themes.build theme_id: theme_dark.id, role: theme_dark.role
+      theme.shop = shop # replace with stubbed model
+      theme.save
       FileUtils.rm_rf "/tmp/deploy"
       FileUtils.rm_f current_data_path
       file = File.join theme.public_path, 'assets'

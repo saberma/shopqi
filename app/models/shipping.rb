@@ -3,6 +3,7 @@ class Shipping < ActiveRecord::Base
   belongs_to :shop
   has_many :weight_based_shipping_rates, order: 'id asc'
   has_many :price_based_shipping_rates , order: 'id asc'
+  attr_accessible :code
 
   # 修改此模块内方法要记得重启服务
   module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
@@ -40,6 +41,7 @@ class WeightBasedShippingRate < ActiveRecord::Base # 基于重量计算的运费
   default_value_for :weight_low , 0.0
   default_value_for :weight_high, 25.0
   default_value_for :price, 10.0
+  attr_accessible :price, :weight_low, :weight_high, :name
   validates_presence_of :name
 
   def shipping_rate # 保存在order的配送方式
@@ -51,6 +53,7 @@ class PriceBasedShippingRate < ActiveRecord::Base # 基于价格计算的运费(
   belongs_to :shipping
   default_value_for :min_order_subtotal , 50.0
   default_value_for :price, 0.0
+  attr_accessible :price, :min_order_subtotal, :max_order_subtotal, :name
   validates_presence_of :name
 
   def shipping_rate # 保存在order的配送方式

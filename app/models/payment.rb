@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Payment < ActiveRecord::Base
   belongs_to :shop
+  attr_accessible :email, :payment_type_id, :key, :account, :message, :name, :service
   validates_presence_of :account, :key, :service, if: Proc.new{|p| p.payment_type_id?}
   validates_presence_of :email, if: Proc.new{|p| p.is_alipay?} # 支付宝才需要email
   validates_presence_of :name, if: Proc.new{|p| !p.payment_type_id?}

@@ -5,7 +5,7 @@ describe ActivityObserver do
 
   let(:shop) { Factory(:user).shop }
   let(:blog){ Factory :blog, shop: shop}
-  let(:article){ Article.create title: 'aaa', blog: blog, body_html: 'aaaaa'}
+  let(:article){ blog.articles.create title: 'aaa', body_html: 'aaaaa'}
 
   context ".after_create" do
     it "should be insert new activity" do
@@ -36,7 +36,7 @@ describe ActivityObserver do
       end.to change(Activity,:count).by(1)
 
       expect do
-        blog.destroy
+        blog.reload.destroy
       end.to change(Activity,:count).by(1)
 
     end

@@ -2,6 +2,7 @@
 # 外观主题设置
 class ShopThemeSetting < ActiveRecord::Base
   belongs_to :theme, class_name: 'ShopTheme'
+  attr_accessible :name, :value
 
   # 修改此模块内方法要记得重启服务
   module Extension # http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html #Association extensions
@@ -189,6 +190,7 @@ class ShopTheme < ActiveRecord::Base
   belongs_to :shop
   belongs_to :theme
   has_many :settings, class_name: 'ShopThemeSetting', dependent: :destroy, extend: ShopThemeSetting::Extension
+  attr_accessible :name, :role, :load_preset, :theme_id
 
   default_value_for :role, :main # 默认为普通主题
 

@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
   include Models::Handle
   belongs_to :shop
+  attr_accessible :title, :published, :handle, :body_html
 
   validates_presence_of :title
 

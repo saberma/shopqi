@@ -37,6 +37,7 @@ class Shop < ActiveRecord::Base
 
   accepts_nested_attributes_for :domains, :themes, :policies
   attr_readonly :orders_count
+  attr_accessible :name, :phone, :plan, :province, :city, :district, :zip_code, :address, :email, :password, :password_enabled, :password_message, :currency, :money_with_currency_format, :money_format, :money_with_currency_in_emails_format, :money_in_emails_format, :order_number_format, :signup_source, :guided, :access_enabled, :domains_attributes, :themes_attributes, :policies_attributes
   attr_protected :deadline
   validates_presence_of :name, :email, :plan
   validates :email, email_format: true
@@ -194,6 +195,7 @@ end
 
 class ShopDomain < ActiveRecord::Base # 域名
   belongs_to :shop
+  attr_accessible :subdomain, :domain, :host, :primary, :force_domain, :record
 
   #域名须为3到20位数字和字母组成的，且唯一
   validates :subdomain, presence: true, length: 3..32        , format: {with:  /^([a-z0-9\-])*$/ }, unless: "domain.blank?"
@@ -248,18 +250,22 @@ end
 
 class ShopProductType < ActiveRecord::Base #商品类型
   belongs_to :shop
+  attr_accessible :name
 end
 
 class ShopProductVendor < ActiveRecord::Base #商品厂商
   belongs_to :shop
+  attr_accessible :name
 end
 
 class ShopPolicy< ActiveRecord::Base #商店政策
   belongs_to :shop
+  attr_accessible :title, :body
 end
 
 class ShopTask < ActiveRecord::Base #新手指引任务
   belongs_to :shop
+  attr_accessible :name, :completed
   scope :incomplete, where(completed: false)
 
   before_update do
@@ -274,4 +280,5 @@ class ShopTask < ActiveRecord::Base #新手指引任务
 end
 
 class CancelReason < ActiveRecord::Base
+  attr_accessible :selection, :detailed
 end

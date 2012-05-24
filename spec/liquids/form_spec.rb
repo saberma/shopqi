@@ -9,7 +9,7 @@ describe Form do
 
     let(:blog) { shop.blogs.where(handle: 'news').first }
 
-    let(:article) { Article.create title: '文章', shop_id: shop.id, blog_id: blog.id , body_html: '新文章。。。'}
+    let(:article) { blog.articles.create title: '文章', body_html: '新文章。。。' }
 
     let(:article_drop) { ArticleDrop.new(article) }
 

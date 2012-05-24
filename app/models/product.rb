@@ -10,6 +10,8 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :tags, order: 'id asc'
   # 标签
   attr_accessor :tags_text,:images
+  attr_accessible :handle, :title, :published, :body_html, :price, :product_type, :vendor, :tags_text, :images, :photos_attributes, :variants_attributes, :options_attributes
+
   scope :published, where(published: true)
 
   accepts_nested_attributes_for :photos  , allow_destroy: true
@@ -209,6 +211,7 @@ end
 class ProductOption < ActiveRecord::Base # 商品选项
   belongs_to :product
   acts_as_list scope: :product
+  attr_accessible :name, :value, :position
   attr_accessor :value, :first, :last # 辅助值，用于保存至商品款式中
 
   before_destroy do # 更新商品所有款式
@@ -252,6 +255,7 @@ end
 class Photo < ActiveRecord::Base
   belongs_to :product
   default_scope order: 'position asc'
+  attr_accessible :product_image, :position
   VERSION_KEYS = []
 
   image_accessor :product_image do

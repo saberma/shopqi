@@ -7,7 +7,6 @@ class Customer < ActiveRecord::Base
 
   accepts_nested_attributes_for :addresses
 
-
   # Include default devise modules. Others available are:
   # :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :token_authenticatable,
@@ -103,6 +102,7 @@ end
 class CustomerAddress < ActiveRecord::Base
   belongs_to :customer
   include ActionView::Helpers::FormOptionsHelper
+  attr_accessible :name, :company, :province, :city, :district, :address1, :address2, :zip, :phone, :default_address
 
   before_create do
     self.name = self.customer.name if self.name.blank?
@@ -146,6 +146,7 @@ class CustomerTag < ActiveRecord::Base
   has_and_belongs_to_many :customer
   # 最近使用过的标签
   scope :previou_used, order: :updated_at.desc, limit: 10
+  attr_accessible :name
 
   # 分隔逗号
   def self.split(text)

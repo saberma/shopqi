@@ -3,6 +3,7 @@
 class Cart < ActiveRecord::Base
   belongs_to :shop
   belongs_to :customer
+  attr_accessible :session_id, :cart_hash
 
   before_create do
     self.token = UUID.generate(:compact)

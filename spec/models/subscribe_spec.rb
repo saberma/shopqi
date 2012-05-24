@@ -7,10 +7,12 @@ describe Subscribe do
   let(:shop) { user.shop}
 
   context 'when subsribe associate with user ' do
+
     it "should save success" do
       subscribe = shop.subscribes.create user: user
       subscribe.user.id.should eql user.id
     end
+
   end
 
   context 'when subsribe type with email ' do

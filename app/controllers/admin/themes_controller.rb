@@ -51,11 +51,7 @@ class Admin::ThemesController < Admin::AppController
       end
       path = Rails.root.join 'tmp', 'themes', shop.id.to_s
       qqfile = QqFile.new params[:qqfile], request
-      name = qqfile.name
-      zip_path = File.join path, "t#{DateTime.now.to_i}-#{name}"
-      name = name[0, name.rindex('.')] # 去掉文件后缀
-      name = name[0, 32] # 最多32位
-      name = Asset.safe(name) # 过滤文件名
+      zip_path = File.join path, "t#{DateTime.now.to_i}-#{Random.new.rand(1..9999)}"
       FileUtils.mkdir_p path
       File.open(zip_path, 'wb') {|f| f.write(qqfile.body) }
       files = []
@@ -85,6 +81,10 @@ class Admin::ThemesController < Admin::AppController
         render text: {missing: missing}.to_json and return
       end
 
+      name = qqfile.name
+      name = name[0, name.rindex('.')] # 去掉文件后缀
+      name = name[0, 32] # 最多32位
+      name = Asset.safe(name) # 过滤文件名
       shop_theme = shop.themes.create name: name, role: 'wait' # 等待解压主题文件
       Resque.enqueue(ThemeExtracter, shop.id, shop_theme.id, zip_path)
       render text: {id: shop_theme.id, name: shop_theme.name}.to_json

@@ -1,6 +1,7 @@
 class ApiClient < ActiveRecord::Base
   belongs_to :shop
   validates_uniqueness_of :api_key
+  attr_accessible []
 
   before_create do
     self.password      ||= SecureRandom.hex(16)

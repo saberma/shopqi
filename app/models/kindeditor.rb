@@ -2,6 +2,8 @@
 #用于处理富文本编辑
 class Kindeditor < ActiveRecord::Base
   belongs_to :shop
+  attr_accessible :kindeditor_image
+
   image_accessor :kindeditor_image do
     storage_path{ |image|
       "#{self.shop.id}/kindeditors/#{image.basename}_#{rand(1000)}.#{image.format}" # data/shops/1/kindeditors/foo_45.jpg

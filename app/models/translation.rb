@@ -1,5 +1,7 @@
 #encoding: utf-8
 class Translation < ActiveRecord::Base
+  attr_accessible :key, :value
+
   def self.get_value(key)
     value = Translation.find_by_key(key).try(:value)
     value = value.blank? ? key : value

@@ -42,7 +42,7 @@ class Admin::AppController < ActionController::Base # 后台管理/admin
   end
 
   def force_domain # Users::SessionsController.force_domain()要保持一致
-    myshopqi = Shop.at( request.host).domains.myshopqi
+    myshopqi = Shop.at(request.host).domains.myshopqi
     redirect_to "#{request.protocol}#{myshopqi.host}#{request.port_string}#{request.path}" if request.host != myshopqi.host
   end
 

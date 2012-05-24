@@ -3,6 +3,7 @@ class Consumption < ActiveRecord::Base
   belongs_to :shop
   belongs_to_active_hash :plan_type,  class_name: 'KeyValues::Plan::Type'
 
+  attr_accessible :plan_type_id, :quantity
   attr_protected :price, :status
 
   default_value_for(:token){ UUID.generate(:compact) }

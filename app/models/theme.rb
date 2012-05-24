@@ -6,6 +6,7 @@ class Theme < ActiveRecord::Base
   mount_uploader :main      , ThemeMainUploader
   mount_uploader :collection, ThemeCollectionUploader
   mount_uploader :product   , ThemeProductUploader
+  attr_accessible :name, :handle, :style, :style_handle, :role, :price, :color, :desc, :shop, :site, :author, :email, :published, :file, :main, :collection, :product, :position
 
   validates_presence_of :name, :handle, :style, :style_handle, :role, :color
   validates_uniqueness_of :style_handle, scope: :handle

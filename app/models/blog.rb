@@ -4,6 +4,7 @@ class Blog < ActiveRecord::Base
   has_many :articles, dependent: :destroy, order: 'id desc'
   belongs_to :shop
   validates_presence_of :title
+  attr_accessible :title, :handle, :commentable
 
   before_save do
     self.make_valid(shop.blogs)
@@ -33,6 +34,7 @@ class Article < ActiveRecord::Base
   has_many :spam_comments,class_name:"Comment",conditions:"comments.status = 'spam'"
   validates_presence_of :title
   delegate :shop, to: :blog
+  attr_accessible :title, :body_html, :published, :author
 
   searchable do
     integer :shop_id, references: Shop
@@ -91,6 +93,7 @@ class Comment < ActiveRecord::Base
   belongs_to :shop
   validates_presence_of :body,:email,:author
   validates :email, format: {with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/ }
+  attr_accessible :status, :author, :email, :body
 
   before_create do
     self.shop_id = article.shop_id

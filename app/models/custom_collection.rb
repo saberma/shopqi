@@ -4,6 +4,7 @@ class CustomCollection < ActiveRecord::Base
   belongs_to :shop
   has_many :collection_products, dependent: :destroy          , class_name: 'CustomCollectionProduct'
   has_many :products           , through: :collection_products, order: '"custom_collection_products"."position" asc' # 商店使用
+  attr_accessible :title, :published, :handle, :body_html, :products_order, :products
 
   validates_presence_of :title
 
@@ -32,6 +33,7 @@ end
 class CustomCollectionProduct < ActiveRecord::Base
   belongs_to :custom_collection
   belongs_to :product
+  attr_accessible :position
 
   def self.ordered(products_order = 'position asc')
     self.select("custom_collection_products.*").joins(:product).order(products_order) # issues#231
