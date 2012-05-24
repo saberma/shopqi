@@ -10,8 +10,9 @@ class Admin::ArticlesController < Admin::AppController
   expose(:tags) { shop.tags.previou_used(2) }
 
   def create
-    article.user = current_user
     blog = shop.blogs.find(params[:article][:blog_id])
+    article = blog.articles.build params[:article]
+    article.user = current_user
     if article.save
       flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")
       redirect_to blog_article_path(blog,article)
