@@ -3,6 +3,7 @@ class Admin::SessionsController < Devise::SessionsController
   #before_filter :get_host, only: :create
   before_filter :check_shop_access_enabled
   before_filter :force_domain # 登录信息需要用到https，必须重定向至 .myshopqi.com
+  skip_before_filter :verify_authenticity_token, only: [:new, :create] # 官网登录时token是不一样的
 
   private
   def check_shop_access_enabled
