@@ -2,6 +2,10 @@ bundler_args: --without production development #rails-dev-boost: invalid byte se
 
 rvm: 1.9.3
 
+# RubyPython::PyObject::FFI (NameError)
+# https://github.com/travis-ci/travis-ci/issues/557#issuecomment-5919720
+before_install: gem uninstall ffi -a
+
 # request headless test
 before_script: sh -e /etc/init.d/xvfb start
 
