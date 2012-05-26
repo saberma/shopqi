@@ -11,7 +11,7 @@ class Admin::ArticlesController < Admin::AppController
 
   def create
     blog = shop.blogs.find(params[:article][:blog_id])
-    article = blog.articles.build params[:article]
+    @_resources = { article: blog.articles.build(params[:article]) } # expose的article
     article.user = current_user
     if article.save
       flash[:notice] = I18n.t("flash.actions.#{action_name}.notice")

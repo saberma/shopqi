@@ -164,6 +164,7 @@ describe "Shippings", js: true do
                 click_on '以上'
                 sleep 1
                 find('.edit-max-purchase').visible?.should be_true
+                find('form').click # 输入项失焦点
                 fill_in 'min_order_subtotal', with: '150'
                 sleep 1
                 find('.edit-max-purchase').visible?.should be_false
