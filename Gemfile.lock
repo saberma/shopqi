@@ -27,13 +27,6 @@ GIT
       posix-spawn (~> 0.3.6)
 
 GIT
-  remote: git://github.com/ryanb/letter_opener.git
-  revision: 29b17fefe87b8fdc7ead987dbfabe355b59ff684
-  specs:
-    letter_opener (0.0.2)
-      launchy
-
-GIT
   remote: git://github.com/saberma/activemerchant_patch_for_china.git
   revision: 539240e6db55a514d98df381c9d94befcccd6c55
   specs:
@@ -216,8 +209,10 @@ GEM
     kaminari (0.12.4)
       rails (>= 3.0.0)
     kgio (2.6.0)
-    launchy (2.0.5)
+    launchy (2.1.0)
       addressable (~> 2.2.6)
+    letter_opener (0.0.2)
+      launchy
     libv8 (3.3.10.2)
     liquid (2.3.0)
     macaddr (1.5.0)
@@ -425,7 +420,7 @@ DEPENDENCIES
   interactive_editor
   jquery-rails
   kaminari
-  letter_opener!
+  letter_opener
   liquid (~> 2.3.0)
   memcache-client
   message_block
