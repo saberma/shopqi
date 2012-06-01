@@ -8,21 +8,17 @@ describe ShopObserver do
 
     describe 'oauth2 consumer' do
 
-      let(:client) { Factory(:oauth2_client) }
+      let(:application) { Factory :themes_application }
 
       before(:each) do
-        client
-        Theme.should_receive(:client_id).and_return(client.client_id)
+        application
+        Theme.should_receive(:client_id).and_return(application.uid)
       end
 
       it "should create oauth2 access_token" do
         expect do
-          expect do
-            shop
-            shop.oauth2_authorizations.first.access_token_hash.should_not be_blank
-            shop.oauth2_consumer_tokens.first.access_token.should_not be_blank
-          end.to change(OAuth2::Model::Authorization, :count).by(1)
-        end.to change(OAuth2::Model::ConsumerToken, :count).by(1)
+          shop
+        end.to change(Doorkeeper::AccessToken, :count).by(1)
       end
 
     end

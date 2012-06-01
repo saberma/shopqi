@@ -30,16 +30,24 @@ class Theme < ActiveRecord::Base
 
   begin 'oauth2' # theme作为client，向provider请求认证时传递的返回跳转uri
 
+    def self.client_name
+      'themes'
+    end
+
     def self.client_id
-      client.client_id
+      client.uid
     end
 
     def self.client_secret
-      client.client_secret
+      client.secret
+    end
+
+    def self.client_redirect_uri
+      "http://themes.#{Setting.host}#{':4000' if development?}/callback"
     end
 
     def self.client
-      OAuth2::Model::ConsumerClient.where(name: 'themes').first
+      Doorkeeper::Application.find_by_name(self.client_name)
     end
 
   end

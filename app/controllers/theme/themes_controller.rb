@@ -54,19 +54,19 @@ class Theme::ThemesController < Theme::AppController
     end
 
     def get_shop # 获取商店信息
-      access_token = OAuth2::AccessToken.from_hash(client, access_token: token, header_format: 'OAuth %s') # 注意,由于oauth2标准处于草稿修订阶段,变动较频繁.此处的header_format要与 lib/oauth2/router.rb 中的 self.access_token 对应
-      oauth2_response = access_token.get('/api/me')
+      access_token = OAuth2::AccessToken.from_hash(client, access_token: token)
+      oauth2_response = access_token.get('/api/v1/shop')
       result = JSON(oauth2_response.body)
       if result['error'].blank?
-        session[:shop] = result['name']
+        session[:shop] = result['shop']['name']
       end
       redirect_to theme_download_path(handle: handle, style_handle: style_handle)
     end
 
     def apply # 切换主题
       if request.post?
-        access_token = OAuth2::AccessToken.from_hash(client, access_token: token, header_format: 'OAuth %s') # 注意,由于oauth2标准处于草稿修订阶段,变动较频繁.此处的header_format要与 lib/oauth2/router.rb 中的 self.access_token 对应
-        oauth2_response = access_token.post('/api/themes/install', params: { handle: handle, style_handle: style_handle })
+        access_token = OAuth2::AccessToken.from_hash(client, access_token: token)
+        oauth2_response = access_token.post('/api/v1/themes/install', params: { handle: handle, style_handle: style_handle })
         @result = JSON(oauth2_response.body)
       end
     end
@@ -127,8 +127,7 @@ class Theme::ThemesController < Theme::AppController
 
   def token
     shop = Shop.at(shop_host)
-    consumer = OAuth2::Model::ConsumerToken.where(shop_id: shop.id, client_id: Theme.client_id).first
-    consumer.access_token
+    Theme.client.access_tokens.find_by_resource_owner_id(shop.id).token
   end
 
   def authenticate_shop! # 必须通过认证

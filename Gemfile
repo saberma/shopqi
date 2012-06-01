@@ -51,7 +51,9 @@ gem "uuid" # 生成36位(或32位)唯一序列号
 gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit', git: 'git://github.com/mojombo/grit.git' # 主题版本控制(每个商店主题都是一个git repository) # 2.4.1版本存在此问题 http://j.mp/uoEKw1
-gem 'oauth2' # 提供访问oauth provider的客户端访问接口,服务端(Provider)使用http://j.mp/nCZiUj, 代码放在 lib/oauth2
+gem 'doorkeeper', '~> 0.4.0'
+gem "oauth2", "~> 0.6.1" # 0.6.1 以上版本依赖 rack 1.4，与 resque 依赖 1.3 冲突
+gem 'rabl' # 构造 json api 数据
 #gem 'newrelic_rpm' # 性能监控(模板编辑器中的layout/theme.liquid也会被注入script,暂时不使用此gem)
 gem "jquery-rails"
 gem 'rubyzip' # 解压缩用户上传的主题zip文件
@@ -62,10 +64,6 @@ gem 'sitemap_generator' # 生成搜索引擎友好的sitemap # bundle exec rake 
 group :development do
   gem 'rails3-generators'
   gem "haml-rails"
-  gem 'guard'
-  gem 'guard-livereload' # 修改后台文件后，safari或chrome浏览器会自动刷新
-  gem 'guard-rspec'
-  gem 'guard-spork'
   #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
   gem 'rvm-capistrano', "~> 1.1.0", require: 'capistrano'
@@ -75,7 +73,6 @@ end
 group :development, :test do
   unless ENV['TRAVIS'] # 特殊处理，去掉在travis-ci中不需要的gem
     gem "awesome_print", require: 'ap' # 调试
-    gem "interactive_editor"
     gem 'sunspot_solr'
   end
   gem "factory_girl"

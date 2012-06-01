@@ -12,8 +12,6 @@ SecretSetting.admin_users.each_value do |attr|
   AdminUser.create!(attr) unless AdminUser.exists?(email: attr['email'])
 end
 
-unless OAuth2::Model::Client.exists?(name: 'themes')
-  redirect_uri = "http://themes.#{Setting.host}#{':4000' if development?}/callback"
-  client = OAuth2::Model::Client.create name: 'themes', redirect_uri: redirect_uri # 注册主题Client，用于商店切换主题操作
-  OAuth2::Model::ConsumerClient.create name: 'themes', client_id: client.client_id, client_secret: client.client_secret
+unless Doorkeeper::Application.exists?(name: Theme.client_name)
+  Doorkeeper::Application.create! name: Theme.client_name, redirect_uri: Theme.redirect_uri # 注册主题Client，用于商店切换主题操作
 end

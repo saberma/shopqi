@@ -1,10 +1,10 @@
 #encoding: utf-8
-ActiveAdmin.register OAuth2::Model::Client do
+ActiveAdmin.register Doorkeeper::Application do
 
   index do
     column :id
     column :name
-    column :client_id
+    column :uid
     column :redirect_uri
     column :created_at
     default_actions

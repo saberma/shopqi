@@ -26,16 +26,4 @@ class Admin::ShopsController < Admin::AppController
     end
   end
 
-  begin 'api'
-    def me
-      authorization = OAuth2::Provider.access_token(nil, [], request)
-      result = if authorization.valid?
-        authorization.owner.as_json(only: [:deadline, :created_at, :updated_at, :name])['shop']
-      else
-        {error: 'No soup for you!'}
-      end
-      render json: result.to_json
-    end
-  end
-
 end

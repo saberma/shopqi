@@ -57,13 +57,8 @@ class ShopObserver < ActiveRecord::Observer
       shop.emails.create title: title, mail_type: type.code, body: body
     end
 
-    # 预先生成consumer access_token(不需要用户手动授权主题应用)，用于主题商店切换主题
-    client = OAuth2::Model::Client.find_by_client_id(Theme.client_id)
-    author = shop.oauth2_authorizations.build client: client
-    #author = OAuth2::Model::Authorization.new owner: shop, client: client
-    author.access_token = OAuth2::Model::Authorization.create_access_token # expires_at为nil，永不过期
-    author.save
-    shop.oauth2_consumer_tokens.create client_id: client.client_id, access_token: author.access_token
+    application = Doorkeeper::Application.find_by_name(Theme.client_name)
+    application.access_tokens.create! resource_owner_id: shop.id, expires_in: Doorkeeper.configuration.access_token_expires_in
   end
 
 end

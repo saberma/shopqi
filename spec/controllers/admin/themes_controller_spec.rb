@@ -151,38 +151,4 @@ describe Admin::ThemesController do
 
   end
 
-  context '#api' do # 安装主题
-
-    before do
-      authorization = mock('authorization')
-      authorization.stub!(:owner).and_return(shop)
-      authorization.stub!(:valid?).and_return(true)
-      OAuth2::Provider.stub!(:access_token).and_return(authorization)
-    end
-
-    it 'should be install' do # issues#228
-      expect do
-        post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle
-        response.should be_success
-      end.should change(ShopTheme, :count).by(1)
-    end
-
-    describe 'validate' do
-
-      context 'shop storage is not idle' do # 商店容量已用完
-
-        before { Rails.cache.write(shop.storage_cache_key, 101) }
-
-        after { Rails.cache.delete(shop.storage_cache_key) }
-
-        it 'should be fail' do
-          post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle
-          JSON(response.body)['error'].should_not be_blank
-        end
-
-      end
-    end
-
-  end
-
 end

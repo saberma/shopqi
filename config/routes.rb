@@ -2,13 +2,21 @@
 #include Rails.application.routes.url_helpers #在console中调用orders_path等
 Shopqi::Application.routes.draw do
 
-  scope "/api" do # 供oauth2调用
-    scope module: :admin do
-      get '/me'             , to: 'shops#me'      , as: :api_me
+  mount Doorkeeper::Engine => '/oauth'
+
+  #scope "/api" do # 供oauth2调用
+  #  scope module: :admin do
+  #    get '/me'             , to: 'shops#me'      , as: :api_me
+  #    post '/themes/install', to: 'themes#install'
+  #  end
+  #end
+
+  namespace :api do
+    namespace :v1 do
+      get '/shop'           , to: "shops#show"
       post '/themes/install', to: 'themes#install'
     end
   end
-
 
   constraints(Domain::Wiki) do # 帮助文档
     devise_for :admin_users, ActiveAdmin::Devise.config
@@ -163,16 +171,8 @@ Shopqi::Application.routes.draw do
       get '/robots.txt'                                     , to: 'shops#robots'
     end
 
-    scope module: :admin do # 用户后台管理
-
-      begin 'oauth2' # 授权认证
-        get '/oauth/authorize'    , to: 'oauth#authorize'   , as: :authorize
-        post '/oauth/access_token', to: 'oauth#access_token', as: :access_token
-        post '/oauth/token'       , to: 'oauth#access_token', as: :token
-        match '/oauth/allow'      , to: 'oauth#allow'       , as: :oauth_allow
-      end
+    scope module: :admin do # 用户后台管理(无 /admin 前缀)
       post '/kindeditor/upload_image', to: 'kindeditor#upload_image'
-
     end
 
     scope "/admin", module: :admin do # 用户后台管理

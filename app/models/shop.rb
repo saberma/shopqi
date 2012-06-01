@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Shop < ActiveRecord::Base
-  #include OAuth2::Model::ClientOwner # Client所属者不应该是Shop，要放置于以后开发的Partner类
-  include OAuth2::Model::ResourceOwner
-  has_many :api_clients           , dependent: :destroy
+  has_many :api_clients           , dependent: :destroy                      , order: 'id asc'
+  has_many :access_grants         , dependent: :destroy                      , class_name: 'Doorkeeper::AccessGrant', order: 'id asc', foreign_key: 'resource_owner_id'
+  has_many :access_tokens         , dependent: :destroy                      , class_name: 'Doorkeeper::AccessToken', order: 'id asc', foreign_key: 'resource_owner_id'
   has_many :users                 , dependent: :destroy                      , order: 'id asc'
   has_many :domains               , dependent: :destroy                      , order: 'id asc', class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: 'id desc'
@@ -23,7 +23,6 @@ class Shop < ActiveRecord::Base
   has_many :comments              , dependent: :destroy
   has_many :themes                , dependent: :destroy                      , class_name: 'ShopTheme', extend: ShopTheme::Extension
   has_many :shippings             , dependent: :destroy                      , order: 'code desc',      extend: Shipping::Extension
-  has_many :oauth2_consumer_tokens, dependent: :destroy                      , class_name: 'OAuth2::Model::ConsumerToken'
 
   has_many :types                 , dependent: :destroy                      , class_name: 'ShopProductType'
   has_many :vendors               , dependent: :destroy                      , class_name: 'ShopProductVendor'
