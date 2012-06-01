@@ -10,12 +10,9 @@ describe ShopObserver do
 
       let(:application) { Factory :themes_application }
 
-      before(:each) do
-        application
-        Theme.should_receive(:client_id).and_return(application.uid)
-      end
+      before { application }
 
-      it "should create oauth2 access_token" do
+      it "should create oauth2 access_token", f: true do
         expect do
           shop
         end.to change(Doorkeeper::AccessToken, :count).by(1)
