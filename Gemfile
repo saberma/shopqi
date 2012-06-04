@@ -1,7 +1,7 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+gem 'rails', '3.1.5'
 
 ##### 实体相关 #####
 gem 'pg'
@@ -52,7 +52,7 @@ gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit', git: 'git://github.com/mojombo/grit.git' # 主题版本控制(每个商店主题都是一个git repository) # 2.4.1版本存在此问题 http://j.mp/uoEKw1
 gem 'doorkeeper', '~> 0.4.0'
-gem "oauth2", "~> 0.6.1" # 0.6.1 以上版本依赖 rack 1.4，与 resque 依赖 1.3 冲突
+gem "oauth2", "~> 0.5.2" # 0.6.1 版本依赖 multi_json 1.3，与 rails 3.1.5 冲突，0.6.1 以上版本依赖 rack 1.4，与 resque 依赖 1.3 冲突
 gem 'rabl' # 构造 json api 数据
 #gem 'newrelic_rpm' # 性能监控(模板编辑器中的layout/theme.liquid也会被注入script,暂时不使用此gem)
 gem "jquery-rails"
