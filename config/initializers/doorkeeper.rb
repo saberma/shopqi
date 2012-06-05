@@ -1,3 +1,11 @@
+module Doorkeeper::OAuth
+  class AuthorizationRequest
+    def success_redirect_uri # 获取 authorize_code 后返回 callback 时要带上 shop 参数
+      "#{@authorization.callback }&shop=#{@resource_owner.myshopqi_domain.host}#{Setting.domain.port}"
+    end
+  end
+end
+
 Doorkeeper.configure do
   # This block will be called to check whether the
   # resource owner is authenticated or not

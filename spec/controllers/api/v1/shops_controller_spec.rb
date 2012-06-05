@@ -10,7 +10,7 @@ describe Api::V1::ShopsController do
 
   context '#show' do
 
-    let(:application) { Factory :themes_application } # OAuth application
+    let(:application) { Factory :express_application } # OAuth application
 
     let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id }
 

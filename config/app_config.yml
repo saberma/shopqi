@@ -4,12 +4,17 @@ defaults: &defaults
     support: "ShopQi Support<support@shopqi.com>"
   domain:
     host: lvh.me
+    port: ''
     record: 粤ICP备11089804号
   wiki:
     relative_path: 'data/wiki'
 
 development:
   <<: *defaults
+  domain:
+    host: lvh.me
+    port: ':4000'
+    record: 粤ICP备11089804号
 
 test:
   <<: *defaults

@@ -52,10 +52,6 @@ class Shop < ActiveRecord::Base
     self.set_currency_format if currency_changed? # 修改币种，则更新相应格式(如果用户同时修改格式，则会被覆盖)
   end
 
-  def self.at(domain) # 域名
-    ShopDomain.at(domain).shop
-  end
-
   def collections
     custom_collections.where(published: true) + smart_collections.where(published: true)
   end
@@ -68,8 +64,20 @@ class Shop < ActiveRecord::Base
     self.update_attributes! guided: true, password_enabled: false
   end
 
-  def primary_domain # 主域名
-    domains.primary
+  begin 'domain'
+
+    def self.at(domain) # 域名
+      ShopDomain.at(domain).shop
+    end
+
+    def primary_domain # 主域名
+      domains.primary
+    end
+
+    def myshopqi_domain # 官方二级域名
+      domains.myshopqi
+    end
+
   end
 
   begin 'plan' # 商店帐号类型

@@ -43,7 +43,7 @@ class Theme < ActiveRecord::Base
     end
 
     def self.client_redirect_uri
-      "http://themes.#{Setting.host}#{':4000' if development?}/callback"
+      "http://themes.#{Setting.host}#{Setting.port}/callback"
     end
 
     def self.client

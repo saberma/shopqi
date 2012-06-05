@@ -8,4 +8,9 @@ FactoryGirl.define do
     name 'themes'
     redirect_uri "http://themes.#{Setting.host}/callback"
   end
+
+  factory :express_application, parent: :application do
+    name 'express'
+    redirect_uri "http://express.shopqiapp.com/callback"
+  end
 end
