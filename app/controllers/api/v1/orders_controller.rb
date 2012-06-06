@@ -3,7 +3,7 @@ module Api::V1
   class OrdersController < AppController
 
     def index
-      @orders = shop.orders.reorder('id asc')
+      @orders = shop.orders
     end
 
   end

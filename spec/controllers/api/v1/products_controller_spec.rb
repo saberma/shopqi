@@ -26,7 +26,7 @@ describe Api::V1::ProductsController do
       response.should be_success
       json = JSON(response.body)['products']
       json.size.should eql 2
-      product_json = json.first
+      product_json = json.last
       %w(id title body_html handle product_type vendor).each do |field|
         product_json[field].should eql iphone4.send(field)
       end
