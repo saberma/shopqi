@@ -74,8 +74,12 @@ class Shop < ActiveRecord::Base
       domains.primary
     end
 
-    def myshopqi_domain # 官方二级域名
-      domains.myshopqi
+    def domain
+      primary_domain.host
+    end
+
+    def shopqi_domain # 官方二级域名
+      "#{domains.myshopqi.host}#{Setting.domain.port}"
     end
 
   end

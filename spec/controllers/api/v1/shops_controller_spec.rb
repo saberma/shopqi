@@ -19,7 +19,7 @@ describe Api::V1::ShopsController do
       get :show, format: :json, access_token: token.token
       response.should be_success
       json = JSON(response.body)['shop']
-      %w(id name).each do |field|
+      %w(id name phone plan province city district zip_code address email domain shopqi_domain).each do |field|
         json[field].should eql shop.send(field)
       end
     end

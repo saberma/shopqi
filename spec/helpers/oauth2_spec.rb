@@ -12,7 +12,7 @@ describe 'Doorkeeper::OAuth::AuthorizationRequest' do
     it 'should get shop params' do
       authorize = Doorkeeper::OAuth::AuthorizationRequest.new application, shop, response_type: 'code', redirect_uri: application.redirect_uri
       authorize.authorize
-      authorize.success_redirect_uri.should include("&shop=#{shop.myshopqi_domain.host}#{Setting.domain.port}")
+      authorize.success_redirect_uri.should include("&shop=#{shop.shopqi_domain}")
     end
 
   end
