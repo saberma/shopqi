@@ -4,17 +4,12 @@ Shopqi::Application.routes.draw do
 
   mount Doorkeeper::Engine => '/oauth'
 
-  #scope "/api" do # 供oauth2调用
-  #  scope module: :admin do
-  #    get '/me'             , to: 'shops#me'      , as: :api_me
-  #    post '/themes/install', to: 'themes#install'
-  #  end
-  #end
-
-  namespace :api do
-    namespace :v1 do
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       get '/shop'           , to: "shops#show"
       post '/themes/install', to: 'themes#install'
+      get '/products'       , to: "products#index"
+      get '/orders'         , to: "orders#index"
     end
   end
 
@@ -107,14 +102,6 @@ Shopqi::Application.routes.draw do
   end
 
   constraints(Domain::Store) do
-
-    namespace :api do
-      get '/shop' , to: "shops#index"
-      resources :customers
-      resources :products
-      resources :blogs
-      resources :orders
-    end
 
     devise_for :user, skip: :registrations, controllers: {sessions: "admin/sessions"}# 登录
 

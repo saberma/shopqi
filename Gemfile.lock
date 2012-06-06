@@ -240,7 +240,7 @@ GEM
     pr_geohash (1.0.0)
     pygments.rb (0.2.4)
       rubypython (~> 0.5.3)
-    rabl (0.6.12)
+    rabl (0.6.13)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
     rack (1.3.6)
