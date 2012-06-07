@@ -49,7 +49,7 @@ ActiveAdmin.register Shop do
 
    collection_action :state do # 系统运行状态
      begin 'libxml2' # issues#274
-       html_path = Rails.root.join "spec/factories/data/themes/settings_with_class.html"
+       html_path = Rails.root.join "spec/factories/data/themes/settings/with_class.html"
        settings = Nokogiri::HTML(File.open(html_path), nil, 'utf-8').inner_html
        @libxml2 = !settings.blank?
      end
@@ -71,18 +71,16 @@ ActiveAdmin.register Shop do
        @theme = Theme.first
      end
      begin 'shop' # 商店
-       asset_host = ActionController::Base.asset_host # 可能为Proc对象
-       asset_host_for_shop = asset_host.respond_to?(:call) ? asset_host.call : asset_host
-       @shop_global_js = "#{asset_host_for_shop}/s/global/jquery/1.5.2/jquery.js"
-       @shop_shopqi_js = "#{asset_host_for_shop}/s/shopqi/option_selection.js"
+       @shop_global_js = "#{asset_host}/s/global/jquery/1.5.2/jquery.js"
+       @shop_shopqi_js = "#{asset_host}/s/shopqi/option_selection.js"
        @shop = Shop.where(email: 'admin@shopqi.com', :id.lt => 10).order('id asc').first
        if @shop
          theme = @shop.themes.where(name: '乔木林地').first
          if theme
-           @shop_shop_css = "#{asset_host_for_shop}#{theme.asset_url('stylesheet.css')}"
-           @shop_shop_js = "#{asset_host_for_shop}#{theme.asset_url('fancybox.js')}"
+           @shop_shop_css = "#{asset_host}#{theme.asset_url('stylesheet.css')}"
+           @shop_shop_js = "#{asset_host}#{theme.asset_url('fancybox.js')}"
          end
-         @shop_product_photo = @shop.products.first.try(:index_photo)
+         @shop_product_photo = @shop.products.last.try(:index_photo)
        end
      end
      begin 'server' # 服务器

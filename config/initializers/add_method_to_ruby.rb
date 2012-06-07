@@ -28,3 +28,9 @@ def smart_fetch(name, options = {}, &blk)
     return val
   end
 end
+
+# cdn 域名地址
+def asset_host
+  host = ActionController::Base.asset_host # 可能为Proc对象
+  host.respond_to?(:call) ? host.call : host
+end

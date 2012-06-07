@@ -14,4 +14,8 @@ class Kindeditor < ActiveRecord::Base
   validates_with StorageValidator
 
   validates_property :mime_type, of: :kindeditor_image, in: %w(image/jpeg image/jpg image/png image/gif), message:  "格式不正确"
+
+  def url
+    "#{asset_host}#{kindeditor_image.url}"
+  end
 end

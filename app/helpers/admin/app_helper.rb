@@ -17,7 +17,7 @@ module Admin::AppHelper
   def use_kindeditor
     content_for :kindeditor do
       %Q(
-        <script src="/javascripts/kindeditor/kindeditor.js?1" type="text/javascript"></script>
+        <script src="/javascripts/kindeditor/kindeditor-min.js?2" type="text/javascript"></script>
         <script src="/javascripts/kindeditor/kindeditor_config.js?1" type="text/javascript"></script>
       ).html_safe
     end

@@ -952,7 +952,7 @@ KE.format = {
 			var m = location.pathname.match(/^(\/.*)\//);
 			pathname = m ? m[1] : '';
 		}
-		var matches = url.match(/^(\w+:\/\/[^\/]*)/);
+		var matches = url.match(/^((\w+:){0,1}\/\/[^\/]*)/); // 要支持 //cdn.exampel.com 格式(同步kindeditor.min),issues#453
 		if (matches) {
 			if (matches[1] !== host) return url;
 		} else if (url.match(/^\w+:/)) {
@@ -2942,7 +2942,7 @@ KE.create = function(id, mode) {
 		KE.history.add(id, KE.g[id].minChangeSize);
 	});
 	if (KE.browser.IE) KE.readonly(id, false);
-	//if (KE.browser.IE && KE.browser.VERSION < 8) KE.blur(id); //后台管理商品详情会提示'控件不可见',issues#294
+	//if (KE.browser.IE && KE.browser.VERSION < 8) KE.blur(id); //后台管理商品详情会提示'控件不可见'(同步kindeditor.min),issues#294
 	KE.util.setFullHtml(id, srcTextarea.value);
 	KE.history.add(id, 0);
 	if (mode > 0) KE.util.focus(id);

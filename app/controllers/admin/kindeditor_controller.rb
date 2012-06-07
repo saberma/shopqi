@@ -6,7 +6,7 @@ class Admin::KindeditorController < Admin::AppController
   def upload_image
     @image = shop.kindeditors.build(kindeditor_image: params[:imgFile])
     if @image.save
-      render text: {error: 0, url: @image.kindeditor_image.url}.to_json
+      render text: {error: 0, url: @image.url}.to_json
     else
       render  text: {error: 1, message: @image.errors.full_messages.join(',')}.to_json
     end
