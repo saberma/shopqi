@@ -32,6 +32,15 @@ describe Api::V1::ProductsController do
       end
     end
 
+    it 'should be paginate' do # page, per_page
+      get :index, format: :json, access_token: token.token, page: 2, per_page: 1
+      response.should be_success
+      json = JSON(response.body)['products']
+      json.size.should eql 1
+      product_json = json.first
+      product_json['id'] = iphone4.id
+    end
+
   end
 
 end

@@ -3,7 +3,7 @@ module Api::V1
   class OrdersController < AppController
 
     def index
-      @orders = shop.orders
+      @orders = shop.orders.page(page).per(per_page)
     end
 
   end

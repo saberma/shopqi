@@ -71,6 +71,13 @@ describe Api::V1::OrdersController do
       end
     end
 
+    it 'should be paginate' do # page, per_page
+      get :index, format: :json, access_token: token.token, page: 2, per_page: 1
+      response.should be_success
+      json = JSON(response.body)['orders']
+      json.size.should eql 0
+    end
+
   end
 
 end
