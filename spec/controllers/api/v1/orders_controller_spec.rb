@@ -40,42 +40,58 @@ describe Api::V1::OrdersController do
 
     let(:application) { Factory :express_application } # OAuth application
 
-    let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id }
+    context 'with scopes' do # 资源访问范围匹配
 
-    it 'should be success' do
-      get :index, format: :json, access_token: token.token
-      response.should be_success
-      json = JSON(response.body)['orders']
-      json.size.should eql 1
-      order_json = json.first
-      %w(id name note number subtotal_price token total_line_items_price total_price total_weight order_number financial_status financial_status_name fulfillment_status fulfillment_status_name cancel_reason cancelled_at ).each do |field|
-        order_json[field].should eql order.send(field)
+      let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id, scopes: 'read_orders' }
+
+      it 'should be success' do
+        get :index, format: :json, access_token: token.token
+        response.should be_success
+        json = JSON(response.body)['orders']
+        json.size.should eql 1
+        order_json = json.first
+        %w(id name note number subtotal_price token total_line_items_price total_price total_weight order_number financial_status financial_status_name fulfillment_status fulfillment_status_name cancel_reason cancelled_at ).each do |field|
+          order_json[field].should eql order.send(field)
+        end
+
+        fulfillment_json = order_json['fulfillments'].first
+        fulfillment = order.fulfillments.first
+        %w(id order_id tracking_company tracking_number).each do |field|
+          fulfillment_json[field].should eql fulfillment.send(field)
+        end
+        fulfillment_line_item_json = fulfillment_json['line_items'].first
+        fulfillment_line_item = fulfillment.line_items.first
+        %w(id product_id name quantity price sku title variant_title vendor).each do |field|
+          fulfillment_line_item_json[field].should eql fulfillment_line_item.send(field)
+        end
+        fulfillment_line_item_json['variant_id'].should eql fulfillment_line_item.product_variant_id
+
+        customer_json = order_json['customer']
+        customer = order.customer.reload
+        %w(id name email note orders_count total_spent).each do |field|
+          customer_json[field].should eql customer.send(field)
+        end
       end
 
-      fulfillment_json = order_json['fulfillments'].first
-      fulfillment = order.fulfillments.first
-      %w(id order_id tracking_company tracking_number).each do |field|
-        fulfillment_json[field].should eql fulfillment.send(field)
+      it 'should be paginate' do # page, per_page
+        get :index, format: :json, access_token: token.token, page: 2, per_page: 1
+        response.should be_success
+        json = JSON(response.body)['orders']
+        json.size.should eql 0
       end
-      fulfillment_line_item_json = fulfillment_json['line_items'].first
-      fulfillment_line_item = fulfillment.line_items.first
-      %w(id product_id name quantity price sku title variant_title vendor).each do |field|
-        fulfillment_line_item_json[field].should eql fulfillment_line_item.send(field)
-      end
-      fulfillment_line_item_json['variant_id'].should eql fulfillment_line_item.product_variant_id
 
-      customer_json = order_json['customer']
-      customer = order.customer.reload
-      %w(id name email note orders_count total_spent).each do |field|
-        customer_json[field].should eql customer.send(field)
-      end
     end
 
-    it 'should be paginate' do # page, per_page
-      get :index, format: :json, access_token: token.token, page: 2, per_page: 1
-      response.should be_success
-      json = JSON(response.body)['orders']
-      json.size.should eql 0
+    context 'without scopes' do # 资源访问范围不匹配
+
+      let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id }
+
+      it 'should be fail' do # 认证失败
+        get :index, format: :json, access_token: token.token
+        response.should_not be_success
+        response.status.should eql 401
+      end
+
     end
 
   end

@@ -1,6 +1,7 @@
 # encoding: utf-8
 module Api::V1
   class ThemesController < AppController
+    doorkeeper_for :install, scopes: [:write_themes], unless: lambda { @api_client }
 
     def install
       if shop.themes.exceed? # 超出主题数则不更新

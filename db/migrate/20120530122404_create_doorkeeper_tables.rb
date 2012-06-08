@@ -76,7 +76,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration # OAuth2 Provider 改为�
 
     application = Doorkeeper::Application.create! name: Theme.client_name, redirect_uri: Theme.client_redirect_uri
     Shop.all.each do |shop| # 授权时检查到有 access_token，就表示已经授权，同时会生成 access_grant
-      application.access_tokens.create! resource_owner_id: shop.id, expires_in: Doorkeeper.configuration.access_token_expires_in
+      application.access_tokens.create! resource_owner_id: shop.id, expires_in: Doorkeeper.configuration.access_token_expires_in, scopes: 'write_themes'
     end
 
     drop_table :oauth2_clients
