@@ -6,7 +6,7 @@ gem 'rails', '3.1.5'
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise', '~> 1.4.9'
-gem "sass-rails" # 放在assets分组会报错 http://j.mp/oj7y6K
+gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
 gem 'activeadmin'
 #gem 'acts_as_list' # 仍然使用plugin版本，此Gem版本同时删除多个记录时position不正确
 
@@ -33,7 +33,7 @@ gem 'sentient_user' # 将current_user设置至线程中
 gem "mini_magick" # 调用参数说明:http://www.imagemagick.org/Usage/
 
 ##### 视图相关 #####
-gem 'haml'
+gem 'haml', '~> 3.2.0.alpha.14'
 gem 'message_block' #用于显示错误信息
 gem 'client_side_validations' #客户端校验
 gem 'therubyracer', require: nil unless ENV['TRAVIS'] # 编译coffee-script # 安装编译过程太慢(大概需要4分钟)
@@ -102,4 +102,6 @@ end
 group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
+  gem 'compass-rails'
+  gem 'susy', '~> 1.0.rc.1'
 end
