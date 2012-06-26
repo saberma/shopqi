@@ -13,8 +13,9 @@ describe Kindeditor do
     end
 
     it "should get url" do
+      ActionController::Base.asset_host = "//lvh.me"
       photo.save
-      photo.url.should eql "http:#{asset_host}#{photo.kindeditor_image.url}"
+      photo.url.should eql "//lvh.me#{photo.kindeditor_image.url}"
     end
 
     context 'shop storage is not idle' do # 容量已经用完

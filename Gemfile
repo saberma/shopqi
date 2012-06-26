@@ -68,6 +68,7 @@ group :development do
   gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
   gem 'rvm-capistrano', "~> 1.1.0", require: 'capistrano'
   gem "letter_opener"
+  gem 'guard-livereload'
 end
 
 group :development, :test do
@@ -84,7 +85,8 @@ group :test do
   # 2.19以前的版本存在问题 # http://bit.ly/Hp3Aru
   # Selenium::WebDriver::Error::MoveTargetOutOfBoundsError:
   #        Element cannot be scrolled into view:[object HTMLInputElement]
-  gem "selenium-webdriver", "~> 2.20.0" # 支持travis-ci的firefox11.0版本
+  #gem "selenium-webdriver", "~> 2.20.0" # 支持travis-ci的firefox11.0版本
+  gem "selenium-webdriver", "~> 2.24.0" # 支持travis-ci的firefox13.0版本
   gem "rspec-rails"
   gem 'capybara' , ' ~> 1.1.2'
   gem 'resque_spec' # resque测试

@@ -159,8 +159,12 @@ GEM
       railties (~> 3.1)
     dragonfly (0.9.8)
       rack
+    em-websocket (0.3.6)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
     erubis (2.7.0)
     escape (0.0.4)
+    eventmachine (0.12.10)
     execjs (1.2.9)
       multi_json (~> 1.0)
     factory_girl (2.1.2)
@@ -178,6 +182,13 @@ GEM
       i18n (~> 0.4)
     fssm (0.2.9)
     github-markup (0.7.0)
+    guard (1.2.1)
+      listen (>= 0.4.2)
+      thor (>= 0.14.6)
+    guard-livereload (1.0.0)
+      em-websocket (>= 0.2.0)
+      guard (>= 1.1.0)
+      multi_json (~> 1.0)
     haml (3.2.0.alpha.14)
       tilt
     haml-rails (0.3.4)
@@ -207,6 +218,10 @@ GEM
       launchy
     libv8 (3.3.10.2)
     liquid (2.3.0)
+    listen (0.4.6)
+      rb-fchange (~> 0.0.5)
+      rb-fsevent (~> 0.9.1)
+      rb-inotify (~> 0.8.8)
     macaddr (1.5.0)
       systemu (>= 2.4.0)
     mail (2.3.3)
@@ -282,6 +297,11 @@ GEM
       thor (~> 0.14.6)
     raindrops (0.7.0)
     rake (0.9.2.2)
+    rb-fchange (0.0.5)
+      ffi
+    rb-fsevent (0.9.1)
+    rb-inotify (0.8.8)
+      ffi (>= 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
     redcarpet (2.0.1)
@@ -409,6 +429,7 @@ DEPENDENCIES
   factory_girl_rails
   gollum!
   grit!
+  guard-livereload
   haml (~> 3.2.0.alpha.14)
   haml-rails
   httparty
