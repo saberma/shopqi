@@ -174,7 +174,7 @@ describe "Products", js: true do
             find_field('product[options_attributes][][value]').value.should eql '默认标题'
             has_no_css?('.del-option').should be_true # 第一个选项没有删除按钮
             # 不能选择大小
-            find("option[value='标题']")[:disabled].should eql 'false'
+            find("option[value='标题']")[:disabled].should be_nil
             find("option[value='大小']")[:disabled].should eql 'true'
           end
           within(:xpath, "//tr[contains(@class, 'edit-option')][2]") do
@@ -185,7 +185,7 @@ describe "Products", js: true do
             find('.del-option').visible?.should be_true # 删除按钮可见
             # 不能选择标题
             find("option[value='标题']")[:disabled].should eql 'true'
-            find("option[value='大小']")[:disabled].should eql 'false'
+            find("option[value='大小']")[:disabled].should be_nil
           end
           within(:xpath, "//tr[contains(@class, 'edit-option')][3]") do
             find('.option-selector').value.should eql 'create_new'
