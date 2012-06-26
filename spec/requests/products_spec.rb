@@ -110,7 +110,7 @@ describe "Products", js: true do
         find_field('product[variants_attributes][][weight]')[:disabled].should eql 'true'
 
         check('product[variants_attributes][][requires_shipping]')
-        find_field('product[variants_attributes][][weight]')[:disabled].should eql 'false'
+        find_field('product[variants_attributes][][weight]')[:disabled].should be_nil
       end
 
       # 选项操作
@@ -137,7 +137,7 @@ describe "Products", js: true do
             find('.del-option').visible?.should be_true # 删除按钮可见
             # 不能选择标题
             find("option[value='标题']")[:disabled].should eql 'true'
-            find("option[value='大小']")[:disabled].should eql 'false'
+            find("option[value='大小']")[:disabled].should be_nil
           end
           click_on '新增另一个选项'
           within(:xpath, "//tr[contains(@class, 'edit-option')][3]") do
@@ -149,7 +149,7 @@ describe "Products", js: true do
             # 不能选择标题、大小
             find("option[value='标题']")[:disabled].should eql 'true'
             find("option[value='大小']")[:disabled].should eql 'true'
-            find("option[value='颜色']")[:disabled].should eql 'false'
+            find("option[value='颜色']")[:disabled].should be_nil
             # 换下名称
             select '材料'
             find_field('product[options_attributes][][name]').value.should eql '材料'
@@ -766,7 +766,7 @@ describe "Products", js: true do
                 has_content?('已选中 1 个款式').should be_true
                 within('#product-select') do
                   find("option[value='destroy']")[:disabled].should eql 'true' #只剩下一个款式，不能删除
-                  find('#dup-option-1')[:disabled].should eql 'false' #只选中一个款式，可以复制
+                  find('#dup-option-1')[:disabled].should be_nil #只选中一个款式，可以复制
                 end
                 select '修改价格', from: 'product-select'
                 fill_in 'new_value', with: '10'
