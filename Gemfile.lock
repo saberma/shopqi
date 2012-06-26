@@ -346,6 +346,8 @@ GEM
       sass (>= 3.1.4)
       sprockets (~> 2.0.0)
       tilt (~> 1.3.2)
+    sassy-buttons (0.1.1)
+      compass (>= 0.12.1)
     seedbank (0.0.7)
     selenium-webdriver (2.24.0)
       childprocess (>= 0.2.5)
@@ -458,6 +460,7 @@ DEPENDENCIES
   rubyzip
   rvm-capistrano (~> 1.1.0)
   sass-rails
+  sassy-buttons
   seedbank
   selenium-webdriver (~> 2.24.0)
   sentient_user

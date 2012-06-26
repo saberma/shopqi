@@ -106,4 +106,5 @@ group :assets do
   gem 'uglifier'
   gem 'compass-rails'
   gem 'susy', '~> 1.0.rc.1'
+  gem 'sassy-buttons'
 end
