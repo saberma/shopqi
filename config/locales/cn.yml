@@ -218,6 +218,9 @@ cn:
         blank: 不能为空
 
   doorkeeper:
+    errors:
+      messages:
+        invalid_redirect_uri: 客户端请求的 redirect_uri 与服务端设定值不匹配
     scopes:
       read_products: 获取商品信息
       write_products: 更新商品信息
