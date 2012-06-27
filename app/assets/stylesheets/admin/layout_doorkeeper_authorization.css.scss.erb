@@ -1,0 +1,27 @@
+@import "normalize"; // https://github.com/JohnAlbin/normalize.css-with-sass-or-compass
+
+.btn {
+  @include sassy-button('matte', 5px); }
+
+.inline_block {
+  @include inline-block; }
+
+body {
+  font-family: $font-sans;
+  background-color: #EAEEE2;
+  color: #333; }
+
+.page { 
+  background-color: white;
+  border: 1px solid #CCC;
+  margin: rhythm(2) auto rhythm(1) auto;
+  padding-bottom: $base-line-height;
+  @include container(6); 
+  @include border-radius(4px);
+  @include single-box-shadow(rgba(0,0,0,0.1), 0, 0, 10px);
+  h1, h2 {
+    border-bottom: 1px solid #eee; // 下方有 1px 的边框，垂直韵律要相应减掉 1px
+    margin-bottom: rhythm(0.5, $base-font-size, 1);
+    small {
+      color: #999; } }
+}

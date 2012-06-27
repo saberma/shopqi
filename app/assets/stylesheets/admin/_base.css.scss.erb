@@ -1,0 +1,31 @@
+// Legacy IE support
+$legacy-support-for-ie6: true;
+$legacy-support-for-ie7: true;
+$legacy-support-for-ie8: true;
+
+
+// Responsive design
+$total-columns  : 12;             // a 12-column grid
+$column-width   : 4em;            // each column is 4em wide
+$gutter-width   : 1em;            // 1em gutters between columns
+$grid-padding   : $gutter-width;  // grid-padding equal to gutters
+
+// Font faces, stacks and sizes.
+$relative-font-sizing: false;
+$base-font-size   : 14px;
+$base-line-height : 22px;
+$font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
+// Buttons
+$sb-base-color:      #f8f8f8;
+$sb-second-color:    #ececec;
+$sb-text-color:      #3A3A3A;
+
+@import "compass/support";
+@import "compass/utilities/general/clearfix";
+@import "compass/utilities/sprites";
+@import "compass/css3";
+@import "compass/typography/vertical_rhythm";
+@import "sassy-buttons";
+@import "susy";

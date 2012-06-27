@@ -1,0 +1,28 @@
+.page
+  %h2
+    %small 您要安装
+    =@authorization.client.name
+    %small ?
+  %p 此应用将会读取您的商店信息
+  - scopes = @authorization.scopes.to_a.tap{|o| o.delete_if{|e| e == :'' || (e =~ /^read_(.+)/ && o.include?(e.to_s.sub(/read_(.+)/, 'write_\1').to_sym)) }}
+  - if scopes
+    %ul
+      - scopes.each do |scope|
+        %li= t scope, :scope => [:doorkeeper, :scopes]
+  .inline_block
+    = form_for @authorization, :as => :authorization, :url => authorization_path, :method => :post do |f|
+      = f.hidden_field :client_id
+      = f.hidden_field :redirect_uri
+      = f.hidden_field :state
+      = f.hidden_field :response_type
+      = f.hidden_field :scope
+      = f.submit "安装", :class => "btn success"
+  %small 或者
+  .inline_block
+    = form_for @authorization, :as => :authorization, :url => authorization_path, :method => :delete do |f|
+      = f.hidden_field :client_id
+      = f.hidden_field :redirect_uri
+      = f.hidden_field :state
+      = f.hidden_field :response_type
+      = f.hidden_field :scope
+      = f.submit "取消", :class => "btn"

@@ -1,0 +1,16 @@
+.span16
+  %header.page-header
+    %h2 Your authorized applications
+  %table.zebra-striped
+    %thead
+      %tr
+        %th Application
+        %th Authorized at
+        %th
+        %th
+    %tbody
+      - @applications.each do |application|
+        %tr
+          %td= application.name
+          %td= application.created_at
+          %td= link_to 'Revoke', authorized_application_path(application), :confirm => 'Are you sure?', :method => :delete, :class => 'btn danger'

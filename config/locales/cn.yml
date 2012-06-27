@@ -217,6 +217,13 @@ cn:
       messages:
         blank: 不能为空
 
+  doorkeeper:
+    scopes:
+      read_products: 获取商品信息
+      write_products: 更新商品信息
+      read_orders: 获取订单信息
+      write_orders: 更新订单信息
+
   # flash message
   flash:
     actions:

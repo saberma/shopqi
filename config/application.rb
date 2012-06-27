@@ -75,6 +75,11 @@ module Shopqi
     config.generators.stylesheets = false
     config.generators.javascripts = false
 
+    # doorkeeper
+    config.to_prepare do
+      Doorkeeper::AuthorizationsController.layout "doorkeeper/authorization"
+    end
+
     config.middleware.insert 0, 'Rack::Cache', {
       :verbose     => false,
       :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"),

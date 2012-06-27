@@ -1,0 +1,23 @@
+!!! 5
+:erb
+  <!--[if lt IE 7]>        <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+  <!--[if IE 7]>           <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+  <!--[if IE 8]>           <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+  <!--[if IE 9]>           <html class="no-js ie9"       lang="en"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+%head
+  %meta(content="text/html; charset=utf-8" http-equiv="Content-Type")/
+  %meta(content="no" http-equiv="imagetoolbar")/
+  %meta(content="width=device-width initial-scale=1.0" name="viewport")/
+  %link(href="#{image_path('favicon.png')}" rel="shortcut icon" type="image/x-icon")/
+  %link(href="#{image_path('icons/apple-touch-icon.png')}" rel="apple-touch-icon-precomposed")/
+  %title==安装#{@authorization.client.name}
+  = stylesheet_link_tag "admin/layout_doorkeeper_authorization"
+  -#=javascript_include_tag 'shopqi_application'
+  =csrf_meta_tag
+%body
+  =yield
+
+:erb
+  </html>
