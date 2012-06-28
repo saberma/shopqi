@@ -11,7 +11,7 @@ Rabl.configure do |config|
   # config.include_msgpack_root = true
   # config.include_bson_root = true
   # config.include_plist_root = true
-  # config.include_xml_root  = false      
+  # config.include_xml_root  = false
   config.include_child_root = false
   # config.enable_json_callbacks = false
   # config.xml_options = { :dasherize  => true, :skip_types => false }

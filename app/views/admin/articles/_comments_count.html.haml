@@ -3,6 +3,6 @@
 -else
   %td(style="width: 15%;")
     =link_to "#{article.comments.size}条评论",comments_path(article_id:article.id,blog_id:blog.id),title:"显示所有评论"
-  %td(style="width: 15%;") 
+  %td(style="width: 15%;")
     %span.status_tag.unapproved
       =link_to "#{article.unapproved_comments.size}条待审核评论",comments_path(article_id:article.id,blog_id:blog.id,status:"unapproved"),title:"显示所有待审核评论"
