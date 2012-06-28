@@ -2,7 +2,7 @@
 class Activity < ActiveRecord::Base
   belongs_to :shop
   belongs_to :user
-  attr_accessible :operate, :content, :user_id, :class_name
+  attr_accessible :operate, :content, :user, :class_name
 
   module Extension
 
