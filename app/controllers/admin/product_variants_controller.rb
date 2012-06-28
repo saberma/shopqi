@@ -28,11 +28,14 @@ class Admin::ProductVariantsController < Admin::AppController
   def set
     operation = params[:operation]
     ids = params[:variants]
-    if operation.to_sym == :destroy
-      product_variants.find(ids).map(&:destroy)
-    else
-      #product_variants.where(id:ids).update_all operation => params[:new_value]
-      product_variants.update(ids,operation => params[:new_value])
+    ProductVariant.transaction do
+      if operation.to_sym == :destroy
+        product_variants.find(ids).map(&:destroy)
+      elsif [:price, :inventory_quantity].include?(operation.to_sym)
+        product_variants.find(ids).each do |variant|
+          variant.update_attribute operation, params[:new_value]
+        end
+      end
     end
     render nothing: true
   end

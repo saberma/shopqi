@@ -25,7 +25,7 @@ describe Admin::ProductVariantsController do
       end.should change(ProductVariant, :count).by(1)
     end
 
-    it "should cant create new variant when sku is limited" ,focus: true do # issue#284
+    it "should cant create new variant when sku is limited" do # issue#284
       iphone4
       shop.plan_type.stub!(:skus).and_return(1)
       expect do
@@ -35,8 +35,9 @@ describe Admin::ProductVariantsController do
     end
   end
 
-  context '#create' do
-    it "should update variant " ,focus: true do # issue#284
+  context '#update' do
+
+    it "should update variant" do # issue#284
       iphone4
       variant = iphone4.variants.first
       expect do
@@ -46,7 +47,7 @@ describe Admin::ProductVariantsController do
       end.should change(variant, :price).from(3000).to(111)
     end
 
-    it "should cant update  variant when sku is limited" ,focus: true do # issue#284
+    it "should cant update  variant when sku is limited" do # issue#284
       iphone4
       variant = iphone4.variants.first
       shop.plan_type.stub!(:skus).and_return(1)
@@ -55,6 +56,22 @@ describe Admin::ProductVariantsController do
         response.should be_success
         variant.reload
       end.should_not change(variant, :price).from(3000).to(111)
+    end
+
+  end
+
+  context '#set' do
+
+    let(:first_variant) { iphone4.variants.first }
+
+    let(:second_variant) { iphone4.variants.create price: 2500.0 }
+
+    before { second_variant }
+
+    it "should be success" do # issue#454
+      post :set, product_id: iphone4.id, variants: [first_variant.id, second_variant.id], operation: 'price', new_value: 1000
+      response.should be_success
+      second_variant.reload.price.should eql 1000.0
     end
 
   end
