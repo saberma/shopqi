@@ -318,4 +318,16 @@ describe Order do
 
   end
 
+  describe 'scope contain date' do
+
+    before { order }
+
+    it 'should be execute every time' do # 444
+      shop.orders.today.size.should eql 1
+      Date.stub(:today).and_return(Date.tomorrow) # 明天的统计不包含今天的订单
+      shop.orders.today.size.should eql 0
+    end
+
+  end
+
 end

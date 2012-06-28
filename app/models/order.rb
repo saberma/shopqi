@@ -98,9 +98,9 @@ class Order < ActiveRecord::Base
 
   scope :status_open, where(status: 'open')
 
-  scope :today, where(:created_at.gt => Date.today.beginning_of_day)
+  scope :today, lambda { where(:created_at.gt => Date.today.beginning_of_day) }
 
-  scope :yesterday, where(:created_at.gt => Date.yesterday.beginning_of_day).where(:created_at.lt => Date.today.beginning_of_day)
+  scope :yesterday, lambda{ where(:created_at.gt => Date.yesterday.beginning_of_day).where(:created_at.lt => Date.today.beginning_of_day) }
 
   scope :between, lambda{|d1,d2| where(:created_at.gte => d1, :created_at.lt => d2.tomorrow) }
 
