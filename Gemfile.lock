@@ -165,6 +165,8 @@ GEM
     erubis (2.7.0)
     escape (0.0.4)
     eventmachine (0.12.10)
+    exception_notification (2.6.1)
+      actionmailer (>= 3.0.4)
     execjs (1.2.9)
       multi_json (~> 1.0)
     factory_girl (2.1.2)
@@ -429,6 +431,7 @@ DEPENDENCIES
   devise (~> 1.4.9)
   doorkeeper (~> 0.4.0)
   dragonfly (~> 0.9.8)
+  exception_notification
   factory_girl
   factory_girl_rails
   gollum!

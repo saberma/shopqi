@@ -60,6 +60,7 @@ gem 'rubyzip' # 解压缩用户上传的主题zip文件
 gem 'gollum', git: 'git://github.com/saberma/gollum.git'  #用于wiki系统，1.3.1需要安装Pygments http://j.mp/uHMN1L，开发版本使用payments.rb，但有waring提示'did not have a valid gemspec'
 gem 'RedCloth'
 gem 'sitemap_generator' # 生成搜索引擎友好的sitemap # bundle exec rake sitemap:refresh:no_ping
+gem 'exception_notification' # 发生异常时邮件通知
 
 group :development do
   gem 'rails3-generators'
