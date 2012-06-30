@@ -97,6 +97,14 @@ module Admin::AppHelper
 
   end
 
+  begin 'api'
+
+    def installed_apps
+      @apps ||= shop.installed_apps
+    end
+
+  end
+
   def clippy(text, bgcolor='#FFFFFF') # https://github.com/mojombo/clippy
     html = <<-EOF
       <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"

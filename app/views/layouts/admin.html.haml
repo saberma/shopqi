@@ -50,9 +50,13 @@
         %ul#secondary
           %li#apps-link
             #apps-dropdown.nav-dropdown.dropdown.hide
-              %h3 未安装应用
-              %ul
-                %li
+              -if installed_apps.empty?
+                %h3 未安装应用
+              -else
+                %h3 已安装应用
+                - installed_apps.each do |app|
+                  %ul
+                    %li=link_to app.name, "#{app.redirect_uri}_login?shop=#{shop.shopqi_domain}"
               %p.nav-manage=link_to '管理应用', "#", onclick: "javascript:msg('即将上线...');return false;", class: 'inactive'
               %p.more
                 =link_to '获取更多应用', "#", onclick: "javascript:msg('即将上线...');return false;"

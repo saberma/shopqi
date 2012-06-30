@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Shop < ActiveRecord::Base
   has_many :api_clients           , dependent: :destroy                      , order: 'id asc'
-  has_many :access_grants         , dependent: :destroy                      , class_name: 'Doorkeeper::AccessGrant', order: 'id asc', foreign_key: 'resource_owner_id'
-  has_many :access_tokens         , dependent: :destroy                      , class_name: 'Doorkeeper::AccessToken', order: 'id asc', foreign_key: 'resource_owner_id'
+  has_many :access_grants         , dependent: :destroy                      , class_name: 'Doorkeeper::AccessGrant', foreign_key: 'resource_owner_id'
+  has_many :access_tokens         , dependent: :destroy                      , class_name: 'Doorkeeper::AccessToken', foreign_key: 'resource_owner_id'
   has_many :users                 , dependent: :destroy                      , order: 'id asc'
   has_many :domains               , dependent: :destroy                      , order: 'id asc', class_name: 'ShopDomain'
   has_many :products              , dependent: :destroy                      , order: 'id desc'
@@ -176,6 +176,14 @@ class Shop < ActiveRecord::Base
       else
         Resque.redis.set "#{self.id}_#{key}", value
       end
+    end
+
+  end
+
+  begin 'api'
+
+    def installed_apps
+      self.access_tokens.select('distinct application_id').includes(:application).map(&:application).reject{|app| app.name == Theme.client_name }
     end
 
   end
