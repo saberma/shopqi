@@ -1,5 +1,5 @@
 App.Views.Webhook.Index = Backbone.View.extend
-  el: '#webhook-group'
+  el: '#webhooks'
 
   events:
     "click #add-webhook a": "add"

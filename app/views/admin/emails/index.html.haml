@@ -55,7 +55,7 @@
           %input.btn{:name => "commit", :type => "submit", :value =>"保存" }
           =w('or')
           %a#cancel(href="#")=w('cancel')
-#webhook-group.pgroup
+#webhooks.pgroup
   %h3 事件回调
   %p.note.sb 您可以订阅商品或者订单的各种事件，当这些事件发生时，可以向指定的网站发送信息。
   .section
@@ -63,14 +63,15 @@
       %thead
         %tr
           %th 事件
-          %th(colspan=4) 回调 URL 地址
+          %th(colspan=3) 回调 URL 地址
       %tbody#webhook_body
         %tr.c.note
           %td(colspan=4 style="padding: 10px 0;") 当前没有订阅任何事件
         %tr#add-webhook
           %td.action-link(colspan=4)
-            %span.plus +
-            %a(style="display:inline") 新增事件回调
+            %a(href="#")
+              %span.plus +
+              新增事件回调
 
     #add-webhook-details.hide
       %form(action="#")
@@ -89,14 +90,14 @@
             =w('or')
             %a.cancel(href="#")=w('cancel')
 %script(id="webhook-item" type="text/x-handlebars-template")
-  %td
+  %td.event_name
     %strong {{{event_name}}}
-  %td {{{callback_url}}}
+  %td.callback_url {{{callback_url}}}
   %td.r
     -#
       %a(href="/send_example") 发送测试信息
   %td.r
-    %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
+    %a.destroy(href="#")=image_tag 'admin/icons/trash.gif', alt: '删除'
 
 :javascript
   new App.Controllers.Emails()

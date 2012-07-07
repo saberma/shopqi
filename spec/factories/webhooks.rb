@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :webhook do
-      event "MyString"
-      callback_url "MyString"
-    end
+    event "orders/fulfilled"
+    callback_url "http://express.shopqiapp.com"
+  end
 end
