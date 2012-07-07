@@ -440,5 +440,30 @@ module KeyValues
 
   end
 
+  module WebHook
+
+    class Event < KeyValues::Base # 事件
+      self.data = [
+        {id: 1, name: '创建购物车'  , code: 'carts/create'          },
+        {id: 1, name: '更新购物车'  , code: 'carts/update'          },
+        {id: 2, name: '新增集合'    , code: 'collections/create'    },
+        {id: 2, name: '删除集合'    , code: 'collections/delete'    },
+        {id: 2, name: '修改集合'    , code: 'collections/update'    },
+        {id: 2, name: '新增顾客分组', code: 'customer_groups/create'},
+        {id: 2, name: '删除顾客分组', code: 'customer_groups/delete'},
+        {id: 2, name: '修改顾客分组', code: 'customer_groups/update'},
+        {id: 2, name: '新增订单'    , code: 'orders/create'         },
+        {id: 2, name: '修改订单'    , code: 'orders/update'         },
+        {id: 2, name: '订单支付'    , code: 'orders/paid'           },
+        {id: 2, name: '订单发货'    , code: 'orders/fulfilled'      },
+        {id: 2, name: '取消订单'    , code: 'orders/cancelled'      },
+        {id: 2, name: '新增商品'    , code: 'products/create'       },
+        {id: 2, name: '删除商品'    , code: 'products/delete'       },
+        {id: 2, name: '修改商品'    , code: 'products/update'       },
+      ]
+    end
+
+  end
+
 end
 
