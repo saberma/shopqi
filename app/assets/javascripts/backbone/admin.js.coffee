@@ -17,6 +17,7 @@
 #=require_tree ./views/payments
 #=require_tree ./views/shippings
 #=require_tree ./views/api_clients
+#=require_tree ./views/webhooks
 #=require_tree ./controllers/orders
 #=require_tree ./controllers/customers
 #=require ./controllers/products
@@ -71,6 +72,7 @@ window.App =
     ProductOption: {}
     Task: {}
     Domain: {}
+    Webhook: {}
   Controllers:
     Orders: {}
     Customers: {}

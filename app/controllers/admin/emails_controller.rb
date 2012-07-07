@@ -8,6 +8,8 @@ class Admin::EmailsController < Admin::AppController
   expose(:email)
   expose(:subscribes){ shop.subscribes }
   expose(:subscribe)
+  expose(:webhook_events){ KeyValues::Webhook::Event.options }
+  expose(:webhooks_json){ shop.webhooks.to_json(except: :created_at) }
 
   def index
   end

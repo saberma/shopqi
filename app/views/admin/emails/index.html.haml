@@ -16,8 +16,7 @@
 / pgroup
 .pgroup
   %h3 订单提醒
-  %p.note.sb
-    当有顾客下了新的订单时，您可以设置提醒的邮件地址。
+  %p.note.sb 当有顾客下了新的订单时，您可以设置提醒的邮件地址。
   #order-notification-list
     %table#order-notification-table.data{:cellpadding => "0", :cellspacing => "0"}
       %tr
@@ -56,6 +55,51 @@
           %input.btn{:name => "commit", :type => "submit", :value =>"保存" }
           =w('or')
           %a#cancel(href="#")=w('cancel')
+#webhook-group.pgroup
+  %h3 事件回调
+  %p.note.sb 您可以订阅商品或者订单的各种事件，当这些事件发生时，可以向指定的网站发送信息。
+  .section
+    %table#webhooks-table.data(cellspacing=0 cellpadding=0)
+      %thead
+        %tr
+          %th 事件
+          %th(colspan=4) 回调 URL 地址
+      %tbody#webhook_body
+        %tr.c.note
+          %td(colspan=4 style="padding: 10px 0;") 当前没有订阅任何事件
+        %tr#add-webhook
+          %td.action-link(colspan=4)
+            %span.plus +
+            %a(style="display:inline") 新增事件回调
+
+    #add-webhook-details.hide
+      %form(action="#")
+        %dl
+          %dt 新增事件回调
+          %dd#webhooks-event.sb
+            %label(for="webhook_event") 事件
+            %select#webhook_event(name="webhook[event]")=options_for_select webhook_events
+          %dd#webhooks-callback_url
+            %label(for="webhook_callback_url") 回调 URL 地址
+            %input#webhook_callback_url(name="webhook[callback_url]" size="40" type="text" value="http://")
+              %p.note.st.sb
+                当所选择的事件发生时，ShopQi 将向 回调 URL 地址发送 POST 请求，并带上相应的数据信息。
+          %dd.btn-divider
+            %input.btn(name="commit" type="submit" value="订阅")
+            =w('or')
+            %a.cancel(href="#")=w('cancel')
+%script(id="webhook-item" type="text/x-handlebars-template")
+  %td
+    %strong {{{event}}}
+  %td {{{callback_url}}}
+  %td.r
+    -#
+      %a(href="/send_example") 发送测试信息
+  %td.r
+    %a.destroy(href="#")=image_tag 'admin/icons/trash.gif'
 
 :javascript
   new App.Controllers.Emails()
+  App.webhooks = new App.Collections.Webhooks();
+  App.webhooks.refresh(#{webhooks_json});
+  new App.Views.Webhook.Index({collection: App.webhooks})

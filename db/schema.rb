@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530122404) do
+ActiveRecord::Schema.define(:version => 20120707020959) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -750,6 +750,13 @@ ActiveRecord::Schema.define(:version => 20120530122404) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["shop_id", "email"], :name => "index_users_on_shop_id_and_email", :unique => true
   add_index "users", ["shop_id"], :name => "index_users_on_shop_id"
+
+  create_table "webhooks", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "event",        :limit => 32, :null => false
+    t.string   "callback_url",               :null => false
+    t.datetime "created_at",                 :null => false
+  end
 
   create_table "weight_based_shipping_rates", :force => true do |t|
     t.float    "price"

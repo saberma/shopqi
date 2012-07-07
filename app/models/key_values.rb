@@ -440,7 +440,7 @@ module KeyValues
 
   end
 
-  module WebHook
+  module Webhook
 
     class Event < KeyValues::Base # 事件
       self.data = [

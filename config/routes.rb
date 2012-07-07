@@ -179,7 +179,7 @@ Shopqi::Application.routes.draw do
       post "/dashboard/launch"              , to: "home#launch"                         , as: :launch
       post "/dashboard/skip_tutorial"       , to: "home#skip_tutorial"                  , as: :skip_tutorial
 
-      resources :web_hooks
+      resources :webhooks, only: [:create, :destroy]
 
       resources :shops, only: [:update]
 
