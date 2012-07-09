@@ -153,8 +153,16 @@ class Order < ActiveRecord::Base
     KeyValues::Order::FinancialStatus.find_by_code(financial_status).name
   end
 
-  def fulfillment_status_name
-    KeyValues::Order::FulfillmentStatus.find_by_code(fulfillment_status).name
+  begin 'fulfillment'
+
+    def fulfillment_status_name
+      KeyValues::Order::FulfillmentStatus.find_by_code(fulfillment_status).name
+    end
+
+    def fulfilled?
+      fulfillment_status.to_sym == :fulfilled
+    end
+
   end
 
   def cancel_reason_name

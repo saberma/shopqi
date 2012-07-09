@@ -32,7 +32,7 @@ describe Webhook do
     end
 
     it 'should be invoke' do
-      stub = stub_request(:post, "express.shopqiapp.com").with(body: order.to_json).to_return(body: 'a')
+      stub = stub_request(:post, "express.shopqiapp.com")
       webhook
       fulfillment
       stub.should have_been_requested
