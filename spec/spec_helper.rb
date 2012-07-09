@@ -12,6 +12,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'capybara/rspec'
   require 'capybara/rails'
+  require 'webmock/rspec'
   Capybara.default_wait_time = 5
   Capybara.server_boot_timeout = 50
 
