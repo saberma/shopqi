@@ -752,10 +752,11 @@ ActiveRecord::Schema.define(:version => 20120707020959) do
   add_index "users", ["shop_id"], :name => "index_users_on_shop_id"
 
   create_table "webhooks", :force => true do |t|
+    t.integer  "application_id"
     t.integer  "shop_id"
-    t.string   "event",        :limit => 32, :null => false
-    t.string   "callback_url",               :null => false
-    t.datetime "created_at",                 :null => false
+    t.string   "event",          :limit => 32, :null => false
+    t.string   "callback_url",                 :null => false
+    t.datetime "created_at",                   :null => false
   end
 
   create_table "weight_based_shipping_rates", :force => true do |t|

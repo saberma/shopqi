@@ -20,6 +20,7 @@ describe Api::V1::WebhooksController do
       it 'should be success' do
         expect do
           post :create, webhook: {event: 'orders/fulfilled', callback_url: 'express.shopqiapp.com'}, format: :json, access_token: token.token
+          assigns[:webhook].application_id.should eql application.id # 通过 API 创建的记录要关联到应用
           response.should be_success
           json = JSON(response.body)['webhook']
           json['id'].should_not be_blank

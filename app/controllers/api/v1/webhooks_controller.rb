@@ -7,7 +7,9 @@ module Api::V1
     end
 
     def create
-      @webhook = shop.webhooks.create! params[:webhook]
+      @webhook = shop.webhooks.build params[:webhook]
+      @webhook.application = doorkeeper_token.application
+      @webhook.save!
     end
 
     private
