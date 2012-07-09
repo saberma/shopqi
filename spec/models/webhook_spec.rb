@@ -34,7 +34,9 @@ describe Webhook do
     it 'should be invoke' do
       stub = stub_request(:post, "express.shopqiapp.com")
       webhook
-      fulfillment
+      with_resque do
+        fulfillment
+      end
       stub.should have_been_requested
     end
 

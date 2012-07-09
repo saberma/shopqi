@@ -6,7 +6,7 @@ class WebhookObserver < ActiveRecord::Observer
     order = fulfillment.order
     if order.fulfilled?
       order.shop.webhooks.orders_fulfilled.each do |webhook|
-        response = HTTParty.post(webhook.callback_url, body: fulfillment.to_json)
+        Resque.enqueue(WebhookWorker, webhook.callback_url, body: fulfillment.as_json)
       end
     end
   end
