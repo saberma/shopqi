@@ -8,7 +8,7 @@ describe "Webhook", js: true do
 
   let(:shop) { user_admin.shop }
 
-  let(:webhook) { Factory(:webhook, shop: shop) }
+  let(:webhook) { Factory(:webhook_orders_fulfilled, shop: shop) }
 
   describe "GET /webhooks" do
 
