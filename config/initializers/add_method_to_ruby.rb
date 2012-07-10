@@ -36,3 +36,9 @@ def asset_host
   host = ActionController::Base.asset_host # 可能为Proc对象
   host.respond_to?(:call) ? host.call : host
 end
+
+# 签名
+def sign_hmac(secret, data)
+  digest  = OpenSSL::Digest::Digest.new('sha256')
+  Base64.encode64(OpenSSL::HMAC.digest(digest, secret, data)).strip
+end

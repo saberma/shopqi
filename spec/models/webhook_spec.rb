@@ -5,9 +5,13 @@ describe Webhook do
 
   let(:shop) { Factory(:user).shop }
 
+  let(:application) { Factory :express_application } # OAuth application
+
+  before { WebMock.disable_net_connect! }
+
   context 'orders fulfilled' do # 订单发货
 
-    let(:webhook) { Factory(:webhook_orders_fulfilled, shop: shop) }
+    let(:webhook) { Factory(:webhook_orders_fulfilled, shop: shop, application_id: application.id) } # 通过应用创建
 
     let(:iphone4) { Factory :iphone4, shop: shop }
 
@@ -32,12 +36,13 @@ describe Webhook do
     end
 
     it 'should be invoke' do
-      stub = stub_request(:post, "express.shopqiapp.com")
+      stub_request(:post, "express.shopqiapp.com")
       webhook
       with_resque do
         fulfillment
       end
-      stub.should have_been_requested
+      data = fulfillment.to_json
+      a_request(:post, "express.shopqiapp.com").with(headers: {X_SHOPQI_HMAC_SHA256: sign_hmac(application.secret, data)}).should have_been_made
     end
 
   end
