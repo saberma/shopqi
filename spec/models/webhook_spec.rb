@@ -35,6 +35,10 @@ describe Webhook do
       record
     end
 
+    before { Timecop.freeze(Time.now) }
+
+    after { Timecop.return }
+
     it 'should be invoke' do
       stub_request(:post, "express.shopqiapp.com")
       webhook
