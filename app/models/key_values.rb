@@ -447,23 +447,40 @@ module KeyValues
   module Webhook
 
     class Event < KeyValues::Base # 事件
+      CARTS_CREATE           = 'carts/create'
+      CARTS_UPDATE           = 'carts/update'
+      COLLECTIONS_CREATE     = 'collections/create'
+      COLLECTIONS_DELETE     = 'collections/delete'
+      COLLECTIONS_UPDATE     = 'collections/update'
+      CUSTOMER_GROUPS_CREATE = 'customer_groups/create'
+      CUSTOMER_GROUPS_DELETE = 'customer_groups/delete'
+      CUSTOMER_GROUPS_UPDATE = 'customer_groups/update'
+      ORDERS_CREATE          = 'orders/create'
+      ORDERS_UPDATE          = 'orders/update'
+      ORDERS_PAID            = 'orders/paid'
+      ORDERS_FULFILLED       = 'orders/fulfilled'
+      ORDERS_CANCELLED       = 'orders/cancelled'
+      PRODUCTS_CREATE        = 'products/create'
+      PRODUCTS_DELETE        = 'products/delete'
+      PRODUCTS_UPDATE        = 'products/update'
+
       self.data = [
-        {id: 1, name: '创建购物车'  , code: 'carts/create'          , scope: 'read_carts'    },
-        {id: 1, name: '更新购物车'  , code: 'carts/update'          , scope: 'read_carts'    },
-        {id: 2, name: '新增集合'    , code: 'collections/create'    , scope: 'read_products' },
-        {id: 2, name: '删除集合'    , code: 'collections/delete'    , scope: 'read_products' },
-        {id: 2, name: '修改集合'    , code: 'collections/update'    , scope: 'read_products' },
-        {id: 2, name: '新增顾客分组', code: 'customer_groups/create', scope: 'read_customers'},
-        {id: 2, name: '删除顾客分组', code: 'customer_groups/delete', scope: 'read_customers'},
-        {id: 2, name: '修改顾客分组', code: 'customer_groups/update', scope: 'read_customers'},
-        {id: 2, name: '新增订单'    , code: 'orders/create'         , scope: 'read_orders'   },
-        {id: 2, name: '修改订单'    , code: 'orders/update'         , scope: 'read_orders'   },
-        {id: 2, name: '订单支付'    , code: 'orders/paid'           , scope: 'read_orders'   },
-        {id: 2, name: '订单发货'    , code: 'orders/fulfilled'      , scope: 'read_orders'   },
-        {id: 2, name: '取消订单'    , code: 'orders/cancelled'      , scope: 'read_orders'   },
-        {id: 2, name: '新增商品'    , code: 'products/create'       , scope: 'read_products' },
-        {id: 2, name: '删除商品'    , code: 'products/delete'       , scope: 'read_products' },
-        {id: 2, name: '修改商品'    , code: 'products/update'       , scope: 'read_products' }
+        {id: 1, name: '创建购物车'  , code: CARTS_CREATE          , scope: 'read_carts'    },
+        {id: 1, name: '更新购物车'  , code: CARTS_UPDATE          , scope: 'read_carts'    },
+        {id: 2, name: '新增集合'    , code: COLLECTIONS_CREATE    , scope: 'read_products' },
+        {id: 2, name: '删除集合'    , code: COLLECTIONS_DELETE    , scope: 'read_products' },
+        {id: 2, name: '修改集合'    , code: COLLECTIONS_UPDATE    , scope: 'read_products' },
+        {id: 2, name: '新增顾客分组', code: CUSTOMER_GROUPS_CREATE, scope: 'read_customers'},
+        {id: 2, name: '删除顾客分组', code: CUSTOMER_GROUPS_DELETE, scope: 'read_customers'},
+        {id: 2, name: '修改顾客分组', code: CUSTOMER_GROUPS_UPDATE, scope: 'read_customers'},
+        {id: 2, name: '新增订单'    , code: ORDERS_CREATE         , scope: 'read_orders'   },
+        {id: 2, name: '修改订单'    , code: ORDERS_UPDATE         , scope: 'read_orders'   },
+        {id: 2, name: '订单支付'    , code: ORDERS_PAID           , scope: 'read_orders'   },
+        {id: 2, name: '订单发货'    , code: ORDERS_FULFILLED      , scope: 'read_orders'   },
+        {id: 2, name: '取消订单'    , code: ORDERS_CANCELLED      , scope: 'read_orders'   },
+        {id: 2, name: '新增商品'    , code: PRODUCTS_CREATE       , scope: 'read_products' },
+        {id: 2, name: '删除商品'    , code: PRODUCTS_DELETE       , scope: 'read_products' },
+        {id: 2, name: '修改商品'    , code: PRODUCTS_UPDATE       , scope: 'read_products' }
       ]
     end
 
