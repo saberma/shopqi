@@ -465,22 +465,22 @@ module KeyValues
       PRODUCTS_UPDATE        = 'products/update'
 
       self.data = [
-        {id: 1, name: '创建购物车'  , code: CARTS_CREATE          , scope: 'read_carts'    },
-        {id: 1, name: '更新购物车'  , code: CARTS_UPDATE          , scope: 'read_carts'    },
-        {id: 2, name: '新增集合'    , code: COLLECTIONS_CREATE    , scope: 'read_products' },
-        {id: 2, name: '删除集合'    , code: COLLECTIONS_DELETE    , scope: 'read_products' },
-        {id: 2, name: '修改集合'    , code: COLLECTIONS_UPDATE    , scope: 'read_products' },
-        {id: 2, name: '新增顾客分组', code: CUSTOMER_GROUPS_CREATE, scope: 'read_customers'},
-        {id: 2, name: '删除顾客分组', code: CUSTOMER_GROUPS_DELETE, scope: 'read_customers'},
-        {id: 2, name: '修改顾客分组', code: CUSTOMER_GROUPS_UPDATE, scope: 'read_customers'},
-        {id: 2, name: '新增订单'    , code: ORDERS_CREATE         , scope: 'read_orders'   },
-        {id: 2, name: '修改订单'    , code: ORDERS_UPDATE         , scope: 'read_orders'   },
-        {id: 2, name: '订单支付'    , code: ORDERS_PAID           , scope: 'read_orders'   },
-        {id: 2, name: '订单发货'    , code: ORDERS_FULFILLED      , scope: 'read_orders'   },
-        {id: 2, name: '取消订单'    , code: ORDERS_CANCELLED      , scope: 'read_orders'   },
-        {id: 2, name: '新增商品'    , code: PRODUCTS_CREATE       , scope: 'read_products' },
-        {id: 2, name: '删除商品'    , code: PRODUCTS_DELETE       , scope: 'read_products' },
-        {id: 2, name: '修改商品'    , code: PRODUCTS_UPDATE       , scope: 'read_products' }
+        {id: 1, name: '创建购物车'  , code: CARTS_CREATE          , scopes: [:read_carts    , :write_carts    ]},
+        {id: 1, name: '更新购物车'  , code: CARTS_UPDATE          , scopes: [:read_carts    , :write_carts    ]},
+        {id: 2, name: '新增集合'    , code: COLLECTIONS_CREATE    , scopes: [:read_products , :write_products ]},
+        {id: 2, name: '删除集合'    , code: COLLECTIONS_DELETE    , scopes: [:read_products , :write_products ]},
+        {id: 2, name: '修改集合'    , code: COLLECTIONS_UPDATE    , scopes: [:read_products , :write_products ]},
+        {id: 2, name: '新增顾客分组', code: CUSTOMER_GROUPS_CREATE, scopes: [:read_customers, :write_customers]},
+        {id: 2, name: '删除顾客分组', code: CUSTOMER_GROUPS_DELETE, scopes: [:read_customers, :write_customers]},
+        {id: 2, name: '修改顾客分组', code: CUSTOMER_GROUPS_UPDATE, scopes: [:read_customers, :write_customers]},
+        {id: 2, name: '新增订单'    , code: ORDERS_CREATE         , scopes: [:read_orders   , :write_orders   ]},
+        {id: 2, name: '修改订单'    , code: ORDERS_UPDATE         , scopes: [:read_orders   , :write_orders   ]},
+        {id: 2, name: '订单支付'    , code: ORDERS_PAID           , scopes: [:read_orders   , :write_orders   ]},
+        {id: 2, name: '订单发货'    , code: ORDERS_FULFILLED      , scopes: [:read_orders   , :write_orders   ]},
+        {id: 2, name: '取消订单'    , code: ORDERS_CANCELLED      , scopes: [:read_orders   , :write_orders   ]},
+        {id: 2, name: '新增商品'    , code: PRODUCTS_CREATE       , scopes: [:read_products , :write_products ]},
+        {id: 2, name: '删除商品'    , code: PRODUCTS_DELETE       , scopes: [:read_products , :write_products ]},
+        {id: 2, name: '修改商品'    , code: PRODUCTS_UPDATE       , scopes: [:read_products , :write_products ]}
       ]
     end
 
