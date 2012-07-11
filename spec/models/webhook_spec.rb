@@ -41,7 +41,7 @@ describe Webhook do
       with_resque do
         fulfillment
       end
-      data = fulfillment.to_json
+      data = Rabl::Renderer.json(order.reload, 'orders/show', view_path: 'app/views/api/v1')
       a_request(:post, "express.shopqiapp.com").with(headers: {X_SHOPQI_HMAC_SHA256: sign_hmac(application.secret, data)}).should have_been_made
     end
 
