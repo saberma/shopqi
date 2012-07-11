@@ -10,6 +10,7 @@ Shopqi::Application.routes.draw do
       post '/themes/install', to: 'themes#install'
       get '/products'       , to: "products#index"
       get '/orders'         , to: "orders#index"
+      get '/orders/:id'     , to: "orders#show"
       post '/webhooks'      , to: "webhooks#create"
     end
   end

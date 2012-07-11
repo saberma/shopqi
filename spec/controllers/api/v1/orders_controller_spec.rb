@@ -29,20 +29,17 @@ describe Api::V1::OrdersController do
 
   before :each do
     request.host = "#{shop.primary_domain.host}"
+    fulfillment
+    order.reload
   end
 
-  context '#index' do
+  let(:application) { Factory :express_application } # OAuth application
 
-    before do
-      fulfillment
-      order.reload
-    end
+  context 'with scopes' do # 资源访问范围匹配
 
-    let(:application) { Factory :express_application } # OAuth application
+    let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id, scopes: 'read_orders' }
 
-    context 'with scopes' do # 资源访问范围匹配
-
-      let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id, scopes: 'read_orders' }
+    context 'index' do
 
       it 'should be success' do
         get :index, format: :json, access_token: token.token
@@ -50,27 +47,7 @@ describe Api::V1::OrdersController do
         json = JSON(response.body)['orders']
         json.size.should eql 1
         order_json = json.first
-        %w(id name note number subtotal_price token total_line_items_price total_price total_weight order_number financial_status financial_status_name fulfillment_status fulfillment_status_name cancel_reason cancelled_at ).each do |field|
-          order_json[field].should eql order.send(field)
-        end
-
-        fulfillment_json = order_json['fulfillments'].first
-        fulfillment = order.fulfillments.first
-        %w(id order_id tracking_company tracking_number).each do |field|
-          fulfillment_json[field].should eql fulfillment.send(field)
-        end
-        fulfillment_line_item_json = fulfillment_json['line_items'].first
-        fulfillment_line_item = fulfillment.line_items.first
-        %w(id product_id name quantity price sku title variant_title vendor).each do |field|
-          fulfillment_line_item_json[field].should eql fulfillment_line_item.send(field)
-        end
-        fulfillment_line_item_json['variant_id'].should eql fulfillment_line_item.product_variant_id
-
-        customer_json = order_json['customer']
-        customer = order.customer.reload
-        %w(id name email note orders_count total_spent).each do |field|
-          customer_json[field].should eql customer.send(field)
-        end
+        asset_json(order_json)
       end
 
       it 'should be paginate' do # page, per_page
@@ -82,18 +59,59 @@ describe Api::V1::OrdersController do
 
     end
 
-    context 'without scopes' do # 资源访问范围不匹配
+    context 'show' do
 
-      let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id }
-
-      it 'should be fail' do # 认证失败
-        get :index, format: :json, access_token: token.token
-        response.should_not be_success
-        response.status.should eql 401
+      it 'should be success' do
+        get :show, id: order.id, format: :json, access_token: token.token
+        response.should be_success
+        order_json = JSON(response.body)['order']
+        asset_json(order_json)
       end
-
     end
 
+  end
+
+  context 'without scopes' do # 资源访问范围不匹配
+
+    let(:token) { Factory :access_token, application: application, resource_owner_id: shop.id }
+
+    it 'should not be index' do
+      get :index, format: :json, access_token: token.token
+      response.should_not be_success
+      response.status.should eql 401
+    end
+
+    it 'should not be show' do
+      get :show, id: order.id, format: :json, access_token: token.token
+      response.should_not be_success
+      response.status.should eql 401
+    end
+
+  end
+
+  private
+  def asset_json(order_json)
+    %w(id name note number subtotal_price token total_line_items_price total_price total_weight order_number financial_status financial_status_name fulfillment_status fulfillment_status_name cancel_reason cancelled_at ).each do |field|
+      order_json[field].should eql order.send(field)
+    end
+
+    fulfillment_json = order_json['fulfillments'].first
+    fulfillment = order.fulfillments.first
+    %w(id order_id tracking_company tracking_number).each do |field|
+      fulfillment_json[field].should eql fulfillment.send(field)
+    end
+    fulfillment_line_item_json = fulfillment_json['line_items'].first
+    fulfillment_line_item = fulfillment.line_items.first
+    %w(id product_id name quantity price sku title variant_title vendor).each do |field|
+      fulfillment_line_item_json[field].should eql fulfillment_line_item.send(field)
+    end
+    fulfillment_line_item_json['variant_id'].should eql fulfillment_line_item.product_variant_id
+
+    customer_json = order_json['customer']
+    customer = order.customer.reload
+    %w(id name email note orders_count total_spent).each do |field|
+      customer_json[field].should eql customer.send(field)
+    end
   end
 
 end
