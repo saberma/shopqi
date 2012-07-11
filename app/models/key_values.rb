@@ -10,6 +10,10 @@ module KeyValues
     def self.hash
       Hash[*(all.map{|t| [t.code, t.name]}.flatten)]
     end
+
+    def self.find_by_code(code)
+      super(code.to_s)
+    end
   end
 
   class CancelReason < KeyValues::Base
