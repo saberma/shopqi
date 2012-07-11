@@ -39,6 +39,7 @@ Doorkeeper.configure do
   # For more information go to https://github.com/applicake/doorkeeper/wiki/Using-Scopes
   default_scopes  ''
   optional_scopes :read_themes, :write_themes, :read_products, :write_products, :read_orders, :write_orders
+  # read_content, write_content, read_customers, write_customers
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from `HTTP_AUTHORIZATION` header and
