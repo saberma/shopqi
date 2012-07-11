@@ -42,7 +42,13 @@ describe Webhook do
         fulfillment
       end
       data = Rabl::Renderer.json(order.reload, 'orders/show', view_path: 'app/views/api/v1')
-      a_request(:post, "express.shopqiapp.com").with(headers: {X_SHOPQI_HMAC_SHA256: sign_hmac(application.secret, data)}).should have_been_made
+      headers = {
+        X_SHOPQI_EVENT: 'orders/fulfilled',
+        X_SHOPQI_DOMAIN: shop.shopqi_domain,
+        X_SHOPQI_ORDER_ID: order.id.to_s,
+        X_SHOPQI_HMAC_SHA256: sign_hmac(application.secret, data),
+      }
+      a_request(:post, "express.shopqiapp.com").with(headers: headers).should have_been_made
     end
 
   end
