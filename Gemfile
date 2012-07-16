@@ -94,6 +94,7 @@ group :test do
   gem 'database_cleaner' # 保持数据库处理干净状态
   gem 'spork' # 为测试加速的drb server(spork spec &)
   gem 'webmock' # 模拟外部应用 HTTP 响应(fakeweb 不支持 post 数据)
+  gem 'json_expressions' # 用于测试 API 返回的 JSON
   gem 'timecop' # 锁定当前时间
 end
 

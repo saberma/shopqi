@@ -211,6 +211,7 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     json (1.7.3)
+    json_expressions (0.7.2)
     kaminari (0.12.4)
       rails (>= 3.0.0)
     kgio (2.6.0)
@@ -445,6 +446,7 @@ DEPENDENCIES
   haml-rails
   httparty
   jquery-rails
+  json_expressions
   kaminari
   letter_opener
   liquid (~> 2.3.0)

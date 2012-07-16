@@ -27,13 +27,16 @@ describe Api::V1::OrdersController do
     record
   end
 
-  before :each do
+  let(:application) { Factory :express_application } # OAuth application
+
+  before do
+    Timecop.freeze(Time.now)
     request.host = "#{shop.primary_domain.host}"
     fulfillment
     order.reload
   end
 
-  let(:application) { Factory :express_application } # OAuth application
+  after { Timecop.return }
 
   context 'with scopes' do # 资源访问范围匹配
 
@@ -63,7 +66,6 @@ describe Api::V1::OrdersController do
 
       it 'should be success' do
         get :show, id: order.id, format: :json, access_token: token.token
-        response.should be_success
         order_json = JSON(response.body)['order']
         asset_json(order_json)
       end
@@ -91,27 +93,55 @@ describe Api::V1::OrdersController do
 
   private
   def asset_json(order_json)
-    %w(id name note number subtotal_price token total_line_items_price total_price total_weight order_number financial_status financial_status_name fulfillment_status fulfillment_status_name cancel_reason cancelled_at ).each do |field|
-      order_json[field].should eql order.send(field)
-    end
-
-    fulfillment_json = order_json['fulfillments'].first
-    fulfillment = order.fulfillments.first
-    %w(id order_id tracking_company tracking_number).each do |field|
-      fulfillment_json[field].should eql fulfillment.send(field)
-    end
-    fulfillment_line_item_json = fulfillment_json['line_items'].first
-    fulfillment_line_item = fulfillment.line_items.first
-    %w(id product_id name quantity price sku title variant_title vendor).each do |field|
-      fulfillment_line_item_json[field].should eql fulfillment_line_item.send(field)
-    end
-    fulfillment_line_item_json['variant_id'].should eql fulfillment_line_item.product_variant_id
-
-    customer_json = order_json['customer']
-    customer = order.customer.reload
-    %w(id name email note orders_count total_spent).each do |field|
-      customer_json[field].should eql customer.send(field)
-    end
+    pattern = {
+      id: :order_id,
+      name: '#1001',
+      note: nil,
+      number: 1,
+      subtotal_price: 20.0,
+      token: order.token,
+      total_line_items_price: 20.0,
+      total_price: 30.0,
+      total_weight: 5800,
+      order_number: 1001,
+      financial_status: "pending",
+      financial_status_name: "待支付",
+      fulfillment_status: "fulfilled",
+      fulfillment_status_name: "已发货",
+      cancel_reason: nil,
+      cancelled_at: nil,
+      created_at: Time.now.iso8601,
+      updated_at: Time.now.iso8601,
+      transactions: [],
+      fulfillments: [{
+        id: 1,
+        order_id: 1,
+        tracking_company: nil,
+        tracking_number: nil,
+        created_at: Time.now.iso8601,
+        updated_at: Time.now.iso8601,
+        line_items: [{
+          id: 1,
+          product_id: 1,
+          name: "iphone4",
+          quantity: 2,
+          price: 10.0,
+          sku: "APPLE1000",
+          title: "iphone4",
+          variant_id: 1,
+          variant_title: nil,
+          vendor: "Apple"}]}],
+      customer: {
+        id: 1,
+        name: "马海波",
+        email: "admin@shopqi.com",
+        note: nil,
+        orders_count: 1,
+        total_spent: 0.0,
+        created_at: Time.now.iso8601,
+        updated_at: Time.now.iso8601}
+    }
+    order_json.should match_json_expression(pattern)
   end
 
 end
