@@ -6,8 +6,11 @@ describe Api::V1::WebhooksController do
   let(:shop) { Factory(:user).shop }
 
   before :each do
+    Timecop.freeze(Time.now)
     request.host = "#{shop.primary_domain.host}"
   end
+
+  after { Timecop.return }
 
   context '#create' do
 
@@ -22,10 +25,14 @@ describe Api::V1::WebhooksController do
           post :create, webhook: {event: 'orders/fulfilled', callback_url: 'express.shopqiapp.com'}, format: :json, access_token: token.token
           response.should be_success
           assigns[:webhook].application_id.should eql application.id # 通过 API 创建的记录要关联到应用
-          json = JSON(response.body)['webhook']
-          json['id'].should_not be_blank
-          json['event'].should eql 'orders/fulfilled'
-          json['callback_url'].should eql 'express.shopqiapp.com'
+          pattern = {
+            webhook: {
+              id: 1,
+              event: "orders/fulfilled",
+              callback_url: "express.shopqiapp.com"
+            }
+          }
+          response.body.should match_json_expression(pattern)
         end.should change(Webhook, :count).by(1)
       end
 

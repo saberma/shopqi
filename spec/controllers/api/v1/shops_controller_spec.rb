@@ -6,8 +6,11 @@ describe Api::V1::ShopsController do
   let(:shop) { Factory(:user).shop }
 
   before :each do
+    Timecop.freeze(Time.now)
     request.host = "#{shop.primary_domain.host}"
   end
+
+  after { Timecop.return }
 
   context '#show' do
 
@@ -18,13 +21,28 @@ describe Api::V1::ShopsController do
     it 'should be success' do
       get :show, format: :json, access_token: token.token
       response.should be_success
-      json = JSON(response.body)['shop']
-      %w(id name phone plan province city district zip_code address email domain shopqi_domain).each do |field|
-        json[field].should eql shop.send(field)
-      end
+      pattern = {
+        shop: {
+          id: 1,
+          name: "测试商店",
+          phone: nil,
+          plan: "professional",
+          province: nil,
+          city: nil,
+          district: nil,
+          zip_code: nil,
+          address: nil,
+          email: "admin@shopqi.com",
+          domain: "shopqi.lvh.me",
+          shopqi_domain: "shopqi.lvh.me",
+          created_at: Time.now.iso8601,
+          updated_at: Time.now.iso8601
+        }
+      }
+      response.body.should match_json_expression(pattern)
     end
 
-    context 'when use bearer header auth', f: true do # oauth2 client 会优先使用 header_format 传递 access_token，格式为 Bearer %s
+    context 'when use bearer header auth' do # oauth2 client 会优先使用 header_format 传递 access_token，格式为 Bearer %s
 
       it 'should be success' do
         request.env['HTTP_AUTHORIZATION'] = 'Bearer %s' % token.token

@@ -94,7 +94,7 @@ describe Api::V1::OrdersController do
   private
   def asset_json(order_json)
     pattern = {
-      id: :order_id,
+      id: 1,
       name: '#1001',
       note: nil,
       number: 1,

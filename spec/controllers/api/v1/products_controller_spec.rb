@@ -10,8 +10,11 @@ describe Api::V1::ProductsController do
   let(:psp) { Factory :psp, shop: shop }
 
   before :each do
+    Timecop.freeze(Time.now)
     request.host = "#{shop.primary_domain.host}"
   end
+
+  after { Timecop.return }
 
   context '#index' do
 
@@ -29,9 +32,17 @@ describe Api::V1::ProductsController do
         json = JSON(response.body)['products']
         json.size.should eql 2
         product_json = json.last
-        %w(id title body_html handle product_type vendor).each do |field|
-          product_json[field].should eql iphone4.send(field)
-        end
+        pattern = {
+          id: 1,
+          title: "iphone4",
+          body_html: "iphone 4是一款基于WCDMA制式的3G手机",
+          handle: "iphone4",
+          product_type: "手机",
+          vendor: "Apple",
+          created_at: Time.now.iso8601,
+          updated_at: Time.now.iso8601
+        }
+        product_json.should match_json_expression(pattern)
       end
 
       it 'should be paginate' do # page, per_page
