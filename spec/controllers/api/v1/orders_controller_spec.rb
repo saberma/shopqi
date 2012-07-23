@@ -110,16 +110,16 @@ describe Api::V1::OrdersController do
       fulfillment_status_name: "已发货",
       cancel_reason: nil,
       cancelled_at: nil,
-      created_at: Time.now.iso8601,
-      updated_at: Time.now.iso8601,
+      created_at: WILDCARD_MATCHER,
+      updated_at: WILDCARD_MATCHER,
       transactions: [],
       fulfillments: [{
         id: 1,
         order_id: 1,
         tracking_company: nil,
         tracking_number: nil,
-        created_at: Time.now.iso8601,
-        updated_at: Time.now.iso8601,
+        created_at: WILDCARD_MATCHER,
+        updated_at: WILDCARD_MATCHER,
         line_items: [{
           id: 1,
           product_id: 1,
@@ -138,8 +138,8 @@ describe Api::V1::OrdersController do
         note: nil,
         orders_count: 1,
         total_spent: 0.0,
-        created_at: Time.now.iso8601,
-        updated_at: Time.now.iso8601}
+        created_at: WILDCARD_MATCHER,
+        updated_at: WILDCARD_MATCHER}
     }
     order_json.should match_json_expression(pattern)
   end

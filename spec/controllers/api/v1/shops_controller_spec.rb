@@ -35,8 +35,8 @@ describe Api::V1::ShopsController do
           email: "admin@shopqi.com",
           domain: "shopqi.lvh.me",
           shopqi_domain: "shopqi.lvh.me",
-          created_at: Time.now.iso8601,
-          updated_at: Time.now.iso8601
+          created_at: WILDCARD_MATCHER,
+          updated_at: WILDCARD_MATCHER
         }
       }
       response.body.should match_json_expression(pattern)

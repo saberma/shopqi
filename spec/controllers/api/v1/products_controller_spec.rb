@@ -39,8 +39,8 @@ describe Api::V1::ProductsController do
           handle: "iphone4",
           product_type: "手机",
           vendor: "Apple",
-          created_at: Time.now.iso8601,
-          updated_at: Time.now.iso8601
+          created_at: WILDCARD_MATCHER,
+          updated_at: WILDCARD_MATCHER
         }
         product_json.should match_json_expression(pattern)
       end
