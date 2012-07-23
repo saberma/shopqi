@@ -24,7 +24,7 @@ class CustomCollection < ActiveRecord::Base
   def ordered_products #排序后的商品(只在后台管理中显示，商店显示时直接使用position排序)
     order_text = "position asc"
     order_text = "products.#{self.products_order.sub '.', ' '}" if self.products_order != 'manual'
-    collection_products.ordered(order_text)
+    collection_products.use_order(order_text)
   end
 
 end
@@ -35,7 +35,7 @@ class CustomCollectionProduct < ActiveRecord::Base
   belongs_to :product
   attr_accessible :position
 
-  def self.ordered(products_order = 'position asc')
+  def self.use_order(products_order = 'position asc')
     self.select("custom_collection_products.*").joins(:product).order(products_order) # issues#231
   end
 

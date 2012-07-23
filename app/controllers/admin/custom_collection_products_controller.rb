@@ -5,7 +5,7 @@ class Admin::CustomCollectionProductsController < Admin::AppController
 
   expose(:custom_collections) { current_user.shop.custom_collections }
   expose(:custom_collection)
-  expose(:custom_collection_products) { custom_collection.collection_products.ordered }
+  expose(:custom_collection_products) { custom_collection.collection_products.use_order }
   expose(:custom_collection_product)
 
   def create
