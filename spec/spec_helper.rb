@@ -14,6 +14,7 @@ Spork.prefork do
   require 'capybara/rails'
   require 'webmock/rspec'
   require 'json_expressions/rspec'
+  include JsonExpressions # fixed: uninitialized constant WILDCARD_MATCHER
   Capybara.default_wait_time = 5
   Capybara.server_boot_timeout = 50
 
