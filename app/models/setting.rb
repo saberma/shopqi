@@ -3,6 +3,10 @@ class Setting < Settingslogic
   namespace Rails.env
   load!
 
+  def self.port # :4000
+    Setting.domain.port
+  end
+
   begin 'shopqi.com'
 
     def self.host # shopqi.com

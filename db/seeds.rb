@@ -13,5 +13,5 @@ SecretSetting.admin_users.each_value do |attr|
 end
 
 unless Doorkeeper::Application.exists?(name: Theme.client_name)
-  Doorkeeper::Application.create! name: Theme.client_name, redirect_uri: Theme.redirect_uri # 注册主题Client，用于商店切换主题操作
+  Doorkeeper::Application.create! name: Theme.client_name, redirect_uri: Theme.client_redirect_uri # 注册主题Client，用于商店切换主题操作
 end

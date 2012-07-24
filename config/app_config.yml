@@ -26,4 +26,5 @@ production:
   domain:
     #host: lvh.me
     host: shopqi.com
+    port: ''
     record: 粤ICP备11089804号
