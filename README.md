@@ -1,6 +1,6 @@
 ## ShopQi [![维护中](http://stillmaintained.com/saberma/shopqi.png)](http://stillmaintained.com/saberma/shopqi) [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
 
-## README English
+## English README
 
 ShopQi is based on Rails3.2, include all the features of e-commerce.
 
@@ -13,7 +13,7 @@ Please feel free to [contact me](mailto:mahb45@gmail.com) if you have any questi
 1. [PostgreSQL](http://www.postgresql.org/download)
 2. [Redis](http://redis.io/download)
 
-**Installation**
+*Installation*
 
     $ bundle
     $ bundle exec rake shopqi:bootstrap
@@ -31,7 +31,7 @@ http://www.lvh.me:4000
 **DO NOT use localhost, use lvh.me intead.**
 
 
-## 中文说明(README Chinese)
+## 中文说明(Chinese README)
 
 ShopQi 基于 Rails3.2 开发, 覆盖电子商务所有功能，包括
 

@@ -33,5 +33,5 @@ Shopqi::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :stric
+  config.active_record.mass_assignment_sanitizer = :strict
 end
