@@ -1,6 +1,41 @@
 ## ShopQi [![维护中](http://stillmaintained.com/saberma/shopqi.png)](http://stillmaintained.com/saberma/shopqi) [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
 
+## README English
+
+ShopQi is based on Rails3.2, include all the features of e-commerce.
+
+Please feel free to [contact me](mailto:mahb45@gmail.com) if you have any questions.
+
+### Installation
+
+*Requirement*
+
+1. [PostgreSQL](http://www.postgresql.org/download)
+2. [Redis](http://redis.io/download)
+
+**Installation**
+
+    $ bundle
+    $ bundle exec rake shopqi:bootstrap
+
+### Usage
+
+*Start the server*
+
+    $ bundle exec unicorn_rails -p 4000 -c config/development.unicorn.conf.rb
+
+*Open the browser*
+
+http://www.lvh.me:4000
+
+**DO NOT use localhost, use lvh.me intead.**
+
+
+## 中文说明(README Chinese)
+
 ShopQi 基于 Rails3.2 开发, 覆盖电子商务所有功能，包括
+
+有任何问题或建议请[联系我](mailto:mahb45@gmail.com).
 
 *基本功能*
 
@@ -36,7 +71,7 @@ ShopQi 基于 Rails3.2 开发, 覆盖电子商务所有功能，包括
 * 提供 Rails 应用 Engine [shopqi-app](http://github.com/saberma/shopqi-app)，及其示例应用 [shopqi-app-example](http://github.com/saberma/shopqi-app-example)
 * 提供 Rails 应用 Engine(支持 Webhook 回调) [shopqi-app-webhook](http://github.com/saberma/shopqi-app-webhook)
 
-## 安装
+### 安装
 
 *要求*
 
@@ -48,7 +83,7 @@ ShopQi 基于 Rails3.2 开发, 覆盖电子商务所有功能，包括
     $ bundle
     $ bundle exec rake shopqi:bootstrap
 
-## 使用
+### 使用
 
 *启动应用服务器*
 
@@ -60,8 +95,7 @@ http://www.lvh.me:4000
 
 **注意不要使用 localhost 来访问**
 
-
-## 反馈
+### 反馈
 
 [有任何问题点这里](https://github.com/saberma/shopqi/issues)
 [![提交问题](http://i.imgur.com/K8vsw.gif)](https://github.com/saberma/shopqi/issues)
@@ -69,4 +103,4 @@ http://www.lvh.me:4000
 
 ## License
 
-产品协议: [GNU  Affero GPL 3](http://www.gnu.org/licenses/agpl-3.0.html)
+[GNU  Affero GPL 3](http://www.gnu.org/licenses/agpl-3.0.html)
