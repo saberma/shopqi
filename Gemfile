@@ -1,12 +1,14 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.6'
+gem 'rails', '3.2.6'
 
 ##### 实体相关 #####
 gem 'pg'
 gem 'devise', '~> 1.4.9'
 gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
+
+
 gem 'activeadmin'
 #gem 'acts_as_list' # 仍然使用plugin版本，此Gem版本同时删除多个记录时position不正确
 

@@ -27,16 +27,22 @@ Shopqi::Application.configure do
     "//cdn.lvh.me#{Setting.domain.port}"
   }
 
+  # Raise exception on mass assignment protection for Active Record models
+  config.active_record.mass_assignment_sanitizer = :strict
+
+  # Log the query plan for queries taking more than this (works
+  # with SQLite, MySQL, and PostgreSQL)
+  config.active_record.auto_explain_threshold_in_seconds = 0.5
+
   # Do not compress assets
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = false
+  config.assets.debug = true
 
 end
-#
-#需要开发active_admin功能时，将
-#下面注释掉
+
+#需要开发active_admin功能时，将下面注释掉
 #module ActiveAdmin
 #  class Reloader
 #    def attach!
