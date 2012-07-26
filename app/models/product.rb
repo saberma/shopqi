@@ -129,7 +129,7 @@ class ProductVariant < ActiveRecord::Base
   belongs_to :product
   acts_as_list scope: :product
   validates_with SkuValidator
-  attr_accessible :price, :weight, :compare_at_price, :option1, :option2, :option3, :sku, :requires_shipping, :inventory_quantity, :inventory_management, :inventory_policy
+  attr_accessible :price, :weight, :compare_at_price, :option1, :option2, :option3, :sku, :requires_shipping, :inventory_quantity, :inventory_management, :inventory_policy, :position
 
   before_create do
     self.shop_id = self.product.shop_id

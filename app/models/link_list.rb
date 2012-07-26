@@ -15,7 +15,7 @@ end
 class Link < ActiveRecord::Base
   belongs_to :link_list
   acts_as_list scope: :link_list
-  attr_accessible :title, :link_type, :subject_handle, :subject_params, :url
+  attr_accessible :title, :link_type, :subject_handle, :subject_params, :url, :position
 
   before_save do
     self.title = self.title.blank? ? '未命名' : self.title
