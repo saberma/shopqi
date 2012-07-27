@@ -10,7 +10,7 @@ App.Views.Shipping.Show = Backbone.View.extend
   initialize: ->
     @render()
     $('#custom-shipping').append @el
-    $(@el).attr cellspacing: 0, cellspacing: 0
+    $(@el).attr cellspacing: 0
 
   render: ->
     self = this

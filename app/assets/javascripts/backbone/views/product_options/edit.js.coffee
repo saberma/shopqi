@@ -5,8 +5,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
   events:
     "click .del-option": "destroy"
     "click .resume-option": "resumeOption"
-    "change .option-selector": "disableOption"
-    "change .option-selector": "setDefaultValue"
+    "change .option-selector": "changeOptions"
 
   initialize: ->
     _.bindAll this, 'destroy', 'disableOption', 'setDefaultValue'
@@ -80,3 +79,7 @@ App.Views.ProductOption.Edit = Backbone.View.extend
     value = "\u9ED8\u8BA4"
     value += @$('.option-selector > option:selected').text() if @$('.option-selector').val() isnt 'create_new'
     @$("input[name='product[options_attributes][][value]']").val(value)
+
+  changeOptions: -> # 修改选项
+    @disableOption()
+    @setDefaultValue()
