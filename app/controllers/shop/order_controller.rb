@@ -68,7 +68,7 @@ class Shop::OrderController < Shop::AppController
     end
 
     order.discount_code = session['discount_code'] # 优惠码
-    order.build_shipping_address(order.shipping_address.attributes)
+    # order.build_shipping_address(order.shipping_address.attributes) # Can't mass-assign protected attributes: id, order_id
     cart_line_items.each_pair do |variant, quantity|
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
