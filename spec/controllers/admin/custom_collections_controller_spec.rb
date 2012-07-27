@@ -30,7 +30,7 @@ describe Admin::CustomCollectionsController do
         put :update_order, id: custom_collection.id, custom_collection: {products_order: 'created_at.asc'}, format: :js
         response.should be_success
         custom_collection.reload.products_order.should eql 'created_at.asc'
-      end.should_not raise_error(ActiveRecord::ReadOnlyRecord)
+      end.not_to raise_error(ActiveRecord::ReadOnlyRecord)
     end
 
     context 'by title' do # 按标题

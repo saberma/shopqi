@@ -45,7 +45,7 @@ describe Shop::OrderController do
         invalid_cart = Factory :cart, shop: shop, cart_hash: %Q({"#{un_exist_variant_id}":1})
         expect do
           get :new, cart_token: invalid_cart.token
-        end.should_not raise_error
+        end.not_to raise_error
         response.should be_success
         response.body.should include '购物车是空的'
       end

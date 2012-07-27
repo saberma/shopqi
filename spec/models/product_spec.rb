@@ -106,7 +106,7 @@ describe Product do
           shop.update_attributes plan: :unlimited
           expect do
             variant = iphone4.variants.create price: 2500.0
-          end.should_not raise_error
+          end.not_to raise_error
         end
 
       end
@@ -437,7 +437,7 @@ describe Product do
     it 'should be raise error' do
       expect do
         shop.products.handle!('no-exists-handle')
-      end.should raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
 
   end
