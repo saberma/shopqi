@@ -146,7 +146,7 @@ describe Shop do
       it 'should not be create' do # 不需要创建
         expect do
           shop
-        end.should_not change(Permission, :count)
+        end.not_to change(Permission, :count)
       end
 
     end

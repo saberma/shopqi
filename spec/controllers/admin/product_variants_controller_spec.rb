@@ -55,7 +55,7 @@ describe Admin::ProductVariantsController do
         put :update, product_id: iphone4.id, product_variant: {compare_at_price: "", id: iphone4.variants.first.id,  price: "111", product_id: iphone4.id, shop_id: shop.id},  id: iphone4.variants.first.id
         response.should be_success
         variant.reload
-      end.should_not change(variant, :price).from(3000).to(111)
+      end.not_to change(variant, :price).from(3000).to(111)
     end
 
   end

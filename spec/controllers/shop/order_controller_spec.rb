@@ -125,9 +125,9 @@ describe Shop::OrderController do
               post :create, cart_token: invalid_cart.token, order: order_attributes
               response.should be_success
               JSON(response.body)['error'].should eql 'unavailable_product'
-            end.should_not change(Order, :count)
-          end.should_not change(OrderLineItem, :count)
-        end.should_not change(Cart, :count)
+            end.not_to change(Order, :count)
+          end.not_to change(OrderLineItem, :count)
+        end.not_to change(Cart, :count)
       end
 
     end
@@ -264,7 +264,7 @@ describe Shop::OrderController do
             expect do
               get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
               response.should be_success
-            end.should_not change(OrderTransaction, :count)
+            end.not_to change(OrderTransaction, :count)
             order.reload.financial_status.to_sym.should eql :abandoned # 不能再次被修改为paid
           end
 

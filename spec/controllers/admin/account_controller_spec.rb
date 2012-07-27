@@ -110,7 +110,7 @@ describe Admin::AccountController do
         expect do
           post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.body.should eql 'success'
-        end.should_not change(shop, :deadline)
+        end.not_to change(shop, :deadline)
       end
 
     end
@@ -124,7 +124,7 @@ describe Admin::AccountController do
         expect do
           post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.body.should eql 'success'
-        end.should_not change(shop, :deadline)
+        end.not_to change(shop, :deadline)
         consumption.reload.status.should be_false
       end
 
@@ -180,7 +180,7 @@ describe Admin::AccountController do
         expect do
           get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, AlipayConfig['key']))
           response.should be_redirect
-        end.should_not change(shop, :deadline)
+        end.not_to change(shop, :deadline)
       end
 
     end

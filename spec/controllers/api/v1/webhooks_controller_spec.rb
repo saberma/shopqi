@@ -44,7 +44,7 @@ describe Api::V1::WebhooksController do
             response.should be_success
             json = JSON(response.body)
             json['errors'].should_not be_nil
-          end.should_not change(Webhook, :count)
+          end.not_to change(Webhook, :count)
         end
       
       end
@@ -60,7 +60,7 @@ describe Api::V1::WebhooksController do
           post :create, webhook: {event: 'orders/fulfilled', callback_url: 'express.shopqiapp.com'}, format: :json, access_token: token.token
           response.should_not be_success
           response.status.should eql 401
-        end.should_not change(Webhook, :count)
+        end.not_to change(Webhook, :count)
       end
 
     end
