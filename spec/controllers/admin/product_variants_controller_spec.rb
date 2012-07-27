@@ -22,7 +22,7 @@ describe Admin::ProductVariantsController do
       expect do
         post :create, product_id: iphone4.id, product_variant: {option1: '16G', price: nil, weight: nil}
         response.should be_success
-      end.should change(ProductVariant, :count).by(1)
+      end.to change(ProductVariant, :count).by(1)
     end
 
     it "should cant create new variant when sku is limited" do # issue#284
@@ -31,7 +31,7 @@ describe Admin::ProductVariantsController do
       expect do
         post :create, product_id: iphone4.id, product_variant: {option1: '16G', price: nil, weight: nil}
         response.should be_success
-      end.should change(ProductVariant, :count).by(0)
+      end.to change(ProductVariant, :count).by(0)
     end
   end
 
@@ -44,7 +44,7 @@ describe Admin::ProductVariantsController do
         put :update, product_id: iphone4.id, product_variant: {compare_at_price: "", id: variant.id,  price: "111", product_id: iphone4.id, shop_id: shop.id},  id: variant.id
         response.should be_success
         variant.reload
-      end.should change(variant, :price).from(3000).to(111)
+      end.to change(variant, :price).from(3000).to(111)
     end
 
     it "should cant update  variant when sku is limited" do # issue#284

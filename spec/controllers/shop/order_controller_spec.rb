@@ -93,8 +93,8 @@ describe Shop::OrderController do
             order.shipping_rate.should eql '普通快递-10.0'
             order.payment_id.should eql payment.id
             order.line_items.should_not be_empty
-          end.should change(Order, :count).by(1)
-        end.should change(OrderLineItem, :count).by(1)
+          end.to change(Order, :count).by(1)
+        end.to change(OrderLineItem, :count).by(1)
       end
 
       describe '#cart' do # 购物车
@@ -104,7 +104,7 @@ describe Shop::OrderController do
         it 'should be destroy' do # 会被删除
           expect do
             post :create, cart_token: cart.token, order: order_attributes
-          end.should change(Cart, :count).by(-1)
+          end.to change(Cart, :count).by(-1)
         end
 
       end
@@ -147,7 +147,7 @@ describe Shop::OrderController do
           order = assigns['_resources']['order']
           order.total_price.should eql (cart.total_price - discount.value + order.shipping_rate_price)
           discount.reload.used_times.should eql 1
-        end.should change(OrderDiscount, :count).by(1)
+        end.to change(OrderDiscount, :count).by(1)
       end
 
     end
@@ -187,7 +187,7 @@ describe Shop::OrderController do
               post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
               response.body.should eql 'success'
               order.reload.financial_status_paid?.should be_true
-            end.should change(OrderTransaction, :count).by(1)
+            end.to change(OrderTransaction, :count).by(1)
             order.transactions.first.amount.should eql order.total_price
             order.trade_no.should eql trade_no
           end
@@ -214,7 +214,7 @@ describe Shop::OrderController do
               post :notify, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
               response.body.should eql 'success'
               order.reload.financial_status_paid?.should be_true
-            end.should change(OrderTransaction, :count).by(1)
+            end.to change(OrderTransaction, :count).by(1)
             order.transactions.first.amount.should eql order.total_price
             order.trade_no.should eql trade_no
           end
@@ -251,7 +251,7 @@ describe Shop::OrderController do
             expect do
               get :done, attrs.merge(sign_type: 'md5', sign: sign(attrs, order.payment.key))
               response.should be_success
-            end.should change(OrderTransaction, :count)
+            end.to change(OrderTransaction, :count)
             order.reload.financial_status_paid?.should be_true
             order.trade_no.should eql trade_no
           end
@@ -297,7 +297,7 @@ describe Shop::OrderController do
               post :tenpay_notify, attrs.merge(bargainor_id: order.payment.account, sign: tenpay_sign(attrs, order.payment.key))
               response.body.should_not eql 'fail'
               order.reload.financial_status_paid?.should be_true
-            end.should change(OrderTransaction, :count).by(1)
+            end.to change(OrderTransaction, :count).by(1)
             order.transactions.first.amount.should eql order.total_price
           end
 

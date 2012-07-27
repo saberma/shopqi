@@ -24,7 +24,7 @@ describe Admin::ProductsController do
         post :create ,:product => attrs
         response.should be_redirect
         flash[:notice].should == "新增商品成功!"
-      end.should change(Product,:count).by(1)
+      end.to change(Product,:count).by(1)
     end
 
   end
@@ -36,7 +36,7 @@ describe Admin::ProductsController do
       expect do
         post :duplicate , id: iphone4.id, new_title: 'iphone5'
         response.should be_success
-      end.should change(Product, :count).by(1)
+      end.to change(Product, :count).by(1)
     end
 
   end

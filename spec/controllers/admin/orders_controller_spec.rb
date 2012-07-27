@@ -55,7 +55,7 @@ describe Admin::OrdersController do
     order
     expect do
       delete :destroy, id: order.id
-    end.should change(Order, :count).by(-1)
+    end.to change(Order, :count).by(-1)
     response.should be_redirect
   end
 

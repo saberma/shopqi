@@ -20,7 +20,7 @@ describe Admin::PagesController do
       expect do
         post :create, page: { title: 'Welcome', body_html: 'Hello'}
         response.should be_redirect
-      end.should change(Page, :count).by(1)
+      end.to change(Page, :count).by(1)
     end
 
   end

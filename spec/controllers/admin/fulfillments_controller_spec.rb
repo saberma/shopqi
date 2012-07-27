@@ -44,7 +44,7 @@ describe Admin::FulfillmentsController do
         line_item.fulfillment.should_not be_nil
       end
       order.reload.fulfillment_status.to_sym.should eql :fulfilled
-    end.should change(OrderFulfillment, :count).by(1)
+    end.to change(OrderFulfillment, :count).by(1)
   end
 
 end

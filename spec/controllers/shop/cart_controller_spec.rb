@@ -43,13 +43,13 @@ describe Shop::CartController do
       it 'should be submit by button' do
         expect do
           post :update, shop_id: shop.id, updates: {}, checkout: :checkout
-        end.should change(Cart, :count).by(1)
+        end.to change(Cart, :count).by(1)
       end
 
       it 'should be submit by image' do
         expect do
           post :update, shop_id: shop.id, updates: {}, 'checkout.x' => 88
-        end.should change(Cart, :count).by(1)
+        end.to change(Cart, :count).by(1)
       end
 
     end

@@ -18,13 +18,13 @@ describe Admin::WeightBasedShippingRatesController do
     it "success" do
       expect do
         xhr :post, :create, shipping_id: shipping.id, weight_based_shipping_rate: {weight_low: 0.0, weight_high: 10.0, name: '顺丰快递'}
-      end.should change(WeightBasedShippingRate,:count).by(1)
+      end.to change(WeightBasedShippingRate,:count).by(1)
     end
 
     it "failure" do
       expect do
         xhr :post, :create, shipping_id: shipping.id, weight_based_shipping_rate: {weight_low: 0.0, weight_high: 10.0, name: ''}
-      end.should change(WeightBasedShippingRate,:count).by(0)
+      end.to change(WeightBasedShippingRate,:count).by(0)
     end
 
   end

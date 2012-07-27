@@ -16,7 +16,7 @@ describe ShopTheme do
     it 'should be install' do
       expect do
         shop.themes.install theme_dark
-      end.should change(ShopTheme, :count).by(1)
+      end.to change(ShopTheme, :count).by(1)
     end
 
     context '#duplicate' do
@@ -29,7 +29,7 @@ describe ShopTheme do
           expect do
             duplicate_theme = theme.duplicate
             duplicate_theme.name.should eql "副本 #{theme.name}"
-          end.should change(ShopTheme, :count).by(1)
+          end.to change(ShopTheme, :count).by(1)
         end
 
       end

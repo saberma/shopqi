@@ -15,7 +15,7 @@ describe LinkList do
       welcome
       expect do
         link_list.links.create title: '博客', link_type: 'blog', subject_handle: welcome.handle, url: "/blogs/#{welcome.handle}"
-      end.should change(Link, :count).by(1)
+      end.to change(Link, :count).by(1)
     end
 
   end

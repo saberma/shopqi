@@ -35,9 +35,9 @@ describe User do
           expect do
             user = User.create attrs_with_shop
             user.shop.activities.should_not be_empty
-          end.should change(User, :count).by(1)
-        end.should change(Shop, :count).by(1)
-      end.should change(ShopDomain, :count).by(1)
+          end.to change(User, :count).by(1)
+        end.to change(Shop, :count).by(1)
+      end.to change(ShopDomain, :count).by(1)
     end
 
     describe 'permissions' do # 普通用户权限记录
@@ -46,7 +46,7 @@ describe User do
         user_saberma
         expect do
           Factory :normal_user, shop: user_saberma.shop
-        end.should change(Permission, :count)
+        end.to change(Permission, :count)
       end
 
     end

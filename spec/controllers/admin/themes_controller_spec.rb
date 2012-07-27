@@ -41,7 +41,7 @@ describe Admin::ThemesController do
       expect do
         put :duplicate, id: theme.id
         JSON(response.body)['shop_theme']['role'].should eql 'unpublished'
-      end.should change(ShopTheme, :count).by(1)
+      end.to change(ShopTheme, :count).by(1)
     end
 
     describe 'validate' do

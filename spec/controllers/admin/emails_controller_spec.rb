@@ -17,7 +17,7 @@ describe Admin::EmailsController do
     it "should create subscribe success" do
       expect do
         xhr :post, :follow,subscribe_type: 'email', address: "ee@gmail.com"
-      end.should change(Subscribe, :count).by(1)
+      end.to change(Subscribe, :count).by(1)
     end
   end
 
@@ -25,7 +25,7 @@ describe Admin::EmailsController do
     it "should remove a subscribe " do
       expect do
         xhr :delete, :unfollow, id: subscribes.first.id
-      end.should change(Subscribe,:count).by(-1)
+      end.to change(Subscribe,:count).by(-1)
     end
   end
 

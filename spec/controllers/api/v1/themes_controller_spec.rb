@@ -22,7 +22,7 @@ describe Api::V1::ThemesController do
         expect do
           post :install, handle: theme_slate.handle, style_handle: theme_slate.style_handle, access_token: token.token
           response.should be_success
-        end.should change(ShopTheme, :count).by(1)
+        end.to change(ShopTheme, :count).by(1)
       end
 
       describe 'validate' do

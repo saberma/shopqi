@@ -27,8 +27,8 @@ describe Order do
       expect do
         expect do
           order
-        end.should change(Customer, :count).by(1)
-      end.should change(CustomerAddress, :count).by(1)
+        end.to change(Customer, :count).by(1)
+      end.to change(CustomerAddress, :count).by(1)
       order.customer.should_not be_nil
     end
 
@@ -41,14 +41,14 @@ describe Order do
     it 'should be add' do
       expect do
         transaction
-      end.should change(OrderTransaction, :count).by(1)
+      end.to change(OrderTransaction, :count).by(1)
     end
 
     it 'should save history' do
       order
       expect do
         transaction
-      end.should change(OrderHistory, :count).by(1)
+      end.to change(OrderHistory, :count).by(1)
     end
 
     context 'enough amount' do # 完整支付
@@ -99,7 +99,7 @@ describe Order do
     it 'should be add' do
       expect do
         fulfillment
-      end.should change(OrderFulfillment, :count).by(1)
+      end.to change(OrderFulfillment, :count).by(1)
       line_item.reload.fulfilled.should be_true
       order.reload.fulfillment_status.should eql 'fulfilled'
     end
@@ -109,7 +109,7 @@ describe Order do
       expect do
         fulfillment
         order.histories.first.url.should_not be_blank
-      end.should change(OrderHistory, :count).by(1)
+      end.to change(OrderHistory, :count).by(1)
     end
 
     describe 'email' do
@@ -259,8 +259,8 @@ describe Order do
       expect do
         expect do
           order
-        end.should change(Order, :count).by(1)
-      end.should change(OrderShippingAddress, :count).by(1)
+        end.to change(Order, :count).by(1)
+      end.to change(OrderShippingAddress, :count).by(1)
     end
 
     it 'should save name' do
@@ -272,7 +272,7 @@ describe Order do
     it 'should save history' do
       expect do
         order
-      end.should change(OrderHistory, :count).by(1)
+      end.to change(OrderHistory, :count).by(1)
     end
 
     context 'inventory tracking' do # 跟踪库存

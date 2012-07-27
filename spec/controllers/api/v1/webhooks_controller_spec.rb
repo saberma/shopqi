@@ -33,7 +33,7 @@ describe Api::V1::WebhooksController do
             }
           }
           response.body.should match_json_expression(pattern)
-        end.should change(Webhook, :count).by(1)
+        end.to change(Webhook, :count).by(1)
       end
 
       context 'wrong event' do
