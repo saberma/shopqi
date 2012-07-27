@@ -84,12 +84,7 @@ group :development, :test do
 end
 
 group :test do
-  #gem "selenium-webdriver", "~> 2.14.0" # 支持travis-ci的firefox8.0版本(但存在session未被清空的问题)
-  # 2.19以前的版本存在问题 # http://bit.ly/Hp3Aru
-  # Selenium::WebDriver::Error::MoveTargetOutOfBoundsError:
-  #        Element cannot be scrolled into view:[object HTMLInputElement]
-  #gem "selenium-webdriver", "~> 2.20.0" # 支持travis-ci的firefox11.0版本
-  gem "selenium-webdriver", "~> 2.24.0" # 支持travis-ci的firefox13.0版本
+  gem "selenium-webdriver", "~> 2.25.0"
   gem "rspec-rails"
   gem 'capybara' , ' ~> 1.1.2'
   gem 'resque_spec' # resque测试
