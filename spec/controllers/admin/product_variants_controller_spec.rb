@@ -41,7 +41,7 @@ describe Admin::ProductVariantsController do
       iphone4
       variant = iphone4.variants.first
       expect do
-        put :update, product_id: iphone4.id, product_variant: {compare_at_price: "", id: variant.id,  price: "111", product_id: iphone4.id, shop_id: shop.id},  id: variant.id
+        put :update, product_id: iphone4.id, product_variant: {compare_at_price: "",  price: "111"},  id: variant.id
         response.should be_success
         variant.reload
       end.to change(variant, :price).from(3000).to(111)
@@ -52,7 +52,7 @@ describe Admin::ProductVariantsController do
       variant = iphone4.variants.first
       shop.plan_type.stub!(:skus).and_return(1)
       expect do
-        put :update, product_id: iphone4.id, product_variant: {compare_at_price: "", id: iphone4.variants.first.id,  price: "111", product_id: iphone4.id, shop_id: shop.id},  id: iphone4.variants.first.id
+        put :update, product_id: iphone4.id, product_variant: {compare_at_price: "",  price: "111"},  id: iphone4.variants.first.id
         response.should be_success
         variant.reload
       end.not_to change(variant, :price).from(3000).to(111)

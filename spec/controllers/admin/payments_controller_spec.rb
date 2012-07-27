@@ -19,7 +19,7 @@ describe Admin::PaymentsController do
   context '#update' do
 
     it "should be success" do
-      attrs = payment_alipay.attributes.clone
+      attrs = payment_alipay.attributes.clone.symbolize_keys.except(:id, :shop_id, :created_at, :updated_at)
       service = ActiveMerchant::Billing::Integrations::Alipay::Helper::TRADE_CREATE_BY_BUYER # 改为担保交易
       attrs.merge! key: 'abcdef', account: '123456', email: 'admin@shopqi.com', service: service
       post :update, id: payment_alipay.id, payment: attrs
@@ -31,7 +31,7 @@ describe Admin::PaymentsController do
     end
 
     it "should support empty key" do # 更新时不输入key
-      attrs = payment_alipay.attributes.clone
+      attrs = payment_alipay.attributes.clone.symbolize_keys.except(:id, :shop_id, :created_at, :updated_at)
       attrs.merge! key: nil, account: 'admin@shopqi.com'
       post :update, id: payment_alipay.id, payment: attrs
       payment_alipay.reload

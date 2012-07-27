@@ -20,19 +20,19 @@ describe Admin::LinkListsController do
   context '#update' do
 
     it "without links" do
-      xhr :put, :update, :id => link_list.id, :link_list => link_list.attributes
+      xhr :put, :update, id: link_list.id, link_list: link_list.attributes.symbolize_keys.except(:id, :shop_id, :created_at, :updated_at)
       response.should be_success
     end
 
     it "with links" do
-      attrs = link_list_with_links.attributes
+      attrs = link_list_with_links.attributes.symbolize_keys.except(:id, :shop_id, :created_at, :updated_at)
       attrs[:links_attributes] = []
       link_list_with_links.links.each do |link|
-        attrs[:links_attributes] << link.attributes
+        attrs[:links_attributes] << link.attributes.symbolize_keys.except(:link_list_id, :created_at, :updated_at)
       end
       attrs[:links_attributes] << {:title => '联想'}
 
-      xhr :put, :update, :id => link_list_with_links.id, :link_list => attrs
+      xhr :put, :update, id: link_list_with_links.id, link_list: attrs
       response.should be_success
       link_list_with_links.reload.links.size.should eql attrs[:links_attributes].size
     end

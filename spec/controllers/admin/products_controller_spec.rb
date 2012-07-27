@@ -18,10 +18,8 @@ describe Admin::ProductsController do
   context '#create' do
 
     it "should create new product" do
-      attrs = iphone4.attributes
-      attrs.delete('shop_id')
       expect do
-        post :create ,:product => attrs
+        post :create, product: iphone4.attributes.symbolize_keys.except(:id, :shop_id, :created_at, :updated_at)
         response.should be_redirect
         flash[:notice].should == "新增商品成功!"
       end.to change(Product,:count).by(1)
