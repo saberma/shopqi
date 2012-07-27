@@ -45,7 +45,8 @@ class Customer < ActiveRecord::Base
 
   # 首次下单
   def order
-    self.available_orders.first.as_json['order']
+    json = self.available_orders.first.as_json
+    json['order'] if json
   end
 
   def status_name
