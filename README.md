@@ -15,14 +15,14 @@ Please feel free to [contact me](mailto:mahb45@gmail.com) if you have any questi
 
 *Installation*
 
-    $ bundle
-    $ bundle exec rake shopqi:bootstrap
+    $ bundle
+    $ bundle exec rake shopqi:bootstrap
 
 ### Usage
 
 *Start the server*
 
-    $ bundle exec unicorn_rails -p 4000 -c config/development.unicorn.conf.rb
+    $ bundle exec unicorn_rails -p 4000 -c config/development.unicorn.conf.rb
 
 *Open the browser*
 
