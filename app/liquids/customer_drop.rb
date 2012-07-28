@@ -1,7 +1,6 @@
 #encoding: utf-8
 #订单关联的liquid属性
 class CustomerDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(customer)
     @customer = customer
@@ -23,18 +22,16 @@ class CustomerDrop < Liquid::Drop
   end
 
   def addresses
-    @customer.addresses.map do |address|
+    @addresses ||= @customer.addresses.map do |address|
       CustomerAddressDrop.new address if address.id?
     end.compact
   end
-  memoize :addresses
 
   def orders
-    @customer.orders.map do |order|
+    @orders ||= @customer.orders.map do |order|
       OrderDrop.new  order
     end
   end
-  memoize :orders
 
   def new_address
     CustomerAddressDrop.new @customer.addresses.new

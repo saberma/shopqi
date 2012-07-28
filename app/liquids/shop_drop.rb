@@ -1,6 +1,5 @@
 #encoding: utf-8
 class ShopDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(shop, theme = nil, host = nil)
     @shop = shop
@@ -24,14 +23,12 @@ class ShopDrop < Liquid::Drop
   end
 
   def types
-    @shop.types.map(&:name)
+    @types ||= @shop.types.map(&:name)
   end
-  memoize :types
 
   def vendors
-    @shop.vendors.map(&:name)
+    @vendors ||= @shop.vendors.map(&:name)
   end
-  memoize :vendors
 
   def domain_record # 备案号
     @shop.domains.where(host: @host).first.record

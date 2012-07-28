@@ -1,6 +1,5 @@
 #encoding: utf-8
 class CartDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(cart_hash = {})
     @cart_hash = cart_hash #Hash{variant_id: quantity}
@@ -9,16 +8,16 @@ class CartDrop < Liquid::Drop
   delegate :item_count, :requires_shipping, :total_price, :total_weight, :note, :attributes, to: :session_cart
 
   def session_cart
-    shop = @context['shop'].instance_variable_get('@shop')
-    @session_cart = SessionCart.new(@cart_hash, shop)
+    @session_cart ||= begin
+      shop = @context['shop'].instance_variable_get('@shop')
+      @session_cart = SessionCart.new(@cart_hash, shop)
+    end
   end
-  memoize :session_cart
 
   def items
-    session_cart.items.map do |session_line_item|
+    @items ||= session_cart.items.map do |session_line_item|
       LineItemDrop.new session_line_item
     end
   end
-  memoize :items
 
 end

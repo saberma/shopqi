@@ -12,7 +12,6 @@ class BlogsDrop < Liquid::Drop
 end
 
 class BlogDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   delegate :title, :handle, to: :@blog
 
@@ -21,11 +20,10 @@ class BlogDrop < Liquid::Drop
   end
 
   def articles
-    @blog.articles.map do |article|
+    @articles ||= @blog.articles.map do |article|
       ArticleDrop.new article
     end
   end
-  memoize :articles
 
   def articles_count
     self.articles.size
@@ -55,10 +53,9 @@ class BlogDrop < Liquid::Drop
 
   private
   def article_drops # {1 => ArticleDrop.new(article)}
-    Hash[ *self.articles.map do |article_drop|
+    @article_drops ||= Hash[ *self.articles.map do |article_drop|
       [article_drop.id, article_drop]
     end.flatten ]
   end
-  memoize :article_drops
 
 end

@@ -88,7 +88,6 @@ class OrderDrop < Liquid::Drop
 end
 
 class OrderLineItemDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(order_line_item)
     @order_line_item = order_line_item
@@ -101,24 +100,20 @@ class OrderLineItemDrop < Liquid::Drop
   end
 
   def variant
-    ProductVariantDrop.new(@order_line_item.product_variant)
+    @variant ||= ProductVariantDrop.new(@order_line_item.product_variant)
   end
-  memoize :variant
 
   def product
-    ProductDrop.new(@order_line_item.product)
+    @product ||= ProductDrop.new(@order_line_item.product)
   end
-  memoize :product
 
   def line_price
     quantity * price
   end
-  memoize :line_price
 
   def fulfillment
-    OrderFulfillmentDrop.new(@order_line_item.fulfillments.first) if @order_line_item.fulfillments.first
+    @fulfillment ||= OrderFulfillmentDrop.new(@order_line_item.fulfillments.first) if @order_line_item.fulfillments.first
   end
-  memoize :fulfillment
 
 end
 

@@ -1,9 +1,8 @@
 #encoding: utf-8
 class SearchDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(results, terms)
-    @results = results || []
+    @search_results = results || []
     @terms = terms
   end
 
@@ -16,14 +15,13 @@ class SearchDrop < Liquid::Drop
   end
 
   def results
-    @results.map do |item|
+    @results ||= @search_results.map do |item|
       SearchItemDrop.new item
     end
   end
-  memoize :results
 
   def results_count
-    @results.size
+    @search_results.size
   end
 
 end

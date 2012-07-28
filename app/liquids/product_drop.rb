@@ -1,6 +1,5 @@
 #encoding: utf-8
 class ProductDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(product)
     @product = product
@@ -9,60 +8,53 @@ class ProductDrop < Liquid::Drop
   delegate :id, :handle, :title, :url, :price, :available, :vendor, :tags, to: :@product, allow_nil: true
 
   def variants
-    @product.variants.map do |variant|
+    @variants ||= @product.variants.map do |variant|
       ProductVariantDrop.new variant
     end
   end
-  memoize :variants
 
   def options
-    @product.options.map do |option|
+    @options ||= @product.options.map do |option|
       ProductOptionDrop.new option
     end
   end
-  memoize :options
 
   def images
-    @product.photos.map do |image|
+    @images ||= @product.photos.map do |image|
       ProductImageDrop.new image
     end
   end
-  memoize :images
 
   def type
     @product.product_type
   end
 
   def price_varies
-    @product.variants.map(&:price).uniq.size > 1
+    @price_varies ||= @product.variants.map(&:price).uniq.size > 1
   end
-  memoize :price_varies
 
   def price_min
     price
   end
 
   def compare_at_price_varies
-    @product.variants.map(&:compare_at_price).uniq.size > 1
+    @compare_at_price_varies ||= @product.variants.map(&:compare_at_price).uniq.size > 1
   end
-  memoize :compare_at_price_varies
 
   def compare_at_price_max
-    @product.variants.map(&:compare_at_price).max
+    @compare_at_price_max ||= @product.variants.map(&:compare_at_price).max
   end
-  memoize :compare_at_price_max
 
   def compare_at_price_min
-    @product.variants.map(&:compare_at_price).min
+    @compare_at_price_min ||= @product.variants.map(&:compare_at_price).min
   end
-  memoize :compare_at_price_min
 
   def description
     @product.body_html
   end
 
   def featured_image
-    ProductImageDrop.new @product.photos.first unless @product.photos.empty?
+    @featured_image ||= ProductImageDrop.new @product.photos.first unless @product.photos.empty?
   end
 
   def as_json(options = nil)

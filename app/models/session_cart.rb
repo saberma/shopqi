@@ -1,6 +1,5 @@
 #encoding: utf-8
 class SessionCart # Session购物车
-  extend ActiveSupport::Memoizable
 
   def initialize(cart_hash = {}, shop)
     @cart_hash = cart_hash #Hash{variant_id: quantity}
@@ -13,27 +12,23 @@ class SessionCart # Session购物车
   end
 
   def items
-    @cart_hash.map do |variant_id, quantity|
+    @items ||= @cart_hash.map do |variant_id, quantity|
       SessionLineItem.new variant_id, quantity, @shop
     end
   end
-  memoize :items
 
   # 只要有一个款式需要收货，则购物车需要收货地址
   def requires_shipping
     items.any?(&:requires_shipping)
   end
-  memoize :requires_shipping
 
   def total_price
     items.map(&:line_price).sum
   end
-  memoize :total_price
 
   def total_weight
     items.map(&:line_weight).sum
   end
-  memoize :total_weight
 
   def note
   end
@@ -56,7 +51,6 @@ class SessionCart # Session购物车
 end
 
 class SessionLineItem # Session购物车中商品款式
-  extend ActiveSupport::Memoizable
 
   def initialize(variant_id, quantity, shop)
     @variant = shop.variants.find(variant_id)
@@ -78,17 +72,14 @@ class SessionLineItem # Session购物车中商品款式
   def title
     @variant.name
   end
-  memoize :title
 
   def line_price
     quantity * price
   end
-  memoize :line_price
 
   def line_weight
     quantity * grams
   end
-  memoize :line_weight
 
   def quantity
     @quantity
@@ -97,7 +88,6 @@ class SessionLineItem # Session购物车中商品款式
   def grams # 单位:克
     (@variant.weight * 1000).to_i
   end
-  memoize :grams
 
   #def tax
   #end

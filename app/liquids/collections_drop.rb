@@ -1,5 +1,4 @@
 class CollectionsDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   def initialize(shop)
     @shop = shop
@@ -11,11 +10,10 @@ class CollectionsDrop < Liquid::Drop
   end
 
   def all
-    @shop.collections.map do |collection|
+    @all ||= @shop.collections.map do |collection|
       CollectionDrop.new collection
     end
   end
-  memoize :all
 
   def each(&block) # 对象支持直接迭代
     all.each(&block)
@@ -24,7 +22,6 @@ class CollectionsDrop < Liquid::Drop
 end
 
 class CollectionDrop < Liquid::Drop
-  extend ActiveSupport::Memoizable
 
   delegate :title, :handle, to: :@collection
 
@@ -35,11 +32,10 @@ class CollectionDrop < Liquid::Drop
   def products #数组要缓存，以便paginate替换为当前页
     #注：不能用products.where,因为有地方是直接用collection.new来直接关联products,
     #而没有在数据库中存储对应的记录的
-    @collection.products.map do |product|
+    @products ||= @collection.products.map do |product|
       ProductDrop.new product if product.published #只显示product published的商品
     end.compact
   end
-  memoize :products
 
   def description
     @collection.body_html
@@ -102,10 +98,9 @@ class CollectionDrop < Liquid::Drop
 
   private
   def product_drops # {1 => ProductDrop.new(product)}
-    Hash[ *self.products.map do |product_drop|
+    @product_drops ||= Hash[ *self.products.map do |product_drop|
       [product_drop.id, product_drop]
     end.flatten ]
   end
-  memoize :product_drops
 
 end
