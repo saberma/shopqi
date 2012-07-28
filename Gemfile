@@ -10,7 +10,7 @@ gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
 
 
 gem 'activeadmin'
-#gem 'acts_as_list' # 仍然使用plugin版本，此Gem版本同时删除多个记录时position不正确
+gem 'acts_as_list', git: 'git://github.com/saberma/acts_as_list.git' # 支持同时删除多个记录
 
 #use unicorn as web server
 gem 'unicorn'

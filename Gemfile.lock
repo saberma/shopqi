@@ -34,6 +34,12 @@ GIT
       activemerchant (>= 1.4.2)
 
 GIT
+  remote: git://github.com/saberma/acts_as_list.git
+  revision: 8bc26426d3104876191fc579cc4fced21ee9e2bb
+  specs:
+    acts_as_list (0.1.6)
+
+GIT
   remote: git://github.com/saberma/gollum.git
   revision: ee3874033a52cb261b43fedd5215a092f299e8ff
   specs:
@@ -424,6 +430,7 @@ DEPENDENCIES
   activeadmin
   activemerchant
   activemerchant_patch_for_china!
+  acts_as_list!
   awesome_print
   capybara (~> 1.1.2)
   carrierwave
