@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
 require 'shared_stuff'
+require 'resolv'
 
 describe "Domains", js: true do
 
@@ -12,7 +13,8 @@ describe "Domains", js: true do
 
     before(:each) do
       dns = mock('dns')
-      dns.stub!(:getresource).and_return("wrong.myshopoqi.com")
+      cname = Resolv::DNS::Resource::IN::CNAME.new(Resolv::DNS::Name.create("wrong.myshopoqi.com"))
+      dns.stub!(:getresource).and_return(cname)
       Resolv::DNS.stub(:new).and_return(dns)
       visit domains_path
     end
