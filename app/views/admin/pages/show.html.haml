@@ -6,7 +6,7 @@
     %li.no-icon
       %a#page-edit-link(href="#pages/edit") 修改
     %li.no-pad
-      = link_to image_tag('admin/icons/trash.gif'), page_path(page), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+      = link_to image_tag('admin/icons/trash.gif'), page_path(page), remote: true, method: :delete, title: '删除它', class: :del, data: { confirm: '您确定要删除?' }
 
 .page-edit
   .group(style="margin-top:0")

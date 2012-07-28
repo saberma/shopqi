@@ -12,4 +12,4 @@
   %td
     %span.note=article.updated_at.to_s(:with_year)
   %td.r
-    = link_to image_tag('admin/icons/trash.gif'), blog_article_path(blog,article), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+    = link_to image_tag('admin/icons/trash.gif'), blog_article_path(blog,article), remote: true, method: :delete, title: '删除它', class: :del, data: { confirm: '您确定要删除?' }

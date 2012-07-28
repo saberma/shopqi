@@ -8,7 +8,7 @@
     %li.no-icon
       %a.dup-btn(href="#") 复制此商品
     %li.no-icon
-      = link_to image_tag('admin/icons/trash.gif'), product_path(product), method: :delete, confirm: '您确定要删除此商品吗?', title: '删除它', class: :del
+      = link_to image_tag('admin/icons/trash.gif'), product_path(product), method: :delete, title: '删除它', class: :del, data: {  confirm: '您确定要删除此商品吗?' }
 
 #duplicate-product.group.hide
   .group-fields

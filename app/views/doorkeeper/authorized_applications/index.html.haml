@@ -13,4 +13,4 @@
         %tr
           %td= application.name
           %td= application.created_at
-          %td= link_to 'Revoke', authorized_application_path(application), :confirm => 'Are you sure?', :method => :delete, :class => 'btn danger'
+          %td= link_to 'Revoke', authorized_application_path(application), method: :delete, class: 'btn danger', data: { confirm: 'Are you sure?' }

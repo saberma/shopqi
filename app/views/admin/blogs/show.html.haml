@@ -7,7 +7,7 @@
     %li.no-icon
       =link_to "修改",edit_blog_path(blog),id:"blog-edit-link"
     %li.no-icon
-      = link_to image_tag('admin/icons/trash.gif'), blog_path(blog), remote: true, method: :delete, confirm: '您确定要删除?', title: '删除它', class: :del
+      = link_to image_tag('admin/icons/trash.gif'), blog_path(blog), remote: true, method: :delete, title: '删除它', class: :del, data: { confirm: '您确定要删除?' }
 / begin action_links
 #table-filters.box2.sst.ssb{:style => ""}
   显示
