@@ -8,11 +8,12 @@ App.Models.LinkList = Backbone.Model.extend
 
   #重载，支持子实体
   toJSON : ->
-    attrs = this.wrappedAttributes()
+    @unset 'id', silent: true
+    @unset 'shop_id', silent: true
+    attrs = @wrappedAttributes()
     #手动调用_clone，因为toJSON会加wraper
-    if this.links?
-      links_attrs = this.links.models.map (model) ->
-        _.clone model.attributes
+    if @links?
+      links_attrs = @links.models.map (model) -> model.toJSON()['link']
       attrs['link_list']['links_attributes'] = links_attrs
     attrs
 

@@ -26,9 +26,10 @@ App.Models.Payment = Backbone.Model.extend
       errors
 
   toJSON : ->
+    @unset 'shop_id', silent: true
     @unset 'service_name', silent: true
     @unset 'id', silent: true
-    attrs = @wrappedAttributes()
+    @wrappedAttributes()
 
 App.Collections.Payments = Backbone.Collection.extend
   model: App.Models.Payment

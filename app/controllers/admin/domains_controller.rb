@@ -19,7 +19,7 @@ class Admin::DomainsController < Admin::AppController
       begin
         cname = Resolv::DNS.new.getresource shop_domain.host, Resolv::DNS::Resource::IN::CNAME # 确保顶级域名存在cname，并且指向example.myshopqi.com
         text = :ok if !cname.nil? and cname.name.to_s == shop.domains.myshopqi.host
-      rescue; end
+      rescue Resolv::ResolvError; end
     end
     render text: text
   end

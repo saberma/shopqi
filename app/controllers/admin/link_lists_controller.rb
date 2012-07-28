@@ -5,7 +5,12 @@ class Admin::LinkListsController < Admin::AppController
 
   expose(:shop) { current_user.shop }
   expose(:link_lists) { shop.link_lists }
-  expose(:link_lists_json) { link_lists.to_json(except: [ :created_at, :updated_at ], include: :links) }
+  expose(:link_lists_json) do
+    link_lists.to_json({
+      except: [ :created_at, :updated_at ],
+      include: { links: { except: [ :created_at, :updated_at ]} }
+    })
+  end
   expose(:link_list)
   expose(:link_types) { KeyValues::Link::Type.options }
   expose(:link)

@@ -34,7 +34,7 @@ class Article < ActiveRecord::Base
   has_many :spam_comments,class_name:"Comment",conditions:"comments.status = 'spam'"
   validates_presence_of :title
   delegate :shop, to: :blog
-  attr_accessible :title, :body_html, :published, :author
+  attr_accessible :blog_id, :tags_text, :title, :body_html, :published, :author
 
   searchable do
     integer :shop_id, references: Shop

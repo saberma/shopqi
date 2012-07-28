@@ -11,11 +11,12 @@ App.Models.Product = Backbone.Model.extend
 
   #重载，支持子实体
   toJSON : ->
-    attrs = this.wrappedAttributes()
+    @unset 'id', silent: true
+    @unset 'shop_id', silent: true
+    attrs = @wrappedAttributes()
     #手动调用_clone，因为toJSON会加wraper
     if @options?
-      options_attrs = @options.models.map (model) ->
-        _.clone model.attributes
+      options_attrs = @options.models.map (model) -> model.toJSON()['product_option']
       attrs['product']['options_attributes'] = options_attrs
     attrs
 
@@ -54,9 +55,21 @@ App.Models.Product = Backbone.Model.extend
 App.Models.ProductOption = Backbone.Model.extend
   name: 'product_option'
 
+  toJSON : ->
+    @unset 'product_id', silent: true
+    @unset 'first', silent: true
+    @unset 'last', silent: true
+    @wrappedAttributes()
+
 # 商品款式
 App.Models.ProductVariant = Backbone.Model.extend
   name: 'product_variant'
+
+  toJSON: ->
+    @unset 'id', silent: true
+    @unset 'product_id', silent: true
+    @unset 'shop_id', silent: true
+    @wrappedAttributes()
 
   validate: (attrs) ->
     return unless attrs.option1? #没有修改option值则不校验
@@ -100,8 +113,6 @@ App.Collections.AvailableProducts = Backbone.Collection.extend
 
 App.Collections.Products = Backbone.Collection.extend
   model: App.Models.Product
-
-
 
 App.Collections.ProductOptions = Backbone.Collection.extend
   model: App.Models.ProductOption

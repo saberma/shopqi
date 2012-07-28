@@ -3,6 +3,10 @@ App.Models.CustomerGroup = Backbone.Model.extend
   url: ->
     "/admin/customer_groups/#{this.id}"
 
+  toJSON: ->
+    @unset 'shop_id', silent: true
+    @wrappedAttributes()
+
   # 获取filter hash数组
   filters: ->
     query = this.get('query')

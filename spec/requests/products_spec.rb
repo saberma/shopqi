@@ -493,7 +493,7 @@ describe "Products", js: true do
           click_on '保存'
 
           find('#product_title a').text.should eql 'iphone'
-          within '#product-options' do
+          within '#product-options' do # show options
             has_content?('智能手机').should be_true
             has_content?('Apple').should be_true
             has_content?('默认标题').should be_true
