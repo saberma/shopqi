@@ -49,7 +49,7 @@ class Shop::SessionsController < Shop::AppController
       end
       redirect_to checkout_url and return
     else
-      respond_with resource, :location => redirect_location(resource_name, resource)
+      respond_with resource, location: after_sign_in_path_for(resource)
     end
   end
 
