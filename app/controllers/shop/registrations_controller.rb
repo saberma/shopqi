@@ -1,7 +1,6 @@
 #encoding: utf-8
 class Shop::RegistrationsController < Shop::AppController
   prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
-  prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy]
   skip_before_filter :must_has_theme
   include Devise::Controllers::InternalHelpers
   include Shop::OrderHelper
@@ -18,7 +17,6 @@ class Shop::RegistrationsController < Shop::AppController
     assign.merge!('content_for_layout' => liquid_view)
     html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
     render text: html
-    #render_with_scope :new
   end
 
   # POST /resource
@@ -47,7 +45,6 @@ class Shop::RegistrationsController < Shop::AppController
       end
     else
       clean_up_passwords(resource)
-      #render_with_scope :new
       path = Rails.root.join 'app/views/shop/templates/customers/registrations.liquid'
       assign = template_assign('template' => 'customers', 'customer' => CustomerDrop.new(resource))
       liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
@@ -55,35 +52,6 @@ class Shop::RegistrationsController < Shop::AppController
       html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
       render text: html
     end
-  end
-
-  # GET /resource/edit
-  def edit
-    render_with_scope :edit
-  end
-
-  # PUT /resource
-  # We need to use a copy of the resource because we don't want to change
-  # the current user in place.
-  def update
-    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
-
-    if resource.update_with_password(params[resource_name])
-      set_flash_message :notice, :updated if is_navigational_format?
-      sign_in resource_name, resource, :bypass => true
-      respond_with resource, :location => after_update_path_for(resource)
-    else
-      clean_up_passwords(resource)
-      respond_with_navigational(resource){ render_with_scope :edit }
-    end
-  end
-
-  # DELETE /resource
-  def destroy
-    resource.destroy
-    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    set_flash_message :notice, :destroyed if is_navigational_format?
-    redirect_to after_sign_out_path_for(resource_name)
   end
 
   # GET /resource/cancel
