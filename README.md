@@ -10,13 +10,19 @@ Please feel free to [contact me](mailto:mahb45@gmail.com) if you have any questi
 
 *Requirement*
 
-1. [PostgreSQL](http://www.postgresql.org/download)
+1. [PostgreSQL](http://www.postgresql.org/download) OR [MySQL](http://www.mysql.com/downloads/mysql)
 2. [Redis](http://redis.io/download)
 
-*Installation*
+*Installation[use PostgreSQL]*
 
     $ bundle
     $ bundle exec rake shopqi:bootstrap
+
+*Installation[use MySQL]*
+
+    $ script/development/use_mysql
+    $ bundle
+    $ bundle exec rake "shopqi:bootstrap[mysql]"
 
 ### Usage
 
@@ -75,13 +81,19 @@ ShopQi 基于 Rails3.2 开发, 覆盖电子商务所有功能，包括
 
 *要求*
 
-1. [PostgreSQL](http://www.postgresql.org/download)
+1. [PostgreSQL](http://www.postgresql.org/download) OR [MySQL](http://www.mysql.com/downloads/mysql)
 2. [redis](http://redis.io/download)
 
-*安装*
+*安装[使用Postgresql]*
 
     $ bundle
     $ bundle exec rake shopqi:bootstrap
+
+*安装[使用MySQL]*
+
+    $ script/development/use_mysql
+    $ bundle
+    $ bundle exec rake "shopqi:bootstrap[mysql]"
 
 ### 使用
 
