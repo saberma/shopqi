@@ -10,7 +10,7 @@ before_install: gem uninstall ffi -a
 before_script: sh -e /etc/init.d/xvfb start
 
 script:
- - "cp config/database.yml.example config/database.yml 2>&1"
+ - "cp config/database.yml.example.postgresql config/database.yml 2>&1"
  - "cp config/app_secret_config.yml.example config/app_secret_config.yml 2>&1"
  #- "bundle exec rake travis:init_db"
  - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
