@@ -68,10 +68,10 @@ myshopqi.customer_groups.create [
 ]
 
 #默认api_client,用于测试shopqi_api
-myshopqi.api_clients.create(
-  api_key:  "api_key",
-  password: "password",
-  shared_secret: "shared_secret"
-)
+client = myshopqi.api_clients.build
+client.api_key = "api_key"
+client.password = "password"
+client.shared_secret = "shared_secret"
+client.save
 
 myshopqi.launch!
