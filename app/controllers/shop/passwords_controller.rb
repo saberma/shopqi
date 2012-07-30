@@ -1,7 +1,6 @@
 #encoding: utf-8
 class Shop::PasswordsController  < Shop::AppController
   prepend_before_filter :require_no_authentication
-  include Devise::Controllers::InternalHelpers
   skip_before_filter :must_has_theme
   expose(:shop) { Shop.at(request.host) }
 

@@ -176,8 +176,4 @@ class Shop::AppController < ActionController::Base
 
   end
 
-  def after_sign_in_path_for(resource)
-    stored_location_for(resource) ||  customer_account_index_path
-  end
-
 end

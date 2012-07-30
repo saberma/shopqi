@@ -16,7 +16,7 @@ Shopqi::Application.routes.draw do
   end
 
   constraints(Domain::Wiki) do # 帮助文档
-    devise_scope :admin_users, ActiveAdmin::Devise.config
+    devise_for :admin_users, ActiveAdmin::Devise.config
     scope module: :wiki do
       get '/'                         , to: 'wiki_pages#index'           , as: :wiki_pages_index
       get '/active_admin'             , to: redirect('/')
@@ -84,6 +84,8 @@ Shopqi::Application.routes.draw do
       get '/login'    , to: 'home#login'
       scope "/services/signup" do
         get '/'                    , to: 'home#signup'                               , as: :services_signup
+        # :confirmations, :omniauth_callbacks, :passwords, :registrations, :sessions, :unlocks
+        devise_for :user, skip: [:sessions, :confirmations, :passwords], skip_helpers: true
         devise_scope :user do
           get "/new/:plan"         , to: "registrations#new"                         , as: :signup
           get "/check_availability", to: "registrations#check_availability"
@@ -100,15 +102,16 @@ Shopqi::Application.routes.draw do
       mount Resque::Server.new, at: "/resque" # 查看后台任务执行情况
     end
 
-    devise_scope :admin_users, ActiveAdmin::Devise.config
+    devise_for :admin_users, ActiveAdmin::Devise.config
   end
 
   constraints(Domain::Store) do
 
-    devise_scope :user, skip: :registrations, controllers: {sessions: "admin/sessions"}# 登录
+    devise_for :user, skip: :registrations, controllers: {sessions: "admin/sessions"} # 登录
 
     scope module: :shop do # 前台商店
       scope '/account' do
+        devise_for :customer, skip: :all, skip_helpers: true
         devise_scope :customer do
           get '/login'                     , to: 'sessions#new'
           post '/login'                    , to: 'sessions#create'

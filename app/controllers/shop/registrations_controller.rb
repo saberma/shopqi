@@ -2,15 +2,10 @@
 class Shop::RegistrationsController < Shop::AppController
   prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
   skip_before_filter :must_has_theme
-  include Devise::Controllers::InternalHelpers
   include Shop::OrderHelper
-  #layout 'shop/admin'
   expose(:shop) { Shop.at(request.host) }
 
-
-  # GET /resource/sign_up
   def new
-    resource = build_resource({})
     path = Rails.root.join 'app/views/shop/templates/customers/registrations.liquid'
     assign = template_assign('template' => 'customers')
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
@@ -19,15 +14,12 @@ class Shop::RegistrationsController < Shop::AppController
     render text: html
   end
 
-  # POST /resource
   def create
-    build_resource
-    resource.shop = shop
+    resource = shop.customers.build params[:customer]
 
     if resource.save
       if resource.active_for_authentication?
-        set_flash_message :notice, :signed_up if is_navigational_format?
-        sign_in(resource_name, resource)
+        sign_in(resource)
         if checkout_url # 跳转到结算页面
           token = checkout_url.gsub(/.+\//,'')
           if cart = Cart.find_by_token(token)
