@@ -16,7 +16,7 @@ Shopqi::Application.routes.draw do
   end
 
   constraints(Domain::Wiki) do # 帮助文档
-    devise_for :admin_users, ActiveAdmin::Devise.config
+    devise_scope :admin_users, ActiveAdmin::Devise.config
     scope module: :wiki do
       get '/'                         , to: 'wiki_pages#index'           , as: :wiki_pages_index
       get '/active_admin'             , to: redirect('/')
@@ -100,16 +100,16 @@ Shopqi::Application.routes.draw do
       mount Resque::Server.new, at: "/resque" # 查看后台任务执行情况
     end
 
-    devise_for :admin_users, ActiveAdmin::Devise.config
+    devise_scope :admin_users, ActiveAdmin::Devise.config
   end
 
   constraints(Domain::Store) do
 
-    devise_for :user, skip: :registrations, controllers: {sessions: "admin/sessions"}# 登录
+    devise_scope :user, skip: :registrations, controllers: {sessions: "admin/sessions"}# 登录
 
     scope module: :shop do # 前台商店
       scope '/account' do
-        devise_for :customer do
+        devise_scope :customer do
           get '/login'                     , to: 'sessions#new'
           post '/login'                    , to: 'sessions#create'
           get '/signup'                    , to: 'registrations#new'
