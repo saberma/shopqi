@@ -54,12 +54,6 @@ GIT
       sanitize (~> 2.0.0)
       sinatra (~> 1.0)
 
-GIT
-  remote: git://github.com/thedarkone/rails-dev-boost.git
-  revision: a995f0a3734ecf36da74dcce32ed2ba74e25c56d
-  specs:
-    rails-dev-boost (0.1.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -469,7 +463,6 @@ DEPENDENCIES
   rabl
   rack-cache
   rails (= 3.2.6)
-  rails-dev-boost!
   rails3-generators
   resque!
   resque-scheduler!
