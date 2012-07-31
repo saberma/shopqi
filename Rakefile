@@ -12,20 +12,10 @@ end
 
 namespace :travis do
 
-  desc "Init database"
-  task :init_db do # 并发时使用不同的数据库，否则偶尔会死锁(deadlock detected)
-    unit_test = ENV['UNIT_TEST']
-    integrate_test = ENV['INTEGRATE_TEST']
-    path = Rails.root.join 'config/database.yml'
-    configs = YAML.load_file(path)
-    db_name = "#{configs[Rails.env]['database']}_#{unit_test && 'u_'}#{unit_test || integrate_test}"
-    configs[Rails.env]['database'] = db_name
-    File.open(path, 'w') {|f| YAML.dump(configs, f) }
-  end
-
   desc "Run travis in parallel"
   task :parallel do
-    parallel_size = 8
+    unit_parallel_size = 2
+    integrate_parallel_size = 3
     unit_test = ENV['UNIT_TEST']
     integrate_test = ENV['INTEGRATE_TEST']
     all_files = Dir.chdir(Rails.root) { Dir["spec/**/*_spec.rb"]}.sort
@@ -34,10 +24,10 @@ namespace :travis do
     %w(shop/shops_searches_spec.rb lookup_spec.rb).each do |searchable_spec|
       integrate_files.delete "spec/requests/#{searchable_spec}" # 需要solr才能运行
     end
-    files = if unit_test # 8个并发
-            unit_files.in_groups(parallel_size)[unit_test.to_i-1].join(' ')
-          elsif integrate_test # 8个并发
-            integrate_files.in_groups(parallel_size)[integrate_test.to_i-1].join(' ')
+    files = if unit_test # 2个并发
+            unit_files.in_groups(unit_parallel_size)[unit_test.to_i-1].join(' ')
+          elsif integrate_test # 3个并发
+            integrate_files.in_groups(integrate_parallel_size)[integrate_test.to_i-1].join(' ')
           end
 
     cmd = "rspec #{files}"
