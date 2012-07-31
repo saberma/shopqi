@@ -111,7 +111,7 @@ Shopqi::Application.routes.draw do
 
     scope module: :shop do # 前台商店
       scope '/account' do
-        devise_for :customer, skip: :all, skip_helpers: true
+        devise_for :customer, only: :passwords
         devise_scope :customer do
           get '/login'                     , to: 'sessions#new'
           post '/login'                    , to: 'sessions#create'
