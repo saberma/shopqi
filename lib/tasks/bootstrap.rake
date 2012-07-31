@@ -3,16 +3,18 @@
 # bundle exec rake shopqi:bootstrap
 namespace :shopqi do
 
-  desc "Run all bootstrapping tasks"
-  task :bootstrap do
+  desc "Run all bootstrapping tasks (database options: ['postgresql', 'mysql'])"
+  task :bootstrap, [:database] do |t, args|
+    args.with_defaults(database: "postgresql")
     unless Rails.env == 'production' # 防止生产环境下执行
-      secret_files = %w(database sunspot app_secret_config)
-      secret_files.each do |file|
-        file = "config/#{file}.yml"
+      %w(database sunspot app_secret_config).each do |name|
+        file = "config/#{name}.yml"
         path = Rails.root.join(file)
         unless File.exists?(path)
-          source_path = Rails.root.join("#{file}.example")
-          "复制配置文件:#{source_path} => #{path}"
+          file = "#{file}.example"
+          file += ".#{args.database}" if name == 'database'
+          source_path = Rails.root.join(file)
+          "Copying :#{source_path} => #{path}"
           FileUtils.cp source_path, path
         end
       end

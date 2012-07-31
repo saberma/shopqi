@@ -1,0 +1,3 @@
+#!/bin/bash
+sed -i "s/gem 'pg'/gem 'mysql2'/" Gemfile
+echo "Replaced \"gem 'pg'\" to \"gem 'mysql2'\" in Gemfile."
