@@ -7,7 +7,7 @@ class Shop::RegistrationsController < Shop::AppController
   def new
     path = Rails.root.join 'app/views/shop/templates/customers/registrations.liquid'
     options = {'template' => 'customers'}
-    options.merge!('customer' => CustomerDrop.new(customer)) if @customer
+    options.merge!('customer' => CustomerDrop.new(@customer)) if @customer
     assign = template_assign(options)
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
@@ -28,7 +28,7 @@ class Shop::RegistrationsController < Shop::AppController
         end
         redirect_to checkout_url and return
       else
-        redirect_to after_sign_in_path_for(:customer, @customer) and return
+        redirect_to after_sign_in_path_for(@customer) and return
       end
     else
       new

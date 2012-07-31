@@ -41,7 +41,6 @@ class Shop::SessionsController < Shop::AppController
       end
       redirect_to checkout_url and return
     else
-      # respond_with customer, location: after_sign_in_path_for(customer)
       redirect_to after_sign_in_path_for(customer)
     end
   end
@@ -52,4 +51,3 @@ class Shop::SessionsController < Shop::AppController
   end
 
 end
-

@@ -113,15 +113,16 @@ Shopqi::Application.routes.draw do
       scope '/account' do
         devise_for :customer, only: :passwords
         devise_scope :customer do
-          get '/login'                     , to: 'sessions#new',      as: :new_customer_session
+          get '/login'                     , to: 'sessions#new'      , as: :new_customer_session
           post '/login'                    , to: 'sessions#create'
-          get '/signup'                    , to: 'registrations#new', as: :new_customer_registration
           get '/logout'                    , to: 'sessions#destroy'
+          get '/signup'                    , to: 'registrations#new' , as: :new_customer_registration
+          post '/customer'                 , to: 'registrations#create'
         end
-        get '/orders/:token'               , to: 'account#show_order' , as: :account_show_order
-        get '/index'                       , to: 'account#index', as: :customer_account_index
+        get '/orders/:token'               , to: 'account#show_order', as: :account_show_order
+        get '/index'                       , to: 'account#index'     , as: :customer_root
         get '/'                            , to: 'account#index'
-        resources :customer_addresses, path: '/addresses'
+        resources :customer_addresses      , path: '/addresses'
       end
       match '/'                                             , to: 'shops#show'
       match '/password'                                     , to: 'shops#password'
