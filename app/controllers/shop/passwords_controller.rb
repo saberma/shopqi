@@ -1,37 +1,32 @@
 #encoding: utf-8
 class Shop::PasswordsController  < Shop::AppController
-  prepend_before_filter :require_no_authentication
-  include Devise::Controllers::InternalHelpers
   skip_before_filter :must_has_theme
   expose(:shop) { Shop.at(request.host) }
 
-  # GET /resource/password/new
-  def new
-    build_resource({})
-    render_with_scope :new
-  end
+  # new action is not need, it's contained in login page, show by js click.
 
   # POST /resource/password
   def create
-    self.resource = resource_class.send_reset_password_instructions(email: params[:email])
+    @customer = Customer.send_reset_password_instructions(email: params[:email])
 
-    if successful_and_sane?(resource)
-      set_flash_message(:notice, :send_instructions) if is_navigational_format?
-      respond_with({}, :location => after_sending_reset_password_instructions_path_for(resource_name))
+    if @customer.errors.empty?
+      flash[:notice] = I18n.t("send_instructions", scope: 'devise.passwords')
+      redirect_to after_sending_reset_password_instructions_path_for(:customer) and return
     else
-      #respond_with_navigational(resource){ render_with_scope :new }
-      flash[:notice] = resource.errors.full_messages
-      redirect_to '/account/login#recover'
+      flash[:notice] = @customer.errors.full_messages
+      redirect_to '/account/login#recover' and return
     end
   end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
-    self.resource = resource_class.new
-    resource.reset_password_token = params[:reset_password_token]
+    unless @customer # from update action
+      @customer = shop.customers.build
+      @customer.reset_password_token = params[:reset_password_token]
+    end
     path = theme.template_path('customers/reset_password')
     path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid' unless File.exist?(path)
-    assign = template_assign('template' => 'customers_reset_password', 'customer' => CustomerDrop.new(resource))
+    assign = template_assign('template' => 'customers_reset_password', 'customer' => CustomerDrop.new(@customer))
     liquid_view = Liquid::Template.parse(File.read(path)).render(assign)
     assign.merge!('content_for_layout' => liquid_view)
     html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
@@ -40,21 +35,14 @@ class Shop::PasswordsController  < Shop::AppController
 
   # PUT /resource/password
   def update
-    self.resource = resource_class.reset_password_by_token(params[resource_name])
+    @customer = Customer.reset_password_by_token(params[:customer])
 
-    if resource.errors.empty?
-      flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
-      set_flash_message(:notice, flash_message) if is_navigational_format?
-      sign_in(resource_name, resource)
-      respond_with resource, :location => redirect_location(resource_name, resource)
+    if @customer.errors.empty?
+      flash[:notice] = I18n.t("updated", scope: 'devise.passwords')
+      sign_in(:customer, @customer)
+      redirect_to after_sign_in_path_for(@customer) and return
     else
-      path = theme.template_path('customers/reset_password')
-      path = Rails.root.join 'app/views/shop/templates/customers/reset_password.liquid' unless File.exist?(path)
-      assign = template_assign('template' => 'customers_reset_password', 'customer' => CustomerDrop.new(resource))
-      liquid_view = Liquid::Template.parse(File.read(path)).render(assign.merge!('reset_password_token' => resource.reset_password_token ))
-      assign.merge!('content_for_layout' => liquid_view)
-      html = Liquid::Template.parse(layout_content).render(shop_assign(assign))
-      render text: html
+      edit
     end
   end
 
