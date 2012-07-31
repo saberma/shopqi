@@ -5,7 +5,7 @@ gem 'rails', '3.2.6'
 
 ##### 实体相关 #####
 gem 'pg'
-gem 'devise', '~> 2.0.0'
+gem 'devise', '~> 2.1.2'
 gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
 
 
