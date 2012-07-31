@@ -33,7 +33,8 @@ class Shop::AppController < ActionController::Base
     return unless shop_domain # 排除checkout页面
     primary = shop_domain.shop.primary_domain
     if primary.force_domain and host != primary.host  # 重定向
-      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}" and return
+      query_string = "?#{request.query_string}" if request.query_string
+      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}#{query_string}" and return
     end
   end
 

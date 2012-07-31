@@ -9,11 +9,12 @@ class Shop::PasswordsController  < Shop::AppController
   def create
     @customer = Customer.send_reset_password_instructions(email: params[:email])
 
-    if successfully_sent?(@customer)
-      respond_with({}, location: after_sending_reset_password_instructions_path_for(:customer))
+    if @customer.errors.empty?
+      flash[:notice] = I18n.t("send_instructions", scope: 'devise.passwords')
+      redirect_to after_sending_reset_password_instructions_path_for(:customer) and return
     else
       flash[:notice] = @customer.errors.full_messages
-      redirect_to '/account/login#recover'
+      redirect_to '/account/login#recover' and return
     end
   end
 
@@ -37,10 +38,9 @@ class Shop::PasswordsController  < Shop::AppController
     @customer = Customer.reset_password_by_token(params[:customer])
 
     if @customer.errors.empty?
-      flash_message = @customer.active_for_authentication? ? :updated : :updated_not_active
-      set_flash_message(:notice, flash_message)
+      flash[:notice] = I18n.t("updated", scope: 'devise.passwords')
       sign_in(:customer, @customer)
-      respond_with @customer, location: after_sign_in_path_for(@customer)
+      redirect_to after_sign_in_path_for(@customer) and return
     else
       edit
     end
