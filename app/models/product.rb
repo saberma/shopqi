@@ -56,13 +56,6 @@ class Product < ActiveRecord::Base
 
   before_save do
     self.make_valid(shop.products)
-    # 新增的选项默认值要设置到所有款式中
-    self.options.reject{|option| option.marked_for_destruction?}.each_with_index do |option, index|
-      next if option.value.blank?
-      self.variants.each do |variant|
-        variant.send "option#{index+1}=", option.value
-      end
-    end
   end
 
   def tags_text
@@ -214,13 +207,19 @@ class ProductOption < ActiveRecord::Base # 商品选项
   attr_accessible :name, :value, :position
   attr_accessor :value, :first, :last # 辅助值，用于保存至商品款式中
 
+  before_create do # 新增的选项默认值要设置到所有款式中
+    product.variants.each do |variant|
+      variant.update_column "option#{position}", value
+    end if value.present?
+  end
+
   before_destroy do # 更新商品所有款式
     options_size = product.options.size
     product.variants.each do |variant|
       (position...options_size).each do |i|
-        variant.send("option#{i}=", variant.send("option#{i+1}"))
+        variant.update_column "option#{i}", variant.send("option#{i+1}")
       end
-      variant.save
+      variant.update_column "option#{options_size}", nil
     end
   end
 
