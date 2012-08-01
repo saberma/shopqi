@@ -4,7 +4,7 @@ rvm: 1.9.3
 
 # RubyPython::PyObject::FFI (NameError)
 # https://github.com/travis-ci/travis-ci/issues/557#issuecomment-5919720
-before_install: gem uninstall ffi -a
+# before_install: gem uninstall ffi -a
 
 # request headless test
 before_script: sh -e /etc/init.d/xvfb start
@@ -12,8 +12,8 @@ before_script: sh -e /etc/init.d/xvfb start
 script:
  - "cp config/database.yml.example.postgresql config/database.yml 2>&1"
  - "cp config/app_secret_config.yml.example config/app_secret_config.yml 2>&1"
- - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
- - "bundle exec rake travis:parallel"
+ - "time bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
+ - "time bundle exec rake travis:parallel"
 
 env:
  - UNIT_TEST=1      # 单元测试1
