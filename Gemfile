@@ -24,7 +24,7 @@ gem 'kaminari' # 分页
 gem 'dragonfly', ' ~> 0.9.8'
 gem 'rack-cache', require: 'rack/cache'
 gem 'liquid','~> 2.3.0' #模板语言
-gem "carrierwave"
+gem "carrierwave", '~> 0.6.2'
 gem 'meta_search', '~> 1.1.1' #查询
 gem 'squeel'
 gem 'seedbank' # 分离出各个环境下的seed

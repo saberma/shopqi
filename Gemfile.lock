@@ -110,8 +110,9 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
-    carrierwave (0.5.7)
-      activesupport (~> 3.0)
+    carrierwave (0.6.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
     childprocess (0.3.4)
       ffi (~> 1.0, >= 1.0.6)
     chinese_pinyin (0.3.0)
@@ -422,7 +423,7 @@ DEPENDENCIES
   acts_as_list!
   awesome_print
   capybara (~> 1.1.2)
-  carrierwave
+  carrierwave (~> 0.6.2)
   chinese_pinyin
   client_side_validations
   coffee-rails
