@@ -281,6 +281,7 @@ class OrderFulfillment < ActiveRecord::Base
     end
     fulfillment_status = (self.order.line_items.unshipped.size > 0) ? :partial : :fulfilled
     self.order.fulfillment_status = fulfillment_status
+    self.order.save
     self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
     Resque.enqueue(ShopqiMailer::Ship, 'ship_confirm', self.id) if self.notify_customer == 'true' #当选中通知顾客时，发送邮件(不管有没有写运货单号)
   end
