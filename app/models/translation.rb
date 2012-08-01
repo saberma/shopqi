@@ -7,10 +7,10 @@ class Translation < ActiveRecord::Base
     value = value.blank? ? key : value
   end
 
-  def self.update_or_create(key,value)
+  def self.update_or_create(key, value)
     translation = self.where(key: key).first
     translation = if translation
-      translation.update_attribute :value,value
+      translation.update_attributes value: value
     else
       self.create(key: key, value: value)
     end

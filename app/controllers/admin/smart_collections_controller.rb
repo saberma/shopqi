@@ -51,9 +51,9 @@ class Admin::SmartCollectionsController < Admin::AppController
 
   #手动调整排序
   def sort
-    smart_collection.update_attribute :products_order, :manual
+    smart_collection.update_attributes products_order: :manual
     params[:product].each_with_index do |id, index|
-      smart_collection.collection_products.find(id).update_attribute :position, index
+      smart_collection.collection_products.find(id).update_attributes position: index
     end
     render :nothing => true
   end

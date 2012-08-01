@@ -105,7 +105,7 @@ class Admin::ProductsController < Admin::AppController
     new_product.options = product.options.map(&:dup).each{|o| o.position = nil } # Fixed: #159 position不为空导致排序报错
     new_product.collection_products = product.collection_products.map(&:dup)
     new_product.tags_text = product.tags_text
-    new_product.update_attribute :title, params[:new_title]
+    new_product.update_attributes title: params[:new_title]
     render json: {id: new_product.id}
   end
 
