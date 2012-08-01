@@ -19,7 +19,7 @@ describe SmartCollectionObserver do
     it "should be insert" do
       expect do
         iphone4
-        iphone4.update_attribute :body_html, '' #update will not insert again
+        iphone4.update_attributes body_html: '' #update will not insert again
       end.to change(SmartCollectionProduct, :count).by(1)
     end
   end

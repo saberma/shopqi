@@ -26,7 +26,8 @@ describe Discount do
 
       let(:discount) do
         model = shop.discounts.create code: 'coupon123', usage_limit: 1
-        model.update_attribute :used_times, 1
+        model.used_times = 1
+        model.save
         model
       end
 

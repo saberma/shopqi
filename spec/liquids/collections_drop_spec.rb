@@ -43,7 +43,7 @@ describe CollectionsDrop do
       variant = "{% for product in collections.frontpage.products %}<span>{{ product.title }}</span>{% endfor %}"
       result = "<span>#{iphone4.title}</span>"
       Liquid::Template.parse(variant).render('collections' => collections_drop).should eql result
-      iphone4.update_attribute :published,false
+      iphone4.update_attributes published: false
       variant = "{% if collections.frontpage.products.size == 0 %}<span>没有商品</span>{% endif %}"
       result = "<span>没有商品</span>"
       Liquid::Template.parse(variant).render('collections' => collections_drop).should eql result

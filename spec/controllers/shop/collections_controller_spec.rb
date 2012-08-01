@@ -43,7 +43,7 @@ describe Shop::CollectionsController do
 
       it "should view the index collections" do
         smart_collection_low_price
-        iphone4.update_attribute :published, false
+        iphone4.update_attributes published: false
         get 'index'
         response.should be_success
         response.body.should have_content('首页商品')
@@ -72,7 +72,7 @@ describe Shop::CollectionsController do
       response.body.should have_content('低价商品')
       get 'show', handle: 'low_price'
       response.body.should_not have_content("此页面不存在")
-      smart_collection_low_price.update_attribute :published, false
+      smart_collection_low_price.update_attributes published: false
       iphone4
       get 'index'
       response.body.should_not have_content('低价商品')

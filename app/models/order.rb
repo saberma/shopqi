@@ -261,7 +261,10 @@ class OrderTransaction < ActiveRecord::Base
 
   after_create do
     amount_sum = self.order.transactions.map(&:amount).sum
-    self.order.financial_status = :paid if amount_sum >= self.order.total_price
+    if amount_sum >= self.order.total_price
+      self.order.financial_status = :paid
+      self.order.save
+    end
     self.order.histories.create body: "我们已经成功接收款项"
   end
 end

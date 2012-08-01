@@ -63,7 +63,8 @@ describe "Orders", js: true do
     context "#pending" do
 
       before :each do
-        order.update_attribute :financial_status, :pending # 假设顾客已经提交订单
+        order.financial_status = :pending # 假设顾客已经提交订单
+        order.save
       end
 
       it "should save fulfillment" do #支持分批发货
@@ -226,7 +227,8 @@ describe "Orders", js: true do
         click_on '放弃'
         has_content?(order.name).should be_true
 
-        order.update_attribute :financial_status, :pending # 假设顾客已经提交订单
+        order.financial_status = :pending # 假设顾客已经提交订单
+        order.save
         visit orders_path
         has_content?(order.name).should be_true
       end
