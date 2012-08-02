@@ -45,7 +45,7 @@ describe Webhook do
       with_resque do
         fulfillment
       end
-      data = Rabl::Renderer.json(order.reload, 'orders/show', view_path: 'app/views/api/v1')
+      data = Rabl::Renderer.json(order.reload, 'api/v1/orders/show', view_path: 'app/views')
       headers = {
         X_SHOPQI_EVENT: 'orders/fulfilled',
         X_SHOPQI_DOMAIN: shop.shopqi_domain,

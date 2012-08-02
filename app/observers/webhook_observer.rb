@@ -6,7 +6,7 @@ class WebhookObserver < ActiveRecord::Observer
     shop = order.shop
     if order.fulfillment_status_changed? and order.fulfilled?
       shop.webhooks.orders_fulfilled.each do |webhook|
-        options = { body: Rabl::Renderer.json(order, 'orders/show', view_path: 'app/views/api/v1') }
+        options = { body: Rabl::Renderer.json(order, 'api/v1/orders/show', view_path: 'app/views') }
         options[:headers] = {
           X_SHOPQI_EVENT: KeyValues::Webhook::Event::ORDERS_FULFILLED,
           X_SHOPQI_DOMAIN: shop.shopqi_domain,
