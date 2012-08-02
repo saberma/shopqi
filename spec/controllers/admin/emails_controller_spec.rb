@@ -66,7 +66,7 @@ describe Admin::EmailsController do
       title.should include '[测试商店] 订单 #9999 , 马海波下单'
       body.should include '测试商店'
       body.should include '马海波 新增了订单.'
-      body.should include "今天(#{Date.today.to_s(:db)}"
+      body.should include "今天(#{Time.zone.today.to_s(:db)}"
       body.should include '在线支付-支付宝'
       body.should include '普通快递'
       body.should include '广东省 深圳市 南山区 科技园南区6栋311'
