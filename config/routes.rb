@@ -9,6 +9,7 @@ Shopqi::Application.routes.draw do
       get '/shop'           , to: "shops#show"
       post '/themes/install', to: 'themes#install'
       get '/products'       , to: "products#index"
+      put '/variants/:id'   , to: "product_variants#update"
       get '/orders'         , to: "orders#index"
       get '/orders/:id'     , to: "orders#show"
       post '/webhooks'      , to: "webhooks#create"
@@ -84,6 +85,8 @@ Shopqi::Application.routes.draw do
       get '/login'    , to: 'home#login'
       scope "/services/signup" do
         get '/'                    , to: 'home#signup'                               , as: :services_signup
+        # :confirmations, :omniauth_callbacks, :passwords, :registrations, :sessions, :unlocks
+        devise_for :user, skip: [:sessions, :confirmations, :passwords], skip_helpers: true
         devise_scope :user do
           get "/new/:plan"         , to: "registrations#new"                         , as: :signup
           get "/check_availability", to: "registrations#check_availability"
@@ -105,20 +108,22 @@ Shopqi::Application.routes.draw do
 
   constraints(Domain::Store) do
 
-    devise_for :user, skip: :registrations, controllers: {sessions: "admin/sessions"}# 登录
+    devise_for :user, skip: :registrations, controllers: {sessions: "admin/sessions"} # 登录
 
     scope module: :shop do # 前台商店
       scope '/account' do
-        devise_for :customer do
-          get '/login'                     , to: 'sessions#new'
+        devise_for :customer, only: :passwords
+        devise_scope :customer do
+          get '/login'                     , to: 'sessions#new'        , as: :new_customer_session
           post '/login'                    , to: 'sessions#create'
-          get '/signup'                    , to: 'registrations#new'
           get '/logout'                    , to: 'sessions#destroy'
+          get '/signup'                    , to: 'registrations#new'   , as: :new_customer_registration
+          post '/customer'                 , to: 'registrations#create', as: :customer_registration
         end
-        get '/orders/:token'               , to: 'account#show_order' , as: :account_show_order
-        get '/index'                       , to: 'account#index', as: :customer_account_index
+        get '/orders/:token'               , to: 'account#show_order', as: :account_show_order
+        get '/index'                       , to: 'account#index'     , as: :customer_root
         get '/'                            , to: 'account#index'
-        resources :customer_addresses, path: '/addresses'
+        resources :customer_addresses      , path: '/addresses'
       end
       match '/'                                             , to: 'shops#show'
       match '/password'                                     , to: 'shops#password'

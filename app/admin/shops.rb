@@ -33,7 +33,7 @@ ActiveAdmin.register Shop do
 
    member_action :restore, method: :put do
      shop = Shop.find(params[:id])
-     shop.update_attribute(:access_enabled,true)
+     shop.update_attributes access_enabled: true
      Resque.remove_delayed(DeleteShop, shop.id)
      redirect_to active_admin_shop_path(shop), notice: '商店已恢复'
    end

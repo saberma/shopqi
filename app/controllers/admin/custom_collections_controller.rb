@@ -46,7 +46,7 @@ class Admin::CustomCollectionsController < Admin::AppController
     CustomCollection.transaction do
       custom_collection.save
       @collection_products = custom_collection.ordered_products.each_with_index do |custom_collection_product, index|
-        custom_collection_product.update_attribute :position, index
+        custom_collection_product.update_attributes position: index
       end
     end
     flash.now[:notice] = '重新排序成功!'

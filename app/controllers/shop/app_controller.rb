@@ -17,7 +17,7 @@ class Shop::AppController < ActionController::Base
 
   protected
   def check_shop_access_enabled
-    render template: 'shared/no_shop.html', content_type: "text/html", status: 404, layout: nil and return unless shop.access_enabled
+    render template: 'shared/no_shop', formats: [:html], content_type: "text/html", status: 404, layout: nil and return unless shop.access_enabled
   end
   def check_shop_avaliable
     redirect_to controller: :shops, action: :unavailable and return unless shop.available?
@@ -33,7 +33,8 @@ class Shop::AppController < ActionController::Base
     return unless shop_domain # 排除checkout页面
     primary = shop_domain.shop.primary_domain
     if primary.force_domain and host != primary.host  # 重定向
-      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}" and return
+      query_string = "?#{request.query_string}" if request.query_string
+      redirect_to "#{request.protocol}#{primary.host}#{request.port_string}#{request.path}#{query_string}" and return
     end
   end
 
@@ -174,10 +175,6 @@ class Shop::AppController < ActionController::Base
       render text: html, status: 404
     end
 
-  end
-
-  def after_sign_in_path_for(resource)
-    stored_location_for(resource) ||  customer_account_index_path
   end
 
 end

@@ -83,7 +83,7 @@ class Shop::OrderController < Shop::AppController
   end
 
   def show
-    render file: 'public/404.html',layout: false, status: 404 unless order
+    render file: 'public/404', formats: [:html], layout: false, status: 404 unless order
   end
 
   def shipping_rates # 获取快递记录

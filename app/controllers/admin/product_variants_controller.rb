@@ -33,7 +33,7 @@ class Admin::ProductVariantsController < Admin::AppController
         product_variants.find(ids).map(&:destroy)
       elsif [:price, :inventory_quantity].include?(operation.to_sym)
         product_variants.find(ids).each do |variant|
-          variant.update_attribute operation, params[:new_value]
+          variant.update_attributes operation => params[:new_value]
         end
       end
     end
@@ -42,7 +42,7 @@ class Admin::ProductVariantsController < Admin::AppController
 
   def sort
     params[:variant].each_with_index do |id, index|
-      product.variants.find(id).update_attribute :position,  index + 1
+      product.variants.find(id).update_attributes position: index + 1
     end
     render nothing: true
   end

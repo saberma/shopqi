@@ -64,7 +64,8 @@ class Admin::OrdersController < Admin::AppController
       value = (operation == :close) ? :closed : :open
       Order.transaction do
         shop.orders.find(ids).each do |order|
-          order.update_attribute :status, value
+          order.status = value
+          order.save
         end
       end
     else #支付授权
@@ -77,12 +78,14 @@ class Admin::OrdersController < Admin::AppController
   end
 
   def close
-    order.update_attribute :status, :closed
+    order.status = :closed
+    order.save
     redirect_to orders_path
   end
 
   def open
-    order.update_attribute :status, :open
+    order.status = :open
+    order.save
     redirect_to order_path(order)
   end
 

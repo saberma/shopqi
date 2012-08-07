@@ -1,3 +1,21 @@
+## v0.2.0 / 2012-06-17 (9)
+
+### 功能(7):
+
+1. Upgrade to Rails3.2.6[saberma] #461
+2. rake db:seed或者db:seed:development:shop 报错[saberma] #459
+3. 商店支持 WebHook[saberma] #457
+4. 后台管理显示已安装应用[saberma] #456
+5. 商品详情的图片要使用绝对路径[saberma] #453
+6. 用户可以安装应用[saberma] #183
+7. 开发app应用示例[saberma] #114
+
+### 缺陷(2):
+
+1. 后台管理日志未显示操作人名称[saberma] #455
+2. 批量修改库存刷新后不生效[saberma] #454
+
+
 ## v0.1.10 / 2012-04-15 (24)
 
 ### 功能(12):

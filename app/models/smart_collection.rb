@@ -27,7 +27,7 @@ class SmartCollection < ActiveRecord::Base
       end
       rules_products.each_with_index do |product, index|
         collection_product = self.collection_products.where(product_id: product).first || self.collection_products.new(product: product)
-        collection_product.update_attribute :position, index
+        collection_product.update_attributes position: index
       end
     end
   end

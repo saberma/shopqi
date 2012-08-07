@@ -112,6 +112,17 @@ describe Api::V1::OrdersController do
       cancelled_at: nil,
       created_at: WILDCARD_MATCHER,
       updated_at: WILDCARD_MATCHER,
+      line_items: [{
+        id: 1,
+        product_id: 1,
+        name: "iphone4",
+        quantity: 2,
+        price: 10.0,
+        sku: "APPLE1000",
+        title: "iphone4",
+        variant_id: 1,
+        variant_title: nil,
+        vendor: "Apple"}],
       transactions: [],
       fulfillments: [{
         id: 1,

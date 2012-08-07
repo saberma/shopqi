@@ -139,7 +139,8 @@ class Order < ActiveRecord::Base
 
     def cancel! # 取消订单
       self.class.transaction do
-        self.update_attribute :status, :cancelled
+        self.status = :cancelled
+        self.save
         self.line_items.each do |line_item| # 跟踪库存
           variant = line_item.product_variant
           variant.increment! :inventory_quantity if variant.manage_inventory?
@@ -260,7 +261,10 @@ class OrderTransaction < ActiveRecord::Base
 
   after_create do
     amount_sum = self.order.transactions.map(&:amount).sum
-    self.order.update_attribute :financial_status, :paid if amount_sum >= self.order.total_price
+    if amount_sum >= self.order.total_price
+      self.order.financial_status = :paid
+      self.order.save
+    end
     self.order.histories.create body: "我们已经成功接收款项"
   end
 end
@@ -275,10 +279,12 @@ class OrderFulfillment < ActiveRecord::Base
 
   after_create do
     line_items.each do |line_item|
-      line_item.update_attribute :fulfilled, true
+      line_item.fulfilled = true
+      line_item.save
     end
     fulfillment_status = (self.order.line_items.unshipped.size > 0) ? :partial : :fulfilled
-    self.order.update_attribute :fulfillment_status, fulfillment_status
+    self.order.fulfillment_status = fulfillment_status
+    self.order.save
     self.order.histories.create body: "我们已经将#{line_items.size}个商品发货", url: order_fulfillment_path(self.order, self)
     Resque.enqueue(ShopqiMailer::Ship, 'ship_confirm', self.id) if self.notify_customer == 'true' #当选中通知顾客时，发送邮件(不管有没有写运货单号)
   end

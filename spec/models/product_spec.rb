@@ -270,7 +270,7 @@ describe Product do
         {name: '大小', value: '默认大小'}
       ]
       iphone4.save
-      iphone4.variants.first.option2.should eql '默认大小'
+      iphone4.variants.first.reload.option2.should eql '默认大小'
     end
 
     it 'should be destroy' do

@@ -20,7 +20,8 @@ describe "Customers", js: true do
       {product_variant: iphone4_variant, price: 10, quantity: 2},
     ]
     o.save
-    o.update_attribute :financial_status, :pending # 修改为pending会增加消费金额
+    o.financial_status = :pending # 修改为pending会增加消费金额
+    o.save
     o
   end
 

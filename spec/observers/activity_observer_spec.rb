@@ -23,11 +23,11 @@ describe ActivityObserver do
       end.to change(Activity,:count).by(1)
 
       expect do
-        blog.update_attribute 'title', 'bbbbb'
+        blog.update_attributes title: 'bbbbb'
       end.to change(Activity,:count).by(1)
 
       expect do
-        article.update_attribute 'title', 'cccc'
+        article.update_attributes title: 'cccc'
       end.to change(Activity,:count).by(1)
 
 

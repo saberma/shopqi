@@ -4,7 +4,7 @@ rvm: 1.9.3
 
 # RubyPython::PyObject::FFI (NameError)
 # https://github.com/travis-ci/travis-ci/issues/557#issuecomment-5919720
-before_install: gem uninstall ffi -a
+# before_install: gem uninstall ffi -a
 
 # request headless test
 before_script: sh -e /etc/init.d/xvfb start
@@ -12,31 +12,12 @@ before_script: sh -e /etc/init.d/xvfb start
 script:
  - "cp config/database.yml.example.postgresql config/database.yml 2>&1"
  - "cp config/app_secret_config.yml.example config/app_secret_config.yml 2>&1"
- #- "bundle exec rake travis:init_db"
- - "bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
- - "bundle exec rake travis:parallel"
+ - "time bundle exec rake db:drop db:create db:schema:load --trace 2>&1"
+ - "time bundle exec rake travis:parallel"
 
 env:
  - UNIT_TEST=1      # 单元测试1
- - UNIT_TEST=2      # 单元测试2
- - UNIT_TEST=3      # 单元测试3
- - UNIT_TEST=4      # 单元测试4
- - UNIT_TEST=5      # 单元测试5
- - UNIT_TEST=6      # 单元测试6
- - UNIT_TEST=7      # 单元测试7
- - UNIT_TEST=8      # 单元测试8
  - INTEGRATE_TEST=1 # 集成测试1
  - INTEGRATE_TEST=2 # 集成测试2
  - INTEGRATE_TEST=3 # 集成测试3
  - INTEGRATE_TEST=4 # 集成测试4
- - INTEGRATE_TEST=5 # 集成测试5
- - INTEGRATE_TEST=6 # 集成测试6
- - INTEGRATE_TEST=7 # 集成测试7
- - INTEGRATE_TEST=8 # 集成测试8
-
-#notifications:
-#  recipients:
-#    - mahb45@gmail.com
-
-timeouts:
-  bundle: 1200

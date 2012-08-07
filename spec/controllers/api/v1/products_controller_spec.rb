@@ -40,7 +40,25 @@ describe Api::V1::ProductsController do
           product_type: "手机",
           vendor: "Apple",
           created_at: WILDCARD_MATCHER,
-          updated_at: WILDCARD_MATCHER
+          updated_at: WILDCARD_MATCHER,
+          variants: [{
+            id: 1,
+            product_id: 1,
+            price: 3000.0,
+            compare_at_price: 3500.0,
+            weight: 2.9,
+            sku: "APPLE1000",
+            position: 1,
+            option1: "默认标题",
+            option2: nil,
+            option3: nil,
+            requires_shipping: true,
+            inventory_quantity: nil,
+            inventory_management: nil,
+            inventory_policy: "deny",
+            created_at: WILDCARD_MATCHER,
+            updated_at: WILDCARD_MATCHER
+          }]
         }
         product_json.should match_json_expression(pattern)
       end

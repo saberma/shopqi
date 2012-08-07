@@ -1,11 +1,11 @@
 #rails new . -d postgresql -T -J
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.7'
 
 ##### 实体相关 #####
 gem 'pg'
-gem 'devise', '~> 1.4.9'
+gem 'devise', '~> 2.1.2'
 gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
 
 
@@ -16,7 +16,7 @@ gem 'acts_as_list', git: 'git://github.com/saberma/acts_as_list.git' # 支持同
 gem 'unicorn'
 
 gem 'default_value_for'
-gem 'sunspot_rails',  "~> 1.3.0.rc6"
+gem 'sunspot_rails',  '~> 1.3.3'
 
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'kaminari' # 分页
@@ -24,7 +24,7 @@ gem 'kaminari' # 分页
 gem 'dragonfly', ' ~> 0.9.8'
 gem 'rack-cache', require: 'rack/cache'
 gem 'liquid','~> 2.3.0' #模板语言
-gem "carrierwave"
+gem "carrierwave", '~> 0.6.2'
 gem 'meta_search', '~> 1.1.1' #查询
 gem 'squeel'
 gem 'seedbank' # 分离出各个环境下的seed
@@ -45,8 +45,8 @@ gem "activemerchant" # 支付
 gem "activemerchant_patch_for_china", git: "git://github.com/saberma/activemerchant_patch_for_china.git" # 支持多个支付帐户(待完成其他财付通等类型后再send pull request)
 gem "httparty"
 #gem "resque" # 后台任务
-gem "resque", git: 'git://github.com/defunkt/resque.git' # 1.19.0之后的版本才支持后台运行
-gem "resque-scheduler", git: 'git://github.com/bvandenbos/resque-scheduler.git' # 最新版本才支持后台运行
+gem "resque", "~> 1.21.0"
+gem "resque-scheduler", "~> 2.0.0"
 gem "chinese_pinyin" # 汉字转拼音
 gem "nokogiri" # 解释模板config/settings.html
 gem "uuid" # 生成36位(或32位)唯一序列号
@@ -54,7 +54,7 @@ gem 'settingslogic' #用于解析一些配置信息
 #gem 'rack-perftools_profiler', :require => 'rack/perftools_profiler'
 gem 'grit', git: 'git://github.com/mojombo/grit.git' # 主题版本控制(每个商店主题都是一个git repository) # 2.4.1版本存在此问题 http://j.mp/uoEKw1
 gem 'doorkeeper', '~> 0.4.0'
-gem "oauth2", "~> 0.5.2" # 0.6.1 版本依赖 multi_json 1.3，与 rails 3.1.5 冲突，0.6.1 以上版本依赖 rack 1.4，与 resque 依赖 1.3 冲突
+gem "oauth2", "~> 0.8.0"
 gem 'rabl' # 构造 json api 数据
 #gem 'newrelic_rpm' # 性能监控(模板编辑器中的layout/theme.liquid也会被注入script,暂时不使用此gem)
 gem "jquery-rails"
@@ -68,7 +68,6 @@ group :development do
   gem 'rails3-generators'
   gem "haml-rails"
   #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
-  gem 'rails-dev-boost', git: 'git://github.com/thedarkone/rails-dev-boost.git', require: 'rails_development_boost' # 加快开发时的响应速度
   gem 'rvm-capistrano', "~> 1.1.0", require: 'capistrano'
   gem "letter_opener"
   gem 'guard-livereload'
@@ -77,7 +76,7 @@ end
 group :development, :test do
   unless ENV['TRAVIS'] # 特殊处理，去掉在travis-ci中不需要的gem
     gem "awesome_print", require: 'ap' # 调试
-    gem 'sunspot_solr'
+    gem 'sunspot_solr',  '~> 1.3.3'
   end
   gem "factory_girl"
   gem "factory_girl_rails"
