@@ -55,7 +55,7 @@ class Theme::ThemesController < Theme::AppController
 
     def get_shop # 获取商店信息
       access_token = OAuth2::AccessToken.from_hash(client, access_token: token)
-      oauth2_response = access_token.get('/api/v1/shop')
+      oauth2_response = access_token.get('/api/shop')
       result = JSON(oauth2_response.body)
       if result['error'].blank?
         session[:shop] = result['shop']['name']
@@ -66,7 +66,7 @@ class Theme::ThemesController < Theme::AppController
     def apply # 切换主题
       if request.post?
         access_token = OAuth2::AccessToken.from_hash(client, access_token: token)
-        oauth2_response = access_token.post('/api/v1/themes/install', params: { handle: handle, style_handle: style_handle })
+        oauth2_response = access_token.post('/api/themes/install', params: { handle: handle, style_handle: style_handle })
         @result = JSON(oauth2_response.body)
       end
     end
