@@ -75,7 +75,7 @@ end
 
 group :development, :test do
   unless ENV['TRAVIS'] # 特殊处理，去掉在travis-ci中不需要的gem
-    gem "awesome_print", require: 'ap' # 调试
+    gem "awesome_print"
     gem 'sunspot_solr',  '~> 1.3.3'
   end
   gem "factory_girl"
