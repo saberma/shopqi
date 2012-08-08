@@ -1,5 +1,5 @@
 #变量定义到~/.zshrc
-#export CAP_RVM_RUBY=ruby-1.9.3-p0
+#export CAP_RVM_RUBY=ruby-1.9.3
 #export CAP_PORT=10000
 #export CAP_WEB_HOST=188.188.188.188
 #export CAP_APP_HOST=$CAP_WEB_HOST
@@ -9,6 +9,7 @@ require "rvm/capistrano"                                 # Load RVM's capistrano
 require "bundler/capistrano" # 集成bundler和rvm
 set :rvm_ruby_string, ENV['CAP_RVM_RUBY']                # Or whatever env you want it to run in.
 set :rvm_type, :user                                     # Copy the exact line. I really mean :user here
+#set :bundle_flags,    "--deployment --verbose"          # Just for debug
 
 set :application, "shopqi"
 set :port, ENV['CAP_PORT']
@@ -77,8 +78,8 @@ namespace :resque do # 后台任务
 
   desc "Start resque scheduler, workers"
   task :start, roles: :app, only: { jobs: true } do
-    run "cd #{current_path}; PIDFILE=#{pids_path}/resque.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shopqi_mailer_ship,shop_contact_us,alipay_send_goods, webhook_worker bundle exec rake resque:work"
-    run "cd #{current_path}; PIDFILE=#{pids_path}/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shopqi_mailer_ship,shop_contact_us,alipay_send_goods, webhook_worker bundle exec rake resque:scheduler"
+    run "cd #{current_path}; PIDFILE=#{pids_path}/resque.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shopqi_mailer_ship,shop_contact_us,alipay_send_goods,webhook_worker bundle exec rake resque:work"
+    run "cd #{current_path}; PIDFILE=#{pids_path}/resque-scheduler.#{application}.pid BACKGROUND=yes QUEUE=theme_extracter,theme_exporter,solr_index,shopqi_mailer,shopqi_mailer_ship,shop_contact_us,alipay_send_goods,webhook_worker bundle exec rake resque:scheduler"
   end
 
   desc "Stop resque scheduler, workers"
