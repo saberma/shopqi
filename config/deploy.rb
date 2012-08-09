@@ -1,5 +1,5 @@
 #变量定义到~/.zshrc
-#export CAP_RVM_RUBY=ruby-1.9.3
+#export CAP_RVM_RUBY=ruby-1.9.3-p194
 #export CAP_PORT=10000
 #export CAP_WEB_HOST=188.188.188.188
 #export CAP_APP_HOST=$CAP_WEB_HOST
