@@ -8,6 +8,10 @@ describe "SmartCollections" do
 
     include_context 'login admin'
 
+    let(:iphone4) { Factory :iphone4, shop: shop }
+
+    before { iphone4 }
+
     it "works!", js: true do
       visit custom_collections_path
       click_on '新增智能集合'
