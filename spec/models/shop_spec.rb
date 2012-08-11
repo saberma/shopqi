@@ -75,7 +75,7 @@ describe Shop do
 
   end
 
-  describe ShopDomain, f: true do
+  describe ShopDomain do
 
     context 'default' do # 默认shopqi子域名
 

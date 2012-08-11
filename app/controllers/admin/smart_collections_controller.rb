@@ -33,7 +33,7 @@ class Admin::SmartCollectionsController < Admin::AppController
 
   def destroy
     smart_collection.destroy
-    redirect_to smart_collections_path
+    redirect_to custom_collections_path
   end
 
   #更新可见性
