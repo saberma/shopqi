@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Shipping < ActiveRecord::Base
   belongs_to :shop
-  has_many :weight_based_shipping_rates, order: 'id asc'
-  has_many :price_based_shipping_rates , order: 'id asc'
+  has_many :weight_based_shipping_rates, dependent: :destroy, order: 'id asc'
+  has_many :price_based_shipping_rates , dependent: :destroy, order: 'id asc'
   attr_accessible :code
 
   # 修改此模块内方法要记得重启服务

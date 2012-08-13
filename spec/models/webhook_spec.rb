@@ -47,10 +47,10 @@ describe Webhook do
       end
       data = Rabl::Renderer.json(order.reload, 'api/v1/orders/show', view_path: 'app/views')
       headers = {
-        X_SHOPQI_EVENT: 'orders/fulfilled',
-        X_SHOPQI_DOMAIN: shop.shopqi_domain,
-        X_SHOPQI_ORDER_ID: order.id.to_s,
-        X_SHOPQI_HMAC_SHA256: sign_hmac(application.secret, data),
+        'x-shopqi-event' => 'orders/fulfilled',
+        'x-shopqi-domain' => shop.shopqi_domain,
+        'x-shopqi-order-id' => order.id.to_s,
+        'x-shopqi-hmac-sha256' => sign_hmac(application.secret, data),
       }
       a_request(:post, "express.shopqiapp.com").with(headers: headers).should have_been_made
     end

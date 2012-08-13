@@ -42,6 +42,10 @@ class Theme < ActiveRecord::Base
       client.secret
     end
 
+    def self.client_scope
+      'write_themes'
+    end
+
     def self.client_redirect_uri
       "http://themes.#{Setting.host}#{Setting.port}/callback"
     end

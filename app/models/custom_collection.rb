@@ -33,7 +33,7 @@ end
 class CustomCollectionProduct < ActiveRecord::Base
   belongs_to :custom_collection
   belongs_to :product
-  attr_accessible :position
+  attr_accessible :position, :product_id
 
   def self.use_order(products_order = 'position asc')
     self.select("custom_collection_products.*").joins(:product).order(products_order) # issues#231

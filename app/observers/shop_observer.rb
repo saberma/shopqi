@@ -58,7 +58,7 @@ class ShopObserver < ActiveRecord::Observer
     end
 
     application = Doorkeeper::Application.find_by_name(Theme.client_name)
-    application.access_tokens.create! resource_owner_id: shop.id, expires_in: Doorkeeper.configuration.access_token_expires_in, scopes: 'write_themes'
+    application.access_tokens.create! resource_owner_id: shop.id, expires_in: Doorkeeper.configuration.access_token_expires_in, scopes: Theme.client_scope
   end
 
 end

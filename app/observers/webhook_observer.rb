@@ -8,11 +8,11 @@ class WebhookObserver < ActiveRecord::Observer
       shop.webhooks.orders_fulfilled.each do |webhook|
         options = { body: Rabl::Renderer.json(order, 'api/v1/orders/show', view_path: 'app/views') }
         options[:headers] = {
-          X_SHOPQI_EVENT: KeyValues::Webhook::Event::ORDERS_FULFILLED,
-          X_SHOPQI_DOMAIN: shop.shopqi_domain,
-          X_SHOPQI_ORDER_ID: order.id.to_s
+          'x-shopqi-event' => KeyValues::Webhook::Event::ORDERS_FULFILLED,
+          'x-shopqi-domain' => shop.shopqi_domain,
+          'x-shopqi-order-id' => order.id.to_s
         }
-        options[:headers][:X_SHOPQI_HMAC_SHA256] = sign_hmac(webhook.application.secret, options[:body]) if webhook.application_id
+        options[:headers]['x-shopqi-hmac-sha256'] = sign_hmac(webhook.application.secret, options[:body]) if webhook.application_id
         Resque.enqueue(WebhookWorker, webhook.callback_url, options)
       end
     end

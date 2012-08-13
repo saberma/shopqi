@@ -89,7 +89,7 @@ describe Shop do
     context '#create' do
 
       it 'should save host' do
-        domain = ShopDomain.create subdomain: 'shop', domain: '.myshopqi.com'
+        domain = shop.domains.create subdomain: 'shop', domain: '.myshopqi.com'
         domain.verified.should be_false
         domain.host.should_not be_blank
       end
@@ -99,18 +99,18 @@ describe Shop do
     describe 'validate' do
 
       it 'should validate subdomain' do
-        domain = ShopDomain.create domain: '.myshopqi.com'
+        domain = shop.domains.create domain: '.myshopqi.com'
         domain.errors[:subdomain].should_not be_empty
       end
 
       it 'should be at least 3 characters' do
-        domain = ShopDomain.create subdomain: 'xx',  domain: '.myshopqi.com'
+        domain = shop.domains.create subdomain: 'xx',  domain: '.myshopqi.com'
         domain.errors[:subdomain].should_not be_empty
       end
 
       it 'should be unique' do
-        ShopDomain.create subdomain: 'shop',  domain: '.myshopqi.com'
-        domain = ShopDomain.create subdomain: 'shop',  domain: '.myshopqi.com'
+        shop.domains.create subdomain: 'shop',  domain: '.myshopqi.com'
+        domain = shop.domains.create subdomain: 'shop',  domain: '.myshopqi.com'
         domain.errors[:host].should_not be_empty
       end
 

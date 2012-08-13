@@ -67,7 +67,7 @@ Shopqi::Application.configure do
     shopqi_application.js shopqi_wiki_application.js admin_application.js checkout_application.js active_admin.js
     layout_application.css layout_admin.css layout_admin_print.css layout_shopqi.css
     shopqi_ie-signup.css layout_shopqi_theme.css active_admin.css layout_shopqi_wiki.css
-    layout_checkout.css layout_doorkeeper_authorization.css
+    layout_checkout.css admin/layout_doorkeeper_authorization.css
     ie6.css ie-admin.css ie7.css ie-checkout.css ie.css ie-themes.css ie7-themes.css DD_belatedPNG_0.0.8a-min.js
   )
 

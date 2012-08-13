@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120729144327) do
+ActiveRecord::Schema.define(:version => 20120810144404) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
     t.string   "operate"
     t.string   "content"
     t.integer  "user_id"
-    t.integer  "shop_id"
+    t.integer  "shop_id",    :null => false
     t.string   "class_name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "api_clients", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                     :null => false
     t.string   "api_key",       :limit => 32
     t.string   "password",      :limit => 32
     t.string   "shared_secret", :limit => 32
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   end
 
   create_table "articles", :force => true do |t|
-    t.integer  "shop_id"
-    t.integer  "blog_id"
+    t.integer  "shop_id",                      :null => false
+    t.integer  "blog_id",                      :null => false
     t.string   "title"
     t.text     "body_html"
     t.boolean  "published",  :default => true
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "articles_tags", ["tag_id"], :name => "index_articles_tags_on_tag_id"
 
   create_table "blogs", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",     :null => false
     t.string   "title",       :null => false
     t.string   "commentable"
     t.string   "handle",      :null => false
@@ -120,8 +120,8 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "carts", ["token"], :name => "index_carts_on_token", :unique => true
 
   create_table "comments", :force => true do |t|
-    t.integer  "article_id"
-    t.integer  "shop_id"
+    t.integer  "article_id", :null => false
+    t.integer  "shop_id",    :null => false
     t.string   "status"
     t.string   "author"
     t.string   "email"
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
 
   create_table "consumptions", :force => true do |t|
     t.string   "token",        :limit => 32, :null => false
-    t.integer  "shop_id"
+    t.integer  "shop_id",                    :null => false
     t.integer  "quantity"
     t.float    "price"
     t.boolean  "status"
@@ -144,8 +144,8 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   end
 
   create_table "custom_collection_products", :force => true do |t|
-    t.integer  "custom_collection_id"
-    t.integer  "product_id"
+    t.integer  "custom_collection_id", :null => false
+    t.integer  "product_id",           :null => false
     t.integer  "position"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "custom_collection_products", ["custom_collection_id"], :name => "index_custom_collection_products_on_custom_collection_id"
 
   create_table "custom_collections", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                          :null => false
     t.string   "title"
     t.boolean  "published",      :default => true
     t.string   "handle",                           :null => false
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "customers", ["shop_id"], :name => "index_customers_on_shop_id"
 
   create_table "discounts", :force => true do |t|
-    t.integer "shop_id"
+    t.integer "shop_id",                                    :null => false
     t.string  "code",          :limit => 32
     t.string  "discount_type", :limit => 16
     t.float   "value"
@@ -246,7 +246,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   end
 
   create_table "emails", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                         :null => false
     t.string   "title",                           :null => false
     t.string   "mail_type",                       :null => false
     t.text     "body",                            :null => false
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   end
 
   create_table "link_lists", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                           :null => false
     t.string   "title"
     t.string   "handle"
     t.boolean  "system_default", :default => false
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "link_lists", ["shop_id"], :name => "index_link_lists_on_shop_id"
 
   create_table "links", :force => true do |t|
-    t.integer  "link_list_id"
+    t.integer  "link_list_id",   :null => false
     t.string   "title"
     t.string   "link_type"
     t.string   "subject_handle"
@@ -328,7 +328,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
 
   create_table "order_discounts", :force => true do |t|
-    t.integer "order_id"
+    t.integer "order_id",               :null => false
     t.string  "code",     :limit => 32
     t.float   "amount"
   end
@@ -366,7 +366,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
     t.float   "price",                                 :null => false
     t.integer "quantity",                              :null => false
     t.boolean "fulfilled",          :default => false
-    t.integer "product_id"
+    t.integer "product_id",                            :null => false
     t.string  "title"
     t.string  "variant_title"
     t.string  "name"
@@ -432,7 +432,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "orders", ["token"], :name => "index_orders_on_token", :unique => true
 
   create_table "pages", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                       :null => false
     t.string   "title"
     t.boolean  "published",  :default => false
     t.string   "handle",                        :null => false
@@ -444,7 +444,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "pages", ["shop_id"], :name => "index_pages_on_shop_id"
 
   create_table "payments", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                       :null => false
     t.string   "email"
     t.integer  "payment_type_id"
     t.string   "key"
@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "permissions", ["user_id", "resource_id"], :name => "index_permissions_on_user_id_and_resource_id"
 
   create_table "photos", :force => true do |t|
-    t.integer  "product_id"
+    t.integer  "product_id",           :null => false
     t.string   "product_image_uid"
     t.string   "product_image_format"
     t.integer  "position"
@@ -481,7 +481,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
     t.string   "name",               :limit => 32
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
-    t.integer  "shipping_id"
+    t.integer  "shipping_id",                      :null => false
   end
 
   add_index "price_based_shipping_rates", ["shipping_id"], :name => "index_price_based_shipping_rates_on_shipping_id"
@@ -539,7 +539,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "products_tags", ["tag_id"], :name => "index_products_tags_on_tag_id"
 
   create_table "shippings", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                 :null => false
     t.string   "code",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
@@ -548,7 +548,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "shippings", ["shop_id"], :name => "index_shippings_on_shop_id"
 
   create_table "shop_domains", :force => true do |t|
-    t.integer "shop_id"
+    t.integer "shop_id",                                       :null => false
     t.string  "subdomain",    :limit => 32
     t.string  "domain",       :limit => 32
     t.string  "host",         :limit => 64
@@ -564,7 +564,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   create_table "shop_policies", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.integer  "shop_id"
+    t.integer  "shop_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -572,21 +572,21 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "shop_policies", ["shop_id"], :name => "index_shop_policies_on_shop_id"
 
   create_table "shop_product_types", :force => true do |t|
-    t.integer "shop_id"
+    t.integer "shop_id",               :null => false
     t.string  "name",    :limit => 32
   end
 
   add_index "shop_product_types", ["shop_id"], :name => "index_shop_product_types_on_shop_id"
 
   create_table "shop_product_vendors", :force => true do |t|
-    t.integer "shop_id"
+    t.integer "shop_id",               :null => false
     t.string  "name",    :limit => 32
   end
 
   add_index "shop_product_vendors", ["shop_id"], :name => "index_shop_product_vendors_on_shop_id"
 
   create_table "shop_tasks", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                       :null => false
     t.string   "name"
     t.boolean  "completed",  :default => false
     t.datetime "created_at",                    :null => false
@@ -647,8 +647,8 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   end
 
   create_table "smart_collection_products", :force => true do |t|
-    t.integer  "smart_collection_id"
-    t.integer  "product_id"
+    t.integer  "smart_collection_id", :null => false
+    t.integer  "product_id",          :null => false
     t.integer  "position"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
@@ -657,7 +657,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "smart_collection_products", ["smart_collection_id"], :name => "index_smart_collection_products_on_smart_collection_id"
 
   create_table "smart_collection_rules", :force => true do |t|
-    t.integer  "smart_collection_id"
+    t.integer  "smart_collection_id", :null => false
     t.string   "column"
     t.string   "relation"
     t.string   "condition"
@@ -668,7 +668,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "smart_collection_rules", ["smart_collection_id"], :name => "index_smart_collection_rules_on_smart_collection_id"
 
   create_table "smart_collections", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",                          :null => false
     t.string   "title"
     t.boolean  "published",      :default => true
     t.string   "handle",                           :null => false
@@ -681,7 +681,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
   add_index "smart_collections", ["shop_id"], :name => "index_smart_collections_on_shop_id"
 
   create_table "subscribes", :force => true do |t|
-    t.integer  "shop_id"
+    t.integer  "shop_id",    :null => false
     t.integer  "user_id"
     t.string   "kind"
     t.string   "address"
@@ -740,7 +740,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
     t.string   "phone"
     t.text     "bio"
     t.boolean  "receive_announcements",                 :default => true
-    t.integer  "shop_id"
+    t.integer  "shop_id",                                                 :null => false
     t.string   "avatar_image_uid"
     t.boolean  "admin",                                 :default => true
     t.string   "authentication_token"
@@ -756,7 +756,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
 
   create_table "webhooks", :force => true do |t|
     t.integer  "application_id"
-    t.integer  "shop_id"
+    t.integer  "shop_id",                      :null => false
     t.string   "event",          :limit => 32, :null => false
     t.string   "callback_url",                 :null => false
     t.datetime "created_at",                   :null => false
@@ -769,7 +769,7 @@ ActiveRecord::Schema.define(:version => 20120729144327) do
     t.string   "name",        :limit => 32
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.integer  "shipping_id"
+    t.integer  "shipping_id",               :null => false
   end
 
   add_index "weight_based_shipping_rates", ["shipping_id"], :name => "index_weight_based_shipping_rates_on_shipping_id"

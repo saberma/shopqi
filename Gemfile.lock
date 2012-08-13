@@ -91,7 +91,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.8)
     arel (3.0.2)
-    awesome_print (0.4.0)
+    awesome_print (1.0.2)
     bcrypt-ruby (3.0.1)
     blankslate (2.1.2.4)
     bourbon (2.1.1)
@@ -182,7 +182,7 @@ GEM
       haml (~> 3.0)
       railties (~> 3.0)
     has_scope (0.5.1)
-    highline (1.6.12)
+    highline (1.6.13)
     hike (1.2.1)
     httparty (0.7.8)
       crack (= 0.1.8)
@@ -242,7 +242,7 @@ GEM
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.3.0)
+    net-ssh (2.5.2)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.2)
@@ -338,7 +338,7 @@ GEM
     rubyzip (0.9.9)
     rufus-scheduler (2.0.17)
       tzinfo (>= 0.3.23)
-    rvm-capistrano (1.1.0)
+    rvm-capistrano (1.2.5)
       capistrano (>= 2.0.0)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
@@ -464,7 +464,7 @@ DEPENDENCIES
   resque_spec
   rspec-rails
   rubyzip
-  rvm-capistrano (~> 1.1.0)
+  rvm-capistrano (~> 1.2.5)
   sass-rails
   sassy-buttons
   seedbank

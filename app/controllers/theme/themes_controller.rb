@@ -87,7 +87,8 @@ class Theme::ThemesController < Theme::AppController
          redirect_to theme_store_url_with_port and return
       end
       redirect_to client.auth_code.authorize_url(
-        redirect_uri: "#{theme_store_url_with_port}/callback"
+        redirect_uri: Theme.client_redirect_uri,
+        scope: Theme.client_scope,
       )
     end
 
