@@ -9,7 +9,7 @@ describe PaginateFilter do
 
   let(:collection_drop) { CollectionDrop.new(collection) }
 
-  let(:iphone4) { Factory :iphone4, shop: shop, collections: [collection] }
+  let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [collection] }
 
   context '#default_pagination' do
 

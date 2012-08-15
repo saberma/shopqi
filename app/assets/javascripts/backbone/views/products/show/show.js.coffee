@@ -11,7 +11,7 @@ App.Views.Product.Show.Show = Backbone.View.extend
     attrs = _.clone @model.attributes
     attrs['options'] = @model.options
     attrs['tags'] = StringUtils.to_a attrs.tags_text
-    collections = _.map @model.attributes.collection_ids, (id) ->
+    collections = _.map @model.attributes.custom_collection_ids, (id) ->
       collection =
         id: id
         title: $("#collection_#{id}").next('label').text()

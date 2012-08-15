@@ -58,7 +58,7 @@ describe TagFilter do
 
       let(:collection) { shop.custom_collections.where(handle: 'frontpage').first }
 
-      let(:iphone4) { Factory :iphone4, shop: shop, collections: [collection], tags_text: '智能 手机 待机时间长'  }
+      let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [collection], tags_text: '智能 手机 待机时间长'  }
 
       it "should get link to tag url" do
         variant = "{{ tag | link_to_tag: tag }}"

@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :tags       , order: 'id asc'
   # 标签
   attr_accessor :tags_text,:images
-  attr_accessible :handle, :title, :published, :body_html, :price, :product_type, :vendor, :tags_text, :images, :photos_attributes, :variants_attributes, :options_attributes, :collection_ids
+  attr_accessible :handle, :title, :published, :body_html, :price, :product_type, :vendor, :tags_text, :images, :photos_attributes, :variants_attributes, :options_attributes, :custom_collection_ids
 
   scope :published, where(published: true)
 
