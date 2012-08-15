@@ -164,6 +164,25 @@ describe ShopTheme do
 
   end
 
+  describe 'Asset' do
+
+    context 'path' do
+
+      context 'do not exist' do # 468
+
+        it 'should not raise error' do
+          theme = shop.themes.install theme_slate
+          expect do
+            theme.asset_url('deleted_image')
+          end.not_to raise_error
+        end
+
+      end
+
+    end
+
+  end
+
   describe 'link path' do
 
     # capistrano部署时会将current 链接到 release_path 目录，但FileUtils.ln_s不能指向release_path，旧有release_path会随时被删除
