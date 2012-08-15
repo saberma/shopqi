@@ -31,7 +31,7 @@ App.Views.Product.Show.Edit = Backbone.View.extend
         product_type: @$("input[name='product_type']").val(),
         vendor: @$("input[name='vendor']").val(),
         tags_text: @$("input[name='tags_text']").val(),
-        collection_ids: _.map @$("input[name='product[collection_ids][]']:checked"), (input) ->
+        custom_collection_ids: _.map @$("input[name='product[custom_collection_ids][]']:checked"), (input) ->
           input.value
       },
       success: (model, resp) ->

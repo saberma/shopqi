@@ -16,7 +16,7 @@ describe Shop::CollectionsController do
 
   let(:smart_collection_low_price){ Factory(:smart_collection_low_price,handle: 'low_price', shop: shop)}
 
-  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
+  let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [frontpage_collection] }
 
   before :each do
     request.host = "#{shop.primary_domain.host}"
@@ -145,11 +145,11 @@ describe Shop::CollectionsController do
 
   context '#show_with_tag' do # 结合标签过滤集合商品
 
-    let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection], tags_text: '手机, 游戏机, 带拍照功能' }
+    let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [frontpage_collection], tags_text: '手机, 游戏机, 带拍照功能' }
 
-    let(:psp) { Factory :psp, shop: shop, collections: [frontpage_collection], tags_text: '游戏机, 带拍照功能' }
+    let(:psp) { Factory :psp, shop: shop, custom_collections: [frontpage_collection], tags_text: '游戏机, 带拍照功能' }
 
-    let(:leika) { Factory :leika, shop: shop, collections: [frontpage_collection], tags_text: '相机, 带拍照功能' }
+    let(:leika) { Factory :leika, shop: shop, custom_collections: [frontpage_collection], tags_text: '相机, 带拍照功能' }
 
     before do
       [iphone4, psp]

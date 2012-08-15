@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to   :shop
-  has_many     :articles       , dependent: :destroy
+  has_many     :articles
   has_many     :permissions    , dependent: :destroy
 
   # Include default devise modules. Others available are:

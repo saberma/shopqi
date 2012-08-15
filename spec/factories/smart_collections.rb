@@ -6,6 +6,12 @@ FactoryGirl.define do
     body_html "低价商品"
   end
 
+  factory :smart_collection_default, parent: :smart_collection do
+    rules_attributes [
+    {column: 'title', relation: 'equals', condition: ''}
+  ]
+  end
+
   factory :smart_collection_low_price, parent: :smart_collection do
     rules_attributes [
     {column: 'variants_price', relation: 'less_than', condition: 100}

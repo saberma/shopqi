@@ -47,8 +47,8 @@ describe "SmartCollections", js: true do
     context '#465' do
 
       before do
-        psp.destroy
-        iphone4 # id 不为 1
+        psp.destroy # 保证 id=1 的记录不存在
+        iphone4 # id = 2
         smart_collection # new(product_id: product) product_id 都会被置为 1；要使用 new(product_id: product.id)
       end
 
