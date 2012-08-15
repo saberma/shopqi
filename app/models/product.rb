@@ -2,15 +2,16 @@
 class Product < ActiveRecord::Base
   include Models::Handle
   belongs_to :shop
-  has_many :photos             , dependent: :destroy           , order: 'position asc'
-  has_many :variants           , dependent: :destroy           , class_name: 'ProductVariant'         , order: 'position asc'
-  has_many :options            , dependent: :destroy           , class_name: 'ProductOption'          , order: 'position asc'
-  has_many :collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
-  has_many :collections        , class_name: 'CustomCollection', through: :collection_products        , source: :custom_collection
-  has_and_belongs_to_many :tags, order: 'id asc'
+  has_many :photos                    , dependent: :destroy           , order: 'position asc'
+  has_many :variants                  , dependent: :destroy           , class_name: 'ProductVariant'         , order: 'position asc'
+  has_many :options                   , dependent: :destroy           , class_name: 'ProductOption'          , order: 'position asc'
+  has_many :custom_collection_products, dependent: :destroy           , class_name: 'CustomCollectionProduct'
+  has_many :custom_collections        , class_name: 'CustomCollection', through: :custom_collection_products , source: :custom_collection
+  has_many :smart_collection_products , dependent: :destroy           , class_name: 'SmartCollectionProduct'
+  has_and_belongs_to_many :tags       , order: 'id asc'
   # 标签
   attr_accessor :tags_text,:images
-  attr_accessible :handle, :title, :published, :body_html, :price, :product_type, :vendor, :tags_text, :images, :photos_attributes, :variants_attributes, :options_attributes, :collection_ids
+  attr_accessible :handle, :title, :published, :body_html, :price, :product_type, :vendor, :tags_text, :images, :photos_attributes, :variants_attributes, :options_attributes, :custom_collection_ids
 
   scope :published, where(published: true)
 

@@ -273,7 +273,7 @@ class ShopTheme < ActiveRecord::Base
 
   begin # 当前theme所在URL
     def asset_url(name) # s/files/1/theme/1/assets/checkout.css
-      "/#{self.asset_relative_path(name)}?#{File.mtime(self.asset_path(name)).to_i}"
+      "/#{self.asset_relative_path(name)}?#{self.asset_timestamp(name)}"
     end
   end
 
@@ -302,6 +302,12 @@ class ShopTheme < ActiveRecord::Base
       liquid_path = File.join path, 'assets', "#{asset}.liquid"
       return liquid_path if File.exist?(liquid_path) #存在liquid文件，则解释liquid
       asset_path_without_liquid asset
+    end
+
+    def asset_timestamp(name) # 1328060092
+      File.mtime(self.asset_path(name)).to_i
+    rescue
+      '' # file deleted
     end
 
     def asset_path_without_liquid(asset) # data/shops/1/themes/1/assets/favicon.ico

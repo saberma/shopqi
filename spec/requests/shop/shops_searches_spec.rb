@@ -8,7 +8,7 @@ describe "Shop::Searches", js:true do
 
   let(:frontpage_collection) { shop.custom_collections.where(handle: 'frontpage').first }
 
-  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
+  let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [frontpage_collection] }
 
   # 查询(需要启动全文检索服务) RAILS_ENV=test bundle exec rake sunspot:solr:run
   describe "GET /search", searchable: true do

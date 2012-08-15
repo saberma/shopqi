@@ -14,7 +14,7 @@ describe Shop::ProductsController do
 
   let(:frontpage_collection) { shop.custom_collections.where(handle: 'frontpage').first }
 
-  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
+  let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [frontpage_collection] }
 
   before :each do
     request.host = "#{shop.primary_domain.host}"

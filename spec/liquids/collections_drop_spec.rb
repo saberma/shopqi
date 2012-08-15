@@ -9,9 +9,9 @@ describe CollectionsDrop do
 
   let(:smart_collection_low_price){ Factory(:smart_collection_low_price, shop: shop)}
 
-  let(:iphone4) { Factory :iphone4, shop: shop, collections: [frontpage_collection] }
+  let(:iphone4) { Factory :iphone4, shop: shop, custom_collections: [frontpage_collection] }
 
-  let(:psp) { Factory :psp, shop: shop, collections: [frontpage_collection] }
+  let(:psp) { Factory :psp, shop: shop, custom_collections: [frontpage_collection] }
 
   let(:collections_drop) { CollectionsDrop.new(shop) }
 
