@@ -15,12 +15,6 @@ GIT
       activemerchant (>= 1.4.2)
 
 GIT
-  remote: git://github.com/saberma/acts_as_list.git
-  revision: 8bc26426d3104876191fc579cc4fced21ee9e2bb
-  specs:
-    acts_as_list (0.1.6)
-
-GIT
   remote: git://github.com/saberma/gollum.git
   revision: ee3874033a52cb261b43fedd5215a092f299e8ff
   specs:
@@ -34,6 +28,12 @@ GIT
       redcarpet
       sanitize (~> 2.0.0)
       sinatra (~> 1.0)
+
+GIT
+  remote: git://github.com/swanandp/acts_as_list.git
+  revision: f62c43265f0e47fe7666a93849abad5aa7c5c6d3
+  specs:
+    acts_as_list (0.1.8)
 
 GEM
   remote: http://rubygems.org/
