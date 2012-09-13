@@ -8,7 +8,7 @@ class OrderObserver < ActiveRecord::Observer
     unless customer
       customer = shop.customers.create email: order.email, name: order.shipping_address.name, password: Random.new.rand(100000..999999)
     end
-    customer.add_address order.shipping_address
+    customer.add_address order.shipping_address if order.shipping_address
     order.customer = customer
   end
 

@@ -72,6 +72,7 @@ class Shop::OrderController < Shop::AppController
     cart_line_items.each_pair do |variant, quantity|
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
+    order.note = cart.note # 订单备注
 
     data = {}
     if order.save

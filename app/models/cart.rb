@@ -3,7 +3,7 @@
 class Cart < ActiveRecord::Base
   belongs_to :shop
   belongs_to :customer
-  attr_accessible :session_id, :cart_hash
+  attr_accessible :session_id, :cart_hash, :note
 
   before_create do
     self.token = UUID.generate(:compact)
@@ -52,5 +52,9 @@ class Cart < ActiveRecord::Base
       quantity = item.second
       quantity * variant.price
     end.sum
+  end
+
+  def requires_shipping?
+    self.line_items.keys.any?(&:requires_shipping)
   end
 end

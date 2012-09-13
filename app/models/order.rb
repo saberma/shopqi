@@ -15,7 +15,8 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :shipping_address
 
-  validates_presence_of :email, :shipping_address, :shipping_rate, message: '此栏不能为空白'
+  validates_presence_of :email, message: '此栏不能为空白'
+  validates_presence_of :shipping_address, :shipping_rate, message: '此栏不能为空白', if: "requires_shipping?"
   validates_presence_of :payment_id, message: '此栏不能为空白', unless: "total_price.zero?"
   #validates :shipping_rate, inclusion: { in: %w()} # TODO: 配送记录必须存在
 
@@ -178,6 +179,10 @@ class Order < ActiveRecord::Base
     self.trade_no = trade_no
     self.save
     self.transactions.create kind: :capture, amount: amount
+  end
+
+  def requires_shipping?
+    self.line_items.any?(&:requires_shipping)
   end
 
   def other_orders

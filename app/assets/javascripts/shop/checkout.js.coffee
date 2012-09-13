@@ -89,10 +89,10 @@ $(document).ready ->
       order_shipping_address_attributes_phone: '电话'
     }
     return false unless Validator.valid_email('order_email', 'Email地址')
-    if $("input[name='order[shipping_rate]']:checked").size() is 0
+    if $("#addresses")[0] && $("input[name='order[shipping_rate]']:checked").size() is 0
       alert '请选择配送方式'
       return false
-    else if $("input[name='order[payment_id]']:checked").size() is 0 and !is_free()
+    if $("input[name='order[payment_id]']:checked").size() is 0 and !is_free()
       alert '请选择支付方式'
       return false
     $(this).attr('disabled', 'true').val '正在提交...'
