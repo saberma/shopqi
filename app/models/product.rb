@@ -187,6 +187,7 @@ class ProductVariant < ActiveRecord::Base
     def shop_as_json(options = nil)
       {
         id: self.id,
+        product_id: self.product_id,
         option1: self.option1,
         option2: self.option2,
         option3: self.option3,

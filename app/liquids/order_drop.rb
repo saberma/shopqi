@@ -25,7 +25,7 @@ class OrderDrop < Liquid::Drop
   end
 
   def requires_shipping
-    !@order.line_items.blank?
+    @order.requires_shipping?
   end
 
   def tax_price #税钱
