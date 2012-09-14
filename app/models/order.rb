@@ -233,6 +233,7 @@ class OrderLineItem < ActiveRecord::Base
     self.variant_title = product_variant.title
     self.name = product_variant.name
     self.vendor = product.vendor
+    self.requires_shipping = product_variant.requires_shipping
     self.grams = (product_variant.weight * 1000).to_i
     self.sku = product_variant.sku
   end
