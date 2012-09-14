@@ -27,6 +27,7 @@ describe BaseFilter do
       json['variants'].should eql [
         {
           'id' => variant.id,
+          'product_id' => iphone4.id,
           'option1' => '默认标题',
           'option2' => nil,
           'option3' => nil,
