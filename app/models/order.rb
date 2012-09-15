@@ -182,7 +182,8 @@ class Order < ActiveRecord::Base
   end
 
   def requires_shipping?
-    self.line_items.any?(&:requires_shipping)
+    #self.line_items.any?(&:requires_shipping) # line item 保存前，requires_shipping 还没有初始化
+    self.line_items.map(&:product_variant).any?(&:requires_shipping)
   end
 
   def other_orders
@@ -217,10 +218,6 @@ class OrderLineItem < ActiveRecord::Base
   attr_accessible :product_variant, :price, :quantity
 
   scope :unshipped, where(fulfilled: false)
-
-  before_validation do
-    self.requires_shipping ||= product_variant.requires_shipping
-  end
 
   before_create do
     self.init
