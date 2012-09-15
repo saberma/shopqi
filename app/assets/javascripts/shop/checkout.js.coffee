@@ -52,7 +52,6 @@ Validator = # 校验
     flag
 
 $(document).ready ->
-
   $("#discount_new").submit -> # 提交优惠码
     $("#discount_btn").attr 'disabled', 'disabled'
     $("#discount-errors").hide()
@@ -183,3 +182,6 @@ $(document).ready ->
 
   shipping_rate = -> # 运费
     parseFloat($('#cost').attr('shipping_rate') or 0)
+
+  if $("input[name='order[payment_id]']").size() is 1 and !is_free() # 支付方式只有一种时默认选中
+    $("input[name='order[payment_id]']").click()
