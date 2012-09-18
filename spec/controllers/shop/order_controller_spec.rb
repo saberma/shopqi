@@ -204,7 +204,7 @@ describe Shop::OrderController do
 
         end
 
-        context 'trade status is TRADE_SUCCESS', f: true do # 交易完成(高级即时付款，支付退款)
+        context 'trade status is TRADE_SUCCESS' do # 交易完成(高级即时付款，支付退款)
 
           let(:attrs) { { trade_no: trade_no, out_trade_no: order.token, notify_id: '123456', trade_status: 'TRADE_SUCCESS', total_fee: order.total_price } }
 

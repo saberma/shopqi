@@ -213,6 +213,8 @@ describe "Orders", js: true do
 
     context "(with a order)" do
 
+      before { order }
+
       it "should be list" do
         visit orders_path
         has_content?(order.name).should be_true
