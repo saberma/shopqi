@@ -157,6 +157,10 @@
       %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
       %input.btn(name="commit" type="submit" value="已收到款项")
     %p.instruction.r 您还未收到此订单的款项
+    %p.note
+      如果您联系了顾客，对方需要继续完成购买操作，可将
+      %a(href="#{show_shop_url}/orders/#{order.token}") 此链接地址
+      发送给顾客
     {{/if}}
   %h3 支付方式
   %p {{gateway}}
