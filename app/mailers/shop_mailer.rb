@@ -12,6 +12,33 @@ class ShopMailer < ActionMailer::Base
     liquid_mail mail_type, email, liquid_hash, order
   end
 
+  begin 'paid' # 支付成功时
+
+    def paid(transaction_id) # 给顾客发送
+      transaction = OrderTransaction.find(transaction_id)
+      order = transaction.order
+      order_drop = OrderDrop.new(order)
+      shop_drop = ShopDrop.new(order.shop)
+      transaction_drop = OrderTransactionDrop.new(transaction)
+      liquid_hash = order_drop.as_json
+      liquid_hash.merge! 'shop' => shop_drop, 'transaction' => transaction_drop
+      liquid_mail 'order_paid', order.email, liquid_hash, order
+    end
+
+    def paid_notify(transaction_id) # 给订阅者发送
+      transaction = OrderTransaction.find(transaction_id)
+      order = transaction.order
+      shop = order.shop
+      order_drop = OrderDrop.new(order)
+      shop_drop = ShopDrop.new(shop)
+      transaction_drop = OrderTransactionDrop.new(transaction)
+      liquid_hash = order_drop.as_json
+      liquid_hash.merge! 'shop' => shop_drop, 'transaction' => transaction_drop
+      liquid_mail 'order_paid_notify', shop.subscribes.map(&:email_address), liquid_hash, order
+    end
+
+  end
+
   def ship(mail_type, fulfillment_id) # 给顾客发送发货通知邮件
     fulfillment = OrderFulfillment.find(fulfillment_id)
     order = fulfillment.order

@@ -1,0 +1,3 @@
+{{ shop_name }},
+
+今天({{ date | date: "%Y-%m-%d %H:%M" }}), {{ customer.name }} 通过 {{ gateway }} 成功支付款项 {{ transaction.amount | money_with_currency }}。

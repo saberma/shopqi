@@ -1,8 +1,18 @@
 module ShopqiMailer
-  @queue = "shopqi_mailer"
+  QUEUE_NAME = "shopqi_mailer"
+  @queue = self.const_get(:QUEUE_NAME)
 
   def self.perform(mail_type, email, order_id)
     ShopMailer.notify_email(mail_type, email, order_id).deliver
+  end
+
+  module Paid # 支付
+    @queue = ShopqiMailer::QUEUE_NAME
+
+    def self.perform(transaction_id)
+      ShopMailer.paid(transaction_id).deliver
+      ShopMailer.paid_notify(transaction_id).deliver
+    end
   end
 
   module Ship # 发货

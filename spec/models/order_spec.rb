@@ -71,6 +71,28 @@ describe Order do
 
     end
 
+    describe 'email' do
+
+      before { order; ActionMailer::Base.deliveries.clear }
+
+      context '#create' do
+
+        it 'should send email' do # 给顾客、管理员发送通知邮件
+          with_resque do
+            ActionMailer::Base.deliveries.empty?.should be_true
+            transaction
+            ActionMailer::Base.deliveries.empty?.should be_false
+            email = ActionMailer::Base.deliveries.first # 顾客
+            email.subject.should eql "订单 #1001 完成支付\n"
+            email = ActionMailer::Base.deliveries.last # 管理员
+            email.subject.should eql "[测试商店] 订单 #1001 , 马海波完成支付\n"
+          end
+        end
+
+      end
+
+    end
+
   end
 
   describe OrderLineItem do

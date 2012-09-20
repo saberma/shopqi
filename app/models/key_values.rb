@@ -202,6 +202,8 @@ module KeyValues
           {id: 10, name: '订单确认提醒'            , code: 'order_confirm'                 , des: '当订单创建时，给客户发送此邮件'                                  },
           {id: 20, name: '新订单提醒'              , code: 'new_order_notify'              , des: '当有新订单创建时，给网店管理者发送此邮件'                        },
           #{id: 25, name: '新订单提醒(手机)'        , code: 'new_order_notify_mobile'       , des: '当有新订单创建时，给网店管理者发送此手机短信'                    },
+          {id: 26, name: '订单支付确认提醒'        , code: 'order_paid'                    , des: '当订单支付时，给客户发送此邮件'                                  },
+          {id: 27, name: '订单支付提醒'            , code: 'order_paid_notify'             , des: '当订单支付时，给网店管理者发送此邮件'                            },
           {id: 30, name: '货物发送提醒'            , code: 'ship_confirm'                  , des: '当客户的订单的货物发送时，给客户发送此邮件'                      },
           {id: 40, name: '货物发送信息更改提醒'    , code: 'ship_update'                   , des: '当订单的发送信息变更时，给客户发送此邮件'                        },
           #{id: 50, name: '联系买家'                , code: 'contact_buyer'                 , des: '在订单页面点击"发送邮件"时显示的邮件内容'                        },

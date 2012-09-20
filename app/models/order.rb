@@ -272,6 +272,7 @@ class OrderTransaction < ActiveRecord::Base
       self.order.save
     end
     self.order.histories.create body: "我们已经成功接收款项"
+    Resque.enqueue(ShopqiMailer::Paid, self.id)
   end
 end
 

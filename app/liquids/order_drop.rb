@@ -133,7 +133,13 @@ class OrderFulfillmentDrop < Liquid::Drop
   def tracking_url
     KeyValues::Order::TrackingCompany.url(self.tracking_company)
   end
+end
 
+class OrderTransactionDrop < Liquid::Drop # 支付记录
+  def initialize(transaction)
+    @transaction = transaction
+  end
+  delegate :amount, to: :@transaction
 end
 
 class ShippingMethodDrop < Liquid::Drop
@@ -149,4 +155,3 @@ class ShippingMethodDrop < Liquid::Drop
     @order.shipping_rate_price
   end
 end
-

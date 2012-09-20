@@ -43,7 +43,8 @@ class Admin::EmailsController < Admin::AppController
     order = demo_order
     order_drop = OrderDrop.new(order)
     fulfillment_drop = OrderFulfillmentDrop.new(demo_fulfillment(order))
-    assign = order_drop.as_json.merge('shop' => ShopDrop.new(shop), 'fulfillment' => fulfillment_drop, 'is_email' => true) # email的币种字符与html的不同
+    transaction_drop = OrderTransactionDrop.new(demo_transaction(order))
+    assign = order_drop.as_json.merge('shop' => ShopDrop.new(shop), 'fulfillment' => fulfillment_drop, 'transaction' => transaction_drop, 'is_email' => true) # email的币种字符与html的不同
     body = params[:email][:body_html]
     body = params[:email][:body] if params[:view_type] == 'text'
     @subject = Liquid::Template.parse(params[:email][:title]).render(assign)
@@ -88,6 +89,10 @@ class Admin::EmailsController < Admin::AppController
     fulfillment = order.fulfillments.new tracking_number: '1234', tracking_company: KeyValues::Order::TrackingCompany.first.code
     fulfillment.line_items << order.line_items.first
     fulfillment
+  end
+
+  def demo_transaction(order) # 支付信息
+    order.transactions.new kind: :capture, amount: order.total_price
   end
 
 end
