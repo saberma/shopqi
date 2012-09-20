@@ -66,12 +66,10 @@ describe ShopMailer do
 
     describe 'subscribers' do # 商店管理员订阅者
 
-      before { Timecop.freeze(Time.local(2012, 9, 20, 18, 0, 0)) }
-
       it "should receive paid email" do # 能收到支付成功通知邮件
         email = ShopMailer.paid_notify(transaction.id).deliver
         email.subject.should eql "[测试商店] 订单 #1001 , 马海波完成支付\n"
-        email.body.should include('今天(2012-09-20 18:00), 马海波 通过 在线支付-支付宝 成功支付款项 ¥3010.0 元。')
+        email.body.should include('马海波 通过 在线支付-支付宝 成功支付款项 ¥3010.0 元。')
       end
 
     end
