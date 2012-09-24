@@ -48,7 +48,7 @@ class Order < ActiveRecord::Base
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s
     self.line_items.each do |line_item| # 跟踪库存
       variant = line_item.product_variant
-      variant.decrement! :inventory_quantity if variant.manage_inventory?
+      variant.decrement! :inventory_quantity, line_item.quantity if variant.manage_inventory?
     end
   end
 
@@ -144,7 +144,7 @@ class Order < ActiveRecord::Base
         self.save
         self.line_items.each do |line_item| # 跟踪库存
           variant = line_item.product_variant
-          variant.increment! :inventory_quantity if variant.manage_inventory?
+          variant.increment! :inventory_quantity, line_item.quantity if variant.manage_inventory?
         end
       end
     end

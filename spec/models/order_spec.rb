@@ -303,9 +303,9 @@ describe Order do
         variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 2
       end
 
-      it 'should reduce product variant inventory quantity' do #
+      it 'should reduce product variant inventory quantity' do # 库存为 2，订单买了 2 件商品，库存要更新为 0
         order.save
-        variant.reload.inventory_quantity.should eql 1
+        variant.reload.inventory_quantity.should eql 0
       end
 
     end
@@ -328,10 +328,10 @@ describe Order do
           variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 0
         end
 
-        it 'should reduce product variant inventory quantity' do #
+        it 'should reduce product variant inventory quantity' do # 当前库存为 0，订单包含 2 件商品，库存要更新为 2
           order.cancel_reason = 'customer' # 顾客取消订单
           order.cancel!
-          variant.reload.inventory_quantity.should eql 1
+          variant.reload.inventory_quantity.should eql 2
         end
 
       end
