@@ -9,6 +9,10 @@ child :transactions => :transactions do
   attributes :id
 end
 
+child :shipping_address => :shipping_address do
+  attributes :id, :order_id, :province, :province_name, :city, :city_name, :district, :district_name, :address1, :company, :zip, :name, :phone, :full_info
+end
+
 child :fulfillments => :fulfillments do
   attributes :id, :order_id, :tracking_company, :tracking_number, :created_at, :updated_at
   child :line_items => :line_items do

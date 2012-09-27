@@ -124,6 +124,22 @@ describe Api::V1::OrdersController do
         variant_title: nil,
         vendor: "Apple"}],
       transactions: [],
+      shipping_address: {
+        id: 1,
+        order_id: 1,
+        province: '440000',
+        province_name: '广东省',
+        city: '440300',
+        city_name: '深圳市',
+        district: '440305',
+        district_name: '南山区',
+        address1: '311',
+        company: '深圳市索奇电子商务有限公司',
+        zip: '518057',
+        name: '马海波',
+        phone: '13928452888',
+        full_info: '广东省深圳市南山区311，深圳市索奇电子商务有限公司，518057，马海波，13928452888'
+      },
       fulfillments: [{
         id: 1,
         order_id: 1,

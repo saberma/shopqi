@@ -333,7 +333,7 @@ class OrderShippingAddress < ActiveRecord::Base
   end
 
   def full_info # 全地址
-    "#{province_name}#{city_name}#{district_name}#{address1}，#{zip}，#{name}，#{phone}"
+    "#{info}，#{company}，#{zip}，#{name}，#{phone}"
   end
 end
 
