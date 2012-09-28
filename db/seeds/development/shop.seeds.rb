@@ -45,7 +45,7 @@ product_description = %q{
 frontpage_collection = myshopqi.custom_collections.where(handle: 'frontpage').first
 1.upto(6) do |i|
   product = myshopqi.products.create title: "示例商品#{i}", handle: "example-#{i}", body_html: product_description, product_type: '手机', vendor: 'ShopQi'
-  product.collections << frontpage_collection
+  product.custom_collections << frontpage_collection
   product.save
 end
 

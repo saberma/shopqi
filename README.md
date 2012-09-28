@@ -1,4 +1,4 @@
-## ShopQi [![维护中](http://stillmaintained.com/saberma/shopqi.png)](http://stillmaintained.com/saberma/shopqi) [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
+## ShopQi [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
 
 ## English README
 
