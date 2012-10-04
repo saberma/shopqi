@@ -104,6 +104,7 @@ describe Api::V1::OrdersController do
       total_price: 30.0,
       total_weight: 5800,
       order_number: 1001,
+      email: "admin@shopqi.com",
       financial_status: "pending",
       financial_status_name: "待支付",
       fulfillment_status: "fulfilled",
