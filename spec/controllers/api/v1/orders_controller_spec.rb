@@ -60,6 +60,32 @@ describe Api::V1::OrdersController do
         json.size.should eql 0
       end
 
+      context 'search' do
+
+        context '#financial_status' do
+
+          it 'should be success' do
+            get :index, financial_status: 'pending', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 1
+            get :index, financial_status: 'paid', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 0
+          end
+
+        end
+
+        context '#fulfillment_status' do
+
+          it 'should be success' do
+            get :index, fulfillment_status: 'unshipped', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 0
+            get :index, fulfillment_status: 'fulfilled', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 1
+          end
+
+        end
+
+      end
+
     end
 
     context 'show' do
