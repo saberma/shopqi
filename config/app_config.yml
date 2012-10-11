@@ -3,7 +3,7 @@ defaults: &defaults
     from: "ShopQi<noreply@shopqi.com>"
     support: "ShopQi Support<support@shopqi.com>"
   domain:
-    host: 42foo.com
+    host: lvh.me
     port: ''
     record: 粤ICP备11089804号
   wiki:
@@ -12,7 +12,7 @@ defaults: &defaults
 development:
   <<: *defaults
   domain:
-    host: 42foo.com
+    host: lvh.me
     port: ':4000'
     record: 粤ICP备11089804号
 
