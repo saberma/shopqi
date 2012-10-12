@@ -111,6 +111,8 @@ http://www.lvh.me:4000
 
 **注意不要使用 localhost 来访问**
 
+[#486](https://github.com/saberma/shopqi/issues/486): 如果无法通过 `www.lvh.me` 访问，｀ping www.lvh.me` 也无法连接，可改为使用 `42foo.com` 进行访问，并将 [`config/app_config.yml`](https://github.com/saberma/shopqi/blob/master/config/app_config.yml#L15) 文件中的 `lvh.me` 修改为 `42foo.com`
+
 ### 反馈
 
 [有任何问题点这里](https://github.com/saberma/shopqi/issues)
