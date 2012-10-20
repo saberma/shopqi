@@ -214,6 +214,7 @@ Shopqi::Application.routes.draw do
           put  :cancel #取消
           post :previous #上一订单
           post :next     #下一订单
+          post :alipay_refund_notify, as: :alipay_refund_notify  #支付宝退款通知
         end
 
         # 配送记录(物流信息)

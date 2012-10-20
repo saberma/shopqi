@@ -12,16 +12,20 @@
     -if order.closed_at
       %li#locko=link_to "重新打开此订单", open_order_path(order), method: :post
       %li.no-icon= link_to image_tag('admin/icons/trash.gif'), order_path(order), method: :delete, data: { confirm: '您确定要删除?' }
-    -else
+    -elsif !order.cancelled?
       %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
-      -unless order.financial_status == 'abandoned' or order.cancelled?
+      -unless order.financial_status == 'abandoned'
         %li#cancel-order=link_to "取消此订单", '#'
 =render "shared/noscript"
 =render "shared/upgrade_ie"
--if order.closed_at
+-if order.closed_at or order.cancelled_at
   .sst.pgroup.c.warn
     %p
-      %strong==此订单已于#{order.closed_at.to_s(:full)}关闭.
+      %strong
+        -if order.closed_at
+          ==此订单已于#{order.closed_at.to_s(:full)}关闭.
+        -else
+          ==此订单已于#{order.cancelled_at.to_s(:full)}取消.
 #previous
   .tools.hide
     =link_to previous_order_path(order), class: :message do
@@ -150,8 +154,17 @@
 %script(id="order-status-item" type="text/x-handlebars-template")
   .fr.r
     {{#if payed}}
+    {{#if refunded}}
+    %h3 已退款
+    {{else}}
     %h3 已支付
     %p 您已经收到此订单的款项
+    -if @refund_apply_url
+      %p.warn
+        订单已取消，请点击
+        %a(href="#{@refund_apply_url}" title="请使用 IE 浏览器，支付宝退款数字证书只支持 IE 浏览器") 退款
+        前往支付网关完成退款操作
+    {{/if}}
     {{else}}
     %form#transaction_new.transaction_new(action="#" onsubmit="return false")
       %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")

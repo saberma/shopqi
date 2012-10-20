@@ -4,6 +4,7 @@ defaults: &defaults
     support: "ShopQi Support<support@shopqi.com>"
   domain:
     host: lvh.me
+    #host: localtunnel.com
     port: ''
     record: 粤ICP备11089804号
   wiki:
@@ -13,6 +14,7 @@ development:
   <<: *defaults
   domain:
     host: lvh.me
+    #host: localtunnel.com
     port: ':4000'
     record: 粤ICP备11089804号
 

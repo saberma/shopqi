@@ -53,6 +53,10 @@ class Payment < ActiveRecord::Base
       self.payment_type_id == 2
     end
 
+    def refundable? # 支持退款?(暂时只支持支付宝)
+      is_alipay? and  direct?
+    end
+
   end
 
 end

@@ -15,8 +15,10 @@ App.Views.Order.Show.Transaction.Index = Backbone.View.extend
       memo + amount
     , 0
     template = Handlebars.compile $('#order-status-item').html()
-    payed = order.get('financial_status') is 'paid' or (order.get('transactions').length != 0 and amount_sum >= order.get('total_price'))
-    $(@el).html template payed: payed, gateway: order.get('gateway')
+    financial_status = order.get('financial_status')
+    payed = financial_status is 'paid' or (order.get('transactions').length != 0 and amount_sum >= order.get('total_price'))
+    refunded = financial_status is 'refunded'
+    $(@el).html template payed: payed, refunded: refunded, gateway: order.get('gateway')
 
   save: ->
     self = this

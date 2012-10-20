@@ -335,6 +335,7 @@ module KeyValues
         {id: 2, name: '待支付', code: 'pending'   },
         {id: 3, name: '认证'  , code: 'authorized'},
         {id: 4, name: '放弃'  , code: 'abandoned' },
+        {id: 5, name: '已退款', code: 'refunded'  },
       ]
     end
 

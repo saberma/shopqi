@@ -126,6 +126,10 @@ class Order < ActiveRecord::Base
       self.financial_status.to_sym == :paid
     end
 
+    def financial_status_refunded? # 已退款?
+      self.financial_status.to_sym == :refunded
+    end
+
   end
 
   begin 'status'
@@ -138,7 +142,9 @@ class Order < ActiveRecord::Base
       status.to_sym == :cancelled
     end
 
-    def cancel! # 取消订单
+    # options[:email] 发送邮件给顾客
+    # options[:amount] 退款给顾客的金额，为 0 表示不退款
+    def cancel!(options = {}) # 取消订单
       self.class.transaction do
         self.status = :cancelled
         self.save
@@ -146,7 +152,18 @@ class Order < ActiveRecord::Base
           variant = line_item.product_variant
           variant.increment! :inventory_quantity, line_item.quantity if variant.manage_inventory?
         end
+        self.refund! options[:amount]
+        send_email('order_cancelled') if options[:email]
       end
+    end
+
+    def refund!(amount = nil)
+      amount = self.total_price if amount.blank?
+      self.transactions.create!(kind: :refund, status: :pending, amount: amount, batch_no: Gateway::Alipay::Refund.generate_batch_no) if !amount.zero?
+    end
+
+    def refundable? # 支持退款
+      self.financial_status_paid? and self.payment and self.payment.refundable?
     end
 
   end
@@ -259,13 +276,23 @@ end
 # 支付记录
 class OrderTransaction < ActiveRecord::Base
   belongs_to :order
-  attr_accessible :kind, :capture, :amount
+  attr_accessible :kind, :amount, :status, :batch_no
+
+  scope :pending_refund, where(kind: 'refund', status: 'pending')
 
   before_create do
     self.amount ||= order.total_price #非信用卡,手动接收款项
   end
 
   after_create do
+    self.capture if capture?
+  end
+
+  before_update do
+    self.refund if refund?
+  end
+
+  def capture
     amount_sum = self.order.transactions.map(&:amount).sum
     if amount_sum >= self.order.total_price
       self.order.financial_status = :paid
@@ -273,6 +300,22 @@ class OrderTransaction < ActiveRecord::Base
     end
     self.order.histories.create body: "我们已经成功接收款项"
     Resque.enqueue(ShopqiMailer::Paid, self.id)
+  end
+
+  def refund
+    if status_changed? and status.to_sym == :success # 退款成功
+      self.order.financial_status = :refunded
+      self.order.save
+      self.order.histories.create body: "我们已经将款项退回给顾客"
+    end
+  end
+
+  def capture?
+    self.kind.to_sym == :capture
+  end
+
+  def refund?
+    self.kind.to_sym == :refund
   end
 end
 
