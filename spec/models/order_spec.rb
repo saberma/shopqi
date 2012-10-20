@@ -220,7 +220,7 @@ describe Order do
           before { transaction }
 
           it 'should be query' do # 等待退款
-            order.transactions.pending_refund.should_not be_nil
+            order.transactions.pending_refund.first.should_not be_nil
           end
 
         end
@@ -229,7 +229,7 @@ describe Order do
         context 'without pending refund' do
 
           it 'should be query' do # 无须退款
-            order.transactions.pending_refund.should be_nil
+            order.transactions.pending_refund.first.should be_nil
           end
 
         end
