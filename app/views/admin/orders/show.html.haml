@@ -1,6 +1,7 @@
 -address = order.shipping_address
 %h2#title
   =order.title
+  %span.hide==token: #{order.token}
   %span#order-date=order.created_at.to_s(:with_year)
 #action-links
   %ul
