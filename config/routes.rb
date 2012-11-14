@@ -85,10 +85,10 @@ Shopqi::Application.routes.draw do
       get '/signup'   , to: redirect('/services/signup')
       get '/login'    , to: 'home#login'
       scope "/services/signup" do
-        get '/'                    , to: 'home#signup'                               , as: :services_signup
         # :confirmations, :omniauth_callbacks, :passwords, :registrations, :sessions, :unlocks
         devise_for :user, skip: [:sessions, :confirmations, :passwords], skip_helpers: true
         devise_scope :user do
+          get '/new/professional'  , to: 'registrations#new'                         , as: :services_signup
           get "/new/:plan"         , to: "registrations#new"                         , as: :signup
           get "/check_availability", to: "registrations#check_availability"
           post "/user"             , to: "registrations#create"                      , as: :signup_user

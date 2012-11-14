@@ -1,4 +1,5 @@
 defaults: &defaults
+  can_register: true
   mail:
     from: "ShopQi<noreply@shopqi.com>"
     support: "ShopQi Support<support@shopqi.com>"
@@ -25,6 +26,7 @@ test:
 
 production:
   <<: *defaults
+  can_register: false
   domain:
     #host: lvh.me
     host: shopqi.com

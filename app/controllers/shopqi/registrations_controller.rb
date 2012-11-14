@@ -13,6 +13,10 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
 
   expose(:signup_source_options) { KeyValues::Shop::SignupSource.options }
 
+  def new
+    (render action: :forbid and return) unless Setting.can_register
+  end
+
   def create
     data = {errors: {}}
     if is_code_valid? # 手机校验码(测试环境下不校验)
