@@ -54,13 +54,13 @@ describe "Shopqi::Home", js: true do
 
   end
 
-  describe "GET /signup" do # 价格方案
+  #describe "GET /signup" do # 价格方案
 
-    it "should be show" do
-      visit '/signup'
-      has_content?('价格(元)').should be_true
-    end
+  #  it "should be show" do
+  #    visit '/signup'
+  #    has_content?('价格(元)').should be_true
+  #  end
 
-  end
+  #end
 
 end

@@ -14,6 +14,7 @@ class Shopqi::RegistrationsController < Devise::RegistrationsController
   expose(:signup_source_options) { KeyValues::Shop::SignupSource.options }
 
   def new
+    params[:plan] ||= :professional
     (render action: :forbid and return) unless Setting.can_register
   end
 
