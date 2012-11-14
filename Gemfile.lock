@@ -206,8 +206,8 @@ GEM
     kgio (2.6.0)
     launchy (2.1.0)
       addressable (~> 2.2.6)
-    letter_opener (0.0.2)
-      launchy
+    letter_opener (1.0.0)
+      launchy (>= 2.0.4)
     libv8 (3.3.10.2)
     libwebsocket (0.1.5)
       addressable
@@ -447,7 +447,7 @@ DEPENDENCIES
   jquery-rails
   json_expressions
   kaminari
-  letter_opener
+  letter_opener (~> 1.0.0)
   liquid (~> 2.3.0)
   memcache-client
   message_block

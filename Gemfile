@@ -69,7 +69,7 @@ group :development do
   gem "haml-rails"
   #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'rvm-capistrano', '~> 1.2.5'
-  gem "letter_opener"
+  gem "letter_opener", '~> 1.0.0'
   gem 'guard-livereload'
 end
 
