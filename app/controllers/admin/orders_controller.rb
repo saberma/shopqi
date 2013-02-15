@@ -1,6 +1,8 @@
 #encoding: utf-8
 class Admin::OrdersController < Admin::AppController
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, except: :alipay_refund_notify
+  skip_before_filter :check_permission     , only: :alipay_refund_notify
+  skip_before_filter :force_domain         , only: :alipay_refund_notify
   layout 'admin'
 
   expose(:shop) { current_user.shop }
@@ -56,6 +58,18 @@ class Admin::OrdersController < Admin::AppController
     end
   end
 
+  def show
+    if order.cancelled? and transaction = order.transactions.pending_refund.first
+      payment = order.payment
+      data = [{
+        'trade_no' => order.trade_no,
+        'amount' => transaction.amount,
+        'reason' => '协商退款'
+      }]
+      @refund_apply_url = Gateway::Alipay::Refund.apply_url(payment.account, payment.key, payment.email, 'batch_no' => transaction.batch_no, 'data' => data, 'notify_url' => "#{request.protocol}#{shop.domains.myshopqi.host}#{alipay_refund_notify_order_path(order)}")
+    end
+  end
+
   # 批量修改
   def set
     operation = params[:operation].to_sym
@@ -90,13 +104,38 @@ class Admin::OrdersController < Admin::AppController
   end
 
   def cancel
-    order.cancel!
-    order.send_email('order_cancelled') if params[:email]
-    redirect_to orders_path
+    amount = params[:refund] ? order.total_price : 0
+    order.cancel!(email: params[:email], amount: amount)
+    path = params[:refund] ? order_path(order) : orders_path # 需要退款直接返回订单详情
+    redirect_to path
   end
 
   def destroy
     order.destroy
     redirect_to orders_path
+  end
+
+  begin 'from pay gateway'
+
+    begin 'alipay'
+
+      def alipay_refund_notify # 退款通知
+        text = 'fail'
+        shop = ShopDomain.at(request.host).shop
+        if alipay = shop.payments.alipay
+          notification = Gateway::Alipay::Refund::Notification.new(request.raw_post, alipay.key, alipay.account)
+          notification.data.each do |item|
+            order = shop.orders.find_by_trade_no(item.trade_no)
+            if order and transaction = order.transactions.pending_refund.where(batch_no: notification.batch_no).first
+              transaction.status = (item.result.downcase == 'success') ? 'success' : 'failure'
+              transaction.save
+            end
+          end
+        end
+        render text: 'success'
+      end
+
+    end
+
   end
 end

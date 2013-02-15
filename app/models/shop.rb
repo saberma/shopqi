@@ -39,6 +39,7 @@ class Shop < ActiveRecord::Base
   attr_readonly :orders_count
   attr_accessible :name, :phone, :plan, :province, :city, :district, :zip_code, :address, :email, :password, :password_enabled, :password_message, :currency, :money_with_currency_format, :money_format, :money_with_currency_in_emails_format, :money_in_emails_format, :order_number_format, :signup_source, :guided, :access_enabled, :domains_attributes, :themes_attributes, :policies_attributes
   attr_protected :deadline
+  validates_length_of :name, maximum: 16
   validates_presence_of :name, :email, :plan
   validates :email, email_format: true
   validates_length_of :address, maximum: 64

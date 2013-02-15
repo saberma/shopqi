@@ -9,6 +9,7 @@ Shopqi::Application.routes.draw do
       get '/shop'           , to: "shops#show"
       post '/themes/install', to: 'themes#install'
       get '/products'       , to: "products#index"
+      get '/products/:id'   , to: "products#show"
       put '/variants/:id'   , to: "product_variants#update"
       get '/orders'         , to: "orders#index"
       get '/orders/:id'     , to: "orders#show"
@@ -84,10 +85,10 @@ Shopqi::Application.routes.draw do
       get '/signup'   , to: redirect('/services/signup')
       get '/login'    , to: 'home#login'
       scope "/services/signup" do
-        get '/'                    , to: 'home#signup'                               , as: :services_signup
         # :confirmations, :omniauth_callbacks, :passwords, :registrations, :sessions, :unlocks
         devise_for :user, skip: [:sessions, :confirmations, :passwords], skip_helpers: true
         devise_scope :user do
+          get '/new/professional'  , to: 'registrations#new'                         , as: :services_signup
           get "/new/:plan"         , to: "registrations#new"                         , as: :signup
           get "/check_availability", to: "registrations#check_availability"
           post "/user"             , to: "registrations#create"                      , as: :signup_user
@@ -213,6 +214,7 @@ Shopqi::Application.routes.draw do
           put  :cancel #取消
           post :previous #上一订单
           post :next     #下一订单
+          post :alipay_refund_notify, as: :alipay_refund_notify  #支付宝退款通知
         end
 
         # 配送记录(物流信息)

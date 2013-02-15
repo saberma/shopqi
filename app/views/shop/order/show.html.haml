@@ -2,7 +2,7 @@
   #logo
     / css hook for logos
   %h1#tagline
-    %span.title 谢谢您
+    %span.title= link_to '谢谢您', show_shop_url
     %span.subtitle 我们已经成功接收了您的订单.
 #main
   #overview
@@ -15,13 +15,18 @@
         %strong=order.name
       -if order.payment.nil?
         %p 我们将会发送购物信息到您的电子邮箱中，请注意查收.
-        %p 感谢您的惠顾 .
-        .actions=link_to "返回#{shop.name}",show_shop_url
-      -elsif !order.payment.payment_type_id?
+        %p 感谢您的惠顾.
+        .actions=link_to "返回 #{shop.name}",show_shop_url
+      -elsif !order.payment.payment_type_id? # 非在线支付
         %h3==#{order.payment.name} 的简要说明
         %p==#{order.payment.message}
         %p 我们将会发送收据到您的电子邮箱中，请保留以作为您的纪录.
-        %p 感谢您的惠顾 .
-        .actions=link_to "返回#{shop.name}",show_shop_url
-      -elsif !order.financial_status_paid? # 邮件中会显示此url地址，已支付时就不需要再显示支付按钮
-        =render "confirm_pay_#{order.payment.payment_type_id}"
+        %p 感谢您的惠顾.
+        .actions=link_to "返回 #{shop.name}",show_shop_url
+      -else
+        -if order.financial_status_paid?
+          %p 此订单已经完成支付。
+          .actions=link_to "返回 #{shop.name}",show_shop_url
+        -else # 邮件中会显示此url地址，已支付时就不需要再显示支付按钮
+          %p==订单信息已发送到 #{order.email}，内容包含此页面地址，如支付过程出现问题，请打开此链接地址重新支付。
+          =render "confirm_pay_#{order.payment.payment_type_id}"

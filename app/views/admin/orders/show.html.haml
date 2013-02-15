@@ -1,5 +1,7 @@
+-address = order.shipping_address
 %h2#title
   =order.title
+  %span.hide==token: #{order.token}
   %span#order-date=order.created_at.to_s(:with_year)
 #action-links
   %ul
@@ -11,16 +13,20 @@
     -if order.closed_at
       %li#locko=link_to "重新打开此订单", open_order_path(order), method: :post
       %li.no-icon= link_to image_tag('admin/icons/trash.gif'), order_path(order), method: :delete, data: { confirm: '您确定要删除?' }
-    -else
+    -elsif !order.cancelled?
       %li#lock=link_to "关闭此订单", close_order_path(order), method: :post
-      -unless order.financial_status == 'abandoned' or order.cancelled?
+      -unless order.financial_status == 'abandoned'
         %li#cancel-order=link_to "取消此订单", '#'
 =render "shared/noscript"
 =render "shared/upgrade_ie"
--if order.closed_at
+-if order.closed_at or order.cancelled_at
   .sst.pgroup.c.warn
     %p
-      %strong==此订单已于#{order.closed_at.to_s(:full)}关闭.
+      %strong
+        -if order.closed_at
+          ==此订单已于#{order.closed_at.to_s(:full)}关闭.
+        -else
+          ==此订单已于#{order.cancelled_at.to_s(:full)}取消.
 #previous
   .tools.hide
     =link_to previous_order_path(order), class: :message do
@@ -46,8 +52,9 @@
           %h3=link_to customer.name, customer_path(customer)
           %p(style="line-height:18px;")
             %a(href="mailto:#{customer.email}")=customer.email
-            %br
-            =order.shipping_address.phone
+            -if address
+              %br
+              =address.phone
       %tr
         %td.attribute 营销
         %td.value.image
@@ -60,8 +67,11 @@
     #shipping-address.vcard
       %address.adr
         %span
-          =order.shipping_address.full_info
-          =raw clippy(order.shipping_address.full_info)
+          -if address
+            =address.full_info
+            =raw clippy(address.full_info)
+          -else
+            此商品不需要收货地址
       %a.email.hide(href="mailto:mahb45@gmail.com")
   #other-orders-box.customer-col.hide
     %h3(title="显示此顾客其他待处理的订单，方便一起发货") 此顾客其他订单
@@ -83,7 +93,7 @@
         #unshipped-goods.fr.r
         .sb.shipping-method
           %h3 配送方式
-          %p==#{order.shipping_rate}
+          %p=address ? order.shipping_rate : '不需要配送'
       %form#batch_fulfillment_form(action="#" onsubmit="return false")
         #mark-shipped.hide
           .sb.order-action-line
@@ -145,13 +155,26 @@
 %script(id="order-status-item" type="text/x-handlebars-template")
   .fr.r
     {{#if payed}}
+    {{#if refunded}}
+    %h3 已退款
+    {{else}}
     %h3 已支付
     %p 您已经收到此订单的款项
+    -if @refund_apply_url
+      %p.warn
+        订单已取消，请点击
+        %a(href="#{@refund_apply_url}" title="请使用 IE 浏览器，支付宝退款数字证书只支持 IE 浏览器") 退款
+        前往支付网关完成退款操作
+    {{/if}}
     {{else}}
     %form#transaction_new.transaction_new(action="#" onsubmit="return false")
       %input#transaction_kind(name="transaction[kind]" type="hidden" value="capture")
       %input.btn(name="commit" type="submit" value="已收到款项")
     %p.instruction.r 您还未收到此订单的款项
+    %p.note
+      如果您联系了顾客，对方需要继续完成购买操作，可将
+      %a(href="#{show_shop_url}/orders/#{order.token}") 此链接地址
+      发送给顾客
     {{/if}}
   %h3 支付方式
   %p {{gateway}}

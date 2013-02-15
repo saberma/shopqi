@@ -11,14 +11,14 @@
     - service.discount 0
     - service.agent payment.account
     - service.logistics type: 'EXPRESS', fee: 0, payment: 'BUYER_PAY'
-    - service.receive name: address.name, address: address.info, zip: address.zip, phone: address.phone
+    - service.receive name: address.name, address: address.info, zip: address.zip, phone: address.phone if address # 除非是虚拟商品
   - service.seller email: payment.email
   - service.notify_url notify_order_url
   - service.return_url done_order_url
   - service.charset "utf-8"
   - service.service payment.service
   - service.payment_type 1
-  - service.subject "#{shop.name}商品付款"
+  - service.subject "#{shop.name}商品"
   - service.sign payment.key
 .actions
   = button_to_function "确认支付", "$('#payment-form > div').remove();$('#payment-form').submit()",class:'btn'

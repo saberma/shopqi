@@ -3,7 +3,7 @@ class CustomCollection < ActiveRecord::Base
   include Models::Handle
   belongs_to :shop
   has_many :collection_products, dependent: :destroy          , class_name: 'CustomCollectionProduct'
-  has_many :products           , through: :collection_products, order: '"custom_collection_products"."position" asc' # 商店使用
+  has_many :products           , through: :collection_products, order: 'custom_collection_products.position asc' # 商店使用
   attr_accessible :title, :published, :handle, :body_html, :products_order, :products
 
   validates_presence_of :title

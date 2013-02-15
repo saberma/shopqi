@@ -202,6 +202,8 @@ module KeyValues
           {id: 10, name: '订单确认提醒'            , code: 'order_confirm'                 , des: '当订单创建时，给客户发送此邮件'                                  },
           {id: 20, name: '新订单提醒'              , code: 'new_order_notify'              , des: '当有新订单创建时，给网店管理者发送此邮件'                        },
           #{id: 25, name: '新订单提醒(手机)'        , code: 'new_order_notify_mobile'       , des: '当有新订单创建时，给网店管理者发送此手机短信'                    },
+          {id: 26, name: '订单支付确认提醒'        , code: 'order_paid'                    , des: '当订单支付时，给客户发送此邮件'                                  },
+          {id: 27, name: '订单支付提醒'            , code: 'order_paid_notify'             , des: '当订单支付时，给网店管理者发送此邮件'                            },
           {id: 30, name: '货物发送提醒'            , code: 'ship_confirm'                  , des: '当客户的订单的货物发送时，给客户发送此邮件'                      },
           {id: 40, name: '货物发送信息更改提醒'    , code: 'ship_update'                   , des: '当订单的发送信息变更时，给客户发送此邮件'                        },
           #{id: 50, name: '联系买家'                , code: 'contact_buyer'                 , des: '在订单页面点击"发送邮件"时显示的邮件内容'                        },
@@ -333,6 +335,7 @@ module KeyValues
         {id: 2, name: '待支付', code: 'pending'   },
         {id: 3, name: '认证'  , code: 'authorized'},
         {id: 4, name: '放弃'  , code: 'abandoned' },
+        {id: 5, name: '已退款', code: 'refunded'  },
       ]
     end
 
@@ -458,29 +461,29 @@ module KeyValues
       ORDERS_CREATE          = 'orders/create'
       ORDERS_UPDATE          = 'orders/update'
       ORDERS_PAID            = 'orders/paid'
-      ORDERS_FULFILLED       = 'orders/fulfilled'
+      ORDERS_FULFILLED       = 'orders/fulfilled' # 订单完全发货后才会触发事件
       ORDERS_CANCELLED       = 'orders/cancelled'
       PRODUCTS_CREATE        = 'products/create'
       PRODUCTS_DELETE        = 'products/delete'
       PRODUCTS_UPDATE        = 'products/update'
 
       self.data = [
-        {id: 1, name: '创建购物车'  , code: CARTS_CREATE          , scopes: [:read_carts    , :write_carts    ]},
-        {id: 1, name: '更新购物车'  , code: CARTS_UPDATE          , scopes: [:read_carts    , :write_carts    ]},
-        {id: 2, name: '新增集合'    , code: COLLECTIONS_CREATE    , scopes: [:read_products , :write_products ]},
-        {id: 2, name: '删除集合'    , code: COLLECTIONS_DELETE    , scopes: [:read_products , :write_products ]},
-        {id: 2, name: '修改集合'    , code: COLLECTIONS_UPDATE    , scopes: [:read_products , :write_products ]},
-        {id: 2, name: '新增顾客分组', code: CUSTOMER_GROUPS_CREATE, scopes: [:read_customers, :write_customers]},
-        {id: 2, name: '删除顾客分组', code: CUSTOMER_GROUPS_DELETE, scopes: [:read_customers, :write_customers]},
-        {id: 2, name: '修改顾客分组', code: CUSTOMER_GROUPS_UPDATE, scopes: [:read_customers, :write_customers]},
-        {id: 2, name: '新增订单'    , code: ORDERS_CREATE         , scopes: [:read_orders   , :write_orders   ]},
-        {id: 2, name: '修改订单'    , code: ORDERS_UPDATE         , scopes: [:read_orders   , :write_orders   ]},
-        {id: 2, name: '订单支付'    , code: ORDERS_PAID           , scopes: [:read_orders   , :write_orders   ]},
-        {id: 2, name: '订单发货'    , code: ORDERS_FULFILLED      , scopes: [:read_orders   , :write_orders   ]},
-        {id: 2, name: '取消订单'    , code: ORDERS_CANCELLED      , scopes: [:read_orders   , :write_orders   ]},
-        {id: 2, name: '新增商品'    , code: PRODUCTS_CREATE       , scopes: [:read_products , :write_products ]},
-        {id: 2, name: '删除商品'    , code: PRODUCTS_DELETE       , scopes: [:read_products , :write_products ]},
-        {id: 2, name: '修改商品'    , code: PRODUCTS_UPDATE       , scopes: [:read_products , :write_products ]}
+        #{id: 1, name: '创建购物车'  , code: CARTS_CREATE          , scopes: [:read_carts    , :write_carts    ]},
+        #{id: 1, name: '更新购物车'  , code: CARTS_UPDATE          , scopes: [:read_carts    , :write_carts    ]},
+        #{id: 2, name: '新增集合'    , code: COLLECTIONS_CREATE    , scopes: [:read_products , :write_products ]},
+        #{id: 2, name: '删除集合'    , code: COLLECTIONS_DELETE    , scopes: [:read_products , :write_products ]},
+        #{id: 2, name: '修改集合'    , code: COLLECTIONS_UPDATE    , scopes: [:read_products , :write_products ]},
+        #{id: 2, name: '新增顾客分组', code: CUSTOMER_GROUPS_CREATE, scopes: [:read_customers, :write_customers]},
+        #{id: 2, name: '删除顾客分组', code: CUSTOMER_GROUPS_DELETE, scopes: [:read_customers, :write_customers]},
+        #{id: 2, name: '修改顾客分组', code: CUSTOMER_GROUPS_UPDATE, scopes: [:read_customers, :write_customers]},
+        #{id: 2, name: '新增订单'    , code: ORDERS_CREATE         , scopes: [:read_orders   , :write_orders   ]},
+        #{id: 2, name: '修改订单'    , code: ORDERS_UPDATE         , scopes: [:read_orders   , :write_orders   ]},
+        #{id: 2, name: '订单支付'    , code: ORDERS_PAID           , scopes: [:read_orders   , :write_orders   ]},
+        {id: 2, name: '订单发货'    , code: ORDERS_FULFILLED      , scopes: [:read_orders   , :write_orders   ]}
+        #{id: 2, name: '取消订单'    , code: ORDERS_CANCELLED      , scopes: [:read_orders   , :write_orders   ]},
+        #{id: 2, name: '新增商品'    , code: PRODUCTS_CREATE       , scopes: [:read_products , :write_products ]},
+        #{id: 2, name: '删除商品'    , code: PRODUCTS_DELETE       , scopes: [:read_products , :write_products ]},
+        #{id: 2, name: '修改商品'    , code: PRODUCTS_UPDATE       , scopes: [:read_products , :write_products ]}
       ]
     end
 

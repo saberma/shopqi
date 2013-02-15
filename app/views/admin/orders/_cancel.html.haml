@@ -10,6 +10,15 @@
         %select#reason(name="order[cancel_reason]")=options_for_select cancel_reasons.invert
       .pgroup
         %table#cancel-data.no-lines
+          -if order.refundable?
+            %tr
+              %td(style="width: 200px")
+                %input#refund(checked="checked" name="refund" type="checkbox" value="1")
+                %label(for="refund") 退款
+              %td#refund-instructions.note
+                您将退回 #{shop.format_money_in_emails(order.total_price)} 给顾客。取消订单后请手动点击"退款"链接进行退款。
+                -#
+                  %input#amount(name="amount" size="7" type="text" value="#{order.total_price}")
           %tr
             %td(style="width: 200px; padding-top: 20px")
               %input#email(checked="checked" name="email" type="checkbox" value="1")

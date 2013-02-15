@@ -9,7 +9,7 @@
 
    订单商品明细： {% for line in line_items %} 
               {{ line.quantity }} x {{ line.title }}  单价： {{ line.price | money }} {% endfor %}
-   订单总额： {{ total_price | money_with_currency }}  | 商品总额： {{ subtotal_price | money_with_currency }}  | 发货方式及金额： {{ shipping_name }} - {{ shipping_rate_price | money_with_currency }}
+   订单总额： {{ total_price | money_with_currency }}  | 商品总额： {{ subtotal_price | money_with_currency }} {% if requires_shipping %} | 发货方式及金额： {{ shipping_name }} - {{ shipping_rate_price | money_with_currency }} {% endif %}
    {% unless total_price == 0 %}
    付款方式： {{ gateway }}   
    

@@ -2,7 +2,7 @@
   #logo
     / css hook for logos
   %h1#tagline
-    %span.title=shop.name
+    %span.title= link_to shop.name, show_shop_url
     %span.subtitle 填写购物信息
 #main
   / begin overview
@@ -12,10 +12,12 @@
       %table#thumbs(cellspacing="0" cellpadding="0")=render 'line_items', line_items: cart_line_items
     #wallet
       %span#cost(total_price="#{cart_total_price}" discount_amount="" shipping_rate="")=shop.format_money_in_emails(cart_total_price )
-      %br
-      %span#shipping_span.hint .. 未包含运费
-      %br
-      %span#discount_span.hint.hide .. 未包含折扣
+      - if cart.requires_shipping?
+        %br
+        %span#shipping_span.hint .. 未包含运费
+      -if @exist_discount
+        %br
+        %span#discount_span.hint.hide .. 未包含折扣
     %div(style="clear:left")
   /
     \/end overview
@@ -54,50 +56,56 @@
             %span.sign-in-message
               已经有账户了？
               =link_to ' 现在就登录',new_customer_session_url(checkout_url: "/carts/#{cart.token}")
-      / begin addresses
-      #addresses.group.clearfix
-        %h3 收货地址
-        %table#shipping.form(cellspacing="0" cellpadding="0")
-          -if current_customer
-            %tr#shipping_address_selection.multiple_address_selection
-              %td(colspan=2)
-                %select(id="shipping_address_selector" name="shipping_address_selector")
-                  -current_customer.addresses.each do |a|
-                    %option{value:a.id, name:a.name, province:a.province, city:a.city, district:a.district, address1:a.address1, zip:a.zip, phone:a.phone}==#{a.name},#{a.detail_address}
-                  %option 新地址
-          =f.fields_for :shipping_address do |s|
-            %tr
-              %td.lbl=s.label :name
-              %td
-                =s.text_field :name, class: :short
-                %span#error_order_shipping_address_attributes_name.errorHint
-            %tr
-              %td.lbl
-                %label(for='order_shipping_address_attributes_province') 地区
-              %td.region
-                =s.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
-                =s.select :city, District.list(order.shipping_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
-                =s.select :district, District.list(order.shipping_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
-                %span#error_order_shipping_address_attributes_province.errorHint
-                %span#error_order_shipping_address_attributes_city.errorHint
-                %span#error_order_shipping_address_attributes_district.errorHint
-            %tr
-              %td.lbl=s.label :address1
-              %td
-                =s.text_field :address1
-                %span#error_order_shipping_address_attributes_address1.errorHint
-            %tr
-              %td.lbl=s.label :phone
-              %td
-                =s.text_field :phone, class: :short
-                %span#error_order_shipping_address_attributes_phone.errorHint
-            %tr
-              %td.lbl=s.label :zip
-              %td
-                =s.text_field :zip, class: :short
-                %span#error_order_shipping_address_attributes_zip.errorHint
-        %div(style="clear: both")
-      / end addresses
+      -if cart.requires_shipping?
+        / begin addresses
+        #addresses.group.clearfix
+          %h3 收货地址
+          %table#shipping.form(cellspacing="0" cellpadding="0")
+            -if current_customer
+              %tr#shipping_address_selection.multiple_address_selection
+                %td(colspan=2)
+                  %select(id="shipping_address_selector" name="shipping_address_selector")
+                    -current_customer.addresses.each do |a|
+                      %option{value:a.id, name:a.name, province:a.province, city:a.city, district:a.district, address1:a.address1, zip:a.zip, phone:a.phone}==#{a.name},#{a.detail_address}
+                    %option 新地址
+            =f.fields_for :shipping_address do |s|
+              %tr
+                %td.lbl=s.label :name
+                %td
+                  =s.text_field :name, class: :short
+                  %span#error_order_shipping_address_attributes_name.errorHint
+              %tr
+                %td.lbl
+                  %label(for='order_shipping_address_attributes_province') 地区
+                %td.region
+                  =s.select :province, District.list, {include_blank: '--省份--'}, style: 'width: 76px'
+                  =s.select :city, District.list(order.shipping_address.province), {include_blank: '--城市--'}, style: 'width: 76px'
+                  =s.select :district, District.list(order.shipping_address.city), {include_blank: '--地区--'}, style: 'width: 76px'
+                  %span#error_order_shipping_address_attributes_province.errorHint
+                  %span#error_order_shipping_address_attributes_city.errorHint
+                  %span#error_order_shipping_address_attributes_district.errorHint
+              %tr
+                %td.lbl=s.label :address1
+                %td
+                  =s.text_field :address1
+                  %span#error_order_shipping_address_attributes_address1.errorHint
+              %tr
+                %td.lbl=s.label :company
+                %td
+                  =s.text_field :company, class: :short
+                  %span#error_order_shipping_address_attributes_company.errorHint
+              %tr
+                %td.lbl=s.label :phone
+                %td
+                  =s.text_field :phone, class: :short
+                  %span#error_order_shipping_address_attributes_phone.errorHint
+              %tr
+                %td.lbl=s.label :zip
+                %td
+                  =s.text_field :zip, class: :short
+                  %span#error_order_shipping_address_attributes_zip.errorHint
+          %div(style="clear: both")
+        / end addresses
       #payment
         #shipping_rates_group.group.clearfix.hide
           %h3 配送方式
@@ -114,7 +122,7 @@
               %span.error-message
               %ul#payment-methods
                 -shop.payments.each do |gateway|
-                  %li
+                  %li(class="#{gateway == shop.payments.last ? 'last' : ''}")
                     =f.radio_button :payment_id, gateway.id
                     =label_tag "order_payment_id_#{gateway.id}" , gateway.name? ? gateway.name :  gateway.payment_type.name
             #pay-info.gright
@@ -129,7 +137,7 @@
             %input#complete-purchase(name="commit" type="submit" value="提交订单")
             %small#cancel-purchase
               或者
-              %a(href="#{shop.primary_domain.url}#{request.port_string}") 返回商店
+              %a(href="#{show_shop_url}") 返回商店
           %td(style="text-align:right;vertical-align:bottom")
             %span#purchase-progress(style="display:none")=image_tag 'spinner_big.gif'
 

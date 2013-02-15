@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815032021) do
+ActiveRecord::Schema.define(:version => 20121016152948) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20120815032021) do
     t.integer  "customer_id"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.string   "note"
   end
 
   add_index "carts", ["shop_id"], :name => "index_carts_on_shop_id"
@@ -398,6 +399,8 @@ ActiveRecord::Schema.define(:version => 20120815032021) do
     t.string   "kind",       :limit => 16, :null => false
     t.float    "amount"
     t.datetime "created_at",               :null => false
+    t.string   "status",     :limit => 16
+    t.string   "batch_no",   :limit => 24
   end
 
   add_index "order_transactions", ["order_id"], :name => "index_order_transactions_on_order_id"

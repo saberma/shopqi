@@ -45,7 +45,7 @@ class Shop::CartController < Shop::AppController
     if params[:checkout].blank? and params['checkout.x'].blank? # 支持按钮提交和图片提交两种方式
       redirect_to cart_path
     else
-      cart = shop.carts.update_or_create({session_id: cart_session_id}, cart_hash: cart_hash.to_json)
+      cart = shop.carts.update_or_create({session_id: cart_session_id}, cart_hash: cart_hash.to_json, note: params[:note])
       checkout_url = "/carts/#{cart.token}"
       if shop.customer_accounts_required?
         session['customer_return_to'] = checkout_url

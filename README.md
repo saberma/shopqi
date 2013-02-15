@@ -1,4 +1,6 @@
-## ShopQi [![维护中](http://stillmaintained.com/saberma/shopqi.png)](http://stillmaintained.com/saberma/shopqi) [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
+**最新电子商务开源项目 [19wu](https://github.com/saberma/19wu)**
+
+## ShopQi [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
 
 ## English README
 
@@ -29,6 +31,8 @@ Please feel free to [contact me](mailto:mahb45@gmail.com) if you have any questi
 *Start the server*
 
     $ bundle exec unicorn_rails -p 4000 -c config/development.unicorn.conf.rb
+
+If you change the port, make sure the port value in [`config/app_config.yml`](https://github.com/saberma/shopqi/blob/master/config/app_config.yml#L16) was changed too.
 
 *Open the browser*
 
@@ -101,11 +105,15 @@ ShopQi 基于 Rails3.2 开发, 覆盖电子商务所有功能，包括
 
     $ bundle exec unicorn_rails -p 4000 -c config/development.unicorn.conf.rb
 
+如果你修改了端口，请同时修改 [`config/app_config.yml`](https://github.com/saberma/shopqi/blob/master/config/app_config.yml#L16) 文件中的端口号
+
 *浏览*
 
 http://www.lvh.me:4000
 
 **注意不要使用 localhost 来访问**
+
+[#486](https://github.com/saberma/shopqi/issues/486): 如果无法通过 `www.lvh.me` 访问，｀ping www.lvh.me` 也无法连接，可改为使用 `42foo.com` 进行访问，并将 [`config/app_config.yml`](https://github.com/saberma/shopqi/blob/master/config/app_config.yml#L15) 文件中的 `lvh.me` 修改为 `42foo.com`
 
 ### 反馈
 

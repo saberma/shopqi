@@ -30,35 +30,8 @@ describe "Orders", js: true do
     o
   end
 
-  before :each do
-    order
-  end
-
   ##### 查看 #####
   describe "GET /orders/id" do
-
-=begin # 合并结算步骤后不会再有放弃状态的订单了
-    context "#abandoned" do
-
-      it "should show tip" do
-        visit order_path(order)
-        has_content?('此订单已经被放弃').should be_true
-      end
-
-      it "should not show cancel action" do
-        visit order_path(order)
-        within '#action-links' do
-          has_content?('取消此订单').should be_false
-        end
-      end
-
-      it "should not list abandoned order" do
-        visit orders_path
-        has_content?(order.name).should be_false
-      end
-
-    end
-=end
 
     context "#pending" do
 
@@ -211,6 +184,28 @@ describe "Orders", js: true do
 
     end
 
+    context "product do not requires shipping" do # 虚拟商品不需要收货地址
+
+      let(:order) do
+        o = Factory.build :order_not_requires_shipping, shop: shop, payment_id: payment_alipay.id
+        o.line_items.build [ {product_variant: iphone4_variant, price: 10, quantity: 2}, ]
+        o.save
+        o
+      end
+
+      before do
+        iphone4_variant.update_attributes! requires_shipping: false
+      end
+
+      it "should be show" do
+        visit order_path(order)
+        has_content?(order.name).should be_true
+        find('#shipping-address').should have_content('此商品不需要收货地址') # 收货地址
+        find('#order-fulfillment').should have_content('不需要配送') # 配送方式
+      end
+
+    end
+
   end
 
   ##### 列表 #####
@@ -218,21 +213,12 @@ describe "Orders", js: true do
 
     context "(with a order)" do
 
-=begin
-      it "should not list abandoned order" do
-        visit orders_path
-        has_content?(order.name).should be_false # 默认不显示[放弃]的订单
+      before { order }
 
-        click_on '任何支付状态'
-        click_on '放弃'
-        has_content?(order.name).should be_true
-
-        order.financial_status = :pending # 假设顾客已经提交订单
-        order.save
+      it "should be list" do
         visit orders_path
         has_content?(order.name).should be_true
       end
-=end
 
     end
 

@@ -60,6 +60,32 @@ describe Api::V1::OrdersController do
         json.size.should eql 0
       end
 
+      context 'search' do
+
+        context '#financial_status' do
+
+          it 'should be success' do
+            get :index, financial_status: 'pending', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 1
+            get :index, financial_status: 'paid', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 0
+          end
+
+        end
+
+        context '#fulfillment_status' do
+
+          it 'should be success' do
+            get :index, fulfillment_status: 'unshipped', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 0
+            get :index, fulfillment_status: 'fulfilled', format: :json, access_token: token.token
+            JSON(response.body)['orders'].size.should eql 1
+          end
+
+        end
+
+      end
+
     end
 
     context 'show' do
@@ -104,6 +130,7 @@ describe Api::V1::OrdersController do
       total_price: 30.0,
       total_weight: 5800,
       order_number: 1001,
+      email: "admin@shopqi.com",
       financial_status: "pending",
       financial_status_name: "待支付",
       fulfillment_status: "fulfilled",
@@ -124,6 +151,22 @@ describe Api::V1::OrdersController do
         variant_title: nil,
         vendor: "Apple"}],
       transactions: [],
+      shipping_address: {
+        id: 1,
+        order_id: 1,
+        province: '440000',
+        province_name: '广东省',
+        city: '440300',
+        city_name: '深圳市',
+        district: '440305',
+        district_name: '南山区',
+        address1: '311',
+        company: '深圳市索奇电子商务有限公司',
+        zip: '518057',
+        name: '马海波',
+        phone: '13928452888',
+        full_info: '广东省深圳市南山区311，深圳市索奇电子商务有限公司，518057，马海波，13928452888'
+      },
       fulfillments: [{
         id: 1,
         order_id: 1,
