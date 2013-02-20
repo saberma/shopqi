@@ -38,35 +38,61 @@ describe Order do
 
     let(:transaction) { order.transactions.create kind: :capture }
 
-    it 'should be add' do
-      expect do
-        transaction
-      end.to change(OrderTransaction, :count).by(1)
-    end
+    context 'capture' do # 支付
 
-    it 'should save history' do
-      order
-      expect do
-        transaction
-      end.to change(OrderHistory, :count).by(1)
-    end
+      it 'should be add' do
+        expect do
+          transaction
+        end.to change(OrderTransaction, :count).by(1)
+      end
 
-    context 'enough amount' do # 完整支付
+      it 'should save history' do
+        order
+        expect do
+          transaction
+        end.to change(OrderHistory, :count).by(1)
+      end
 
-      it 'should change order financial_status to paid' do
-        transaction
-        order.reload.financial_status_paid?.should be_true
+      context 'enough amount' do # 完整支付
+
+        it 'should change order financial_status to paid' do
+          transaction
+          order.reload.financial_status_paid?.should be_true
+        end
+
+      end
+
+      context 'no enough amount' do # 部分支付
+
+        let(:transaction) { order.transactions.create kind: :capture, amount: 1 }
+
+        it 'should not change order financial_status' do
+          transaction
+          order.reload.financial_status_paid?.should_not be_true
+        end
+
       end
 
     end
 
-    context 'no enough amount' do # 部分支付
+    describe 'email' do
 
-      let(:transaction) { order.transactions.create kind: :capture, amount: 1 }
+      before { order; ActionMailer::Base.deliveries.clear }
 
-      it 'should not change order financial_status' do
-        transaction
-        order.reload.financial_status_paid?.should_not be_true
+      context '#create' do
+
+        it 'should send email' do # 给顾客、管理员发送通知邮件
+          with_resque do
+            ActionMailer::Base.deliveries.empty?.should be_true
+            transaction
+            ActionMailer::Base.deliveries.empty?.should be_false
+            email = ActionMailer::Base.deliveries.first # 顾客
+            email.subject.should eql "订单 #1001 完成支付\n"
+            email = ActionMailer::Base.deliveries.last # 管理员
+            email.subject.should eql "[测试商店] 订单 #1001 , 马海波完成支付\n"
+          end
+        end
+
       end
 
     end
@@ -147,30 +173,67 @@ describe Order do
 
     end
 
-    describe 'alipay' do # 集成支付宝担保交易发货接口
-
-      let(:fulfillment) do
-        record = order.fulfillments.build notify_customer: 'true', tracking_number: 'abcd1234', tracking_company: '申通E物流'
-        record.line_items << line_item
-        record.save
-        record
-      end
+    describe 'alipay' do # 集成支付宝(担保交易发货接口，即时到帐退款接口)
 
       let(:trade_no) { '2012041441700373' } # 支付宝交易号
 
-      let(:payment) { Factory :payment_alipay_escrow, shop: shop } # 支付方式:支付宝
+      context 'goods' do # 发货
 
-      before do
-        order.trade_no = trade_no
-        order.save
+        let(:payment) { Factory :payment_alipay_escrow, shop: shop } # 支付方式:支付宝
+
+        let(:fulfillment) do
+          record = order.fulfillments.build notify_customer: 'true', tracking_number: 'abcd1234', tracking_company: '申通E物流'
+          record.line_items << line_item
+          record.save
+          record
+        end
+
+        before do
+          order.trade_no = trade_no
+          order.save
+        end
+
+        it 'should receive send goods' do # 接受到发货信息
+          options = { 'logistics_name' => '申通E物流', 'invoice_no' => 'abcd1234', 'trade_no' => trade_no }
+          Gateway::Alipay::Goods.should_receive(:send).with(options, payment.account, payment.key, payment.email)
+          with_resque do
+            fulfillment
+          end
+        end
+
       end
 
-      it 'should receive send goods' do # 接受到发货信息
-        options = { 'logistics_name' => '申通E物流', 'invoice_no' => 'abcd1234', 'trade_no' => trade_no }
-        Gateway::Alipay.should_receive(:send_goods).with(options, payment.account, payment.key, payment.email)
-        with_resque do
-          fulfillment
+      context 'refund' do # 退款
+
+        let(:payment) { Factory :payment_alipay, shop: shop } # 支付方式:支付宝即时到帐
+
+        let(:transaction) { order.refund! }
+
+        it 'should be add' do
+          expect do
+            transaction.status.to_sym.should eql :pending
+          end.to change(OrderTransaction, :count).by(1)
         end
+
+        context 'with pending refund' do
+
+          before { transaction }
+
+          it 'should be query' do # 等待退款
+            order.transactions.pending_refund.first.should_not be_nil
+          end
+
+        end
+
+
+        context 'without pending refund' do
+
+          it 'should be query' do # 无须退款
+            order.transactions.pending_refund.first.should be_nil
+          end
+
+        end
+
       end
 
     end
@@ -281,9 +344,9 @@ describe Order do
         variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 2
       end
 
-      it 'should reduce product variant inventory quantity' do #
+      it 'should reduce product variant inventory quantity' do # 库存为 2，订单买了 2 件商品，库存要更新为 0
         order.save
-        variant.reload.inventory_quantity.should eql 1
+        variant.reload.inventory_quantity.should eql 0
       end
 
     end
@@ -306,10 +369,10 @@ describe Order do
           variant.update_attributes inventory_management: 'shopqi', inventory_quantity: 0
         end
 
-        it 'should reduce product variant inventory quantity' do #
+        it 'should reduce product variant inventory quantity' do # 当前库存为 0，订单包含 2 件商品，库存要更新为 2
           order.cancel_reason = 'customer' # 顾客取消订单
           order.cancel!
-          variant.reload.inventory_quantity.should eql 1
+          variant.reload.inventory_quantity.should eql 2
         end
 
       end

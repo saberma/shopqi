@@ -24,7 +24,7 @@ Shopqi::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.action_controller.asset_host = Proc.new { |source|
-    "//cdn.lvh.me#{Setting.domain.port}"
+    "//cdn.#{Setting.domain.host}#{Setting.domain.port}"
   }
 
   # Raise exception on mass assignment protection for Active Record models

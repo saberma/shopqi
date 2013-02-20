@@ -12,7 +12,7 @@ module AlipaySendGoods
         'invoice_no' => fulfillment.tracking_number,
         'trade_no' => order.trade_no
       }
-      unless Gateway::Alipay.send_goods?(options, payment.account, payment.key, payment.email)
+      unless Gateway::Alipay::Goods.send?(options, payment.account, payment.key, payment.email)
         ShopMailer.alipay_send_goods_error(fulfillment).deliver
       end
     rescue => e

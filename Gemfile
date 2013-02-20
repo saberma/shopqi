@@ -10,7 +10,7 @@ gem 'sass-rails' # 放在assets分组会报错 http://j.mp/oj7y6K
 
 
 gem 'activeadmin'
-gem 'acts_as_list', git: 'git://github.com/saberma/acts_as_list.git' # 支持同时删除多个记录
+gem 'acts_as_list', git: 'git://github.com/swanandp/acts_as_list.git' # 支持同时删除多个记录
 
 #use unicorn as web server
 gem 'unicorn'
@@ -69,7 +69,7 @@ group :development do
   gem "haml-rails"
   #gem 'ruby-debug19', platforms: :ruby_19 # To use debugger(add 'debugger' in code, then set autoeval; set autolist in console)
   gem 'rvm-capistrano', '~> 1.2.5'
-  gem "letter_opener"
+  gem "letter_opener", '~> 1.0.0'
   gem 'guard-livereload'
 end
 

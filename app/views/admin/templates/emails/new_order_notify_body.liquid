@@ -1,6 +1,6 @@
 {{ shop_name }},
 
-今天({{ date | date: "%Y-%m-%d %H:%M" }}), {{ shipping_address.name }} 新增了订单.
+今天({{ date | date: "%Y-%m-%d %H:%M" }}), {{ customer.name }} 新增了订单.
 
 付款方式:
   {{ gateway }}{% if requires_shipping %}

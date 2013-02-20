@@ -47,4 +47,33 @@ describe ShopMailer do
 
   end
 
+  describe OrderTransaction do
+
+    let(:transaction) { order.transactions.create kind: :capture }
+
+    let(:payment) { Factory :payment_alipay, shop: shop }
+
+    describe 'customer' do # 顾客
+
+      it "should receive paid email" do # 能收到支付成功通知邮件
+        email = ShopMailer.paid(transaction.id).deliver
+        email.subject.should eql "订单 #1001 完成支付\n"
+        email.body.should include('尊敬的马海波')
+        email.body.should include('您好，我们已经收到您通过 在线支付-支付宝 支付的款项 ¥3010.0 元。')
+      end
+
+    end
+
+    describe 'subscribers' do # 商店管理员订阅者
+
+      it "should receive paid email" do # 能收到支付成功通知邮件
+        email = ShopMailer.paid_notify(transaction.id).deliver
+        email.subject.should eql "[测试商店] 订单 #1001 , 马海波完成支付\n"
+        email.body.should include('马海波 通过 在线支付-支付宝 成功支付款项 ¥3010.0 元。')
+      end
+
+    end
+
+  end
+
 end

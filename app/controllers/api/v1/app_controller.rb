@@ -25,7 +25,8 @@ module Api::V1
       end
 
       def per_page
-        params[:per_page] || 30
+        limit = (params[:per_page] || 30).to_i
+        limit > 100 ? 100 : limit # 限制每页最多 100 条记录
       end
 
     end

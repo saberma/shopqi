@@ -52,7 +52,6 @@ Validator = # 校验
     flag
 
 $(document).ready ->
-
   $("#discount_new").submit -> # 提交优惠码
     $("#discount_btn").attr 'disabled', 'disabled'
     $("#discount-errors").hide()
@@ -89,10 +88,10 @@ $(document).ready ->
       order_shipping_address_attributes_phone: '电话'
     }
     return false unless Validator.valid_email('order_email', 'Email地址')
-    if $("input[name='order[shipping_rate]']:checked").size() is 0
+    if $("#addresses")[0] && $("input[name='order[shipping_rate]']:checked").size() is 0
       alert '请选择配送方式'
       return false
-    else if $("input[name='order[payment_id]']:checked").size() is 0 and !is_free()
+    if $("input[name='order[payment_id]']:checked").size() is 0 and !is_free()
       alert '请选择支付方式'
       return false
     $(this).attr('disabled', 'true').val '正在提交...'
@@ -183,3 +182,6 @@ $(document).ready ->
 
   shipping_rate = -> # 运费
     parseFloat($('#cost').attr('shipping_rate') or 0)
+
+  if $("input[name='order[payment_id]']").size() is 1 and !is_free() # 支付方式只有一种时默认选中
+    $("input[name='order[payment_id]']").click()

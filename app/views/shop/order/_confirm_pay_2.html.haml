@@ -11,7 +11,7 @@
   - service.return_url tenpay_notify_order_url
   - service.charset "utf-8"
   - service.spbill_create_ip request.remote_ip
-  - service.description "#{shop.name}商品付款"
+  - service.description "#{shop.name}商品"
   - service.attach 'ShopQi'
   - service.sign payment.key
 .actions

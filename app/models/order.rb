@@ -15,7 +15,8 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :shipping_address
 
-  validates_presence_of :email, :shipping_address, :shipping_rate, message: '此栏不能为空白'
+  validates_presence_of :email, message: '此栏不能为空白'
+  validates_presence_of :shipping_address, :shipping_rate, message: '此栏不能为空白', if: "requires_shipping?"
   validates_presence_of :payment_id, message: '此栏不能为空白', unless: "total_price.zero?"
   #validates :shipping_rate, inclusion: { in: %w()} # TODO: 配送记录必须存在
 
@@ -47,7 +48,7 @@ class Order < ActiveRecord::Base
     self.name = shop.order_number_format.gsub /{{number}}/, self.order_number.to_s
     self.line_items.each do |line_item| # 跟踪库存
       variant = line_item.product_variant
-      variant.decrement! :inventory_quantity if variant.manage_inventory?
+      variant.decrement! :inventory_quantity, line_item.quantity if variant.manage_inventory?
     end
   end
 
@@ -125,6 +126,10 @@ class Order < ActiveRecord::Base
       self.financial_status.to_sym == :paid
     end
 
+    def financial_status_refunded? # 已退款?
+      self.financial_status.to_sym == :refunded
+    end
+
   end
 
   begin 'status'
@@ -137,15 +142,28 @@ class Order < ActiveRecord::Base
       status.to_sym == :cancelled
     end
 
-    def cancel! # 取消订单
+    # options[:email] 发送邮件给顾客
+    # options[:amount] 退款给顾客的金额，为 0 表示不退款
+    def cancel!(options = {}) # 取消订单
       self.class.transaction do
         self.status = :cancelled
         self.save
         self.line_items.each do |line_item| # 跟踪库存
           variant = line_item.product_variant
-          variant.increment! :inventory_quantity if variant.manage_inventory?
+          variant.increment! :inventory_quantity, line_item.quantity if variant.manage_inventory?
         end
+        self.refund! options[:amount]
+        send_email('order_cancelled') if options[:email]
       end
+    end
+
+    def refund!(amount = nil)
+      amount = self.total_price if amount.blank?
+      self.transactions.create!(kind: :refund, status: :pending, amount: amount, batch_no: Gateway::Alipay::Refund.generate_batch_no) if !amount.zero?
+    end
+
+    def refundable? # 支持退款
+      self.financial_status_paid? and self.payment and self.payment.refundable?
     end
 
   end
@@ -178,6 +196,11 @@ class Order < ActiveRecord::Base
     self.trade_no = trade_no
     self.save
     self.transactions.create kind: :capture, amount: amount
+  end
+
+  def requires_shipping?
+    #self.line_items.any?(&:requires_shipping) # line item 保存前，requires_shipping 还没有初始化
+    self.line_items.map(&:product_variant).any?(&:requires_shipping)
   end
 
   def other_orders
@@ -253,19 +276,46 @@ end
 # 支付记录
 class OrderTransaction < ActiveRecord::Base
   belongs_to :order
-  attr_accessible :kind, :capture, :amount
+  attr_accessible :kind, :amount, :status, :batch_no
+
+  scope :pending_refund, where(kind: 'refund', status: 'pending')
 
   before_create do
     self.amount ||= order.total_price #非信用卡,手动接收款项
   end
 
   after_create do
+    self.capture if capture?
+  end
+
+  before_update do
+    self.refund if refund?
+  end
+
+  def capture
     amount_sum = self.order.transactions.map(&:amount).sum
     if amount_sum >= self.order.total_price
       self.order.financial_status = :paid
       self.order.save
     end
     self.order.histories.create body: "我们已经成功接收款项"
+    Resque.enqueue(ShopqiMailer::Paid, self.id)
+  end
+
+  def refund
+    if status_changed? and status.to_sym == :success # 退款成功
+      self.order.financial_status = :refunded
+      self.order.save
+      self.order.histories.create body: "我们已经将款项退回给顾客"
+    end
+  end
+
+  def capture?
+    self.kind.to_sym == :capture
+  end
+
+  def refund?
+    self.kind.to_sym == :refund
   end
 end
 
@@ -326,7 +376,7 @@ class OrderShippingAddress < ActiveRecord::Base
   end
 
   def full_info # 全地址
-    "#{province_name}#{city_name}#{district_name}#{address1}，#{zip}，#{name}，#{phone}"
+    "#{info}，#{company}，#{zip}，#{name}，#{phone}"
   end
 end
 

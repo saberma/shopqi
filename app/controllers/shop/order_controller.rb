@@ -72,6 +72,7 @@ class Shop::OrderController < Shop::AppController
     cart_line_items.each_pair do |variant, quantity|
       order.line_items.build product_variant: variant, price: variant.price, quantity: quantity
     end
+    order.note = cart.note # 订单备注
 
     data = {}
     if order.save
@@ -99,7 +100,7 @@ class Shop::OrderController < Shop::AppController
         notification = ActiveMerchant::Billing::Integrations::Alipay::Notification.new(request.raw_post)
         @order = shop.orders.find_by_token(notification.out_trade_no)
         if @order and notification.acknowledge(@order.payment.key) and valid?(notification, @order.payment.account)
-          @order.pay!(notification.total_fee, notification.trade_no) if (notification.complete? or notification.payed?)and @order.financial_status_pending? # 要支持重复请求
+          @order.pay!(notification.total_fee, notification.trade_no) if (notification.complete? or notification.payed?) and @order.financial_status_pending? # 要支持重复请求
           render text: "success"
         else
           render text: "fail"
