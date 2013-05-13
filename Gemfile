@@ -38,7 +38,7 @@ gem "mini_magick" # 调用参数说明:http://www.imagemagick.org/Usage/
 gem 'haml', '~> 3.2.0.alpha.14'
 gem 'message_block' #用于显示错误信息
 gem 'client_side_validations' #客户端校验
-gem 'therubyracer', require: nil unless ENV['TRAVIS'] # 编译coffee-script # 安装编译过程太慢(大概需要4分钟)
+#gem 'therubyracer', require: nil unless ENV['TRAVIS'] # 编译coffee-script # 安装编译过程太慢(大概需要4分钟)
 
 ##### 其他 #####
 gem "activemerchant" # 支付
