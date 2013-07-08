@@ -217,7 +217,7 @@ end
 
 class ShopDomain < ActiveRecord::Base # 域名
   belongs_to :shop
-  attr_accessible :subdomain, :domain, :host, :primary, :force_domain, :record
+  attr_accessible :subdomain, :domain, :host, :primary, :force_domain, :record, :verified
 
   #域名须为3到20位数字和字母组成的，且唯一
   validates :subdomain, presence: true, length: 3..32        , format: {with:  /^([a-z0-9\-])*$/ }, unless: "domain.blank?"
