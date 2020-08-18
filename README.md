@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/saberma/shopqi)
+
 **最新电子商务开源项目 [19wu](https://github.com/saberma/19wu)**
 
 ## ShopQi [![测试結果](https://secure.travis-ci.org/saberma/shopqi.png)](http://travis-ci.org/saberma/shopqi)
