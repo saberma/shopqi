@@ -299,7 +299,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
-    redcarpet (2.0.1)
+    redcarpet (3.5.1)
     redis (3.0.1)
     redis-namespace (1.2.0)
       redis (~> 3.0.0)
